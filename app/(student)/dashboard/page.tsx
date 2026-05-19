@@ -385,7 +385,7 @@ export default function DashboardPage() {
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-neutral-mid">Cadre:</span>
-                <Badge variant="primary">{data.student.cadre}</Badge>
+                <Badge variant="teal">{data.student.cadre}</Badge>
               </div>
               {data.student.specialty && (
                 <div className="flex justify-between">
