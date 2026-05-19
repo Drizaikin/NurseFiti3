@@ -84,11 +84,13 @@ export default function LoginPage() {
         router.push('/dashboard');
       } else if (profile.role === 'tutor') {
         // Check tutor verification status
-        const { data: tutorProfile } = await supabase
+        const { data: tutorProfileData } = await supabase
           .from('tutor_profiles')
           .select('verification_status')
           .eq('id', authData.user.id)
           .single();
+
+        const tutorProfile = tutorProfileData as { verification_status: 'pending' | 'verified' | 'rejected' } | null;
 
         if (tutorProfile?.verification_status === 'pending') {
           router.push('/tutor-pending');
