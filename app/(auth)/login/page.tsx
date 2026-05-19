@@ -217,7 +217,7 @@ export default function LoginPage() {
 
           {/* Signup Link */}
           <div className="mt-6 text-center text-sm text-neutral-mid">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/signup" className="text-primary font-semibold hover:underline">
               Sign up
             </Link>
@@ -226,7 +226,7 @@ export default function LoginPage() {
           {/* Tutor Login Note */}
           <div className="mt-4 pt-4 border-t border-neutral-border">
             <p className="text-sm text-neutral-mid text-center">
-              <span className="font-semibold">Tutors:</span> Use the same login. You'll be redirected to your tutor dashboard.
+              <span className="font-semibold">Tutors:</span> Use the same login. You&apos;ll be redirected to your tutor dashboard.
             </p>
           </div>
         </Card>

@@ -198,7 +198,7 @@ export default function OnboardingQuizPage() {
             No Questions Available
           </h2>
           <p className="text-neutral-mid mb-6">
-            We couldn't find any questions for your cadre. Please contact support.
+            We couldn&apos;t find any questions for your cadre. Please contact support.
           </p>
           <Button variant="primary" onClick={() => router.push('/dashboard')}>
             Go to Dashboard

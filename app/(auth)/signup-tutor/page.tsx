@@ -196,7 +196,7 @@ export default function TutorSignupPage() {
                     Personal Information
                   </h2>
                   <p className="text-neutral-mid">
-                    Let's start with your basic details
+                    Let&apos;s start with your basic details
                   </p>
                 </div>
 
@@ -613,7 +613,7 @@ export default function TutorSignupPage() {
                     placeholder="+254712345678"
                   />
                   <p className="mt-1 text-xs text-neutral-light">
-                    This is where you'll receive payments for completed sessions
+                    This is where you&apos;ll receive payments for completed sessions
                   </p>
                   {errors.mpesaNumber && (
                     <p className="mt-1 text-sm text-error">{errors.mpesaNumber.message}</p>
@@ -647,7 +647,7 @@ export default function TutorSignupPage() {
                     <li>• NurseFiti takes a 20% platform fee</li>
                     <li>• Payments are processed weekly every Monday</li>
                     <li>• Minimum payout threshold: KSh 1,000</li>
-                    <li>• You'll receive 80% of your session rate</li>
+                    <li>• You&apos;ll receive 80% of your session rate</li>
                   </ul>
                 </div>
 

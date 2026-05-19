@@ -264,11 +264,11 @@ export default function TutorPendingPage() {
               </li>
               <li className="flex items-start">
                 <span className="text-primary mr-2">2.</span>
-                <span>We'll verify your NCK registration and professional qualifications</span>
+                <span>We&apos;ll verify your NCK registration and professional qualifications</span>
               </li>
               <li className="flex items-start">
                 <span className="text-primary mr-2">3.</span>
-                <span>You'll receive an email notification once your application is approved</span>
+                <span>You&apos;ll receive an email notification once your application is approved</span>
               </li>
               <li className="flex items-start">
                 <span className="text-primary mr-2">4.</span>

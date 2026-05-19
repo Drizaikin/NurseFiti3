@@ -9,3 +9,6 @@ export const createServerClient = () => {
 export const createRouteClient = () => {
   return createRouteHandlerClient<Database>({ cookies });
 };
+
+// Alias for consistency
+export const createClient = createServerClient;
