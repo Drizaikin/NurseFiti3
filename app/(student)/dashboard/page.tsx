@@ -242,7 +242,7 @@ export default function DashboardPage() {
             <div className="text-4xl">🎯</div>
           </div>
           <div className="mt-3">
-            <ProgressBar percentage={xpProgress} size="sm" />
+            <ProgressBar value={xpProgress} size="sm" showLabel={false} />
             <p className="text-xs text-neutral-mid mt-1">
               {data.student.xp % 100} / {xpToNextLevel} XP
             </p>
@@ -341,7 +341,8 @@ export default function DashboardPage() {
                   </span>
                 </div>
                 <ProgressBar
-                  percentage={Math.min((data.stats.total_questions_answered / 500) * 100, 100)}
+                  value={Math.min((data.stats.total_questions_answered / 500) * 100, 100)}
+                  showLabel={false}
                 />
               </div>
 
@@ -353,7 +354,8 @@ export default function DashboardPage() {
                   </span>
                 </div>
                 <ProgressBar
-                  percentage={Math.min((data.stats.mock_exams_taken / 10) * 100, 100)}
+                  value={Math.min((data.stats.mock_exams_taken / 10) * 100, 100)}
+                  showLabel={false}
                 />
               </div>
 
@@ -365,7 +367,8 @@ export default function DashboardPage() {
                   </span>
                 </div>
                 <ProgressBar
-                  percentage={Math.min((data.stats.flashcards_reviewed / 200) * 100, 100)}
+                  value={Math.min((data.stats.flashcards_reviewed / 200) * 100, 100)}
+                  showLabel={false}
                 />
               </div>
             </div>
