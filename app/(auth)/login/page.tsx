@@ -65,24 +65,24 @@ export default function LoginPage() {
       }
 
       // Get user profile to determine role
-      const { data: profile, error: profileError } = await supabase
+      const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .select('role')
         .eq('id', authData.user.id)
         .single();
 
-      if (profileError || !profile) {
+      if (profileError || !profileData) {
         throw new Error('Failed to load user profile');
       }
+
+      const profile = profileData as { role: 'student' | 'tutor' | 'admin' };
 
       toast.success('Welcome back!');
 
       // Redirect based on role
-      const userRole = profile.role as 'student' | 'tutor' | 'admin';
-      
-      if (userRole === 'student') {
+      if (profile.role === 'student') {
         router.push('/dashboard');
-      } else if (userRole === 'tutor') {
+      } else if (profile.role === 'tutor') {
         // Check tutor verification status
         const { data: tutorProfile } = await supabase
           .from('tutor_profiles')
