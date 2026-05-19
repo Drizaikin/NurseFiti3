@@ -83,10 +83,12 @@ export default function DashboardPage() {
       }
 
       // Fetch answer statistics
-      const { data: answersData } = await supabase
+      const { data: answersDataRaw } = await supabase
         .from('student_answers')
         .select('is_correct, time_taken_seconds')
         .eq('student_id', user.id);
+
+      const answersData = answersDataRaw as Array<{ is_correct: boolean; time_taken_seconds: number | null }> | null;
 
       const totalAnswers = answersData?.length || 0;
       const correctAnswers = answersData?.filter(a => a.is_correct).length || 0;
