@@ -65,17 +65,30 @@ export default function DashboardPage() {
       }
 
       // Fetch student profile
-      const { data: profileData } = await supabase
+      const { data: profileDataRaw } = await supabase
         .from('profiles')
         .select('full_name')
         .eq('id', user.id)
         .single();
 
-      const { data: studentData } = await supabase
+      const profileData = profileDataRaw as { full_name: string } | null;
+
+      const { data: studentDataRaw } = await supabase
         .from('student_profiles')
         .select('*')
         .eq('id', user.id)
         .single();
+
+      const studentData = studentDataRaw as {
+        cadre: string;
+        specialty?: string;
+        exam_date: string;
+        exam_cycle: string;
+        xp: number;
+        level: number;
+        streak_count: number;
+        last_study_date?: string;
+      } | null;
 
       if (!studentData) {
         router.push('/onboarding');
@@ -96,19 +109,23 @@ export default function DashboardPage() {
       const totalStudyTime = answersData?.reduce((sum, a) => sum + (a.time_taken_seconds || 0), 0) || 0;
 
       // Fetch mock exam count
-      const { data: mockExamsData } = await supabase
+      const { data: mockExamsDataRaw } = await supabase
         .from('mock_exam_results')
         .select('id')
         .eq('student_id', user.id);
 
+      const mockExamsData = mockExamsDataRaw as Array<{ id: string }> | null;
+
       // Fetch flashcard progress count
-      const { data: flashcardsData } = await supabase
+      const { data: flashcardsDataRaw } = await supabase
         .from('flashcard_progress')
         .select('id')
         .eq('student_id', user.id);
 
+      const flashcardsData = flashcardsDataRaw as Array<{ id: string }> | null;
+
       // Fetch upcoming sessions
-      const { data: sessionsData } = await supabase
+      const { data: sessionsDataRaw } = await supabase
         .from('sessions')
         .select(`
           id,
@@ -125,6 +142,14 @@ export default function DashboardPage() {
         .order('session_date', { ascending: true })
         .order('start_time', { ascending: true })
         .limit(3);
+
+      const sessionsData = sessionsDataRaw as Array<{
+        id: string;
+        session_date: string;
+        start_time: string;
+        topic: string | null;
+        tutor: { full_name: string } | null;
+      }> | null;
 
       const dashboardData: DashboardData = {
         student: {
@@ -149,7 +174,7 @@ export default function DashboardPage() {
         recentActivity: [],
         upcomingSessions: sessionsData?.map(s => ({
           id: s.id,
-          tutor_name: (s.tutor as any)?.full_name || 'Unknown',
+          tutor_name: s.tutor?.full_name || 'Unknown',
           session_date: s.session_date,
           start_time: s.start_time,
           topic: s.topic || 'General Session',
