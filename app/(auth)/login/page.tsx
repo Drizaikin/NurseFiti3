@@ -78,9 +78,11 @@ export default function LoginPage() {
       toast.success('Welcome back!');
 
       // Redirect based on role
-      if (profile.role === 'student') {
+      const userRole = profile.role as 'student' | 'tutor' | 'admin';
+      
+      if (userRole === 'student') {
         router.push('/dashboard');
-      } else if (profile.role === 'tutor') {
+      } else if (userRole === 'tutor') {
         // Check tutor verification status
         const { data: tutorProfile } = await supabase
           .from('tutor_profiles')
