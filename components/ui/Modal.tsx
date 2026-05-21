@@ -1,0 +1,97 @@
+"use client";
+
+import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
+
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title?: string;
+  children: React.ReactNode;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  /** Prevent closing when clicking the backdrop */
+  disableBackdropClose?: boolean;
+}
+
+export function Modal({
+  isOpen,
+  onClose,
+  title,
+  children,
+  size = 'md',
+  disableBackdropClose = false,
+}: ModalProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  // Close on Escape
+  useEffect(() => {
+    if (!isOpen) return;
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, [isOpen, onClose]);
+
+  // Lock body scroll
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  const sizeClasses = {
+    sm: 'max-w-sm',
+    md: 'max-w-md',
+    lg: 'max-w-lg',
+    xl: 'max-w-2xl',
+  };
+
+  const modal = (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={title ? 'modal-title' : undefined}
+    >
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={disableBackdropClose ? undefined : onClose}
+        aria-hidden="true"
+      />
+
+      {/* Panel */}
+      <div
+        ref={dialogRef}
+        className={`relative w-full ${sizeClasses[size]} bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl shadow-2xl`}
+      >
+        {/* Header */}
+        {title && (
+          <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)]">
+            <h2 id="modal-title" className="text-lg font-heading font-bold text-[var(--color-text)]">
+              {title}
+            </h2>
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-lg text-[var(--color-text-secondary)] hover:bg-primary-light hover:text-primary transition-colors"
+              aria-label="Close modal"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        )}
+
+        {/* Body */}
+        <div className="px-6 py-5">{children}</div>
+      </div>
+    </div>
+  );
+
+  return createPortal(modal, document.body);
+}

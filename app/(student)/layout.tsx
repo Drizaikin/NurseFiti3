@@ -1,6 +1,9 @@
 import { Sidebar } from '@/components/student/Sidebar';
 import { Topbar } from '@/components/student/Topbar';
 
+// All student pages are dynamic — they require auth and live Supabase data
+export const dynamic = 'force-dynamic';
+
 export default function StudentLayout({
   children,
 }: {

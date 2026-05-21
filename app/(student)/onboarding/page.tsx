@@ -144,7 +144,7 @@ export default function OnboardingQuizPage() {
         selected_option: answer.selected_option,
         is_correct: answer.is_correct,
         time_taken_seconds: answer.time_taken_seconds,
-        mode: 'onboarding',
+        mode: 'practice' as const, // onboarding uses practice mode
       }));
 
       const { error: answersError } = await supabase
@@ -324,7 +324,7 @@ export default function OnboardingQuizPage() {
               {studentCadre}
             </Badge>
           </div>
-          <ProgressBar percentage={progress} />
+          <ProgressBar value={progress} showLabel={false} />
         </div>
 
         {/* Question Card */}

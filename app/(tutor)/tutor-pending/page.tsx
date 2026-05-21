@@ -9,6 +9,8 @@ import { Button } from '@/components/ui/Button';
 import { Spinner } from '@/components/ui/Spinner';
 import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 
+export const dynamic = 'force-dynamic';
+
 interface TutorProfile {
   nck_reg_number: string;
   professional_title: string;
@@ -17,10 +19,9 @@ interface TutorProfile {
   cadres_taught: string[];
   specialties: string[];
   bio: string;
-  session_rate: number;
-  verification_status: 'pending' | 'approved' | 'rejected';
+  rate_per_hour: number;
+  verification_status: 'pending' | 'verified' | 'rejected';
   rejection_reason?: string;
-  created_at: string;
 }
 
 export default function TutorPendingPage() {
@@ -42,7 +43,7 @@ export default function TutorPendingPage() {
         const { data, error } = await supabase
           .from('tutor_profiles')
           .select('*')
-          .eq('user_id', user.id)
+          .eq('id', user.id)
           .single();
 
         if (error) {
@@ -50,10 +51,11 @@ export default function TutorPendingPage() {
           return;
         }
 
-        setProfile(data);
+        const tutorData = data as TutorProfile;
+        setProfile(tutorData);
 
-        // If approved, redirect to tutor dashboard
-        if (data.verification_status === 'approved') {
+        // If verified, redirect to tutor dashboard
+        if (tutorData.verification_status === 'verified') {
           router.push('/tutor-dashboard');
         }
       } catch (error) {
@@ -234,18 +236,7 @@ export default function TutorPendingPage() {
             <div>
               <p className="text-sm font-semibold text-neutral-mid mb-1">Session Rate</p>
               <p className="text-neutral-dark dark:text-neutral-light">
-                KSh {profile.session_rate.toLocaleString()} per hour
-              </p>
-            </div>
-
-            <div>
-              <p className="text-sm font-semibold text-neutral-mid mb-1">Application Submitted</p>
-              <p className="text-neutral-dark dark:text-neutral-light">
-                {new Date(profile.created_at).toLocaleDateString('en-KE', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
+                KSh {profile.rate_per_hour.toLocaleString()} per hour
               </p>
             </div>
           </div>

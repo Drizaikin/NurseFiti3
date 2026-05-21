@@ -1,14 +1,41 @@
-import { createServerComponentClient, createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import type { Database } from '@/lib/types/database.types';
 
-export const createServerClient = () => {
-  return createServerComponentClient<Database>({ cookies });
+/**
+ * Server Component / Route Handler Supabase client.
+ * Uses @supabase/ssr which correctly handles cookies in Next.js 14 App Router.
+ */
+export const createClient = () => {
+  const cookieStore = cookies();
+
+  return createServerClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return cookieStore.get(name)?.value;
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          try {
+            cookieStore.set({ name, value, ...options });
+          } catch {
+            // Server Components can't set cookies — middleware handles this
+          }
+        },
+        remove(name: string, options: CookieOptions) {
+          try {
+            cookieStore.set({ name, value: '', ...options });
+          } catch {
+            // Server Components can't set cookies — middleware handles this
+          }
+        },
+      },
+    }
+  );
 };
 
-export const createRouteClient = () => {
-  return createRouteHandlerClient<Database>({ cookies });
-};
-
-// Alias for consistency
-export const createClient = createServerClient;
+/** Alias for route handlers */
+export const createRouteClient = createClient;
+export const createServerClient_ = createClient;

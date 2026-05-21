@@ -21,7 +21,9 @@ export async function POST(request: NextRequest) {
       yearsExperience: Number(formData.get('yearsExperience')),
       currentEmployer: formData.get('currentEmployer') as string,
       cadresTaught: JSON.parse(formData.get('cadresTaught') as string),
-      specialties: formData.get('specialties') ? JSON.parse(formData.get('specialties') as string) : undefined,
+      specialties: formData.get('specialties')
+        ? JSON.parse(formData.get('specialties') as string)
+        : undefined,
       bio: formData.get('bio') as string,
       sessionRate: Number(formData.get('sessionRate')),
       mpesaNumber: formData.get('mpesaNumber') as string,
@@ -35,7 +37,14 @@ export async function POST(request: NextRequest) {
     const nationalId = formData.get('nationalId') as File;
 
     // Validate form data
-    const validatedData = tutorSignupSchema.parse(data);
+    const validationResult = tutorSignupSchema.safeParse(data);
+    if (!validationResult.success) {
+      return NextResponse.json(
+        { error: 'Invalid form data', details: validationResult.error.flatten().fieldErrors },
+        { status: 400 }
+      );
+    }
+    const validatedData = validationResult.data;
 
     // Validate files
     if (!nckCertificate || !academicQualification || !nationalId) {
@@ -45,47 +54,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate file sizes
-    if (nckCertificate.size > MAX_FILE_SIZE) {
-      return NextResponse.json(
-        { error: 'NCK certificate file size must be less than 5MB' },
-        { status: 400 }
-      );
-    }
-    if (academicQualification.size > MAX_FILE_SIZE) {
-      return NextResponse.json(
-        { error: 'Academic qualification file size must be less than 5MB' },
-        { status: 400 }
-      );
-    }
-    if (nationalId.size > MAX_FILE_SIZE) {
-      return NextResponse.json(
-        { error: 'National ID file size must be less than 5MB' },
-        { status: 400 }
-      );
+    for (const [label, file] of [
+      ['NCK certificate', nckCertificate],
+      ['Academic qualification', academicQualification],
+      ['National ID', nationalId],
+    ] as [string, File][]) {
+      if (file.size > MAX_FILE_SIZE) {
+        return NextResponse.json({ error: `${label} must be less than 5MB` }, { status: 400 });
+      }
+      if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+        return NextResponse.json({ error: `${label} must be PDF, JPG, or PNG` }, { status: 400 });
+      }
     }
 
-    // Validate file types
-    if (!ALLOWED_FILE_TYPES.includes(nckCertificate.type)) {
-      return NextResponse.json(
-        { error: 'NCK certificate must be PDF, JPG, or PNG' },
-        { status: 400 }
-      );
-    }
-    if (!ALLOWED_FILE_TYPES.includes(academicQualification.type)) {
-      return NextResponse.json(
-        { error: 'Academic qualification must be PDF, JPG, or PNG' },
-        { status: 400 }
-      );
-    }
-    if (!ALLOWED_FILE_TYPES.includes(nationalId.type)) {
-      return NextResponse.json(
-        { error: 'National ID must be PDF, JPG, or PNG' },
-        { status: 400 }
-      );
-    }
+    const supabase = createClient();
 
-    const supabase = await createClient();
+    // Helper to get file extension
+    const ext = (f: File) => f.name.split('.').pop() ?? 'bin';
 
     // Check if email already exists
     const { data: existingUser } = await supabase
@@ -97,7 +82,7 @@ export async function POST(request: NextRequest) {
     if (existingUser) {
       return NextResponse.json(
         { error: 'An account with this email already exists' },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
@@ -106,15 +91,12 @@ export async function POST(request: NextRequest) {
       email: validatedData.email,
       password: validatedData.password,
       options: {
-        data: {
-          full_name: validatedData.fullName,
-          role: 'tutor',
-        },
+        data: { full_name: validatedData.fullName, role: 'tutor' },
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
       },
     });
 
     if (authError || !authData.user) {
-      console.error('Auth error:', authError);
       return NextResponse.json(
         { error: authError?.message || 'Failed to create account' },
         { status: 400 }
@@ -122,132 +104,79 @@ export async function POST(request: NextRequest) {
     }
 
     const userId = authData.user.id;
+    const timestamp = Date.now();
 
     try {
       // Upload documents to Supabase Storage
-      const timestamp = Date.now();
-      const nckCertPath = `tutor-documents/${userId}/nck-certificate-${timestamp}.${nckCertificate.name.split('.').pop()}`;
-      const academicQualPath = `tutor-documents/${userId}/academic-qualification-${timestamp}.${academicQualification.name.split('.').pop()}`;
-      const nationalIdPath = `tutor-documents/${userId}/national-id-${timestamp}.${nationalId.name.split('.').pop()}`;
+      const paths = {
+        nck: `tutor-documents/${userId}/nck-certificate-${timestamp}.${ext(nckCertificate)}`,
+        academic: `tutor-documents/${userId}/academic-qualification-${timestamp}.${ext(academicQualification)}`,
+        id: `tutor-documents/${userId}/national-id-${timestamp}.${ext(nationalId)}`,
+      };
 
-      // Convert files to ArrayBuffer
-      const nckCertBuffer = await nckCertificate.arrayBuffer();
-      const academicQualBuffer = await academicQualification.arrayBuffer();
-      const nationalIdBuffer = await nationalId.arrayBuffer();
-
-      // Upload NCK certificate
-      const { error: nckUploadError } = await supabase.storage
-        .from('documents')
-        .upload(nckCertPath, nckCertBuffer, {
-          contentType: nckCertificate.type,
-          upsert: false,
-        });
-
-      if (nckUploadError) {
-        throw new Error('Failed to upload NCK certificate');
-      }
-
-      // Upload academic qualification
-      const { error: academicUploadError } = await supabase.storage
-        .from('documents')
-        .upload(academicQualPath, academicQualBuffer, {
-          contentType: academicQualification.type,
-          upsert: false,
-        });
-
-      if (academicUploadError) {
-        throw new Error('Failed to upload academic qualification');
-      }
-
-      // Upload national ID
-      const { error: idUploadError } = await supabase.storage
-        .from('documents')
-        .upload(nationalIdPath, nationalIdBuffer, {
-          contentType: nationalId.type,
-          upsert: false,
-        });
-
-      if (idUploadError) {
-        throw new Error('Failed to upload national ID');
+      for (const [path, file] of [
+        [paths.nck, nckCertificate],
+        [paths.academic, academicQualification],
+        [paths.id, nationalId],
+      ] as [string, File][]) {
+        const { error: uploadError } = await supabase.storage
+          .from('documents')
+          .upload(path, await file.arrayBuffer(), { contentType: file.type, upsert: false });
+        if (uploadError) throw new Error(`Failed to upload document: ${uploadError.message}`);
       }
 
       // Create profile record
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .insert({
-          id: userId,
-          email: validatedData.email,
-          full_name: validatedData.fullName,
-          phone: validatedData.phone,
-          role: 'tutor',
-        });
+      const { error: profileError } = await supabase.from('profiles').insert({
+        id: userId,
+        email: validatedData.email,
+        full_name: validatedData.fullName,
+        phone: validatedData.phone,
+        role: 'tutor',
+      });
+      if (profileError) throw new Error(`Failed to create profile: ${profileError.message}`);
 
-      if (profileError) {
-        throw new Error('Failed to create profile');
-      }
-
-      // Create tutor_profile record
-      const { error: tutorProfileError } = await supabase
-        .from('tutor_profiles')
-        .insert({
-          user_id: userId,
-          nck_reg_number: validatedData.nckRegNumber,
-          professional_title: validatedData.professionalTitle,
-          years_experience: validatedData.yearsExperience,
-          current_employer: validatedData.currentEmployer,
-          cadres_taught: validatedData.cadresTaught,
-          specialties: validatedData.specialties || [],
-          bio: validatedData.bio,
-          session_rate: validatedData.sessionRate,
-          mpesa_number: validatedData.mpesaNumber,
-          whatsapp_number: validatedData.whatsappNumber,
-          nck_certificate_url: nckCertPath,
-          academic_qualification_url: academicQualPath,
-          national_id_url: nationalIdPath,
-          verification_status: 'pending',
-        });
-
-      if (tutorProfileError) {
-        throw new Error('Failed to create tutor profile');
-      }
-
-      // TODO: Send admin notification email
-      // TODO: Send confirmation email to tutor
+      // Create tutor_profile record — uses `id` as FK (matches schema)
+      const { error: tutorProfileError } = await supabase.from('tutor_profiles').insert({
+        id: userId,
+        nck_reg_number: validatedData.nckRegNumber,
+        professional_title: validatedData.professionalTitle,
+        years_experience: validatedData.yearsExperience,
+        current_employer: validatedData.currentEmployer,
+        cadres_taught: validatedData.cadresTaught,
+        specialties: validatedData.specialties || [],
+        bio: validatedData.bio,
+        rate_per_hour: validatedData.sessionRate,
+        mpesa_number: validatedData.mpesaNumber,
+        whatsapp_number: validatedData.whatsappNumber,
+        nck_certificate_url: paths.nck,
+        academic_qualification_url: paths.academic,
+        national_id_url: paths.id,
+        verification_status: 'pending',
+        session_platform: ['Zoom', 'Google Meet', 'WhatsApp'],
+      });
+      if (tutorProfileError) throw new Error(`Failed to create tutor profile: ${tutorProfileError.message}`);
 
       return NextResponse.json(
-        {
-          message: 'Application submitted successfully',
-          userId,
-        },
+        { message: 'Application submitted successfully', userId },
         { status: 201 }
       );
     } catch (error: any) {
-      // Cleanup: Delete auth user if profile creation failed
-      await supabase.auth.admin.deleteUser(userId);
+      // Best-effort cleanup
+      await supabase.auth.admin.deleteUser(userId).catch(() => {});
+      await supabase.storage
+        .from('documents')
+        .remove([
+          `tutor-documents/${userId}/nck-certificate-${timestamp}.${ext(nckCertificate)}`,
+          `tutor-documents/${userId}/academic-qualification-${timestamp}.${ext(academicQualification)}`,
+          `tutor-documents/${userId}/national-id-${timestamp}.${ext(nationalId)}`,
+        ])
+        .catch(() => {});
 
-      // Cleanup: Delete uploaded files
-      await supabase.storage.from('documents').remove([
-        `tutor-documents/${userId}/nck-certificate-${timestamp}.${nckCertificate.name.split('.').pop()}`,
-        `tutor-documents/${userId}/academic-qualification-${timestamp}.${academicQualification.name.split('.').pop()}`,
-        `tutor-documents/${userId}/national-id-${timestamp}.${nationalId.name.split('.').pop()}`,
-      ]);
-
-      console.error('Profile creation error:', error);
-      return NextResponse.json(
-        { error: error.message || 'Failed to create tutor profile' },
-        { status: 500 }
-      );
+      console.error('Tutor profile creation error:', error);
+      return NextResponse.json({ error: error.message || 'Failed to create tutor profile' }, { status: 500 });
     }
   } catch (error: any) {
     console.error('Tutor signup error:', error);
-    
-    if (error.name === 'ZodError') {
-      return NextResponse.json(
-        { error: 'Invalid form data', details: error.errors },
-        { status: 400 }
-      );
-    }
-
     return NextResponse.json(
       { error: error.message || 'An unexpected error occurred' },
       { status: 500 }

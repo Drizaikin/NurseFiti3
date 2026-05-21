@@ -23,8 +23,10 @@ const config: Config = {
         dark: {
           DEFAULT: '#0F1C1C',
           mid: '#1E3535',
+          card: '#0F1C1C',
         },
         neutral: {
+          dark: '#0F1C1C',
           mid: '#4A6565',
           light: '#7A9E9E',
           border: '#D0E6E5',
@@ -32,6 +34,7 @@ const config: Config = {
         },
         error: '#E84545',
         success: '#1A9E75',
+        warning: '#F5A623',
       },
       fontFamily: {
         heading: ['var(--font-syne)', 'sans-serif'],
@@ -54,6 +57,9 @@ const config: Config = {
         md: '0.75rem',
         lg: '1rem',
         xl: '1.5rem',
+      },
+      backgroundImage: {
+        'tutor-sidebar': 'linear-gradient(175deg, #061412, #0A2322, #0F3030)',
       },
     },
   },

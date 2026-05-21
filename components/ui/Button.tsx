@@ -16,7 +16,7 @@ export function Button({
   const baseStyles = 'font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center';
   
   const variantStyles = {
-    primary: 'bg-accent text-white hover:bg-accent-dark',
+    primary: 'bg-accent text-dark hover:bg-accent-dark',
     secondary: 'bg-primary text-white hover:bg-primary-mid',
     ghost: 'bg-transparent text-primary hover:bg-primary-light',
     outline: 'bg-transparent border-2 border-primary text-primary hover:bg-primary-light',

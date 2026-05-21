@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createClient } from '@/lib/supabase/server';
 import { studentSignupSchema } from '@/lib/validations/auth';
 
 export async function POST(req: NextRequest) {
@@ -18,7 +17,7 @@ export async function POST(req: NextRequest) {
     }
     
     const data = validationResult.data;
-    const supabase = createRouteHandlerClient({ cookies });
+    const supabase = createClient();
     
     // Check if email already exists
     const { data: existingUser } = await supabase
