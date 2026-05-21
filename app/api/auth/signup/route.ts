@@ -4,7 +4,6 @@ import { studentSignupSchema } from '@/lib/validations/auth';
 
 /**
  * Inline admin client — service role, bypasses RLS.
- * Used here so we can clean up orphaned auth users on partial failures.
  */
 function getAdminClient() {
   return createClient(
@@ -12,6 +11,15 @@ function getAdminClient() {
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     { auth: { autoRefreshToken: false, persistSession: false } }
   );
+}
+
+// Health check — visit /api/auth/signup in browser to confirm route is reachable
+export async function GET() {
+  return NextResponse.json({
+    ok: true,
+    supabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+    serviceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+  });
 }
 
 export async function POST(req: NextRequest) {
@@ -33,6 +41,12 @@ export async function POST(req: NextRequest) {
     }
 
     const data = validation.data;
+
+    // Normalise phone: 07xx → +254xx
+    const phone = data.phone.startsWith('0')
+      ? '+254' + data.phone.slice(1)
+      : data.phone;
+
     const supabase = getAdminClient();
 
     // ── 2. Check for duplicate email ──────────────────────────────────────
@@ -78,7 +92,7 @@ export async function POST(req: NextRequest) {
       role: 'student',
       full_name: data.fullName,
       email: data.email,
-      phone: data.phone,
+      phone: phone,
     });
 
     if (profileError) {

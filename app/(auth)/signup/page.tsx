@@ -58,7 +58,15 @@ export default function StudentSignupPage() {
         body: JSON.stringify(data),
       });
 
-      const result = await response.json();
+      // Read as text first so we can log it if JSON parse fails
+      const responseText = await response.text();
+      let result: { error?: string; success?: boolean; message?: string };
+      try {
+        result = JSON.parse(responseText);
+      } catch {
+        console.error('Non-JSON response from /api/auth/signup:', responseText.slice(0, 500));
+        throw new Error('Server error — please try again or contact support.');
+      }
 
       if (!response.ok) {
         throw new Error(result.error || 'Signup failed');
