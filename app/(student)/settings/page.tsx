@@ -37,22 +37,33 @@ export default function SettingsPage() {
         return;
       }
 
-      const { data: profileData } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: profileData } = await (supabase as any)
         .from('profiles')
         .select('full_name, email, phone')
         .eq('id', user.id)
         .single();
 
-      const { data: studentData } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: studentData } = await (supabase as any)
         .from('student_profiles')
         .select('cadre, specialty, institution, exam_date, exam_cycle')
         .eq('id', user.id)
         .single();
 
-      if (profileData && studentData) {
+      const pd = profileData as { full_name: string; email: string; phone: string } | null;
+      const sd = studentData as { cadre: string; specialty?: string; institution: string; exam_date: string; exam_cycle: string } | null;
+
+      if (pd && sd) {
         setProfile({
-          ...profileData,
-          ...studentData,
+          full_name: pd.full_name,
+          email: pd.email,
+          phone: pd.phone,
+          cadre: sd.cadre,
+          specialty: sd.specialty,
+          institution: sd.institution,
+          exam_date: sd.exam_date,
+          exam_cycle: sd.exam_cycle,
         });
       }
     } catch (error) {

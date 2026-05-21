@@ -12,7 +12,10 @@ export const studentSignupSchema = z.object({
     .toLowerCase(),
   
   phone: z.string()
-    .regex(/^(\+254|0)[17]\d{8}$/, 'Invalid Kenyan phone number. Use format: +254712345678 or 0712345678'),
+    .regex(
+      /^(\+254|0)(7\d{8}|1\d{8})$/,
+      'Invalid Kenyan phone number. Use format: 0712345678 or +254712345678'
+    ),
   
   password: z.string()
     .min(8, 'Password must be at least 8 characters')

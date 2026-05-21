@@ -3,17 +3,23 @@ import { createClient } from '@supabase/supabase-js';
 import { studentSignupSchema } from '@/lib/validations/auth';
 
 /**
- * Inline admin client — service role, bypasses RLS.
+ * Admin client using service role key — bypasses RLS.
+ * Only used server-side in this route handler.
  */
 function getAdminClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  );
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !key) {
+    throw new Error('Missing Supabase environment variables. Check NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in Vercel dashboard.');
+  }
+
+  return createClient(url, key, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
 }
 
-// Health check — visit /api/auth/signup in browser to confirm route is reachable
+// Health check — GET /api/auth/signup confirms the route is reachable
 export async function GET() {
   return NextResponse.json({
     ok: true,
@@ -24,7 +30,19 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
-    // ── 1. Parse & validate body ──────────────────────────────────────────
+    // ── 1. Validate env vars first — crash early with JSON, not HTML ──────
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (!supabaseUrl || !serviceKey) {
+      console.error('Missing env vars: NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY');
+      return NextResponse.json(
+        { error: 'Server configuration error. Please contact support.' },
+        { status: 500 }
+      );
+    }
+
+    // ── 2. Parse & validate body ──────────────────────────────────────────
     let body: unknown;
     try {
       body = await req.json();
@@ -35,7 +53,10 @@ export async function POST(req: NextRequest) {
     const validation = studentSignupSchema.safeParse(body);
     if (!validation.success) {
       return NextResponse.json(
-        { error: 'Invalid input', details: validation.error.flatten().fieldErrors },
+        {
+          error: 'Please check your form — some fields are invalid.',
+          details: validation.error.flatten().fieldErrors,
+        },
         { status: 400 }
       );
     }
@@ -49,7 +70,7 @@ export async function POST(req: NextRequest) {
 
     const supabase = getAdminClient();
 
-    // ── 2. Check for duplicate email ──────────────────────────────────────
+    // ── 3. Check for duplicate email ──────────────────────────────────────
     const { data: existing } = await supabase
       .from('profiles')
       .select('email')
@@ -63,13 +84,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ── 3. Create Supabase auth user ──────────────────────────────────────
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
-
+    // ── 4. Create Supabase auth user ──────────────────────────────────────
+    // email_confirm: true — skip email verification for now so users can log in immediately.
+    // Change to false and add email sending if you want email verification.
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
       email: data.email,
       password: data.password,
-      email_confirm: false,          // require email verification
+      email_confirm: true,
       user_metadata: {
         full_name: data.fullName,
         role: 'student',
@@ -86,7 +107,7 @@ export async function POST(req: NextRequest) {
 
     const userId = authData.user.id;
 
-    // ── 4. Create public profile row ──────────────────────────────────────
+    // ── 5. Create public profile row ──────────────────────────────────────
     const { error: profileError } = await supabase.from('profiles').insert({
       id: userId,
       role: 'student',
@@ -97,14 +118,15 @@ export async function POST(req: NextRequest) {
 
     if (profileError) {
       console.error('Profile insert error:', profileError);
-      await supabase.auth.admin.deleteUser(userId).catch(() => {});
+      // Clean up auth user so the email isn't stuck
+      await supabase.auth.admin.deleteUser(userId);
       return NextResponse.json(
         { error: 'Failed to create user profile. Please try again.' },
         { status: 500 }
       );
     }
 
-    // ── 5. Create student profile row ─────────────────────────────────────
+    // ── 6. Create student profile row ─────────────────────────────────────
     const { error: studentError } = await supabase.from('student_profiles').insert({
       id: userId,
       cadre: data.cadre,
@@ -120,34 +142,23 @@ export async function POST(req: NextRequest) {
 
     if (studentError) {
       console.error('Student profile insert error:', studentError);
-      await supabase.from('profiles').delete().eq('id', userId).catch(() => {});
-      await supabase.auth.admin.deleteUser(userId).catch(() => {});
+      // Clean up both rows
+      await supabase.from('profiles').delete().eq('id', userId);
+      await supabase.auth.admin.deleteUser(userId);
       return NextResponse.json(
         { error: 'Failed to create student profile. Please try again.' },
         { status: 500 }
       );
     }
 
-    // ── 6. Send verification email via Supabase ───────────────────────────
-    // Generate a magic link / OTP so the user gets a verification email
-    await supabase.auth.admin.generateLink({
-      type: 'signup',
-      email: data.email,
-      options: {
-        redirectTo: `${siteUrl}/auth/callback`,
-      },
-    }).catch((e) => {
-      // Non-fatal — user can request resend from login page
-      console.warn('Could not send verification email:', e);
-    });
-
     return NextResponse.json({
       success: true,
-      message: 'Account created! Please check your email to verify your account.',
+      message: 'Account created successfully! You can now log in.',
     });
 
   } catch (error: unknown) {
-    console.error('Unexpected signup error:', error);
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Unexpected signup error:', message);
     return NextResponse.json(
       { error: 'An unexpected error occurred. Please try again.' },
       { status: 500 }

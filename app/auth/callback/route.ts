@@ -18,20 +18,24 @@ export async function GET(req: NextRequest) {
         .eq('id', session.user.id)
         .single();
 
-      if (profile?.role === 'student') {
+      const profileData = profile as { role: string } | null;
+
+      if (profileData?.role === 'student') {
         return NextResponse.redirect(new URL('/dashboard', req.url));
       }
 
-      if (profile?.role === 'tutor') {
+      if (profileData?.role === 'tutor') {
         const { data: tutorProfile } = await supabase
           .from('tutor_profiles')
           .select('verification_status')
           .eq('id', session.user.id)
           .single();
 
+        const tutorData = tutorProfile as { verification_status: string } | null;
+
         return NextResponse.redirect(
           new URL(
-            tutorProfile?.verification_status === 'verified' ? '/tutor-dashboard' : '/tutor-pending',
+            tutorData?.verification_status === 'verified' ? '/tutor-dashboard' : '/tutor-pending',
             req.url
           )
         );

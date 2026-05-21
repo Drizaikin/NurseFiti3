@@ -72,10 +72,8 @@ export default function StudentSignupPage() {
         throw new Error(result.error || 'Signup failed');
       }
 
-      toast.success('Account created! Please check your email to verify your account.');
-      
-      // Redirect to login or email verification page
-      router.push('/login?verified=false');
+      toast.success('Account created! You can now log in.');
+      router.push('/login');
     } catch (error: any) {
       toast.error(error.message || 'Failed to create account. Please try again.');
     } finally {

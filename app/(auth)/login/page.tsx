@@ -30,12 +30,9 @@ function LoginForm() {
 
   // Show message if redirected from signup
   useEffect(() => {
-    const verified = searchParams.get('verified');
-    if (verified === 'false') {
-      toast('Please check your email to verify your account before logging in.', {
-        icon: '📧',
-        duration: 6000,
-      });
+    const message = searchParams.get('message');
+    if (message) {
+      toast(message, { icon: 'ℹ️', duration: 5000 });
     }
   }, [searchParams]);
 
@@ -54,14 +51,6 @@ function LoginForm() {
 
       if (!authData.user) {
         throw new Error('Login failed. Please try again.');
-      }
-
-      // Check if email is verified
-      if (!authData.user.email_confirmed_at) {
-        toast.error('Please verify your email before logging in. Check your inbox.');
-        await supabase.auth.signOut();
-        setIsLoading(false);
-        return;
       }
 
       // Get user profile to determine role

@@ -65,11 +65,13 @@ export default function PracticePage() {
         return;
       }
 
-      const { data: profile } = await supabase
+      const { data: profileRaw } = await supabase
         .from('student_profiles')
         .select('cadre')
         .eq('id', user.id)
         .single();
+
+      const profile = profileRaw as { cadre: string } | null;
 
       if (profile) {
         setStudentCadre(profile.cadre);
@@ -84,14 +86,14 @@ export default function PracticePage() {
 
   const fetchUnits = async (cadre: string) => {
     try {
-      const { data } = await supabase
+      const { data: unitsRaw } = await supabase
         .from('questions')
         .select('unit')
         .eq('cadre', cadre)
         .eq('status', 'approved');
 
-      if (data) {
-        const uniqueUnits = Array.from(new Set(data.map(q => q.unit)));
+      if (unitsRaw) {
+        const uniqueUnits = Array.from(new Set((unitsRaw as Array<{ unit: string }>).map(q => q.unit)));
         setUnits(uniqueUnits);
       }
     } catch (error) {
@@ -152,7 +154,8 @@ export default function PracticePage() {
       if (!user) return;
 
       // Store answer in database
-      await supabase.from('student_answers').insert({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await (supabase as any).from('student_answers').insert({
         student_id: user.id,
         question_id: questionId,
         selected_option: selectedOption,
@@ -171,11 +174,14 @@ export default function PracticePage() {
 
       // Update student XP and streak
       if (isCorrect) {
-        const { data: currentProfile } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { data: currentProfileRaw } = await (supabase as any)
           .from('student_profiles')
           .select('xp, level, last_study_date, streak_count')
           .eq('id', user.id)
           .single();
+
+        const currentProfile = currentProfileRaw as { xp: number; level: number; last_study_date: string | null; streak_count: number } | null;
 
         if (currentProfile) {
           const today = new Date().toISOString().split('T')[0];
@@ -200,7 +206,8 @@ export default function PracticePage() {
           const newXP = currentProfile.xp + xpGained;
           const newLevel = Math.floor(newXP / 100) + 1;
 
-          await supabase
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          await (supabase as any)
             .from('student_profiles')
             .update({
               xp: newXP,

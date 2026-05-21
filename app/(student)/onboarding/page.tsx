@@ -57,11 +57,14 @@ export default function OnboardingQuizPage() {
       }
 
       // Fetch student profile to get cadre
-      const { data: profile, error: profileError } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: profileRaw, error: profileError } = await (supabase as any)
         .from('student_profiles')
         .select('cadre')
         .eq('id', user.id)
         .single();
+
+      const profile = profileRaw as { cadre: string } | null;
 
       if (profileError || !profile) {
         console.error('Error fetching profile:', profileError);
@@ -144,10 +147,11 @@ export default function OnboardingQuizPage() {
         selected_option: answer.selected_option,
         is_correct: answer.is_correct,
         time_taken_seconds: answer.time_taken_seconds,
-        mode: 'practice' as const, // onboarding uses practice mode
+        mode: 'practice' as const,
       }));
 
-      const { error: answersError } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error: answersError } = await (supabase as any)
         .from('student_answers')
         .insert(answersToInsert);
 
@@ -158,7 +162,8 @@ export default function OnboardingQuizPage() {
       // Award XP for completing onboarding (50 XP + 5 XP per correct answer)
       const xpEarned = 50 + (correctCount * 5);
 
-      const { error: xpError } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error: xpError } = await (supabase as any)
         .from('student_profiles')
         .update({
           xp: xpEarned,

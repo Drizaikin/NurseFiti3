@@ -51,7 +51,20 @@ export interface Database {
           plan_tier: PlanTier;
           plan_expires_at: string | null;
         };
-        Insert: Omit<Database['public']['Tables']['student_profiles']['Row'], never>;
+        Insert: {
+          id: string;
+          cadre: Cadre;
+          specialty?: string | null;
+          institution?: string | null;
+          exam_date: string;
+          exam_cycle: ExamCycle;
+          xp?: number;
+          level?: number;
+          streak_count?: number;
+          last_study_date?: string | null;
+          plan_tier?: PlanTier;
+          plan_expires_at?: string | null;
+        };
         Update: Partial<Database['public']['Tables']['student_profiles']['Row']>;
       };
 

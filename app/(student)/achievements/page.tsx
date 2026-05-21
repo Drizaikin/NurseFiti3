@@ -1,31 +1,216 @@
 "use client";
 
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
 import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import Link from 'next/link';
+import { Badge } from '@/components/ui/Badge';
+import { ProgressBar } from '@/components/ui/ProgressBar';
+import { Spinner } from '@/components/ui/Spinner';
+
+interface BadgeDef {
+  id: string;
+  icon: string;
+  name: string;
+  description: string;
+  condition: string;
+}
+
+const BADGE_DEFS: BadgeDef[] = [
+  { id: 'streak_master',   icon: '🔥', name: 'Streak Master',   description: '14-day study streak',           condition: '14-day streak' },
+  { id: 'pharma_warrior',  icon: '💊', name: 'Pharma Warrior',  description: '100 Pharmacology answers',       condition: '100 Pharmacology Qs' },
+  { id: 'mock_maestro',    icon: '🎯', name: 'Mock Maestro',    description: '3 full mock exams completed',    condition: '3 mock exams' },
+  { id: 'speed_demon',     icon: '⚡', name: 'Speed Demon',     description: 'Finish mock exam 20+ min early', condition: 'Finish early' },
+  { id: 'top_10',          icon: '🏆', name: 'Top 10%',         description: 'Reach 90th percentile',          condition: '90th percentile' },
+  { id: 'knowledge_god',   icon: '🧠', name: 'Knowledge God',   description: 'Answer all 5,000 questions',     condition: '5,000 questions' },
+  { id: 'perfect_score',   icon: '💯', name: 'Perfect Score',   description: 'Score 90%+ on any mock exam',    condition: '90%+ mock score' },
+  { id: 'team_captain',    icon: '👑', name: 'Team Captain',    description: 'Create and lead a study group',  condition: 'Create a group' },
+];
+
+// XP thresholds per level
+function xpForLevel(level: number) { return level <= 1 ? 0 : (level - 1) * 200 + (level - 2) * 100; }
+function xpToNextLevel(level: number) { return level * 200 + (level - 1) * 100; }
+
+interface StudentData {
+  full_name: string;
+  xp: number;
+  level: number;
+  streak_count: number;
+  last_study_date: string | null;
+}
+
+interface LeaderboardEntry {
+  id: string;
+  full_name: string;
+  xp: number;
+  level: number;
+  cadre: string;
+  isMe: boolean;
+}
 
 export default function AchievementsPage() {
+  const router = useRouter();
+  const supabase = createClient();
+  const [student, setStudent] = useState<StudentData | null>(null);
+  const [earnedBadges, setEarnedBadges] = useState<Set<string>>(new Set());
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [leaderTab, setLeaderTab] = useState<'weekly' | 'alltime'>('alltime');
+  const [isLoading, setIsLoading] = useState(true);
+  const [streakDays, setStreakDays] = useState<Record<string, 'done' | 'missed' | 'today'>>({});
+
+  useEffect(() => {
+    const load = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) { router.push('/login'); return; }
+
+      const [profileRes, studentRes, badgesRes] = await Promise.all([
+        supabase.from('profiles').select('full_name').eq('id', user.id).single(),
+        supabase.from('student_profiles').select('xp, level, streak_count, last_study_date, cadre').eq('id', user.id).single(),
+        supabase.from('student_badges').select('badge_id').eq('student_id', user.id),
+      ]);
+
+      const profile = profileRes.data as { full_name: string } | null;
+      const sp = studentRes.data as (StudentData & { cadre: string }) | null;
+      if (!sp || !profile) { setIsLoading(false); return; }
+
+      setStudent({ ...sp, full_name: profile.full_name });
+      setEarnedBadges(new Set((badgesRes.data ?? []).map((b: { badge_id: string }) => b.badge_id)));
+
+      // Build streak calendar (last 31 days)
+      const today = new Date().toISOString().split('T')[0];
+      const { data: answerDays } = await supabase.from('student_answers')
+        .select('answered_at').eq('student_id', user.id)
+        .gte('answered_at', new Date(Date.now() - 31 * 86400000).toISOString());
+      const studiedDays = new Set((answerDays ?? []).map((a: { answered_at: string }) => a.answered_at.split('T')[0]));
+      const calendar: Record<string, 'done' | 'missed' | 'today'> = {};
+      for (let i = 30; i >= 0; i--) {
+        const d = new Date(); d.setDate(d.getDate() - i);
+        const ds = d.toISOString().split('T')[0];
+        calendar[ds] = ds === today ? 'today' : studiedDays.has(ds) ? 'done' : 'missed';
+      }
+      setStreakDays(calendar);
+
+      // Leaderboard — top 20 students by XP
+      const { data: lb } = await supabase.from('student_profiles')
+        .select('id, xp, level, cadre').order('xp', { ascending: false }).limit(20);
+      if (lb) {
+        const ids = (lb as Array<{ id: string; xp: number; level: number; cadre: string }>).map(r => r.id);
+        const { data: names } = await supabase.from('profiles').select('id, full_name').in('id', ids);
+        const nameMap = new Map((names ?? []).map((n: { id: string; full_name: string }) => [n.id, n.full_name]));
+        setLeaderboard((lb as Array<{ id: string; xp: number; level: number; cadre: string }>).map((r, i) => ({
+          id: r.id, full_name: nameMap.get(r.id) ?? 'Student', xp: r.xp, level: r.level, cadre: r.cadre,
+          isMe: r.id === user.id,
+        })));
+      }
+      setIsLoading(false);
+    };
+    load();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (isLoading) return <div className="flex items-center justify-center min-h-[60vh]"><Spinner size="lg" color="primary" /></div>;
+  if (!student) return null;
+
+  const currentLevelXP = xpForLevel(student.level);
+  const nextLevelXP = xpToNextLevel(student.level);
+  const xpInLevel = student.xp - currentLevelXP;
+  const xpNeeded = nextLevelXP - currentLevelXP;
+  const levelProgress = Math.min(100, Math.round((xpInLevel / xpNeeded) * 100));
+
   return (
-    <div className="max-w-4xl mx-auto">
-      <h1 className="text-3xl font-heading font-bold text-primary mb-6">
-        Achievements
-      </h1>
-      <Card className="text-center py-12">
-        <div className="text-6xl mb-4">🏆</div>
-        <h2 className="text-2xl font-heading font-bold text-primary mb-4">
-          Achievements & Badges
-        </h2>
-        <p className="text-neutral-mid mb-6 max-w-md mx-auto">
-          Earn badges, climb the leaderboard, and celebrate your milestones as you progress toward exam success.
-        </p>
-        <p className="text-sm text-neutral-light mb-6">
-          Coming soon in Phase 2
-        </p>
-        <Link href="/dashboard">
-          <Button variant="primary">
-            Back to Dashboard
-          </Button>
-        </Link>
+    <div className="max-w-5xl mx-auto space-y-6">
+      <h1 className="text-3xl font-heading font-bold text-primary">Achievements</h1>
+
+      {/* XP & Level card */}
+      <Card className="bg-gradient-to-br from-accent/10 to-accent/5 border-accent/30">
+        <div className="flex flex-col sm:flex-row items-center gap-6">
+          <div className="w-24 h-24 rounded-full bg-accent flex items-center justify-center text-dark font-heading font-bold text-3xl flex-shrink-0">
+            {student.level}
+          </div>
+          <div className="flex-1 w-full text-center sm:text-left">
+            <p className="text-sm text-neutral-mid mb-1">Level {student.level}</p>
+            <p className="text-2xl font-heading font-bold text-[var(--color-text)] mb-2">{student.xp.toLocaleString()} XP</p>
+            <ProgressBar value={levelProgress} color="amber" showLabel={false} />
+            <p className="text-xs text-neutral-mid mt-1">{xpInLevel} / {xpNeeded} XP to Level {student.level + 1}</p>
+          </div>
+          <div className="text-center">
+            <p className="text-4xl">🔥</p>
+            <p className="text-2xl font-heading font-bold text-accent">{student.streak_count}</p>
+            <p className="text-xs text-neutral-mid">day streak</p>
+          </div>
+        </div>
+      </Card>
+
+      {/* Streak calendar */}
+      <Card>
+        <h2 className="text-xl font-heading font-bold mb-4">Study Streak — Last 31 Days</h2>
+        <div className="flex flex-wrap gap-1.5">
+          {Object.entries(streakDays).map(([day, status]) => (
+            <div key={day} title={day}
+              className={`w-7 h-7 rounded-md flex items-center justify-center text-xs transition-all ${
+                status === 'today' ? 'bg-accent text-dark font-bold ring-2 ring-accent/50' :
+                status === 'done'  ? 'bg-primary text-white' :
+                'bg-neutral-border text-neutral-mid'
+              }`}>
+              {status === 'done' ? '✓' : status === 'today' ? '★' : ''}
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center gap-4 mt-3 text-xs text-neutral-mid">
+          <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-primary inline-block" /> Studied</span>
+          <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-accent inline-block" /> Today</span>
+          <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-neutral-border inline-block" /> Missed</span>
+        </div>
+      </Card>
+
+      {/* Badges */}
+      <Card>
+        <h2 className="text-xl font-heading font-bold mb-4">Badges</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {BADGE_DEFS.map(b => {
+            const earned = earnedBadges.has(b.id);
+            return (
+              <div key={b.id} className={`flex flex-col items-center text-center p-4 rounded-xl border-2 transition-all ${earned ? 'border-accent bg-accent/5' : 'border-[var(--color-border)] opacity-50 grayscale'}`}>
+                <span className="text-4xl mb-2">{b.icon}</span>
+                <p className="font-semibold text-sm text-[var(--color-text)]">{b.name}</p>
+                <p className="text-xs text-neutral-mid mt-1">{b.description}</p>
+                {earned && <Badge variant="amber" size="sm" className="mt-2">Earned</Badge>}
+              </div>
+            );
+          })}
+        </div>
+      </Card>
+
+      {/* Leaderboard */}
+      <Card>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-heading font-bold">Leaderboard</h2>
+          <div className="flex gap-1 bg-neutral-border rounded-lg p-1">
+            {(['alltime', 'weekly'] as const).map(t => (
+              <button key={t} onClick={() => setLeaderTab(t)}
+                className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${leaderTab === t ? 'bg-[var(--color-card)] text-primary shadow-sm' : 'text-neutral-mid'}`}>
+                {t === 'alltime' ? 'All Time' : 'Weekly'}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="space-y-2">
+          {leaderboard.map((entry, i) => (
+            <div key={entry.id} className={`flex items-center gap-3 p-3 rounded-xl ${entry.isMe ? 'bg-accent/10 border-2 border-accent/30' : 'bg-[var(--color-bg)]'}`}>
+              <span className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 ${i === 0 ? 'bg-accent text-dark' : i === 1 ? 'bg-neutral-mid text-white' : i === 2 ? 'bg-amber-700 text-white' : 'bg-neutral-border text-neutral-mid'}`}>
+                {i + 1}
+              </span>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-sm text-[var(--color-text)] truncate">{entry.full_name}{entry.isMe && ' (You)'}</p>
+                <p className="text-xs text-neutral-mid">Level {entry.level} · {entry.cadre}</p>
+              </div>
+              <div className="text-right">
+                <p className="font-bold text-sm text-accent">{entry.xp.toLocaleString()} XP</p>
+              </div>
+            </div>
+          ))}
+          {leaderboard.length === 0 && <p className="text-neutral-mid text-sm text-center py-6">No leaderboard data yet.</p>}
+        </div>
       </Card>
     </div>
   );

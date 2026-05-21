@@ -4,6 +4,13 @@ import { NextResponse, type NextRequest } from 'next/server';
 export async function middleware(req: NextRequest) {
   let res = NextResponse.next({ request: { headers: req.headers } });
 
+  const { pathname } = req.nextUrl;
+
+  // Never run auth middleware on API routes — let route handlers deal with auth
+  if (pathname.startsWith('/api/')) {
+    return res;
+  }
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -27,7 +34,6 @@ export async function middleware(req: NextRequest) {
   );
 
   const { data: { session } } = await supabase.auth.getSession();
-  const { pathname } = req.nextUrl;
 
   // Public routes — no auth required
   const publicRoutes = [
@@ -123,6 +129,14 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    /*
+     * Match all paths EXCEPT:
+     * - _next/static (static files)
+     * - _next/image (image optimization)
+     * - favicon.ico
+     * - static file extensions
+     * - /api/* routes (handled by route handlers directly, not middleware)
+     */
+    '/((?!_next/static|_next/image|favicon.ico|api/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 };
