@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createClient } from '@supabase/supabase-js';
 import { tutorSignupSchema } from '@/lib/validations/auth';
+
+function getAdminClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  );
+}
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ALLOWED_FILE_TYPES = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
@@ -67,7 +75,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const supabase = createClient();
+    const supabase = getAdminClient();
 
     // Helper to get file extension
     const ext = (f: File) => f.name.split('.').pop() ?? 'bin';
@@ -87,13 +95,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Create auth user
-    const { data: authData, error: authError } = await supabase.auth.signUp({
+    const { data: authData, error: authError } = await supabase.auth.admin.createUser({
       email: validatedData.email,
       password: validatedData.password,
-      options: {
-        data: { full_name: validatedData.fullName, role: 'tutor' },
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
-      },
+      email_confirm: false,
+      user_metadata: { full_name: validatedData.fullName, role: 'tutor' },
     });
 
     if (authError || !authData.user) {
