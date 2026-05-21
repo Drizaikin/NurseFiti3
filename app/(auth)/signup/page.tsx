@@ -20,12 +20,6 @@ const HIGHER_DIPLOMA_SPECIALTIES = [
   'Peri-Operative Nursing',
 ];
 
-const UPCOMING_EXAM_DATES = [
-  { value: '2026-05-15', label: 'May 2026', cycle: 'May' },
-  { value: '2026-08-15', label: 'August 2026', cycle: 'August' },
-  { value: '2026-11-15', label: 'November 2026', cycle: 'November' },
-];
-
 export default function StudentSignupPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -36,18 +30,22 @@ export default function StudentSignupPage() {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<StudentSignupInput>({
     resolver: zodResolver(studentSignupSchema),
   });
 
   const selectedCadre = watch('cadre');
-  const selectedExamDate = watch('examDate');
 
-  // Auto-set exam cycle based on selected date
-  const getExamCycle = (date: string) => {
-    const examDate = UPCOMING_EXAM_DATES.find(d => d.value === date);
-    return examDate?.cycle || '';
+  // When the user picks a date, suggest the matching exam cycle
+  const handleExamDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const picked = e.target.value; // e.g. "2026-05-15"
+    if (!picked) return;
+    const month = new Date(picked).getUTCMonth(); // 0-indexed
+    if (month >= 3 && month <= 5) setValue('examCycle', 'May');
+    else if (month >= 6 && month <= 8) setValue('examCycle', 'August');
+    else if (month >= 9 && month <= 11) setValue('examCycle', 'November');
   };
 
   const onSubmit = async (data: StudentSignupInput) => {
@@ -278,25 +276,18 @@ export default function StudentSignupPage() {
                 <label htmlFor="examDate" className="block text-sm font-semibold mb-2">
                   Target Exam Date <span className="text-error">*</span>
                 </label>
-                <select
+                <input
                   {...register('examDate')}
+                  type="date"
                   id="examDate"
                   className="input"
+                  min={new Date().toISOString().split('T')[0]}
                   disabled={isLoading}
                   onChange={(e) => {
-                    const cycle = getExamCycle(e.target.value);
-                    if (cycle) {
-                      // This will be handled by the form
-                    }
+                    register('examDate').onChange(e);
+                    handleExamDateChange(e);
                   }}
-                >
-                  <option value="">Select exam date</option>
-                  {UPCOMING_EXAM_DATES.map(date => (
-                    <option key={date.value} value={date.value}>
-                      {date.label}
-                    </option>
-                  ))}
-                </select>
+                />
                 {errors.examDate && (
                   <p className="mt-1 text-sm text-error">{errors.examDate.message}</p>
                 )}
@@ -306,15 +297,17 @@ export default function StudentSignupPage() {
                 <label htmlFor="examCycle" className="block text-sm font-semibold mb-2">
                   Exam Cycle <span className="text-error">*</span>
                 </label>
-                <input
+                <select
                   {...register('examCycle')}
-                  type="text"
                   id="examCycle"
-                  className="input bg-gray-100 dark:bg-gray-800"
-                  value={selectedExamDate ? getExamCycle(selectedExamDate) : ''}
-                  readOnly
-                  disabled
-                />
+                  className="input"
+                  disabled={isLoading}
+                >
+                  <option value="">Select exam cycle</option>
+                  <option value="May">May</option>
+                  <option value="August">August</option>
+                  <option value="November">November</option>
+                </select>
                 {errors.examCycle && (
                   <p className="mt-1 text-sm text-error">{errors.examCycle.message}</p>
                 )}
