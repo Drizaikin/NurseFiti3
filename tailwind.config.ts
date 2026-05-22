@@ -58,6 +58,15 @@ const config: Config = {
         lg: '1rem',
         xl: '1.5rem',
       },
+      boxShadow: {
+        'glow-teal':     'var(--shadow-glow-teal)',
+        'glow-teal-lg':  'var(--shadow-glow-teal-lg)',
+        'glow-amber':    'var(--shadow-glow-amber)',
+        'glow-amber-lg': 'var(--shadow-glow-amber-lg)',
+        'premium':       'var(--shadow-premium)',
+        'card':          'var(--shadow-card)',
+        'card-hover':    'var(--shadow-card-hover)',
+      },
       backgroundImage: {
         'tutor-sidebar': 'linear-gradient(175deg, #061412, #0A2322, #0F3030)',
       },

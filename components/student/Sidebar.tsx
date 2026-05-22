@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { NurseFitiLogo } from '../shared/NurseFitiLogo';
@@ -12,7 +13,7 @@ interface NavItem {
 
 function Icon({ d }: { d: string }) {
   return (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={d} />
     </svg>
   );
@@ -32,20 +33,20 @@ const navItems: NavItem[] = [
   { name: 'Settings',      href: '/settings',       icon: <Icon d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z" /> },
 ];
 
-export function Sidebar() {
+function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 bg-dark text-white border-r border-dark-mid">
+    <>
       {/* Logo */}
-      <div className="flex items-center h-16 px-5 border-b border-dark-mid">
-        <Link href="/dashboard" aria-label="NurseFiti home">
-          <NurseFitiLogo variant="full" size={36} />
+      <div className="flex items-center h-16 px-5 border-b border-white/10">
+        <Link href="/dashboard" aria-label="NurseFiti home" onClick={onNavClick}>
+          <NurseFitiLogo variant="full" size={36} context="sidebar" />
         </Link>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto py-4" aria-label="Student navigation">
+      <nav className="flex-1 overflow-y-auto py-4 scrollbar-thin" aria-label="Student navigation">
         <ul className="space-y-0.5 px-3">
           {navItems.map((item) => {
             const isActive = pathname === item.href || pathname?.startsWith(item.href + '/');
@@ -53,14 +54,23 @@ export function Sidebar() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors min-h-[44px] ${
-                    isActive
-                      ? 'bg-accent text-dark font-semibold'
-                      : 'text-neutral-light hover:bg-dark-mid hover:text-white'
-                  }`}
+                  onClick={onNavClick}
+                  className={`
+                    flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium
+                    transition-all duration-200 min-h-[44px] group
+                    ${isActive
+                      ? 'bg-gradient-to-r from-accent to-accent/80 text-dark font-semibold shadow-glow-amber'
+                      : 'text-[#7A9E9E] hover:bg-white/8 hover:text-white'
+                    }
+                  `}
                 >
-                  <span className={isActive ? 'text-dark' : 'text-neutral-light'}>{item.icon}</span>
+                  <span className={`transition-transform duration-200 group-hover:scale-110 ${isActive ? 'text-dark' : 'text-[#7A9E9E] group-hover:text-white'}`}>
+                    {item.icon}
+                  </span>
                   {item.name}
+                  {isActive && (
+                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-dark/40" />
+                  )}
                 </Link>
               </li>
             );
@@ -69,9 +79,94 @@ export function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t border-dark-mid">
-        <p className="text-xs text-neutral-light text-center">© 2026 NurseFiti</p>
+      <div className="p-4 border-t border-white/10">
+        <p className="text-xs text-[#4A6565] text-center">© 2026 NurseFiti</p>
       </div>
-    </aside>
+    </>
+  );
+}
+
+export function Sidebar() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Close drawer on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  // Lock body scroll when drawer is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
+
+  return (
+    <>
+      {/* ── DESKTOP sidebar ─────────────────────────────────────────────── */}
+      <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 sidebar-bg border-r border-white/8 z-30">
+        <SidebarContent />
+      </aside>
+
+      {/* ── MOBILE hamburger button (rendered inside Topbar via export) ─── */}
+      {/* Exposed as a separate export so Topbar can render it */}
+
+      {/* ── MOBILE drawer backdrop ──────────────────────────────────────── */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+          onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* ── MOBILE drawer ───────────────────────────────────────────────── */}
+      <aside
+        className={`
+          fixed inset-y-0 left-0 z-50 w-72 flex flex-col sidebar-bg
+          border-r border-white/8 shadow-2xl
+          transform transition-transform duration-300 ease-in-out
+          lg:hidden
+          ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
+        `}
+        aria-label="Mobile navigation"
+      >
+        {/* Close button */}
+        <button
+          onClick={() => setMobileOpen(false)}
+          className="absolute top-4 right-4 p-2 rounded-lg text-[#7A9E9E] hover:text-white hover:bg-white/10 transition-colors"
+          aria-label="Close menu"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <SidebarContent onNavClick={() => setMobileOpen(false)} />
+      </aside>
+
+      {/* ── MOBILE hamburger trigger (fixed bottom-right for easy thumb reach) */}
+      <button
+        onClick={() => setMobileOpen(true)}
+        className={`
+          fixed bottom-6 right-6 z-30 lg:hidden
+          w-14 h-14 rounded-2xl
+          bg-gradient-to-br from-primary to-primary-mid
+          shadow-glow-teal
+          flex items-center justify-center
+          text-white
+          transition-all duration-200 active:scale-95
+          ${mobileOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}
+        `}
+        aria-label="Open navigation menu"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </>
   );
 }

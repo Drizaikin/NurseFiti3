@@ -10,180 +10,391 @@ import { Badge } from '@/components/ui/Badge';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Spinner } from '@/components/ui/Spinner';
 
+// ── Time-aware greeting (uses browser local time = user's timezone) ────────
+function useGreeting() {
+  const [greeting, setGreeting] = useState('');
+  const [emoji, setEmoji] = useState('');
+
+  useEffect(() => {
+    const update = () => {
+      const hour = new Date().getHours(); // local time, respects user's timezone
+      if (hour >= 5 && hour < 12)       { setGreeting('Good morning');   setEmoji('👋'); }
+      else if (hour >= 12 && hour < 17) { setGreeting('Good afternoon'); setEmoji('☀️'); }
+      else if (hour >= 17 && hour < 21) { setGreeting('Good evening');   setEmoji('🌆'); }
+      else                              { setGreeting('Good night');      setEmoji('🌙'); }
+    };
+    update();
+    // Re-check every minute so it updates if the user leaves the tab open
+    const id = setInterval(update, 60_000);
+    return () => clearInterval(id);
+  }, []);
+
+  return { greeting, emoji };
+}
+
+// ── Live countdown hook ────────────────────────────────────────────────────
+function useCountdown(targetDate: string) {
+  const calc = () => {
+    const diff = Math.max(0, new Date(targetDate).getTime() - Date.now());
+    return {
+      days:    Math.floor(diff / (1000 * 60 * 60 * 24)),
+      hours:   Math.floor((diff / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((diff / (1000 * 60)) % 60),
+      seconds: Math.floor((diff / 1000) % 60),
+      total:   diff,
+    };
+  };
+  const [time, setTime] = useState(calc);
+  useEffect(() => {
+    const id = setInterval(() => setTime(calc()), 1000);
+    return () => clearInterval(id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [targetDate]);
+  return time;
+}
+
+function pad(n: number) { return String(n).padStart(2, '0'); }
+
+// ── Hero banner — matches the reference image exactly ─────────────────────
+function HeroBanner({
+  firstName, streakCount, examDate, examCycle,
+}: {
+  firstName: string;
+  streakCount: number;
+  examDate: string;
+  examCycle: string;
+}) {
+  const { greeting, emoji } = useGreeting();
+  const t = useCountdown(examDate);
+  const isUrgent = t.days < 14;
+
+  return (
+    <div
+      className="relative overflow-hidden rounded-2xl sm:rounded-3xl px-6 py-7 sm:px-8 sm:py-8"
+      style={{
+        /* Layer 1: deep forest green base — exactly as in image */
+        background: '#0D2B1F',
+      }}
+    >
+      {/* Layer 2: gradient — darker bottom-left to slightly lighter top-right */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden="true"
+        style={{
+          background: 'linear-gradient(135deg, #0A2018 0%, #0F2E22 40%, #133828 70%, #174030 100%)',
+        }}
+      />
+
+      {/* Layer 3a: soft circle — top-right, slightly lighter green, not distinct */}
+      <div
+        className="absolute pointer-events-none"
+        aria-hidden="true"
+        style={{
+          top: '-60px',
+          right: '-60px',
+          width: '420px',
+          height: '380px',
+          background: 'radial-gradient(ellipse at center, rgba(30,90,55,0.55) 0%, transparent 65%)',
+          filter: 'blur(60px)',
+        }}
+      />
+
+      {/* Layer 3b: soft circle — bottom-left, slightly different green tone, not distinct */}
+      <div
+        className="absolute pointer-events-none"
+        aria-hidden="true"
+        style={{
+          bottom: '-60px',
+          left: '-60px',
+          width: '380px',
+          height: '340px',
+          background: 'radial-gradient(ellipse at center, rgba(14,70,45,0.60) 0%, transparent 65%)',
+          filter: 'blur(55px)',
+        }}
+      />
+
+      {/* ── Content row ── */}
+      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+
+        {/* Left: greeting + subtitle + CTAs */}
+        <div className="flex-1 min-w-0">
+          {/* Greeting */}
+          <h1 className="text-2xl sm:text-3xl font-heading font-bold text-white leading-tight mb-1">
+            {greeting}, {firstName} {emoji}
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-sm text-white/70 mb-5">
+            {streakCount > 0
+              ? <>You&apos;re on a <span className="text-accent font-semibold">{streakCount}-day streak</span>! Your exam is in <span className="text-accent font-semibold">{t.days} days</span>. Stay consistent.</>
+              : <>Your <span className="text-accent font-semibold">{examCycle} NCK exam</span> is in <span className="text-accent font-semibold">{t.days} days</span>. Start your streak today.</>
+            }
+          </p>
+
+          {/* CTA buttons */}
+          <div className="flex flex-wrap gap-3">
+            <Link href="/practice">
+              <button className="
+                inline-flex items-center gap-2 px-5 py-2.5 rounded-full
+                font-semibold text-sm text-dark
+                transition-all duration-200 active:scale-[0.97]
+              " style={{
+                background: 'linear-gradient(135deg, #F5A623 0%, #E09010 100%)',
+              }}>
+                <span>📝</span> Continue Practice
+              </button>
+            </Link>
+            <Link href="/mock-exam">
+              <button className="
+                inline-flex items-center gap-2 px-5 py-2.5 rounded-full
+                font-semibold text-sm text-white
+                border border-white/25
+                transition-all duration-200 active:scale-[0.97]
+                hover:bg-white/10
+              " style={{
+                background: 'rgba(255,255,255,0.08)',
+                backdropFilter: 'blur(8px)',
+              }}>
+                <span>⏱️</span> Take Mock Exam
+              </button>
+            </Link>
+          </div>
+        </div>
+
+        {/* Right: countdown box */}
+        <div className="flex-shrink-0">
+          {t.total > 0 ? (
+            <div
+              className="rounded-2xl px-5 py-4 text-center min-w-[120px]"
+              style={{
+                background: 'rgba(255,255,255,0.07)',
+                border: '1px solid rgba(255,255,255,0.12)',
+                backdropFilter: 'blur(12px)',
+                boxShadow: isUrgent
+                  ? '0 0 24px rgba(232,69,69,0.30), inset 0 1px 0 rgba(255,255,255,0.08)'
+                  : '0 0 24px rgba(245,166,35,0.20), inset 0 1px 0 rgba(255,255,255,0.08)',
+              }}
+            >
+              {/* Days — big number like the image */}
+              <div
+                className="text-5xl sm:text-6xl font-heading font-bold tabular-nums leading-none"
+                style={{
+                  color: isUrgent ? '#E84545' : '#F5A623',
+                  textShadow: isUrgent
+                    ? '0 0 20px rgba(232,69,69,0.60)'
+                    : '0 0 20px rgba(245,166,35,0.60)',
+                }}
+              >
+                {pad(t.days)}
+              </div>
+              <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/50 mt-1 mb-3">
+                DAYS
+              </div>
+
+              {/* Hours : Mins : Secs — smaller row */}
+              <div className="flex items-center justify-center gap-1 text-white/80">
+                {[
+                  { v: t.hours,   l: 'HRS' },
+                  { v: t.minutes, l: 'MIN' },
+                  { v: t.seconds, l: 'SEC' },
+                ].map(({ v, l }, i) => (
+                  <div key={l} className="flex items-center gap-1">
+                    <div className="text-center">
+                      <div className="text-base font-heading font-bold tabular-nums leading-none">{pad(v)}</div>
+                      <div className="text-[9px] uppercase tracking-wider text-white/40 mt-0.5">{l}</div>
+                    </div>
+                    {i < 2 && <span className="text-white/30 font-bold text-sm mb-3">:</span>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-2xl px-6 py-5 text-center" style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)' }}>
+              <p className="text-2xl font-heading font-bold text-accent">🎉</p>
+              <p className="text-sm text-white font-semibold mt-1">Exam Day!</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Stat tile ──────────────────────────────────────────────────────────────
+function StatTile({ label, value, sub, icon, color }: {
+  label: string; value: string | number; sub: string; icon: string;
+  color: 'teal' | 'amber' | 'green' | 'blue';
+}) {
+  const styles = {
+    teal:  { bg: 'rgba(8,81,79,0.08)',   border: 'rgba(8,81,79,0.18)',   iconBg: 'rgba(8,81,79,0.12)',   val: '#08514F',  dark: { bg: 'rgba(10,104,101,0.15)', border: 'rgba(10,104,101,0.25)', val: '#0A6865' } },
+    amber: { bg: 'rgba(245,166,35,0.08)', border: 'rgba(245,166,35,0.18)', iconBg: 'rgba(245,166,35,0.12)', val: '#C47F0A', dark: { bg: 'rgba(245,166,35,0.12)', border: 'rgba(245,166,35,0.22)', val: '#F5A623' } },
+    green: { bg: 'rgba(26,158,117,0.08)', border: 'rgba(26,158,117,0.18)', iconBg: 'rgba(26,158,117,0.12)', val: '#1A9E75', dark: { bg: 'rgba(26,158,117,0.12)', border: 'rgba(26,158,117,0.22)', val: '#1A9E75' } },
+    blue:  { bg: 'rgba(59,130,246,0.08)', border: 'rgba(59,130,246,0.18)', iconBg: 'rgba(59,130,246,0.12)', val: '#2563EB', dark: { bg: 'rgba(59,130,246,0.12)', border: 'rgba(59,130,246,0.22)', val: '#60A5FA' } },
+  };
+  const s = styles[color];
+
+  return (
+    <div
+      className="rounded-2xl p-4 sm:p-5 transition-all duration-200 hover:-translate-y-0.5"
+      style={{
+        background: `var(--stat-bg-${color}, ${s.bg})`,
+        border: `1px solid ${s.border}`,
+        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+      }}
+    >
+      <div className="flex items-start justify-between mb-3">
+        <p className="text-[11px] font-bold uppercase tracking-widest text-[var(--color-text-secondary)]">{label}</p>
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center text-lg" style={{ background: s.iconBg }}>
+          {icon}
+        </div>
+      </div>
+      <p className="text-2xl sm:text-3xl font-heading font-bold leading-none" style={{ color: s.val }}>{value}</p>
+      <p className="text-xs text-[var(--color-text-secondary)] mt-2">{sub}</p>
+    </div>
+  );
+}
+
+// ── Action card ────────────────────────────────────────────────────────────
+function ActionCard({ href, icon, label, sublabel, variant }: {
+  href: string; icon: string; label: string; sublabel: string;
+  variant: 'teal' | 'amber' | 'outline';
+}) {
+  const styles = {
+    teal: {
+      bg: 'linear-gradient(135deg, #08514F 0%, #0A6865 100%)',
+      border: 'rgba(10,104,101,0.40)',
+      shadow: '0 0 20px rgba(8,81,79,0.30), 0 4px 12px rgba(8,81,79,0.20)',
+      text: 'text-white',
+      sub: 'text-white/60',
+    },
+    amber: {
+      bg: 'linear-gradient(135deg, #F5A623 0%, #C47F0A 100%)',
+      border: 'rgba(245,166,35,0.40)',
+      shadow: '0 0 20px rgba(245,166,35,0.35), 0 4px 12px rgba(245,166,35,0.25)',
+      text: 'text-dark',
+      sub: 'text-dark/60',
+    },
+    outline: {
+      bg: 'var(--color-card)',
+      border: 'var(--color-border)',
+      shadow: 'var(--shadow-card)',
+      text: 'text-[var(--color-text)]',
+      sub: 'text-[var(--color-text-secondary)]',
+    },
+  };
+  const s = styles[variant];
+
+  return (
+    <Link href={href}>
+      <div
+        className={`flex items-center gap-4 p-4 rounded-2xl transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer group ${s.text}`}
+        style={{ background: s.bg, border: `1px solid ${s.border}`, boxShadow: s.shadow }}
+      >
+        <span className="text-2xl flex-shrink-0">{icon}</span>
+        <div className="flex-1 min-w-0">
+          <p className="font-semibold text-sm">{label}</p>
+          <p className={`text-xs mt-0.5 ${s.sub}`}>{sublabel}</p>
+        </div>
+        <svg className="w-4 h-4 opacity-40 group-hover:opacity-80 group-hover:translate-x-0.5 transition-all flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </div>
+    </Link>
+  );
+}
+
+// ── Dashboard data types ───────────────────────────────────────────────────
 interface DashboardData {
   student: {
-    full_name: string;
-    cadre: string;
-    specialty?: string;
-    exam_date: string;
-    exam_cycle: string;
-    xp: number;
-    level: number;
-    streak_count: number;
-    last_study_date?: string;
+    full_name: string; cadre: string; specialty?: string;
+    exam_date: string; exam_cycle: string;
+    xp: number; level: number; streak_count: number;
   };
   stats: {
-    total_questions_answered: number;
-    correct_answers: number;
-    accuracy_percentage: number;
-    total_study_time_minutes: number;
-    mock_exams_taken: number;
-    flashcards_reviewed: number;
+    total_questions_answered: number; correct_answers: number;
+    accuracy_percentage: number; total_study_time_minutes: number;
+    mock_exams_taken: number; flashcards_reviewed: number;
   };
-  recentActivity: Array<{
-    id: string;
-    type: string;
-    description: string;
-    timestamp: string;
-  }>;
   upcomingSessions: Array<{
-    id: string;
-    tutor_name: string;
-    session_date: string;
-    start_time: string;
-    topic: string;
+    id: string; tutor_name: string; session_date: string; start_time: string; topic: string;
   }>;
 }
 
+// ── Main page ──────────────────────────────────────────────────────────────
 export default function DashboardPage() {
   const router = useRouter();
   const supabase = createClient();
   const [data, setData] = useState<DashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    fetchDashboardData();
-  }, []);
+  useEffect(() => { fetchDashboardData(); }, []);
 
   const fetchDashboardData = async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user) {
-        router.push('/login');
-        return;
-      }
+      if (!user) { router.push('/login'); return; }
 
-      // Fetch student profile
-      const { data: profileDataRaw } = await supabase
-        .from('profiles')
-        .select('full_name')
-        .eq('id', user.id)
-        .single();
+      const [profileRes, studentRes, answersRes, mockRes, flashRes, sessionsRes] = await Promise.all([
+        supabase.from('profiles').select('full_name').eq('id', user.id).single(),
+        supabase.from('student_profiles').select('*').eq('id', user.id).single(),
+        supabase.from('student_answers').select('is_correct, time_taken_seconds').eq('student_id', user.id),
+        supabase.from('mock_exam_results').select('id').eq('student_id', user.id),
+        supabase.from('flashcard_progress').select('id').eq('student_id', user.id),
+        supabase.from('sessions')
+          .select('id, session_date, start_time, topic, tutor:tutor_id(full_name)')
+          .eq('student_id', user.id).eq('status', 'confirmed')
+          .gte('session_date', new Date().toISOString().split('T')[0])
+          .order('session_date', { ascending: true }).limit(3),
+      ]);
 
-      const profileData = profileDataRaw as { full_name: string } | null;
-
-      const { data: studentDataRaw } = await supabase
-        .from('student_profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-
-      const studentData = studentDataRaw as {
-        cadre: string;
-        specialty?: string;
-        exam_date: string;
-        exam_cycle: string;
-        xp: number;
-        level: number;
-        streak_count: number;
-        last_study_date?: string;
+      const profileData = profileRes.data as { full_name: string } | null;
+      const studentData = studentRes.data as {
+        cadre: string; specialty?: string; exam_date: string; exam_cycle: string;
+        xp: number; level: number; streak_count: number;
       } | null;
 
-      if (!studentData) {
-        router.push('/onboarding');
-        return;
-      }
+      if (!studentData) { router.push('/onboarding'); return; }
 
-      // Fetch answer statistics
-      const { data: answersDataRaw } = await supabase
-        .from('student_answers')
-        .select('is_correct, time_taken_seconds')
-        .eq('student_id', user.id);
+      const answers = (answersRes.data ?? []) as Array<{ is_correct: boolean; time_taken_seconds: number | null }>;
+      const totalAnswers = answers.length;
+      const correctAnswers = answers.filter(a => a.is_correct).length;
+      const accuracy = totalAnswers > 0 ? (correctAnswers / totalAnswers) * 100 : 0;
+      const studyTime = Math.floor(answers.reduce((s, a) => s + (a.time_taken_seconds ?? 0), 0) / 60);
 
-      const answersData = answersDataRaw as Array<{ is_correct: boolean; time_taken_seconds: number | null }> | null;
-
-      const totalAnswers = answersData?.length || 0;
-      const correctAnswers = answersData?.filter(a => a.is_correct).length || 0;
-      const accuracyPercentage = totalAnswers > 0 ? (correctAnswers / totalAnswers) * 100 : 0;
-      const totalStudyTime = answersData?.reduce((sum, a) => sum + (a.time_taken_seconds || 0), 0) || 0;
-
-      // Fetch mock exam count
-      const { data: mockExamsDataRaw } = await supabase
-        .from('mock_exam_results')
-        .select('id')
-        .eq('student_id', user.id);
-
-      const mockExamsData = mockExamsDataRaw as Array<{ id: string }> | null;
-
-      // Fetch flashcard progress count
-      const { data: flashcardsDataRaw } = await supabase
-        .from('flashcard_progress')
-        .select('id')
-        .eq('student_id', user.id);
-
-      const flashcardsData = flashcardsDataRaw as Array<{ id: string }> | null;
-
-      // Fetch upcoming sessions
-      const { data: sessionsDataRaw } = await supabase
-        .from('sessions')
-        .select(`
-          id,
-          session_date,
-          start_time,
-          topic,
-          tutor:tutor_id (
-            full_name
-          )
-        `)
-        .eq('student_id', user.id)
-        .eq('status', 'confirmed')
-        .gte('session_date', new Date().toISOString().split('T')[0])
-        .order('session_date', { ascending: true })
-        .order('start_time', { ascending: true })
-        .limit(3);
-
-      const sessionsData = sessionsDataRaw as Array<{
-        id: string;
-        session_date: string;
-        start_time: string;
-        topic: string | null;
+      const sessions = (sessionsRes.data ?? []) as Array<{
+        id: string; session_date: string; start_time: string; topic: string | null;
         tutor: { full_name: string } | null;
-      }> | null;
+      }>;
 
-      const dashboardData: DashboardData = {
+      setData({
         student: {
-          full_name: profileData?.full_name || '',
+          full_name: profileData?.full_name ?? '',
           cadre: studentData.cadre,
           specialty: studentData.specialty,
           exam_date: studentData.exam_date,
           exam_cycle: studentData.exam_cycle,
-          xp: studentData.xp || 0,
-          level: studentData.level || 1,
-          streak_count: studentData.streak_count || 0,
-          last_study_date: studentData.last_study_date,
+          xp: studentData.xp ?? 0,
+          level: studentData.level ?? 1,
+          streak_count: studentData.streak_count ?? 0,
         },
         stats: {
           total_questions_answered: totalAnswers,
           correct_answers: correctAnswers,
-          accuracy_percentage: accuracyPercentage,
-          total_study_time_minutes: Math.floor(totalStudyTime / 60),
-          mock_exams_taken: mockExamsData?.length || 0,
-          flashcards_reviewed: flashcardsData?.length || 0,
+          accuracy_percentage: accuracy,
+          total_study_time_minutes: studyTime,
+          mock_exams_taken: mockRes.data?.length ?? 0,
+          flashcards_reviewed: flashRes.data?.length ?? 0,
         },
-        recentActivity: [],
-        upcomingSessions: sessionsData?.map(s => ({
+        upcomingSessions: sessions.map(s => ({
           id: s.id,
-          tutor_name: s.tutor?.full_name || 'Unknown',
+          tutor_name: s.tutor?.full_name ?? 'Unknown',
           session_date: s.session_date,
           start_time: s.start_time,
-          topic: s.topic || 'General Session',
-        })) || [],
-      };
-
-      setData(dashboardData);
-    } catch (error) {
-      console.error('Error fetching dashboard data:', error);
+          topic: s.topic ?? 'General Session',
+        })),
+      });
+    } catch (err) {
+      console.error('Dashboard error:', err);
     } finally {
       setIsLoading(false);
     }
@@ -201,257 +412,146 @@ export default function DashboardPage() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <Card className="max-w-md w-full text-center">
-          <p className="text-error mb-4">Failed to load dashboard data</p>
-          <Button variant="primary" onClick={() => window.location.reload()}>
-            Retry
-          </Button>
+          <p className="text-error mb-4">Failed to load dashboard</p>
+          <Button variant="primary" onClick={() => window.location.reload()}>Retry</Button>
         </Card>
       </div>
     );
   }
 
-  const daysUntilExam = Math.ceil(
-    (new Date(data.student.exam_date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
-  );
-
-  const xpToNextLevel = data.student.level * 100;
-  const xpProgress = (data.student.xp % 100) / xpToNextLevel * 100;
+  const firstName = data.student.full_name.split(' ')[0];
+  const xpForNextLevel = data.student.level * 200;
+  const xpInLevel = data.student.xp % xpForNextLevel;
+  const xpProgress = Math.min(100, (xpInLevel / xpForNextLevel) * 100);
 
   return (
-    <div className="space-y-6">
-      {/* Welcome Header */}
-      <div>
-        <h1 className="text-3xl font-heading font-bold text-primary mb-2">
-          Welcome back, {data.student.full_name.split(' ')[0]}! 👋
-        </h1>
-        <p className="text-neutral-mid">
-          {daysUntilExam > 0
-            ? `${daysUntilExam} days until your ${data.student.exam_cycle} NCK exam`
-            : 'Your exam is coming up soon!'}
-        </p>
+    <div className="space-y-5 pb-24 lg:pb-6">
+
+      {/* ── Hero banner ────────────────────────────────────────────────── */}
+      <HeroBanner
+        firstName={firstName}
+        streakCount={data.student.streak_count}
+        examDate={data.student.exam_date}
+        examCycle={data.student.exam_cycle}
+      />
+
+      {/* ── Stat tiles ─────────────────────────────────────────────────── */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <StatTile label="Questions Answered" value={data.stats.total_questions_answered} sub={`${data.stats.accuracy_percentage.toFixed(0)}% accuracy`} icon="📝" color="teal" />
+        <StatTile label="Study Streak"        value={`${data.student.streak_count}d`}     sub={data.student.streak_count > 0 ? 'Keep it going!' : 'Start today'} icon="🔥" color="amber" />
+        <StatTile label="Average Score"       value={`${data.stats.accuracy_percentage.toFixed(0)}%`} sub={`${data.stats.correct_answers} correct`} icon="✅" color="green" />
+        <StatTile label="Study Time"          value={`${data.stats.total_study_time_minutes}m`} sub="Total minutes" icon="⏱️" color="blue" />
       </div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="bg-gradient-to-br from-teal-50 to-teal-100 dark:from-teal-900/20 dark:to-teal-800/20 border-teal-200 dark:border-teal-800">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-neutral-mid mb-1">Level</p>
-              <p className="text-3xl font-bold text-primary">{data.student.level}</p>
-            </div>
-            <div className="text-4xl">🎯</div>
-          </div>
-          <div className="mt-3">
-            <ProgressBar value={xpProgress} size="sm" showLabel={false} />
-            <p className="text-xs text-neutral-mid mt-1">
-              {data.student.xp % 100} / {xpToNextLevel} XP
-            </p>
-          </div>
-        </Card>
+      {/* ── Main grid ──────────────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
-        <Card className="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 border-amber-200 dark:border-amber-800">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-neutral-mid mb-1">Streak</p>
-              <p className="text-3xl font-bold text-accent">{data.student.streak_count}</p>
-            </div>
-            <div className="text-4xl">🔥</div>
-          </div>
-          <p className="text-xs text-neutral-mid mt-3">
-            {data.student.streak_count > 0 ? 'Keep it going!' : 'Start your streak today!'}
-          </p>
-        </Card>
+        {/* Left col */}
+        <div className="lg:col-span-2 space-y-5">
 
-        <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border-green-200 dark:border-green-800">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-neutral-mid mb-1">Accuracy</p>
-              <p className="text-3xl font-bold text-success">
-                {data.stats.accuracy_percentage.toFixed(0)}%
-              </p>
-            </div>
-            <div className="text-4xl">✅</div>
-          </div>
-          <p className="text-xs text-neutral-mid mt-3">
-            {data.stats.correct_answers} / {data.stats.total_questions_answered} correct
-          </p>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border-blue-200 dark:border-blue-800">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-neutral-mid mb-1">Study Time</p>
-              <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-                {data.stats.total_study_time_minutes}
-              </p>
-            </div>
-            <div className="text-4xl">⏱️</div>
-          </div>
-          <p className="text-xs text-neutral-mid mt-3">minutes total</p>
-        </Card>
-      </div>
-
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Quick Actions */}
-        <div className="lg:col-span-2 space-y-6">
+          {/* Quick actions */}
           <Card>
-            <h2 className="text-xl font-heading font-bold text-primary mb-4">
-              Quick Actions
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <Link href="/practice">
-                <Button variant="primary" className="w-full justify-start">
-                  <span className="text-xl mr-3">📝</span>
-                  Practice Questions
-                </Button>
-              </Link>
-              <Link href="/mock-exam">
-                <Button variant="secondary" className="w-full justify-start">
-                  <span className="text-xl mr-3">⏱️</span>
-                  Take Mock Exam
-                </Button>
-              </Link>
-              <Link href="/flashcards">
-                <Button variant="outline" className="w-full justify-start">
-                  <span className="text-xl mr-3">🎴</span>
-                  Review Flashcards
-                </Button>
-              </Link>
-              <Link href="/tutors">
-                <Button variant="outline" className="w-full justify-start">
-                  <span className="text-xl mr-3">👨‍🏫</span>
-                  Find a Tutor
-                </Button>
-              </Link>
+            <h2 className="text-base font-heading font-bold text-[var(--color-text)] mb-4">Quick Actions</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <ActionCard href="/practice"   icon="📝" label="Practice Questions"  sublabel="Adaptive MCQ drill"     variant="teal" />
+              <ActionCard href="/mock-exam"  icon="⏱️" label="Mock Exam"           sublabel="DigiProctor simulation"  variant="amber" />
+              <ActionCard href="/flashcards" icon="🎴" label="Flashcards"          sublabel="Spaced repetition SRS"   variant="outline" />
+              <ActionCard href="/tutors"     icon="👨‍🏫" label="Find a Tutor"       sublabel="Book a live session"     variant="outline" />
             </div>
           </Card>
 
-          {/* Progress Overview */}
+          {/* XP level progress */}
           <Card>
-            <h2 className="text-xl font-heading font-bold text-primary mb-4">
-              Your Progress
-            </h2>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-base font-heading font-bold text-[var(--color-text)]">Level Progress</h2>
+              <Badge variant="teal">Level {data.student.level}</Badge>
+            </div>
+            <ProgressBar value={xpProgress} color="teal" size="lg" showLabel={false} />
+            <div className="flex justify-between text-xs text-[var(--color-text-secondary)] mt-2">
+              <span>{xpInLevel} XP earned</span>
+              <span>{xpForNextLevel - xpInLevel} XP to Level {data.student.level + 1}</span>
+            </div>
+          </Card>
+
+          {/* Study progress bars */}
+          <Card>
+            <h2 className="text-base font-heading font-bold text-[var(--color-text)] mb-4">Study Progress</h2>
             <div className="space-y-4">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold">Questions Answered</span>
-                  <span className="text-sm text-neutral-mid">
-                    {data.stats.total_questions_answered}
-                  </span>
+              {[
+                { label: 'Questions Answered', value: data.stats.total_questions_answered, max: 500,  color: 'teal'  as const },
+                { label: 'Mock Exams Done',     value: data.stats.mock_exams_taken,         max: 10,   color: 'amber' as const },
+                { label: 'Flashcards Reviewed', value: data.stats.flashcards_reviewed,      max: 200,  color: 'green' as const },
+              ].map(({ label, value, max, color }) => (
+                <div key={label}>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-sm font-medium text-[var(--color-text)]">{label}</span>
+                    <span className="text-xs font-semibold text-[var(--color-text-secondary)]">{value} / {max}</span>
+                  </div>
+                  <ProgressBar value={Math.min((value / max) * 100, 100)} color={color} size="sm" showLabel={false} />
                 </div>
-                <ProgressBar
-                  value={Math.min((data.stats.total_questions_answered / 500) * 100, 100)}
-                  showLabel={false}
-                />
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold">Mock Exams Completed</span>
-                  <span className="text-sm text-neutral-mid">
-                    {data.stats.mock_exams_taken}
-                  </span>
-                </div>
-                <ProgressBar
-                  value={Math.min((data.stats.mock_exams_taken / 10) * 100, 100)}
-                  showLabel={false}
-                />
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold">Flashcards Reviewed</span>
-                  <span className="text-sm text-neutral-mid">
-                    {data.stats.flashcards_reviewed}
-                  </span>
-                </div>
-                <ProgressBar
-                  value={Math.min((data.stats.flashcards_reviewed / 200) * 100, 100)}
-                  showLabel={false}
-                />
-              </div>
+              ))}
             </div>
           </Card>
         </div>
 
-        {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Exam Info */}
-          <Card className="bg-primary/5 dark:bg-primary/10 border-primary/20">
-            <h3 className="font-heading font-bold text-primary mb-3">
-              Exam Information
-            </h3>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-neutral-mid">Cadre:</span>
-                <Badge variant="teal">{data.student.cadre}</Badge>
+        {/* Right col */}
+        <div className="space-y-5">
+
+          {/* Exam details */}
+          <Card>
+            <h3 className="font-heading font-bold text-[var(--color-text)] mb-4">Exam Details</h3>
+            <div className="space-y-3 text-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-[var(--color-text-secondary)]">Cadre</span>
+                <Badge variant="teal" size="sm">{data.student.cadre}</Badge>
               </div>
               {data.student.specialty && (
-                <div className="flex justify-between">
-                  <span className="text-neutral-mid">Specialty:</span>
-                  <span className="font-semibold">{data.student.specialty}</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-[var(--color-text-secondary)]">Specialty</span>
+                  <span className="font-semibold text-[var(--color-text)] text-xs">{data.student.specialty}</span>
                 </div>
               )}
-              <div className="flex justify-between">
-                <span className="text-neutral-mid">Exam Date:</span>
-                <span className="font-semibold">
-                  {new Date(data.student.exam_date).toLocaleDateString('en-KE', {
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
-                  })}
+              <div className="flex items-center justify-between">
+                <span className="text-[var(--color-text-secondary)]">Exam Date</span>
+                <span className="font-semibold text-[var(--color-text)]">
+                  {new Date(data.student.exam_date).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}
                 </span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-neutral-mid">Cycle:</span>
-                <span className="font-semibold">{data.student.exam_cycle}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-neutral-mid">Days Left:</span>
-                <span className="font-bold text-primary">{daysUntilExam}</span>
+              <div className="flex items-center justify-between">
+                <span className="text-[var(--color-text-secondary)]">Cycle</span>
+                <span className="font-semibold text-[var(--color-text)]">{data.student.exam_cycle}</span>
               </div>
             </div>
           </Card>
 
-          {/* Upcoming Sessions */}
+          {/* Upcoming sessions */}
           <Card>
-            <h3 className="font-heading font-bold text-primary mb-3">
-              Upcoming Sessions
-            </h3>
+            <h3 className="font-heading font-bold text-[var(--color-text)] mb-4">Upcoming Sessions</h3>
             {data.upcomingSessions.length > 0 ? (
               <div className="space-y-3">
-                {data.upcomingSessions.map((session) => (
+                {data.upcomingSessions.map(s => (
                   <div
-                    key={session.id}
-                    className="p-3 bg-neutral-cream dark:bg-dark rounded-lg"
+                    key={s.id}
+                    className="p-3 rounded-xl border"
+                    style={{ background: 'rgba(8,81,79,0.05)', borderColor: 'rgba(8,81,79,0.12)' }}
                   >
-                    <p className="font-semibold text-sm mb-1">{session.tutor_name}</p>
-                    <p className="text-xs text-neutral-mid mb-1">{session.topic}</p>
-                    <p className="text-xs text-neutral-light">
-                      {new Date(session.session_date).toLocaleDateString('en-KE', {
-                        month: 'short',
-                        day: 'numeric',
-                      })}{' '}
-                      at {session.start_time}
+                    <p className="font-semibold text-sm text-[var(--color-text)]">{s.tutor_name}</p>
+                    <p className="text-xs text-[var(--color-text-secondary)] mt-0.5">{s.topic}</p>
+                    <p className="text-xs text-primary font-medium mt-1">
+                      {new Date(s.session_date).toLocaleDateString('en-KE', { month: 'short', day: 'numeric' })} at {s.start_time}
                     </p>
                   </div>
                 ))}
                 <Link href="/bookings">
-                  <Button variant="ghost" size="sm" className="w-full">
-                    View All Bookings
-                  </Button>
+                  <Button variant="ghost" size="sm" className="w-full mt-1">View All Bookings</Button>
                 </Link>
               </div>
             ) : (
               <div className="text-center py-6">
-                <p className="text-sm text-neutral-mid mb-3">
-                  No upcoming sessions
-                </p>
+                <p className="text-4xl mb-3">👨‍🏫</p>
+                <p className="text-sm text-[var(--color-text-secondary)] mb-4">No upcoming sessions</p>
                 <Link href="/tutors">
-                  <Button variant="primary" size="sm">
-                    Book a Tutor
-                  </Button>
+                  <Button variant="primary" size="sm" className="w-full">Book a Tutor</Button>
                 </Link>
               </div>
             )}
