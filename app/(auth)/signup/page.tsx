@@ -68,7 +68,12 @@ export default function StudentSignupPage() {
         throw new Error('Server error — please try again or contact support.');
       }
 
-      if (!response.ok) {
+    if (!response.ok) {
+        // Show the specific validation error if available
+        if (result.details) {
+          const firstError = Object.values(result.details as Record<string, string[]>).flat()[0];
+          throw new Error(firstError || result.error || 'Signup failed');
+        }
         throw new Error(result.error || 'Signup failed');
       }
 

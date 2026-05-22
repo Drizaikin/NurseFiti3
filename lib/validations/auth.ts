@@ -12,9 +12,10 @@ export const studentSignupSchema = z.object({
     .toLowerCase(),
   
   phone: z.string()
+    .min(10, 'Phone number is required')
     .regex(
       /^(\+254|0)(7\d{8}|1\d{8})$/,
-      'Invalid Kenyan phone number. Use format: 0712345678 or +254712345678'
+      'Use format: 0712345678 or +254712345678'
     ),
   
   password: z.string()
@@ -73,7 +74,8 @@ export const tutorSignupSchema = z.object({
     .toLowerCase(),
   
   phone: z.string()
-    .regex(/^(\+254|0)[17]\d{8}$/, 'Invalid Kenyan phone number'),
+    .min(10, 'Phone number is required')
+    .regex(/^(\+254|0)(7\d{8}|1\d{8})$/, 'Use format: 0712345678 or +254712345678'),
   
   password: z.string()
     .min(8, 'Password must be at least 8 characters')
@@ -118,10 +120,12 @@ export const tutorSignupSchema = z.object({
   
   // Step 5: M-Pesa
   mpesaNumber: z.string()
-    .regex(/^(\+254|0)[17]\d{8}$/, 'Invalid M-Pesa number'),
+    .min(10, 'M-Pesa number is required')
+    .regex(/^(\+254|0)(7\d{8}|1\d{8})$/, 'Use format: 0712345678 or +254712345678'),
   
   whatsappNumber: z.string()
-    .regex(/^(\+254|0)[17]\d{8}$/, 'Invalid WhatsApp number'),
+    .min(10, 'WhatsApp number is required')
+    .regex(/^(\+254|0)(7\d{8}|1\d{8})$/, 'Use format: 0712345678 or +254712345678'),
   
   agreeToTerms: z.boolean()
     .refine(val => val === true, 'You must agree to the terms and conditions'),
