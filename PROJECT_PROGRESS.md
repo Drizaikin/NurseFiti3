@@ -76,9 +76,9 @@
 | 2.2 | `Sidebar.tsx` — student variant | ✅ Done | 11 nav items, amber active state with gradient, mobile drawer with hamburger FAB, closes on route change. |
 | 2.3 | `Topbar.tsx` | ✅ Done | XP/Level/Streak badges, dark mode toggle, profile dropdown with logout. |
 | 2.4 | `MCQCard.tsx` | ✅ Done | Option selection, submit, correct/incorrect colour feedback, rationale drawer, per-option rationale. |
-| 2.5 | `/practice` — unit filter + question display + SRS | ✅ Done | Filter by unit/difficulty/mode, fetches from DB, XP tracking (+5/correct), streak updates, session summary. |
-| 2.6 | `/mock-exam` — timer, 100Q, grid navigator, submit | ✅ Done | DigiProctor-style dark UI (`#0A1A1A`), paper selection, 100-question timed exam, 10×10 question navigator grid, flag questions, countdown (red <20min), auto-submit on expire, full results review with rationale, saves to `mock_exam_results`, +200 XP. |
-| 2.7 | `/flashcards` — deck selector + flip + SRS rating | ✅ Done | Deck browser with due counts, SM-2 inspired SRS (again/hard/good/easy intervals), 3D flip animation, upserts `flashcard_progress`, +30 XP on session complete. |
+| 2.5 | `/practice` — unit filter + question display + SRS | ✅ Done | Filter by unit/difficulty/mode, fetches from DB, XP tracking (+8/correct), streak updates, session summary. |
+| 2.6 | `/mock-exam` — timer, 100Q, grid navigator, submit | ✅ Done | DigiProctor-style dark UI (`#0A1A1A`), paper selection, 100-question timed exam, 10×10 question navigator grid, flag questions, countdown (red <20min), auto-submit on expire, full results review with rationale, saves to `mock_exam_results`, +100 XP. |
+| 2.7 | `/flashcards` — deck selector + flip + SRS rating | ✅ Done | Deck browser with due counts, SM-2 inspired SRS (again/hard/good/easy intervals), 3D flip animation, upserts `flashcard_progress`, +5 XP per card on session complete. |
 | 2.8 | `/analytics` — charts from real data | ✅ Done | Exam readiness score (unit mastery 60% + mock avg 40%), 7-day bar chart (Recharts), unit mastery progress bars, mock exam history table. |
 | 2.9 | `/achievements` — XP, streak calendar, badges, leaderboard | ✅ Done | XP/level card, 31-day streak calendar, 8 badge definitions (earned/locked states), leaderboard (top 20 by XP, all-time/weekly tabs). |
 | 2.10 | `/groups` — browse/join/create groups | ✅ Done | Browse/join/leave open groups, create group modal, filter by cadre, member counts. |
@@ -101,7 +101,7 @@
 | 3.3 | `/tutor-schedule` — weekly calendar, availability toggles | ✅ Done | 7-day grid (7AM–8PM), click to toggle availability, booked sessions shown in grid, week navigation, session preferences panel (instant booking/group sessions/buffer/rate), saves to `tutor_availability` table. |
 | 3.4 | `/tutor-students` — roster, detail panel, session notes | ✅ Done | Student list with accuracy/XP/level, "At Risk" flag (<60% accuracy with 10+ answers), search/filter by cadre, detail panel with unit stats, private session notes (create/view from `session_notes` table). |
 | 3.5 | `/tutor-studio` — MCQ builder, note builder, contributions | ✅ Done | Tabbed: Add MCQ (cadre/unit/difficulty/stem/options/correct/rationale), Add Study Note (markdown), My Contributions table (status/views/XP). |
-| 3.6 | `/tutor-earnings` — transactions, payout card | ✅ Done | This month gross/net, YTD, pending payout, weekly bar chart (Recharts), transaction history table, payout request button (Monday-only, min KSh 1,000). |
+| 3.6 | `/tutor-earnings` — transactions, payout card | ✅ Done | This month gross/net, YTD, pending payout, weekly bar chart (Recharts), transaction history table, payout request button (Monday-only, min KSh 1,000). Platform fee: 30%, tutor keeps 70%. |
 | 3.7 | `/tutor-reviews` — rating display, review cards | ✅ Done | Average rating, ranking among verified tutors, 5-star distribution bars, full reviews list with student names/cadres. |
 | 3.8 | `/tutor-profile` — editor + live preview | ✅ Done | Edit bio/title/cadres/specialties/rate/platforms/accepting bookings, verification status checklist, live student-view preview card. |
 
@@ -134,7 +134,7 @@
 
 | Task | Spec Item | Status | Notes |
 |---|---|---|---|
-| 5.1 | `/revision-plan` — locked teaser state | 🔴 Stub | Shows "Coming soon in Phase 5" |
+| 5.1 | `/revision-plan` — tier-aware teaser state | 🟡 Partial | Fetches student subscription plan, shows correct price (KSh 999/499/199), upgrade CTA for free users, feature preview cards. Full generator deferred to Phase 5. |
 | 5.2 | M-Pesa KSh 500 payment flow | 🔴 Not built | Depends on Phase 6 |
 | 5.3 | Multi-step input form | 🔴 Not built | — |
 | 5.4 | `/api/revision-plan/generate` — plan generation logic | 🔴 Not built | — |
@@ -244,14 +244,26 @@
 | `lib/validations/auth.ts` Zod schemas | Phase 1 | Centralised validation reused across pages and API routes; cleaner than inline validation |
 | `/forgot-password` page | Phase 1 | Essential auth flow referenced in spec Section 6 but not listed in Phase 1 tasks |
 | Tutor rejection flow in middleware | Phase 1 | Spec mentions rejection in Section 6 but not in Phase 1 task list; needed for complete auth routing |
-| XP per correct answer: +5 instead of +8 | Phase 2 | Minor calibration; spec says +8, implementation uses +5. Easily changed in one constant |
 | `/onboarding` built in Phase 2 not Phase 1 | Phase 2 | Onboarding is a student-facing page; fits naturally with dashboard flow |
 | Settings page partially stubbed | Phase 2 | Edit forms deferred; lower priority than core study features |
 | Peer percentile uses placeholder calculation | Phase 2 | Full cross-student aggregation deferred; requires careful query optimisation |
 | `TutorTopbar.tsx` added | Phase 3 | Implied by spec but not listed as a Phase 3 task; tutor dashboard needs its own topbar |
-| Payout button uses `setTimeout` mock | Phase 3 | M-Pesa B2C is Phase 6; UI is complete and ready to wire |
+| Payout button uses Paystack instead of M-Pesa B2C | Phase 3/6 | M-Pesa B2C is Phase 6; Paystack wired as interim. UI ready to swap |
 | "Content Gap Alert" banner not built | Phase 3 | Requires `units` table to be populated with question counts; deferred to Phase 5 |
-| Booking approve/decline is UI-only | Phase 3 | Full booking system is Phase 4; tutor dashboard UI is ready to wire |
+
+## DISCREPANCY FIXES — APPLIED
+
+The following spec discrepancies were identified and corrected:
+
+| # | Issue | File(s) | Fix Applied |
+|---|---|---|---|
+| 1 | XP per correct answer was +5, spec says +8 | `practice/page.tsx`, `MCQCard.tsx` | Changed to +8 |
+| 2 | Mock exam XP was +200, spec says +100 | `mock-exam/page.tsx` | Changed to +100 (logic + UI display) |
+| 3 | Flashcard XP was flat +30/session, spec says +5/card | `flashcards/page.tsx` | Changed to `cards.length × 5` (logic + UI display) |
+| 4 | Revision plan stub showed flat "KSh 500", spec has tier pricing | `revision-plan/page.tsx` | Full rewrite: fetches `subscription_plan`, shows KSh 999/499/199 by tier |
+| 5 | Premium plan missing from JSON-LD Course offers | `app/page.tsx` | Added Premium (KSh 3,500) to structured data |
+| 6 | Level XP formula mismatch: write used 100 XP/level, dashboard display used `level × 200` | `dashboard/page.tsx` | Fixed to consistent 100 XP/level |
+| 7 | Tutor earnings showed 15% platform fee / 85% tutor, spec says 30%/70% | `tutor-earnings/page.tsx` | Changed to 30% fee / 70% tutor (text + calculation) |
 
 ---
 

@@ -420,9 +420,10 @@ export default function DashboardPage() {
   }
 
   const firstName = data.student.full_name.split(' ')[0];
-  const xpForNextLevel = data.student.level * 200;
-  const xpInLevel = data.student.xp % xpForNextLevel;
-  const xpProgress = Math.min(100, (xpInLevel / xpForNextLevel) * 100);
+  const xpPerLevel = 100;
+  const xpForNextLevel = xpPerLevel; // each level requires 100 XP
+  const xpInLevel = data.student.xp % xpPerLevel;
+  const xpProgress = Math.min(100, (xpInLevel / xpPerLevel) * 100);
 
   return (
     <div className="space-y-5 pb-24 lg:pb-6">

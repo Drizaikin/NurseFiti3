@@ -142,7 +142,7 @@ export default function TutorEarningsPage() {
     <div className="space-y-5 pb-24 lg:pb-6 max-w-5xl mx-auto">
       <div>
         <h1 className="text-2xl font-heading font-bold text-[var(--color-text)]">Earnings & Payouts</h1>
-        <p className="text-sm text-[var(--color-text-secondary)] mt-1">All amounts in KSh. Platform fee: 15% · You keep 85%. Payouts every Monday.</p>
+        <p className="text-sm text-[var(--color-text-secondary)] mt-1">All amounts in KSh. Platform fee: 30% · You keep 70%. Payouts every Monday.</p>
       </div>
 
       {/* Hero stats */}
@@ -169,7 +169,7 @@ export default function TutorEarningsPage() {
               M-Pesa: <span className="font-semibold text-[var(--color-text)]">{data.mpesaNumber ?? 'Not set'}</span>
             </p>
             <p className="text-xs text-[var(--color-text-secondary)] mt-1">
-              Gross → 15% platform fee → You receive 85%: KSh {Math.round(data.ratePerHour * 0.85).toLocaleString()}/hr
+              Gross → 30% platform fee → You receive 70%: KSh {Math.round(data.ratePerHour * 0.70).toLocaleString()}/hr
             </p>
           </div>
           <div className="flex flex-col items-end gap-2">

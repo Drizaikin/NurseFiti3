@@ -165,7 +165,7 @@ export default function PracticePage() {
       });
 
       // Update session stats
-      const xpGained = isCorrect ? 5 : 0;
+      const xpGained = isCorrect ? 8 : 0;
       setSession(prev => ({
         questionsAnswered: prev.questionsAnswered + 1,
         correctAnswers: prev.correctAnswers + (isCorrect ? 1 : 0),

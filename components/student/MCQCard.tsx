@@ -172,7 +172,7 @@ export function MCQCard({ question, onAnswer, showFeedback = true }: MCQCardProp
           <div className="flex items-center justify-center">
             {selectedOption === question.correct_option ? (
               <Badge variant="success" size="lg">
-                ✓ Correct! +5 XP
+                ✓ Correct! +8 XP
               </Badge>
             ) : (
               <Badge variant="error" size="lg">

@@ -176,11 +176,12 @@ export default function FlashcardsPage() {
     setSessionStats(prev => ({ ...prev, reviewed: prev.reviewed + 1, [rating]: prev[rating] + 1 }));
 
     if (cardIndex + 1 >= cards.length) {
-      // Award XP for completing a session
+      // Award XP: +5 per card reviewed (spec requirement)
+      const xpEarned = cards.length * 5;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data: sp } = await (supabase as any).from('student_profiles').select('xp, level').eq('id', userId).single();
       if (sp) {
-        const newXP = (sp.xp ?? 0) + 30;
+        const newXP = (sp.xp ?? 0) + xpEarned;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         await (supabase as any).from('student_profiles').update({ xp: newXP, level: Math.floor(newXP / 100) + 1 }).eq('id', userId);
       }
@@ -240,7 +241,7 @@ export default function FlashcardsPage() {
         <Card className="py-10">
           <div className="text-6xl mb-4">🎉</div>
           <h2 className="text-2xl font-heading font-bold text-primary mb-2">Session Complete!</h2>
-          <p className="text-neutral-mid mb-6">{selectedDeck?.name} · +30 XP earned</p>
+          <p className="text-neutral-mid mb-6">{selectedDeck?.name} · +{cards.length * 5} XP earned (+5 per card)</p>
           <div className="grid grid-cols-4 gap-3 mb-8">
             {[
               { label: 'Reviewed', value: sessionStats.reviewed, color: 'text-[var(--color-text)]' },

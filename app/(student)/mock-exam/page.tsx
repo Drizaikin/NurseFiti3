@@ -145,7 +145,7 @@ export default function MockExamPage() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { data: spData } = await (supabase as any).from('student_profiles').select('xp, level').eq('id', user.id).single();
     if (spData) {
-      const newXP = (spData.xp ?? 0) + 200;
+      const newXP = (spData.xp ?? 0) + 100;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await (supabase as any).from('student_profiles').update({ xp: newXP, level: Math.floor(newXP / 100) + 1 }).eq('id', user.id);
     }
@@ -221,7 +221,7 @@ export default function MockExamPage() {
           <div className="text-7xl font-heading font-bold" style={{ color: results.passed ? '#1A9E75' : '#E84545' }}>
             {results.score}%
           </div>
-          <p className="text-neutral-mid mt-2">{results.correct} / {results.total} correct · {results.timeUsed} min used · +200 XP</p>
+          <p className="text-neutral-mid mt-2">{results.correct} / {results.total} correct · {results.timeUsed} min used · +100 XP</p>
         </div>
 
         {/* Question review */}
