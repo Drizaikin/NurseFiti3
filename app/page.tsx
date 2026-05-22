@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import Link from 'next/link';
 import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 import { DarkModeToggle } from '@/components/shared/DarkModeToggle';
@@ -13,7 +14,89 @@ export const metadata: Metadata = {
     url: 'https://nursefiti.com',
     siteName: 'NurseFiti',
     type: 'website',
+    images: [
+      {
+        url: 'https://nursefiti.com/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'NurseFiti — NCK Exam Preparation Platform Kenya',
+      },
+    ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'NurseFiti — NCK Exam Preparation Kenya',
+    description: 'Kenya\'s most intelligent NCK exam prep platform.',
+    images: ['https://nursefiti.com/og-image.png'],
+  },
+  alternates: {
+    canonical: 'https://nursefiti.com',
+  },
+};
+
+// ─── JSON-LD Structured Data ─────────────────────────────────────────────────
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationalOrganization',
+  name: 'NurseFiti',
+  url: 'https://nursefiti.com',
+  logo: 'https://nursefiti.com/icon.svg',
+  description: 'Kenya\'s NCK exam preparation platform for KRCHN, BScN, and Higher Diploma nursing graduates.',
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'KE',
+  },
+  sameAs: [],
+};
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'NurseFiti',
+  url: 'https://nursefiti.com',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: 'https://nursefiti.com/tutors?q={search_term_string}',
+    },
+    'query-input': 'required name=search_term_string',
+  },
+};
+
+const courseJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: 'NCK Exam Preparation — KRCHN, BScN & Higher Diploma',
+  description: 'Comprehensive NCK licensure exam preparation with MCQ practice, mock exams, flashcards, and expert tutors.',
+  provider: {
+    '@type': 'Organization',
+    name: 'NurseFiti',
+    url: 'https://nursefiti.com',
+  },
+  educationalLevel: 'Professional Certification',
+  about: {
+    '@type': 'Thing',
+    name: 'Nursing Council of Kenya (NCK) Licensure Examination',
+  },
+  inLanguage: 'en',
+  offers: [
+    {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'KES',
+      name: 'Free Plan',
+      url: 'https://nursefiti.com/signup',
+    },
+    {
+      '@type': 'Offer',
+      price: '1200',
+      priceCurrency: 'KES',
+      name: 'Standard Plan',
+      url: 'https://nursefiti.com/signup',
+    },
+  ],
 };
 
 // ─── Static data ────────────────────────────────────────────────────────────
@@ -241,6 +324,22 @@ function VerificationBadge({ tier }: { tier: 'gold' | 'standard' }) {
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-neutral-cream dark:bg-dark text-[var(--color-text)]">
+      {/* ── JSON-LD Structured Data ── */}
+      <Script
+        id="json-ld-organization"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
+      <Script
+        id="json-ld-website"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
+      <Script
+        id="json-ld-course"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
+      />
 
       {/* ── NAVBAR ── */}
       <header className="sticky top-0 z-50 bg-neutral-cream/90 dark:bg-dark/90 backdrop-blur-md border-b border-[var(--color-border)]">

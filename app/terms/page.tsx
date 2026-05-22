@@ -2,7 +2,15 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 
-export const metadata: Metadata = { title: 'Terms of Service' };
+export const metadata: Metadata = {
+  title: 'Terms of Service',
+  description: 'Read the NurseFiti Terms of Service. Understand your rights and responsibilities when using Kenya\'s NCK exam preparation platform.',
+  openGraph: {
+    title: 'Terms of Service | NurseFiti',
+    description: 'NurseFiti Terms of Service — Kenya\'s NCK exam preparation platform.',
+    url: 'https://nursefiti.com/terms',
+  },
+};
 
 export default function TermsPage() {
   return (

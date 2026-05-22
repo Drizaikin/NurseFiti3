@@ -1,8 +1,18 @@
+import type { Metadata } from 'next';
 import { Sidebar } from '@/components/student/Sidebar';
 import { Topbar } from '@/components/student/Topbar';
 
 // All student pages are dynamic — they require auth and live Supabase data
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: {
+    default: 'Student Dashboard',
+    template: '%s | NurseFiti',
+  },
+  description: 'Your personalised NCK exam preparation dashboard. Practice MCQs, take mock exams, review flashcards, and track your progress.',
+  robots: { index: false, follow: false },
+};
 
 export default function StudentLayout({
   children,

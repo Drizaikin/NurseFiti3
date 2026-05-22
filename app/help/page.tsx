@@ -2,7 +2,15 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 
-export const metadata: Metadata = { title: 'Help Centre' };
+export const metadata: Metadata = {
+  title: 'Help Centre',
+  description: 'Get help with NurseFiti — Kenya\'s NCK exam preparation platform. Find answers about practice questions, mock exams, tutoring, payments, and more.',
+  openGraph: {
+    title: 'Help Centre | NurseFiti',
+    description: 'Get help with NurseFiti — NCK exam prep platform Kenya.',
+    url: 'https://nursefiti.com/help',
+  },
+};
 
 export default function HelpPage() {
   return (

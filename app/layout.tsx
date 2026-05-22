@@ -21,8 +21,8 @@ const nunito = Nunito({
 export const metadata: Metadata = {
   metadataBase: new URL('https://nursefiti.com'),
   title: {
-    default: 'NurseFiti - NCK Exam Preparation Platform Kenya',
-    template: '%s | NurseFiti'
+    default: 'NurseFiti — NCK Exam Preparation Platform Kenya',
+    template: '%s | NurseFiti',
   },
   description: 'Kenya\'s most intelligent NCK exam preparation platform. Practice MCQs, take DigiProctor-style mock exams, study with flashcards, and book expert tutors. Pass your KRCHN, BScN, or Higher Diploma exam.',
   keywords: [
@@ -35,8 +35,37 @@ export const metadata: Metadata = {
     'NCK tutor Kenya',
     'nursing exam practice questions',
     'Kenya nursing licensure exam',
-    'NCK mock exams'
+    'NCK mock exams',
+    'NCK revision plan',
+    'nursing licensure Kenya',
+    'NCK exam tips',
+    'KRCHN study guide',
+    'BScN nursing Kenya',
   ],
+  openGraph: {
+    siteName: 'NurseFiti',
+    type: 'website',
+    locale: 'en_KE',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@nursefiti',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    // Add Google Search Console verification token here when available
+    // google: 'your-verification-token',
+  },
 };
 
 export default function RootLayout({

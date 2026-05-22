@@ -17,6 +17,7 @@ export type PaymentStatus = 'pending' | 'paid' | 'refunded' | 'failed';
 export type GroupPrivacy = 'open' | 'invite_only';
 export type NoteStatus = 'pending_review' | 'approved' | 'needs_revision' | 'rejected';
 export type PaymentType = 'plan_subscription' | 'revision_plan' | 'session_booking';
+export type PayoutStatus = 'pending' | 'processing' | 'success' | 'failed' | 'reversed';
 export type SessionPlatform = 'Zoom' | 'Google Meet' | 'WhatsApp';
 
 export interface Database {
@@ -247,7 +248,7 @@ export interface Database {
           net_amount: number;
           status: SessionStatus;
           payment_status: PaymentStatus;
-          mpesa_transaction_id: string | null;
+          payment_reference: string | null;
           booked_at: string;
           completed_at: string | null;
           reviewed: boolean;
@@ -353,9 +354,12 @@ export interface Database {
           type: PaymentType;
           amount: number;
           currency: string;
-          mpesa_phone: string;
-          mpesa_receipt: string | null;
-          mpesa_checkout_request_id: string | null;
+          customer_phone: string;
+          paystack_reference: string | null;
+          paystack_receipt: string | null;
+          paystack_access_code: string | null;
+          paystack_authorization_url: string | null;
+          paystack_channel: string | null;
           status: 'pending' | 'completed' | 'failed' | 'refunded';
           reference_id: string | null;
           initiated_at: string;
@@ -363,6 +367,23 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['payments']['Row'], 'id' | 'initiated_at'>;
         Update: Partial<Database['public']['Tables']['payments']['Row']>;
+      };
+
+      tutor_payouts: {
+        Row: {
+          id: string;
+          tutor_id: string;
+          amount: number;
+          currency: string;
+          recipient_code: string | null;
+          transfer_code: string | null;
+          status: PayoutStatus;
+          reason: string | null;
+          initiated_at: string;
+          completed_at: string | null;
+        };
+        Insert: Omit<Database['public']['Tables']['tutor_payouts']['Row'], 'id' | 'initiated_at'>;
+        Update: Partial<Database['public']['Tables']['tutor_payouts']['Row']>;
       };
 
       study_notes: {

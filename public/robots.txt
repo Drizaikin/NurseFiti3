@@ -1,0 +1,30 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /auth/
+Disallow: /dashboard
+Disallow: /practice
+Disallow: /mock-exam
+Disallow: /flashcards
+Disallow: /analytics
+Disallow: /achievements
+Disallow: /groups
+Disallow: /revision-plan
+Disallow: /bookings
+Disallow: /settings
+Disallow: /onboarding
+Disallow: /tutor-dashboard
+Disallow: /tutor-schedule
+Disallow: /tutor-students
+Disallow: /tutor-studio
+Disallow: /tutor-earnings
+Disallow: /tutor-reviews
+Disallow: /tutor-profile
+Disallow: /tutor-pending
+
+# Host
+Host: http://localhost:3000
+
+# Sitemaps
+Sitemap: http://localhost:3000/sitemap.xml

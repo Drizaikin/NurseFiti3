@@ -2,7 +2,15 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 
-export const metadata: Metadata = { title: 'Privacy Policy' };
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'Read the NurseFiti Privacy Policy. Learn how we collect, use, and protect your data on Kenya\'s NCK exam preparation platform.',
+  openGraph: {
+    title: 'Privacy Policy | NurseFiti',
+    description: 'NurseFiti Privacy Policy — how we protect your data.',
+    url: 'https://nursefiti.com/privacy',
+  },
+};
 
 export default function PrivacyPage() {
   return (

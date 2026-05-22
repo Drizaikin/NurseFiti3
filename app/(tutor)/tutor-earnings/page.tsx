@@ -117,10 +117,19 @@ export default function TutorEarningsPage() {
 
   const requestPayout = async () => {
     setRequestingPayout(true);
-    // In production this would trigger M-Pesa B2C
-    await new Promise(r => setTimeout(r, 1500));
-    setRequestingPayout(false);
-    toast.success('Payout request submitted! You will receive your M-Pesa payment within 24 hours.');
+    try {
+      const res = await fetch('/api/paystack/payout', { method: 'POST' });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error ?? 'Payout failed');
+      toast.success(result.message ?? 'Payout initiated successfully!');
+      // Refresh data to reflect updated pending amount
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) await loadEarnings(user.id);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Payout request failed. Try again.');
+    } finally {
+      setRequestingPayout(false);
+    }
   };
 
   if (isLoading) return <div className="flex items-center justify-center min-h-[60vh]"><Spinner size="lg" color="primary" /></div>;
@@ -133,7 +142,7 @@ export default function TutorEarningsPage() {
     <div className="space-y-5 pb-24 lg:pb-6 max-w-5xl mx-auto">
       <div>
         <h1 className="text-2xl font-heading font-bold text-[var(--color-text)]">Earnings & Payouts</h1>
-        <p className="text-sm text-[var(--color-text-secondary)] mt-1">All amounts in KSh. Platform fee: 30% · You keep 70%. Payouts every Monday.</p>
+        <p className="text-sm text-[var(--color-text-secondary)] mt-1">All amounts in KSh. Platform fee: 15% · You keep 85%. Payouts every Monday.</p>
       </div>
 
       {/* Hero stats */}
@@ -160,7 +169,7 @@ export default function TutorEarningsPage() {
               M-Pesa: <span className="font-semibold text-[var(--color-text)]">{data.mpesaNumber ?? 'Not set'}</span>
             </p>
             <p className="text-xs text-[var(--color-text-secondary)] mt-1">
-              Gross → 30% platform fee → You receive 70%: KSh {Math.round(data.ratePerHour * 0.70).toLocaleString()}/hr
+              Gross → 15% platform fee → You receive 85%: KSh {Math.round(data.ratePerHour * 0.85).toLocaleString()}/hr
             </p>
           </div>
           <div className="flex flex-col items-end gap-2">

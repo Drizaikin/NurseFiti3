@@ -1,8 +1,18 @@
+import type { Metadata } from 'next';
 import { TutorSidebar } from '@/components/tutor/TutorSidebar';
 import { TutorTopbar } from '@/components/tutor/TutorTopbar';
 
 // All tutor pages are dynamic — they require auth and live Supabase data
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: {
+    default: 'Tutor Dashboard',
+    template: '%s | NurseFiti',
+  },
+  description: 'Manage your tutoring schedule, students, earnings, and content on NurseFiti.',
+  robots: { index: false, follow: false },
+};
 
 export default function TutorLayout({ children }: { children: React.ReactNode }) {
   return (
