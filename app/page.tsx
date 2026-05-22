@@ -254,6 +254,7 @@ export default function LandingPage() {
             <Link href="#tutors" className="hover:text-primary transition-colors">Tutors</Link>
             <Link href="#pricing" className="hover:text-primary transition-colors">Pricing</Link>
             <Link href="#faq" className="hover:text-primary transition-colors">FAQ</Link>
+            <Link href="#partnerships" className="hover:text-primary transition-colors">Partnerships</Link>
           </nav>
           <div className="flex items-center gap-3">
             <DarkModeToggle />
@@ -655,7 +656,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── PARTNERSHIPS ── */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-primary-xlight dark:bg-dark-mid/30">
+      <section id="partnerships" className="py-16 px-4 sm:px-6 lg:px-8 bg-primary-xlight dark:bg-dark-mid/30">
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-light text-primary text-sm font-semibold mb-5">
             🤝 Partnerships & Collaborations
