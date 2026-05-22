@@ -644,10 +644,10 @@ export default function TutorSignupPage() {
                     Payment Terms
                   </h3>
                   <ul className="text-sm text-teal-800 dark:text-teal-200 space-y-1">
-                    <li>• NurseFiti takes a 20% platform fee</li>
+                    <li>• NurseFiti takes a 30% platform fee</li>
                     <li>• Payments are processed weekly every Monday</li>
                     <li>• Minimum payout threshold: KSh 1,000</li>
-                    <li>• You&apos;ll receive 80% of your session rate</li>
+                    <li>• You&apos;ll receive 70% of your session rate</li>
                   </ul>
                 </div>
 

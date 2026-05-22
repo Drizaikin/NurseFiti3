@@ -30,7 +30,7 @@ export default function TermsPage() {
           </section>
           <section>
             <h2 className="text-xl font-heading font-bold mb-3">5. Contact</h2>
-            <p className="text-neutral-mid">Questions? Email <a href="mailto:support@nursefiti.com" className="text-primary hover:underline">support@nursefiti.com</a></p>
+            <p className="text-neutral-mid">Questions? Email <a href="mailto:support@nursefiti.vercel.app" className="text-primary hover:underline">support@nursefiti.vercel.app</a></p>
           </section>
         </div>
         <div className="mt-6 text-center"><Link href="/" className="text-primary hover:underline text-sm">← Back to NurseFiti</Link></div>

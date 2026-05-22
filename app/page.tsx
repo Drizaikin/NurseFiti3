@@ -130,7 +130,7 @@ const PRICING = [
     price: 'KSh 0',
     period: 'forever',
     desc: 'Get started with no commitment.',
-    features: ['50 practice questions/day', '1 mock exam/month', 'Basic analytics', 'Community study groups'],
+    features: ['50 practice questions/day', '1 mock exam/month', 'Basic analytics', 'Community study groups', 'Tutor booking access', 'Revision plan — KSh 999 per generation'],
     cta: 'Start Free',
     href: '/signup',
     highlight: false,
@@ -140,7 +140,7 @@ const PRICING = [
     price: 'KSh 1,200',
     period: '/month',
     desc: 'Everything you need to pass.',
-    features: ['Unlimited MCQ practice', 'Unlimited mock exams', 'Full analytics & AI insights', 'Spaced repetition flashcards', 'Revision plan (KSh 500 add-on)', 'Tutor booking access'],
+    features: ['Unlimited MCQ practice', 'Unlimited mock exams', 'Full analytics & AI insights', 'Spaced repetition flashcards', 'Tutor booking access', 'Revision plan — KSh 499 per generation'],
     cta: 'Start Standard',
     href: '/signup',
     highlight: true,
@@ -150,7 +150,7 @@ const PRICING = [
     price: 'KSh 3,500',
     period: '/60-day cycle',
     desc: 'Intensive prep for your exam cycle.',
-    features: ['Everything in Standard', 'Revision plan included free', '2 tutor sessions included', 'Priority support via WhatsApp', 'Peer percentile leaderboard', 'Exam registration reminders'],
+    features: ['Everything in Standard', '1 free revision plan per billing cycle', 'Additional plans — KSh 199 each', '2 tutor sessions included', 'Priority support via WhatsApp', 'Peer percentile leaderboard', 'Exam registration reminders'],
     cta: 'Go Premium',
     href: '/signup',
     highlight: false,
@@ -189,7 +189,7 @@ const FAQS = [
   },
   {
     q: 'How does the Revision Plan Generator work?',
-    a: 'You enter your exam date, daily study hours, and your current baseline (or we pull it from your practice data). The generator builds a week-by-week schedule that prioritises Tier 1 high-yield NCK units, allocates more time to your weak areas, and includes a mock exam schedule for the final 2 weeks. It costs KSh 500 as a one-time purchase.',
+    a: 'You enter your exam date, daily study hours, and your current baseline (or we pull it from your practice data). The generator builds a week-by-week schedule that prioritises Tier 1 high-yield NCK units, allocates more time to your weak areas, and includes a mock exam schedule for the final 2 weeks. Available on all plans: KSh 999 per generation on Free, KSh 499 on Standard, and KSh 199 on Premium — plus Premium users get 1 free generation every billing cycle.',
   },
   {
     q: 'Are the tutors verified?',
@@ -654,6 +654,31 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── PARTNERSHIPS ── */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-primary-xlight dark:bg-dark-mid/30">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-light text-primary text-sm font-semibold mb-5">
+            🤝 Partnerships & Collaborations
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-heading font-bold text-[var(--color-text)] mb-4">
+            Partner with NurseFiti
+          </h2>
+          <p className="text-neutral-mid leading-relaxed mb-6">
+            Are you a nursing school, hospital, professional association, or organisation looking to support nursing graduates in Kenya? We&apos;re open to institutional partnerships, bulk licensing, co-branded programmes, and content collaborations.
+          </p>
+          <div className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl p-6 inline-block text-left">
+            <p className="text-sm font-semibold text-[var(--color-text-secondary)] mb-1">Get in touch</p>
+            <a
+              href="mailto:docotyanga@gmail.com"
+              className="text-lg font-bold text-primary hover:underline"
+            >
+              docotyanga@gmail.com
+            </a>
+            <p className="text-xs text-neutral-mid mt-2">We typically respond within 1–2 business days.</p>
+          </div>
+        </div>
+      </section>
+
       {/* ── FINAL CTA ── */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-primary">
         <div className="max-w-3xl mx-auto text-center text-white">
@@ -721,18 +746,23 @@ export default function LandingPage() {
               <h4 className="font-heading font-bold mb-4 text-sm uppercase tracking-wider text-neutral-light">Contact</h4>
               <ul className="space-y-2 text-sm text-neutral-light">
                 <li>
-                  <a href="mailto:support@nursefiti.com" className="hover:text-white transition-colors">
-                    support@nursefiti.com
+                  <a href="mailto:support@nursefiti.vercel.app" className="hover:text-white transition-colors">
+                    support@nursefiti.vercel.app
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://wa.me/254700000000"
+                    href="https://wa.me/254791952703"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-white transition-colors"
                   >
                     WhatsApp Support
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:docotyanga@gmail.com" className="hover:text-white transition-colors">
+                    Partnerships
                   </a>
                 </li>
                 <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>

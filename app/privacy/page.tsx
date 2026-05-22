@@ -26,11 +26,11 @@ export default function PrivacyPage() {
           </section>
           <section>
             <h2 className="text-xl font-heading font-bold mb-3">4. Your Rights</h2>
-            <p className="text-neutral-mid leading-relaxed">You can request deletion of your account and all associated data at any time by emailing support@nursefiti.com. We will process deletion requests within 30 days.</p>
+            <p className="text-neutral-mid leading-relaxed">You can request deletion of your account and all associated data at any time by emailing support@nursefiti.vercel.app. We will process deletion requests within 30 days.</p>
           </section>
           <section>
             <h2 className="text-xl font-heading font-bold mb-3">5. Contact</h2>
-            <p className="text-neutral-mid">Privacy questions? Email <a href="mailto:support@nursefiti.com" className="text-primary hover:underline">support@nursefiti.com</a></p>
+            <p className="text-neutral-mid">Privacy questions? Email <a href="mailto:support@nursefiti.vercel.app" className="text-primary hover:underline">support@nursefiti.vercel.app</a></p>
           </section>
         </div>
         <div className="mt-6 text-center"><Link href="/" className="text-primary hover:underline text-sm">← Back to NurseFiti</Link></div>

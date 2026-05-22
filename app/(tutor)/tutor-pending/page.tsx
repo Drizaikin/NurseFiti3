@@ -272,7 +272,7 @@ export default function TutorPendingPage() {
         {/* Contact Support */}
         <div className="mt-6 text-center text-sm text-neutral-mid">
           Have questions?{' '}
-          <a href="mailto:support@nursefiti.com" className="text-primary font-semibold hover:underline">
+          <a href="mailto:support@nursefiti.vercel.app" className="text-primary font-semibold hover:underline">
             Contact Support
           </a>
         </div>
