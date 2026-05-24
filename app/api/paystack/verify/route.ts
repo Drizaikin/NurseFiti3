@@ -154,8 +154,10 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
 }
 
 function getPlanFromAmount(amountKsh: number): { tier: string; durationDays: number } {
-  if (amountKsh >= 3500) return { tier: 'premium', durationDays: 60 };
+  if (amountKsh >= 3500) return { tier: 'premium',  durationDays: 90 };
   if (amountKsh >= 1200) return { tier: 'standard', durationDays: 30 };
+  if (amountKsh >= 349)  return { tier: 'weekly',   durationDays: 7  };
+  if (amountKsh >= 69)   return { tier: 'daily',    durationDays: 1  };
   return { tier: 'free', durationDays: 0 };
 }
 

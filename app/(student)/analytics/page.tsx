@@ -2,12 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Spinner } from '@/components/ui/Spinner';
 import { StatCard } from '@/components/shared/StatCard';
+import { getLimits, effectiveTier } from '@/lib/planLimits';
+import { Button } from '@/components/ui/Button';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
 } from 'recharts';
@@ -54,17 +57,24 @@ export default function AnalyticsPage() {
   const supabase = createClient();
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [planTier, setPlanTier] = useState<string>('free');
 
   useEffect(() => {
     const load = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push('/login'); return; }
 
-      const [answersRes, mockRes, flashRes] = await Promise.all([
+      const [profileRes, answersRes, mockRes, flashRes] = await Promise.all([
+        supabase.from('student_profiles').select('plan_tier, plan_expires_at').eq('id', user.id).single(),
         supabase.from('student_answers').select('is_correct, time_taken_seconds, answered_at, question_id').eq('student_id', user.id),
         supabase.from('mock_exam_results').select('*').eq('student_id', user.id).order('completed_at', { ascending: false }),
         supabase.from('flashcard_progress').select('id').eq('student_id', user.id),
       ]);
+
+      const profileData = profileRes.data as { plan_tier: string; plan_expires_at: string | null } | null;
+      if (profileData) {
+        setPlanTier(effectiveTier(profileData.plan_tier, profileData.plan_expires_at));
+      }
 
       const answers = (answersRes.data ?? []) as Array<{ is_correct: boolean; time_taken_seconds: number | null; answered_at: string; question_id: string }>;
       const mocks = (mockRes.data ?? []) as MockResult[];
@@ -127,6 +137,8 @@ export default function AnalyticsPage() {
   if (!data) return null;
 
   const readinessColor = data.readinessScore >= 70 ? 'text-success' : data.readinessScore >= 50 ? 'text-accent' : 'text-error';
+  const limits = getLimits(planTier);
+  const isFullAnalytics = limits.analyticsLevel === 'full';
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -160,85 +172,107 @@ export default function AnalyticsPage() {
         <StatCard label="Flashcards Reviewed" value={data.flashcardsReviewed.toLocaleString()} icon="🎴" />
       </div>
 
-      {/* Weekly score chart */}
-      <Card>
-        <h2 className="text-xl font-heading font-bold mb-4">7-Day Score Trend</h2>
-        {data.weeklyStats.some(d => d.count > 0) ? (
-          <div className="h-48">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data.weeklyStats} margin={{ top: 5, right: 5, bottom: 5, left: -20 }}>
-                <XAxis dataKey="day" tick={{ fontSize: 12, fill: 'var(--color-text-secondary)' }} axisLine={false} tickLine={false} />
-                <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: 'var(--color-text-secondary)' }} axisLine={false} tickLine={false} />
-                <Tooltip
-                  contentStyle={{ background: 'var(--color-card)', border: '1px solid var(--color-border)', borderRadius: '8px', fontSize: '12px' }}
-                  formatter={(value, _name, props) => {
-                    const payload = props.payload as DayStat;
-                    return [`${value}% (${payload.count} Qs)`, 'Score'] as [string, string];
-                  }}
-                />
-                <Bar dataKey="score" fill="#08514F" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        ) : (
-          <p className="text-neutral-mid text-sm py-8 text-center">No practice data this week. Start practicing to see your trend!</p>
-        )}
-      </Card>
-
-      {/* Unit mastery */}
-      {data.unitStats.length > 0 && (
-        <Card>
-          <h2 className="text-xl font-heading font-bold mb-4">Unit Mastery</h2>
-          <div className="space-y-3">
-            {data.unitStats.map(u => (
-              <div key={u.unit}>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-medium text-[var(--color-text)] truncate max-w-[60%]">{u.unit}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-neutral-mid">{u.correct}/{u.total}</span>
-                    <Badge size="sm" variant={u.accuracy >= 70 ? 'green' : u.accuracy >= 50 ? 'amber' : 'red'}>{u.accuracy}%</Badge>
-                  </div>
-                </div>
-                <ProgressBar value={u.accuracy} color={u.accuracy >= 70 ? 'green' : u.accuracy >= 50 ? 'amber' : 'red'} size="sm" showLabel={false} />
+      {/* ── FULL ANALYTICS (Standard / Premium) ─────────────────────────── */}
+      {isFullAnalytics ? (
+        <>
+          {/* Weekly score chart */}
+          <Card>
+            <h2 className="text-xl font-heading font-bold mb-4">7-Day Score Trend</h2>
+            {data.weeklyStats.some(d => d.count > 0) ? (
+              <div className="h-48">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={data.weeklyStats} margin={{ top: 5, right: 5, bottom: 5, left: -20 }}>
+                    <XAxis dataKey="day" tick={{ fontSize: 12, fill: 'var(--color-text-secondary)' }} axisLine={false} tickLine={false} />
+                    <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: 'var(--color-text-secondary)' }} axisLine={false} tickLine={false} />
+                    <Tooltip
+                      contentStyle={{ background: 'var(--color-card)', border: '1px solid var(--color-border)', borderRadius: '8px', fontSize: '12px' }}
+                      formatter={(value, _name, props) => {
+                        const payload = props.payload as DayStat;
+                        return [`${value}% (${payload.count} Qs)`, 'Score'] as [string, string];
+                      }}
+                    />
+                    <Bar dataKey="score" fill="#08514F" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
-            ))}
-          </div>
-        </Card>
-      )}
+            ) : (
+              <p className="text-neutral-mid text-sm py-8 text-center">No practice data this week. Start practicing to see your trend!</p>
+            )}
+          </Card>
 
-      {/* Mock exam history */}
-      {data.mockExams.length > 0 && (
-        <Card>
-          <h2 className="text-xl font-heading font-bold mb-4">Mock Exam History</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-[var(--color-border)]">
-                  <th className="text-left py-2 pr-4 text-neutral-mid font-semibold">Date</th>
-                  <th className="text-left py-2 pr-4 text-neutral-mid font-semibold">Paper</th>
-                  <th className="text-left py-2 pr-4 text-neutral-mid font-semibold">Score</th>
-                  <th className="text-left py-2 pr-4 text-neutral-mid font-semibold">Time</th>
-                  <th className="text-left py-2 text-neutral-mid font-semibold">Result</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.mockExams.map(m => (
-                  <tr key={m.id} className="border-b border-[var(--color-border)] last:border-0">
-                    <td className="py-3 pr-4 text-[var(--color-text)]">
-                      {new Date(m.completed_at).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}
-                    </td>
-                    <td className="py-3 pr-4 text-[var(--color-text)]">{m.cadre} {m.paper}</td>
-                    <td className="py-3 pr-4 font-semibold" style={{ color: m.score_percentage >= 50 ? '#1A9E75' : '#E84545' }}>
-                      {m.score_percentage.toFixed(0)}%
-                    </td>
-                    <td className="py-3 pr-4 text-neutral-mid">{m.time_used_minutes}m</td>
-                    <td className="py-3">
-                      <Badge variant={m.passed ? 'green' : 'red'} size="sm">{m.passed ? 'Pass' : 'Fail'}</Badge>
-                    </td>
-                  </tr>
+          {/* Unit mastery */}
+          {data.unitStats.length > 0 && (
+            <Card>
+              <h2 className="text-xl font-heading font-bold mb-4">Unit Mastery</h2>
+              <div className="space-y-3">
+                {data.unitStats.map(u => (
+                  <div key={u.unit}>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm font-medium text-[var(--color-text)] truncate max-w-[60%]">{u.unit}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-neutral-mid">{u.correct}/{u.total}</span>
+                        <Badge size="sm" variant={u.accuracy >= 70 ? 'green' : u.accuracy >= 50 ? 'amber' : 'red'}>{u.accuracy}%</Badge>
+                      </div>
+                    </div>
+                    <ProgressBar value={u.accuracy} color={u.accuracy >= 70 ? 'green' : u.accuracy >= 50 ? 'amber' : 'red'} size="sm" showLabel={false} />
+                  </div>
                 ))}
-              </tbody>
-            </table>
+              </div>
+            </Card>
+          )}
+
+          {/* Mock exam history */}
+          {data.mockExams.length > 0 && (
+            <Card>
+              <h2 className="text-xl font-heading font-bold mb-4">Mock Exam History</h2>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-[var(--color-border)]">
+                      <th className="text-left py-2 pr-4 text-neutral-mid font-semibold">Date</th>
+                      <th className="text-left py-2 pr-4 text-neutral-mid font-semibold">Paper</th>
+                      <th className="text-left py-2 pr-4 text-neutral-mid font-semibold">Score</th>
+                      <th className="text-left py-2 pr-4 text-neutral-mid font-semibold">Time</th>
+                      <th className="text-left py-2 text-neutral-mid font-semibold">Result</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.mockExams.map(m => (
+                      <tr key={m.id} className="border-b border-[var(--color-border)] last:border-0">
+                        <td className="py-3 pr-4 text-[var(--color-text)]">
+                          {new Date(m.completed_at).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </td>
+                        <td className="py-3 pr-4 text-[var(--color-text)]">{m.cadre} {m.paper}</td>
+                        <td className="py-3 pr-4 font-semibold" style={{ color: m.score_percentage >= 50 ? '#1A9E75' : '#E84545' }}>
+                          {m.score_percentage.toFixed(0)}%
+                        </td>
+                        <td className="py-3 pr-4 text-neutral-mid">{m.time_used_minutes}m</td>
+                        <td className="py-3">
+                          <Badge variant={m.passed ? 'green' : 'red'} size="sm">{m.passed ? 'Pass' : 'Fail'}</Badge>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Card>
+          )}
+        </>
+      ) : (
+        /* ── BASIC ANALYTICS UPGRADE TEASER (Free) ──────────────────────── */
+        <Card className="border-primary/20">
+          <div className="flex flex-col sm:flex-row items-center gap-6 py-4">
+            <div className="text-5xl">📊</div>
+            <div className="flex-1 text-center sm:text-left">
+              <h3 className="text-lg font-heading font-bold text-primary mb-1">Unlock Full Analytics</h3>
+              <p className="text-sm text-neutral-mid mb-1">
+                Standard and Premium plans include your 7-day score trend, per-unit mastery breakdown, and full mock exam history.
+              </p>
+              <p className="text-xs text-neutral-mid">Free plan · Upgrade from KSh 499/month</p>
+            </div>
+            <Link href="/settings" className="flex-shrink-0">
+              <Button variant="primary">Upgrade →</Button>
+            </Link>
           </div>
         </Card>
       )}

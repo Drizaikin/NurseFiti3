@@ -78,6 +78,14 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/login', req.url));
   }
 
+  // Admin routes — only admin role allowed
+  const isAdminRoute = pathname.startsWith('/admin');
+  if (isAdminRoute && profile.role !== 'admin') {
+    return NextResponse.redirect(
+      new URL(profile.role === 'student' ? '/dashboard' : profile.role === 'tutor' ? '/tutor-dashboard' : '/login', req.url)
+    );
+  }
+
   // Student routes
   const studentRoutes = [
     '/dashboard', '/practice', '/mock-exam', '/flashcards',
@@ -88,7 +96,7 @@ export async function middleware(req: NextRequest) {
 
   if (isStudentRoute && profile.role !== 'student') {
     return NextResponse.redirect(
-      new URL(profile.role === 'tutor' ? '/tutor-dashboard' : '/login', req.url)
+      new URL(profile.role === 'tutor' ? '/tutor-dashboard' : profile.role === 'admin' ? '/admin' : '/login', req.url)
     );
   }
 
@@ -101,7 +109,7 @@ export async function middleware(req: NextRequest) {
 
   if (isTutorRoute && profile.role !== 'tutor') {
     return NextResponse.redirect(
-      new URL(profile.role === 'student' ? '/dashboard' : '/login', req.url)
+      new URL(profile.role === 'student' ? '/dashboard' : profile.role === 'admin' ? '/admin' : '/login', req.url)
     );
   }
 

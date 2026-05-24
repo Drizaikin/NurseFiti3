@@ -222,30 +222,55 @@ const PRICING = [
     price: 'KSh 0',
     period: 'forever',
     desc: 'Get started with no commitment.',
-    features: ['50 practice questions/day', '1 mock exam/month', 'Basic analytics', 'Community study groups', 'Tutor booking access', 'Revision plan — KSh 999 per generation'],
+    features: ['30 practice questions/day', 'Upload questions to unlock mock exam', 'Basic analytics', 'Community study groups', 'Tutor booking access', 'Revision plan — KSh 999 per generation'],
     cta: 'Start Free',
     href: '/signup',
     highlight: false,
+    badge: null,
+  },
+  {
+    name: 'Daily',
+    price: 'KSh 69',
+    period: '/day',
+    desc: '24-hour full access.',
+    features: ['Unlimited MCQ practice', '2 mock exams per week', 'Full analytics & AI insights', 'Spaced repetition flashcards', 'Tutor booking access', 'Revision plan — KSh 499 per generation'],
+    cta: 'Get Daily Access',
+    href: '/signup',
+    highlight: false,
+    badge: null,
+  },
+  {
+    name: 'Weekly',
+    price: 'KSh 349',
+    period: '/week',
+    desc: '7-day access — best for exam week.',
+    features: ['Everything in Daily', '2 mock exams per week', '7-day access', 'Revision plan — KSh 499 per generation'],
+    cta: 'Get Weekly Access',
+    href: '/signup',
+    highlight: true,
+    badge: 'Most Popular',
   },
   {
     name: 'Standard',
     price: 'KSh 1,200',
     period: '/month',
-    desc: 'Everything you need to pass.',
-    features: ['Unlimited MCQ practice', 'Unlimited mock exams', 'Full analytics & AI insights', 'Spaced repetition flashcards', 'Tutor booking access', 'Revision plan — KSh 499 per generation'],
+    desc: 'Full monthly prep.',
+    features: ['Unlimited MCQ practice', '2 mock exams per week', 'Full analytics & AI insights', 'Spaced repetition flashcards', 'Tutor booking access', 'Revision plan — KSh 499 per generation'],
     cta: 'Start Standard',
     href: '/signup',
-    highlight: true,
+    highlight: false,
+    badge: null,
   },
   {
     name: 'Premium',
     price: 'KSh 3,500',
-    period: '/60-day cycle',
+    period: '/90-day cycle',
     desc: 'Intensive prep for your exam cycle.',
-    features: ['Everything in Standard', '1 free revision plan per billing cycle', 'Additional plans — KSh 199 each', '2 tutor sessions included', 'Priority support via WhatsApp', 'Peer percentile leaderboard', 'Exam registration reminders'],
+    features: ['Everything in Standard', 'Unlimited mock exams (1/day)', '1 free revision plan per cycle', 'Additional plans — KSh 199 each', 'Priority support via WhatsApp', 'Peer percentile leaderboard'],
     cta: 'Go Premium',
     href: '/signup',
     highlight: false,
+    badge: 'Best Value',
   },
 ];
 
@@ -281,7 +306,11 @@ const FAQS = [
   },
   {
     q: 'How does the Revision Plan Generator work?',
-    a: 'You enter your exam date, daily study hours, and your current baseline (or we pull it from your practice data). The generator builds a week-by-week schedule that prioritises Tier 1 high-yield NCK units, allocates more time to your weak areas, and includes a mock exam schedule for the final 2 weeks. Available on all plans: KSh 999 per generation on Free, KSh 499 on Standard, and KSh 199 on Premium — plus Premium users get 1 free generation every billing cycle.',
+    a: 'You enter your exam date, daily study hours, and your current baseline (or we pull it from your practice data). The generator builds a week-by-week schedule that prioritises Tier 1 high-yield NCK units, allocates more time to your weak areas, and includes a mock exam schedule for the final 2 weeks. Available on all plans: KSh 999 per generation on Free, KSh 499 on Daily/Weekly/Standard, and KSh 199 on Premium — plus Premium users get 1 free generation every billing cycle.',
+  },
+  {
+    q: 'How many mock exams can I take?',
+    a: 'Free plan users can unlock mock exams by uploading at least 3 past exam question files for review. Daily, Weekly, and Standard plan users get 2 mock exams per week (resets every Monday). Premium users get unlimited mock exams — up to 1 per day. The weekly cap applies across all non-premium paid plans regardless of how many days you pay for.',
   },
   {
     q: 'Are the tutors verified?',
@@ -630,64 +659,103 @@ export default function LandingPage() {
             </h2>
             <p className="text-neutral-mid">All plans paid via M-Pesa. No credit cards. No hidden fees.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {PRICING.map((p) => (
-              <div
-                key={p.name}
-                className={`relative rounded-2xl p-8 border-2 flex flex-col ${
-                  p.highlight
-                    ? 'border-primary bg-primary text-white shadow-xl shadow-primary/20'
-                    : 'border-[var(--color-border)] bg-[var(--color-card)]'
-                }`}
-              >
-                {p.highlight && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="px-4 py-1 rounded-full text-xs font-bold bg-accent text-dark">
-                      Most Popular
-                    </span>
-                  </div>
-                )}
-                <div className="mb-6">
-                  <p className={`text-sm font-semibold mb-1 ${p.highlight ? 'text-primary-light' : 'text-neutral-mid'}`}>
-                    {p.name}
-                  </p>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-heading font-bold">{p.price}</span>
-                    <span className={`text-sm ${p.highlight ? 'text-primary-light' : 'text-neutral-mid'}`}>
-                      {p.period}
-                    </span>
-                  </div>
-                  <p className={`text-sm mt-2 ${p.highlight ? 'text-primary-light' : 'text-neutral-mid'}`}>
-                    {p.desc}
-                  </p>
-                </div>
-                <ul className="space-y-3 mb-8 flex-1">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm">
-                      <svg
-                        className={`w-5 h-5 flex-shrink-0 mt-0.5 ${p.highlight ? 'text-accent' : 'text-success'}`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span className={p.highlight ? 'text-white' : 'text-[var(--color-text)]'}>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href={p.href}
-                  className={`block text-center py-3 rounded-xl font-bold transition-colors ${
+          <div className="flex flex-col gap-8">
+            {/* Row 1: Free, Daily, Weekly — full width */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {PRICING.slice(0, 3).map((p) => (
+                <div
+                  key={p.name}
+                  className={`relative rounded-2xl p-8 border-2 flex flex-col ${
                     p.highlight
-                      ? 'bg-accent text-dark hover:bg-accent-dark'
-                      : 'bg-primary text-white hover:bg-primary-mid'
+                      ? 'border-primary bg-primary text-white shadow-xl shadow-primary/20'
+                      : 'border-[var(--color-border)] bg-[var(--color-card)]'
                   }`}
                 >
-                  {p.cta}
-                </Link>
-              </div>
-            ))}
+                  {p.badge && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                      <span className="px-4 py-1 rounded-full text-sm font-bold bg-accent text-dark whitespace-nowrap">
+                        {p.badge}
+                      </span>
+                    </div>
+                  )}
+                  <div className="mb-6">
+                    <p className={`text-base font-semibold mb-2 ${p.highlight ? 'text-primary-light' : 'text-neutral-mid'}`}>
+                      {p.name}
+                    </p>
+                    <div className="flex items-baseline gap-2 flex-wrap">
+                      <span className="text-4xl font-heading font-bold">{p.price}</span>
+                      <span className={`text-base ${p.highlight ? 'text-primary-light' : 'text-neutral-mid'}`}>
+                        {p.period}
+                      </span>
+                    </div>
+                    <p className={`text-sm mt-2 ${p.highlight ? 'text-primary-light' : 'text-neutral-mid'}`}>
+                      {p.desc}
+                    </p>
+                  </div>
+                  <ul className="space-y-3 mb-8 flex-1">
+                    {p.features.map((f) => (
+                      <li key={f} className="flex items-start gap-3 text-sm">
+                        <svg className={`w-5 h-5 flex-shrink-0 mt-0.5 ${p.highlight ? 'text-accent' : 'text-success'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className={p.highlight ? 'text-white' : 'text-[var(--color-text)]'}>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href={p.href} className={`block text-center py-3 rounded-xl font-bold text-base transition-colors ${p.highlight ? 'bg-accent text-dark hover:bg-accent-dark' : 'bg-primary text-white hover:bg-primary-mid'}`}>
+                    {p.cta}
+                  </Link>
+                </div>
+              ))}
+            </div>
+            {/* Row 2: Standard, Premium — centred, same card size */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto w-full">
+              {PRICING.slice(3).map((p) => (
+                <div
+                  key={p.name}
+                  className={`relative rounded-2xl p-8 border-2 flex flex-col ${
+                    p.highlight
+                      ? 'border-primary bg-primary text-white shadow-xl shadow-primary/20'
+                      : 'border-[var(--color-border)] bg-[var(--color-card)]'
+                  }`}
+                >
+                  {p.badge && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                      <span className="px-4 py-1 rounded-full text-sm font-bold bg-accent text-dark whitespace-nowrap">
+                        {p.badge}
+                      </span>
+                    </div>
+                  )}
+                  <div className="mb-6">
+                    <p className={`text-base font-semibold mb-2 ${p.highlight ? 'text-primary-light' : 'text-neutral-mid'}`}>
+                      {p.name}
+                    </p>
+                    <div className="flex items-baseline gap-2 flex-wrap">
+                      <span className="text-4xl font-heading font-bold">{p.price}</span>
+                      <span className={`text-base ${p.highlight ? 'text-primary-light' : 'text-neutral-mid'}`}>
+                        {p.period}
+                      </span>
+                    </div>
+                    <p className={`text-sm mt-2 ${p.highlight ? 'text-primary-light' : 'text-neutral-mid'}`}>
+                      {p.desc}
+                    </p>
+                  </div>
+                  <ul className="space-y-3 mb-8 flex-1">
+                    {p.features.map((f) => (
+                      <li key={f} className="flex items-start gap-3 text-sm">
+                        <svg className={`w-5 h-5 flex-shrink-0 mt-0.5 ${p.highlight ? 'text-accent' : 'text-success'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className={p.highlight ? 'text-white' : 'text-[var(--color-text)]'}>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href={p.href} className={`block text-center py-3 rounded-xl font-bold text-base transition-colors ${p.highlight ? 'bg-accent text-dark hover:bg-accent-dark' : 'bg-primary text-white hover:bg-primary-mid'}`}>
+                    {p.cta}
+                  </Link>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

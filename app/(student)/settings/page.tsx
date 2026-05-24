@@ -98,6 +98,40 @@ function Toggle({ checked, onChange, label, sub }: {
 
 const PLANS = [
   {
+    tier: 'daily',
+    name: 'Daily',
+    price: 'KSh 69',
+    period: '/day',
+    amountKsh: 69,
+    color: 'border-primary/30 bg-primary-xlight dark:bg-primary/5',
+    badge: 'teal' as const,
+    features: [
+      'Unlimited MCQ practice',
+      '2 mock exams per week',
+      'Full analytics & charts',
+      'Spaced repetition flashcards',
+      'Revision plan — KSh 499/generation',
+    ],
+    note: '24-hour access',
+  },
+  {
+    tier: 'weekly',
+    name: 'Weekly',
+    price: 'KSh 349',
+    period: '/week',
+    amountKsh: 349,
+    color: 'border-primary/40 bg-primary-xlight dark:bg-primary/5',
+    badge: 'teal' as const,
+    features: [
+      'Everything in Daily',
+      '2 mock exams per week',
+      '7-day access',
+      'Revision plan — KSh 499/generation',
+    ],
+    note: 'Best value for short-term prep',
+    highlight: true,
+  },
+  {
     tier: 'standard',
     name: 'Standard',
     price: 'KSh 1,200',
@@ -105,17 +139,33 @@ const PLANS = [
     amountKsh: 1200,
     color: 'border-primary/40 bg-primary-xlight dark:bg-primary/5',
     badge: 'teal' as const,
-    features: ['Unlimited MCQ practice', 'Unlimited mock exams', 'Full analytics & AI insights', 'Spaced repetition flashcards', 'Revision plan — KSh 499/generation'],
+    features: [
+      'Unlimited MCQ practice',
+      '2 mock exams per week',
+      'Full analytics & AI insights',
+      'Spaced repetition flashcards',
+      'Revision plan — KSh 499/generation',
+    ],
+    note: '30-day access',
   },
   {
     tier: 'premium',
     name: 'Premium',
     price: 'KSh 3,500',
-    period: '/60-day cycle',
+    period: '/90-day cycle',
     amountKsh: 3500,
     color: 'border-accent/40 bg-accent-light dark:bg-accent/5',
     badge: 'amber' as const,
-    features: ['Everything in Standard', '1 free revision plan per cycle', 'Additional plans — KSh 199 each', '2 tutor sessions included', 'Priority WhatsApp support'],
+    features: [
+      'Everything in Standard',
+      'Unlimited mock exams (1/day)',
+      '1 free revision plan per cycle',
+      'Additional plans — KSh 199 each',
+      'Priority WhatsApp support',
+      'Peer percentile leaderboard',
+      'Exam registration reminders',
+    ],
+    note: '60-day access',
   },
 ];
 
@@ -132,7 +182,6 @@ function SubscriptionCard({ planTier, onUpgradeSuccess }: { planTier: string; on
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'Payment initialization failed');
-      // Redirect to Paystack checkout
       window.location.href = data.authorization_url;
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Could not start payment. Try again.');
@@ -143,9 +192,30 @@ function SubscriptionCard({ planTier, onUpgradeSuccess }: { planTier: string; on
   const PLAN_META: Record<string, { label: string; variant: 'teal' | 'amber' | 'secondary' }> = {
     premium:  { label: 'Premium',  variant: 'amber' },
     standard: { label: 'Standard', variant: 'teal' },
+    weekly:   { label: 'Weekly',   variant: 'teal' },
+    daily:    { label: 'Daily',    variant: 'teal' },
     free:     { label: 'Free',     variant: 'secondary' },
   };
   const current = PLAN_META[planTier] ?? PLAN_META.free;
+
+  // Tier ordering for "show plans above current"
+  const TIER_ORDER: Record<string, number> = { free: 0, daily: 1, weekly: 2, standard: 3, premium: 4 };
+  const currentOrder = TIER_ORDER[planTier] ?? 0;
+
+  const planSummary: Record<string, string> = {
+    premium:  '✅ Premium — KSh 3,500 / 90-day cycle',
+    standard: '✅ Standard — KSh 1,200 / month',
+    weekly:   '✅ Weekly — KSh 349 / week',
+    daily:    '✅ Daily — KSh 69 / day',
+    free:     '🆓 Free — KSh 0 / forever',
+  };
+  const planSubtext: Record<string, string> = {
+    premium:  'You are on the highest plan. Enjoy all features.',
+    standard: 'Upgrade to Premium for unlimited mock exams, leaderboard, and priority WhatsApp support.',
+    weekly:   'Upgrade to Standard or Premium for longer access and more features.',
+    daily:    'Upgrade to Weekly, Standard, or Premium for longer access.',
+    free:     'Upgrade to unlock unlimited practice, mock exams, flashcards, and discounted revision plans.',
+  };
 
   return (
     <Card>
@@ -156,40 +226,28 @@ function SubscriptionCard({ planTier, onUpgradeSuccess }: { planTier: string; on
 
       {/* Current plan summary */}
       <div className="p-4 rounded-xl bg-primary-xlight dark:bg-primary/5 border border-primary/20 mb-5">
-        <p className="text-sm font-semibold text-[var(--color-text)]">
-          {planTier === 'premium'
-            ? '✅ Premium — KSh 3,500 / 60-day cycle'
-            : planTier === 'standard'
-            ? '✅ Standard — KSh 1,200 / month'
-            : '🆓 Free — KSh 0 / forever'}
-        </p>
-        <p className="text-xs text-[var(--color-text-secondary)] mt-1">
-          {planTier === 'premium'
-            ? 'You are on the highest plan. Enjoy all features.'
-            : planTier === 'standard'
-            ? 'Upgrade to Premium for 1 free revision plan per cycle + 2 included tutor sessions.'
-            : 'Upgrade to unlock unlimited practice, mock exams, and discounted revision plans.'}
-        </p>
+        <p className="text-sm font-semibold text-[var(--color-text)]">{planSummary[planTier] ?? planSummary.free}</p>
+        <p className="text-xs text-[var(--color-text-secondary)] mt-1">{planSubtext[planTier] ?? planSubtext.free}</p>
       </div>
 
-      {/* Upgrade options — only show plans above current tier */}
+      {/* Upgrade options — show plans above current tier */}
       {planTier !== 'premium' && (
         <div className="space-y-3">
           <p className="text-xs font-bold uppercase tracking-widest text-[var(--color-text-secondary)]">
-            {planTier === 'free' ? 'Available Plans' : 'Upgrade to Premium'}
+            {planTier === 'free' ? 'Available Plans' : 'Upgrade Options'}
           </p>
-          {PLANS.filter(p => {
-            if (planTier === 'free') return true;          // free → show both
-            if (planTier === 'standard') return p.tier === 'premium'; // standard → show premium only
-            return false;
-          }).map(plan => (
-            <div key={plan.tier} className={`rounded-xl border-2 p-4 ${plan.color}`}>
+          {PLANS.filter(p => (TIER_ORDER[p.tier] ?? 0) > currentOrder).map(plan => (
+            <div key={plan.tier} className={`rounded-xl border-2 p-4 ${plan.color} ${plan.highlight ? 'ring-2 ring-primary/30' : ''}`}>
+              {plan.highlight && (
+                <p className="text-xs font-bold text-primary mb-2 uppercase tracking-wider">⭐ Most Popular</p>
+              )}
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <p className="font-heading font-bold text-[var(--color-text)]">{plan.name}</p>
                     <Badge variant={plan.badge} size="sm">{plan.price}{plan.period}</Badge>
                   </div>
+                  {plan.note && <p className="text-xs text-neutral-mid mb-2 italic">{plan.note}</p>}
                   <ul className="space-y-0.5 mb-3">
                     {plan.features.map(f => (
                       <li key={f} className="flex items-center gap-1.5 text-xs text-[var(--color-text-secondary)]">
@@ -208,7 +266,7 @@ function SubscriptionCard({ planTier, onUpgradeSuccess }: { planTier: string; on
               >
                 {isUpgrading === plan.tier
                   ? <><Spinner size="sm" color="white" />&nbsp;Redirecting to payment…</>
-                  : `Upgrade to ${plan.name} — ${plan.price}`}
+                  : `Get ${plan.name} — ${plan.price}`}
               </Button>
             </div>
           ))}

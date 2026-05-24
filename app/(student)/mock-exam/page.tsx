@@ -2,12 +2,15 @@
 
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Spinner } from '@/components/ui/Spinner';
 import { CountdownTimer } from '@/components/shared/CountdownTimer';
+import { getLimits, effectiveTier, getWeekStart } from '@/lib/planLimits';
+import toast from 'react-hot-toast';
 
 interface Question {
   id: string;
@@ -51,6 +54,13 @@ export default function MockExamPage() {
 
   const [examState, setExamState] = useState<ExamState>('setup');
   const [studentCadre, setStudentCadre] = useState<string>('KRCHN');
+  const [planTier, setPlanTier] = useState<string>('free');
+  const [examsThisWeek, setExamsThisWeek] = useState(0);
+  // Free-tier upload unlock state
+  const [showUploadPanel, setShowUploadPanel] = useState(false);
+  const [uploadFiles, setUploadFiles] = useState<File[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadDone, setUploadDone] = useState(false);
   const [selectedExam, setSelectedExam] = useState<string>('KRCHN-Paper1');
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -71,11 +81,28 @@ export default function MockExamPage() {
     const init = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push('/login'); return; }
-      const { data: spData } = await supabase.from('student_profiles').select('cadre').eq('id', user.id).single();
-      const sp = spData as { cadre: string } | null;
+
+      const { data: spData } = await supabase
+        .from('student_profiles')
+        .select('cadre, plan_tier, plan_expires_at')
+        .eq('id', user.id)
+        .single();
+      const sp = spData as { cadre: string; plan_tier: string; plan_expires_at: string | null } | null;
+
       if (sp?.cadre) {
+        const tier = effectiveTier(sp.plan_tier, sp.plan_expires_at);
         setStudentCadre(sp.cadre);
+        setPlanTier(tier);
         setSelectedExam(`${sp.cadre}-Paper1`);
+
+        // Count mock exams taken this calendar week (Mon–Sun)
+        const weekStart = getWeekStart();
+        const { count } = await supabase
+          .from('mock_exam_results')
+          .select('id', { count: 'exact', head: true })
+          .eq('student_id', user.id)
+          .gte('completed_at', weekStart);
+        setExamsThisWeek(count ?? 0);
       }
       setIsLoading(false);
     };
@@ -175,10 +202,153 @@ export default function MockExamPage() {
   // ── SETUP ──────────────────────────────────────────────────────────────────
   if (examState === 'setup') {
     const availableExams = Object.entries(EXAM_CONFIGS).filter(([, c]) => c.cadre === studentCadre);
+    const limits = getLimits(planTier);
+    const weeklyLimit = limits.mockExamsPerWeek;
+    const isFree = planTier === 'free';
+    // Free users are fully blocked unless they have an approved upload (handled server-side by plan upgrade)
+    const limitReached = isFree || (weeklyLimit !== Infinity && examsThisWeek >= weeklyLimit);
+
+    // ── File upload handler for free users ──────────────────────────────────
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const selected = Array.from(e.target.files ?? []);
+      const allowed = selected.filter(f => {
+        const ext = f.name.split('.').pop()?.toLowerCase() ?? '';
+        return ['pdf', 'txt', 'doc', 'docx'].includes(ext);
+      });
+      if (allowed.length < selected.length) {
+        toast.error('Only PDF, TXT, DOC, and DOCX files are accepted.');
+      }
+      setUploadFiles(allowed);
+    };
+
+    const handleUploadSubmit = async () => {
+      if (uploadFiles.length < 3) {
+        toast.error('Please select at least 3 question files.');
+        return;
+      }
+      setIsUploading(true);
+      try {
+        const fd = new FormData();
+        uploadFiles.forEach(f => fd.append('files', f));
+        const res = await fetch('/api/question-upload', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error ?? 'Upload failed');
+        setUploadDone(true);
+        toast.success('Files submitted! We will review and upgrade your account within 24 hours.');
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : 'Upload failed. Please try again.');
+      } finally {
+        setIsUploading(false);
+      }
+    };
+
     return (
       <div className="max-w-2xl mx-auto">
         <h1 className="text-3xl font-heading font-bold text-primary mb-2">Mock Exam</h1>
         <p className="text-neutral-mid mb-6">DigiProctor-style timed simulation — same format as the real NCK exam.</p>
+
+        {/* Weekly limit banner — paid plans with a cap */}
+        {!isFree && weeklyLimit !== Infinity && (
+          <div className={`mb-4 rounded-xl px-4 py-3 flex items-center justify-between gap-4 border ${
+            limitReached ? 'bg-error/10 border-error/30' : 'bg-primary-xlight dark:bg-primary/10 border-primary/20'
+          }`}>
+            <div>
+              <p className={`text-sm font-semibold ${limitReached ? 'text-error' : 'text-primary'}`}>
+                {limitReached
+                  ? `Weekly limit reached — ${weeklyLimit} mock exam${weeklyLimit !== 1 ? 's' : ''} used this week`
+                  : `${planTier.charAt(0).toUpperCase() + planTier.slice(1)} plan: ${weeklyLimit - examsThisWeek} of ${weeklyLimit} mock exam${weeklyLimit !== 1 ? 's' : ''} remaining this week`}
+              </p>
+              {limitReached && (
+                <p className="text-xs text-neutral-mid mt-0.5">Resets every Monday · Upgrade to Premium for unlimited mock exams</p>
+              )}
+            </div>
+            {limitReached && (
+              <Link href="/settings">
+                <button className="flex-shrink-0 px-4 py-2 rounded-lg bg-primary text-white text-xs font-bold hover:bg-primary-mid transition-colors">
+                  Upgrade →
+                </button>
+              </Link>
+            )}
+          </div>
+        )}
+
+        {/* Free-tier block */}
+        {isFree && !showUploadPanel && !uploadDone && (
+          <div className="mb-4 rounded-xl px-4 py-4 border bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800">
+            <p className="text-sm font-semibold text-accent-dark dark:text-accent mb-1">🔒 Mock Exams — Paid Feature</p>
+            <p className="text-xs text-neutral-mid mb-3">
+              Mock exams require a paid plan. You can unlock access by uploading at least 3 past exam question files (PDF, TXT, DOC, or DOCX) for review — or upgrade directly.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setShowUploadPanel(true)}
+                className="px-4 py-2 rounded-lg bg-accent text-dark text-xs font-bold hover:bg-accent/80 transition-colors"
+              >
+                Upload Questions to Unlock →
+              </button>
+              <Link href="/settings">
+                <button className="px-4 py-2 rounded-lg bg-primary text-white text-xs font-bold hover:bg-primary-mid transition-colors">
+                  Upgrade Plan →
+                </button>
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {/* Upload panel for free users */}
+        {isFree && showUploadPanel && !uploadDone && (
+          <Card className="mb-4 border-accent/30">
+            <h2 className="text-lg font-heading font-bold mb-1">Upload Exam Questions</h2>
+            <p className="text-sm text-neutral-mid mb-4">
+              Upload at least <strong>3 files</strong> containing past exam questions (PDF, TXT, DOC, or DOCX, max 10 MB each).
+              We will verify they are not already in our database and upgrade your account to Standard within 24 hours.
+            </p>
+            <div className="space-y-3">
+              <label className="block">
+                <span className="text-sm font-semibold text-[var(--color-text)] mb-1.5 block">Select files (min. 3)</span>
+                <input
+                  type="file"
+                  multiple
+                  accept=".pdf,.txt,.doc,.docx"
+                  onChange={handleFileChange}
+                  className="block w-full text-sm text-neutral-mid file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-primary file:text-white hover:file:bg-primary-mid cursor-pointer"
+                />
+              </label>
+              {uploadFiles.length > 0 && (
+                <div className="text-xs text-neutral-mid space-y-0.5">
+                  {uploadFiles.map((f, i) => (
+                    <p key={i}>✓ {f.name} ({(f.size / 1024).toFixed(0)} KB)</p>
+                  ))}
+                  {uploadFiles.length < 3 && (
+                    <p className="text-error font-semibold mt-1">⚠ Need at least 3 files ({3 - uploadFiles.length} more)</p>
+                  )}
+                </div>
+              )}
+              <div className="flex gap-2 pt-1">
+                <Button
+                  variant="primary"
+                  onClick={handleUploadSubmit}
+                  disabled={isUploading || uploadFiles.length < 3}
+                >
+                  {isUploading ? <><Spinner size="sm" color="white" />&nbsp;Uploading…</> : 'Submit Files'}
+                </Button>
+                <Button variant="ghost" onClick={() => setShowUploadPanel(false)}>Cancel</Button>
+              </div>
+            </div>
+          </Card>
+        )}
+
+        {/* Upload success state */}
+        {isFree && uploadDone && (
+          <div className="mb-4 rounded-xl px-4 py-4 border bg-success/10 border-success/30">
+            <p className="text-sm font-semibold text-success mb-1">✅ Files submitted successfully</p>
+            <p className="text-xs text-neutral-mid">
+              Your files are under review. We will upgrade your account to Standard plan within 24 hours.
+              Check back soon or contact support if you have not heard back.
+            </p>
+          </div>
+        )}
+
         <Card>
           <h2 className="text-xl font-heading font-bold mb-4">Select Your Paper</h2>
           <div className="space-y-3 mb-6">
@@ -200,9 +370,32 @@ export default function MockExamPage() {
             <p>• You can flag questions for review and navigate freely</p>
             <p>• Exam auto-submits when the timer reaches zero</p>
           </div>
-          <Button variant="primary" size="lg" className="w-full" onClick={startExam}>
-            Start Exam →
-          </Button>
+          {limitReached ? (
+            <div className="space-y-3">
+              <div className="p-4 rounded-xl bg-error/5 border border-error/20 text-center">
+                {isFree ? (
+                  <>
+                    <p className="text-sm font-semibold text-error mb-1">Free plan — mock exams locked</p>
+                    <p className="text-xs text-neutral-mid">Upload past exam questions above to unlock, or upgrade to a paid plan.</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-sm font-semibold text-error mb-1">Weekly limit reached ({weeklyLimit} exams/week)</p>
+                    <p className="text-xs text-neutral-mid">Resets every Monday. Upgrade to Premium for unlimited mock exams.</p>
+                  </>
+                )}
+              </div>
+              {!isFree && (
+                <Link href="/settings">
+                  <Button variant="primary" size="lg" className="w-full">Upgrade to Premium — Unlimited Mock Exams</Button>
+                </Link>
+              )}
+            </div>
+          ) : (
+            <Button variant="primary" size="lg" className="w-full" onClick={startExam}>
+              Start Exam →
+            </Button>
+          )}
         </Card>
       </div>
     );

@@ -2,12 +2,14 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Spinner } from '@/components/ui/Spinner';
 import { ProgressBar } from '@/components/ui/ProgressBar';
+import { getLimits, effectiveTier } from '@/lib/planLimits';
 
 interface Deck {
   id: string;
@@ -62,13 +64,29 @@ export default function FlashcardsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
   const [dueCount, setDueCount] = useState<Record<string, number>>({});
+  const [planTier, setPlanTier] = useState<string>('free');
 
   useEffect(() => {
     const init = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push('/login'); return; }
       setUserId(user.id);
-      await loadDecks(user.id);
+
+      const { data: spData } = await supabase
+        .from('student_profiles')
+        .select('plan_tier, plan_expires_at')
+        .eq('id', user.id)
+        .single();
+      const sp = spData as { plan_tier: string; plan_expires_at: string | null } | null;
+      if (sp) {
+        const tier = effectiveTier(sp.plan_tier, sp.plan_expires_at);
+        setPlanTier(tier);
+        // Only load decks if the plan allows flashcard access
+        if (getLimits(tier).flashcardsAccess) {
+          await loadDecks(user.id);
+        }
+      }
+
       setIsLoading(false);
     };
     init();
@@ -194,6 +212,28 @@ export default function FlashcardsPage() {
 
   if (isLoading) {
     return <div className="flex items-center justify-center min-h-[60vh]"><Spinner size="lg" color="primary" /></div>;
+  }
+
+  // ── PLAN GATE — flashcards are a paid feature ──────────────────────────────
+  if (!getLimits(planTier).flashcardsAccess) {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-3xl font-heading font-bold text-primary mb-2">Flashcards</h1>
+        <p className="text-neutral-mid mb-6">Spaced repetition — cards resurface at the optimal moment before you forget them.</p>
+        <Card className="text-center py-12 border-primary/20">
+          <div className="text-6xl mb-4">🔒</div>
+          <h2 className="text-2xl font-heading font-bold text-primary mb-2">Flashcards — Standard &amp; Premium</h2>
+          <p className="text-neutral-mid mb-2 max-w-sm mx-auto">
+            Spaced-repetition flashcards are available on Standard and Premium plans.
+            Upgrade to unlock all decks and track your progress.
+          </p>
+          <p className="text-xs text-neutral-mid mb-6">Free plan · Upgrade from KSh 499/month</p>
+          <Link href="/settings">
+            <Button variant="primary" size="lg">Upgrade to Unlock Flashcards →</Button>
+          </Link>
+        </Card>
+      </div>
+    );
   }
 
   // ── DECK SELECTION ─────────────────────────────────────────────────────────
