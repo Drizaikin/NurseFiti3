@@ -24,7 +24,6 @@ interface Question {
   rationale_d?: string;
   unit: string;
   topic: string;
-  difficulty: string;
   cadre: string;
 }
 
@@ -48,7 +47,6 @@ export default function PracticePage() {
   });
   const [isLoading, setIsLoading] = useState(true);
   const [selectedUnit, setSelectedUnit] = useState<string>('all');
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string>('all');
   const [units, setUnits] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(true);
 
@@ -112,10 +110,6 @@ export default function PracticePage() {
 
       if (selectedUnit !== 'all') {
         query = query.eq('unit', selectedUnit);
-      }
-
-      if (selectedDifficulty !== 'all') {
-        query = query.eq('difficulty', selectedDifficulty);
       }
 
       const { data, error } = await query.limit(20);
@@ -313,24 +307,6 @@ export default function PracticePage() {
                     {unit}
                   </option>
                 ))}
-              </select>
-            </div>
-
-            {/* Difficulty Filter */}
-            <div>
-              <label htmlFor="difficulty" className="block text-sm font-semibold mb-2">
-                Difficulty Level
-              </label>
-              <select
-                id="difficulty"
-                value={selectedDifficulty}
-                onChange={(e) => setSelectedDifficulty(e.target.value)}
-                className="input"
-              >
-                <option value="all">All Levels</option>
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
               </select>
             </div>
 

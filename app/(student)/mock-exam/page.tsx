@@ -37,12 +37,12 @@ interface ExamConfig {
 }
 
 const EXAM_CONFIGS: Record<string, ExamConfig> = {
-  'KRCHN-Paper1': { cadre: 'KRCHN', paper: 'Paper I', totalMinutes: 120, totalQuestions: 100 },
-  'KRCHN-Paper2': { cadre: 'KRCHN', paper: 'Paper II', totalMinutes: 120, totalQuestions: 100 },
-  'BScN-Paper1':  { cadre: 'BScN',  paper: 'Paper I', totalMinutes: 180, totalQuestions: 100 },
-  'BScN-Paper2':  { cadre: 'BScN',  paper: 'Paper II', totalMinutes: 180, totalQuestions: 100 },
-  'BScN-Paper3':  { cadre: 'BScN',  paper: 'Paper III', totalMinutes: 180, totalQuestions: 100 },
-  'BScN-Paper4':  { cadre: 'BScN',  paper: 'Paper IV', totalMinutes: 180, totalQuestions: 100 },
+  'KRCHN-Paper1': { cadre: 'KRCHN', paper: 'Paper I',   totalMinutes: 120, totalQuestions: 100 },
+  'KRCHN-Paper2': { cadre: 'KRCHN', paper: 'Paper II',  totalMinutes: 120, totalQuestions: 100 },
+  'BScN-Paper1':  { cadre: 'BScN',  paper: 'Paper I',   totalMinutes: 120, totalQuestions: 100 },
+  'BScN-Paper2':  { cadre: 'BScN',  paper: 'Paper II',  totalMinutes: 120, totalQuestions: 100 },
+  'BScN-Paper3':  { cadre: 'BScN',  paper: 'Paper III', totalMinutes: 120, totalQuestions: 100 },
+  'BScN-Paper4':  { cadre: 'BScN',  paper: 'Paper IV',  totalMinutes: 120, totalQuestions: 100 },
 };
 
 export default function MockExamPage() {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Card } from '@/components/ui/Card';
@@ -13,6 +13,7 @@ import toast from 'react-hot-toast';
 export const dynamic = 'force-dynamic';
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const DAYS_SHORT = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 const HOURS = Array.from({ length: 14 }, (_, i) => i + 7); // 7AM–8PM
 
 interface AvailabilitySlot {
@@ -21,6 +22,8 @@ interface AvailabilitySlot {
   start_time: string;
   end_time: string;
   is_active: boolean;
+  is_recurring: boolean;
+  specific_date: string | null;
 }
 
 interface BookedSession {
@@ -43,12 +46,152 @@ interface TutorPrefs {
   is_accepting_bookings: boolean;
 }
 
+interface SlotPickerState {
+  dayOfWeek: number;
+  hour: number;
+  date: Date;
+  anchorRect: DOMRect;
+}
+
 function formatHour(h: number) {
   if (h === 12) return '12 PM';
   if (h > 12) return `${h - 12} PM`;
   return `${h} AM`;
 }
 
+function toDateStr(d: Date) {
+  // Use local date parts to avoid UTC offset shifting the date
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+// ── Mini Calendar Component ───────────────────────────────────────────────────
+interface MiniCalendarProps {
+  availability: AvailabilitySlot[];
+  onDateClick: (date: Date) => void;
+  selectedDate: Date | null;
+}
+
+function MiniCalendar({ availability, onDateClick, selectedDate }: MiniCalendarProps) {
+  const today = new Date();
+  const [calMonth, setCalMonth] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
+
+  const year = calMonth.getFullYear();
+  const month = calMonth.getMonth();
+  const firstDow = new Date(year, month, 1).getDay(); // 0=Sun
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  // Build set of dates that have availability in this month
+  // For recurring: project forward — every matching day_of_week in this month
+  // For one-time: just the specific_date
+  const recurringDow = new Set(
+    availability.filter(a => a.is_active && a.is_recurring).map(a => a.day_of_week)
+  );
+  const oneTimeDates = new Set(
+    availability.filter(a => a.is_active && !a.is_recurring && a.specific_date).map(a => a.specific_date!)
+  );
+
+  const hasAvailability = (date: Date): { recurring: boolean; oneTime: boolean } => {
+    const dateStr = toDateStr(date);
+    const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const dateMidnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    if (dateMidnight < todayMidnight) return { recurring: false, oneTime: false };
+    return {
+      recurring: recurringDow.has(date.getDay()),
+      oneTime: oneTimeDates.has(dateStr),
+    };
+  };
+
+  const cells: (Date | null)[] = [
+    ...Array(firstDow).fill(null),
+    ...Array.from({ length: daysInMonth }, (_, i) => new Date(year, month, i + 1)),
+  ];
+  // Pad to complete last row
+  while (cells.length % 7 !== 0) cells.push(null);
+
+  const monthLabel = calMonth.toLocaleDateString('en-KE', { month: 'long', year: 'numeric' });
+
+  return (
+    <div>
+      {/* Month nav */}
+      <div className="flex items-center justify-between mb-3">
+        <button
+          onClick={() => setCalMonth(new Date(year, month - 1, 1))}
+          className="p-1 rounded hover:bg-primary-light transition-colors"
+        >
+          <svg className="w-4 h-4 text-[var(--color-text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <span className="text-sm font-semibold text-[var(--color-text)]">{monthLabel}</span>
+        <button
+          onClick={() => setCalMonth(new Date(year, month + 1, 1))}
+          className="p-1 rounded hover:bg-primary-light transition-colors"
+        >
+          <svg className="w-4 h-4 text-[var(--color-text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Day-of-week headers */}
+      <div className="grid grid-cols-7 mb-1">
+        {DAYS_SHORT.map((d, i) => (
+          <div key={i} className="text-center text-[10px] font-bold text-[var(--color-text-secondary)] py-1">{d}</div>
+        ))}
+      </div>
+
+      {/* Date cells */}
+      <div className="grid grid-cols-7 gap-y-0.5">
+        {cells.map((date, i) => {
+          if (!date) return <div key={i} />;
+          const isToday = toDateStr(date) === toDateStr(today);
+          const isSelected = selectedDate && toDateStr(date) === toDateStr(selectedDate);
+          const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+          const isPast = new Date(date.getFullYear(), date.getMonth(), date.getDate()) < todayMidnight;
+          const { recurring, oneTime } = hasAvailability(date);
+          const hasAny = recurring || oneTime;
+
+          return (
+            <button
+              key={i}
+              onClick={() => !isPast && onDateClick(date)}
+              disabled={isPast}
+              className={`relative flex flex-col items-center justify-center h-8 w-full rounded-lg text-xs font-medium transition-all
+                ${isSelected ? 'bg-primary text-white' : ''}
+                ${isToday && !isSelected ? 'ring-1 ring-primary text-primary font-bold' : ''}
+                ${isPast ? 'opacity-30 cursor-not-allowed' : !isSelected ? 'hover:bg-primary-light cursor-pointer' : ''}
+                ${!isSelected && !isToday && !isPast ? 'text-[var(--color-text)]' : ''}
+              `}
+            >
+              <span>{date.getDate()}</span>
+              {hasAny && !isSelected && (
+                <span className="absolute bottom-0.5 flex gap-0.5">
+                  {recurring && <span className="w-1 h-1 rounded-full bg-success inline-block" />}
+                  {oneTime  && <span className="w-1 h-1 rounded-full bg-primary inline-block" />}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Dot legend */}
+      <div className="flex items-center gap-3 mt-3 pt-3 border-t border-[var(--color-border)]">
+        <span className="flex items-center gap-1 text-[10px] text-[var(--color-text-secondary)]">
+          <span className="w-2 h-2 rounded-full bg-success inline-block" /> Recurring
+        </span>
+        <span className="flex items-center gap-1 text-[10px] text-[var(--color-text-secondary)]">
+          <span className="w-2 h-2 rounded-full bg-primary inline-block" /> One-time
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// ── Main Page ─────────────────────────────────────────────────────────────────
 export default function TutorSchedulePage() {
   const router = useRouter();
   const supabase = createClient();
@@ -65,18 +208,35 @@ export default function TutorSchedulePage() {
   });
   const [isLoading, setIsLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [weekOffset, setWeekOffset] = useState(0); // 0 = current week
+  const [weekOffset, setWeekOffset] = useState(0);
+  const [slotPicker, setSlotPicker] = useState<SlotPickerState | null>(null);
+  const [calSelectedDate, setCalSelectedDate] = useState<Date | null>(null);
+  const pickerRef = useRef<HTMLDivElement>(null);
 
-  // Get the Monday of the displayed week
+  // ── Week helpers ──────────────────────────────────────────────────────────
   const getWeekStart = useCallback(() => {
     const d = new Date();
     const day = d.getDay();
-    const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Monday
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1);
     d.setDate(diff + weekOffset * 7);
     d.setHours(0, 0, 0, 0);
     return d;
   }, [weekOffset]);
 
+  // Compute weekOffset for a given date
+  const weekOffsetForDate = (date: Date): number => {
+    const now = new Date();
+    const day = now.getDay();
+    const diff = now.getDate() - day + (day === 0 ? -6 : 1);
+    const currentMonday = new Date(now); currentMonday.setDate(diff); currentMonday.setHours(0,0,0,0);
+    const targetMonday = new Date(date);
+    const td = targetMonday.getDay();
+    const tdiff = targetMonday.getDate() - td + (td === 0 ? -6 : 1);
+    targetMonday.setDate(tdiff); targetMonday.setHours(0,0,0,0);
+    return Math.round((targetMonday.getTime() - currentMonday.getTime()) / (7 * 24 * 60 * 60 * 1000));
+  };
+
+  // ── Init ──────────────────────────────────────────────────────────────────
   useEffect(() => {
     const init = async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -89,6 +249,22 @@ export default function TutorSchedulePage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (userId) loadSessions(userId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [weekOffset, userId]);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (pickerRef.current && !pickerRef.current.contains(e.target as Node)) {
+        setSlotPicker(null);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  // ── Data loaders ──────────────────────────────────────────────────────────
   const loadAvailability = async (uid: string) => {
     const { data } = await supabase.from('tutor_availability').select('*').eq('tutor_id', uid);
     setAvailability((data ?? []) as AvailabilitySlot[]);
@@ -103,7 +279,6 @@ export default function TutorSchedulePage() {
       .gte('session_date', weekStart.toISOString().split('T')[0])
       .lt('session_date', weekEnd.toISOString().split('T')[0])
       .in('status', ['confirmed', 'pending_approval', 'completed']);
-
     const sessArr = (sessData ?? []) as any[];
     const studentIds = Array.from(new Set(sessArr.map(s => s.student_id)));
     let nameMap: Record<string, string> = {};
@@ -124,32 +299,115 @@ export default function TutorSchedulePage() {
     if (data) setPrefs(data as TutorPrefs);
   };
 
-  const toggleSlot = async (dayOfWeek: number, hour: number) => {
-    if (!userId) return;
-    const startTime = `${String(hour).padStart(2, '0')}:00:00`;
-    const endTime = `${String(hour + 1).padStart(2, '0')}:00:00`;
-    const existing = availability.find(a => a.day_of_week === dayOfWeek && a.start_time === startTime);
+  // ── Slot helpers ──────────────────────────────────────────────────────────
+  const isSlotPast = (date: Date, hour: number): boolean => {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const slotDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    if (slotDay < today) return true;
+    if (slotDay.getTime() === today.getTime() && hour < now.getHours()) return true;
+    return false;
+  };
 
-    if (existing) {
-      // Toggle active state
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { error } = await (supabase as any).from('tutor_availability')
-        .update({ is_active: !existing.is_active }).eq('id', existing.id);
-      if (!error) {
-        setAvailability(prev => prev.map(a => a.id === existing.id ? { ...a, is_active: !a.is_active } : a));
-      }
-    } else {
-      // Create new slot
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data, error } = await (supabase as any).from('tutor_availability').insert({
-        tutor_id: userId, day_of_week: dayOfWeek, start_time: startTime, end_time: endTime, is_active: true,
-      }).select().single();
-      if (!error && data) {
-        setAvailability(prev => [...prev, data as AvailabilitySlot]);
-      }
+  const findActiveSlot = (dayOfWeek: number, hour: number, date: Date): AvailabilitySlot | undefined => {
+    const startTime = `${String(hour).padStart(2, '0')}:00:00`;
+    const dateStr = toDateStr(date);
+    const oneTime = availability.find(
+      a => !a.is_recurring && a.specific_date === dateStr && a.start_time === startTime && a.is_active
+    );
+    if (oneTime) return oneTime;
+    return availability.find(
+      a => a.is_recurring && a.day_of_week === dayOfWeek && a.start_time === startTime && a.is_active
+    );
+  };
+
+  const getSlotStatus = (dayOfWeek: number, hour: number, date: Date) => {
+    const startTime = `${String(hour).padStart(2, '0')}:00:00`;
+    const dateStr = toDateStr(date);
+    const booked = sessions.find(s => s.session_date === dateStr && s.start_time === startTime);
+    if (booked) return { type: 'booked' as const, session: booked };
+    if (!isSlotPast(date, hour)) {
+      const avail = findActiveSlot(dayOfWeek, hour, date);
+      if (avail) return { type: 'available' as const, slot: avail };
+    }
+    return { type: 'empty' as const };
+  };
+
+  // Get all active slots for a specific date (for the day detail panel)
+  const getSlotsForDate = (date: Date): AvailabilitySlot[] => {
+    const dateStr = toDateStr(date);
+    const dow = date.getDay();
+    const result: AvailabilitySlot[] = [];
+    const seenTimes = new Set<string>();
+    // One-time slots first
+    availability.filter(a => a.is_active && !a.is_recurring && a.specific_date === dateStr)
+      .forEach(a => { result.push(a); seenTimes.add(a.start_time); });
+    // Recurring slots (only if no one-time overrides that time)
+    availability.filter(a => a.is_active && a.is_recurring && a.day_of_week === dow)
+      .forEach(a => { if (!seenTimes.has(a.start_time)) result.push(a); });
+    return result.sort((a, b) => a.start_time.localeCompare(b.start_time));
+  };
+
+  // ── Slot mutations ────────────────────────────────────────────────────────
+  const removeSlot = async (slot: AvailabilitySlot) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { error } = await (supabase as any).from('tutor_availability')
+      .update({ is_active: false }).eq('id', slot.id);
+    if (!error) {
+      setAvailability(prev => prev.map(a => a.id === slot.id ? { ...a, is_active: false } : a));
+      toast.success('Slot removed');
     }
   };
 
+  const addSlot = async (dayOfWeek: number, hour: number, date: Date, isRecurring: boolean) => {
+    if (!userId) return;
+    const startTime = `${String(hour).padStart(2, '0')}:00:00`;
+    const endTime   = `${String(hour + 1).padStart(2, '0')}:00:00`;
+    const dateStr   = toDateStr(date);
+    const existing = availability.find(a =>
+      isRecurring
+        ? a.is_recurring && a.day_of_week === dayOfWeek && a.start_time === startTime
+        : !a.is_recurring && a.specific_date === dateStr && a.start_time === startTime
+    );
+    if (existing) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error } = await (supabase as any).from('tutor_availability')
+        .update({ is_active: true }).eq('id', existing.id);
+      if (!error) {
+        setAvailability(prev => prev.map(a => a.id === existing.id ? { ...a, is_active: true } : a));
+        toast.success(isRecurring ? 'Recurring slot added' : 'One-time slot added');
+      }
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data, error } = await (supabase as any).from('tutor_availability').insert({
+        tutor_id: userId, day_of_week: dayOfWeek, start_time: startTime, end_time: endTime,
+        is_active: true, is_recurring: isRecurring, specific_date: isRecurring ? null : dateStr,
+      }).select().single();
+      if (!error && data) {
+        setAvailability(prev => [...prev, data as AvailabilitySlot]);
+        toast.success(isRecurring ? 'Recurring slot added' : 'One-time slot added');
+      } else if (error) {
+        toast.error('Could not save slot');
+      }
+    }
+    setSlotPicker(null);
+  };
+
+  const handleCellClick = (e: React.MouseEvent<HTMLButtonElement>, dayOfWeek: number, hour: number, date: Date) => {
+    const status = getSlotStatus(dayOfWeek, hour, date);
+    if (status.type === 'booked') return;
+    if (status.type === 'available') { removeSlot(status.slot); return; }
+    const rect = (e.currentTarget as HTMLButtonElement).getBoundingClientRect();
+    setSlotPicker({ dayOfWeek, hour, date, anchorRect: rect });
+  };
+
+  // Calendar date click — jump week grid to that week and select the date
+  const handleCalendarDateClick = (date: Date) => {
+    setCalSelectedDate(date);
+    setWeekOffset(weekOffsetForDate(date));
+  };
+
+  // ── Prefs save ────────────────────────────────────────────────────────────
   const savePrefs = async () => {
     if (!userId) return;
     setSaving(true);
@@ -162,33 +420,33 @@ export default function TutorSchedulePage() {
       is_accepting_bookings: prefs.is_accepting_bookings,
     }).eq('id', userId);
     setSaving(false);
-    if (error) { toast.error('Failed to save preferences'); }
-    else { toast.success('Preferences saved!'); }
+    if (error) toast.error('Failed to save preferences');
+    else toast.success('Preferences saved!');
   };
 
-  const getSlotStatus = (dayOfWeek: number, hour: number, date: Date) => {
-    const startTime = `${String(hour).padStart(2, '0')}:00:00`;
-    const dateStr = date.toISOString().split('T')[0];
-    const booked = sessions.find(s => s.session_date === dateStr && s.start_time === startTime);
-    if (booked) return { type: 'booked' as const, session: booked };
-    const avail = availability.find(a => a.day_of_week === dayOfWeek && a.start_time === startTime && a.is_active);
-    if (avail) return { type: 'available' as const };
-    return { type: 'empty' as const };
-  };
-
-  if (isLoading) return <div className="flex items-center justify-center min-h-[60vh]"><Spinner size="lg" color="primary" /></div>;
+  if (isLoading) return (
+    <div className="flex items-center justify-center min-h-[60vh]">
+      <Spinner size="lg" color="primary" />
+    </div>
+  );
 
   const weekStart = getWeekStart();
   const weekDays = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(weekStart); d.setDate(d.getDate() + i); return d;
   });
 
+  // Slots for the selected calendar date (for the detail panel)
+  const selectedDateSlots = calSelectedDate ? getSlotsForDate(calSelectedDate) : [];
+
   return (
     <div className="space-y-5 pb-24 lg:pb-6">
+      {/* ── Header ─────────────────────────────────────────────────────────── */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-heading font-bold text-[var(--color-text)]">Schedule & Availability</h1>
-          <p className="text-sm text-[var(--color-text-secondary)] mt-1">Click any slot to toggle availability. Students see this in real-time.</p>
+          <p className="text-sm text-[var(--color-text-secondary)] mt-1">
+            Click any slot to set availability. Choose <strong>Recurring</strong> to repeat every week, or <strong>One-time</strong> for that date only.
+          </p>
         </div>
         <div className="flex items-center gap-2">
           <button onClick={() => setWeekOffset(w => w - 1)} className="p-2 rounded-lg border border-[var(--color-border)] hover:bg-primary-light transition-colors">
@@ -203,8 +461,8 @@ export default function TutorSchedulePage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
 
-        {/* Calendar grid */}
-        <div className="lg:col-span-3">
+        {/* ── Week grid ──────────────────────────────────────────────────────── */}
+        <div className="lg:col-span-3 relative">
           <Card padding="none">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[600px]">
@@ -213,10 +471,11 @@ export default function TutorSchedulePage() {
                     <th className="w-16 p-3 text-xs text-[var(--color-text-secondary)] font-medium text-left">Time</th>
                     {weekDays.map((d, i) => {
                       const isToday = d.toDateString() === new Date().toDateString();
+                      const isCalSelected = calSelectedDate && toDateStr(d) === toDateStr(calSelectedDate);
                       return (
-                        <th key={i} className="p-3 text-center">
+                        <th key={i} className={`p-3 text-center ${isCalSelected ? 'bg-primary/5 rounded-t-lg' : ''}`}>
                           <p className={`text-xs font-semibold ${isToday ? 'text-primary' : 'text-[var(--color-text-secondary)]'}`}>{DAYS[d.getDay()]}</p>
-                          <p className={`text-lg font-heading font-bold ${isToday ? 'text-primary' : 'text-[var(--color-text)]'}`}>{d.getDate()}</p>
+                          <p className={`text-lg font-heading font-bold ${isToday ? 'text-primary' : isCalSelected ? 'text-primary' : 'text-[var(--color-text)]'}`}>{d.getDate()}</p>
                         </th>
                       );
                     })}
@@ -228,27 +487,36 @@ export default function TutorSchedulePage() {
                       <td className="p-2 text-xs text-[var(--color-text-secondary)] font-medium whitespace-nowrap">{formatHour(hour)}</td>
                       {weekDays.map((d, di) => {
                         const status = getSlotStatus(d.getDay(), hour, d);
-                        const isPast = d < new Date() && hour < new Date().getHours();
+                        const isPast = isSlotPast(d, hour);
+                        const isRecurringSlot = status.type === 'available' && status.slot.is_recurring;
+                        const isOneTimeSlot   = status.type === 'available' && !status.slot.is_recurring;
+                        const isCalSelected = calSelectedDate && toDateStr(d) === toDateStr(calSelectedDate);
                         return (
-                          <td key={di} className="p-1">
+                          <td key={di} className={`p-1 ${isCalSelected ? 'bg-primary/5' : ''}`}>
                             <button
-                              onClick={() => !isPast && toggleSlot(d.getDay(), hour)}
-                              disabled={isPast}
+                              onClick={(e) => !isPast && handleCellClick(e, d.getDay(), hour, d)}
+                              disabled={isPast || status.type === 'booked'}
                               className={`w-full h-10 rounded-lg text-xs font-medium transition-all ${
                                 status.type === 'booked'
                                   ? 'bg-accent/20 border border-accent/40 text-accent-dark dark:text-accent cursor-default'
-                                  : status.type === 'available'
+                                  : isRecurringSlot
                                   ? 'bg-success/20 border border-success/40 text-success hover:bg-success/30'
+                                  : isOneTimeSlot
+                                  ? 'bg-primary/15 border border-primary/40 text-primary hover:bg-primary/25'
                                   : isPast
                                   ? 'bg-neutral-border/30 cursor-not-allowed opacity-40'
                                   : 'bg-[var(--color-bg)] border border-[var(--color-border)] hover:bg-primary-light hover:border-primary/40 cursor-pointer'
                               }`}
-                              title={status.type === 'booked' ? `${status.session.student_name} — ${status.session.topic ?? 'Session'}` : undefined}
+                              title={
+                                status.type === 'booked' ? `${status.session.student_name} — ${status.session.topic ?? 'Session'}`
+                                : isRecurringSlot ? 'Recurring every week — click to remove'
+                                : isOneTimeSlot ? 'One-time slot — click to remove'
+                                : isPast ? 'Past slot' : 'Click to set availability'
+                              }
                             >
-                              {status.type === 'booked' && (
-                                <span className="truncate px-1 block">{status.session.student_name.split(' ')[0]}</span>
-                              )}
-                              {status.type === 'available' && <span>✓</span>}
+                              {status.type === 'booked' && <span className="truncate px-1 block">{status.session.student_name.split(' ')[0]}</span>}
+                              {isRecurringSlot && <span className="flex items-center justify-center gap-0.5"><span>✓</span><span className="text-[9px] opacity-70">↻</span></span>}
+                              {isOneTimeSlot && <span>✓</span>}
                             </button>
                           </td>
                         );
@@ -258,18 +526,139 @@ export default function TutorSchedulePage() {
                 </tbody>
               </table>
             </div>
-
             {/* Legend */}
-            <div className="flex items-center gap-4 p-4 border-t border-[var(--color-border)] text-xs text-[var(--color-text-secondary)]">
-              <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-success/30 border border-success/40 inline-block" /> Available</span>
-              <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-accent/20 border border-accent/40 inline-block" /> Booked</span>
-              <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-neutral-border/30 inline-block" /> Unavailable</span>
+            <div className="flex flex-wrap items-center gap-4 p-4 border-t border-[var(--color-border)] text-xs text-[var(--color-text-secondary)]">
+              <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-success/30 border border-success/40 inline-block" />Recurring (every week)</span>
+              <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-primary/15 border border-primary/40 inline-block" />One-time (this date only)</span>
+              <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-accent/20 border border-accent/40 inline-block" />Booked</span>
+              <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-neutral-border/30 inline-block" />Unavailable / Past</span>
             </div>
           </Card>
+
+          {/* Slot type picker popup */}
+          {slotPicker && (
+            <div
+              ref={pickerRef}
+              className="fixed z-50 bg-[var(--color-card)] border border-[var(--color-border)] rounded-xl shadow-xl p-4 w-64"
+              style={{
+                top: Math.min(slotPicker.anchorRect.bottom + 8, window.innerHeight - 200),
+                left: Math.min(slotPicker.anchorRect.left, window.innerWidth - 272),
+              }}
+            >
+              <p className="text-sm font-heading font-bold text-[var(--color-text)] mb-1">
+                {DAYS[slotPicker.dayOfWeek]}{' '}
+                {slotPicker.date.toLocaleDateString('en-KE', { day: 'numeric', month: 'short' })}{' '}
+                · {formatHour(slotPicker.hour)}
+              </p>
+              <p className="text-xs text-[var(--color-text-secondary)] mb-4">How should this slot repeat?</p>
+              <div className="space-y-2">
+                <button onClick={() => addSlot(slotPicker.dayOfWeek, slotPicker.hour, slotPicker.date, true)}
+                  className="w-full flex items-start gap-3 p-3 rounded-lg border border-success/40 bg-success/5 hover:bg-success/10 transition-colors text-left">
+                  <span className="text-success text-lg leading-none mt-0.5">↻</span>
+                  <div>
+                    <p className="text-sm font-semibold text-[var(--color-text)]">Recurring</p>
+                    <p className="text-xs text-[var(--color-text-secondary)]">Every {DAYS[slotPicker.dayOfWeek]} at {formatHour(slotPicker.hour)}, week after week</p>
+                  </div>
+                </button>
+                <button onClick={() => addSlot(slotPicker.dayOfWeek, slotPicker.hour, slotPicker.date, false)}
+                  className="w-full flex items-start gap-3 p-3 rounded-lg border border-primary/40 bg-primary/5 hover:bg-primary/10 transition-colors text-left">
+                  <span className="text-primary text-lg leading-none mt-0.5">📅</span>
+                  <div>
+                    <p className="text-sm font-semibold text-[var(--color-text)]">One-time only</p>
+                    <p className="text-xs text-[var(--color-text-secondary)]">Only on {slotPicker.date.toLocaleDateString('en-KE', { weekday: 'long', day: 'numeric', month: 'long' })}</p>
+                  </div>
+                </button>
+              </div>
+              <button onClick={() => setSlotPicker(null)} className="mt-3 w-full text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Cancel</button>
+            </div>
+          )}
         </div>
 
-        {/* Settings panel */}
+        {/* ── Right panel ────────────────────────────────────────────────────── */}
         <div className="space-y-4">
+
+          {/* ── Mini Calendar ─────────────────────────────────────────────── */}
+          <Card>
+            <h3 className="font-heading font-bold text-[var(--color-text)] mb-4">Availability Overview</h3>
+            <MiniCalendar
+              availability={availability}
+              onDateClick={handleCalendarDateClick}
+              selectedDate={calSelectedDate}
+            />
+          </Card>
+
+          {/* ── Day detail panel (shown when a date is selected) ──────────── */}
+          {calSelectedDate && (
+            <Card>
+              <div className="flex items-center justify-between mb-3">
+                <div>
+                  <h3 className="font-heading font-bold text-[var(--color-text)] text-sm">
+                    {calSelectedDate.toLocaleDateString('en-KE', { weekday: 'long', day: 'numeric', month: 'long' })}
+                  </h3>
+                  <p className="text-xs text-[var(--color-text-secondary)] mt-0.5">
+                    {selectedDateSlots.length === 0
+                      ? 'No availability set'
+                      : `${selectedDateSlots.length} slot${selectedDateSlots.length > 1 ? 's' : ''} available`}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setCalSelectedDate(null)}
+                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors"
+                  title="Close"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {selectedDateSlots.length === 0 ? (
+                <p className="text-xs text-[var(--color-text-secondary)] text-center py-3">
+                  Click any slot in the grid above to add availability for this day.
+                </p>
+              ) : (
+                <div className="space-y-1.5">
+                  {selectedDateSlots.map(slot => (
+                    <div
+                      key={slot.id}
+                      className={`flex items-center justify-between px-3 py-2 rounded-lg border text-xs
+                        ${slot.is_recurring
+                          ? 'bg-success/5 border-success/30'
+                          : 'bg-primary/5 border-primary/30'}`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className={slot.is_recurring ? 'text-success' : 'text-primary'}>
+                          {slot.is_recurring ? '↻' : '📅'}
+                        </span>
+                        <span className="font-medium text-[var(--color-text)]">
+                          {formatHour(parseInt(slot.start_time.slice(0, 2)))}
+                          {' – '}
+                          {formatHour(parseInt(slot.end_time.slice(0, 2)))}
+                        </span>
+                        <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-semibold
+                          ${slot.is_recurring
+                            ? 'bg-success/15 text-success'
+                            : 'bg-primary/15 text-primary'}`}>
+                          {slot.is_recurring ? 'Weekly' : 'Once'}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => removeSlot(slot)}
+                        className="text-[var(--color-text-secondary)] hover:text-red-500 transition-colors ml-2"
+                        title="Remove this slot"
+                      >
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </Card>
+          )}
+
+          {/* ── Session Preferences ───────────────────────────────────────── */}
           <Card>
             <h3 className="font-heading font-bold text-[var(--color-text)] mb-4">Session Preferences</h3>
             <div className="space-y-4">
@@ -314,7 +703,7 @@ export default function TutorSchedulePage() {
             </div>
           </Card>
 
-          {/* Student view banner */}
+          {/* ── Live banner ───────────────────────────────────────────────── */}
           <Card className="bg-success/5 border-success/20">
             <div className="flex items-start gap-2">
               <span className="text-success text-lg">✅</span>
@@ -327,7 +716,7 @@ export default function TutorSchedulePage() {
             </div>
           </Card>
 
-          {/* This week's sessions */}
+          {/* ── This week's sessions ──────────────────────────────────────── */}
           {sessions.length > 0 && (
             <Card>
               <h3 className="font-heading font-bold text-[var(--color-text)] mb-3">This Week</h3>
@@ -339,15 +728,21 @@ export default function TutorSchedulePage() {
                       {new Date(s.session_date).toLocaleDateString('en-KE', { weekday: 'short', month: 'short', day: 'numeric' })} · {s.start_time.slice(0, 5)}
                     </p>
                     <div className="flex items-center gap-1 mt-1">
-                      <Badge variant={s.status === 'confirmed' ? 'green' : s.status === 'pending_approval' ? 'amber' : 'secondary'} size="sm">{s.status.replace('_', ' ')}</Badge>
+                      <Badge
+                        variant={s.status === 'confirmed' ? 'green' : s.status === 'pending_approval' ? 'amber' : 'secondary'}
+                        size="sm"
+                      >
+                        {s.status.replace('_', ' ')}
+                      </Badge>
                     </div>
                   </div>
                 ))}
               </div>
             </Card>
           )}
-        </div>
-      </div>
+
+        </div>{/* end right panel */}
+      </div>{/* end grid */}
     </div>
   );
 }

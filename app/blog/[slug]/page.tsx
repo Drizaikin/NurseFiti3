@@ -41,10 +41,13 @@ Passing the NCK exam is not optional — it is the gateway to your nursing caree
 - Topics: Community Health Nursing, Maternal & Child Health, Medical-Surgical Nursing, Pharmacology, Anatomy & Physiology
 
 ### BScN (Bachelor of Science in Nursing)
-- **4 papers**
+- **4 papers** — Paper 1, Paper 2, Paper 3, and Paper 4
 - **100 MCQs per paper**
-- **3 hours per paper**
-- Topics: Advanced Medical-Surgical, Critical Care, Mental Health, Community Health, Research & Evidence-Based Practice
+- **2 hours per paper**
+- Paper 1: Medical-Surgical Nursing & Pharmacology
+- Paper 2: Maternal, Child & Community Health
+- Paper 3: Mental Health & Psychiatric Nursing
+- Paper 4: Research, Management & Professional Issues
 
 ### Higher Diploma
 - **2 papers** — specialty-specific
@@ -177,7 +180,7 @@ const POSTS_EXTRA: Post[] = [
     content: `
 ## The BScN NCK Exam at a Glance
 
-BScN candidates sit **4 papers**, each with 100 MCQs and a 3-hour time limit. The broader scope and longer duration make the BScN exam more demanding than KRCHN — but also more predictable if you know which units to prioritise.
+BScN candidates sit **4 papers**, each with 100 MCQs and a 2-hour time limit. The exam covers a broad clinical and community scope — knowing which units to prioritise is the key to passing efficiently.
 
 ## Paper Breakdown
 
@@ -188,6 +191,7 @@ The largest paper by content volume. Focus areas:
 - Endocrine disorders (diabetes mellitus, thyroid disorders)
 - Neurological disorders (stroke, meningitis, epilepsy)
 - Renal disorders (AKI, CKD, nephrotic syndrome)
+- Pharmacology — drug classifications, dosage calculations, adverse effects
 
 ### Paper 2 — Maternal, Child & Community Health
 - Obstetric complications (pre-eclampsia, PPH, obstructed labour)
@@ -213,11 +217,11 @@ Often underestimated. High-yield topics:
 
 ## 6-Week BScN Study Plan
 
-**Week 1:** Medical-Surgical Paper 1 — cardiovascular, respiratory, endocrine  
-**Week 2:** Medical-Surgical Paper 1 — neurological, renal, gastrointestinal  
-**Week 3:** Maternal, Child & Community Health  
-**Week 4:** Mental Health & Psychiatric Nursing  
-**Week 5:** Research, Management & Professional Issues + mixed practice  
+**Week 1:** Medical-Surgical Paper 1 — cardiovascular, respiratory, endocrine (80 MCQs/day)
+**Week 2:** Medical-Surgical Paper 1 — neurological, renal, pharmacology (80 MCQs/day)
+**Week 3:** Maternal, Child & Community Health (80 MCQs/day)
+**Week 4:** Mental Health & Psychiatric Nursing (80 MCQs/day)
+**Week 5:** Research, Management & Professional Issues + mixed practice (80 MCQs/day)
 **Week 6:** Full mock exams (3 per week) + weak unit drilling + flashcard review
 
 ## BScN-Specific Tips

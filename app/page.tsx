@@ -154,7 +154,7 @@ const CADRES = [
     id: 'bscn',
     label: 'BScN',
     full: 'Bachelor of Science in Nursing',
-    papers: '4 papers · 100 MCQs each · 3 hours per paper',
+    papers: '4 papers · 100 MCQs each · 2 hours per paper',
     color: 'bg-accent-light border-accent/30',
     badge: 'bg-accent text-dark',
   },
@@ -839,7 +839,7 @@ export default function LandingPage() {
                 <li><Link href="/help" className="hover:text-white transition-colors">Help Centre</Link></li>
                 <li>
                   <a
-                    href="https://nck.go.ke"
+                    href="https://nckenya.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-white transition-colors"

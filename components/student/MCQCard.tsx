@@ -21,7 +21,6 @@ interface MCQCardProps {
     rationale_d?: string;
     unit: string;
     topic: string;
-    difficulty: string;
   };
   onAnswer: (questionId: string, selectedOption: string, isCorrect: boolean, timeTaken: number) => void;
   showFeedback?: boolean;
