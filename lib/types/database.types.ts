@@ -442,6 +442,36 @@ export interface Database {
         Update: Partial<Database['public']['Tables']['units']['Row']>;
       };
 
+      app_feedback: {
+        Row: {
+          id: string;
+          user_id: string;
+          user_role: 'student' | 'tutor';
+          display_name: string;
+          cadre: string | null;
+          category: 'general' | 'complaint' | 'suggestion' | 'bug_report' | 'praise';
+          rating: number;
+          message: string;
+          contact_channel: 'email' | 'whatsapp' | 'none';
+          is_approved: boolean;
+          is_pinned: boolean;
+          helpful_count: number;
+          created_at: string;
+        };
+        Insert: Omit<Database['public']['Tables']['app_feedback']['Row'], 'id' | 'helpful_count' | 'is_pinned' | 'created_at'>;
+        Update: Partial<Database['public']['Tables']['app_feedback']['Row']>;
+      };
+
+      feedback_helpful: {
+        Row: {
+          feedback_id: string;
+          user_id: string;
+          created_at: string;
+        };
+        Insert: Omit<Database['public']['Tables']['feedback_helpful']['Row'], 'created_at'>;
+        Update: never;
+      };
+
       practice_sessions: {
         Row: {
           id: string;

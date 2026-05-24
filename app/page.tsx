@@ -3,6 +3,8 @@ import Script from 'next/script';
 import Link from 'next/link';
 import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 import { DarkModeToggle } from '@/components/shared/DarkModeToggle';
+import { FeedbackWall } from '@/components/shared/FeedbackWall';
+import { LandingFeedbackButton } from '@/components/shared/LandingFeedbackButton';
 
 export const metadata: Metadata = {
   title: 'NurseFiti — Kenya\'s NCK Exam Preparation Platform',
@@ -359,11 +361,13 @@ export default function LandingPage() {
             <Link href="#cadres" className="hover:text-primary transition-colors">Cadres</Link>
             <Link href="#tutors" className="hover:text-primary transition-colors">Tutors</Link>
             <Link href="#pricing" className="hover:text-primary transition-colors">Pricing</Link>
+            <Link href="#reviews" className="hover:text-primary transition-colors">Reviews</Link>
             <Link href="#faq" className="hover:text-primary transition-colors">FAQ</Link>
             <Link href="#partnerships" className="hover:text-primary transition-colors">Partnerships</Link>
           </nav>
           <div className="flex items-center gap-3">
             <DarkModeToggle />
+            <LandingFeedbackButton />
             <Link
               href="/login"
               className="hidden sm:inline-flex items-center px-4 py-2 text-sm font-semibold text-primary border-2 border-primary rounded-lg hover:bg-primary-light transition-colors"
@@ -724,6 +728,35 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── REVIEWS & FEEDBACK WALL ── */}
+      <section id="reviews" className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-light text-primary text-sm font-semibold mb-5">
+              💬 Community Reviews
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-[var(--color-text)] mb-4">
+              What students and tutors are saying
+            </h2>
+            <p className="text-neutral-mid max-w-xl mx-auto mb-8">
+              Real feedback from the NurseFiti community — unfiltered complaints, suggestions, and praise.
+              Every review is posted publicly, just like Google Play Store.
+            </p>
+            {/* CTA for logged-in users — opens feedback modal */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <LandingFeedbackButton variant="cta" />
+              <Link
+                href="/login"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-primary border-2 border-primary rounded-xl hover:bg-primary-light transition-colors"
+              >
+                Log in to leave a review
+              </Link>
+            </div>
+          </div>
+          <FeedbackWall limit={8} showSummary={true} showFilters={true} />
         </div>
       </section>
 

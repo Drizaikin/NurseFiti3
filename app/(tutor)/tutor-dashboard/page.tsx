@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/Button';
 import { Spinner } from '@/components/ui/Spinner';
 import { Avatar } from '@/components/ui/Avatar';
 import { ProgressBar } from '@/components/ui/ProgressBar';
+import { FeedbackWidget } from '@/components/shared/FeedbackWidget';
+import { FeedbackWall } from '@/components/shared/FeedbackWall';
 
 export const dynamic = 'force-dynamic';
 
@@ -432,8 +434,62 @@ export default function TutorDashboardPage() {
               <Button variant="primary" size="sm" className="w-full mt-4">+ Add Content</Button>
             </Link>
           </Card>
+
+          {/* Feedback & support */}
+          <Card>
+            <h3 className="font-heading font-bold text-[var(--color-text)] mb-1">Feedback & Support</h3>
+            <p className="text-xs text-[var(--color-text-secondary)] mb-4">
+              Share a complaint, suggestion, or praise — posted publicly.
+            </p>
+            <FeedbackWidget
+              displayName={tutor.full_name.split(' ')[0]}
+              cadre={tutor.professional_title}
+              userRole="tutor"
+              triggerVariant="dashboard"
+            />
+            <div className="mt-3 flex gap-2">
+              <a
+                href="mailto:support@nursefiti.vercel.app"
+                className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-secondary)] hover:border-primary/40 hover:text-primary transition-colors"
+              >
+                ✉️ Email Support
+              </a>
+              <a
+                href="https://wa.me/254791952703"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-secondary)] hover:border-success/40 hover:text-success transition-colors"
+              >
+                💬 WhatsApp
+              </a>
+            </div>
+          </Card>
         </div>
       </div>
+
+      {/* ── Community Reviews ─────────────────────────────────────────── */}
+      <Card>
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-base font-heading font-bold text-[var(--color-text)]">Community Reviews</h2>
+            <p className="text-xs text-[var(--color-text-secondary)] mt-0.5">What the NurseFiti community is saying</p>
+          </div>
+          <FeedbackWidget
+            displayName={tutor.full_name.split(' ')[0]}
+            cadre={tutor.professional_title}
+            userRole="tutor"
+            trigger={
+              <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary-mid transition-colors">
+                + Write a Review
+              </button>
+            }
+          />
+        </div>
+        <FeedbackWall limit={4} showSummary={false} showFilters={false} compact={true} />
+        <a href="/#reviews" className="block text-center text-xs text-primary font-semibold mt-4 hover:underline">
+          View all reviews →
+        </a>
+      </Card>
     </div>
   );
 }

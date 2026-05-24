@@ -9,6 +9,8 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Spinner } from '@/components/ui/Spinner';
+import { FeedbackWidget } from '@/components/shared/FeedbackWidget';
+import { FeedbackWall } from '@/components/shared/FeedbackWall';
 
 // ── Time-aware greeting (uses browser local time = user's timezone) ────────
 function useGreeting() {
@@ -557,8 +559,62 @@ export default function DashboardPage() {
               </div>
             )}
           </Card>
+
+          {/* Feedback & support */}
+          <Card>
+            <h3 className="font-heading font-bold text-[var(--color-text)] mb-1">Feedback & Support</h3>
+            <p className="text-xs text-[var(--color-text-secondary)] mb-4">
+              Your review is posted publicly — like a Play Store review.
+            </p>
+            <FeedbackWidget
+              displayName={firstName}
+              cadre={data.student.cadre}
+              userRole="student"
+              triggerVariant="dashboard"
+            />
+            <div className="mt-3 flex gap-2">
+              <a
+                href="mailto:support@nursefiti.vercel.app"
+                className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-secondary)] hover:border-primary/40 hover:text-primary transition-colors"
+              >
+                ✉️ Email Support
+              </a>
+              <a
+                href="https://wa.me/254791952703"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-secondary)] hover:border-success/40 hover:text-success transition-colors"
+              >
+                💬 WhatsApp
+              </a>
+            </div>
+          </Card>
         </div>
       </div>
+
+      {/* ── Community Reviews ─────────────────────────────────────────── */}
+      <Card>
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-base font-heading font-bold text-[var(--color-text)]">Community Reviews</h2>
+            <p className="text-xs text-[var(--color-text-secondary)] mt-0.5">What students and tutors are saying about NurseFiti</p>
+          </div>
+          <FeedbackWidget
+            displayName={firstName}
+            cadre={data.student.cadre}
+            userRole="student"
+            trigger={
+              <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary-mid transition-colors">
+                + Write a Review
+              </button>
+            }
+          />
+        </div>
+        <FeedbackWall limit={4} showSummary={false} showFilters={false} compact={true} />
+        <a href="/#reviews" className="block text-center text-xs text-primary font-semibold mt-4 hover:underline">
+          View all reviews →
+        </a>
+      </Card>
     </div>
   );
 }
