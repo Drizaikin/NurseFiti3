@@ -363,6 +363,7 @@ export default function PracticePage() {
 
       {/* Question */}
       <MCQCard
+        key={currentQuestion.id}
         question={currentQuestion}
         onAnswer={handleAnswer}
         showFeedback={true}
