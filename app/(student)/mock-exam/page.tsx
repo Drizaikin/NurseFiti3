@@ -263,7 +263,7 @@ export default function MockExamPage() {
               )}
             </div>
             {limitReached && (
-              <Link href="/settings">
+              <Link href="/settings?tab=account">
                 <button className="flex-shrink-0 px-4 py-2 rounded-lg bg-primary text-white text-xs font-bold hover:bg-primary-mid transition-colors">
                   Upgrade →
                 </button>
@@ -286,7 +286,7 @@ export default function MockExamPage() {
               >
                 Upload Questions to Unlock →
               </button>
-              <Link href="/settings">
+              <Link href="/settings?tab=account">
                 <button className="px-4 py-2 rounded-lg bg-primary text-white text-xs font-bold hover:bg-primary-mid transition-colors">
                   Upgrade Plan →
                 </button>
@@ -386,7 +386,7 @@ export default function MockExamPage() {
                 )}
               </div>
               {!isFree && (
-                <Link href="/settings">
+                <Link href="/settings?tab=account">
                   <Button variant="primary" size="lg" className="w-full">Upgrade to Premium — Unlimited Mock Exams</Button>
                 </Link>
               )}

@@ -165,7 +165,7 @@ const PLANS = [
       'Peer percentile leaderboard',
       'Exam registration reminders',
     ],
-    note: '60-day access',
+    note: '90-day access',
   },
 ];
 
@@ -288,14 +288,18 @@ export default function SettingsPage() {
 
   const [activeSection, setActiveSection] = useState<Section>('profile');
 
-  // Handle Paystack redirect back after payment
+  // Handle tab query param — e.g. /settings?tab=account jumps straight to the account section
   useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab === 'account' || tab === 'profile' || tab === 'password' || tab === 'notifications') {
+      setActiveSection(tab as Section);
+    }
+    // Handle Paystack redirect back after payment
     const payment = searchParams.get('payment');
     if (payment === 'success') {
       toast.success('Payment successful! Your plan has been upgraded.');
       setActiveSection('account');
-      // Clean the query param without a full reload
-      router.replace('/settings', { scroll: false });
+      router.replace('/settings?tab=account', { scroll: false });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

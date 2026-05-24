@@ -228,7 +228,7 @@ export default function FlashcardsPage() {
             Upgrade to unlock all decks and track your progress.
           </p>
           <p className="text-xs text-neutral-mid mb-6">Free plan · Upgrade from KSh 499/month</p>
-          <Link href="/settings">
+          <Link href="/settings?tab=account">
             <Button variant="primary" size="lg">Upgrade to Unlock Flashcards →</Button>
           </Link>
         </Card>

@@ -292,7 +292,7 @@ export default function PracticePage() {
               )}
             </div>
             {limitReached && (
-              <Link href="/settings">
+              <Link href="/settings?tab=account">
                 <button className="flex-shrink-0 px-4 py-2 rounded-lg bg-primary text-white text-xs font-bold hover:bg-primary-mid transition-colors">
                   Upgrade →
                 </button>
@@ -354,7 +354,7 @@ export default function PracticePage() {
                     Free plan allows {dailyLimit} practice questions per day. Come back tomorrow or upgrade for unlimited access.
                   </p>
                 </div>
-                <Link href="/settings">
+                <Link href="/settings?tab=account">
                   <Button variant="primary" size="lg" className="w-full">
                     Upgrade for Unlimited Practice
                   </Button>
@@ -420,7 +420,7 @@ export default function PracticePage() {
           <p className="text-sm font-semibold text-error">
             You&apos;ve reached your {dailyLimit}-question daily limit.
           </p>
-          <Link href="/settings">
+          <Link href="/settings?tab=account">
             <button className="px-4 py-2 rounded-lg bg-primary text-white text-xs font-bold hover:bg-primary-mid transition-colors flex-shrink-0">
               Upgrade →
             </button>

@@ -270,7 +270,7 @@ export default function AnalyticsPage() {
               </p>
               <p className="text-xs text-neutral-mid">Free plan · Upgrade from KSh 499/month</p>
             </div>
-            <Link href="/settings" className="flex-shrink-0">
+            <Link href="/settings?tab=account" className="flex-shrink-0">
               <Button variant="primary">Upgrade →</Button>
             </Link>
           </div>
