@@ -15,6 +15,8 @@ import { createRouteClient } from '@/lib/supabase/server';
 import { verifyTransaction } from '@/lib/paystack';
 import { addDays, addMonths } from 'date-fns';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest) {
   const reference = req.nextUrl.searchParams.get('reference');
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';

@@ -19,6 +19,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 
+export const dynamic = 'force-dynamic';
+
 const ADMIN_EMAIL = 'docotyanga@gmail.com';
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
 const MIN_FILES = 3;

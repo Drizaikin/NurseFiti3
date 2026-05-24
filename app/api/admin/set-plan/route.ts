@@ -20,6 +20,8 @@ import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { z } from 'zod';
 
+export const dynamic = 'force-dynamic';
+
 const bodySchema = z.object({
   studentId:   z.string().uuid(),
   tier:        z.enum(['free', 'daily', 'weekly', 'standard', 'premium']),

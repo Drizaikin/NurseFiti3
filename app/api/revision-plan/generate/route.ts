@@ -20,6 +20,8 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { z } from 'zod';
 import { randomUUID } from 'crypto';
 
+export const dynamic = 'force-dynamic';
+
 // ─── Validation ───────────────────────────────────────────────────────────────
 
 const bodySchema = z.object({

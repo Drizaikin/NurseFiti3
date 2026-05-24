@@ -14,6 +14,8 @@ import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { z } from 'zod';
 
+export const dynamic = 'force-dynamic';
+
 const bodySchema = z.object({
   uploadId:    z.string().uuid(),
   reason:      z.string().min(5).max(500),

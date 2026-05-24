@@ -19,6 +19,8 @@ import { createRouteClient } from '@/lib/supabase/server';
 import { initializeTransaction, generateReference } from '@/lib/paystack';
 import { z } from 'zod';
 
+export const dynamic = 'force-dynamic';
+
 const bodySchema = z.object({
   type: z.enum(['plan_subscription', 'revision_plan', 'session_booking']),
   amountKsh: z.number().int().positive(),

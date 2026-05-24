@@ -23,6 +23,8 @@ import {
   generateReference,
 } from '@/lib/paystack';
 
+export const dynamic = 'force-dynamic';
+
 const MIN_PAYOUT_KSH = 1000;
 
 export async function POST(req: NextRequest) {

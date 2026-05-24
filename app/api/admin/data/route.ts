@@ -10,6 +10,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 
+// Force dynamic rendering — this route reads cookies (auth session)
+// and must never be statically generated at build time.
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest) {
   try {
     // Auth + role check using the regular client (reads own profile only — fine)
