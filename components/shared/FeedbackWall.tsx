@@ -109,7 +109,15 @@ function RatingSummary({ items }: { items: FeedbackItem[] }) {
 
 // ─── Single review card ───────────────────────────────────────────────────────
 
-function ReviewCard({ item, onHelpful }: { item: FeedbackItem; onHelpful: (id: string) => void }) {
+function ReviewCard({
+  item,
+  onHelpful,
+  hasVoted,
+}: {
+  item: FeedbackItem;
+  onHelpful: (id: string) => void;
+  hasVoted: boolean;
+}) {
   const meta = CATEGORY_META[item.category];
   const initials = item.display_name === 'Anonymous'
     ? '?'
@@ -166,13 +174,23 @@ function ReviewCard({ item, onHelpful }: { item: FeedbackItem; onHelpful: (id: s
       {/* Footer */}
       <div className="flex items-center justify-between">
         <button
-          onClick={() => onHelpful(item.id)}
-          className="flex items-center gap-1.5 text-xs text-[var(--color-text-secondary)] hover:text-primary transition-colors group"
+          onClick={() => !hasVoted && onHelpful(item.id)}
+          disabled={hasVoted}
+          className={`flex items-center gap-1.5 text-xs transition-colors group ${
+            hasVoted
+              ? 'text-primary font-semibold cursor-default'
+              : 'text-[var(--color-text-secondary)] hover:text-primary cursor-pointer'
+          }`}
+          aria-label={hasVoted ? 'You marked this as helpful' : 'Mark as helpful'}
         >
-          <svg className="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+          <svg
+            className={`w-4 h-4 transition-transform ${hasVoted ? 'fill-primary stroke-primary' : 'fill-none stroke-current group-hover:scale-110'}`}
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
           </svg>
-          Helpful ({item.helpful_count})
+          {hasVoted ? `Helpful (${item.helpful_count}) ✓` : `Helpful (${item.helpful_count})`}
         </button>
       </div>
     </div>
@@ -228,24 +246,69 @@ export function FeedbackWall({
   useEffect(() => { fetchFeedback(); }, [fetchFeedback]);
 
   const handleHelpful = async (feedbackId: string) => {
-    if (helpfulSet.has(feedbackId)) return; // already voted
+    if (helpfulSet.has(feedbackId)) return; // already voted this session
+
+    // Optimistic update immediately so the UI feels instant
+    setItems(prev => prev.map(i =>
+      i.id === feedbackId ? { ...i, helpful_count: i.helpful_count + 1 } : i
+    ));
+    setHelpfulSet(prev => new Set([...prev, feedbackId]));
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user) {
+        // Revert optimistic update if not logged in
+        setItems(prev => prev.map(i =>
+          i.id === feedbackId ? { ...i, helpful_count: i.helpful_count - 1 } : i
+        ));
+        setHelpfulSet(prev => { const s = new Set(prev); s.delete(feedbackId); return s; });
+        return;
+      }
 
-      // Upsert helpful vote
-      await supabase.from('feedback_helpful').insert({ feedback_id: feedbackId, user_id: user.id });
+      // Insert the vote record (will fail silently on duplicate due to PRIMARY KEY)
+      const { error: insertError } = await supabase
+        .from('feedback_helpful')
+        .insert({ feedback_id: feedbackId, user_id: user.id });
 
-      // Increment count optimistically
-      setItems(prev => prev.map(i =>
-        i.id === feedbackId ? { ...i, helpful_count: i.helpful_count + 1 } : i
-      ));
-      setHelpfulSet(prev => new Set([...prev, feedbackId]));
+      if (insertError) {
+        // Duplicate vote — revert the optimistic update
+        setItems(prev => prev.map(i =>
+          i.id === feedbackId ? { ...i, helpful_count: i.helpful_count - 1 } : i
+        ));
+        setHelpfulSet(prev => { const s = new Set(prev); s.delete(feedbackId); return s; });
+        return;
+      }
+
+      // Increment helpful_count in app_feedback
+      await supabase.rpc('increment_helpful_count', { feedback_id: feedbackId });
+
     } catch {
-      // Silently ignore duplicate vote errors
+      // Revert on any unexpected error
+      setItems(prev => prev.map(i =>
+        i.id === feedbackId ? { ...i, helpful_count: i.helpful_count - 1 } : i
+      ));
+      setHelpfulSet(prev => { const s = new Set(prev); s.delete(feedbackId); return s; });
     }
   };
+
+  // Load which items the current user has already voted on
+  const loadUserVotes = useCallback(async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase
+        .from('feedback_helpful')
+        .select('feedback_id')
+        .eq('user_id', user.id);
+      if (data) {
+        setHelpfulSet(new Set((data as Array<{ feedback_id: string }>).map(r => r.feedback_id)));
+      }
+    } catch {
+      // Non-fatal
+    }
+  }, [supabase]);
+
+  useEffect(() => { loadUserVotes(); }, [loadUserVotes]);
 
   const filtered = activeFilter === 'all'
     ? items
@@ -325,7 +388,7 @@ export function FeedbackWall({
       {/* Cards grid */}
       <div className={compact ? 'space-y-3' : 'grid grid-cols-1 md:grid-cols-2 gap-4'}>
         {displayed.map(item => (
-          <ReviewCard key={item.id} item={item} onHelpful={handleHelpful} />
+          <ReviewCard key={item.id} item={item} onHelpful={handleHelpful} hasVoted={helpfulSet.has(item.id)} />
         ))}
       </div>
 
