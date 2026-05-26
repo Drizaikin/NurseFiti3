@@ -11,6 +11,7 @@ import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Spinner } from '@/components/ui/Spinner';
 import { FeedbackWidget } from '@/components/shared/FeedbackWidget';
 import { FeedbackWall } from '@/components/shared/FeedbackWall';
+import { effectiveTier, PLAN_PRICING_META } from '@/lib/planLimits';
 
 // ── Time-aware greeting (uses browser local time = user's timezone) ────────
 function useGreeting() {
@@ -311,6 +312,7 @@ interface DashboardData {
     full_name: string; cadre: string; specialty?: string;
     exam_date: string; exam_cycle: string;
     xp: number; level: number; streak_count: number;
+    plan_tier: string; plan_expires_at: string | null;
   };
   stats: {
     total_questions_answered: number; correct_answers: number;
@@ -353,6 +355,7 @@ export default function DashboardPage() {
       const studentData = studentRes.data as {
         cadre: string; specialty?: string; exam_date: string; exam_cycle: string;
         xp: number; level: number; streak_count: number;
+        plan_tier: string; plan_expires_at: string | null;
       } | null;
 
       if (!studentData) { router.push('/onboarding'); return; }
@@ -378,6 +381,8 @@ export default function DashboardPage() {
           xp: studentData.xp ?? 0,
           level: studentData.level ?? 1,
           streak_count: studentData.streak_count ?? 0,
+          plan_tier: studentData.plan_tier ?? 'free',
+          plan_expires_at: studentData.plan_expires_at ?? null,
         },
         stats: {
           total_questions_answered: totalAnswers,
@@ -504,6 +509,29 @@ export default function DashboardPage() {
           <Card>
             <h3 className="font-heading font-bold text-[var(--color-text)] mb-4">Exam Details</h3>
             <div className="space-y-3 text-sm">
+              {/* Active plan */}
+              {(() => {
+                const tier = effectiveTier(data.student.plan_tier, data.student.plan_expires_at);
+                const meta = PLAN_PRICING_META[tier];
+                const isExpired = data.student.plan_tier !== 'free' && tier === 'free';
+                const expiresAt = data.student.plan_expires_at;
+                return (
+                  <div className="flex items-center justify-between pb-3 border-b border-[var(--color-border)]">
+                    <span className="text-[var(--color-text-secondary)]">Active Plan</span>
+                    <div className="flex flex-col items-end gap-0.5">
+                      <Badge variant={meta.badge} size="sm">{meta.label}</Badge>
+                      {isExpired && (
+                        <span className="text-[10px] text-error font-semibold">Expired</span>
+                      )}
+                      {!isExpired && tier !== 'free' && expiresAt && (
+                        <span className="text-[10px] text-[var(--color-text-secondary)]">
+                          until {new Date(expiresAt).toLocaleDateString('en-KE', { day: 'numeric', month: 'short' })}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })()}
               <div className="flex items-center justify-between">
                 <span className="text-[var(--color-text-secondary)]">Cadre</span>
                 <Badge variant="teal" size="sm">{data.student.cadre}</Badge>

@@ -58,9 +58,10 @@ export function CountdownTimer({ targetDate, onExpire, variant = 'full', classNa
 
   if (variant === 'exam') {
     // Exam timer — large, turns red under 20 min
+    // Always on a dark background (#0A1A1A) so use white for normal state
     const isWarning = timeLeft.total < 20 * 60 * 1000;
     return (
-      <div className={`font-heading font-bold tabular-nums ${isWarning ? 'text-error' : 'text-[var(--color-text)]'} ${className}`}>
+      <div className={`font-heading font-bold tabular-nums ${isWarning ? 'text-error' : 'text-white'} ${className}`}>
         {pad(timeLeft.hours)}:{pad(timeLeft.minutes)}:{pad(timeLeft.seconds)}
       </div>
     );

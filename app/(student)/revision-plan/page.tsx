@@ -14,8 +14,10 @@ import toast from 'react-hot-toast';
 
 const PLAN_PRICING: Record<string, { price: number; label: string; variant: 'teal' | 'amber' | 'secondary' }> = {
   premium:  { price: 199,  label: 'Premium',  variant: 'amber' },
-  standard: { price: 499,  label: 'Standard',  variant: 'teal' },
-  free:     { price: 999,  label: 'Free',      variant: 'secondary' },
+  standard: { price: 499,  label: 'Standard', variant: 'teal' },
+  weekly:   { price: 499,  label: 'Weekly',   variant: 'teal' },
+  daily:    { price: 499,  label: 'Daily',    variant: 'teal' },
+  free:     { price: 999,  label: 'Free',     variant: 'secondary' },
 };
 
 const WORK_STATUS_OPTIONS = [
@@ -281,6 +283,8 @@ export default function RevisionPlanPage() {
               ? 'Premium: KSh 199 per generation + 1 free per billing cycle'
               : planTier === 'standard'
               ? 'Standard: KSh 499 per generation'
+              : planTier === 'daily' || planTier === 'weekly'
+              ? `${pricing.label}: KSh 499 per generation`
               : 'Free: KSh 999 per generation'}
           </p>
         </div>
