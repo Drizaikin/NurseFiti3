@@ -36,6 +36,55 @@ interface PracticeSession {
   xpEarned: number;
 }
 
+// Shape of what we persist in localStorage
+interface SavedSession {
+  questions: Question[];
+  currentQuestionIndex: number;
+  selectedUnit: string;
+  session: PracticeSession;
+  savedAt: number; // timestamp — sessions older than 24h are discarded
+}
+
+const STORAGE_KEY = 'nursefiti_practice_session';
+const SESSION_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+function loadSavedSession(): SavedSession | null {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const parsed: SavedSession = JSON.parse(raw);
+    // Discard sessions older than 24 hours
+    if (Date.now() - parsed.savedAt > SESSION_TTL_MS) {
+      localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    // Must have at least one unanswered question remaining
+    if (parsed.currentQuestionIndex >= parsed.questions.length) {
+      localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function saveSession(data: SavedSession) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch {
+    // localStorage may be unavailable (private browsing quota)
+  }
+}
+
+function clearSavedSession() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // ignore
+  }
+}
+
 export default function PracticePage() {
   const router = useRouter();
   const supabase = createClient();
@@ -53,8 +102,11 @@ export default function PracticePage() {
   const [selectedUnit, setSelectedUnit] = useState<string>('all');
   const [units, setUnits] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(true);
-  // How many questions the student has already answered today
   const [answeredToday, setAnsweredToday] = useState(0);
+
+  // Resume prompt state
+  const [savedSession, setSavedSession] = useState<SavedSession | null>(null);
+  const [showResumePrompt, setShowResumePrompt] = useState(false);
 
   useEffect(() => {
     fetchStudentProfile();
@@ -82,6 +134,13 @@ export default function PracticePage() {
           fetchUnits(profile.cadre),
           fetchAnsweredToday(user.id),
         ]);
+
+        // Check for a saved session after profile is loaded
+        const saved = loadSavedSession();
+        if (saved && saved.questions.length > 0) {
+          setSavedSession(saved);
+          setShowResumePrompt(true);
+        }
       }
     } catch (error) {
       console.error('Error fetching profile:', error);
@@ -119,17 +178,33 @@ export default function PracticePage() {
     }
   };
 
+  // Resume the saved session
+  const handleResume = () => {
+    if (!savedSession) return;
+    setQuestions(savedSession.questions);
+    setCurrentQuestionIndex(savedSession.currentQuestionIndex);
+    setSelectedUnit(savedSession.selectedUnit);
+    setSession(savedSession.session);
+    setShowResumePrompt(false);
+    setShowFilters(false);
+  };
+
+  // Discard saved session and go to filter screen
+  const handleStartFresh = () => {
+    clearSavedSession();
+    setSavedSession(null);
+    setShowResumePrompt(false);
+  };
+
   const startPractice = async () => {
     const limits = getLimits(planTier);
 
-    // Enforce daily limit for free users
     if (limits.practiceQuestionsPerDay !== Infinity && answeredToday >= limits.practiceQuestionsPerDay) {
-      return; // UI already shows the paywall — button is disabled
+      return;
     }
 
     setIsLoading(true);
     try {
-      // How many questions can we still serve today?
       const remaining = limits.practiceQuestionsPerDay === Infinity
         ? 20
         : Math.min(20, limits.practiceQuestionsPerDay - answeredToday);
@@ -154,10 +229,21 @@ export default function PracticePage() {
       }
 
       const shuffled = [...data].sort(() => Math.random() - 0.5);
+      const newSession: PracticeSession = { questionsAnswered: 0, correctAnswers: 0, xpEarned: 0 };
+
       setQuestions(shuffled);
       setCurrentQuestionIndex(0);
       setShowFilters(false);
-      setSession({ questionsAnswered: 0, correctAnswers: 0, xpEarned: 0 });
+      setSession(newSession);
+
+      // Persist the new session immediately
+      saveSession({
+        questions: shuffled,
+        currentQuestionIndex: 0,
+        selectedUnit,
+        session: newSession,
+        savedAt: Date.now(),
+      });
     } catch (error) {
       console.error('Error:', error);
     } finally {
@@ -181,12 +267,28 @@ export default function PracticePage() {
       });
 
       const xpGained = isCorrect ? 8 : 0;
-      setSession(prev => ({
-        questionsAnswered: prev.questionsAnswered + 1,
-        correctAnswers: prev.correctAnswers + (isCorrect ? 1 : 0),
-        xpEarned: prev.xpEarned + xpGained,
-      }));
+      const updatedSession: PracticeSession = {
+        questionsAnswered: session.questionsAnswered + 1,
+        correctAnswers: session.correctAnswers + (isCorrect ? 1 : 0),
+        xpEarned: session.xpEarned + xpGained,
+      };
+      setSession(updatedSession);
       setAnsweredToday(prev => prev + 1);
+
+      // Persist progress after every answer — next question index is currentQuestionIndex + 1
+      const nextIndex = currentQuestionIndex + 1;
+      if (nextIndex < questions.length) {
+        saveSession({
+          questions,
+          currentQuestionIndex: nextIndex,
+          selectedUnit,
+          session: updatedSession,
+          savedAt: Date.now(),
+        });
+      } else {
+        // All questions answered — clear the saved session
+        clearSavedSession();
+      }
 
       if (isCorrect) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -236,6 +338,7 @@ export default function PracticePage() {
       && answeredToday >= limits.practiceQuestionsPerDay;
 
     if (hitDailyLimit || currentQuestionIndex >= questions.length - 1) {
+      clearSavedSession();
       setShowFilters(true);
       setQuestions([]);
     } else {
@@ -244,6 +347,7 @@ export default function PracticePage() {
   };
 
   const handleEndSession = () => {
+    // Session is already saved in localStorage — user can resume later
     setShowFilters(true);
     setQuestions([]);
     setCurrentQuestionIndex(0);
@@ -262,6 +366,43 @@ export default function PracticePage() {
   const dailyLimit = limits.practiceQuestionsPerDay;
   const limitReached = dailyLimit !== Infinity && answeredToday >= dailyLimit;
   const remaining = dailyLimit === Infinity ? null : Math.max(0, dailyLimit - answeredToday);
+
+  // ── RESUME PROMPT ──────────────────────────────────────────────────────────
+  if (showResumePrompt && savedSession) {
+    const questionsLeft = savedSession.questions.length - savedSession.currentQuestionIndex;
+    const unitLabel = savedSession.selectedUnit === 'all' ? 'All Units' : savedSession.selectedUnit;
+    return (
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-6">
+          <h1 className="text-3xl font-heading font-bold text-primary mb-2">Practice Questions</h1>
+          <p className="text-neutral-mid">You have an unfinished session</p>
+        </div>
+        <Card className="border-primary/30 bg-primary/5 dark:bg-primary/10">
+          <div className="flex items-start gap-4">
+            <div className="text-3xl">📖</div>
+            <div className="flex-1">
+              <h2 className="text-lg font-heading font-bold text-primary mb-1">Resume where you left off?</h2>
+              <p className="text-sm text-neutral-mid mb-1">
+                Unit: <span className="font-semibold text-[var(--color-text)]">{unitLabel}</span>
+              </p>
+              <p className="text-sm text-neutral-mid mb-4">
+                <span className="font-semibold text-[var(--color-text)]">{questionsLeft}</span> question{questionsLeft !== 1 ? 's' : ''} remaining ·{' '}
+                <span className="font-semibold text-success">{savedSession.session.correctAnswers}</span> correct so far
+              </p>
+              <div className="flex gap-3">
+                <Button variant="primary" onClick={handleResume}>
+                  Resume Session →
+                </Button>
+                <Button variant="outline" onClick={handleStartFresh}>
+                  Start Fresh
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   // ── FILTER / START SCREEN ──────────────────────────────────────────────────
   if (showFilters || questions.length === 0) {
@@ -301,7 +442,7 @@ export default function PracticePage() {
           </div>
         )}
 
-        {/* Session Summary (if completed) */}
+        {/* Session Summary (if just completed) */}
         {session.questionsAnswered > 0 && (
           <Card className="mb-6 bg-primary/5 dark:bg-primary/10 border-primary/20">
             <h2 className="text-xl font-heading font-bold text-primary mb-4">Session Complete! 🎉</h2>
@@ -389,7 +530,9 @@ export default function PracticePage() {
             )}
           </p>
         </div>
-        <Button variant="ghost" onClick={handleEndSession}>End Session</Button>
+        <Button variant="ghost" onClick={handleEndSession}>
+          Pause &amp; Save
+        </Button>
       </div>
 
       <div className="grid grid-cols-3 gap-4 mb-6">
