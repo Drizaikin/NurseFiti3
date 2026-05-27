@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Spinner } from '@/components/ui/Spinner';
 import { CountdownTimer } from '@/components/shared/CountdownTimer';
 import { getLimits, effectiveTier, getWeekStart } from '@/lib/planLimits';
+import { AskAI } from '@/components/student/AskAI';
 import toast from 'react-hot-toast';
 
 interface Question {
@@ -447,8 +448,11 @@ export default function MockExamPage() {
                       {showRationale === q.id ? 'Hide' : 'Show'} explanation
                     </button>
                     {showRationale === q.id && (
-                      <div className="mt-2 p-3 bg-primary-light dark:bg-primary/10 rounded-lg text-xs text-[var(--color-text)]">
-                        {q.rationale}
+                      <div className="mt-2 space-y-3">
+                        <div className="p-3 bg-primary-light dark:bg-primary/10 rounded-lg text-xs text-[var(--color-text)]">
+                          {q.rationale}
+                        </div>
+                        <AskAI question={q} />
                       </div>
                     )}
                   </div>

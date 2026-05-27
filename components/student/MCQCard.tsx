@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
+import { AskAI } from './AskAI';
 
 interface MCQCardProps {
   question: {
@@ -216,6 +217,9 @@ export function MCQCard({ question, onAnswer, showFeedback = true }: MCQCardProp
               )}
             </div>
           )}
+
+          {/* AI deeper explanation */}
+          <AskAI question={question} />
         </div>
       )}
     </Card>
