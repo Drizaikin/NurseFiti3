@@ -13,7 +13,21 @@
  */
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const IntaSend = require('intasend-node');
+const IntaSend = require('intasend-node') as new (
+  publishableKey: string,
+  secretKey: string,
+  isTest: boolean
+) => {
+  collection: () => {
+    charge: (params: Record<string, unknown>) => Promise<Record<string, unknown>>;
+    status: (invoiceId: string) => Promise<Record<string, unknown>>;
+    mpesaStkPush: (params: Record<string, unknown>) => Promise<Record<string, unknown>>;
+  };
+  payouts: () => {
+    mpesa: (params: Record<string, unknown>) => Promise<Record<string, unknown>>;
+    approve: (response: Record<string, unknown>) => Promise<Record<string, unknown>>;
+  };
+};
 
 const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_INTASEND_PUBLISHABLE_KEY ?? '';
 const SECRET_KEY      = process.env.INTASEND_SECRET_KEY ?? '';

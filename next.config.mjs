@@ -21,6 +21,8 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['recharts', 'framer-motion'],
   },
+  // Tell Next.js not to bundle these CJS packages — load them at runtime instead
+  serverExternalPackages: ['intasend-node'],
   eslint: {
     ignoreDuringBuilds: true,
   },
