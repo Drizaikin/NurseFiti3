@@ -1,8 +1,8 @@
 /**
- * POST /api/paystack/initialize
+ * POST /api/intasend/initialize
  *
- * Initializes a Paystack transaction and returns the authorization_url
- * for the client to redirect to (or open in a popup via Paystack Inline JS).
+ * Creates an IntaSend checkout session and returns the hosted checkout URL
+ * for the client to redirect to.
  *
  * Body:
  *   type        — 'plan_subscription' | 'revision_plan' | 'session_booking'
@@ -11,12 +11,12 @@
  *   metadata    — optional extra data stored on the transaction
  *
  * Returns:
- *   { authorization_url, reference, access_code }
+ *   { checkout_url, reference }
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createRouteClient } from '@/lib/supabase/server';
-import { initializeTransaction, generateReference } from '@/lib/paystack';
+import { createCheckout, generateReference } from '@/lib/intasend';
 import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
@@ -38,12 +38,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Get user email and phone
+    // Get user profile
     const { data: profile } = await supabase
       .from('profiles')
       .select('email, phone, full_name')
       .eq('id', user.id)
-      .single();
+      .single() as any;
 
     if (!profile) {
       return NextResponse.json({ error: 'Profile not found' }, { status: 404 });
@@ -58,23 +58,33 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { type, amountKsh, referenceId, metadata } = body.data;
+    const { type, amountKsh, referenceId } = body.data;
     const reference = generateReference('NF');
 
-    // Initialize with Paystack
-    const result = await initializeTransaction({
+    // Split full name into first/last for IntaSend
+    const nameParts = (profile.full_name ?? '').trim().split(' ');
+    const firstName = nameParts[0] ?? '';
+    const lastName = nameParts.slice(1).join(' ') || undefined;
+
+    // Normalize phone for IntaSend (needs 254... format)
+    const rawPhone = (profile.phone ?? '').replace(/\s/g, '');
+    const phone = rawPhone.startsWith('0')
+      ? `254${rawPhone.slice(1)}`
+      : rawPhone.startsWith('+')
+      ? rawPhone.slice(1)
+      : rawPhone || undefined;
+
+    // Create IntaSend checkout
+    const result = await createCheckout({
       email: profile.email,
-      amountKsh,
-      reference,
-      callbackUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/api/paystack/verify?reference=${reference}`,
-      metadata: {
-        user_id: user.id,
-        user_name: profile.full_name,
-        payment_type: type,
-        reference_id: referenceId ?? null,
-        ...metadata,
-      },
-      channels: ['card', 'bank', 'mobile_money', 'bank_transfer'],
+      phone_number: phone,
+      first_name: firstName,
+      last_name: lastName,
+      amount: amountKsh,
+      currency: 'KES',
+      api_ref: reference,
+      redirect_url: `${process.env.NEXT_PUBLIC_SITE_URL}/api/intasend/verify?reference=${reference}`,
+      comment: `NurseFiti ${type.replace(/_/g, ' ')}`,
     });
 
     // Store pending payment record
@@ -84,20 +94,20 @@ export async function POST(req: NextRequest) {
       amount: amountKsh,
       currency: 'KES',
       customer_phone: profile.phone,
-      paystack_reference: reference,
-      paystack_access_code: result.access_code,
-      paystack_authorization_url: result.authorization_url,
+      intasend_reference: reference,
+      intasend_checkout_id: result.id,
+      intasend_checkout_url: result.url,
+      intasend_signature: result.signature,
       status: 'pending',
       reference_id: referenceId ?? null,
     } as any);
 
     return NextResponse.json({
-      authorization_url: result.authorization_url,
-      access_code: result.access_code,
-      reference: result.reference,
+      checkout_url: result.url,
+      reference,
     });
   } catch (err) {
-    console.error('[paystack/initialize]', err);
+    console.error('[intasend/initialize]', err instanceof Error ? err.message : err);
     return NextResponse.json(
       { error: err instanceof Error ? err.message : 'Payment initialization failed' },
       { status: 500 }

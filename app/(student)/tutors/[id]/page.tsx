@@ -318,7 +318,7 @@ export default function TutorProfilePage() {
 
   const initiatePayment = async (sessionId: string, amountKsh: number) => {
     try {
-      const res = await fetch('/api/paystack/initialize', {
+      const res = await fetch('/api/intasend/initialize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -329,8 +329,8 @@ export default function TutorProfilePage() {
         }),
       });
       const data = await res.json();
-      if (data.authorization_url) {
-        window.location.href = data.authorization_url;
+      if (data.checkout_url) {
+        window.location.href = data.checkout_url;
       } else {
         throw new Error(data.error ?? 'Payment initialization failed');
       }

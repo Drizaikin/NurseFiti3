@@ -118,7 +118,7 @@ export default function TutorEarningsPage() {
   const requestPayout = async () => {
     setRequestingPayout(true);
     try {
-      const res = await fetch('/api/paystack/payout', { method: 'POST' });
+      const res = await fetch('/api/intasend/payout', { method: 'POST' });
       const result = await res.json();
       if (!res.ok) throw new Error(result.error ?? 'Payout failed');
       toast.success(result.message ?? 'Payout initiated successfully!');

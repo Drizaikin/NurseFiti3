@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Spinner } from '@/components/ui/Spinner';
 import toast from 'react-hot-toast';
+import { effectiveTier } from '@/lib/planLimits';
 
 interface Student {
   id: string;
@@ -140,7 +141,10 @@ export default function AdminStudentsPage() {
                   </td>
                   <td className="px-4 py-3 text-neutral-mid">{s.cadre}</td>
                   <td className="px-4 py-3">
-                    <Badge variant={TIER_BADGE[s.plan_tier] ?? 'secondary'} size="sm">{s.plan_tier}</Badge>
+                    {(() => {
+                      const tier = effectiveTier(s.plan_tier, s.plan_expires_at);
+                      return <Badge variant={TIER_BADGE[tier] ?? 'secondary'} size="sm">{tier}</Badge>;
+                    })()}
                   </td>
                   <td className="px-4 py-3 text-xs text-neutral-mid">
                     {s.plan_expires_at

@@ -1,9 +1,9 @@
 /**
- * GET /api/paystack/verify?reference=NF-xxx
+ * GET /api/intasend/verify?reference=NF-xxx
  *
- * Called after Paystack redirects back to our site (callback_url).
- * Verifies the transaction server-side, updates the payment record,
- * and provisions access (plan, revision plan, or session confirmation).
+ * Called after IntaSend redirects back to our site (redirect_url).
+ * Looks up the payment record by our api_ref, verifies the checkout status
+ * with IntaSend, updates the payment record, and provisions access.
  *
  * Redirects to:
  *   /dashboard?payment=success&type=<type>   on success
@@ -12,8 +12,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createRouteClient } from '@/lib/supabase/server';
-import { verifyTransaction } from '@/lib/paystack';
-import { addDays, addMonths } from 'date-fns';
+import { verifyCheckout } from '@/lib/intasend';
+import { addDays } from 'date-fns';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,24 +28,12 @@ export async function GET(req: NextRequest) {
   try {
     const supabase = createRouteClient();
 
-    // Verify with Paystack
-    const txn = await verifyTransaction(reference);
-
-    if (txn.status !== 'success') {
-      await supabase
-        .from('payments')
-        .update({ status: 'failed' } as any)
-        .eq('paystack_reference' as any, reference);
-
-      return NextResponse.redirect(`${siteUrl}/dashboard?payment=failed&reason=${txn.status}`);
-    }
-
-    // Fetch our payment record
+    // Fetch our payment record by our own reference
     const { data: payment } = await supabase
       .from('payments')
       .select('*')
-      .eq('paystack_reference' as any, reference)
-      .single();
+      .eq('intasend_reference' as any, reference)
+      .single() as any;
 
     if (!payment) {
       return NextResponse.redirect(`${siteUrl}/dashboard?payment=failed&reason=not_found`);
@@ -58,15 +46,33 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    // Verify with IntaSend using the invoice_id stored at checkout creation
+    const invoiceId = (payment as any).intasend_checkout_id;
+
+    if (!invoiceId) {
+      return NextResponse.redirect(`${siteUrl}/dashboard?payment=failed&reason=missing_invoice_id`);
+    }
+
+    const txn = await verifyCheckout(invoiceId);
+
+    if (txn.state !== 'COMPLETE') {
+      await (supabase as any)
+        .from('payments')
+        .update({ status: 'failed' })
+        .eq('intasend_reference', reference);
+
+      return NextResponse.redirect(`${siteUrl}/dashboard?payment=failed&reason=${txn.state.toLowerCase()}`);
+    }
+
     // Mark payment as completed
-    await supabase
+    await (supabase as any)
       .from('payments')
       .update({
         status: 'completed',
-        paystack_receipt: txn.reference,
-        paystack_channel: txn.channel,
+        intasend_invoice_id: txn.invoice_id,
+        intasend_channel: txn.provider,
         completed_at: new Date().toISOString(),
-      } as any)
+      })
       .eq('id', (payment as any).id);
 
     // Provision access based on payment type
@@ -76,7 +82,7 @@ export async function GET(req: NextRequest) {
       `${siteUrl}${getSuccessRedirect((payment as any).type)}`
     );
   } catch (err) {
-    console.error('[paystack/verify]', err);
+    console.error('[intasend/verify]', err);
     return NextResponse.redirect(`${siteUrl}/dashboard?payment=failed&reason=server_error`);
   }
 }
@@ -89,7 +95,6 @@ export async function GET(req: NextRequest) {
 async function provisionAccess(supabase: any, payment: any, txn: any) {
   switch (payment.type) {
     case 'plan_subscription': {
-      // Determine plan tier and duration from amount
       const { tier, durationDays } = getPlanFromAmount(payment.amount);
       const expiresAt = addDays(new Date(), durationDays).toISOString();
 
@@ -101,27 +106,23 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
     }
 
     case 'revision_plan': {
-      // Mark the revision plan as paid so the generator unlocks
-      // The actual plan generation happens when the student submits the form
       await supabase
         .from('revision_plans')
-        .update({ payment_ref: txn.reference })
+        .update({ payment_ref: txn.invoice_id })
         .eq('id', payment.reference_id);
       break;
     }
 
     case 'session_booking': {
-      // Confirm the session and mark payment as paid
       await supabase
         .from('sessions')
         .update({
           status: 'confirmed',
           payment_status: 'paid',
-          payment_reference: txn.reference,
+          payment_reference: txn.invoice_id,
         })
         .eq('id', payment.reference_id);
 
-      // Create notifications for both student and tutor
       const { data: session } = await supabase
         .from('sessions')
         .select('student_id, tutor_id, session_date, start_time, topic')
@@ -165,9 +166,9 @@ function getPlanFromAmount(amountKsh: number): { tier: string; durationDays: num
 
 function getSuccessRedirect(type: string): string {
   switch (type) {
-    case 'revision_plan':    return '/revision-plan?payment=success';
-    case 'session_booking':  return '/bookings?payment=success';
+    case 'revision_plan':     return '/revision-plan?payment=success';
+    case 'session_booking':   return '/bookings?payment=success';
     case 'plan_subscription': return '/settings?payment=success';
-    default:                 return '/dashboard?payment=success';
+    default:                  return '/dashboard?payment=success';
   }
 }

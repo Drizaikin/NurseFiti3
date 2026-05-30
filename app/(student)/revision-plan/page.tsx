@@ -117,7 +117,7 @@ export default function RevisionPlanPage() {
 
   useEffect(() => { loadData(); }, [loadData]);
 
-  // Handle Paystack redirect back after payment
+  // Handle IntaSend redirect back after payment
   useEffect(() => {
     const payment = searchParams.get('payment');
     const ref = searchParams.get('reference');
@@ -135,7 +135,7 @@ export default function RevisionPlanPage() {
   const handlePay = async () => {
     setPageState('paying');
     try {
-      const res = await fetch('/api/paystack/initialize', {
+      const res = await fetch('/api/intasend/initialize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -146,7 +146,7 @@ export default function RevisionPlanPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'Payment initialization failed');
-      window.location.href = data.authorization_url;
+      window.location.href = data.checkout_url;
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Payment failed. Try again.');
       setPageState('form');
@@ -470,7 +470,7 @@ export default function RevisionPlanPage() {
             </div>
 
             <p className="text-xs text-center text-[var(--color-text-secondary)]">
-              Secure payment via Paystack · Card, bank transfer, or mobile money
+              Secure payment via IntaSend · M-Pesa, card, or bank transfer
             </p>
           </div>
         )}

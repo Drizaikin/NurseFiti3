@@ -355,6 +355,14 @@ export interface Database {
           amount: number;
           currency: string;
           customer_phone: string;
+          // IntaSend fields
+          intasend_reference: string | null;
+          intasend_checkout_id: string | null;
+          intasend_checkout_url: string | null;
+          intasend_signature: string | null;
+          intasend_invoice_id: string | null;
+          intasend_channel: string | null;
+          // Legacy Paystack fields (kept for backwards compatibility)
           paystack_reference: string | null;
           paystack_receipt: string | null;
           paystack_access_code: string | null;
@@ -375,8 +383,9 @@ export interface Database {
           tutor_id: string;
           amount: number;
           currency: string;
-          recipient_code: string | null;
-          transfer_code: string | null;
+          tracking_id: string | null;       // IntaSend send-money tracking ID
+          recipient_code: string | null;    // Legacy Paystack field
+          transfer_code: string | null;     // Legacy Paystack field
           status: PayoutStatus;
           reason: string | null;
           initiated_at: string;

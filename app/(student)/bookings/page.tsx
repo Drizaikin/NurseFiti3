@@ -305,13 +305,13 @@ export default function BookingsPage() {
                       {session.status === 'confirmed' && session.payment_status === 'pending' && (
                         <button
                           onClick={async () => {
-                            const res = await fetch('/api/paystack/initialize', {
+                            const res = await fetch('/api/intasend/initialize', {
                               method: 'POST',
                               headers: { 'Content-Type': 'application/json' },
                               body: JSON.stringify({ type: 'session_booking', amountKsh: session.gross_amount, referenceId: session.id }),
                             });
                             const data = await res.json();
-                            if (data.authorization_url) window.location.href = data.authorization_url;
+                            if (data.checkout_url) window.location.href = data.checkout_url;
                           }}
                           className="px-3 py-1 rounded-lg bg-accent text-dark text-xs font-bold hover:bg-accent/80 transition-colors"
                         >

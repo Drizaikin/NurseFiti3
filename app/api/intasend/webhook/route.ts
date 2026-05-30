@@ -1,72 +1,65 @@
 /**
- * POST /api/paystack/webhook
+ * POST /api/intasend/webhook
  *
- * Receives Paystack webhook events. This is the server-to-server notification
- * that fires regardless of whether the user completes the redirect flow.
+ * Receives IntaSend webhook events. This is the server-to-server notification
+ * that fires whenever a payment state changes.
  *
- * Set this URL in your Paystack dashboard:
- *   https://nursefiti.com/api/paystack/webhook
+ * Set this URL in your IntaSend dashboard under Webhooks:
+ *   https://nursefiti.com/api/intasend/webhook
  *
- * Events handled:
- *   charge.success       — payment completed
- *   transfer.success     — tutor payout completed
- *   transfer.failed      — tutor payout failed
- *   transfer.reversed    — tutor payout reversed
+ * Also set a "challenge" string in the dashboard and add it to your env:
+ *   INTASEND_WEBHOOK_CHALLENGE=your-challenge-string
+ *
+ * Events handled (collection events — state field):
+ *   COMPLETE  — payment completed
+ *   FAILED    — payment failed
+ *
+ * Send money events (status field):
+ *   Completed — tutor payout completed
+ *   Failed Processing — tutor payout failed
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { verifyWebhookSignature } from '@/lib/paystack';
+import { verifyWebhookChallenge } from '@/lib/intasend';
 
 export async function POST(req: NextRequest) {
-  // Read raw body for signature verification
-  const rawBody = await req.text();
-  const signature = req.headers.get('x-paystack-signature');
-
-  // Verify the request is genuinely from Paystack
-  if (!verifyWebhookSignature(rawBody, signature)) {
-    console.warn('[paystack/webhook] Invalid signature — request rejected');
-    return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
-  }
-
-  let event: { event: string; data: Record<string, unknown> };
+  let body: Record<string, unknown>;
   try {
-    event = JSON.parse(rawBody);
+    body = await req.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
+  }
+
+  // Validate the challenge to confirm the request is from IntaSend
+  const challenge = body.challenge as string | undefined;
+  if (!verifyWebhookChallenge(challenge)) {
+    console.warn('[intasend/webhook] Invalid challenge — request rejected');
+    return NextResponse.json({ error: 'Invalid challenge' }, { status: 401 });
   }
 
   const supabase = createAdminClient();
 
   try {
-    switch (event.event) {
-      case 'charge.success':
-        await handleChargeSuccess(supabase, event.data);
-        break;
-
-      case 'transfer.success':
-        await handleTransferUpdate(supabase, event.data, 'success');
-        break;
-
-      case 'transfer.failed':
-        await handleTransferUpdate(supabase, event.data, 'failed');
-        break;
-
-      case 'transfer.reversed':
-        await handleTransferUpdate(supabase, event.data, 'reversed');
-        break;
-
-      default:
-        // Acknowledge unknown events without error
-        break;
+    // Collection event — has invoice_id and state
+    if (body.invoice_id && body.state) {
+      await handleCollectionEvent(supabase, body);
+      return NextResponse.json({ received: true });
     }
+
+    // Send money event — has file_id and status
+    if (body.file_id && body.status) {
+      await handleSendMoneyEvent(supabase, body);
+      return NextResponse.json({ received: true });
+    }
+
+    // Unknown event shape — acknowledge without error
+    return NextResponse.json({ received: true });
   } catch (err) {
-    console.error(`[paystack/webhook] Error handling ${event.event}:`, err);
-    // Return 200 so Paystack doesn't retry — log the error for investigation
+    console.error('[intasend/webhook] Error handling event:', err);
+    // Return 200 so IntaSend doesn't deactivate the webhook
     return NextResponse.json({ received: true, error: 'Processing error' });
   }
-
-  return NextResponse.json({ received: true });
 }
 
 // ---------------------------------------------------------------------------
@@ -74,51 +67,72 @@ export async function POST(req: NextRequest) {
 // ---------------------------------------------------------------------------
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function handleChargeSuccess(supabase: any, data: any) {
-  const reference = data.reference as string;
-  const channel = data.channel as string;
+async function handleCollectionEvent(supabase: any, data: any) {
+  const invoiceId = data.invoice_id as string;
+  const state = data.state as string;
+  const apiRef = data.api_ref as string; // our reference (NF-xxx)
+  const provider = data.provider as string;
 
-  // Find our payment record
+  // Find our payment record by our own api_ref
   const { data: payment } = await supabase
     .from('payments')
     .select('*')
-    .eq('paystack_reference', reference)
+    .eq('intasend_reference', apiRef)
     .single();
 
   if (!payment) {
-    console.warn(`[paystack/webhook] Payment not found for reference: ${reference}`);
+    console.warn(`[intasend/webhook] Payment not found for api_ref: ${apiRef}`);
     return;
   }
 
-  // Idempotency — already processed (e.g. via the redirect verify route)
-  if (payment.status === 'completed') return;
+  if (state === 'COMPLETE') {
+    // Idempotency — already processed
+    if (payment.status === 'completed') return;
 
-  // Mark as completed
-  await supabase
-    .from('payments')
-    .update({
-      status: 'completed',
-      paystack_receipt: reference,
-      paystack_channel: channel,
-      completed_at: new Date().toISOString(),
-    })
-    .eq('id', payment.id);
+    await supabase
+      .from('payments')
+      .update({
+        status: 'completed',
+        intasend_invoice_id: invoiceId,
+        intasend_channel: provider,
+        completed_at: new Date().toISOString(),
+      })
+      .eq('id', payment.id);
 
-  // Provision access
-  await provisionAccess(supabase, payment, data);
+    // Pass a txnData shape consistent with what provisionAccess expects
+    await provisionAccess(supabase, payment, { invoice_id: invoiceId, provider });
+  } else if (state === 'FAILED') {
+    if (payment.status === 'failed') return;
+
+    await supabase
+      .from('payments')
+      .update({ status: 'failed' })
+      .eq('id', payment.id);
+  }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function handleTransferUpdate(supabase: any, data: any, status: string) {
-  const transferCode = data.transfer_code as string;
+async function handleSendMoneyEvent(supabase: any, data: any) {
+  const trackingId = data.tracking_id as string;
+  const status = data.status as string;
+
+  // Map IntaSend send-money status to our payout status
+  let payoutStatus: string;
+  if (status === 'Completed') {
+    payoutStatus = 'success';
+  } else if (status === 'Failed Processing') {
+    payoutStatus = 'failed';
+  } else {
+    payoutStatus = 'processing';
+  }
 
   await supabase
     .from('tutor_payouts')
     .update({
-      status,
-      completed_at: status === 'success' ? new Date().toISOString() : null,
+      status: payoutStatus,
+      completed_at: payoutStatus === 'success' ? new Date().toISOString() : null,
     })
-    .eq('transfer_code', transferCode);
+    .eq('tracking_id', trackingId);
 }
 
 // ---------------------------------------------------------------------------
@@ -144,11 +158,9 @@ async function provisionAccess(supabase: any, payment: any, txnData: any) {
       if (payment.reference_id) {
         await supabase
           .from('revision_plans')
-          .update({ payment_ref: txnData.reference })
+          .update({ payment_ref: txnData.invoice_id })
           .eq('id', payment.reference_id);
       } else {
-        // Payment before plan creation — mark user as having paid
-        // The generate route will check for a completed revision_plan payment
         await supabase
           .from('payments')
           .update({ status: 'completed' })
@@ -165,11 +177,10 @@ async function provisionAccess(supabase: any, payment: any, txnData: any) {
         .update({
           status: 'confirmed',
           payment_status: 'paid',
-          payment_reference: txnData.reference,
+          payment_reference: txnData.invoice_id,
         })
         .eq('id', payment.reference_id);
 
-      // Notifications
       const { data: session } = await supabase
         .from('sessions')
         .select('student_id, tutor_id, session_date, start_time, topic')

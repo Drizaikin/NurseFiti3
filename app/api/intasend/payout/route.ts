@@ -1,27 +1,19 @@
 /**
- * POST /api/paystack/payout
+ * POST /api/intasend/payout
  *
- * Initiates a tutor payout via Paystack Transfers (M-Pesa mobile money).
+ * Initiates a tutor payout via IntaSend M-Pesa B2C.
  * Only callable on Mondays. Minimum payout: KSh 1,000.
  *
  * Flow:
  *   1. Verify tutor identity + pending payout amount
- *   2. Create/reuse Paystack transfer recipient (M-Pesa)
- *   3. Initiate transfer
- *   4. Store payout record in tutor_payouts table
- *
- * Note: Paystack Transfers must be enabled on your dashboard and
- * your account must have sufficient balance.
+ *   2. Initiate M-Pesa B2C transfer via IntaSend
+ *   3. Store payout record in tutor_payouts table
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
-import {
-  createTransferRecipient,
-  initiateTransfer,
-  generateReference,
-} from '@/lib/paystack';
+import { initiateMpesaPayout, generateReference } from '@/lib/intasend';
 
 export const dynamic = 'force-dynamic';
 
@@ -43,7 +35,7 @@ export async function POST(req: NextRequest) {
       .from('profiles')
       .select('role, full_name')
       .eq('id', user.id)
-      .single();
+      .single() as any;
 
     if (!profile || profile.role !== 'tutor') {
       return NextResponse.json({ error: 'Forbidden — tutors only' }, { status: 403 });
@@ -54,7 +46,7 @@ export async function POST(req: NextRequest) {
       .from('tutor_profiles')
       .select('mpesa_number, rate_per_hour, verification_status')
       .eq('id', user.id)
-      .single();
+      .single() as any;
 
     if (!tutorProfile || tutorProfile.verification_status !== 'verified') {
       return NextResponse.json(
@@ -70,7 +62,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Calculate pending payout amount (completed sessions, payment paid, not yet paid out)
+    // Calculate pending payout amount
     const { data: sessions } = await supabase
       .from('sessions')
       .select('net_amount')
@@ -90,8 +82,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Create Paystack transfer recipient (M-Pesa)
-    // Normalize phone: strip leading 0, add 254
+    // Normalize phone: strip leading 0, add 254 country code
     const rawPhone = tutorProfile.mpesa_number.replace(/\s/g, '');
     const normalizedPhone = rawPhone.startsWith('0')
       ? `254${rawPhone.slice(1)}`
@@ -99,39 +90,30 @@ export async function POST(req: NextRequest) {
       ? rawPhone.slice(1)
       : rawPhone;
 
-    let recipientCode: string;
+    // Initiate M-Pesa B2C payout via IntaSend
+    let result;
     try {
-      const recipient = await createTransferRecipient({
+      result = await initiateMpesaPayout({
+        amount: pendingAmount,
+        account: normalizedPhone,
         name: profile.full_name,
-        accountNumber: normalizedPhone,
-        bankCode: 'MPESA',
+        narrative: `NurseFiti tutor payout — ${new Date().toLocaleDateString('en-KE')}`,
         currency: 'KES',
       });
-      recipientCode = recipient.recipient_code;
     } catch (err) {
-      console.error('[payout] Failed to create recipient:', err);
+      console.error('[payout] Failed to initiate payout:', err);
       return NextResponse.json(
-        { error: 'Failed to set up payout recipient. Check your M-Pesa number.' },
+        { error: 'Failed to initiate payout. Please try again or contact support.' },
         { status: 500 }
       );
     }
-
-    // Initiate transfer
-    const reference = generateReference('PAYOUT');
-    const transfer = await initiateTransfer({
-      amountKsh: pendingAmount,
-      recipientCode,
-      reason: `NurseFiti tutor payout — ${new Date().toLocaleDateString('en-KE')}`,
-      reference,
-    });
 
     // Record payout
     await adminSupabase.from('tutor_payouts').insert({
       tutor_id: user.id,
       amount: pendingAmount,
       currency: 'KES',
-      recipient_code: recipientCode,
-      transfer_code: transfer.transfer_code,
+      tracking_id: result.tracking_id,
       status: 'processing',
       reason: `Payout for completed sessions`,
     } as any);
@@ -139,11 +121,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       amount: pendingAmount,
-      transfer_code: transfer.transfer_code,
+      tracking_id: result.tracking_id,
       message: `KSh ${pendingAmount.toLocaleString()} payout initiated to ${tutorProfile.mpesa_number}. You'll receive it within minutes.`,
     });
   } catch (err) {
-    console.error('[paystack/payout]', err);
+    console.error('[intasend/payout]', err);
     return NextResponse.json(
       { error: err instanceof Error ? err.message : 'Payout failed' },
       { status: 500 }

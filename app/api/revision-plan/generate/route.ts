@@ -8,7 +8,7 @@
  *   studyHoursWeekday — hours available per weekday (1–8)
  *   studyHoursWeekend — hours available per weekend day (1–12)
  *   workSchoolStatus  — 'working_full_time' | 'working_part_time' | 'student_only'
- *   paymentRef        — Paystack reference confirming payment (or 'free_premium' for premium free generation)
+ *   paymentRef        — IntaSend reference confirming payment (or 'free_premium' for premium free generation)
  *
  * Returns:
  *   { planId, shareToken, planHtml }
@@ -402,7 +402,7 @@ export async function POST(req: NextRequest) {
       const { data: payment } = await supabase
         .from('payments')
         .select('status, type')
-        .eq('paystack_reference' as any, paymentRef)
+        .eq('intasend_reference' as any, paymentRef)
         .eq('user_id', user.id)
         .single();
 

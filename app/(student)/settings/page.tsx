@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Spinner } from '@/components/ui/Spinner';
 import toast from 'react-hot-toast';
+import { effectiveTier, PLAN_PRICING_META } from '@/lib/planLimits';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -21,6 +22,7 @@ interface ProfileData {
   exam_date: string;
   exam_cycle: string;
   plan_tier: string;
+  plan_expires_at: string | null;
 }
 
 interface NotifPrefs {
@@ -169,38 +171,38 @@ const PLANS = [
   },
 ];
 
-function SubscriptionCard({ planTier, onUpgradeSuccess }: { planTier: string; onUpgradeSuccess: () => void }) {
+function SubscriptionCard({ planTier, planExpiresAt, onUpgradeSuccess }: {
+  planTier: string;
+  planExpiresAt: string | null;
+  onUpgradeSuccess: () => void;
+}) {
   const [isUpgrading, setIsUpgrading] = useState<string | null>(null);
+
+  // Use the effective tier — falls back to 'free' if expired
+  const activeTier = effectiveTier(planTier, planExpiresAt);
+  const isExpired = planTier !== 'free' && activeTier === 'free';
+  const meta = PLAN_PRICING_META[activeTier];
 
   const handleUpgrade = async (amountKsh: number, tier: string) => {
     setIsUpgrading(tier);
     try {
-      const res = await fetch('/api/paystack/initialize', {
+      const res = await fetch('/api/intasend/initialize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'plan_subscription', amountKsh }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'Payment initialization failed');
-      window.location.href = data.authorization_url;
+      window.location.href = data.checkout_url;
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Could not start payment. Try again.');
       setIsUpgrading(null);
     }
   };
 
-  const PLAN_META: Record<string, { label: string; variant: 'teal' | 'amber' | 'secondary' }> = {
-    premium:  { label: 'Premium',  variant: 'amber' },
-    standard: { label: 'Standard', variant: 'teal' },
-    weekly:   { label: 'Weekly',   variant: 'teal' },
-    daily:    { label: 'Daily',    variant: 'teal' },
-    free:     { label: 'Free',     variant: 'secondary' },
-  };
-  const current = PLAN_META[planTier] ?? PLAN_META.free;
-
   // Tier ordering for "show plans above current"
   const TIER_ORDER: Record<string, number> = { free: 0, daily: 1, weekly: 2, standard: 3, premium: 4 };
-  const currentOrder = TIER_ORDER[planTier] ?? 0;
+  const currentOrder = TIER_ORDER[activeTier] ?? 0;
 
   const planSummary: Record<string, string> = {
     premium:  '✅ Premium — KSh 3,500 / 90-day cycle',
@@ -221,20 +223,35 @@ function SubscriptionCard({ planTier, onUpgradeSuccess }: { planTier: string; on
     <Card>
       <div className="flex items-center justify-between mb-5">
         <h2 className="text-lg font-heading font-bold text-[var(--color-text)]">Subscription</h2>
-        <Badge variant={current.variant}>{current.label} Plan</Badge>
+        <Badge variant={meta.badge}>{meta.label} Plan</Badge>
       </div>
 
       {/* Current plan summary */}
-      <div className="p-4 rounded-xl bg-primary-xlight dark:bg-primary/5 border border-primary/20 mb-5">
-        <p className="text-sm font-semibold text-[var(--color-text)]">{planSummary[planTier] ?? planSummary.free}</p>
-        <p className="text-xs text-[var(--color-text-secondary)] mt-1">{planSubtext[planTier] ?? planSubtext.free}</p>
+      <div className={`p-4 rounded-xl border mb-5 ${isExpired ? 'bg-error/5 border-error/20' : 'bg-primary-xlight dark:bg-primary/5 border-primary/20'}`}>
+        {isExpired ? (
+          <>
+            <p className="text-sm font-semibold text-error">⚠️ Your {planTier} plan has expired</p>
+            <p className="text-xs text-[var(--color-text-secondary)] mt-1">
+              Expired {planExpiresAt ? new Date(planExpiresAt).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}. You are now on the Free plan. Renew below to restore access.
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="text-sm font-semibold text-[var(--color-text)]">{planSummary[activeTier] ?? planSummary.free}</p>
+            <p className="text-xs text-[var(--color-text-secondary)] mt-1">
+              {activeTier !== 'free' && planExpiresAt
+                ? `Active until ${new Date(planExpiresAt).toLocaleDateString('en-KE', { day: 'numeric', month: 'long', year: 'numeric' })}. ${planSubtext[activeTier] ?? ''}`
+                : planSubtext[activeTier] ?? planSubtext.free}
+            </p>
+          </>
+        )}
       </div>
 
-      {/* Upgrade options — show plans above current tier */}
-      {planTier !== 'premium' && (
+      {/* Upgrade options — show all plans above current effective tier */}
+      {activeTier !== 'premium' && (
         <div className="space-y-3">
           <p className="text-xs font-bold uppercase tracking-widest text-[var(--color-text-secondary)]">
-            {planTier === 'free' ? 'Available Plans' : 'Upgrade Options'}
+            {activeTier === 'free' ? 'Available Plans' : 'Upgrade Options'}
           </p>
           {PLANS.filter(p => (TIER_ORDER[p.tier] ?? 0) > currentOrder).map(plan => (
             <div key={plan.tier} className={`rounded-xl border-2 p-4 ${plan.color} ${plan.highlight ? 'ring-2 ring-primary/30' : ''}`}>
@@ -266,12 +283,14 @@ function SubscriptionCard({ planTier, onUpgradeSuccess }: { planTier: string; on
               >
                 {isUpgrading === plan.tier
                   ? <><Spinner size="sm" color="white" />&nbsp;Redirecting to payment…</>
+                  : isExpired
+                  ? `Renew with ${plan.name} — ${plan.price}`
                   : `Get ${plan.name} — ${plan.price}`}
               </Button>
             </div>
           ))}
           <p className="text-xs text-[var(--color-text-secondary)]">
-            Payment via Paystack (card, bank transfer, or mobile money). You will be redirected to a secure checkout page.
+            Payment via IntaSend (M-Pesa, card, or bank transfer). You will be redirected to a secure checkout page.
           </p>
         </div>
       )}
@@ -294,7 +313,7 @@ export default function SettingsPage() {
     if (tab === 'account' || tab === 'profile' || tab === 'password' || tab === 'notifications') {
       setActiveSection(tab as Section);
     }
-    // Handle Paystack redirect back after payment
+    // Handle IntaSend redirect back after payment
     const payment = searchParams.get('payment');
     if (payment === 'success') {
       toast.success('Payment successful! Your plan has been upgraded.');
@@ -339,11 +358,23 @@ export default function SettingsPage() {
       (supabase as any).from('profiles').select('full_name, email, phone').eq('id', user.id).single(),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (supabase as any).from('student_profiles')
-        .select('cadre, specialty, institution, exam_date, exam_cycle, plan_tier, notif_booking_confirmed, notif_session_reminder, notif_streak_alerts, notif_plan_expiry, notif_weekly_summary, notif_whatsapp')
+        .select('cadre, specialty, institution, exam_date, exam_cycle, plan_tier, plan_expires_at, notif_booking_confirmed, notif_session_reminder, notif_streak_alerts, notif_plan_expiry, notif_weekly_summary, notif_whatsapp')
         .eq('id', user.id).single(),
     ]);
 
     if (pd && sd) {
+      // Compute effective tier — if expired, write free back to DB so it stays consistent
+      const rawTier = sd.plan_tier ?? 'free';
+      const expiresAt = sd.plan_expires_at ?? null;
+      const active = effectiveTier(rawTier, expiresAt);
+      if (active === 'free' && rawTier !== 'free') {
+        // Plan has expired — reset stored tier to free
+        await (supabase as any)
+          .from('student_profiles')
+          .update({ plan_tier: 'free', plan_expires_at: null })
+          .eq('id', user.id);
+      }
+
       const p: ProfileData = {
         full_name: pd.full_name ?? '',
         email: pd.email ?? '',
@@ -353,7 +384,8 @@ export default function SettingsPage() {
         institution: sd.institution ?? '',
         exam_date: sd.exam_date ?? '',
         exam_cycle: sd.exam_cycle ?? '',
-        plan_tier: sd.plan_tier ?? 'free',
+        plan_tier: active,           // always the effective tier
+        plan_expires_at: active !== 'free' ? expiresAt : null,
       };
       setProfile(p);
       setEditForm({
@@ -498,10 +530,10 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-heading font-bold text-[var(--color-text)]">Profile Information</h2>
                 <Badge
-                  variant={profile?.plan_tier === 'premium' ? 'amber' : profile?.plan_tier === 'standard' ? 'teal' : 'secondary'}
+                  variant={PLAN_PRICING_META[profile?.plan_tier as keyof typeof PLAN_PRICING_META]?.badge ?? 'secondary'}
                   size="sm"
                 >
-                  {profile?.plan_tier === 'premium' ? 'Premium' : profile?.plan_tier === 'standard' ? 'Standard' : 'Free'} Plan
+                  {PLAN_PRICING_META[profile?.plan_tier as keyof typeof PLAN_PRICING_META]?.label ?? 'Free'} Plan
                 </Badge>
               </div>
 
@@ -703,7 +735,7 @@ export default function SettingsPage() {
           {activeSection === 'account' && (
             <div className="space-y-4">
               {/* Subscription */}
-              <SubscriptionCard planTier={profile?.plan_tier ?? 'free'} onUpgradeSuccess={fetchProfile} />
+              <SubscriptionCard planTier={profile?.plan_tier ?? 'free'} planExpiresAt={profile?.plan_expires_at ?? null} onUpgradeSuccess={fetchProfile} />
 
               {/* Logout */}
               <Card>

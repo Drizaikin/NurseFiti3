@@ -1,13 +1,13 @@
 /**
- * usePaystack — client-side hook for initiating Paystack payments.
+ * useIntaSend — client-side hook for initiating IntaSend payments.
  *
  * Usage:
- *   const { pay, isLoading } = usePaystack();
+ *   const { pay, isLoading } = useIntaSend();
  *   await pay({ type: 'revision_plan', amountKsh: 500 });
  *
- * The hook calls /api/paystack/initialize, then redirects the user to
- * Paystack's hosted payment page. On completion, Paystack redirects back
- * to /api/paystack/verify which provisions access and redirects to the
+ * The hook calls /api/intasend/initialize, then redirects the user to
+ * IntaSend's hosted checkout page. On completion, IntaSend redirects back
+ * to /api/intasend/verify which provisions access and redirects to the
  * appropriate success page.
  */
 
@@ -25,13 +25,13 @@ interface PayOptions {
   onRedirect?: () => void;
 }
 
-export function usePaystack() {
+export function useIntaSend() {
   const [isLoading, setIsLoading] = useState(false);
 
   const pay = async (options: PayOptions) => {
     setIsLoading(true);
     try {
-      const res = await fetch('/api/paystack/initialize', {
+      const res = await fetch('/api/intasend/initialize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -50,8 +50,8 @@ export function usePaystack() {
 
       options.onRedirect?.();
 
-      // Redirect to Paystack hosted payment page
-      window.location.href = data.authorization_url;
+      // Redirect to IntaSend hosted checkout page
+      window.location.href = data.checkout_url;
     } catch (err) {
       setIsLoading(false);
       toast.error(err instanceof Error ? err.message : 'Payment failed. Please try again.');

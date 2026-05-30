@@ -12,8 +12,8 @@ export async function GET() {
       NEXT_PUBLIC_SUPABASE_ANON_KEY: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
       SUPABASE_SERVICE_ROLE_KEY: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
       NEXT_PUBLIC_SITE_URL: !!process.env.NEXT_PUBLIC_SITE_URL,
-      PAYSTACK_SECRET_KEY: !!process.env.PAYSTACK_SECRET_KEY,
-      NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY: !!process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
+      INTASEND_SECRET_KEY: !!process.env.INTASEND_SECRET_KEY,
+      NEXT_PUBLIC_INTASEND_PUBLISHABLE_KEY: !!process.env.NEXT_PUBLIC_INTASEND_PUBLISHABLE_KEY,
     },
     supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/^https?:\/\//, '').split('.')[0] ?? 'NOT SET',
   });
