@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Apply as Expert Tutor | NurseFiti',
     description: 'Join NurseFiti as a verified NCK tutor. Earn via M-Pesa.',
-    url: 'https://nursefiti.com/signup-tutor',
+    url: 'https://www.nursefiti.co.ke/signup-tutor',
   },
 };
 

@@ -384,7 +384,7 @@ export async function generateMetadata({
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      url: `https://nursefiti.com/blog/${post.slug}`,
+      url: `https://www.nursefiti.co.ke/blog/${post.slug}`,
       type: 'article',
       publishedTime: post.date,
       authors: ['NurseFiti'],
@@ -396,7 +396,7 @@ export async function generateMetadata({
       description: post.excerpt,
     },
     alternates: {
-      canonical: `https://nursefiti.com/blog/${post.slug}`,
+      canonical: `https://www.nursefiti.co.ke/blog/${post.slug}`,
     },
   };
 }
@@ -491,21 +491,21 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt,
-    url: `https://nursefiti.com/blog/${post.slug}`,
+    url: `https://www.nursefiti.co.ke/blog/${post.slug}`,
     datePublished: post.date,
     dateModified: post.date,
     author: {
       '@type': 'Organization',
       name: 'NurseFiti',
-      url: 'https://nursefiti.com',
+      url: 'https://www.nursefiti.co.ke',
     },
     publisher: {
       '@type': 'Organization',
       name: 'NurseFiti',
-      url: 'https://nursefiti.com',
+      url: 'https://www.nursefiti.co.ke',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://nursefiti.com/icon.svg',
+        url: 'https://www.nursefiti.co.ke/icon.svg',
       },
     },
     about: {

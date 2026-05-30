@@ -19,7 +19,7 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://nursefiti.com'),
+  metadataBase: new URL('https://www.nursefiti.co.ke'),
   title: {
     default: 'NurseFiti — NCK Exam Preparation Platform Kenya',
     template: '%s | NurseFiti',

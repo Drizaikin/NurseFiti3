@@ -13,16 +13,17 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'nursefiti.com',
+        hostname: 'www.nursefiti.co.ke',
       },
     ],
     formats: ['image/avif', 'image/webp'],
   },
   experimental: {
     optimizePackageImports: ['recharts', 'framer-motion'],
+    // Tell Next.js not to bundle these CJS packages; load them at runtime instead.
+    serverComponentsExternalPackages: ['intasend-node'],
   },
   // Tell Next.js not to bundle these CJS packages — load them at runtime instead
-  serverExternalPackages: ['intasend-node'],
   eslint: {
     ignoreDuringBuilds: true,
   },

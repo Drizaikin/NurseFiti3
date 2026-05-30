@@ -19,7 +19,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   const reference = req.nextUrl.searchParams.get('reference');
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.nursefiti.co.ke';
 
   if (!reference) {
     return NextResponse.redirect(`${siteUrl}/dashboard?payment=failed&reason=no_reference`);

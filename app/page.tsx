@@ -13,12 +13,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'NurseFiti — NCK Exam Preparation Kenya',
     description: 'Kenya\'s most intelligent NCK exam prep platform. Practice MCQs, mock exams, flashcards, revision plans & expert tutors.',
-    url: 'https://nursefiti.com',
+    url: 'https://www.nursefiti.co.ke',
     siteName: 'NurseFiti',
     type: 'website',
     images: [
       {
-        url: 'https://nursefiti.com/og-image.png',
+        url: 'https://www.nursefiti.co.ke/og-image.png',
         width: 1200,
         height: 630,
         alt: 'NurseFiti — NCK Exam Preparation Platform Kenya',
@@ -29,10 +29,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'NurseFiti — NCK Exam Preparation Kenya',
     description: 'Kenya\'s most intelligent NCK exam prep platform.',
-    images: ['https://nursefiti.com/og-image.png'],
+    images: ['https://www.nursefiti.co.ke/og-image.png'],
   },
   alternates: {
-    canonical: 'https://nursefiti.com',
+    canonical: 'https://www.nursefiti.co.ke',
   },
 };
 
@@ -42,8 +42,8 @@ const organizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'EducationalOrganization',
   name: 'NurseFiti',
-  url: 'https://nursefiti.com',
-  logo: 'https://nursefiti.com/icon.svg',
+  url: 'https://www.nursefiti.co.ke',
+  logo: 'https://www.nursefiti.co.ke/icon.svg',
   description: 'Kenya\'s NCK exam preparation platform for KRCHN, BScN, and Higher Diploma nursing graduates.',
   address: {
     '@type': 'PostalAddress',
@@ -56,12 +56,12 @@ const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'NurseFiti',
-  url: 'https://nursefiti.com',
+  url: 'https://www.nursefiti.co.ke',
   potentialAction: {
     '@type': 'SearchAction',
     target: {
       '@type': 'EntryPoint',
-      urlTemplate: 'https://nursefiti.com/tutors?q={search_term_string}',
+      urlTemplate: 'https://www.nursefiti.co.ke/tutors?q={search_term_string}',
     },
     'query-input': 'required name=search_term_string',
   },
@@ -75,7 +75,7 @@ const courseJsonLd = {
   provider: {
     '@type': 'Organization',
     name: 'NurseFiti',
-    url: 'https://nursefiti.com',
+    url: 'https://www.nursefiti.co.ke',
   },
   educationalLevel: 'Professional Certification',
   about: {
@@ -89,21 +89,21 @@ const courseJsonLd = {
       price: '0',
       priceCurrency: 'KES',
       name: 'Free Plan',
-      url: 'https://nursefiti.com/signup',
+      url: 'https://www.nursefiti.co.ke/signup',
     },
     {
       '@type': 'Offer',
       price: '1200',
       priceCurrency: 'KES',
       name: 'Standard Plan — KSh 1,200/month',
-      url: 'https://nursefiti.com/signup',
+      url: 'https://www.nursefiti.co.ke/signup',
     },
     {
       '@type': 'Offer',
       price: '3500',
       priceCurrency: 'KES',
       name: 'Premium Plan — KSh 3,500/60-day cycle',
-      url: 'https://nursefiti.com/signup',
+      url: 'https://www.nursefiti.co.ke/signup',
     },
   ],
 };

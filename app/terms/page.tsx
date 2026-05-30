@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Terms of Service | NurseFiti',
     description: 'NurseFiti Terms of Service — Kenya\'s NCK exam preparation platform.',
-    url: 'https://nursefiti.com/terms',
+    url: 'https://www.nursefiti.co.ke/terms',
   },
 };
 

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Log In | NurseFiti',
     description: 'Log in to NurseFiti — Kenya\'s NCK exam preparation platform.',
-    url: 'https://nursefiti.com/login',
+    url: 'https://www.nursefiti.co.ke/login',
   },
 };
 

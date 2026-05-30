@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Privacy Policy | NurseFiti',
     description: 'NurseFiti Privacy Policy — how we protect your data.',
-    url: 'https://nursefiti.com/privacy',
+    url: 'https://www.nursefiti.co.ke/privacy',
   },
 };
 

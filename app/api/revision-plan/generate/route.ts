@@ -369,7 +369,7 @@ export async function POST(req: NextRequest) {
   try {
     const supabase = createRouteClient();
     const adminSupabase = createAdminClient();
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nursefiti.com';
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.nursefiti.co.ke';
 
     // Auth
     const { data: { user }, error: authError } = await supabase.auth.getUser();

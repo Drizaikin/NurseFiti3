@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://nursefiti.com',
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.nursefiti.co.ke',
   generateRobotsTxt: true,
   generateIndexSitemap: false,
   changefreq: 'weekly',

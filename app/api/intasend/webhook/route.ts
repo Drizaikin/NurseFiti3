@@ -5,7 +5,7 @@
  * that fires whenever a payment state changes.
  *
  * Set this URL in your IntaSend dashboard under Webhooks:
- *   https://nursefiti.com/api/intasend/webhook
+ *   https://www.nursefiti.co.ke/api/intasend/webhook
  *
  * Also set a "challenge" string in the dashboard and add it to your env:
  *   INTASEND_WEBHOOK_CHALLENGE=your-challenge-string

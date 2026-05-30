@@ -32,15 +32,19 @@ const IntaSend = require('intasend-node') as new (
 const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_INTASEND_PUBLISHABLE_KEY ?? '';
 const SECRET_KEY      = process.env.INTASEND_SECRET_KEY ?? '';
 
-if (!SECRET_KEY && process.env.NODE_ENV === 'production') {
-  throw new Error('INTASEND_SECRET_KEY is not set');
-}
-
 // Derive test mode from the key prefix — test keys contain "test", live keys contain "live"
 const IS_TEST = SECRET_KEY.includes('test') || PUBLISHABLE_KEY.includes('test');
 
 /** Shared SDK instance */
 function getSdk() {
+  if (!SECRET_KEY) {
+    throw new Error('INTASEND_SECRET_KEY is not set');
+  }
+
+  if (!PUBLISHABLE_KEY) {
+    throw new Error('NEXT_PUBLIC_INTASEND_PUBLISHABLE_KEY is not set');
+  }
+
   return new IntaSend(PUBLISHABLE_KEY, SECRET_KEY, IS_TEST);
 }
 

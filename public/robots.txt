@@ -24,7 +24,7 @@ Disallow: /tutor-profile
 Disallow: /tutor-pending
 
 # Host
-Host: http://localhost:3000
+Host: https://www.nursefiti.co.ke
 
 # Sitemaps
-Sitemap: http://localhost:3000/sitemap.xml
+Sitemap: https://www.nursefiti.co.ke/sitemap.xml

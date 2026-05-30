@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Blog — NCK Exam Tips & Guides | NurseFiti',
     description: 'Expert guides and study strategies for Kenyan nursing graduates preparing for the NCK exam.',
-    url: 'https://nursefiti.com/blog',
+    url: 'https://www.nursefiti.co.ke/blog',
     type: 'website',
   },
   alternates: {
-    canonical: 'https://nursefiti.com/blog',
+    canonical: 'https://www.nursefiti.co.ke/blog',
   },
 };
 
@@ -84,17 +84,17 @@ const blogListJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Blog',
   name: 'NurseFiti Blog',
-  url: 'https://nursefiti.com/blog',
+  url: 'https://www.nursefiti.co.ke/blog',
   description: 'Expert guides and study strategies for Kenyan nursing graduates preparing for the NCK exam.',
   publisher: {
     '@type': 'Organization',
     name: 'NurseFiti',
-    url: 'https://nursefiti.com',
+    url: 'https://www.nursefiti.co.ke',
   },
   blogPost: POSTS.map((p) => ({
     '@type': 'BlogPosting',
     headline: p.title,
-    url: `https://nursefiti.com/blog/${p.slug}`,
+    url: `https://www.nursefiti.co.ke/blog/${p.slug}`,
     datePublished: p.date,
     description: p.excerpt,
   })),
