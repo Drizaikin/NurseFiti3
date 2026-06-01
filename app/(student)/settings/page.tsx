@@ -178,6 +178,7 @@ function SubscriptionCard({ planTier, planExpiresAt, onUpgradeSuccess }: {
   onUpgradeSuccess: () => void;
 }) {
   const [isUpgrading, setIsUpgrading] = useState<string | null>(null);
+  const [isSyncingPayment, setIsSyncingPayment] = useState(false);
 
   // Use the effective tier — falls back to 'free' if expired
   const activeTier = effectiveTier(planTier, planExpiresAt);
@@ -198,6 +199,26 @@ function SubscriptionCard({ planTier, planExpiresAt, onUpgradeSuccess }: {
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Could not start payment. Try again.');
       setIsUpgrading(null);
+    }
+  };
+
+  const handleSyncPayment = async () => {
+    setIsSyncingPayment(true);
+    try {
+      const res = await fetch('/api/intasend/sync-plan', { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Could not confirm payment');
+
+      if (data.upgraded) {
+        toast.success('Payment confirmed. Your plan has been upgraded.');
+        await onUpgradeSuccess();
+      } else {
+        toast.error(data.message ?? 'IntaSend has not confirmed the payment yet.');
+      }
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Could not confirm payment');
+    } finally {
+      setIsSyncingPayment(false);
     }
   };
 
@@ -249,6 +270,22 @@ function SubscriptionCard({ planTier, planExpiresAt, onUpgradeSuccess }: {
       </div>
 
       {/* Upgrade options — show all plans above current effective tier */}
+      {activeTier === 'free' && (
+        <div className="mb-5">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleSyncPayment}
+            disabled={isSyncingPayment || isUpgrading !== null}
+            className="w-full"
+          >
+            {isSyncingPayment
+              ? <><Spinner size="sm" />&nbsp;Checking IntaSend payment...</>
+              : 'Already paid? Confirm recent payment'}
+          </Button>
+        </div>
+      )}
+
       {activeTier !== 'premium' && (
         <div className="space-y-3">
           <p className="text-xs font-bold uppercase tracking-widest text-[var(--color-text-secondary)]">

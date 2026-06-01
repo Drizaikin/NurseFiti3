@@ -91,6 +91,7 @@ export default function RevisionPlanPage() {
   const [savedPlans, setSavedPlans] = useState<SavedPlan[]>([]);
   const [activePlan, setActivePlan] = useState<SavedPlan | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isSyncingPayment, setIsSyncingPayment] = useState(false);
   const [pendingPaymentRef, setPendingPaymentRef] = useState<string | null>(null);
 
   const activeTier = effectiveTier(planTier, planExpiresAt);
@@ -138,6 +139,26 @@ export default function RevisionPlanPage() {
   // ── Payment ─────────────────────────────────────────────────────────────────
   const handlePay = async () => {
     router.push('/settings?tab=account');
+  };
+
+  const handleSyncPayment = async () => {
+    setIsSyncingPayment(true);
+    try {
+      const res = await fetch('/api/intasend/sync-plan', { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Could not confirm payment');
+
+      if (data.upgraded) {
+        toast.success('Payment confirmed. Your plan has been upgraded.');
+        await loadData();
+      } else {
+        toast.error(data.message ?? 'IntaSend has not confirmed the payment yet.');
+      }
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Could not confirm payment');
+    } finally {
+      setIsSyncingPayment(false);
+    }
   };
 
   // ── Generation ──────────────────────────────────────────────────────────────
@@ -276,6 +297,22 @@ export default function RevisionPlanPage() {
           <p className="text-xs text-[var(--color-text-secondary)]">{planAccess.included ? 'with your plan' : 'to unlock'}</p>
         </div>
       </div>
+
+      {!planAccess.included && (
+        <div className="mb-6">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleSyncPayment}
+            disabled={isSyncingPayment}
+            className="w-full"
+          >
+            {isSyncingPayment
+              ? <><Spinner size="sm" />&nbsp;Checking IntaSend payment...</>
+              : 'Already paid? Confirm recent payment'}
+          </Button>
+        </div>
+      )}
 
       {/* Previous plans shortcut */}
       {savedPlans.length > 0 && (
