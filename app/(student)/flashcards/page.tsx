@@ -227,7 +227,7 @@ export default function FlashcardsPage() {
             Spaced-repetition flashcards are available on Exam Boost, Success Plan, and Elite Prep.
             Upgrade to unlock all decks and track your progress.
           </p>
-          <p className="text-xs text-neutral-mid mb-6">Test Yourself plan · Upgrade from KSh 10/day</p>
+          <p className="text-xs text-neutral-mid mb-6">Test Yourself plan · Upgrade from KSh 69/day</p>
           <Link href="/settings?tab=account">
             <Button variant="primary" size="lg">Upgrade to Unlock Flashcards →</Button>
           </Link>
