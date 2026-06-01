@@ -230,7 +230,7 @@ const PRICING = [
   },
   {
     name: 'Exam Boost Daily',
-    price: 'KSh 10',
+    price: 'KSh 69',
     period: '/day',
     desc: 'A focused 24-hour push for active revision.',
     features: ['Unlimited MCQ practice', 'AI explanations', '2 mock exams per week', 'Readiness analytics', 'Flashcards', 'Personalized revision plan included'],

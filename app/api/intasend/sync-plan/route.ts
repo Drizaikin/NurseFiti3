@@ -36,7 +36,7 @@ export async function POST() {
 
     if (paymentError) throw paymentError;
 
-    const payment = payments?.find((p: any) => Number(p.amount) >= 10);
+    const payment = payments?.find((p: any) => Number(p.amount) >= 69);
     if (!payment) {
       return NextResponse.json({ error: 'No recent plan payment found.' }, { status: 404 });
     }
@@ -94,6 +94,6 @@ function getPlanFromAmount(amountKsh: number): { tier: string; durationDays: num
   if (amountKsh >= 3500) return { tier: 'premium',  durationDays: 90 };
   if (amountKsh >= 999)  return { tier: 'standard', durationDays: 30 };
   if (amountKsh >= 299)  return { tier: 'weekly',   durationDays: 7  };
-  if (amountKsh >= 10)   return { tier: 'daily',    durationDays: 1  };
+  if (amountKsh >= 69)   return { tier: 'daily',    durationDays: 1  };
   return { tier: 'free', durationDays: 0 };
 }

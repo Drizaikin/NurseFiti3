@@ -268,7 +268,7 @@ export default function AnalyticsPage() {
               <p className="text-sm text-neutral-mid mb-1">
                 Exam Boost, Success Plan, and Elite Prep include your 7-day score trend, per-unit mastery breakdown, and full mock exam history.
               </p>
-              <p className="text-xs text-neutral-mid">Test Yourself plan · Upgrade from KSh 10/day</p>
+              <p className="text-xs text-neutral-mid">Test Yourself plan · Upgrade from KSh 69/day</p>
             </div>
             <Link href="/settings?tab=account" className="flex-shrink-0">
               <Button variant="primary">Upgrade →</Button>
