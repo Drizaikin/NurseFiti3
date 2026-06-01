@@ -6,7 +6,7 @@
  *
  * Body:
  *   type        — 'plan_subscription' | 'revision_plan' | 'session_booking'
- *   amountKsh   — amount in KSh (e.g. 69, 299, 999, 3500)
+ *   amountKsh   — amount in KSh (e.g. 10, 299, 999, 3500)
  *   referenceId — UUID of the resource being paid for (session id, etc.)
  *   metadata    — optional extra data stored on the transaction
  *
