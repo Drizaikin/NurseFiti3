@@ -102,9 +102,9 @@ const PLANS = [
   {
     tier: 'daily',
     name: 'Exam Boost Daily',
-    price: 'KSh 69',
+    price: 'KSh 10',
     period: '/day',
-    amountKsh: 69,
+    amountKsh: 10,
     color: 'border-primary/30 bg-primary-xlight dark:bg-primary/5',
     badge: 'teal' as const,
     features: [
@@ -230,7 +230,7 @@ function SubscriptionCard({ planTier, planExpiresAt, onUpgradeSuccess }: {
     premium:  'Elite Prep - KSh 3,500 / exam cycle',
     standard: 'Success Plan - KSh 999 / month',
     weekly:   'Exam Boost Weekly - KSh 299 / week',
-    daily:    'Exam Boost Daily - KSh 69 / day',
+    daily:    'Exam Boost Daily - KSh 10 / day',
     free:     'Test Yourself - KSh 0 / forever',
   };
   const planSubtext: Record<string, string> = {

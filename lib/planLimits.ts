@@ -5,7 +5,7 @@
  *
  * Plan tiers:
  *   free     — KSh 0 forever (limited features; can unlock mock exam by uploading questions)
- *   daily    — KSh 69/day  (same features as standard, 1-day access)
+ *   daily    — KSh 10/day  (temporary test price; restore to KSh 69 after live payment test)
  *   weekly   — KSh 299/week (same features as standard, 7-day access)
  *   standard — KSh 999/month (full features, 2 mock exams per week)
  *   premium  — KSh 3,500/60-day cycle (all features, unlimited mock exams = 1/day)
@@ -138,7 +138,7 @@ export const PLAN_PRICING_META: Record<PlanTier, {
   highlight?: boolean;
 }> = {
   free:     { label: 'Test Yourself',     price: 'KSh 0',     period: 'forever',     amountKsh: 0,    durationDays: 0,  badge: 'secondary' },
-  daily:    { label: 'Exam Boost Daily',  price: 'KSh 69',    period: '/day',        amountKsh: 69,   durationDays: 1,  badge: 'teal' },
+  daily:    { label: 'Exam Boost Daily',  price: 'KSh 10',    period: '/day',        amountKsh: 10,   durationDays: 1,  badge: 'teal' },
   weekly:   { label: 'Exam Boost Weekly', price: 'KSh 299',   period: '/week',       amountKsh: 299,  durationDays: 7,  badge: 'teal', highlight: true },
   standard: { label: 'Success Plan',      price: 'KSh 999',   period: '/month',      amountKsh: 999,  durationDays: 30, badge: 'teal' },
   premium:  { label: 'Elite Prep',        price: 'KSh 3,500', period: '/exam cycle', amountKsh: 3500, durationDays: 90, badge: 'amber' },
