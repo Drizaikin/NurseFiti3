@@ -11,7 +11,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createRouteClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { verifyCheckout } from '@/lib/intasend';
 import { addDays } from 'date-fns';
 
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const supabase = createRouteClient();
+    const supabase = createAdminClient();
 
     // Fetch our payment record by our own reference
     const { data: payment } = await supabase

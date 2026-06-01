@@ -74,6 +74,8 @@ export async function POST(req: NextRequest) {
       ? rawPhone.slice(1)
       : rawPhone || undefined;
 
+    const appOrigin = req.nextUrl.origin;
+
     // Create IntaSend checkout
     const result = await createCheckout({
       email: profile.email,
@@ -83,7 +85,7 @@ export async function POST(req: NextRequest) {
       amount: amountKsh,
       currency: 'KES',
       api_ref: reference,
-      redirect_url: `${process.env.NEXT_PUBLIC_SITE_URL}/api/intasend/verify?reference=${reference}`,
+      redirect_url: `${appOrigin}/api/intasend/verify?reference=${reference}`,
       comment: `NurseFiti ${type.replace(/_/g, ' ')}`,
     });
 
