@@ -424,7 +424,7 @@ export default function PracticePage() {
               <p className={`text-sm font-semibold ${limitReached ? 'text-error' : 'text-primary'}`}>
                 {limitReached
                   ? `Daily limit reached — ${dailyLimit} questions used today`
-                  : `Free plan: ${remaining} of ${dailyLimit} questions remaining today`}
+                  : `Test Yourself: ${remaining} of ${dailyLimit} questions remaining today`}
               </p>
               {limitReached && (
                 <p className="text-xs text-neutral-mid mt-0.5">
@@ -492,7 +492,7 @@ export default function PracticePage() {
                 <div className="p-4 rounded-xl bg-error/5 border border-error/20 text-center">
                   <p className="text-sm font-semibold text-error mb-1">Daily limit reached</p>
                   <p className="text-xs text-neutral-mid">
-                    Free plan allows {dailyLimit} practice questions per day. Come back tomorrow or upgrade for unlimited access.
+                    Test Yourself allows {dailyLimit} practice questions per day. Come back tomorrow or upgrade for unlimited access.
                   </p>
                 </div>
                 <Link href="/settings?tab=account">

@@ -8,16 +8,17 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Spinner } from '@/components/ui/Spinner';
 import { ProgressBar } from '@/components/ui/ProgressBar';
+import { effectiveTier } from '@/lib/planLimits';
 import toast from 'react-hot-toast';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const PLAN_PRICING: Record<string, { price: number; label: string; variant: 'teal' | 'amber' | 'secondary' }> = {
-  premium:  { price: 199,  label: 'Premium',  variant: 'amber' },
-  standard: { price: 499,  label: 'Standard', variant: 'teal' },
-  weekly:   { price: 499,  label: 'Weekly',   variant: 'teal' },
-  daily:    { price: 499,  label: 'Daily',    variant: 'teal' },
-  free:     { price: 999,  label: 'Free',     variant: 'secondary' },
+const PLAN_ACCESS: Record<string, { label: string; variant: 'teal' | 'amber' | 'secondary'; included: boolean }> = {
+  premium:  { label: 'Elite Prep',         variant: 'amber',     included: true },
+  standard: { label: 'Success Plan',       variant: 'teal',      included: true },
+  weekly:   { label: 'Exam Boost Weekly',  variant: 'teal',      included: true },
+  daily:    { label: 'Exam Boost Daily',   variant: 'teal',      included: true },
+  free:     { label: 'Test Yourself',      variant: 'secondary', included: false },
 };
 
 const WORK_STATUS_OPTIONS = [
@@ -78,6 +79,7 @@ export default function RevisionPlanPage() {
 
   const [pageState, setPageState] = useState<PageState>('loading');
   const [planTier, setPlanTier] = useState<string>('free');
+  const [planExpiresAt, setPlanExpiresAt] = useState<string | null>(null);
   const [cadre, setCadre] = useState<string>('');
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
@@ -91,7 +93,8 @@ export default function RevisionPlanPage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [pendingPaymentRef, setPendingPaymentRef] = useState<string | null>(null);
 
-  const pricing = PLAN_PRICING[planTier] ?? PLAN_PRICING.free;
+  const activeTier = effectiveTier(planTier, planExpiresAt);
+  const planAccess = PLAN_ACCESS[activeTier] ?? PLAN_ACCESS.free;
 
   const loadData = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -99,13 +102,14 @@ export default function RevisionPlanPage() {
 
     const [{ data: sp }, { data: plans }] = await Promise.all([
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (supabase as any).from('student_profiles').select('plan_tier, exam_date, cadre').eq('id', user.id).single(),
+      (supabase as any).from('student_profiles').select('plan_tier, plan_expires_at, exam_date, cadre').eq('id', user.id).single(),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (supabase as any).from('revision_plans').select('id, cadre, exam_date, generated_at, share_token, plan_html').eq('student_id', user.id).order('generated_at', { ascending: false }).limit(5),
     ]);
 
     if (sp) {
       setPlanTier(sp.plan_tier ?? 'free');
+      setPlanExpiresAt(sp.plan_expires_at ?? null);
       setCadre(sp.cadre ?? '');
       setFormData(f => ({ ...f, examDate: sp.exam_date ?? '' }));
     }
@@ -133,24 +137,7 @@ export default function RevisionPlanPage() {
 
   // ── Payment ─────────────────────────────────────────────────────────────────
   const handlePay = async () => {
-    setPageState('paying');
-    try {
-      const res = await fetch('/api/intasend/initialize', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: 'revision_plan',
-          amountKsh: pricing.price,
-          metadata: { form_data: formData },
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? 'Payment initialization failed');
-      window.location.href = data.checkout_url;
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Payment failed. Try again.');
-      setPageState('form');
-    }
+    router.push('/settings?tab=account');
   };
 
   // ── Generation ──────────────────────────────────────────────────────────────
@@ -158,7 +145,7 @@ export default function RevisionPlanPage() {
     setIsGenerating(true);
     setPageState('generating');
     try {
-      const ref = paymentRef ?? pendingPaymentRef ?? 'free_premium';
+      const ref = paymentRef ?? pendingPaymentRef ?? 'included_subscription';
       const res = await fetch('/api/revision-plan/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -276,21 +263,17 @@ export default function RevisionPlanPage() {
       <div className="flex items-center justify-between p-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] mb-6">
         <div>
           <p className="text-sm font-semibold text-[var(--color-text)]">
-            Your plan: <Badge variant={pricing.variant} size="sm">{pricing.label}</Badge>
+            Your plan: <Badge variant={planAccess.variant} size="sm">{planAccess.label}</Badge>
           </p>
           <p className="text-xs text-[var(--color-text-secondary)] mt-0.5">
-            {planTier === 'premium'
-              ? 'Premium: KSh 199 per generation + 1 free per billing cycle'
-              : planTier === 'standard'
-              ? 'Standard: KSh 499 per generation'
-              : planTier === 'daily' || planTier === 'weekly'
-              ? `${pricing.label}: KSh 499 per generation`
-              : 'Free: KSh 999 per generation'}
+            {planAccess.included
+              ? 'Included in your active prep plan'
+              : 'Upgrade to Exam Boost, Success Plan, or Elite Prep to generate a personalized plan'}
           </p>
         </div>
         <div className="text-right">
-          <p className="text-2xl font-heading font-bold text-primary">KSh {pricing.price.toLocaleString()}</p>
-          <p className="text-xs text-[var(--color-text-secondary)]">per generation</p>
+          <p className="text-2xl font-heading font-bold text-primary">{planAccess.included ? 'Included' : 'Upgrade'}</p>
+          <p className="text-xs text-[var(--color-text-secondary)]">{planAccess.included ? 'with your plan' : 'to unlock'}</p>
         </div>
       </div>
 
@@ -416,7 +399,11 @@ export default function RevisionPlanPage() {
           <div className="space-y-5">
             <div>
               <h2 className="text-lg font-heading font-bold text-[var(--color-text)] mb-1">Review & Generate</h2>
-              <p className="text-sm text-[var(--color-text-secondary)]">Confirm your details and complete payment to generate your plan.</p>
+              <p className="text-sm text-[var(--color-text-secondary)]">
+                {planAccess.included
+                  ? 'Confirm your details and generate your included plan.'
+                  : 'Confirm your details, then upgrade to unlock personalized revision planning.'}
+              </p>
             </div>
 
             {/* Summary */}
@@ -434,8 +421,8 @@ export default function RevisionPlanPage() {
                 </div>
               ))}
               <div className="flex items-center justify-between text-sm pt-2 border-t border-primary/20">
-                <span className="font-bold text-[var(--color-text)]">Total</span>
-                <span className="text-xl font-heading font-bold text-primary">KSh {pricing.price.toLocaleString()}</span>
+                <span className="font-bold text-[var(--color-text)]">Access</span>
+                <span className="text-xl font-heading font-bold text-primary">{planAccess.included ? 'Included' : 'Upgrade required'}</span>
               </div>
             </div>
 
@@ -460,17 +447,19 @@ export default function RevisionPlanPage() {
               <Button
                 variant="primary"
                 className="flex-1"
-                onClick={handlePay}
+                onClick={() => planAccess.included ? handleGenerate() : handlePay()}
                 disabled={pageState === 'paying'}
               >
                 {pageState === 'paying'
                   ? <><Spinner size="sm" color="white" />&nbsp;Redirecting…</>
-                  : `Pay KSh ${pricing.price.toLocaleString()} & Generate`}
+                  : planAccess.included
+                  ? 'Generate My Plan'
+                  : 'Upgrade to Generate'}
               </Button>
             </div>
 
             <p className="text-xs text-center text-[var(--color-text-secondary)]">
-              Secure payment via IntaSend · M-Pesa, card, or bank transfer
+              Paid plans use secure IntaSend checkout with M-Pesa, card, or bank transfer
             </p>
           </div>
         )}

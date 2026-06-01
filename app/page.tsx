@@ -88,21 +88,21 @@ const courseJsonLd = {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'KES',
-      name: 'Free Plan',
+      name: 'Test Yourself Plan',
       url: 'https://www.nursefiti.co.ke/signup',
     },
     {
       '@type': 'Offer',
-      price: '1200',
+      price: '999',
       priceCurrency: 'KES',
-      name: 'Standard Plan — KSh 1,200/month',
+      name: 'Success Plan - KSh 999/month',
       url: 'https://www.nursefiti.co.ke/signup',
     },
     {
       '@type': 'Offer',
       price: '3500',
       priceCurrency: 'KES',
-      name: 'Premium Plan — KSh 3,500/60-day cycle',
+      name: 'Elite Prep - KSh 3,500/exam cycle',
       url: 'https://www.nursefiti.co.ke/signup',
     },
   ],
@@ -218,56 +218,56 @@ const STEPS = [
 
 const PRICING = [
   {
-    name: 'Free',
+    name: 'Test Yourself',
     price: 'KSh 0',
     period: 'forever',
-    desc: 'Get started with no commitment.',
-    features: ['30 practice questions/day', 'Upload questions to unlock mock exam', 'Basic analytics', 'Community study groups', 'Tutor booking access', 'Revision plan — KSh 999 per generation'],
-    cta: 'Start Free',
+    desc: 'Start building confidence with daily practice.',
+    features: ['30 practice questions/day', 'Readiness snapshot', 'Community study groups', 'Tutor booking access', 'Upgrade when you need full exam prep'],
+    cta: 'Start Preparing',
     href: '/signup',
     highlight: false,
     badge: null,
   },
   {
-    name: 'Daily',
+    name: 'Exam Boost Daily',
     price: 'KSh 69',
     period: '/day',
-    desc: '24-hour full access.',
-    features: ['Unlimited MCQ practice', '2 mock exams per week', 'Full analytics & AI insights', 'Spaced repetition flashcards', 'Tutor booking access', 'Revision plan — KSh 499 per generation'],
-    cta: 'Get Daily Access',
+    desc: 'A focused 24-hour push for active revision.',
+    features: ['Unlimited MCQ practice', 'AI explanations', '2 mock exams per week', 'Readiness analytics', 'Flashcards', 'Personalized revision plan included'],
+    cta: 'Boost Today',
     href: '/signup',
     highlight: false,
     badge: null,
   },
   {
-    name: 'Weekly',
-    price: 'KSh 349',
+    name: 'Exam Boost Weekly',
+    price: 'KSh 299',
     period: '/week',
-    desc: '7-day access — best for exam week.',
-    features: ['Everything in Daily', '2 mock exams per week', '7-day access', 'Revision plan — KSh 499 per generation'],
-    cta: 'Get Weekly Access',
+    desc: 'Your mass-market exam prep plan for a serious week.',
+    features: ['Everything in Exam Boost Daily', '7-day access', 'AI explanations', '2 mock exams per week', 'Flashcards and analytics', 'Personalized revision plan included'],
+    cta: 'Start Exam Boost',
     href: '/signup',
     highlight: true,
     badge: 'Most Popular',
   },
   {
-    name: 'Standard',
-    price: 'KSh 1,200',
+    name: 'Success Plan',
+    price: 'KSh 999',
     period: '/month',
-    desc: 'Full monthly prep.',
-    features: ['Unlimited MCQ practice', '2 mock exams per week', 'Full analytics & AI insights', 'Spaced repetition flashcards', 'Tutor booking access', 'Revision plan — KSh 499 per generation'],
-    cta: 'Start Standard',
+    desc: 'Everything you need to maximize exam readiness.',
+    features: ['Unlimited MCQ practice', '2 mock exams per week', 'Smarter analytics', 'Adaptive revision roadmap', 'Flashcards', 'Tutor priority'],
+    cta: 'Start Success Plan',
     href: '/signup',
     highlight: false,
     badge: null,
   },
   {
-    name: 'Premium',
+    name: 'Elite Prep',
     price: 'KSh 3,500',
-    period: '/90-day cycle',
-    desc: 'Intensive prep for your exam cycle.',
-    features: ['Everything in Standard', 'Unlimited mock exams (1/day)', '1 free revision plan per cycle', 'Additional plans — KSh 199 each', 'Priority support via WhatsApp', 'Peer percentile leaderboard'],
-    cta: 'Go Premium',
+    period: '/exam cycle',
+    desc: 'Premium support for serious candidates.',
+    features: ['Everything in Success Plan', 'Unlimited mock exams', 'Tutor priority', 'WhatsApp mentorship', 'AI coaching', 'Accountability tracking'],
+    cta: 'Join Elite Prep',
     href: '/signup',
     highlight: false,
     badge: 'Best Value',
@@ -306,11 +306,11 @@ const FAQS = [
   },
   {
     q: 'How does the Revision Plan Generator work?',
-    a: 'You enter your exam date, daily study hours, and your current baseline (or we pull it from your practice data). The generator builds a week-by-week schedule that prioritises Tier 1 high-yield NCK units, allocates more time to your weak areas, and includes a mock exam schedule for the final 2 weeks. Available on all plans: KSh 999 per generation on Free, KSh 499 on Daily/Weekly/Standard, and KSh 199 on Premium — plus Premium users get 1 free generation every billing cycle.',
+    a: 'You enter your exam date, daily study hours, and your current baseline (or we pull it from your practice data). The generator builds a week-by-week schedule that prioritises Tier 1 high-yield NCK units, allocates more time to your weak areas, and includes a mock exam schedule for the final 2 weeks. Revision plans are included inside paid prep plans, so students can focus on studying instead of paying for every small action.',
   },
   {
     q: 'How many mock exams can I take?',
-    a: 'Free plan users can unlock mock exams by uploading at least 3 past exam question files for review. Daily, Weekly, and Standard plan users get 2 mock exams per week (resets every Monday). Premium users get unlimited mock exams — up to 1 per day. The weekly cap applies across all non-premium paid plans regardless of how many days you pay for.',
+    a: 'Test Yourself users can unlock mock exams by uploading at least 3 past exam question files for review. Exam Boost and Success Plan users get 2 mock exams per week (resets every Monday). Elite Prep users get unlimited mock exams for intensive exam-cycle preparation.',
   },
   {
     q: 'Are the tutors verified?',
@@ -660,7 +660,7 @@ export default function LandingPage() {
             <p className="text-neutral-mid">All plans paid via M-Pesa. No credit cards. No hidden fees.</p>
           </div>
           <div className="flex flex-col gap-8">
-            {/* Row 1: Free, Daily, Weekly — full width */}
+            {/* Row 1: Test Yourself and Exam Boost — full width */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {PRICING.slice(0, 3).map((p) => (
                 <div
@@ -708,7 +708,7 @@ export default function LandingPage() {
                 </div>
               ))}
             </div>
-            {/* Row 2: Standard, Premium — centred, same card size */}
+            {/* Row 2: Success Plan and Elite Prep — centred, same card size */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto w-full">
               {PRICING.slice(3).map((p) => (
                 <div

@@ -101,7 +101,7 @@ function Toggle({ checked, onChange, label, sub }: {
 const PLANS = [
   {
     tier: 'daily',
-    name: 'Daily',
+    name: 'Exam Boost Daily',
     price: 'KSh 69',
     period: '/day',
     amountKsh: 69,
@@ -110,64 +110,65 @@ const PLANS = [
     features: [
       'Unlimited MCQ practice',
       '2 mock exams per week',
-      'Full analytics & charts',
+      'Readiness analytics',
       'Spaced repetition flashcards',
-      'Revision plan — KSh 499/generation',
+      'Personalized revision plan included',
     ],
-    note: '24-hour access',
+    note: '24-hour focused revision',
   },
   {
     tier: 'weekly',
-    name: 'Weekly',
-    price: 'KSh 349',
+    name: 'Exam Boost Weekly',
+    price: 'KSh 299',
     period: '/week',
-    amountKsh: 349,
+    amountKsh: 299,
     color: 'border-primary/40 bg-primary-xlight dark:bg-primary/5',
     badge: 'teal' as const,
     features: [
-      'Everything in Daily',
+      'Everything in Exam Boost Daily',
       '2 mock exams per week',
       '7-day access',
-      'Revision plan — KSh 499/generation',
+      'Personalized revision plan included',
     ],
-    note: 'Best value for short-term prep',
+    note: 'Best value for short-term exam prep',
     highlight: true,
   },
   {
     tier: 'standard',
-    name: 'Standard',
-    price: 'KSh 1,200',
+    name: 'Success Plan',
+    price: 'KSh 999',
     period: '/month',
-    amountKsh: 1200,
+    amountKsh: 999,
     color: 'border-primary/40 bg-primary-xlight dark:bg-primary/5',
     badge: 'teal' as const,
     features: [
       'Unlimited MCQ practice',
       '2 mock exams per week',
-      'Full analytics & AI insights',
+      'Smarter analytics',
       'Spaced repetition flashcards',
-      'Revision plan — KSh 499/generation',
+      'Adaptive revision roadmap',
+      'Tutor priority',
     ],
     note: '30-day access',
   },
   {
     tier: 'premium',
-    name: 'Premium',
+    name: 'Elite Prep',
     price: 'KSh 3,500',
-    period: '/90-day cycle',
+    period: '/exam cycle',
     amountKsh: 3500,
     color: 'border-accent/40 bg-accent-light dark:bg-accent/5',
     badge: 'amber' as const,
     features: [
-      'Everything in Standard',
-      'Unlimited mock exams (1/day)',
-      '1 free revision plan per cycle',
-      'Additional plans — KSh 199 each',
-      'Priority WhatsApp support',
-      'Peer percentile leaderboard',
+      'Everything in Success Plan',
+      'Unlimited mock exams',
+      'Tutor priority',
+      'WhatsApp mentorship',
+      'AI coaching',
+      'Accountability tracking',
       'Exam registration reminders',
     ],
-    note: '90-day access',
+    note: 'Full exam-cycle support',
   },
 ];
 
@@ -205,18 +206,18 @@ function SubscriptionCard({ planTier, planExpiresAt, onUpgradeSuccess }: {
   const currentOrder = TIER_ORDER[activeTier] ?? 0;
 
   const planSummary: Record<string, string> = {
-    premium:  '✅ Premium — KSh 3,500 / 90-day cycle',
-    standard: '✅ Standard — KSh 1,200 / month',
-    weekly:   '✅ Weekly — KSh 349 / week',
-    daily:    '✅ Daily — KSh 69 / day',
-    free:     '🆓 Free — KSh 0 / forever',
+    premium:  'Elite Prep - KSh 3,500 / exam cycle',
+    standard: 'Success Plan - KSh 999 / month',
+    weekly:   'Exam Boost Weekly - KSh 299 / week',
+    daily:    'Exam Boost Daily - KSh 69 / day',
+    free:     'Test Yourself - KSh 0 / forever',
   };
   const planSubtext: Record<string, string> = {
-    premium:  'You are on the highest plan. Enjoy all features.',
-    standard: 'Upgrade to Premium for unlimited mock exams, leaderboard, and priority WhatsApp support.',
-    weekly:   'Upgrade to Standard or Premium for longer access and more features.',
-    daily:    'Upgrade to Weekly, Standard, or Premium for longer access.',
-    free:     'Upgrade to unlock unlimited practice, mock exams, flashcards, and discounted revision plans.',
+    premium:  'You are on the highest plan with exam-cycle mentorship and accountability.',
+    standard: 'Upgrade to Elite Prep for unlimited mocks, WhatsApp mentorship, and stronger accountability.',
+    weekly:   'Upgrade to Success Plan or Elite Prep for longer access and deeper support.',
+    daily:    'Upgrade to Exam Boost Weekly, Success Plan, or Elite Prep for longer access.',
+    free:     'Upgrade to unlock unlimited practice, mock exams, flashcards, and included revision plans.',
   };
 
   return (
@@ -232,7 +233,7 @@ function SubscriptionCard({ planTier, planExpiresAt, onUpgradeSuccess }: {
           <>
             <p className="text-sm font-semibold text-error">⚠️ Your {planTier} plan has expired</p>
             <p className="text-xs text-[var(--color-text-secondary)] mt-1">
-              Expired {planExpiresAt ? new Date(planExpiresAt).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}. You are now on the Free plan. Renew below to restore access.
+              Expired {planExpiresAt ? new Date(planExpiresAt).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}. You are now on Test Yourself. Renew below to restore access.
             </p>
           </>
         ) : (

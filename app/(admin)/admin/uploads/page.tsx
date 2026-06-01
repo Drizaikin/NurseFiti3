@@ -68,7 +68,7 @@ export default function AdminUploadsPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'Failed');
-      toast.success(`${upload.student_name} upgraded to Standard (30 days)`);
+      toast.success(`${upload.student_name} upgraded to Success Plan (30 days)`);
       await loadUploads();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Action failed');
@@ -104,7 +104,7 @@ export default function AdminUploadsPage() {
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h1 className="text-2xl font-heading font-bold text-primary">Question Uploads</h1>
-          <p className="text-neutral-mid text-sm mt-1">Review student-submitted exam question files. Approving upgrades the student to Standard plan for 30 days.</p>
+          <p className="text-neutral-mid text-sm mt-1">Review student-submitted exam question files. Approving upgrades the student to Success Plan for 30 days.</p>
         </div>
         <button onClick={loadUploads} className="text-xs text-primary hover:underline">↻ Refresh</button>
       </div>
