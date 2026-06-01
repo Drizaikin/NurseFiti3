@@ -31,7 +31,7 @@ export async function POST() {
       .eq('user_id', user.id)
       .eq('type', 'plan_subscription')
       .in('status', ['pending', 'completed'])
-      .order('created_at', { ascending: false })
+      .order('initiated_at', { ascending: false })
       .limit(5);
 
     if (paymentError) throw paymentError;
