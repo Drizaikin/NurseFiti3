@@ -27,11 +27,11 @@ const TIER_BADGE: Record<string, 'amber' | 'teal' | 'secondary'> = {
 };
 
 const PLAN_OPTIONS = [
-  { tier: 'standard', label: 'Standard (30 days)',  days: 30  },
-  { tier: 'premium',  label: 'Premium (90 days)',   days: 90  },
-  { tier: 'weekly',   label: 'Weekly (7 days)',     days: 7   },
-  { tier: 'daily',    label: 'Daily (1 day)',       days: 1   },
-  { tier: 'free',     label: 'Free (no expiry)',    days: 0   },
+  { tier: 'standard', label: 'Success Plan (30 days)',       days: 30  },
+  { tier: 'premium',  label: 'Elite Prep (90 days)',         days: 90  },
+  { tier: 'weekly',   label: 'Exam Boost Weekly (7 days)',   days: 7   },
+  { tier: 'daily',    label: 'Exam Boost Daily (1 day)',     days: 1   },
+  { tier: 'free',     label: 'Test Yourself (no expiry)',    days: 0   },
 ];
 
 export default function AdminStudentsPage() {

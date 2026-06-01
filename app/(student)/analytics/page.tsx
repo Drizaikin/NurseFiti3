@@ -266,9 +266,9 @@ export default function AnalyticsPage() {
             <div className="flex-1 text-center sm:text-left">
               <h3 className="text-lg font-heading font-bold text-primary mb-1">Unlock Full Analytics</h3>
               <p className="text-sm text-neutral-mid mb-1">
-                Standard and Premium plans include your 7-day score trend, per-unit mastery breakdown, and full mock exam history.
+                Exam Boost, Success Plan, and Elite Prep include your 7-day score trend, per-unit mastery breakdown, and full mock exam history.
               </p>
-              <p className="text-xs text-neutral-mid">Free plan · Upgrade from KSh 499/month</p>
+              <p className="text-xs text-neutral-mid">Test Yourself plan · Upgrade from KSh 69/day</p>
             </div>
             <Link href="/settings?tab=account" className="flex-shrink-0">
               <Button variant="primary">Upgrade →</Button>

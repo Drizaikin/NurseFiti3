@@ -17,6 +17,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
+import { effectiveTier } from '@/lib/planLimits';
 import { z } from 'zod';
 import { randomUUID } from 'crypto';
 
@@ -29,7 +30,7 @@ const bodySchema = z.object({
   studyHoursWeekday: z.number().int().min(1).max(8),
   studyHoursWeekend: z.number().int().min(1).max(12),
   workSchoolStatus:  z.enum(['working_full_time', 'working_part_time', 'student_only']),
-  paymentRef:        z.string().min(1),
+  paymentRef:        z.string().min(1).optional(),
 });
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -385,8 +386,8 @@ export async function POST(req: NextRequest) {
 
     const { examDate, studyHoursWeekday, studyHoursWeekend, workSchoolStatus, paymentRef } = body.data;
 
-    // Verify payment — check payments table for completed plan_subscription or revision_plan payment
-    // OR allow if student is premium with a free generation available
+    // Paid prep plans include revision plans. Free users still need a verified one-off
+    // legacy payment reference if they arrive from an old checkout link.
     const { data: profile } = await supabase
       .from('student_profiles')
       .select('cadre, plan_tier, plan_expires_at')
@@ -397,8 +398,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Student profile not found' }, { status: 404 });
     }
 
-    // Verify payment reference exists and is completed
-    if (paymentRef !== 'free_premium') {
+    const profileRow = profile as any;
+    const activeTier = effectiveTier(profileRow.plan_tier, profileRow.plan_expires_at);
+    const hasIncludedRevisionPlan = activeTier !== 'free';
+
+    // Verify payment reference exists and is completed for users without an active paid plan.
+    if (!hasIncludedRevisionPlan && paymentRef !== 'free_premium') {
+      if (!paymentRef) {
+        return NextResponse.json({ error: 'Upgrade to a paid prep plan to generate a revision plan.' }, { status: 402 });
+      }
+
       const { data: payment } = await supabase
         .from('payments')
         .select('status, type')
@@ -424,7 +433,7 @@ export async function POST(req: NextRequest) {
     const { data: unitsData } = await supabase
       .from('units')
       .select('name, nck_weight, tier')
-      .eq('cadre', profile.cadre)
+      .eq('cadre', profileRow.cadre)
       .eq('is_examinable', true)
       .order('tier', { ascending: true })
       .order('nck_weight', { ascending: false });
@@ -474,7 +483,7 @@ export async function POST(req: NextRequest) {
 
     // Generate the plan
     const days = generatePlan(
-      profile.cadre,
+      profileRow.cadre,
       new Date(examDate),
       studyHoursWeekday,
       studyHoursWeekend,
@@ -487,7 +496,7 @@ export async function POST(req: NextRequest) {
     // Render HTML
     const planHtml = renderPlanHtml(
       studentName,
-      profile.cadre,
+      profileRow.cadre,
       examDate,
       days,
       units,
@@ -500,7 +509,7 @@ export async function POST(req: NextRequest) {
       .from('revision_plans')
       .insert({
         student_id: user.id,
-        cadre: profile.cadre,
+        cadre: profileRow.cadre,
         exam_date: examDate,
         days_available: days.length,
         study_hours_weekday: studyHoursWeekday,

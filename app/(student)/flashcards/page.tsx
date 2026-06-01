@@ -222,12 +222,12 @@ export default function FlashcardsPage() {
         <p className="text-neutral-mid mb-6">Spaced repetition — cards resurface at the optimal moment before you forget them.</p>
         <Card className="text-center py-12 border-primary/20">
           <div className="text-6xl mb-4">🔒</div>
-          <h2 className="text-2xl font-heading font-bold text-primary mb-2">Flashcards — Standard &amp; Premium</h2>
+          <h2 className="text-2xl font-heading font-bold text-primary mb-2">Flashcards — Exam Boost and above</h2>
           <p className="text-neutral-mid mb-2 max-w-sm mx-auto">
-            Spaced-repetition flashcards are available on Standard and Premium plans.
+            Spaced-repetition flashcards are available on Exam Boost, Success Plan, and Elite Prep.
             Upgrade to unlock all decks and track your progress.
           </p>
-          <p className="text-xs text-neutral-mid mb-6">Free plan · Upgrade from KSh 499/month</p>
+          <p className="text-xs text-neutral-mid mb-6">Test Yourself plan · Upgrade from KSh 69/day</p>
           <Link href="/settings?tab=account">
             <Button variant="primary" size="lg">Upgrade to Unlock Flashcards →</Button>
           </Link>

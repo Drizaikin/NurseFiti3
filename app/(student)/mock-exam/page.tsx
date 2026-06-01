@@ -259,7 +259,7 @@ export default function MockExamPage() {
                   : `${planTier.charAt(0).toUpperCase() + planTier.slice(1)} plan: ${weeklyLimit - examsThisWeek} of ${weeklyLimit} mock exam${weeklyLimit !== 1 ? 's' : ''} remaining this week`}
               </p>
               {limitReached && (
-                <p className="text-xs text-neutral-mid mt-0.5">Resets every Monday · Upgrade to Premium for unlimited mock exams</p>
+                <p className="text-xs text-neutral-mid mt-0.5">Resets every Monday · Upgrade to Elite Prep for unlimited mock exams</p>
               )}
             </div>
             {limitReached && (
@@ -301,7 +301,7 @@ export default function MockExamPage() {
             <h2 className="text-lg font-heading font-bold mb-1">Upload Exam Questions</h2>
             <p className="text-sm text-neutral-mid mb-4">
               Upload at least <strong>3 files</strong> containing past exam questions (PDF, TXT, DOC, or DOCX, max 10 MB each).
-              We will verify they are not already in our database and upgrade your account to Standard within 24 hours.
+              We will verify they are not already in our database and upgrade your account to Success Plan within 24 hours.
             </p>
             <div className="space-y-3">
               <label className="block">
@@ -343,7 +343,7 @@ export default function MockExamPage() {
           <div className="mb-4 rounded-xl px-4 py-4 border bg-success/10 border-success/30">
             <p className="text-sm font-semibold text-success mb-1">✅ Files submitted successfully</p>
             <p className="text-xs text-neutral-mid">
-              Your files are under review. We will upgrade your account to Standard plan within 24 hours.
+              Your files are under review. We will upgrade your account to Success Plan within 24 hours.
               Check back soon or contact support if you have not heard back.
             </p>
           </div>
@@ -375,19 +375,19 @@ export default function MockExamPage() {
               <div className="p-4 rounded-xl bg-error/5 border border-error/20 text-center">
                 {isFree ? (
                   <>
-                    <p className="text-sm font-semibold text-error mb-1">Free plan — mock exams locked</p>
+                    <p className="text-sm font-semibold text-error mb-1">Test Yourself — mock exams locked</p>
                     <p className="text-xs text-neutral-mid">Upload past exam questions above to unlock, or upgrade to a paid plan.</p>
                   </>
                 ) : (
                   <>
                     <p className="text-sm font-semibold text-error mb-1">Weekly limit reached ({weeklyLimit} exams/week)</p>
-                    <p className="text-xs text-neutral-mid">Resets every Monday. Upgrade to Premium for unlimited mock exams.</p>
+                    <p className="text-xs text-neutral-mid">Resets every Monday. Upgrade to Elite Prep for unlimited mock exams.</p>
                   </>
                 )}
               </div>
               {!isFree && (
                 <Link href="/settings?tab=account">
-                  <Button variant="primary" size="lg" className="w-full">Upgrade to Premium — Unlimited Mock Exams</Button>
+                  <Button variant="primary" size="lg" className="w-full">Upgrade to Elite Prep — Unlimited Mock Exams</Button>
                 </Link>
               )}
             </div>
