@@ -39,10 +39,10 @@ export async function POST(request: NextRequest) {
       agreeToTerms: formData.get('agreeToTerms') === 'true',
     };
 
-    // Extract files
-    const nckCertificate = formData.get('nckCertificate') as File;
-    const academicQualification = formData.get('academicQualification') as File;
-    const nationalId = formData.get('nationalId') as File;
+    // Extract optional files
+    const nckCertificate = formData.get('nckCertificate') as File | null;
+    const academicQualification = formData.get('academicQualification') as File | null;
+    const nationalId = formData.get('nationalId') as File | null;
 
     // Validate form data
     const validationResult = tutorSignupSchema.safeParse(data);
@@ -54,19 +54,13 @@ export async function POST(request: NextRequest) {
     }
     const validatedData = validationResult.data;
 
-    // Validate files
-    if (!nckCertificate || !academicQualification || !nationalId) {
-      return NextResponse.json(
-        { error: 'All document uploads are required' },
-        { status: 400 }
-      );
-    }
-
+    // Validate any files that were provided
     for (const [label, file] of [
       ['NCK certificate', nckCertificate],
       ['Academic qualification', academicQualification],
       ['National ID', nationalId],
-    ] as [string, File][]) {
+    ] as [string, File | null][]) {
+      if (!file) continue;
       if (file.size > MAX_FILE_SIZE) {
         return NextResponse.json({ error: `${label} must be less than 5MB` }, { status: 400 });
       }
@@ -111,24 +105,23 @@ export async function POST(request: NextRequest) {
 
     const userId = authData.user.id;
     const timestamp = Date.now();
+    const uploadedPaths: string[] = [];
 
     try {
-      // Upload documents to Supabase Storage
-      const paths = {
-        nck: `tutor-documents/${userId}/nck-certificate-${timestamp}.${ext(nckCertificate)}`,
-        academic: `tutor-documents/${userId}/academic-qualification-${timestamp}.${ext(academicQualification)}`,
-        id: `tutor-documents/${userId}/national-id-${timestamp}.${ext(nationalId)}`,
-      };
+      // Upload any documents that were provided (all optional at signup)
+      const docUploads: Array<[string, File, string]> = [];
+      if (nckCertificate) docUploads.push([`tutor-documents/${userId}/nck-certificate-${timestamp}.${ext(nckCertificate)}`, nckCertificate, 'nck']);
+      if (academicQualification) docUploads.push([`tutor-documents/${userId}/academic-qualification-${timestamp}.${ext(academicQualification)}`, academicQualification, 'academic']);
+      if (nationalId) docUploads.push([`tutor-documents/${userId}/national-id-${timestamp}.${ext(nationalId)}`, nationalId, 'id']);
 
-      for (const [path, file] of [
-        [paths.nck, nckCertificate],
-        [paths.academic, academicQualification],
-        [paths.id, nationalId],
-      ] as [string, File][]) {
+      const docPaths: Record<string, string> = {};
+      for (const [path, file, key] of docUploads) {
         const { error: uploadError } = await supabase.storage
           .from('documents')
           .upload(path, await file.arrayBuffer(), { contentType: file.type, upsert: false });
         if (uploadError) throw new Error(`Failed to upload document: ${uploadError.message}`);
+        uploadedPaths.push(path);
+        docPaths[key] = path;
       }
 
       // Create profile record
@@ -141,26 +134,37 @@ export async function POST(request: NextRequest) {
       });
       if (profileError) throw new Error(`Failed to create profile: ${profileError.message}`);
 
-      // Create tutor_profile record — uses `id` as FK (matches schema)
+      // Create tutor_profile record — optional fields left null until completed from dashboard
       const { error: tutorProfileError } = await supabase.from('tutor_profiles').insert({
         id: userId,
         nck_reg_number: validatedData.nckRegNumber,
         professional_title: validatedData.professionalTitle,
         years_experience: validatedData.yearsExperience,
         current_employer: validatedData.currentEmployer,
-        cadres_taught: validatedData.cadresTaught,
-        specialties: validatedData.specialties || [],
-        bio: validatedData.bio,
-        rate_per_hour: validatedData.sessionRate,
-        mpesa_number: validatedData.mpesaNumber,
-        whatsapp_number: validatedData.whatsappNumber,
-        nck_certificate_url: paths.nck,
-        academic_qualification_url: paths.academic,
-        national_id_url: paths.id,
+        cadres_taught: validatedData.cadresTaught ?? [],
+        specialties: validatedData.specialties ?? [],
+        bio: validatedData.bio ?? null,
+        rate_per_hour: validatedData.sessionRate ?? null,
+        mpesa_number: validatedData.mpesaNumber ?? null,
+        whatsapp_number: validatedData.whatsappNumber ?? null,
+        nck_certificate_url: docPaths.nck ?? null,
+        academic_qualification_url: docPaths.academic ?? null,
+        national_id_url: docPaths.id ?? null,
         verification_status: 'pending',
         session_platform: ['Zoom', 'Google Meet', 'WhatsApp'],
       });
       if (tutorProfileError) throw new Error(`Failed to create tutor profile: ${tutorProfileError.message}`);
+
+      // Notify the tutor to complete their profile from the dashboard (non-critical)
+      try {
+        await supabase.from('notifications').insert({
+          user_id: userId,
+          type: 'profile_incomplete',
+          title: 'Complete your tutor profile',
+          body: 'Welcome to NurseFiti! Please complete your specialization, upload your documents, and add your M-Pesa number so we can activate your profile and start paying you.',
+          action_url: '/tutor-profile/complete',
+        } as any);
+      } catch { /* non-critical */ }
 
       return NextResponse.json(
         { message: 'Application submitted successfully', userId },
@@ -169,14 +173,9 @@ export async function POST(request: NextRequest) {
     } catch (error: any) {
       // Best-effort cleanup
       await supabase.auth.admin.deleteUser(userId).catch(() => {});
-      await supabase.storage
-        .from('documents')
-        .remove([
-          `tutor-documents/${userId}/nck-certificate-${timestamp}.${ext(nckCertificate)}`,
-          `tutor-documents/${userId}/academic-qualification-${timestamp}.${ext(academicQualification)}`,
-          `tutor-documents/${userId}/national-id-${timestamp}.${ext(nationalId)}`,
-        ])
-        .catch(() => {});
+      if (uploadedPaths.length) {
+        await supabase.storage.from('documents').remove(uploadedPaths).catch(() => {});
+      }
 
       console.error('Tutor profile creation error:', error);
       return NextResponse.json({ error: error.message || 'Failed to create tutor profile' }, { status: 500 });
