@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Card } from '@/components/ui/Card';
@@ -336,27 +336,49 @@ function SubscriptionCard({ planTier, planExpiresAt, onUpgradeSuccess }: {
   );
 }
 
+// ─── Payment Redirect Handler ─────────────────────────────────────────────────
+
+function PaymentRedirectHandler({ onSuccess, onFailed }: {
+  onSuccess: () => void;
+  onFailed: (reason?: string) => void;
+}) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    const payment = searchParams.get('payment');
+    const reason = searchParams.get('reason');
+
+    if (payment === 'success') {
+      onSuccess();
+      router.replace('/settings?tab=account', { scroll: false });
+    } else if (payment === 'failed') {
+      onFailed(reason ?? undefined);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return null;
+}
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
+
+// Move EXAM_CYCLES to module scope
+const EXAM_CYCLES = ['May', 'August', 'November'];
 
 export default function SettingsPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const supabase = createClient();
 
   const [activeSection, setActiveSection] = useState<Section>('profile');
 
-  // Handle tab query param — e.g. /settings?tab=account jumps straight to the account section
+  // Handle tab query param — read from URL on initial render via a plain check
   useEffect(() => {
-    const tab = searchParams.get('tab');
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('tab');
     if (tab === 'account' || tab === 'profile' || tab === 'password' || tab === 'notifications') {
       setActiveSection(tab as Section);
-    }
-    // Handle IntaSend redirect back after payment
-    const payment = searchParams.get('payment');
-    if (payment === 'success') {
-      toast.success('Payment successful! Your plan has been upgraded.');
-      setActiveSection('account');
-      router.replace('/settings?tab=account', { scroll: false });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -448,6 +470,16 @@ export default function SettingsPage() {
 
   useEffect(() => { fetchProfile(); }, [fetchProfile]);
 
+  const handlePaymentSuccess = useCallback(async () => {
+    await fetchProfile();
+    toast.success('Payment successful! Your plan has been upgraded.');
+    setActiveSection('account');
+  }, [fetchProfile]);
+
+  const handlePaymentFailed = useCallback((reason?: string) => {
+    toast.error(reason ? `Payment failed: ${reason}` : 'Payment failed. Please try again.');
+  }, []);
+
   // ── Save profile ────────────────────────────────────────────────────────────
   const handleSaveProfile = async () => {
     if (!editForm.full_name.trim()) { toast.error('Full name is required'); return; }
@@ -537,11 +569,11 @@ export default function SettingsPage() {
     );
   }
 
-
-  const EXAM_CYCLES = ['May', 'August', 'November'];
-
   return (
     <div className="max-w-4xl mx-auto pb-24 lg:pb-6">
+      <Suspense fallback={null}>
+        <PaymentRedirectHandler onSuccess={handlePaymentSuccess} onFailed={handlePaymentFailed} />
+      </Suspense>
       <div className="mb-6">
         <h1 className="text-2xl font-heading font-bold text-[var(--color-text)]">Settings</h1>
         <p className="text-sm text-[var(--color-text-secondary)] mt-1">Manage your profile, password, and notification preferences.</p>
@@ -636,6 +668,7 @@ export default function SettingsPage() {
                       onChange={e => setEditForm(f => ({ ...f, exam_cycle: e.target.value }))}
                       className={inputClass()}
                     >
+                      <option value="">Select exam cycle</option>
                       {EXAM_CYCLES.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                   </FormField>

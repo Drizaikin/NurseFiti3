@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { tutorSignupSchema, type TutorSignupInput } from '@/lib/validations/auth';
@@ -16,7 +17,6 @@ const STEPS = [
   { id: 2, name: 'Professional Credentials', description: 'NCK registration & experience' },
 ];
 
-
 export default function TutorSignupPage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
@@ -27,7 +27,6 @@ export default function TutorSignupPage() {
   const {
     register,
     handleSubmit,
-    watch,
     trigger,
     formState: { errors },
   } = useForm<TutorSignupInput>({
@@ -76,10 +75,9 @@ export default function TutorSignupPage() {
         throw new Error(result.error || 'Application submission failed');
       }
 
-      // Success - redirect to login with success message
-      router.push('/login?tutor_application=submitted');
+      router.push('/login?message=Application+submitted.+We+will+review+and+get+back+to+you.');
     } catch (error: any) {
-      alert(error.message || 'Failed to submit application. Please try again.');
+      toast.error(error.message || 'Failed to submit application. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -153,6 +151,7 @@ export default function TutorSignupPage() {
                     id="fullName"
                     className="input"
                     placeholder="Dr. Jane Doe"
+                    disabled={isLoading}
                   />
                   {errors.fullName && (
                     <p className="mt-1 text-sm text-error">{errors.fullName.message}</p>
@@ -170,6 +169,7 @@ export default function TutorSignupPage() {
                       id="email"
                       className="input"
                       placeholder="jane@example.com"
+                      disabled={isLoading}
                     />
                     {errors.email && (
                       <p className="mt-1 text-sm text-error">{errors.email.message}</p>
@@ -186,6 +186,7 @@ export default function TutorSignupPage() {
                       id="phone"
                       className="input"
                       placeholder="+254712345678"
+                      disabled={isLoading}
                     />
                     {errors.phone && (
                       <p className="mt-1 text-sm text-error">{errors.phone.message}</p>
@@ -205,6 +206,7 @@ export default function TutorSignupPage() {
                         id="password"
                         className="input pr-10"
                         placeholder="••••••••"
+                        disabled={isLoading}
                       />
                       <button
                         type="button"
@@ -230,6 +232,7 @@ export default function TutorSignupPage() {
                         id="confirmPassword"
                         className="input pr-10"
                         placeholder="••••••••"
+                        disabled={isLoading}
                       />
                       <button
                         type="button"
@@ -270,6 +273,7 @@ export default function TutorSignupPage() {
                       id="nckRegNumber"
                       className="input"
                       placeholder="NCK/RN/12345"
+                      disabled={isLoading}
                     />
                     {errors.nckRegNumber && (
                       <p className="mt-1 text-sm text-error">{errors.nckRegNumber.message}</p>
@@ -288,6 +292,7 @@ export default function TutorSignupPage() {
                       placeholder="5"
                       min="0"
                       max="50"
+                      disabled={isLoading}
                     />
                     {errors.yearsExperience && (
                       <p className="mt-1 text-sm text-error">{errors.yearsExperience.message}</p>
@@ -305,6 +310,7 @@ export default function TutorSignupPage() {
                     id="professionalTitle"
                     className="input"
                     placeholder="e.g., RN, BScN, MSc Clinical Nursing"
+                    disabled={isLoading}
                   />
                   <p className="mt-1 text-xs text-neutral-light">
                     Include all relevant qualifications and certifications
@@ -324,6 +330,7 @@ export default function TutorSignupPage() {
                     id="currentEmployer"
                     className="input"
                     placeholder="e.g., Kenyatta National Hospital"
+                    disabled={isLoading}
                   />
                   {errors.currentEmployer && (
                     <p className="mt-1 text-sm text-error">{errors.currentEmployer.message}</p>
@@ -343,6 +350,7 @@ export default function TutorSignupPage() {
                       type="checkbox"
                       {...register('agreeToTerms')}
                       className="w-5 h-5 text-primary border-neutral-border rounded focus:ring-primary mt-0.5"
+                      disabled={isLoading}
                     />
                     <span className="text-sm">
                       I agree to the{' '}
@@ -376,7 +384,7 @@ export default function TutorSignupPage() {
                   ← Previous
                 </Button>
               )}
-              
+
               {currentStep < 2 ? (
                 <Button
                   type="button"

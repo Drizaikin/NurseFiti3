@@ -29,14 +29,14 @@ const IntaSend = require('intasend-node') as new (
   };
 };
 
-const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_INTASEND_PUBLISHABLE_KEY ?? '';
-const SECRET_KEY      = process.env.INTASEND_SECRET_KEY ?? '';
-
-// Derive test mode from the key prefix — test keys contain "test", live keys contain "live"
-const IS_TEST = SECRET_KEY.includes('test') || PUBLISHABLE_KEY.includes('test');
-
 /** Shared SDK instance */
 function getSdk() {
+  const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_INTASEND_PUBLISHABLE_KEY ?? '';
+  const SECRET_KEY      = process.env.INTASEND_SECRET_KEY ?? '';
+
+  // Derive test mode from the key prefix — test keys contain "test", live keys contain "live"
+  const IS_TEST = SECRET_KEY.includes('test') || PUBLISHABLE_KEY.includes('test');
+
   if (!SECRET_KEY) {
     throw new Error('INTASEND_SECRET_KEY is not set');
   }
@@ -142,10 +142,16 @@ export async function createCheckout(
   });
 
   // SDK returns the full response — url and id are at the top level
+  if (!resp.url || !resp.id) {
+    throw new Error(
+      'IntaSend checkout response is missing url or id — check your API keys and account status'
+    );
+  }
+
   return {
-    url:       resp.url,
-    id:        resp.id,
-    signature: resp.signature,
+    url:       resp.url as string,
+    id:        resp.id as string,
+    signature: resp.signature as string | undefined,
   };
 }
 
@@ -163,8 +169,15 @@ export async function verifyCheckout(
 
   // SDK returns { invoice: { ... }, meta: { ... } }
   // The invoice object is what we need
-  const invoice = resp.invoice ?? resp;
-  return invoice as CheckoutStatusResult;
+  const invoice = (resp.invoice ?? resp) as Record<string, unknown>;
+
+  if (typeof invoice.state !== 'string') {
+    throw new Error(
+      'IntaSend status response has unexpected shape — invoice.state is not a string'
+    );
+  }
+
+  return invoice as unknown as CheckoutStatusResult;
 }
 
 // ---------------------------------------------------------------------------

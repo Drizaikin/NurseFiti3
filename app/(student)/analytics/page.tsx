@@ -61,6 +61,7 @@ export default function AnalyticsPage() {
 
   useEffect(() => {
     const load = async () => {
+      try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push('/login'); return; }
 
@@ -127,9 +128,13 @@ export default function AnalyticsPage() {
         ? Math.round(unitAvg * 0.6 + mockAvg * 0.4) : 0;
 
       setData({ totalAnswered, correctAnswers, accuracy, studyTimeMinutes, mockExams: mocks, unitStats, weeklyStats, readinessScore, flashcardsReviewed: flashCount });
-      setIsLoading(false);
+      } catch (err) {
+        console.error('Analytics error:', err);
+      } finally {
+        setIsLoading(false);
+      }
     };
-    load();
+    load().catch(() => setIsLoading(false));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -168,7 +173,7 @@ export default function AnalyticsPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard label="Questions Answered" value={data.totalAnswered.toLocaleString()} icon="📝" />
         <StatCard label="Accuracy Rate" value={`${data.accuracy}%`} icon="✅" deltaPositive={data.accuracy >= 60} delta={data.accuracy >= 60 ? 'Good' : 'Needs improvement'} />
-        <StatCard label="Study Time" value={`${data.studyTimeMinutes}m`} icon="⏱️" />
+        <StatCard label="Study Time" value={(() => { const h = Math.floor(data.studyTimeMinutes / 60); const m = data.studyTimeMinutes % 60; return h > 0 ? `${h}h ${m}m` : `${m}m`; })()} icon="⏱️" />
         <StatCard label="Flashcards Reviewed" value={data.flashcardsReviewed.toLocaleString()} icon="🎴" />
       </div>
 

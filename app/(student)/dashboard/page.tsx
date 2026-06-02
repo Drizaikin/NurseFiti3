@@ -426,7 +426,7 @@ export default function DashboardPage() {
     );
   }
 
-  const firstName = data.student.full_name.split(' ')[0];
+  const firstName = data.student.full_name.split(' ')[0] || 'Nurse';
   const xpPerLevel = 100;
   const xpForNextLevel = xpPerLevel; // each level requires 100 XP
   const xpInLevel = data.student.xp % xpPerLevel;
@@ -602,7 +602,7 @@ export default function DashboardPage() {
             />
             <div className="mt-3 flex gap-2">
               <a
-                href="mailto:support@nursefiti.vercel.app"
+                href="mailto:support@nursefiti.co.ke"
                 className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-secondary)] hover:border-primary/40 hover:text-primary transition-colors"
               >
                 ✉️ Email Support

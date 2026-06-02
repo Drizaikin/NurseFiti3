@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 import { createClient } from '@/lib/supabase/client';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -129,7 +130,7 @@ export default function FlashcardsPage() {
     const { data: allCardsData } = await (supabase as any).from('flashcards').select('*').eq('deck_id', deck.id);
     const allCards = (allCardsData ?? []) as Flashcard[];
     if (allCards.length === 0) {
-      alert('No cards in this deck yet.');
+      toast.error('No cards in this deck yet.');
       setIsLoading(false);
       return;
     }
@@ -179,7 +180,7 @@ export default function FlashcardsPage() {
 
     // Upsert progress
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (supabase as any).from('flashcard_progress').upsert({
+    const { error: upsertError } = await (supabase as any).from('flashcard_progress').upsert({
       student_id: userId,
       card_id: card.id,
       interval_days: intervalDays,
@@ -190,6 +191,11 @@ export default function FlashcardsPage() {
       repetitions: 1,
       updated_at: new Date().toISOString(),
     }, { onConflict: 'student_id,card_id' });
+
+    if (upsertError) {
+      toast.error('Failed to save progress. Please try again.');
+      return;
+    }
 
     setSessionStats(prev => ({ ...prev, reviewed: prev.reviewed + 1, [rating]: prev[rating] + 1 }));
 
@@ -222,7 +228,7 @@ export default function FlashcardsPage() {
         <p className="text-neutral-mid mb-6">Spaced repetition — cards resurface at the optimal moment before you forget them.</p>
         <Card className="text-center py-12 border-primary/20">
           <div className="text-6xl mb-4">🔒</div>
-          <h2 className="text-2xl font-heading font-bold text-primary mb-2">Flashcards — Exam Boost and above</h2>
+          <h2 className="text-2xl font-heading font-bold text-primary mb-2">Flashcards — Exam Boost (Daily/Weekly) and above</h2>
           <p className="text-neutral-mid mb-2 max-w-sm mx-auto">
             Spaced-repetition flashcards are available on Exam Boost, Success Plan, and Elite Prep.
             Upgrade to unlock all decks and track your progress.
@@ -282,12 +288,13 @@ export default function FlashcardsPage() {
           <div className="text-6xl mb-4">🎉</div>
           <h2 className="text-2xl font-heading font-bold text-primary mb-2">Session Complete!</h2>
           <p className="text-neutral-mid mb-6">{selectedDeck?.name} · +{cards.length * 5} XP earned (+5 per card)</p>
-          <div className="grid grid-cols-4 gap-3 mb-8">
+          <div className="grid grid-cols-5 gap-3 mb-8">
             {[
               { label: 'Reviewed', value: sessionStats.reviewed, color: 'text-[var(--color-text)]' },
               { label: 'Again', value: sessionStats.again, color: 'text-error' },
               { label: 'Hard', value: sessionStats.hard, color: 'text-accent' },
               { label: 'Good', value: sessionStats.good, color: 'text-primary' },
+              { label: 'Easy', value: sessionStats.easy, color: 'text-success' },
             ].map(s => (
               <div key={s.label}>
                 <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>

@@ -261,13 +261,19 @@ export default function TutorProfilePage() {
 
   const handleBookSession = async () => {
     if (!selectedSlot || !tutor || !currentUserId) return;
+
+    if (currentUserId === tutorId) {
+      toast.error('You cannot book a session with yourself.');
+      return;
+    }
+
     setIsBooking(true);
 
     try {
       const sessionDate = selectedSlot.date.toISOString().split('T')[0];
-      const [startH] = selectedSlot.start_time.split(':').map(Number);
-      const [endH] = selectedSlot.end_time.split(':').map(Number);
-      const durationMinutes = (endH - startH) * 60;
+      const [startH, startM] = selectedSlot.start_time.split(':').map(Number);
+      const [endH, endM] = selectedSlot.end_time.split(':').map(Number);
+      const durationMinutes = (endH * 60 + endM) - (startH * 60 + startM);
       const grossAmount = Math.round((durationMinutes / 60) * tutor.rate_per_hour);
       const platformFee = Math.round(grossAmount * 0.30);
       const netAmount = grossAmount - platformFee;
@@ -569,9 +575,14 @@ export default function TutorProfilePage() {
                   <p className="text-xs text-[var(--color-text-secondary)]">Duration</p>
                   <p className="font-semibold text-[var(--color-text)]">
                     {(() => {
-                      const [sh] = selectedSlot.start_time.split(':').map(Number);
-                      const [eh] = selectedSlot.end_time.split(':').map(Number);
-                      return `${eh - sh} hour${eh - sh !== 1 ? 's' : ''}`;
+                      const [sh, sm] = selectedSlot.start_time.split(':').map(Number);
+                      const [eh, em] = selectedSlot.end_time.split(':').map(Number);
+                      const totalMins = (eh * 60 + em) - (sh * 60 + sm);
+                      const hrs = Math.floor(totalMins / 60);
+                      const mins = totalMins % 60;
+                      if (mins === 0) return `${hrs} hour${hrs !== 1 ? 's' : ''}`;
+                      if (hrs === 0) return `${mins} min`;
+                      return `${hrs} hr ${mins} min`;
                     })()}
                   </p>
                 </div>
@@ -579,9 +590,10 @@ export default function TutorProfilePage() {
                   <p className="text-xs text-[var(--color-text-secondary)]">Amount</p>
                   <p className="font-bold text-accent">
                     KSh {(() => {
-                      const [sh] = selectedSlot.start_time.split(':').map(Number);
-                      const [eh] = selectedSlot.end_time.split(':').map(Number);
-                      return ((eh - sh) * tutor.rate_per_hour).toLocaleString();
+                      const [sh, sm] = selectedSlot.start_time.split(':').map(Number);
+                      const [eh, em] = selectedSlot.end_time.split(':').map(Number);
+                      const totalMins = (eh * 60 + em) - (sh * 60 + sm);
+                      return Math.round((totalMins / 60) * tutor.rate_per_hour).toLocaleString();
                     })()}
                   </p>
                 </div>

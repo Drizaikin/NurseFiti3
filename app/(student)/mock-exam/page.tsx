@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
@@ -73,13 +73,14 @@ export default function MockExamPage() {
   const [results, setResults] = useState<{
     score: number; correct: number; total: number; passed: boolean; timeUsed: number;
   } | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
   const [showRationale, setShowRationale] = useState<string | null>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const init = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push('/login'); return; }
+      setUserId(user.id);
 
       const { data: spData } = await supabase
         .from('student_profiles')
@@ -121,7 +122,7 @@ export default function MockExamPage() {
       .eq('status', 'approved')
       .limit(config.totalQuestions);
     if (error || !data || data.length === 0) {
-      alert('Not enough questions available for this exam. Please try again later.');
+      toast.error('Not enough questions available for this exam. Please try again later.');
       setIsLoading(false);
       return;
     }
@@ -143,8 +144,6 @@ export default function MockExamPage() {
     setIsSubmitting(true);
     setShowConfirm(false);
     const config = EXAM_CONFIGS[selectedExam];
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { setIsSubmitting(false); return; }
 
     let correct = 0;
     questions.forEach(q => {
@@ -155,33 +154,41 @@ export default function MockExamPage() {
     const passed = score >= 50;
     const timeUsed = startedAt ? Math.round((Date.now() - startedAt.getTime()) / 60000) : 0;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (supabase.from('mock_exam_results') as any).insert({
-      student_id: user.id,
-      cadre: config.cadre,
-      paper: config.paper,
-      total_questions: total,
-      correct_answers: correct,
-      score_percentage: score,
-      time_used_minutes: timeUsed,
-      passed,
-      started_at: startedAt?.toISOString() ?? new Date().toISOString(),
-      completed_at: new Date().toISOString(),
-    });
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: spData } = await (supabase as any).from('student_profiles').select('xp, level').eq('id', user.id).single();
-    if (spData) {
-      const newXP = (spData.xp ?? 0) + 100;
+    if (!userId) {
+      toast.error('Your session expired. Please note your score before refreshing.');
+    } else {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await (supabase as any).from('student_profiles').update({ xp: newXP, level: Math.floor(newXP / 100) + 1 }).eq('id', user.id);
+      const { error: insertError } = await (supabase.from('mock_exam_results') as any).insert({
+        student_id: userId,
+        cadre: config.cadre,
+        paper: config.paper,
+        total_questions: total,
+        correct_answers: correct,
+        score_percentage: score,
+        time_used_minutes: timeUsed,
+        passed,
+        started_at: startedAt?.toISOString() ?? new Date().toISOString(),
+        completed_at: new Date().toISOString(),
+      });
+      if (insertError) {
+        console.error('mock_exam_results insert error:', insertError);
+        toast.error('Results could not be saved. Your score is shown below.');
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: spData } = await (supabase as any).from('student_profiles').select('xp, level').eq('id', userId).single();
+      if (spData) {
+        const newXP = (spData.xp ?? 0) + 100;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (supabase as any).from('student_profiles').update({ xp: newXP, level: Math.floor(newXP / 100) + 1 }).eq('id', userId);
+      }
     }
 
     setResults({ score, correct, total, passed, timeUsed });
     setExamState('results');
     setIsSubmitting(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSubmitting, selectedExam, questions, answers, startedAt]);
+  }, [isSubmitting, selectedExam, questions, answers, startedAt, userId]);
 
   const toggleFlag = (id: string) => {
     setFlagged(prev => {
@@ -528,7 +535,7 @@ export default function MockExamPage() {
         </div>
 
         {/* Question grid sidebar */}
-        <div ref={gridRef} className="hidden lg:block w-56 bg-[#0F2020] border-l border-[#1E3535] p-4 overflow-y-auto">
+        <div className="hidden lg:block w-56 bg-[#0F2020] border-l border-[#1E3535] p-4 overflow-y-auto">
           <p className="text-xs font-semibold text-neutral-light mb-3 uppercase tracking-wider">Navigator</p>
           <div className="grid grid-cols-5 gap-1.5">
             {questions.map((q, i) => {

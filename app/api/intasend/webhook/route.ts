@@ -22,6 +22,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { verifyWebhookChallenge } from '@/lib/intasend';
+import { getPlanFromAmount } from '@/lib/planLimits';
 
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>;
@@ -214,10 +215,3 @@ async function provisionAccess(supabase: any, payment: any, txnData: any) {
   }
 }
 
-function getPlanFromAmount(amountKsh: number): { tier: string; durationDays: number } {
-  if (amountKsh >= 3500) return { tier: 'premium',  durationDays: 90 };
-  if (amountKsh >= 999)  return { tier: 'standard', durationDays: 30 };
-  if (amountKsh >= 299)  return { tier: 'weekly',   durationDays: 7  };
-  if (amountKsh >= 69)   return { tier: 'daily',    durationDays: 1  };
-  return { tier: 'free', durationDays: 0 };
-}

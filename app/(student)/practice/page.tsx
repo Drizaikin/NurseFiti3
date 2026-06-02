@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 import { createClient } from '@/lib/supabase/client';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -89,6 +90,7 @@ export default function PracticePage() {
   const router = useRouter();
   const supabase = createClient();
 
+  const [userId, setUserId] = useState<string | null>(null);
   const [studentCadre, setStudentCadre] = useState<string>('');
   const [planTier, setPlanTier] = useState<string>('free');
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -117,6 +119,8 @@ export default function PracticePage() {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push('/login'); return; }
+
+      setUserId(user.id);
 
       const { data: profileRaw } = await supabase
         .from('student_profiles')
@@ -224,7 +228,7 @@ export default function PracticePage() {
       if (error) { console.error('Error fetching questions:', error); return; }
 
       if (!data || data.length === 0) {
-        alert('No questions available for the selected filters. Try different filters.');
+        toast.error('No questions available for the selected filters. Try different filters.');
         return;
       }
 
@@ -252,19 +256,23 @@ export default function PracticePage() {
   };
 
   const handleAnswer = async (questionId: string, selectedOption: string, isCorrect: boolean, timeTaken: number) => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+    // Fix 4: use cached userId instead of calling getUser() on every answer
+    if (!userId) return;
 
+    try {
+      // Fix 1: destructure and check insert error
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await (supabase as any).from('student_answers').insert({
-        student_id: user.id,
+      const { error: insertError } = await (supabase as any).from('student_answers').insert({
+        student_id: userId,
         question_id: questionId,
         selected_option: selectedOption,
         is_correct: isCorrect,
         time_taken_seconds: timeTaken,
         mode: 'practice',
       });
+      if (insertError) {
+        console.error('Error saving answer:', insertError);
+      }
 
       const xpGained = isCorrect ? 8 : 0;
       const updatedSession: PracticeSession = {
@@ -290,42 +298,54 @@ export default function PracticePage() {
         clearSavedSession();
       }
 
-      if (isCorrect) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { data: currentProfileRaw } = await (supabase as any)
-          .from('student_profiles')
-          .select('xp, level, last_study_date, streak_count')
-          .eq('id', user.id)
-          .single();
+      // Fix 2: always fetch profile to update streak/last_study_date regardless of correctness
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: currentProfileRaw } = await (supabase as any)
+        .from('student_profiles')
+        .select('xp, level, last_study_date, streak_count')
+        .eq('id', userId)
+        .single();
 
-        const currentProfile = currentProfileRaw as {
-          xp: number; level: number; last_study_date: string | null; streak_count: number;
-        } | null;
+      const currentProfile = currentProfileRaw as {
+        xp: number; level: number; last_study_date: string | null; streak_count: number;
+      } | null;
 
-        if (currentProfile) {
-          const today = new Date().toISOString().split('T')[0];
-          const lastStudyDate = currentProfile.last_study_date;
-          let newStreak = currentProfile.streak_count;
+      if (currentProfile) {
+        const today = new Date().toISOString().split('T')[0];
+        const lastStudyDate = currentProfile.last_study_date;
+        let newStreak = currentProfile.streak_count;
 
-          if (lastStudyDate) {
-            const daysDiff = Math.floor(
-              (new Date(today).getTime() - new Date(lastStudyDate).getTime()) / (1000 * 60 * 60 * 24)
-            );
-            if (daysDiff === 1) newStreak += 1;
-            else if (daysDiff > 1) newStreak = 1;
-          } else {
-            newStreak = 1;
-          }
+        if (lastStudyDate) {
+          const daysDiff = Math.floor(
+            (new Date(today).getTime() - new Date(lastStudyDate).getTime()) / (1000 * 60 * 60 * 24)
+          );
+          // Fix 2: wrong answers reset streak to 1 (daysDiff > 1), or maintain/increment it
+          if (daysDiff === 1) newStreak += 1;
+          else if (daysDiff > 1) newStreak = 1;
+          // daysDiff === 0 means same day, keep existing streak
+        } else {
+          newStreak = 1;
+        }
 
+        // Fix 2: streak_count and last_study_date are always updated
+        // XP and level increments only happen on correct answers
+        const profileUpdate: Record<string, unknown> = {
+          streak_count: newStreak,
+          last_study_date: today,
+        };
+
+        if (isCorrect) {
           const newXP = currentProfile.xp + xpGained;
           const newLevel = Math.floor(newXP / 100) + 1;
-
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          await (supabase as any)
-            .from('student_profiles')
-            .update({ xp: newXP, level: newLevel, streak_count: newStreak, last_study_date: today })
-            .eq('id', user.id);
+          profileUpdate.xp = newXP;
+          profileUpdate.level = newLevel;
         }
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (supabase as any)
+          .from('student_profiles')
+          .update(profileUpdate)
+          .eq('id', userId);
       }
     } catch (error) {
       console.error('Error handling answer:', error);

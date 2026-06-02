@@ -14,6 +14,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { verifyCheckout } from '@/lib/intasend';
 import { addDays } from 'date-fns';
+import { getPlanFromAmount } from '@/lib/planLimits';
 
 export const dynamic = 'force-dynamic';
 
@@ -55,13 +56,18 @@ export async function GET(req: NextRequest) {
 
     const txn = await verifyCheckout(invoiceId);
 
-    if (txn.state !== 'COMPLETE') {
+    if (txn.state === 'FAILED') {
       await (supabase as any)
         .from('payments')
         .update({ status: 'failed' })
         .eq('intasend_reference', reference);
 
-      return NextResponse.redirect(`${siteUrl}/dashboard?payment=failed&reason=${txn.state.toLowerCase()}`);
+      return NextResponse.redirect(`${siteUrl}/dashboard?payment=failed&reason=failed`);
+    }
+
+    if (txn.state !== 'COMPLETE') {
+      // PENDING or PROCESSING — do not mark as failed; let webhook or sync-plan resolve it
+      return NextResponse.redirect(`${siteUrl}/settings?payment=pending`);
     }
 
     // Mark payment as completed
@@ -76,7 +82,12 @@ export async function GET(req: NextRequest) {
       .eq('id', (payment as any).id);
 
     // Provision access based on payment type
-    await provisionAccess(supabase, payment as any, txn);
+    try {
+      await provisionAccess(supabase, payment as any, txn);
+    } catch (provisionErr) {
+      console.error('[intasend/verify] provisionAccess failed for payment', (payment as any).id, provisionErr);
+      // Payment was taken — redirect to success regardless so we don't confuse the user
+    }
 
     return NextResponse.redirect(
       `${siteUrl}${getSuccessRedirect((payment as any).type)}`
@@ -154,14 +165,6 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
       break;
     }
   }
-}
-
-function getPlanFromAmount(amountKsh: number): { tier: string; durationDays: number } {
-  if (amountKsh >= 3500) return { tier: 'premium',  durationDays: 90 };
-  if (amountKsh >= 999)  return { tier: 'standard', durationDays: 30 };
-  if (amountKsh >= 299)  return { tier: 'weekly',   durationDays: 7  };
-  if (amountKsh >= 69)   return { tier: 'daily',    durationDays: 1  };
-  return { tier: 'free', durationDays: 0 };
 }
 
 function getSuccessRedirect(type: string): string {
