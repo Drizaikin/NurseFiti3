@@ -14,18 +14,8 @@ import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 const STEPS = [
   { id: 1, name: 'Personal Information', description: 'Basic details' },
   { id: 2, name: 'Professional Credentials', description: 'NCK registration & experience' },
-  { id: 3, name: 'Specialization', description: 'Teaching areas & bio' },
-  { id: 4, name: 'Documents', description: 'Upload certificates' },
-  { id: 5, name: 'Payment Details', description: 'M-Pesa information' },
 ];
 
-const HIGHER_DIPLOMA_SPECIALTIES = [
-  'Critical Care Nursing',
-  'Oncology Nursing',
-  'Renal Nursing',
-  'Psychiatric Nursing',
-  'Peri-Operative Nursing',
-];
 
 export default function TutorSignupPage() {
   const router = useRouter();
@@ -33,15 +23,6 @@ export default function TutorSignupPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [documents, setDocuments] = useState<{
-    nckCertificate: File | null;
-    academicQualification: File | null;
-    nationalId: File | null;
-  }>({
-    nckCertificate: null,
-    academicQualification: null,
-    nationalId: null,
-  });
 
   const {
     register,
@@ -54,36 +35,15 @@ export default function TutorSignupPage() {
     mode: 'onChange',
   });
 
-  const cadresTaught = watch('cadresTaught') || [];
-
   const nextStep = async () => {
-    let fieldsToValidate: (keyof TutorSignupInput)[] = [];
-
-    switch (currentStep) {
-      case 1:
-        fieldsToValidate = ['fullName', 'email', 'phone', 'password', 'confirmPassword'];
-        break;
-      case 2:
-        fieldsToValidate = ['nckRegNumber', 'professionalTitle', 'yearsExperience', 'currentEmployer'];
-        break;
-      case 3:
-        fieldsToValidate = ['cadresTaught', 'bio', 'sessionRate'];
-        break;
-      case 4:
-        // Validate documents
-        if (!documents.nckCertificate || !documents.academicQualification || !documents.nationalId) {
-          alert('Please upload all required documents');
-          return;
-        }
-        break;
-      case 5:
-        fieldsToValidate = ['mpesaNumber', 'whatsappNumber', 'agreeToTerms'];
-        break;
-    }
+    const fieldsToValidate: (keyof TutorSignupInput)[] =
+      currentStep === 1
+        ? ['fullName', 'email', 'phone', 'password', 'confirmPassword']
+        : ['nckRegNumber', 'professionalTitle', 'yearsExperience', 'currentEmployer'];
 
     const isValid = await trigger(fieldsToValidate);
     if (isValid) {
-      setCurrentStep(prev => Math.min(prev + 1, 5));
+      setCurrentStep(prev => Math.min(prev + 1, 2));
     }
   };
 
@@ -95,28 +55,15 @@ export default function TutorSignupPage() {
     setIsLoading(true);
 
     try {
-      // Create FormData for file uploads
       const formData = new FormData();
-      
-      // Add all form fields
       Object.entries(data).forEach(([key, value]) => {
+        if (value === undefined || value === null) return;
         if (Array.isArray(value)) {
           formData.append(key, JSON.stringify(value));
         } else {
           formData.append(key, String(value));
         }
       });
-
-      // Add documents
-      if (documents.nckCertificate) {
-        formData.append('nckCertificate', documents.nckCertificate);
-      }
-      if (documents.academicQualification) {
-        formData.append('academicQualification', documents.academicQualification);
-      }
-      if (documents.nationalId) {
-        formData.append('nationalId', documents.nationalId);
-      }
 
       const response = await fetch('/api/auth/signup-tutor', {
         method: 'POST',
@@ -136,10 +83,6 @@ export default function TutorSignupPage() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleFileChange = (field: keyof typeof documents, file: File | null) => {
-    setDocuments(prev => ({ ...prev, [field]: file }));
   };
 
   return (
@@ -386,269 +329,12 @@ export default function TutorSignupPage() {
                     <p className="mt-1 text-sm text-error">{errors.currentEmployer.message}</p>
                   )}
                 </div>
-              </div>
-            )}
 
-            {/* Step 3: Specialization */}
-            {currentStep === 3 && (
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-2xl font-heading font-bold text-primary mb-2">
-                    Specialization
-                  </h2>
-                  <p className="text-neutral-mid">
-                    Tell us about your teaching expertise
-                  </p>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold mb-3">
-                    Which cadres can you teach? <span className="text-error">*</span>
-                  </label>
-                  <div className="space-y-2">
-                    {['KRCHN', 'BScN', 'Higher Diploma'].map((cadre) => (
-                      <label key={cadre} className="flex items-center space-x-3 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          value={cadre}
-                          {...register('cadresTaught')}
-                          className="w-5 h-5 text-primary border-neutral-border rounded focus:ring-primary"
-                        />
-                        <span className="text-sm">{cadre}</span>
-                      </label>
-                    ))}
-                  </div>
-                  {errors.cadresTaught && (
-                    <p className="mt-1 text-sm text-error">{errors.cadresTaught.message}</p>
-                  )}
-                </div>
-
-                {cadresTaught.includes('Higher Diploma') && (
-                  <div>
-                    <label className="block text-sm font-semibold mb-3">
-                      Higher Diploma Specialties (Optional)
-                    </label>
-                    <div className="space-y-2">
-                      {HIGHER_DIPLOMA_SPECIALTIES.map((specialty) => (
-                        <label key={specialty} className="flex items-center space-x-3 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            value={specialty}
-                            {...register('specialties')}
-                            className="w-5 h-5 text-primary border-neutral-border rounded focus:ring-primary"
-                          />
-                          <span className="text-sm">{specialty}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <div>
-                  <label htmlFor="bio" className="block text-sm font-semibold mb-2">
-                    Professional Bio <span className="text-error">*</span>
-                  </label>
-                  <textarea
-                    {...register('bio')}
-                    id="bio"
-                    rows={5}
-                    className="input resize-none"
-                    placeholder="Tell students about your experience, teaching style, and what makes you a great tutor..."
-                  />
-                  <p className="mt-1 text-xs text-neutral-light">
-                    {watch('bio')?.length || 0} / 400 characters (minimum 200)
-                  </p>
-                  {errors.bio && (
-                    <p className="mt-1 text-sm text-error">{errors.bio.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label htmlFor="sessionRate" className="block text-sm font-semibold mb-2">
-                    Hourly Session Rate (KSh) <span className="text-error">*</span>
-                  </label>
-                  <input
-                    {...register('sessionRate', { valueAsNumber: true })}
-                    type="number"
-                    id="sessionRate"
-                    className="input"
-                    placeholder="1500"
-                    min="500"
-                    max="10000"
-                    step="100"
-                  />
-                  <p className="mt-1 text-xs text-neutral-light">
-                    Set your rate between KSh 500 - 10,000 per hour
-                  </p>
-                  {errors.sessionRate && (
-                    <p className="mt-1 text-sm text-error">{errors.sessionRate.message}</p>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Step 4: Documents */}
-            {currentStep === 4 && (
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-2xl font-heading font-bold text-primary mb-2">
-                    Documents
-                  </h2>
-                  <p className="text-neutral-mid">
-                    Upload your professional certificates and identification
-                  </p>
-                </div>
-
-                <div>
-                  <label htmlFor="nckCertificate" className="block text-sm font-semibold mb-2">
-                    NCK Registration Certificate <span className="text-error">*</span>
-                  </label>
-                  <input
-                    type="file"
-                    id="nckCertificate"
-                    accept=".pdf,.jpg,.jpeg,.png"
-                    onChange={(e) => handleFileChange('nckCertificate', e.target.files?.[0] || null)}
-                    className="block w-full text-sm text-neutral-mid
-                      file:mr-4 file:py-2 file:px-4
-                      file:rounded-lg file:border-0
-                      file:text-sm file:font-semibold
-                      file:bg-primary file:text-white
-                      hover:file:bg-primary-dark
-                      file:cursor-pointer cursor-pointer"
-                  />
-                  {documents.nckCertificate && (
-                    <p className="mt-1 text-sm text-success">
-                      ✓ {documents.nckCertificate.name}
-                    </p>
-                  )}
-                  <p className="mt-1 text-xs text-neutral-light">
-                    PDF, JPG, or PNG (max 5MB)
-                  </p>
-                </div>
-
-                <div>
-                  <label htmlFor="academicQualification" className="block text-sm font-semibold mb-2">
-                    Academic Qualification Certificate <span className="text-error">*</span>
-                  </label>
-                  <input
-                    type="file"
-                    id="academicQualification"
-                    accept=".pdf,.jpg,.jpeg,.png"
-                    onChange={(e) => handleFileChange('academicQualification', e.target.files?.[0] || null)}
-                    className="block w-full text-sm text-neutral-mid
-                      file:mr-4 file:py-2 file:px-4
-                      file:rounded-lg file:border-0
-                      file:text-sm file:font-semibold
-                      file:bg-primary file:text-white
-                      hover:file:bg-primary-dark
-                      file:cursor-pointer cursor-pointer"
-                  />
-                  {documents.academicQualification && (
-                    <p className="mt-1 text-sm text-success">
-                      ✓ {documents.academicQualification.name}
-                    </p>
-                  )}
-                  <p className="mt-1 text-xs text-neutral-light">
-                    Diploma, Degree, or Masters certificate (PDF, JPG, or PNG, max 5MB)
-                  </p>
-                </div>
-
-                <div>
-                  <label htmlFor="nationalId" className="block text-sm font-semibold mb-2">
-                    National ID / Passport <span className="text-error">*</span>
-                  </label>
-                  <input
-                    type="file"
-                    id="nationalId"
-                    accept=".pdf,.jpg,.jpeg,.png"
-                    onChange={(e) => handleFileChange('nationalId', e.target.files?.[0] || null)}
-                    className="block w-full text-sm text-neutral-mid
-                      file:mr-4 file:py-2 file:px-4
-                      file:rounded-lg file:border-0
-                      file:text-sm file:font-semibold
-                      file:bg-primary file:text-white
-                      hover:file:bg-primary-dark
-                      file:cursor-pointer cursor-pointer"
-                  />
-                  {documents.nationalId && (
-                    <p className="mt-1 text-sm text-success">
-                      ✓ {documents.nationalId.name}
-                    </p>
-                  )}
-                  <p className="mt-1 text-xs text-neutral-light">
-                    PDF, JPG, or PNG (max 5MB)
-                  </p>
-                </div>
-
-                <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-                  <p className="text-sm text-amber-800 dark:text-amber-200">
-                    <strong>Note:</strong> All documents will be reviewed by our admin team. 
-                    Please ensure they are clear and legible.
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {/* Step 5: Payment Details */}
-            {currentStep === 5 && (
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-2xl font-heading font-bold text-primary mb-2">
-                    Payment Details
-                  </h2>
-                  <p className="text-neutral-mid">
-                    How should we pay you for your tutoring sessions?
-                  </p>
-                </div>
-
-                <div>
-                  <label htmlFor="mpesaNumber" className="block text-sm font-semibold mb-2">
-                    M-Pesa Number <span className="text-error">*</span>
-                  </label>
-                  <input
-                    {...register('mpesaNumber')}
-                    type="tel"
-                    id="mpesaNumber"
-                    className="input"
-                    placeholder="+254712345678"
-                  />
-                  <p className="mt-1 text-xs text-neutral-light">
-                    This is where you&apos;ll receive payments for completed sessions
-                  </p>
-                  {errors.mpesaNumber && (
-                    <p className="mt-1 text-sm text-error">{errors.mpesaNumber.message}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label htmlFor="whatsappNumber" className="block text-sm font-semibold mb-2">
-                    WhatsApp Number <span className="text-error">*</span>
-                  </label>
-                  <input
-                    {...register('whatsappNumber')}
-                    type="tel"
-                    id="whatsappNumber"
-                    className="input"
-                    placeholder="+254712345678"
-                  />
-                  <p className="mt-1 text-xs text-neutral-light">
-                    For session coordination and student communication
-                  </p>
-                  {errors.whatsappNumber && (
-                    <p className="mt-1 text-sm text-error">{errors.whatsappNumber.message}</p>
-                  )}
-                </div>
-
+                {/* Complete-profile nudge */}
                 <div className="bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 rounded-lg p-4">
-                  <h3 className="font-semibold text-teal-900 dark:text-teal-100 mb-2">
-                    Payment Terms
-                  </h3>
-                  <ul className="text-sm text-teal-800 dark:text-teal-200 space-y-1">
-                    <li>• NurseFiti takes a 30% platform fee</li>
-                    <li>• Payments are processed weekly every Monday</li>
-                    <li>• Minimum payout threshold: KSh 1,000</li>
-                    <li>• You&apos;ll receive 70% of your session rate</li>
-                  </ul>
+                  <p className="text-sm text-teal-800 dark:text-teal-200">
+                    After submitting, you can complete your <strong>specialization, documents, and M-Pesa payment details</strong> from your tutor dashboard. We&apos;ll remind you there.
+                  </p>
                 </div>
 
                 <div className="border-t border-neutral-border pt-6">
@@ -691,7 +377,7 @@ export default function TutorSignupPage() {
                 </Button>
               )}
               
-              {currentStep < 5 ? (
+              {currentStep < 2 ? (
                 <Button
                   type="button"
                   variant="primary"
