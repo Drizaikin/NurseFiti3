@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: { token: string } }
 }
 
 export default async function SharedRevisionPlanPage({ params }: { params: { token: string } }) {
-  const supabase = createClient();
+  const supabase = createAdminClient();
 
   const { data: plan } = await supabase
     .from('revision_plans')

@@ -50,8 +50,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Profile not found' }, { status: 404 });
     }
 
+    // Parse JSON body — return 400 on malformed JSON
+    let rawBody: unknown;
+    try {
+      rawBody = await req.json();
+    } catch {
+      return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 });
+    }
+
     // Validate body
-    const body = bodySchema.safeParse(await req.json());
+    const body = bodySchema.safeParse(rawBody);
     if (!body.success) {
       return NextResponse.json(
         { error: 'Invalid request', details: body.error.flatten() },
@@ -60,6 +68,16 @@ export async function POST(req: NextRequest) {
     }
 
     const { type, amountKsh, referenceId } = body.data;
+
+    // Enforce valid plan prices for plan_subscription
+    const VALID_PLAN_PRICES = [69, 299, 999, 3500];
+    if (type === 'plan_subscription' && !VALID_PLAN_PRICES.includes(amountKsh)) {
+      return NextResponse.json(
+        { error: `Invalid plan price. Must be one of: ${VALID_PLAN_PRICES.join(', ')}` },
+        { status: 400 }
+      );
+    }
+
     const reference = generateReference('NF');
 
     // Split full name into first/last for IntaSend
@@ -90,18 +108,16 @@ export async function POST(req: NextRequest) {
       comment: `NurseFiti ${type.replace(/_/g, ' ')}`,
     });
 
-    // Store pending payment record.
-    // Use the admin (service-role) client: the `payments` table has RLS enabled
-    // with no INSERT policy for end users, so inserting with the user session
-    // client is silently rejected — which would leave us with a paid customer
-    // but no payment record to verify or provision against.
+    // Store pending payment record using the admin client — the payments table
+    // has RLS enabled with no INSERT policy for end users, so using the user
+    // session client causes a silent rejection.
     const admin = createAdminClient();
     const { error: insertError } = await admin.from('payments').insert({
       user_id: user.id,
       type,
       amount: amountKsh,
       currency: 'KES',
-      customer_phone: profile.phone,
+      customer_phone: phone ?? profile.phone,
       intasend_reference: reference,
       intasend_checkout_id: result.id,
       intasend_checkout_url: result.url,
@@ -111,7 +127,6 @@ export async function POST(req: NextRequest) {
     } as any);
 
     if (insertError) {
-      // Do not hand the customer a checkout URL we can't reconcile later.
       console.error('[intasend/initialize] payment insert failed:', insertError);
       return NextResponse.json(
         { error: 'Could not record payment. Please try again.' },

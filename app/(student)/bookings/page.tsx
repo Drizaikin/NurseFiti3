@@ -125,8 +125,8 @@ export default function BookingsPage() {
     (s.session_date < today && s.status !== 'pending_approval')
   );
 
-  const handleCancelSession = async (sessionId: string, sessionDate: string) => {
-    const sessionDateObj = new Date(sessionDate);
+  const handleCancelSession = async (sessionId: string, sessionDate: string, startTime: string) => {
+    const sessionDateObj = new Date(`${sessionDate}T${startTime}`);
     const now = new Date();
     const hoursUntil = (sessionDateObj.getTime() - now.getTime()) / (1000 * 60 * 60);
 
@@ -305,13 +305,25 @@ export default function BookingsPage() {
                       {session.status === 'confirmed' && session.payment_status === 'pending' && (
                         <button
                           onClick={async () => {
-                            const res = await fetch('/api/intasend/initialize', {
-                              method: 'POST',
-                              headers: { 'Content-Type': 'application/json' },
-                              body: JSON.stringify({ type: 'session_booking', amountKsh: session.gross_amount, referenceId: session.id }),
-                            });
-                            const data = await res.json();
-                            if (data.checkout_url) window.location.href = data.checkout_url;
+                            try {
+                              const res = await fetch('/api/intasend/initialize', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ type: 'session_booking', amountKsh: session.gross_amount, referenceId: session.id }),
+                              });
+                              if (!res.ok) {
+                                const errData = await res.json().catch(() => ({}));
+                                throw new Error(errData?.error ?? `Request failed with status ${res.status}`);
+                              }
+                              const data = await res.json();
+                              if (data.checkout_url) {
+                                window.location.href = data.checkout_url;
+                              } else {
+                                throw new Error(data.error ?? 'Payment initialization failed');
+                              }
+                            } catch (err: any) {
+                              toast.error(err?.message ?? 'Payment failed. Please try again.');
+                            }
                           }}
                           className="px-3 py-1 rounded-lg bg-accent text-dark text-xs font-bold hover:bg-accent/80 transition-colors"
                         >
@@ -330,7 +342,7 @@ export default function BookingsPage() {
                       {/* Cancel */}
                       {canCancel && (
                         <button
-                          onClick={() => handleCancelSession(session.id, session.session_date)}
+                          onClick={() => handleCancelSession(session.id, session.session_date, session.start_time)}
                           disabled={cancellingId === session.id}
                           className="px-3 py-1 rounded-lg bg-error/10 text-error text-xs font-semibold hover:bg-error/20 transition-colors disabled:opacity-50"
                         >

@@ -29,7 +29,7 @@ const WORK_STATUS_OPTIONS = [
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type PageState = 'loading' | 'form' | 'paying' | 'generating' | 'result' | 'history';
+type PageState = 'loading' | 'form' | 'generating' | 'result';
 
 interface FormData {
   examDate: string;
@@ -200,11 +200,15 @@ export default function RevisionPlanPage() {
   };
 
   // ── Copy share link ──────────────────────────────────────────────────────────
-  const handleCopyShare = () => {
+  const handleCopyShare = async () => {
     if (!activePlan) return;
     const url = `${window.location.origin}/revision-plan/share/${activePlan.share_token}`;
-    navigator.clipboard.writeText(url);
-    toast.success('Share link copied!');
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success('Share link copied!');
+    } catch {
+      toast.error('Could not copy link. Please copy it manually.');
+    }
   };
 
   // ─────────────────────────────────────────────────────────────────────────────
@@ -363,7 +367,17 @@ export default function RevisionPlanPage() {
               variant="primary"
               className="w-full"
               disabled={!formData.examDate || !cadre}
-              onClick={() => setStep(2)}
+              onClick={() => {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const selected = new Date(formData.examDate);
+                selected.setHours(0, 0, 0, 0);
+                if (selected <= today) {
+                  toast.error('Exam date must be in the future.');
+                  return;
+                }
+                setStep(2);
+              }}
             >
               Next: Study Capacity →
             </Button>
@@ -485,10 +499,10 @@ export default function RevisionPlanPage() {
                 variant="primary"
                 className="flex-1"
                 onClick={() => planAccess.included ? handleGenerate() : handlePay()}
-                disabled={pageState === 'paying'}
+                disabled={isGenerating}
               >
-                {pageState === 'paying'
-                  ? <><Spinner size="sm" color="white" />&nbsp;Redirecting…</>
+                {isGenerating
+                  ? <><Spinner size="sm" color="white" />&nbsp;Generating…</>
                   : planAccess.included
                   ? 'Generate My Plan'
                   : 'Upgrade to Generate'}

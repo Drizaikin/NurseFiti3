@@ -68,6 +68,8 @@ function LoginForm() {
 
       toast.success('Welcome back!');
 
+      router.refresh();
+
       // Redirect based on role
       if (profile.role === 'student') {
         router.push('/dashboard');
@@ -174,20 +176,6 @@ function LoginForm() {
               {errors.password && (
                 <p className="mt-1 text-sm text-error">{errors.password.message}</p>
               )}
-            </div>
-
-            {/* Remember Me */}
-            <div className="flex items-center gap-2">
-              <input
-                {...register('rememberMe')}
-                type="checkbox"
-                id="rememberMe"
-                className="w-4 h-4 text-primary border-neutral-border rounded focus:ring-2 focus:ring-primary"
-                disabled={isLoading}
-              />
-              <label htmlFor="rememberMe" className="text-sm text-neutral-mid">
-                Remember me for 30 days
-              </label>
             </div>
 
             {/* Submit Button */}
