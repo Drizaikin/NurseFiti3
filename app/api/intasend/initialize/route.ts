@@ -16,6 +16,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createRouteClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { createCheckout, generateReference } from '@/lib/intasend';
 import { z } from 'zod';
 
@@ -89,8 +90,13 @@ export async function POST(req: NextRequest) {
       comment: `NurseFiti ${type.replace(/_/g, ' ')}`,
     });
 
-    // Store pending payment record
-    await supabase.from('payments').insert({
+    // Store pending payment record.
+    // Use the admin (service-role) client: the `payments` table has RLS enabled
+    // with no INSERT policy for end users, so inserting with the user session
+    // client is silently rejected — which would leave us with a paid customer
+    // but no payment record to verify or provision against.
+    const admin = createAdminClient();
+    const { error: insertError } = await admin.from('payments').insert({
       user_id: user.id,
       type,
       amount: amountKsh,
@@ -103,6 +109,15 @@ export async function POST(req: NextRequest) {
       status: 'pending',
       reference_id: referenceId ?? null,
     } as any);
+
+    if (insertError) {
+      // Do not hand the customer a checkout URL we can't reconcile later.
+      console.error('[intasend/initialize] payment insert failed:', insertError);
+      return NextResponse.json(
+        { error: 'Could not record payment. Please try again.' },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       checkout_url: result.url,
