@@ -44,7 +44,7 @@ export default function TutorPendingPage() {
           .from('tutor_profiles')
           .select('*')
           .eq('id', user.id)
-          .single();
+          .maybeSingle();
 
         if (error) {
           console.error('Error fetching profile:', error);
@@ -236,7 +236,7 @@ export default function TutorPendingPage() {
             <div>
               <p className="text-sm font-semibold text-neutral-mid mb-1">Session Rate</p>
               <p className="text-neutral-dark dark:text-neutral-light">
-                KSh {profile.rate_per_hour.toLocaleString()} per hour
+                {profile.rate_per_hour != null ? `KSh ${profile.rate_per_hour.toLocaleString()} per hour` : 'Not set yet'}
               </p>
             </div>
           </div>

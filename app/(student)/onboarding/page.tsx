@@ -62,7 +62,7 @@ export default function OnboardingQuizPage() {
         .from('student_profiles')
         .select('cadre')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
       const profile = profileRaw as { cadre: string } | null;
 

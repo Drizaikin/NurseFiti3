@@ -80,12 +80,13 @@ export async function GET(req: NextRequest) {
     }
 
     if (type === 'overview') {
-      const [studentsRes, tutorsRes, uploadsRes] = await Promise.all([
+      const [studentsRes, tutorsRes, uploadsRes, questionsRes] = await Promise.all([
         // Count only profiles with role = 'student' — excludes admin accounts
         // that may have a student_profiles row from before being promoted
         admin.from('profiles').select('id', { count: 'exact', head: true }).eq('role', 'student'),
         admin.from('tutor_profiles').select('verification_status'),
         admin.from('question_uploads').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
+        admin.from('questions').select('id', { count: 'exact', head: true }).eq('status', 'pending_review'),
       ]);
 
       // For plan breakdown, join student_profiles only for actual students
@@ -100,13 +101,14 @@ export async function GET(req: NextRequest) {
       const tutors = (tutorsRes.data ?? []) as Array<{ verification_status: string }>;
 
       return NextResponse.json({
-        totalStudents:  studentsRes.count ?? 0,
-        freeStudents:   plans.filter(s => s.plan_tier === 'free').length,
-        paidStudents:   plans.filter(s => s.plan_tier !== 'free').length,
-        totalTutors:    tutors.length,
-        verifiedTutors: tutors.filter(t => t.verification_status === 'verified').length,
-        pendingTutors:  tutors.filter(t => t.verification_status === 'pending').length,
-        pendingUploads: uploadsRes.count ?? 0,
+        totalStudents:    studentsRes.count ?? 0,
+        freeStudents:     plans.filter(s => s.plan_tier === 'free').length,
+        paidStudents:     plans.filter(s => s.plan_tier !== 'free').length,
+        totalTutors:      tutors.length,
+        verifiedTutors:   tutors.filter(t => t.verification_status === 'verified').length,
+        pendingTutors:    tutors.filter(t => t.verification_status === 'pending').length,
+        pendingUploads:   uploadsRes.count ?? 0,
+        pendingQuestions: questionsRes.count ?? 0,
       });
     }
 
@@ -158,7 +160,7 @@ export async function GET(req: NextRequest) {
           .limit(200),
         admin
           .from('tutor_profiles')
-          .select('id, professional_title, cadres_taught, years_experience, verification_status, verification_tier, average_rating, total_sessions, rate_per_hour, nck_reg_number'),
+          .select('id, professional_title, cadres_taught, years_experience, verification_status, verification_tier, average_rating, total_sessions, rate_per_hour, nck_reg_number, bio, current_employer, nck_certificate_url, academic_qualification_url, national_id_url, mpesa_number, rejection_reason'),
       ]);
 
       const profiles = (profilesRes.data ?? []) as Array<{
@@ -169,30 +171,71 @@ export async function GET(req: NextRequest) {
           id: string; professional_title: string; cadres_taught: string[];
           years_experience: number; verification_status: string; verification_tier: string | null;
           average_rating: number; total_sessions: number; rate_per_hour: number; nck_reg_number: string;
+          bio: string | null; current_employer: string | null;
+          nck_certificate_url: string | null; academic_qualification_url: string | null;
+          national_id_url: string | null; mpesa_number: string | null; rejection_reason: string | null;
         }>).map(t => [t.id, t])
       );
 
       const tutors = profiles.map(p => {
         const tp = tpMap.get(p.id);
         return {
-          id:                  p.id,
-          full_name:           p.full_name,
-          email:               p.email,
-          phone:               p.phone,
-          professional_title:  tp?.professional_title ?? '—',
-          cadres_taught:       tp?.cadres_taught ?? [],
-          years_experience:    tp?.years_experience ?? 0,
-          verification_status: tp?.verification_status ?? 'pending',
-          verification_tier:   tp?.verification_tier ?? null,
-          average_rating:      tp?.average_rating ?? 0,
-          total_sessions:      tp?.total_sessions ?? 0,
-          rate_per_hour:       tp?.rate_per_hour ?? 0,
-          nck_reg_number:      tp?.nck_reg_number ?? '—',
-          created_at:          p.created_at,
+          id:                        p.id,
+          full_name:                 p.full_name,
+          email:                     p.email,
+          phone:                     p.phone,
+          professional_title:        tp?.professional_title ?? '—',
+          cadres_taught:             tp?.cadres_taught ?? [],
+          years_experience:          tp?.years_experience ?? 0,
+          verification_status:       tp?.verification_status ?? 'pending',
+          verification_tier:         tp?.verification_tier ?? null,
+          average_rating:            tp?.average_rating ?? 0,
+          total_sessions:            tp?.total_sessions ?? 0,
+          rate_per_hour:             tp?.rate_per_hour ?? 0,
+          nck_reg_number:            tp?.nck_reg_number ?? '—',
+          bio:                       tp?.bio ?? null,
+          current_employer:          tp?.current_employer ?? null,
+          nck_certificate_url:       tp?.nck_certificate_url ?? null,
+          academic_qualification_url: tp?.academic_qualification_url ?? null,
+          national_id_url:           tp?.national_id_url ?? null,
+          mpesa_number:              tp?.mpesa_number ?? null,
+          rejection_reason:          tp?.rejection_reason ?? null,
+          created_at:                p.created_at,
         };
       });
 
       return NextResponse.json({ tutors });
+    }
+
+    if (type === 'questions') {
+      const statusFilter = req.nextUrl.searchParams.get('status') ?? 'pending_review';
+      const { data: questionsData } = await admin
+        .from('questions')
+        .select('id, cadre, unit, topic, stem, option_a, option_b, option_c, option_d, correct_option, rationale, difficulty, contributor_id, status, created_at')
+        .eq('status', statusFilter)
+        .order('created_at', { ascending: false })
+        .limit(200);
+
+      if (!questionsData) return NextResponse.json({ questions: [] });
+
+      // Enrich with contributor name
+      const contributorIds = [...new Set((questionsData as Array<{ contributor_id: string | null }>)
+        .map(q => q.contributor_id).filter(Boolean))] as string[];
+
+      const { data: contributorProfiles } = contributorIds.length > 0
+        ? await admin.from('profiles').select('id, full_name').in('id', contributorIds)
+        : { data: [] };
+
+      const contributorMap = new Map(
+        ((contributorProfiles ?? []) as Array<{ id: string; full_name: string }>).map(p => [p.id, p.full_name])
+      );
+
+      const questions = (questionsData as any[]).map(q => ({
+        ...q,
+        contributor_name: q.contributor_id ? (contributorMap.get(q.contributor_id) ?? 'Unknown') : 'System',
+      }));
+
+      return NextResponse.json({ questions });
     }
 
     return NextResponse.json({ error: 'Unknown type' }, { status: 400 });

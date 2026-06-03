@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
         .from('profiles')
         .select('role')
         .eq('id', session.user.id)
-        .single();
+        .maybeSingle();
 
       const profileData = profile as { role: string } | null;
 
@@ -29,16 +29,17 @@ export async function GET(req: NextRequest) {
           .from('tutor_profiles')
           .select('verification_status')
           .eq('id', session.user.id)
-          .single();
+          .maybeSingle();
 
         const tutorData = tutorProfile as { verification_status: string } | null;
 
         return NextResponse.redirect(
-          new URL(
-            tutorData?.verification_status === 'verified' ? '/tutor-dashboard' : '/tutor-pending',
-            req.url
-          )
+          new URL('/tutor-dashboard', req.url)
         );
+      }
+
+      if (profileData?.role === 'admin') {
+        return NextResponse.redirect(new URL('/admin', req.url));
       }
     }
   }

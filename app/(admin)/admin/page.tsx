@@ -13,6 +13,7 @@ interface Overview {
   verifiedTutors: number;
   pendingTutors: number;
   pendingUploads: number;
+  pendingQuestions: number;
 }
 
 export default function AdminOverviewPage() {
@@ -45,7 +46,8 @@ export default function AdminOverviewPage() {
           { label: 'Total Students',   value: stats?.totalStudents ?? 0,  icon: '👥', color: 'text-primary' },
           { label: 'Free Plan',        value: stats?.freeStudents ?? 0,   icon: '🆓', color: 'text-neutral-mid' },
           { label: 'Paid Plans',       value: stats?.paidStudents ?? 0,   icon: '💳', color: 'text-success' },
-          { label: 'Pending Uploads',  value: stats?.pendingUploads ?? 0, icon: '📂', color: (stats?.pendingUploads ?? 0) > 0 ? 'text-error' : 'text-neutral-mid' },
+          { label: 'Pending Uploads',  value: stats?.pendingUploads ?? 0,   icon: '📂', color: (stats?.pendingUploads ?? 0) > 0 ? 'text-error' : 'text-neutral-mid' },
+          { label: 'Pending MCQs',     value: stats?.pendingQuestions ?? 0, icon: '📝', color: (stats?.pendingQuestions ?? 0) > 0 ? 'text-accent' : 'text-neutral-mid' },
           { label: 'Total Tutors',     value: stats?.totalTutors ?? 0,    icon: '👨‍🏫', color: 'text-primary' },
           { label: 'Verified Tutors',  value: stats?.verifiedTutors ?? 0, icon: '✅', color: 'text-success' },
           { label: 'Pending Tutors',   value: stats?.pendingTutors ?? 0,  icon: '⏳', color: (stats?.pendingTutors ?? 0) > 0 ? 'text-accent' : 'text-neutral-mid' },
@@ -71,6 +73,15 @@ export default function AdminOverviewPage() {
           <Card className="hover:border-primary/40 transition-all cursor-pointer h-full">
             <h2 className="font-heading font-bold text-[var(--color-text)] mb-1">👥 Manage Students</h2>
             <p className="text-sm text-neutral-mid">View all {stats?.totalStudents ?? 0} registered students, search by name/email, and set plan tiers.</p>
+          </Card>
+        </Link>
+        <Link href="/admin/questions">
+          <Card className="hover:border-primary/40 transition-all cursor-pointer h-full">
+            <h2 className="font-heading font-bold text-[var(--color-text)] mb-1">📝 MCQ Review</h2>
+            <p className="text-sm text-neutral-mid">Review and approve tutor-submitted questions. Approved MCQs go live immediately for students.</p>
+            {(stats?.pendingQuestions ?? 0) > 0 && (
+              <p className="text-xs text-accent font-semibold mt-2">{stats?.pendingQuestions} pending review</p>
+            )}
           </Card>
         </Link>
         <Link href="/admin/tutors">

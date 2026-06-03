@@ -22,11 +22,37 @@
    - Filter by unit and difficulty
    - Answer MCQs with immediate feedback
    - Earn 5 XP per correct answer
-   - Build your streak
+   - Build your streak (plan-gated: 30 Q/day free, unlimited paid)
 
-5. **Settings** → `/settings`
-   - View profile information
-   - Logout
+5. **Mock Exam** → `/mock-exam`
+   - DigiProctor-style CBT simulation
+   - 100-question timed exam with navigator grid
+   - Auto-submit on timer expiry
+   - Full rationale review after submission
+   - Plan-gated (upload 3 question files to unlock for free users; 2/week paid)
+
+6. **Flashcards** → `/flashcards`
+   - SM-2 spaced repetition algorithm
+   - 4-rating system (Again/Hard/Good/Easy)
+   - Plan-gated (paid plans only)
+
+7. **Analytics** → `/analytics`
+   - Readiness score, 7-day trend chart
+   - Unit mastery breakdown (paid plans)
+   - Mock exam history (paid plans)
+
+8. **Revision Plan** → `/revision-plan`
+   - AI-generated day-by-day study schedule
+   - Payment-gated per generation (KSh 199–999 by plan tier)
+   - Public share links
+
+9. **Tutors & Bookings** → `/tutors`, `/bookings`
+   - Verified tutor directory
+   - Session booking with Paystack payment
+
+10. **Settings & Upgrade** → `/settings`
+    - Profile management
+    - Upgrade to Daily/Weekly/Standard/Premium via Paystack
 
 ### For Tutors
 1. **Apply** → `/signup-tutor`
@@ -38,6 +64,9 @@
    - View application status
    - See submitted information
    - Wait for admin approval
+
+3. **Tutor Dashboard** → `/tutor-dashboard` (after approval)
+   - Earnings, schedule, student roster, studio, reviews
 
 ---
 
@@ -54,7 +83,7 @@
    - Cadre: BScN
    - Institution: Test University
    - Exam Date: (any future date)
-   - Exam Cycle: November
+   - Exam Cycle: May or November
 3. Click "Create Account"
 4. Check email for verification link (if configured)
 5. Go to /login and sign in

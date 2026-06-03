@@ -69,8 +69,8 @@ export default function TutorProfilePage() {
 
   const loadProfile = async (uid: string) => {
     const [profileRes, tutorRes] = await Promise.all([
-      supabase.from('profiles').select('full_name').eq('id', uid).single(),
-      supabase.from('tutor_profiles').select('*').eq('id', uid).single(),
+      supabase.from('profiles').select('full_name').eq('id', uid).maybeSingle(),
+      supabase.from('tutor_profiles').select('*').eq('id', uid).maybeSingle(),
     ]);
     const profile = profileRes.data as any;
     const tutor = tutorRes.data as any;
@@ -136,23 +136,22 @@ export default function TutorProfilePage() {
     if (!form.bio || form.bio.length < 200) { toast.error('Bio must be at least 200 characters'); return; }
     if (form.cadres_taught.length === 0) { toast.error('Select at least one cadre'); return; }
     setSaving(true);
-    const [profileErr, tutorErr] = await Promise.all([
-      supabase.from('profiles').update({ full_name: form.full_name }).eq('id', userId).then(r => r.error),
-      supabase.from('tutor_profiles').update({
-        professional_title: form.professional_title,
-        bio: form.bio,
-        whatsapp_number: form.whatsapp_number,
-        years_experience: form.years_experience,
-        cadres_taught: form.cadres_taught,
-        specialties: form.specialties,
-        rate_per_hour: form.rate_per_hour,
-        session_platform: form.session_platform,
-        is_accepting_bookings: form.is_accepting_bookings,
-      }).eq('id', userId).then(r => r.error),
-    ]);
-    setSaving(false);
-    if (profileErr || tutorErr) { toast.error('Failed to save profile'); return; }
-    toast.success('Profile saved!');
+    try {
+      const res = await fetch('/api/tutor/update-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Failed to save profile');
+      toast.success('Profile saved!');
+      // Reload so verification status reflects latest DB state
+      await loadProfile(userId);
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to save profile');
+    } finally {
+      setSaving(false);
+    }
   };
 
   if (isLoading) return <div className="flex items-center justify-center min-h-[60vh]"><Spinner size="lg" color="primary" /></div>;

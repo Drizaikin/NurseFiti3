@@ -345,7 +345,7 @@ export default function DashboardPage() {
         supabase.from('mock_exam_results').select('id').eq('student_id', user.id),
         supabase.from('flashcard_progress').select('id').eq('student_id', user.id),
         supabase.from('sessions')
-          .select('id, session_date, start_time, topic, tutor:tutor_id(full_name)')
+          .select('id, session_date, start_time, topic, tutor:profiles!tutor_id(full_name)')
           .eq('student_id', user.id).eq('status', 'confirmed')
           .gte('session_date', new Date().toISOString().split('T')[0])
           .order('session_date', { ascending: true }).limit(3),

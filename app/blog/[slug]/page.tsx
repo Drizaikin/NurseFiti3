@@ -19,7 +19,7 @@ interface Post {
 const POSTS: Post[] = [
   {
     slug: 'nck-exam-preparation-guide-kenya',
-    title: 'The Complete NCK Exam Preparation Guide for Kenyan Nursing Graduates (2025)',
+    title: 'The Complete NCK Exam Preparation Guide for Kenyan Nursing Graduates (2026)',
     excerpt: 'Everything you need to know about the NCK licensure exam — structure, topics, DigiProctor interface, and a proven study strategy to pass first attempt.',
     category: 'Study Guide',
     readTime: '12 min read',
@@ -35,19 +35,16 @@ Passing the NCK exam is not optional — it is the gateway to your nursing caree
 ## Exam Structure by Cadre
 
 ### KRCHN (Kenya Registered Community Health Nurse)
-- **2 papers** — Paper 1 and Paper 2
-- **100 MCQs per paper**
-- **2 hours per paper**
-- Topics: Community Health Nursing, Maternal & Child Health, Medical-Surgical Nursing, Pharmacology, Anatomy & Physiology
+- **2 integrated papers** — Paper I and Paper II
+- Paper I covers Medical-Surgical Nursing, Midwifery, and Pharmacology
+- Paper II covers Community Health Nursing, Mental Health Nursing, and Professional Issues
+- Each paper: 100 MCQs in 2 hours
 
 ### BScN (Bachelor of Science in Nursing)
-- **4 papers** — Paper 1, Paper 2, Paper 3, and Paper 4
-- **100 MCQs per paper**
-- **2 hours per paper**
-- Paper 1: Medical-Surgical Nursing & Pharmacology
-- Paper 2: Maternal, Child & Community Health
-- Paper 3: Mental Health & Psychiatric Nursing
-- Paper 4: Research, Management & Professional Issues
+- **2 integrated competency papers** — Paper I and Paper II
+- Paper I covers Advanced Adult Health, Specialised Nursing, and Maternal/Newborn care
+- Paper II covers Community/Public Health, Research, Leadership, and Mental Health
+- Each paper: 100 MCQs in 2 hours
 
 ### Higher Diploma
 - **2 papers** — specialty-specific
@@ -107,21 +104,24 @@ NurseFiti gives you everything in this guide in one platform: adaptive MCQ pract
     content: `
 ## Understanding the KRCHN Exam
 
-The KRCHN (Kenya Registered Community Health Nurse) NCK exam consists of two papers, each with 100 MCQs to be completed in 2 hours. The exam tests your ability to apply nursing knowledge in community and clinical settings — not just recall facts.
+The KRCHN (Kenya Registered Community Health Nurse) NCK exam consists of **two integrated papers**, each with 100 MCQs to be completed in 2 hours. The exam tests your ability to apply nursing knowledge in both community and clinical settings — not just recall facts. Questions are scenario-based and test prioritisation, emergency recognition, and safe patient care.
 
-## High-Yield Units for KRCHN
+## Paper Structure for KRCHN
 
-Based on past exam patterns, these units consistently carry the most marks:
+### Paper I — Medical-Surgical + Midwifery + Pharmacology
+- **Medical-Surgical Nursing** (30–35%) — common conditions, nursing interventions, post-operative care, emergency recognition
+- **Pharmacology** (20–25%) — drug classifications, dosage calculations, adverse effects, common drug protocols
+- **Midwifery & Maternal Health** (15–20%) — antenatal care, safe delivery, postnatal care, obstetric emergencies
+- **Paediatric Nursing** (10–15%) — common paediatric conditions, growth monitoring, immunisation
+- **Anatomy & Physiology** (10–15%) — body systems, pathophysiology underlying clinical presentations
 
-### Paper 1 — Community & Primary Health Care
-- **Community Health Nursing** (25–30% of paper) — health promotion, disease prevention, community assessment
-- **Maternal & Child Health** (20–25%) — antenatal care, postnatal care, immunisation schedules, nutrition
-- **Environmental Health** (10–15%) — water sanitation, waste management, vector control
-
-### Paper 2 — Clinical Nursing
-- **Medical-Surgical Nursing** (30–35%) — common conditions, nursing interventions, post-operative care
-- **Pharmacology** (20–25%) — drug classifications, dosage calculations, adverse effects
-- **Anatomy & Physiology** (15–20%) — body systems, pathophysiology
+### Paper II — Community Health + Mental Health + Professional Issues
+- **Community Health Nursing** (25–30%) — health promotion, disease prevention, community assessment, PHC
+- **Mental Health Nursing** (15–20%) — mental status examination, common psychiatric conditions, therapeutic communication
+- **Environmental Health & Nutrition** (10–15%) — water sanitation, waste management, vector control, nutritional assessment
+- **Research & Statistics** (10–15%) — basic research concepts, health data interpretation
+- **Health Systems & Professional Issues** (10–15%) — Kenya MOH structure, nursing ethics, legal frameworks
+- **Infection Prevention & Control** (10–15%) — standard precautions, sterilisation, isolation protocols
 
 ## The KRCHN MCQ Approach
 
@@ -151,9 +151,9 @@ NurseFiti's flashcard system does this automatically using the SM-2 algorithm.
 
 ## 4-Week KRCHN Revision Plan
 
-**Week 1:** Community Health Nursing + Maternal & Child Health (60 MCQs/day)  
-**Week 2:** Medical-Surgical Nursing + Pharmacology (60 MCQs/day)  
-**Week 3:** Environmental Health + Anatomy & Physiology + mixed practice (80 MCQs/day)  
+**Week 1:** Paper I focus — Medical-Surgical Nursing + Pharmacology (60 MCQs/day)
+**Week 2:** Paper I focus — Midwifery, Maternal & Child Health, Anatomy & Physiology (60 MCQs/day)
+**Week 3:** Paper II focus — Community Health + Mental Health + Environmental Health + mixed practice (80 MCQs/day)
 **Week 4:** Full mock exams (2 per week) + flashcard review + weak unit drilling
 
 ## Key Numbers to Memorise
@@ -180,57 +180,50 @@ const POSTS_EXTRA: Post[] = [
     content: `
 ## The BScN NCK Exam at a Glance
 
-BScN candidates sit **4 papers**, each with 100 MCQs and a 2-hour time limit. The exam covers a broad clinical and community scope — knowing which units to prioritise is the key to passing efficiently.
+BScN candidates sit **2 integrated competency papers**, each with 100 MCQs and a 2-hour time limit. Unlike KRCHN, the BScN papers demand advanced clinical reasoning, evidence-based practice, and leadership thinking — not just protocol recall. Knowing which units to prioritise and how to think through complex scenarios is the key to passing efficiently.
 
 ## Paper Breakdown
 
-### Paper 1 — Medical-Surgical Nursing
-The largest paper by content volume. Focus areas:
-- Cardiovascular disorders (MI, heart failure, hypertension)
-- Respiratory disorders (pneumonia, COPD, TB)
-- Endocrine disorders (diabetes mellitus, thyroid disorders)
-- Neurological disorders (stroke, meningitis, epilepsy)
-- Renal disorders (AKI, CKD, nephrotic syndrome)
-- Pharmacology — drug classifications, dosage calculations, adverse effects
+### Paper I — Advanced Adult Health + Specialised Nursing + Maternal/Newborn
+The first paper integrates complex clinical management across acute and specialised settings:
+- Advanced Medical-Surgical Nursing — cardiovascular, respiratory, endocrine, neurological, renal disorders with multi-system complications
+- Critical Care Nursing — shock, sepsis, organ failure, ICU prioritisation
+- Pharmacology — advanced drug interactions, dosage calculations, adverse effects, polypharmacy
+- Surgical Nursing — peri-operative management, post-op complications
+- Midwifery — obstetric emergencies (pre-eclampsia, PPH, obstructed labour)
+- Maternal & Child Health — high-risk pregnancy, neonatal resuscitation
+- Paediatric Nursing — acute paediatric conditions, nutritional disorders
+- Anatomy & Physiology — pathophysiological basis for clinical presentations
 
-### Paper 2 — Maternal, Child & Community Health
-- Obstetric complications (pre-eclampsia, PPH, obstructed labour)
-- Neonatal care and common neonatal conditions
-- Paediatric nursing (malnutrition, diarrhoea, pneumonia in children)
-- Community health and primary health care
-
-### Paper 3 — Mental Health & Psychiatric Nursing
-Often underestimated. High-yield topics:
-- Mental status examination
-- Psychotic disorders (schizophrenia, bipolar)
-- Anxiety and mood disorders
-- Substance use disorders
-- Therapeutic communication techniques
-- Mental Health Act Kenya
-
-### Paper 4 — Research, Management & Professional Issues
-- Nursing research methodology
-- Evidence-based practice
-- Nursing management and leadership
-- Professional ethics and legal issues
-- Health systems in Kenya
+### Paper II — Community/Public Health + Research + Leadership + Mental Health
+The second paper tests independent professional judgment and systems-level thinking:
+- Community Health Nursing — community assessment, public health interventions, Kenya MOH guidelines
+- Mental Health Nursing — mental status examination, psychotic and mood disorders, therapeutic communication, Mental Health Act Kenya
+- Research & Evidence-Based Practice — research methodology, sampling, data analysis, critical appraisal of studies
+- Nursing Management & Leadership — delegation, quality improvement, interdisciplinary coordination
+- Professional Ethics & Law — ethical frameworks, legal accountability, scope of practice
+- Health Systems in Kenya — health policy, levels of care, health financing
+- Infection Prevention & Control — standard and transmission-based precautions
+- Nutrition — nutritional assessment and therapeutic diets across the lifespan
 
 ## 6-Week BScN Study Plan
 
-**Week 1:** Medical-Surgical Paper 1 — cardiovascular, respiratory, endocrine (80 MCQs/day)
-**Week 2:** Medical-Surgical Paper 1 — neurological, renal, pharmacology (80 MCQs/day)
-**Week 3:** Maternal, Child & Community Health (80 MCQs/day)
-**Week 4:** Mental Health & Psychiatric Nursing (80 MCQs/day)
-**Week 5:** Research, Management & Professional Issues + mixed practice (80 MCQs/day)
+**Week 1:** Paper I — Advanced Medical-Surgical, Critical Care, Pharmacology (80 MCQs/day)
+**Week 2:** Paper I — Surgical Nursing, Midwifery, Maternal & Child Health, Paediatrics (80 MCQs/day)
+**Week 3:** Paper II — Community Health + Mental Health Nursing (80 MCQs/day)
+**Week 4:** Paper II — Research & EBP + Nursing Leadership & Management (80 MCQs/day)
+**Week 5:** Paper II — Professional Ethics, Health Systems, IPC, Nutrition + mixed practice (80 MCQs/day)
 **Week 6:** Full mock exams (3 per week) + weak unit drilling + flashcard review
 
 ## BScN-Specific Tips
 
-**Research paper:** Many BScN candidates neglect Paper 4. Don't. It is highly scoreable because the content is finite and logical. Master research terminology, sampling methods, and data analysis concepts — they repeat across exam cycles.
+**Research and leadership questions:** Many BScN candidates underestimate Paper II. Don't. Research and leadership content is highly scoreable because it is finite and logical. Master research terminology, sampling methods, data analysis concepts, and delegation principles — they repeat across exam cycles.
 
 **Mental health communication:** Questions about therapeutic communication have one rule — always choose the response that acknowledges the patient's feelings and keeps the conversation open. Avoid responses that give advice, minimise feelings, or close the conversation.
 
-**Pharmacology across all papers:** Drug questions appear in every paper. Know your drug classes, mechanisms, and key adverse effects. Prioritise: antihypertensives, antidiabetics, antibiotics, anticoagulants, antipsychotics, and antidepressants.
+**Advanced reasoning over recall:** BScN MCQs test analysis, synthesis, and evaluation. When answering, ask yourself: *What is the underlying pathophysiology? What is the priority intervention? What evidence guides this decision?* Rote recall alone will not carry you through Paper I.
+
+**Pharmacology integration:** Drug questions appear across both papers. Prioritise: antihypertensives, antidiabetics, antibiotics, anticoagulants, antipsychotics, antidepressants, and critical care medications. Know mechanisms, not just names.
     `,
   },
   {

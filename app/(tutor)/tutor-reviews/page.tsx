@@ -64,7 +64,7 @@ export default function TutorReviewsPage() {
         .select('id, rating, review_text, created_at, student_id')
         .eq('tutor_id', uid).eq('is_published', true)
         .order('created_at', { ascending: false }),
-      supabase.from('tutor_profiles').select('average_rating').eq('id', uid).single(),
+      supabase.from('tutor_profiles').select('average_rating').eq('id', uid).maybeSingle(),
       supabase.from('tutor_profiles').select('id, average_rating').eq('verification_status', 'verified').order('average_rating', { ascending: false }),
     ]);
 

@@ -10,8 +10,8 @@ Kenya's most intelligent NCK exam preparation platform for nursing graduates.
 - **Database:** Supabase (PostgreSQL)
 - **Authentication:** Supabase Auth
 - **Deployment:** Vercel
-- **Payments:** M-Pesa Daraja API
-- **Notifications:** WhatsApp Business API (Twilio)
+- **Payments:** Paystack (primary) · M-Pesa Daraja API (planned)
+- **Notifications:** WhatsApp Business API (Twilio) · Resend (email)
 
 ## Getting Started
 
@@ -78,16 +78,20 @@ nursefiti/
 - [x] **Phase 0:** Foundation (Week 1) - ✅ COMPLETED
 - [x] **Phase 1:** Authentication System (Week 2) - ✅ COMPLETED
 - [x] **Phase 2:** Student Dashboard Core (Weeks 3-5) - ✅ COMPLETED
-- [ ] **Phase 3:** Tutor Dashboard (Weeks 6-7)
-- [ ] **Phase 4:** Booking System (Week 8)
-- [ ] **Phase 5:** Revision Plan Generator (Week 9)
-- [ ] **Phase 6:** M-Pesa & Payments (Week 10)
-- [ ] **Phase 7:** Landing Page & SEO (Week 11)
-- [ ] **Phase 8:** Notifications & WhatsApp (Week 12)
-- [ ] **Phase 9:** QA & Launch Prep (Weeks 13-14)
+- [x] **Phase 3:** Tutor Dashboard (Weeks 6-7) - ✅ COMPLETED
+- [x] **Phase 4:** Booking System (Week 8) - ✅ COMPLETED (95%)
+- [x] **Phase 5:** Revision Plan Generator (Week 9) - ✅ COMPLETED
+- [x] **Phase 6:** Payments (Week 10) - ✅ COMPLETED (90%)
+- [x] **Phase 7:** Landing Page & SEO (Week 11) - ✅ COMPLETED
+- [x] **Phase 8:** Plan Enforcement (Week 12) - ✅ COMPLETED
+- [x] **Phase 9:** Pricing Tiers (Week 13) - ✅ COMPLETED
+- [x] **Phase 10:** Admin Dashboard (Week 14) - ✅ COMPLETED
+- [x] **Phase 11:** Question Uploads (Week 15) - ✅ COMPLETED
+- [ ] **Phase 12:** Notifications - 🔴 Not Started
+- [ ] **Phase 13:** QA & Launch Prep - 🔴 Not Started
 
-**Current Status:** Phase 1 & 2 Complete - 100% Functional ✅  
-**See:** `PHASE_1_AND_2_COMPLETE.md` for detailed completion report
+**Current Status:** Phase 11 Complete — ~92% overall  
+**See:** `PROJECT_PROGRESS.md` for detailed progress report
 
 ## Key Features
 

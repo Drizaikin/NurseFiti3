@@ -102,30 +102,35 @@ export const tutorSignupSchema = z.object({
     .min(2, 'Current or most recent employer is required')
     .max(200, 'Employer name is too long'),
   
-  // Step 3: Specialization
+  // Step 3–5 fields are optional — can be completed later from the tutor dashboard
   cadresTaught: z.array(z.enum(['KRCHN', 'BScN', 'Higher Diploma']))
-    .min(1, 'Select at least one cadre you can teach'),
+    .min(1, 'Select at least one cadre you can teach')
+    .optional(),
   
   specialties: z.array(z.string()).optional(),
   
   bio: z.string()
     .min(200, 'Bio must be at least 200 characters')
-    .max(400, 'Bio must be less than 400 characters'),
+    .max(400, 'Bio must be less than 400 characters')
+    .optional(),
   
   sessionRate: z.number()
     .min(500, 'Session rate must be at least KSh 500')
-    .max(10000, 'Session rate must be less than KSh 10,000'),
+    .max(10000, 'Session rate must be less than KSh 10,000')
+    .optional(),
   
   // Step 4: Documents (handled separately as files)
   
   // Step 5: M-Pesa
   mpesaNumber: z.string()
     .min(10, 'M-Pesa number is required')
-    .regex(/^(\+254|0)(7\d{8}|1\d{8})$/, 'Use format: 0712345678 or +254712345678'),
+    .regex(/^(\+254|0)(7\d{8}|1\d{8})$/, 'Use format: 0712345678 or +254712345678')
+    .optional(),
   
   whatsappNumber: z.string()
     .min(10, 'WhatsApp number is required')
-    .regex(/^(\+254|0)(7\d{8}|1\d{8})$/, 'Use format: 0712345678 or +254712345678'),
+    .regex(/^(\+254|0)(7\d{8}|1\d{8})$/, 'Use format: 0712345678 or +254712345678')
+    .optional(),
   
   agreeToTerms: z.boolean()
     .refine(val => val === true, 'You must agree to the terms and conditions'),

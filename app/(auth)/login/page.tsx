@@ -84,11 +84,11 @@ function LoginForm() {
         const tutorProfile = tutorProfileData as { verification_status: 'pending' | 'verified' | 'rejected' } | null;
 
         if (tutorProfile?.verification_status === 'pending') {
-          router.push('/tutor-pending');
+          router.push('/tutor-dashboard');
         } else if (tutorProfile?.verification_status === 'verified') {
           router.push('/tutor-dashboard');
         } else {
-          router.push('/tutor-pending');
+          router.push('/tutor-dashboard');
         }
       } else {
         router.push('/dashboard');

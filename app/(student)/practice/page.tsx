@@ -126,7 +126,7 @@ export default function PracticePage() {
         .from('student_profiles')
         .select('cadre, plan_tier, plan_expires_at')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
       const profile = profileRaw as { cadre: string; plan_tier: string; plan_expires_at: string | null } | null;
 

@@ -156,7 +156,7 @@ const CADRES = [
     id: 'bscn',
     label: 'BScN',
     full: 'Bachelor of Science in Nursing',
-    papers: '4 papers · 100 MCQs each · 2 hours per paper',
+    papers: '2 integrated papers · 100 MCQs each · 2 hours per paper',
     color: 'bg-accent-light border-accent/30',
     badge: 'bg-accent text-dark',
   },

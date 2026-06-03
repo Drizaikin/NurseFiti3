@@ -258,19 +258,19 @@ NurseFiti is a comprehensive Kenyan NCK (Nursing Council of Kenya) exam preparat
 4. THE Platform SHALL use Supabase real-time subscriptions for synchronization
 5. THE Platform SHALL prevent race conditions when multiple Students attempt to book the same slot simultaneously
 
-### Requirement 18: M-Pesa Payment Integration
+### Requirement 18: Payment Integration
 
-**User Story:** As a Student, I want to pay via M-Pesa, so that I can access paid features and book sessions.
+**User Story:** As a Student, I want to pay via Paystack or M-Pesa, so that I can access paid features and book sessions.
 
 #### Acceptance Criteria
 
-1. WHEN a Student initiates payment, THE Platform SHALL integrate with Daraja_API
-2. WHEN a Student enters M-Pesa phone number, THE Platform SHALL send an STK push prompt
-3. WHEN payment is completed, THE Platform SHALL receive payment confirmation from Daraja_API
-4. WHEN payment is confirmed, THE Platform SHALL update Student account with purchased feature access
-5. THE Platform SHALL store payment transaction records
-6. WHEN payment fails, THE Platform SHALL display an error message and allow retry
-7. THE Platform SHALL support payments for Subscriptions, Revision_Plans, and Session Bookings
+1. WHEN a Student initiates payment, THE Platform SHALL integrate with Paystack's payment gateway
+2. WHEN a Student completes payment via Paystack, THE Platform SHALL receive confirmation via webhook callback
+3. WHEN payment is confirmed, THE Platform SHALL update the Student account with the purchased plan tier and expiry date
+4. THE Platform SHALL store payment transaction records in the `payments` table
+5. WHEN payment fails, THE Platform SHALL display an error message and allow retry
+6. THE Platform SHALL support payments for plan upgrades, Revision Plan generation, and Session Bookings
+7. THE Platform SHALL support M-Pesa as an additional payment method via Daraja STK push (planned post-launch)
 
 ### Requirement 19: Subscription Management
 
@@ -278,12 +278,12 @@ NurseFiti is a comprehensive Kenyan NCK (Nursing Council of Kenya) exam preparat
 
 #### Acceptance Criteria
 
-1. THE Platform SHALL offer monthly and annual Subscription plans
-2. WHEN a Student purchases a Subscription, THE Platform SHALL grant access to premium features
-3. WHEN a Subscription expires, THE Platform SHALL revoke premium feature access
-4. THE Platform SHALL send WhatsApp_Notification 3 days before Subscription expiration
-5. THE Platform SHALL allow Students to cancel Subscriptions
-6. THE Platform SHALL display Subscription status on Student dashboard
+1. THE Platform SHALL offer four paid tiers: Daily (KSh 69 / 1 day), Weekly (KSh 349 / 7 days), Standard (KSh 1,200 / 30 days), and Premium (KSh 3,500 / 60 days)
+2. WHEN a Student purchases a plan, THE Platform SHALL grant access to features matching that tier
+3. WHEN a plan expires, THE Platform SHALL revert the Student to free-tier access
+4. THE Platform SHALL send a reminder notification 3 days before plan expiration
+5. THE Platform SHALL display current plan status and expiry date on the Student dashboard
+6. THE Platform SHALL allow Students to upgrade to a higher plan tier at any time
 
 ### Requirement 20: WhatsApp Notification System
 

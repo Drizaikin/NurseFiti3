@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState, useCallback, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import { Card } from '@/components/ui/Card';
@@ -26,8 +26,15 @@ interface TutorDashboardData {
     total_students: number;
     total_sessions: number;
     pass_rate: number;
-    rate_per_hour: number;
+    rate_per_hour: number | null;
     is_accepting_bookings: boolean;
+    // completion checklist fields
+    bio: string | null;
+    cadres_taught: string[];
+    mpesa_number: string | null;
+    nck_certificate_url: string | null;
+    academic_qualification_url: string | null;
+    national_id_url: string | null;
   };
   todaySessions: Array<{
     id: string;
@@ -57,6 +64,132 @@ interface TutorDashboardData {
   contributionStats: { questions: number; notes: number };
 }
 
+// ── Verification banner shown to pending/incomplete tutors ────────────────────
+function VerificationBanner({ tutor, onRefresh }: {
+  tutor: TutorDashboardData['tutor'];
+  onRefresh: () => Promise<void>;
+}) {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    try { await onRefresh(); } finally { setRefreshing(false); }
+  };
+  const steps = [
+    {
+      id: 'profile',
+      label: 'Complete your profile',
+      detail: 'Add your bio, cadres you teach, and set your hourly rate',
+      done: !!(tutor.bio && tutor.bio.length >= 200 && tutor.cadres_taught.length > 0 && tutor.rate_per_hour),
+      href: '/tutor-complete-profile',
+      cta: 'Complete Profile',
+    },
+    {
+      id: 'documents',
+      label: 'Upload your documents',
+      detail: 'NCK certificate, academic qualification, and national ID',
+      done: !!(tutor.nck_certificate_url && tutor.academic_qualification_url && tutor.national_id_url),
+      href: '/tutor-complete-profile',
+      cta: 'Upload Documents',
+    },
+    {
+      id: 'mpesa',
+      label: 'Link your M-Pesa number',
+      detail: 'Required to receive payments for completed sessions',
+      done: !!tutor.mpesa_number,
+      href: '/tutor-complete-profile',
+      cta: 'Add M-Pesa',
+    },
+    {
+      id: 'review',
+      label: 'Admin review',
+      detail: 'Our team verifies your credentials — typically 1–2 business days',
+      done: tutor.verification_status === 'verified',
+      href: null,
+      cta: null,
+    },
+  ];
+
+  const completedCount = steps.filter(s => s.done).length;
+  const progress = Math.round((completedCount / steps.length) * 100);
+  const isRejected = tutor.verification_status === 'rejected';
+
+  if (tutor.verification_status === 'verified') return null;
+
+  return (
+    <div className={`rounded-2xl border-2 p-5 sm:p-6 ${isRejected ? 'border-error/30 bg-error/5' : 'border-accent/30 bg-accent/5'}`}>
+      <div className="flex items-start gap-4 mb-4">
+        <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xl flex-shrink-0 ${isRejected ? 'bg-error/15' : 'bg-accent/15'}`}>
+          {isRejected ? '❌' : '⏳'}
+        </div>
+        <div className="flex-1 min-w-0">
+          <h2 className={`font-heading font-bold text-lg ${isRejected ? 'text-error' : 'text-[var(--color-text)]'}`}>
+            {isRejected ? 'Application Not Approved' : 'Complete Your Verification'}
+          </h2>
+          <p className="text-sm text-[var(--color-text-secondary)] mt-0.5">
+            {isRejected
+              ? 'Your application was not approved. Please contact support for details.'
+              : `${completedCount} of ${steps.length} steps done — you can use the dashboard while you wait for admin review.`}
+          </p>
+        </div>
+        {!isRejected && (
+          <div className="text-right flex-shrink-0">
+            <p className="text-2xl font-heading font-bold text-accent">{progress}%</p>
+            <p className="text-xs text-[var(--color-text-secondary)]">complete</p>
+            <button
+              onClick={handleRefresh}
+              disabled={refreshing}
+              className="text-xs text-primary hover:underline mt-1 block disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {refreshing ? '⏳ Refreshing…' : '↻ Refresh'}
+            </button>
+          </div>
+        )}
+      </div>
+
+      {!isRejected && (
+        <>
+          {/* Progress bar */}
+          <div className="h-2 rounded-full bg-[var(--color-border)] mb-5 overflow-hidden">
+            <div
+              className="h-full rounded-full bg-accent transition-all duration-500"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+
+          {/* Steps */}
+          <div className="space-y-3">
+            {steps.map((step, i) => (
+              <div key={step.id} className={`flex items-start gap-3 p-3 rounded-xl border transition-all ${step.done ? 'border-success/20 bg-success/5' : 'border-[var(--color-border)] bg-[var(--color-card)]'}`}>
+                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5 ${step.done ? 'bg-success text-white' : 'bg-[var(--color-border)] text-[var(--color-text-secondary)]'}`}>
+                  {step.done ? '✓' : i + 1}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className={`text-sm font-semibold ${step.done ? 'text-success line-through opacity-70' : 'text-[var(--color-text)]'}`}>
+                    {step.label}
+                  </p>
+                  <p className="text-xs text-[var(--color-text-secondary)] mt-0.5">{step.detail}</p>
+                </div>
+                {!step.done && step.href && step.cta && (
+                  <Link href={step.href} className="flex-shrink-0">
+                    <button className="px-3 py-1.5 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary-mid transition-colors whitespace-nowrap">
+                      {step.cta} →
+                    </button>
+                  </Link>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <p className="text-xs text-[var(--color-text-secondary)] mt-4 text-center">
+            Questions? <a href="mailto:support@nursefiti.co.ke" className="text-primary font-semibold hover:underline">Contact support</a>
+          </p>
+        </>
+      )}
+    </div>
+  );
+}
+
 function StatTile({ label, value, icon, color }: { label: string; value: string | number; icon: string; color: 'teal' | 'amber' | 'green' | 'blue' }) {
   const styles = {
     teal:  { bg: 'rgba(8,81,79,0.08)',   border: 'rgba(8,81,79,0.18)',   val: '#08514F',  iconBg: 'rgba(8,81,79,0.12)' },
@@ -78,21 +211,28 @@ function StatTile({ label, value, icon, color }: { label: string; value: string 
 }
 
 export default function TutorDashboardPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-[60vh]"><Spinner size="lg" color="primary" /></div>}>
+      <TutorDashboardInner />
+    </Suspense>
+  );
+}
+
+function TutorDashboardInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const supabase = createClient();
   const [data, setData] = useState<TutorDashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => { fetchData(); }, []);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push('/login'); return; }
 
       const [profileRes, tutorRes, sessionsRes, paymentsRes, questionsRes, notesRes] = await Promise.all([
-        supabase.from('profiles').select('full_name, avatar_url').eq('id', user.id).single(),
-        supabase.from('tutor_profiles').select('*').eq('id', user.id).single(),
+        supabase.from('profiles').select('full_name, avatar_url').eq('id', user.id).maybeSingle(),
+        supabase.from('tutor_profiles').select('*').eq('id', user.id).maybeSingle(),
         supabase.from('sessions').select('id, session_date, start_time, end_time, topic, platform, status, cadre, student_id').eq('tutor_id', user.id).order('session_date', { ascending: false }).limit(20),
         supabase.from('payments').select('amount, completed_at').eq('user_id', user.id).eq('status', 'completed').eq('type', 'session_booking'),
         supabase.from('questions').select('id').eq('contributor_id', user.id).eq('status', 'approved'),
@@ -100,13 +240,13 @@ export default function TutorDashboardPage() {
       ]);
 
       const profile = profileRes.data as { full_name: string; avatar_url: string | null } | null;
-      const tutor = tutorRes.data as any;
-      if (!profile || !tutor) { setIsLoading(false); return; }
+      const tutor = (tutorRes.data ?? {}) as any;
+
+      if (!profile) { setIsLoading(false); return; }
 
       const allSessions = (sessionsRes.data ?? []) as any[];
       const today = new Date().toISOString().split('T')[0];
 
-      // Today's sessions
       const todaySessionIds = allSessions.filter(s => s.session_date === today && s.status === 'confirmed');
       const studentIds = Array.from(new Set([...todaySessionIds, ...allSessions.filter(s => s.status === 'pending_approval')].map(s => s.student_id)));
 
@@ -117,49 +257,35 @@ export default function TutorDashboardPage() {
       }
 
       const todaySessions = todaySessionIds.map(s => ({
-        id: s.id,
-        student_name: studentNames[s.student_id] ?? 'Student',
-        start_time: s.start_time,
-        end_time: s.end_time,
-        topic: s.topic,
-        platform: s.platform,
-        status: s.status,
-        cadre: s.cadre,
+        id: s.id, student_name: studentNames[s.student_id] ?? 'Student',
+        start_time: s.start_time, end_time: s.end_time, topic: s.topic,
+        platform: s.platform, status: s.status, cadre: s.cadre,
       }));
 
       const pendingBookings = allSessions
-        .filter(s => s.status === 'pending_approval')
-        .slice(0, 5)
+        .filter(s => s.status === 'pending_approval').slice(0, 5)
         .map(s => ({
-          id: s.id,
-          student_name: studentNames[s.student_id] ?? 'Student',
-          session_date: s.session_date,
-          start_time: s.start_time,
-          topic: s.topic,
-          cadre: s.cadre,
+          id: s.id, student_name: studentNames[s.student_id] ?? 'Student',
+          session_date: s.session_date, start_time: s.start_time, topic: s.topic, cadre: s.cadre,
         }));
 
-      // Recent unique students
       const seenStudents = new Set<string>();
       const recentStudents: TutorDashboardData['recentStudents'] = [];
       for (const s of allSessions) {
         if (!seenStudents.has(s.student_id) && recentStudents.length < 5) {
           seenStudents.add(s.student_id);
           recentStudents.push({
-            id: s.student_id,
-            full_name: studentNames[s.student_id] ?? 'Student',
-            cadre: s.cadre,
-            sessions_count: allSessions.filter(x => x.student_id === s.student_id).length,
+            id: s.student_id, full_name: studentNames[s.student_id] ?? 'Student',
+            cadre: s.cadre, sessions_count: allSessions.filter(x => x.student_id === s.student_id).length,
           });
         }
       }
 
-      // Earnings this month
       const startOfMonth = new Date(); startOfMonth.setDate(1); startOfMonth.setHours(0, 0, 0, 0);
       const payments = (paymentsRes.data ?? []) as Array<{ amount: number; completed_at: string }>;
       const earningsThisMonth = payments
         .filter(p => new Date(p.completed_at) >= startOfMonth)
-        .reduce((sum, p) => sum + Math.round(p.amount * 0.70), 0); // 70% net (30% platform fee)
+        .reduce((sum, p) => sum + Math.round(p.amount * 0.70), 0);
 
       setData({
         tutor: {
@@ -172,8 +298,14 @@ export default function TutorDashboardPage() {
           total_students: tutor.total_students ?? 0,
           total_sessions: tutor.total_sessions ?? 0,
           pass_rate: tutor.pass_rate ?? 0,
-          rate_per_hour: tutor.rate_per_hour ?? 0,
-          is_accepting_bookings: tutor.is_accepting_bookings ?? true,
+          rate_per_hour: tutor.rate_per_hour ?? null,
+          is_accepting_bookings: tutor.is_accepting_bookings ?? false,
+          bio: tutor.bio ?? null,
+          cadres_taught: tutor.cadres_taught ?? [],
+          mpesa_number: tutor.mpesa_number ?? null,
+          nck_certificate_url: tutor.nck_certificate_url ?? null,
+          academic_qualification_url: tutor.academic_qualification_url ?? null,
+          national_id_url: tutor.national_id_url ?? null,
         },
         todaySessions,
         pendingBookings,
@@ -189,7 +321,22 @@ export default function TutorDashboardPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Initial load
+  useEffect(() => { fetchData(); }, [fetchData]);
+
+  // Re-fetch when returning from complete-profile (?refreshed=1)
+  useEffect(() => {
+    if (searchParams.get('refreshed') === '1') {
+      fetchData().then(() => {
+        // Clean the URL without causing a navigation
+        router.replace('/tutor-dashboard', { scroll: false });
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   const approveBooking = async (sessionId: string) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -212,7 +359,7 @@ export default function TutorDashboardPage() {
       <div className="flex items-center justify-center min-h-[60vh]">
         <Card className="max-w-md w-full text-center">
           <p className="text-error mb-4">Failed to load dashboard</p>
-          <Button variant="primary" onClick={() => window.location.reload()}>Retry</Button>
+          <Button variant="primary" onClick={() => fetchData()}>Retry</Button>
         </Card>
       </div>
     );
@@ -222,6 +369,9 @@ export default function TutorDashboardPage() {
 
   return (
     <div className="space-y-5 pb-24 lg:pb-6">
+
+      {/* Verification banner — shown until verified */}
+      <VerificationBanner tutor={tutor} onRefresh={fetchData} />
 
       {/* Hero banner */}
       <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl px-6 py-7 sm:px-8 sm:py-8"
@@ -370,7 +520,7 @@ export default function TutorDashboardPage() {
             <div className="space-y-3 text-sm">
               <div className="flex items-center justify-between">
                 <span className="text-[var(--color-text-secondary)]">Hourly Rate</span>
-                <span className="font-bold text-accent">KSh {tutor.rate_per_hour.toLocaleString()}</span>
+                <span className="font-bold text-accent">KSh {(tutor.rate_per_hour ?? 0).toLocaleString()}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-[var(--color-text-secondary)]">Platform Fee</span>
@@ -378,7 +528,7 @@ export default function TutorDashboardPage() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-[var(--color-text-secondary)]">Your Net Rate</span>
-                <span className="font-bold text-success">KSh {Math.round(tutor.rate_per_hour * 0.70).toLocaleString()}</span>
+                <span className="font-bold text-success">KSh {Math.round((tutor.rate_per_hour ?? 0) * 0.70).toLocaleString()}</span>
               </div>
               <div className="pt-2 border-t border-[var(--color-border)]">
                 <div className="flex items-center justify-between">

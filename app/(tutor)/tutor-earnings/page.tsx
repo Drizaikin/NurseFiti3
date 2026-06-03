@@ -61,7 +61,7 @@ export default function TutorEarningsPage() {
         .eq('tutor_id', uid)
         .in('status', ['confirmed', 'completed'])
         .order('session_date', { ascending: false }),
-      supabase.from('tutor_profiles').select('mpesa_number, rate_per_hour').eq('id', uid).single(),
+      supabase.from('tutor_profiles').select('mpesa_number, rate_per_hour').eq('id', uid).maybeSingle(),
     ]);
 
     const sessions = (sessionsRes.data ?? []) as any[];

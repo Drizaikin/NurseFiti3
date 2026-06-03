@@ -298,7 +298,7 @@ Create student registration form with validation.
 - [ ] Client-side validation with Zod
 - [ ] Password strength indicator
 - [ ] Cadre dropdown (KRCHN, BScN, Higher Diploma)
-- [ ] Exam date picker with upcoming NCK dates
+- [ ] Exam date picker with upcoming NCK dates (February, May, August, November cycles)
 - [ ] Error handling and display
 
 **Implementation Steps:**

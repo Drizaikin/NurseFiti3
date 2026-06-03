@@ -130,9 +130,9 @@ export default function TutorProfilePage() {
       setCurrentUserId(user.id);
 
       const [tutorRes, profileRes, studentRes, availRes, sessionsRes, reviewsRes] = await Promise.all([
-        supabase.from('tutor_profiles').select('*').eq('id', tutorId).eq('verification_status', 'verified').single(),
-        supabase.from('profiles').select('full_name, avatar_url').eq('id', tutorId).single(),
-        supabase.from('student_profiles').select('cadre').eq('id', user.id).single(),
+        supabase.from('tutor_profiles').select('*').eq('id', tutorId).eq('verification_status', 'verified').maybeSingle(),
+        supabase.from('profiles').select('full_name, avatar_url').eq('id', tutorId).maybeSingle(),
+        supabase.from('student_profiles').select('cadre').eq('id', user.id).maybeSingle(),
         supabase.from('tutor_availability').select('id, day_of_week, start_time, end_time').eq('tutor_id', tutorId).eq('is_active', true),
         supabase.from('sessions').select('session_date, start_time').eq('tutor_id', tutorId).in('status', ['confirmed', 'pending_approval']).gte('session_date', new Date().toISOString().split('T')[0]),
         supabase.from('session_reviews').select('id, rating, review_text, keywords, created_at, student_id').eq('tutor_id', tutorId).eq('is_published', true).order('created_at', { ascending: false }).limit(10),

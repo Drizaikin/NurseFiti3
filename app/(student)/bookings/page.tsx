@@ -181,17 +181,12 @@ export default function BookingsPage() {
       // Mark session as reviewed
       await supabase.from('sessions').update({ reviewed: true } as any).eq('id', reviewModal.sessionId);
 
-      // Update tutor average rating
-      const { data: allReviews } = await supabase
-        .from('session_reviews')
-        .select('rating')
-        .eq('tutor_id', reviewModal.tutorId)
-        .eq('is_published', true);
-
-      if (allReviews && allReviews.length > 0) {
-        const avg = allReviews.reduce((sum: number, r: any) => sum + r.rating, 0) / allReviews.length;
-        await supabase.from('tutor_profiles').update({ average_rating: Math.round(avg * 100) / 100 } as any).eq('id', reviewModal.tutorId);
-      }
+      // Update tutor average rating via API (students can't write tutor_profiles directly)
+      await fetch('/api/tutor/update-rating', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tutorId: reviewModal.tutorId }),
+      });
 
       toast.success('Review submitted! Thank you.');
       setReviewModal(null);

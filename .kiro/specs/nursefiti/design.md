@@ -424,12 +424,12 @@ CREATE TABLE student_profiles (
   specialty TEXT,
   institution TEXT,
   exam_date DATE NOT NULL,
-  exam_cycle TEXT CHECK (exam_cycle IN ('May', 'August', 'November')) NOT NULL,
+  exam_cycle TEXT CHECK (exam_cycle IN ('February', 'May', 'August', 'November')) NOT NULL,
   xp INTEGER DEFAULT 0,
   level INTEGER DEFAULT 1,
   streak_count INTEGER DEFAULT 0,
   last_study_date DATE,
-  plan_tier TEXT CHECK (plan_tier IN ('free', 'standard', 'premium')) DEFAULT 'free',
+  plan_tier TEXT CHECK (plan_tier IN ('free', 'daily', 'weekly', 'standard', 'premium')) DEFAULT 'free',
   plan_expires_at TIMESTAMPTZ
 );
 
@@ -2128,13 +2128,13 @@ function generateMockExamSchedule(cadre: string, examDate: Date): MockExamSchedu
       { date: new Date(twoWeeksBefore.getTime() + 12 * 24 * 60 * 60 * 1000), paper: 'Paper II (Retake)', duration: 120 }
     )
   } else if (cadre === 'BScN') {
-    // 4 papers for BScN
+    // 2 integrated papers for BScN (Paper I: Advanced Adult Health + Specialised + Maternal/Newborn; Paper II: Community/Public Health + Research + Leadership + Mental Health)
     schedule.push(
-      { date: new Date(twoWeeksBefore.getTime() + 1 * 24 * 60 * 60 * 1000), paper: 'Paper I', duration: 180 },
-      { date: new Date(twoWeeksBefore.getTime() + 3 * 24 * 60 * 60 * 1000), paper: 'Paper II', duration: 180 },
-      { date: new Date(twoWeeksBefore.getTime() + 5 * 24 * 60 * 60 * 1000), paper: 'Paper III', duration: 180 },
-      { date: new Date(twoWeeksBefore.getTime() + 7 * 24 * 60 * 60 * 1000), paper: 'Paper IV', duration: 180 },
-      { date: new Date(twoWeeksBefore.getTime() + 10 * 24 * 60 * 60 * 1000), paper: 'Full Mock (All Papers)', duration: 360 }
+      { date: new Date(twoWeeksBefore.getTime() + 1 * 24 * 60 * 60 * 1000), paper: 'Paper I', duration: 120 },
+      { date: new Date(twoWeeksBefore.getTime() + 3 * 24 * 60 * 60 * 1000), paper: 'Paper II', duration: 120 },
+      { date: new Date(twoWeeksBefore.getTime() + 7 * 24 * 60 * 60 * 1000), paper: 'Paper I (Retake)', duration: 120 },
+      { date: new Date(twoWeeksBefore.getTime() + 10 * 24 * 60 * 60 * 1000), paper: 'Paper II (Retake)', duration: 120 },
+      { date: new Date(twoWeeksBefore.getTime() + 13 * 24 * 60 * 60 * 1000), paper: 'Full Mock (Paper I + II)', duration: 240 }
     )
   }
   

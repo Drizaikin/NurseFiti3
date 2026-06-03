@@ -66,7 +66,7 @@ export default function AnalyticsPage() {
       if (!user) { router.push('/login'); return; }
 
       const [profileRes, answersRes, mockRes, flashRes] = await Promise.all([
-        supabase.from('student_profiles').select('plan_tier, plan_expires_at').eq('id', user.id).single(),
+        supabase.from('student_profiles').select('plan_tier, plan_expires_at').eq('id', user.id).maybeSingle(),
         supabase.from('student_answers').select('is_correct, time_taken_seconds, answered_at, question_id').eq('student_id', user.id),
         supabase.from('mock_exam_results').select('*').eq('student_id', user.id).order('completed_at', { ascending: false }),
         supabase.from('flashcard_progress').select('id').eq('student_id', user.id),

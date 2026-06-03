@@ -1,13 +1,19 @@
 -- =============================================================================
--- NCK PAST PAPER QUESTIONS — PAPER 2 SEED DATA
+-- NCK PAST PAPER QUESTIONS — PAPER II SEED DATA
 -- =============================================================================
--- Source: NCK Past Papers — Paper 2 (BSCN & KRCHN)
+-- Source: NCK Past Papers — Paper 2 source documents (BScN & KRCHN)
 -- Cadre mapping: BSCN → 'BScN', KRCHN → 'KRCHN'
 -- exam_year: stored but NOT exposed to students (admin/analytics use only)
 -- year_known: FALSE for uncategorised sets (no year on source PDF)
 -- Units mapped to the seeded units table taxonomy
 -- All questions set to status = 'approved'
 -- correct_option uses uppercase letter: A, B, C, or D
+--
+-- NOTE: paper values inserted as 'Paper 2' (Arabic numeral) in this file.
+-- Migration 20260526000002_correct_paper_assignments.sql corrects ALL paper
+-- values to Roman numerals ('Paper I' / 'Paper II') by unit-based UPDATE.
+-- That migration MUST run after this one. Do NOT re-seed without also
+-- re-running the correction migration.
 -- =============================================================================
 
 -- Helper: we insert with contributor_id = NULL (platform-owned content)

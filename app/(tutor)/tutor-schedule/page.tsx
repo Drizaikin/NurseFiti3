@@ -295,7 +295,7 @@ export default function TutorSchedulePage() {
   const loadPrefs = async (uid: string) => {
     const { data } = await supabase.from('tutor_profiles')
       .select('allow_instant_booking, allow_group_sessions, buffer_minutes, rate_per_hour, session_platform, is_accepting_bookings')
-      .eq('id', uid).single();
+      .eq('id', uid).maybeSingle();
     if (data) setPrefs(data as TutorPrefs);
   };
 
@@ -411,6 +411,7 @@ export default function TutorSchedulePage() {
   const savePrefs = async () => {
     if (!userId) return;
     setSaving(true);
+    // RLS policy allows tutors to update their own row
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { error } = await (supabase as any).from('tutor_profiles').update({
       allow_instant_booking: prefs.allow_instant_booking,

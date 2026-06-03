@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 const POSTS = [
   {
     slug: 'nck-exam-preparation-guide-kenya',
-    title: 'The Complete NCK Exam Preparation Guide for Kenyan Nursing Graduates (2025)',
+    title: 'The Complete NCK Exam Preparation Guide for Kenyan Nursing Graduates (2026)',
     excerpt: 'Everything you need to know about the NCK licensure exam — structure, topics, DigiProctor interface, and a proven study strategy to pass first attempt.',
     category: 'Study Guide',
     readTime: '12 min read',

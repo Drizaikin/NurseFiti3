@@ -21,6 +21,13 @@ interface Tutor {
   total_sessions: number;
   rate_per_hour: number;
   nck_reg_number: string;
+  bio: string | null;
+  current_employer: string | null;
+  nck_certificate_url: string | null;
+  academic_qualification_url: string | null;
+  national_id_url: string | null;
+  mpesa_number: string | null;
+  rejection_reason: string | null;
   created_at: string;
 }
 
@@ -41,6 +48,36 @@ export default function AdminTutorsPage() {
   const [verifyTier, setVerifyTier] = useState<'standard' | 'gold'>('standard');
   const [rejectModal, setRejectModal] = useState<Tutor | null>(null);
   const [rejectReason, setRejectReason] = useState('');
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const [signedUrls, setSignedUrls] = useState<Record<string, string>>({});
+
+  const getSignedUrl = async (path: string | null, bucket = 'documents'): Promise<string | null> => {
+    if (!path) return null;
+    // Return cached URL if already fetched
+    if (signedUrls[path]) return signedUrls[path];
+    try {
+      const res = await fetch(`/api/admin/signed-url?path=${encodeURIComponent(path)}&bucket=${bucket}`);
+      const data = await res.json();
+      if (data.url) {
+        setSignedUrls(prev => ({ ...prev, [path]: data.url }));
+        return data.url;
+      }
+    } catch { /* ignore */ }
+    return null;
+  };
+
+  const handleExpand = async (tutor: Tutor) => {
+    const isOpening = expanded !== tutor.id;
+    setExpanded(isOpening ? tutor.id : null);
+    if (isOpening) {
+      // Pre-fetch signed URLs for all three documents
+      await Promise.all([
+        getSignedUrl(tutor.nck_certificate_url),
+        getSignedUrl(tutor.academic_qualification_url),
+        getSignedUrl(tutor.national_id_url),
+      ]);
+    }
+  };
 
   const loadTutors = useCallback(async () => {
     setIsLoading(true);
@@ -176,6 +213,84 @@ export default function AdminTutorsPage() {
                   <p className="text-xs text-neutral-mid mt-1">
                     Registered {new Date(t.created_at).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}
                   </p>
+
+                  {/* Expand/collapse details */}
+                  <button
+                    onClick={() => handleExpand(t)}
+                    className="text-xs text-primary hover:underline mt-2"
+                  >
+                    {expanded === t.id ? '▲ Hide details' : '▼ View profile & documents'}
+                  </button>
+
+                  {/* Expanded profile + documents */}
+                  {expanded === t.id && (
+                    <div className="mt-4 pt-4 border-t border-[var(--color-border)] space-y-4">
+
+                      {/* Profile details */}
+                      {t.bio && (
+                        <div>
+                          <p className="text-xs font-bold uppercase tracking-wider text-neutral-mid mb-1">Bio</p>
+                          <p className="text-sm text-[var(--color-text)]">{t.bio}</p>
+                        </div>
+                      )}
+                      {t.current_employer && (
+                        <div>
+                          <p className="text-xs font-bold uppercase tracking-wider text-neutral-mid mb-1">Current Employer</p>
+                          <p className="text-sm text-[var(--color-text)]">{t.current_employer}</p>
+                        </div>
+                      )}
+                      {t.mpesa_number && (
+                        <div>
+                          <p className="text-xs font-bold uppercase tracking-wider text-neutral-mid mb-1">M-Pesa Number</p>
+                          <p className="text-sm text-[var(--color-text)]">{t.mpesa_number}</p>
+                        </div>
+                      )}
+
+                      {/* Documents */}
+                      <div>
+                        <p className="text-xs font-bold uppercase tracking-wider text-neutral-mid mb-2">Uploaded Documents</p>
+                        <div className="space-y-2">
+                          {[
+                            { label: 'NCK Certificate',          path: t.nck_certificate_url },
+                            { label: 'Academic Qualification',   path: t.academic_qualification_url },
+                            { label: 'National ID / Passport',   path: t.national_id_url },
+                          ].map(({ label, path }) => {
+                            const signedUrl = path ? signedUrls[path] : null;
+                            return (
+                              <div key={label} className="flex items-center gap-3 p-2 rounded-xl border border-[var(--color-border)]">
+                                <span className="text-xl">📄</span>
+                                <span className="text-sm text-[var(--color-text-secondary)] flex-1">{label}</span>
+                                {path ? (
+                                  signedUrl ? (
+                                    <a
+                                      href={signedUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="px-3 py-1.5 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary-mid transition-colors"
+                                    >
+                                      Open →
+                                    </a>
+                                  ) : (
+                                    <span className="text-xs text-neutral-mid">Loading…</span>
+                                  )
+                                ) : (
+                                  <span className="text-xs text-error font-semibold px-3 py-1.5">Not uploaded</span>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Rejection reason if any */}
+                      {t.rejection_reason && (
+                        <div className="p-3 rounded-xl bg-error/5 border border-error/20">
+                          <p className="text-xs font-bold text-error mb-1">Previous Rejection Reason</p>
+                          <p className="text-sm text-[var(--color-text)]">{t.rejection_reason}</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Actions */}
