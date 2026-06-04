@@ -114,20 +114,127 @@ export default function MockExamPage() {
     const config = EXAM_CONFIGS[selectedExam];
     if (!config) return;
     setIsLoading(true);
-    const { data, error } = await supabase
+
+    // ── STEP 1: Get question IDs the student has already seen in mock exams for this paper ──
+    const { data: seenData } = await supabase
+      .from('student_answers')
+      .select('question_id')
+      .eq('student_id', userId)
+      .eq('mode', 'mock_exam')
+      .eq('paper', config.paper);
+
+    const seenIds = seenData?.map(a => a.question_id) ?? [];
+
+    // ── STEP 2: Fetch ALL approved questions for this cadre + paper ──
+    const { data: allQuestions, error } = await supabase
       .from('questions')
       .select('*')
       .eq('cadre', config.cadre)
       .eq('paper', config.paper)
-      .eq('status', 'approved')
-      .limit(config.totalQuestions);
-    if (error || !data || data.length === 0) {
+      .eq('status', 'approved');
+
+    if (error || !allQuestions || allQuestions.length === 0) {
       toast.error('Not enough questions available for this exam. Please try again later.');
       setIsLoading(false);
       return;
     }
-    const shuffled = [...data].sort(() => Math.random() - 0.5).slice(0, config.totalQuestions);
-    setQuestions(shuffled);
+
+    // ── STEP 3: Prefer unseen questions; if not enough, reset cycle ──
+    let unseenPool = allQuestions.filter(q => !seenIds.includes(q.id));
+    let cycleReset = false;
+
+    if (unseenPool.length < config.totalQuestions) {
+      // Cycle complete — use the full question bank again
+      unseenPool = allQuestions;
+      cycleReset = true;
+    }
+
+    // ── STEP 4: NCK-style unit distribution — interleave questions across units ──
+    // Group unseen questions by unit
+    const byUnit: Record<string, typeof unseenPool> = {};
+    for (const q of unseenPool) {
+      const u = q.unit ?? 'Other';
+      if (!byUnit[u]) byUnit[u] = [];
+      byUnit[u].push(q);
+    }
+
+    // Shuffle within each unit
+    for (const unit of Object.keys(byUnit)) {
+      byUnit[unit] = byUnit[unit].sort(() => Math.random() - 0.5);
+    }
+
+    // Interleave: round-robin across units so no unit clusters together
+    // Weighted by how many questions each unit has (proportional pick)
+    const unitNames = Object.keys(byUnit);
+    const unitPointers: Record<string, number> = {};
+    for (const u of unitNames) unitPointers[u] = 0;
+
+    const interleaved: typeof unseenPool = [];
+    const totalNeeded = Math.min(config.totalQuestions, unseenPool.length);
+
+    // Build a weighted round-robin order: units with more questions get more slots
+    // proportional to their share of the total pool
+    const totalPoolSize = unseenPool.length;
+    const unitSlots: string[] = [];
+    for (const u of unitNames) {
+      const share = Math.round((byUnit[u].length / totalPoolSize) * totalNeeded);
+      for (let i = 0; i < share; i++) unitSlots.push(u);
+    }
+    // Pad or trim to exact count needed
+    while (unitSlots.length < totalNeeded) unitSlots.push(unitNames[unitSlots.length % unitNames.length]);
+    unitSlots.length = totalNeeded;
+
+    // Shuffle the slots so same-unit questions don't cluster
+    // Use a controlled interleave: spread each unit's slots evenly
+    const spreadSlots: string[] = new Array(totalNeeded).fill('');
+    const unitQueue = [...unitNames];
+    const slotsPerUnit: Record<string, number[]> = {};
+    for (const u of unitNames) slotsPerUnit[u] = [];
+
+    // Assign each unit's positions evenly across the exam
+    let posCounter = 0;
+    for (const u of unitNames) {
+      const count = Math.round((byUnit[u].length / totalPoolSize) * totalNeeded);
+      const gap = totalNeeded / (count || 1);
+      for (let i = 0; i < count; i++) {
+        const pos = Math.round(i * gap + posCounter % gap) % totalNeeded;
+        slotsPerUnit[u].push(pos);
+      }
+      posCounter++;
+    }
+
+    // Fill the interleaved array using the spread positions
+    for (const u of unitNames) {
+      let qi = 0;
+      for (const pos of slotsPerUnit[u]) {
+        if (qi < byUnit[u].length && byUnit[u][qi]) {
+          interleaved[pos] = byUnit[u][qi++];
+        }
+      }
+    }
+
+    // Fill any gaps (from rounding) with remaining unseen questions
+    const remaining = unseenPool.filter(q => !interleaved.includes(q));
+    let ri = 0;
+    for (let i = 0; i < totalNeeded; i++) {
+      if (!interleaved[i] && ri < remaining.length) {
+        interleaved[i] = remaining[ri++];
+      }
+    }
+
+    const finalQuestions = interleaved.filter(Boolean).slice(0, config.totalQuestions);
+
+    if (finalQuestions.length === 0) {
+      toast.error('Not enough questions available for this exam. Please try again later.');
+      setIsLoading(false);
+      return;
+    }
+
+    if (cycleReset) {
+      toast('🔄 You\'ve completed a full exam cycle — questions are now repeating from the full bank.', { duration: 4000 });
+    }
+
+    setQuestions(finalQuestions);
     setAnswers({});
     setFlagged(new Set());
     setCurrentIndex(0);
@@ -157,6 +264,25 @@ export default function MockExamPage() {
     if (!userId) {
       toast.error('Your session expired. Please note your score before refreshing.');
     } else {
+      // Save individual question answers for rotation tracking
+      const answerRecords = questions.map(q => ({
+        student_id: userId,
+        question_id: q.id,
+        selected_option: answers[q.id] ?? 'A', // default to A if unanswered (shouldn't happen)
+        is_correct: answers[q.id] === q.correct_option,
+        time_taken_seconds: null, // mock exams don't track per-question time
+        mode: 'mock_exam' as const,
+        unit: q.unit,
+        paper: config.paper,
+        answered_at: new Date().toISOString(),
+      }));
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error: answersError } = await (supabase.from('student_answers') as any).insert(answerRecords);
+      if (answersError) {
+        console.error('student_answers insert error:', answersError);
+      }
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { error: insertError } = await (supabase.from('mock_exam_results') as any).insert({
         student_id: userId,

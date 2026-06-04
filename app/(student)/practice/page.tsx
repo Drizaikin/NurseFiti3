@@ -213,6 +213,26 @@ export default function PracticePage() {
         ? 20
         : Math.min(20, limits.practiceQuestionsPerDay - answeredToday);
 
+      // ── STEP 1: Get IDs of questions the student has already answered in this unit/cadre ──
+      let answeredIdsQuery = supabase
+        .from('student_answers')
+        .select('question_id')
+        .eq('student_id', userId)
+        .eq('mode', 'practice');
+
+      // Join to questions table to filter by cadre and unit (via nested select would be ideal,
+      // but Supabase doesn't support subqueries in .not('id', 'in', ...), so we have to do
+      // a two-step: fetch answered IDs, then fetch the questions with unit filter)
+      
+      // Since student_answers now has a `unit` column (denormalized), we can filter directly:
+      if (selectedUnit !== 'all') {
+        answeredIdsQuery = answeredIdsQuery.eq('unit', selectedUnit);
+      }
+
+      const { data: answeredData } = await answeredIdsQuery;
+      const answeredIds = answeredData?.map(a => a.question_id) || [];
+
+      // ── STEP 2: Fetch questions, excluding already-answered ones ──
       let query = supabase
         .from('questions')
         .select('*')
@@ -223,16 +243,46 @@ export default function PracticePage() {
         query = query.eq('unit', selectedUnit);
       }
 
-      const { data, error } = await query.limit(remaining);
+      // Exclude answered question IDs
+      if (answeredIds.length > 0) {
+        query = query.not('id', 'in', `(${answeredIds.join(',')})`);
+      }
+
+      // Fetch double the remaining count to allow for shuffling, then slice
+      const { data, error } = await query.limit(remaining * 2);
 
       if (error) { console.error('Error fetching questions:', error); return; }
 
-      if (!data || data.length === 0) {
-        toast.error('No questions available for the selected filters. Try different filters.');
-        return;
+      // ── STEP 3: If not enough unseen questions, reset cycle (fetch all) ──
+      let finalQuestions = data || [];
+      if (finalQuestions.length < remaining) {
+        // All questions in this unit have been answered — reset the cycle
+        let resetQuery = supabase
+          .from('questions')
+          .select('*')
+          .eq('cadre', studentCadre)
+          .eq('status', 'approved');
+
+        if (selectedUnit !== 'all') {
+          resetQuery = resetQuery.eq('unit', selectedUnit);
+        }
+
+        const { data: allData } = await resetQuery.limit(remaining * 2);
+        finalQuestions = allData || [];
+        
+        if (finalQuestions.length === 0) {
+          toast.error('No questions available for the selected filters. Try different filters.');
+          setIsLoading(false);
+          return;
+        }
+
+        // Notify student the cycle has restarted
+        if (answeredIds.length > 0) {
+          toast('🔄 You\'ve gone through all questions in this unit — starting the cycle again!', { duration: 4000 });
+        }
       }
 
-      const shuffled = [...data].sort(() => Math.random() - 0.5);
+      const shuffled = [...finalQuestions].sort(() => Math.random() - 0.5).slice(0, remaining);
       const newSession: PracticeSession = { questionsAnswered: 0, correctAnswers: 0, xpEarned: 0 };
 
       setQuestions(shuffled);
@@ -260,6 +310,10 @@ export default function PracticePage() {
     if (!userId) return;
 
     try {
+      // Resolve the unit for this question (for rotation tracking)
+      const answeredQuestion = questions.find(q => q.id === questionId);
+      const questionUnit = answeredQuestion?.unit ?? null;
+
       // Fix 1: destructure and check insert error
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { error: insertError } = await (supabase as any).from('student_answers').insert({
@@ -269,6 +323,7 @@ export default function PracticePage() {
         is_correct: isCorrect,
         time_taken_seconds: timeTaken,
         mode: 'practice',
+        unit: questionUnit,   // denormalized for rotation queries
       });
       if (insertError) {
         console.error('Error saving answer:', insertError);
