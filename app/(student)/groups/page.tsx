@@ -67,6 +67,7 @@ function ChatPanel({
   onBack: () => void;
 }) {
   const supabase = createClient();
+  const supabaseRef = useRef(supabase);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loadingMsgs, setLoadingMsgs] = useState(true);
   const [body, setBody] = useState('');
@@ -84,7 +85,7 @@ function ChatPanel({
     const uniqueUnknown = [...new Set(unknownIds)];
 
     if (uniqueUnknown.length > 0) {
-      const { data: profiles } = await supabase
+      const { data: profiles } = await supabaseRef.current
         .from('profiles')
         .select('id, full_name, avatar_url')
         .in('id', uniqueUnknown);
@@ -112,18 +113,28 @@ function ChatPanel({
         author_avatar: prof.avatar,
       } as ChatMessage;
     });
-  }, [supabase]);
+  }, []);
 
   const loadMessages = useCallback(async () => {
     setLoadingMsgs(true);
-    const { data, error } = await supabase
+    const { data, error } = await supabaseRef.current
       .from('community_messages')
       .select('*')
       .eq('group_id', group.id)
       .order('created_at', { ascending: true })
       .limit(100);
 
-    if (error) { console.error(error); setLoadingMsgs(false); return; }
+    if (error) {
+      // Table doesn't exist yet (migration pending) — show helpful message
+      if (error.message?.includes('schema cache') || error.message?.includes('does not exist')) {
+        setMessages([]);
+        setLoadingMsgs(false);
+        return;
+      }
+      console.error(error);
+      setLoadingMsgs(false);
+      return;
+    }
     const enriched = await enrichMessages((data ?? []) as Record<string, unknown>[]);
     setMessages(enriched);
     setLoadingMsgs(false);
@@ -139,7 +150,7 @@ function ChatPanel({
 
   // Realtime subscription
   useEffect(() => {
-    const channel = supabase
+    const channel = supabaseRef.current
       .channel(`chat-${group.id}`)
       .on(
         'postgres_changes',
@@ -147,7 +158,6 @@ function ChatPanel({
         async (payload) => {
           const enriched = await enrichMessages([payload.new as Record<string, unknown>]);
           setMessages(prev => {
-            // Avoid duplicates (optimistic update may already have added it)
             if (prev.some(m => m.id === enriched[0].id)) return prev;
             return [...prev, enriched[0]];
           });
@@ -163,8 +173,8 @@ function ChatPanel({
       )
       .subscribe();
 
-    return () => { supabase.removeChannel(channel); };
-  }, [group.id, supabase, enrichMessages]);
+    return () => { supabaseRef.current.removeChannel(channel); };
+  }, [group.id, enrichMessages]);
 
   const sendMessage = async () => {
     const trimmed = body.trim();
@@ -190,7 +200,7 @@ function ChatPanel({
     setBody('');
     setReplyTo(null);
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseRef.current
       .from('community_messages')
       .insert({
         author_id: userId,
@@ -218,7 +228,7 @@ function ChatPanel({
 
   const deleteMessage = async (msg: ChatMessage) => {
     if (msg.author_id !== userId) return;
-    await supabase
+    await supabaseRef.current
       .from('community_messages')
       .update({ is_deleted: true, body: '[message deleted]' })
       .eq('id', msg.id);

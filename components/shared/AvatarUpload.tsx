@@ -106,8 +106,10 @@ export function AvatarUpload({ userId, currentUrl, name, size = 'lg', onUploaded
             <Image
               src={displayUrl}
               alt={name ?? 'Profile picture'}
-              fill
-              className="object-cover rounded-full"
+              width={112}
+              height={112}
+              className="object-cover rounded-full w-full h-full"
+              unoptimized
             />
           ) : (
             <div className={`w-full h-full flex items-center justify-center rounded-full bg-primary text-white font-bold ${sizeClass}`}>

@@ -26,8 +26,9 @@ export function OnboardingTourGate() {
         .eq('id', user.id)
         .maybeSingle();
 
-      // Show if column is false/null (new account or column just added)
-      if (data && !(data as { onboarding_tour_seen: boolean }).onboarding_tour_seen) {
+      // Show if column exists and is false/null (new account)
+      // If column doesn't exist yet (migration pending), data will be null — don't show
+      if (data && 'onboarding_tour_seen' in data && !(data as { onboarding_tour_seen: boolean }).onboarding_tour_seen) {
         setShow(true);
       }
     };

@@ -25,7 +25,7 @@ export function TutorOnboardingTourGate() {
         .eq('id', user.id)
         .maybeSingle();
 
-      if (data && !(data as { onboarding_tour_seen: boolean }).onboarding_tour_seen) {
+      if (data && 'onboarding_tour_seen' in data && !(data as { onboarding_tour_seen: boolean }).onboarding_tour_seen) {
         setShow(true);
       }
     };
