@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { TutorSidebar } from '@/components/tutor/TutorSidebar';
 import { TutorTopbar } from '@/components/tutor/TutorTopbar';
+import { TutorOnboardingTourGate } from '@/components/tutor/OnboardingTourGate';
 
 // All tutor pages are dynamic — they require auth and live Supabase data
 export const dynamic = 'force-dynamic';
@@ -36,6 +37,9 @@ export default function TutorLayout({ children }: { children: React.ReactNode })
           {children}
         </main>
       </div>
+
+      {/* Onboarding tour — shown once to new tutor accounts */}
+      <TutorOnboardingTourGate />
     </div>
   );
 }

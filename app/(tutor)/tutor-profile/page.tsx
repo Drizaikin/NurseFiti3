@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Spinner } from '@/components/ui/Spinner';
 import { Toggle } from '@/components/ui/Toggle';
+import { AvatarUpload } from '@/components/shared/AvatarUpload';
 import toast from 'react-hot-toast';
 
 export const dynamic = 'force-dynamic';
@@ -51,6 +52,7 @@ export default function TutorProfilePage() {
     verification_tier: null, nck_reg_number: '',
   });
   const [userId, setUserId] = useState<string | null>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [stats, setStats] = useState({ total_students: 0, total_sessions: 0, average_rating: 0, pass_rate: 0 });
@@ -69,13 +71,14 @@ export default function TutorProfilePage() {
 
   const loadProfile = async (uid: string) => {
     const [profileRes, tutorRes] = await Promise.all([
-      supabase.from('profiles').select('full_name').eq('id', uid).maybeSingle(),
+      supabase.from('profiles').select('full_name, avatar_url').eq('id', uid).maybeSingle(),
       supabase.from('tutor_profiles').select('*').eq('id', uid).maybeSingle(),
     ]);
     const profile = profileRes.data as any;
     const tutor = tutorRes.data as any;
     if (!profile || !tutor) return;
 
+    setAvatarUrl(profile.avatar_url ?? null);
     setForm({
       full_name: profile.full_name ?? '',
       professional_title: tutor.professional_title ?? '',
@@ -308,9 +311,14 @@ export default function TutorProfilePage() {
             <p className="text-xs font-semibold text-primary mb-3 uppercase tracking-wider">Student View Preview</p>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
-                  {form.full_name.charAt(0) || 'T'}
-                </div>
+                <AvatarUpload
+                  userId={userId!}
+                  currentUrl={avatarUrl}
+                  name={form.full_name}
+                  size="md"
+                  onUploaded={setAvatarUrl}
+                  showNudge={true}
+                />
                 <div>
                   <p className="font-heading font-bold text-sm text-[var(--color-text)]">{form.full_name || 'Your Name'}</p>
                   <p className="text-xs text-[var(--color-text-secondary)]">{form.professional_title || 'Professional Title'}</p>

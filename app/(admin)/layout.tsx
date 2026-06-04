@@ -5,11 +5,15 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import { Spinner } from '@/components/ui/Spinner';
+import { AvatarUpload } from '@/components/shared/AvatarUpload';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const supabase = createClient();
   const [checking, setChecking] = useState(true);
+  const [adminId, setAdminId] = useState<string | null>(null);
+  const [adminName, setAdminName] = useState('');
+  const [adminAvatar, setAdminAvatar] = useState<string | null>(null);
 
   useEffect(() => {
     const check = async () => {
@@ -17,13 +21,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       if (!user) { router.push('/login'); return; }
       const { data: profile } = await supabase
         .from('profiles')
-        .select('role')
+        .select('role, full_name, avatar_url')
         .eq('id', user.id)
         .single();
-      if (!profile || profile.role !== 'admin') {
+      if (!profile || (profile as { role: string }).role !== 'admin') {
         router.push('/dashboard');
         return;
       }
+      setAdminId(user.id);
+      setAdminName((profile as { full_name: string }).full_name ?? 'Admin');
+      setAdminAvatar((profile as { avatar_url: string | null }).avatar_url ?? null);
       setChecking(false);
     };
     check();
@@ -62,12 +69,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             ))}
           </nav>
         </div>
-        <button
-          onClick={async () => { await supabase.auth.signOut(); router.push('/login'); }}
-          className="text-xs text-neutral-mid hover:text-error transition-colors"
-        >
-          Sign Out
-        </button>
+
+        <div className="flex items-center gap-3">
+          {adminId && (
+            <AvatarUpload
+              userId={adminId}
+              currentUrl={adminAvatar}
+              name={adminName}
+              size="md"
+              onUploaded={setAdminAvatar}
+            />
+          )}
+          <button
+            onClick={async () => { await supabase.auth.signOut(); router.push('/login'); }}
+            className="text-xs text-neutral-mid hover:text-error transition-colors"
+          >
+            Sign Out
+          </button>
+        </div>
       </header>
 
       <main className="max-w-6xl mx-auto px-4 py-8">

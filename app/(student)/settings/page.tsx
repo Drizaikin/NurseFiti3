@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Spinner } from '@/components/ui/Spinner';
 import toast from 'react-hot-toast';
 import { effectiveTier, PLAN_PRICING_META } from '@/lib/planLimits';
+import { AvatarUpload } from '@/components/shared/AvatarUpload';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -392,6 +393,8 @@ export default function SettingsPage() {
     notif_whatsapp: true,
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   // Edit profile form state
   const [editForm, setEditForm] = useState({ full_name: '', phone: '', institution: '', exam_date: '', exam_cycle: '' });
@@ -412,10 +415,11 @@ export default function SettingsPage() {
   const fetchProfile = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) { router.push('/login'); return; }
+    setCurrentUserId(user.id);
 
     const [{ data: pd }, { data: sd }] = await Promise.all([
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (supabase as any).from('profiles').select('full_name, email, phone').eq('id', user.id).single(),
+      (supabase as any).from('profiles').select('full_name, email, phone, avatar_url').eq('id', user.id).single(),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (supabase as any).from('student_profiles')
         .select('cadre, specialty, institution, exam_date, exam_cycle, plan_tier, plan_expires_at, notif_booking_confirmed, notif_session_reminder, notif_streak_alerts, notif_plan_expiry, notif_weekly_summary, notif_whatsapp')
@@ -434,6 +438,8 @@ export default function SettingsPage() {
           .update({ plan_tier: 'free', plan_expires_at: null })
           .eq('id', user.id);
       }
+
+      setAvatarUrl((pd as any).avatar_url ?? null);
 
       const p: ProfileData = {
         full_name: pd.full_name ?? '',
@@ -606,6 +612,19 @@ export default function SettingsPage() {
                   {PLAN_PRICING_META[profile?.plan_tier as keyof typeof PLAN_PRICING_META]?.label ?? 'Free'} Plan
                 </Badge>
               </div>
+
+              {/* Avatar upload */}
+              {currentUserId && (
+                <div className="flex justify-center mb-6 pb-6 border-b border-[var(--color-border)]">
+                  <AvatarUpload
+                    userId={currentUserId}
+                    currentUrl={avatarUrl}
+                    name={profile?.full_name}
+                    size="xl"
+                    onUploaded={setAvatarUrl}
+                  />
+                </div>
+              )}
 
               <div className="space-y-4">
                 <FormField label="Full Name">
