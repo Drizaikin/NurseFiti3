@@ -19,173 +19,182 @@ interface Post {
 const POSTS: Post[] = [
   {
     slug: 'nck-exam-preparation-guide-kenya',
-    title: 'The Complete NCK Exam Preparation Guide for Kenyan Nursing Graduates (2026)',
-    excerpt: 'Everything you need to know about the NCK licensure exam — structure, topics, DigiProctor interface, and a proven study strategy to pass first attempt.',
+    title: 'NCK Exam Preparation Guide: Pass First Attempt (2026)',
+    excerpt: 'Everything Kenyan nursing graduates need — exam structure, DigiProctor tips, and a proven 8-week study strategy for KRCHN, BScN and Higher Diploma.',
     category: 'Study Guide',
     readTime: '12 min read',
     date: '2026-05-01',
     cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
     content: `
+Most nursing graduates who fail the NCK exam studied hard. The problem wasn't effort — it was method. Here's what the research and candidate experience consistently shows works.
+
 ## What is the NCK Licensure Exam?
 
-The Nursing Council of Kenya (NCK) licensure examination is the mandatory assessment that every nursing graduate must pass before practising as a registered nurse in Kenya. It is a computer-based test (CBT) administered through the **DigiProctor** platform at approved examination centres across the country.
+The Nursing Council of Kenya (NCK) licensure examination is the mandatory assessment every nursing graduate must pass before practising in Kenya. It is a computer-based test (CBT) administered through the **DigiProctor** platform at approved centres across the country. Passing is not optional — it is the gateway to your internship, your licence, and your income.
 
-Passing the NCK exam is not optional — it is the gateway to your nursing career. Yet many graduates underestimate its difficulty, especially those who rely solely on classroom notes without structured exam preparation.
+Miss one cycle, and you wait 4–6 months for the next sitting. That is the real cost of an unstructured study approach.
 
 ## Exam Structure by Cadre
 
 ### KRCHN (Kenya Registered Community Health Nurse)
 - **2 integrated papers** — Paper I and Paper II
-- Paper I covers Medical-Surgical Nursing, Midwifery, and Pharmacology
-- Paper II covers Community Health Nursing, Mental Health Nursing, and Professional Issues
+- Paper I: Medical-Surgical Nursing, Midwifery, Pharmacology
+- Paper II: Community Health, Mental Health, Professional Issues
 - Each paper: 100 MCQs in 2 hours
 
 ### BScN (Bachelor of Science in Nursing)
 - **2 integrated competency papers** — Paper I and Paper II
-- Paper I covers Advanced Adult Health, Specialised Nursing, and Maternal/Newborn care
-- Paper II covers Community/Public Health, Research, Leadership, and Mental Health
+- Paper I: Advanced Adult Health, Specialised Nursing, Maternal/Newborn
+- Paper II: Community/Public Health, Research, Leadership, Mental Health
 - Each paper: 100 MCQs in 2 hours
 
 ### Higher Diploma
-- **2 papers** — specialty-specific
-- **100 MCQs per paper**
-- **2 hours per paper**
+- **2 specialty papers** — 100 MCQs each, 2 hours each
 - Specialties: Critical Care, Oncology, Renal, Psychiatric, Peri-Operative
 
 ## The DigiProctor Interface
 
-DigiProctor is the CBT platform used by NCK. Many candidates lose marks not because they don't know the content, but because they are unfamiliar with the interface on exam day. Key features:
+DigiProctor is the CBT platform NCK uses for all licensure examinations. Many candidates lose marks not because they lack knowledge — but because they encounter the interface for the first time on exam day. That is a solvable problem.
 
-- **Question navigator grid** — shows all questions, flagged questions, and answered/unanswered status
-- **Flag for review** — mark questions to revisit before submitting
-- **Timer** — displayed prominently; auto-submits when time expires
-- **No back-navigation penalty** — you can move freely between questions
+Key features you must know before sitting:
+- **Question navigator grid** — colour-coded grid of all 100 questions; use it to flag and return
+- **Flag for review** — mark uncertain questions without leaving them blank
+- **Timer** — auto-submits when it reaches zero; turns red below 20 minutes
+- **Free navigation** — move back and forward between questions at any time
 
-**The fix:** Practice on a DigiProctor-style interface before exam day. NurseFiti's mock exam module replicates the exact layout, including the dark theme, grid navigator, and countdown timer.
+**[Practice the DigiProctor interface on NurseFiti's mock exam →](https://www.nursefiti.co.ke/mock-exam)**
 
 ## A Proven 8-Week Study Strategy
 
 ### Weeks 1–2: Diagnostic & Foundation
-Take a diagnostic quiz to identify your weakest units. Don't start with your strongest topics — start with the units that carry the most marks and where you score below 60%.
+Take a diagnostic session first. Identify which units you score below 60% in — those are your priority, not the units you already know.
 
 ### Weeks 3–5: Focused Unit Practice
-Work through each unit systematically. For each unit:
-1. Read your notes or a concise summary
+Work through each unit in order of difficulty:
+1. Read a concise summary of the unit
 2. Practice 30–50 MCQs on that unit
-3. Review every wrong answer — read the rationale, not just the correct option
-4. Add weak concepts to your flashcard deck
+3. Review every wrong answer with the rationale — not just the correct option
+4. Add weak concepts to your flashcard deck for spaced repetition
+
+**[Start unit-by-unit practice free on NurseFiti →](https://www.nursefiti.co.ke/practice)**
 
 ### Weeks 6–7: Mixed Practice & Mock Exams
-Stop studying unit by unit. Switch to mixed-topic practice sessions that mirror the real exam. Take at least 2 full mock exams per week under timed conditions.
+Stop studying unit by unit. Switch to full mixed-topic sessions. Take at least 2 full mock exams per week under timed, DigiProctor-style conditions.
 
 ### Week 8: Review & Consolidation
-No new topics. Review your flashcards, revisit flagged questions from mock exams, and focus on high-yield topics. Get adequate sleep the night before the exam.
+No new topics. Review flashcards, revisit flagged questions from mock exams, focus on high-yield areas. Get adequate sleep the night before.
 
 ## The Most Common Mistakes
 
-1. **Memorising without understanding** — NCK MCQs test application, not recall. You need to understand *why* an answer is correct.
-2. **Skipping pharmacology** — Drug calculations and drug mechanisms appear in every paper. Don't neglect them.
-3. **Not practising under time pressure** — 100 questions in 2–3 hours means roughly 1–1.5 minutes per question. Practice at that pace.
-4. **Ignoring community health** — KRCHN candidates especially underestimate community health nursing. It is heavily weighted.
+1. **Memorising without understanding** — NCK MCQs test application, not recall. You must know *why* an answer is correct.
+2. **Skipping pharmacology** — drug calculations and mechanisms appear in every paper. They are not optional.
+3. **No timed practice** — 100 questions in 2 hours means 72 seconds per question. Practice at that pace or the timer will catch you.
+4. **Underestimating community health** — especially for KRCHN, Paper II is where many candidates lose the most marks. See our [KRCHN revision guide](https://www.nursefiti.co.ke/blog/krchn-exam-revision-tips) for the breakdown.
 
 ## Start Your Preparation Today
 
-NurseFiti gives you everything in this guide in one platform: adaptive MCQ practice, DigiProctor mock exams, spaced-repetition flashcards, and a personalised revision plan built around your exam date.
+**[Create your free NurseFiti account →](https://www.nursefiti.co.ke/signup)**
+
+NurseFiti brings adaptive MCQ practice, DigiProctor mock exams, spaced-repetition flashcards, and a personalised revision plan together in one platform — built specifically for the NCK exam.
+
+> *Share this: "Solid breakdown of the NCK exam structure and an 8-week study plan — useful for anyone sitting soon: nursefiti.co.ke/blog/nck-exam-preparation-guide-kenya"*
 
 ## Sources & Further Reading
 
-This guide is based on original editorial content by NurseFiti, informed by official NCK examination regulations and publicly available candidate experience. For official information, refer to:
+This guide is original editorial content by NurseFiti, informed by official NCK examination regulations and publicly available candidate experience. For official information:
 
 - **Nursing Council of Kenya** — official website and examination regulations. [nckenya.com](https://www.nckenya.com)
-- **NCK Online Services Portal** — exam registration, results, and licence applications. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
+- **NCK Online Services Portal** — exam registration, results, licence applications. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
 - **Tuko.co.ke** — *"NCK exam registration and timetable for the 2026 academic year"*. [tuko.co.ke](https://www.tuko.co.ke/facts-lifehacks/study/539756-nck-exam-registration-timetable-2024-academic-year/)
 - **Tuko.co.ke** — *"Nursing Council of Kenya license registration and renewal"*. [tuko.co.ke](https://www.tuko.co.ke/302415-nursing-council-kenya-license-registration-renewal.html)
 
-*Exam structure details are based on NCK examination regulations. Always confirm the latest structure with the official NCK website before your exam.*
+*Exam structure details are based on NCK examination regulations. Always confirm the latest structure at [nckenya.com](https://www.nckenya.com) before your exam.*
     `,
   },
   {
     slug: 'krchn-exam-revision-tips',
-    title: 'KRCHN Exam Revision Tips: How to Pass the Kenya Registered Community Health Nurse Exam',
-    excerpt: 'Targeted revision strategies for KRCHN candidates. Learn which units carry the most marks, how to approach MCQs, and how to use spaced repetition effectively.',
+    title: 'KRCHN Exam: How to Pass Paper I and Paper II (2026)',
+    excerpt: 'Targeted revision for KRCHN candidates — what each paper tests, the ABCDE framework for MCQs, a 4-week plan, and the key numbers NCK will test you on.',
     category: 'KRCHN',
     readTime: '9 min read',
     date: '2026-05-05',
     cadres: ['KRCHN'],
     content: `
+There is one mistake that costs KRCHN candidates more marks than any knowledge gap: treating Paper II as easier than Paper I. It isn't. Here's the full breakdown — and how to approach both.
+
 ## Understanding the KRCHN Exam
 
-The KRCHN (Kenya Registered Community Health Nurse) NCK exam consists of **two integrated papers**, each with 100 MCQs to be completed in 2 hours. The exam tests your ability to apply nursing knowledge in both community and clinical settings — not just recall facts. Questions are scenario-based and test prioritisation, emergency recognition, and safe patient care.
+The KRCHN NCK exam has **two integrated papers**, each with 100 MCQs completed in 2 hours. Questions are scenario-based — you will be given a patient situation and asked what the nurse should do *first*, *next*, or *most appropriately*. The exam does not test memorisation. It tests prioritisation, emergency recognition, and safe clinical judgment.
 
 ## Paper Structure for KRCHN
 
 ### Paper I — Medical-Surgical + Midwifery + Pharmacology
-- **Medical-Surgical Nursing** (30–35%) — common conditions, nursing interventions, post-operative care, emergency recognition
-- **Pharmacology** (20–25%) — drug classifications, dosage calculations, adverse effects, common drug protocols
+- **Medical-Surgical Nursing** (30–35%) — common conditions, interventions, post-operative care, emergency recognition
+- **Pharmacology** (20–25%) — drug classifications, dosage calculations, adverse effects, common protocols
 - **Midwifery & Maternal Health** (15–20%) — antenatal care, safe delivery, postnatal care, obstetric emergencies
 - **Paediatric Nursing** (10–15%) — common paediatric conditions, growth monitoring, immunisation
 - **Anatomy & Physiology** (10–15%) — body systems, pathophysiology underlying clinical presentations
 
 ### Paper II — Community Health + Mental Health + Professional Issues
 - **Community Health Nursing** (25–30%) — health promotion, disease prevention, community assessment, PHC
-- **Mental Health Nursing** (15–20%) — mental status examination, common psychiatric conditions, therapeutic communication
-- **Environmental Health & Nutrition** (10–15%) — water sanitation, waste management, vector control, nutritional assessment
+- **Mental Health Nursing** (15–20%) — mental status exam, psychiatric conditions, therapeutic communication
+- **Environmental Health & Nutrition** (10–15%) — water sanitation, waste management, nutritional assessment
 - **Research & Statistics** (10–15%) — basic research concepts, health data interpretation
 - **Health Systems & Professional Issues** (10–15%) — Kenya MOH structure, nursing ethics, legal frameworks
 - **Infection Prevention & Control** (10–15%) — standard precautions, sterilisation, isolation protocols
 
-## The KRCHN MCQ Approach
+*These percentage ranges are based on publicly reported candidate experience. Confirm exact weightings with official NCK syllabus documents at [nckenya.com](https://www.nckenya.com).*
 
-KRCHN MCQs are scenario-based. You will be given a patient situation and asked what the nurse should do *first*, *next*, or *most appropriately*. 
+## The KRCHN MCQ Approach — ABCDE First
 
-**The ABCDE framework:**
-When a question asks what to do first, apply this priority order:
-1. **Airway** — is the airway patent?
-2. **Breathing** — is the patient breathing adequately?
-3. **Circulation** — is there adequate perfusion?
+When a question asks what to do *first*, apply this priority order every time:
+1. **Airway** — is it patent?
+2. **Breathing** — is it adequate?
+3. **Circulation** — is perfusion sufficient?
 4. **Disability** — neurological status
 5. **Exposure** — other findings
 
-This framework eliminates wrong answers in most emergency scenario questions.
+This framework eliminates wrong answers in the majority of emergency scenario questions. It is not specific to NCK — it is the internationally recognised primary survey used in clinical practice (see ATLS/ACLS protocols).
 
-## Spaced Repetition for KRCHN
+## Spaced Repetition: The Most Efficient Way to Retain KRCHN Content
 
-The KRCHN exam covers a broad range of topics. The most efficient way to retain this volume of information is spaced repetition — reviewing information at increasing intervals just before you would forget it.
+The KRCHN exam covers a broad range of units. Spaced repetition — reviewing information at increasing intervals before you would forget it — is the most evidence-backed method for retaining large volumes of content. The SM-2 algorithm, which underpins NurseFiti's flashcard system, was validated in peer-reviewed research by Wozniak & Gorzelanczyk (1994) and subsequent studies.
 
-**How to implement it:**
+**How to implement it practically:**
 1. After studying a unit, create flashcards for key concepts, drug names, and normal values
 2. Review new cards daily for the first week
-3. Cards you know well get pushed to 3-day, then 7-day, then 14-day intervals
-4. Cards you struggle with stay on short intervals until mastered
+3. Cards answered correctly move to 3-day, then 7-day, then 14-day intervals
+4. Cards answered incorrectly return to daily review
 
-NurseFiti's flashcard system does this automatically using the SM-2 algorithm.
+**[Use NurseFiti's spaced-repetition flashcard system — free →](https://www.nursefiti.co.ke/flashcards)**
 
 ## 4-Week KRCHN Revision Plan
 
-**Week 1:** Paper I focus — Medical-Surgical Nursing + Pharmacology (60 MCQs/day)
-**Week 2:** Paper I focus — Midwifery, Maternal & Child Health, Anatomy & Physiology (60 MCQs/day)
-**Week 3:** Paper II focus — Community Health + Mental Health + Environmental Health + mixed practice (80 MCQs/day)
+**Week 1:** Paper I — Medical-Surgical + Pharmacology (60 MCQs/day on [NurseFiti practice](https://www.nursefiti.co.ke/practice))
+**Week 2:** Paper I — Midwifery, Maternal & Child Health, Anatomy & Physiology (60 MCQs/day)
+**Week 3:** Paper II — Community Health + Mental Health + Environmental Health + mixed (80 MCQs/day)
 **Week 4:** Full mock exams (2 per week) + flashcard review + weak unit drilling
 
-## Key Numbers to Memorise
+## Key Numbers NCK Will Test You On
 
-- Normal blood pressure: 120/80 mmHg
+- Normal blood pressure: 120/80 mmHg *(JNC guidelines; WHO cardiovascular risk assessment)*
 - Normal pulse: 60–100 bpm
 - Normal respiratory rate: 12–20 breaths/min
 - Normal temperature: 36.5–37.5°C
-- Normal blood glucose (fasting): 3.9–5.6 mmol/L
-- WHO immunisation schedule milestones: BCG at birth, OPV/DPT/Hib/PCV at 6/10/14 weeks, measles at 9 months
+- Normal fasting blood glucose: 3.9–5.6 mmol/L *(WHO diabetes diagnostic criteria)*
+- Kenya EPI immunisation: BCG at birth; OPV/DPT/Hib/PCV at 6, 10, 14 weeks; measles at 9 months *(Kenya MOH EPI schedule — [health.go.ke](https://www.health.go.ke))*
+
+> *Share this: "KRCHN Paper I and II breakdown with a 4-week study plan — good prep resource: nursefiti.co.ke/blog/krchn-exam-revision-tips"*
 
 ## Sources & Further Reading
 
-This guide is original editorial content by NurseFiti. Clinical reference ranges and immunisation schedules are drawn from internationally recognised medical standards and Kenya Ministry of Health guidelines. For official NCK information:
-
 - **Nursing Council of Kenya** — regulations and approved programmes. [nckenya.com](https://www.nckenya.com)
 - **NCK Online Services Portal** — exam registration and results. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
-- **Kenya Ministry of Health** — Kenya National Immunisation Programme guidelines. [health.go.ke](https://www.health.go.ke)
-- **WHO immunisation schedule** — World Health Organization, *Immunization schedules by antigen*. [who.int](https://www.who.int/teams/immunization-vaccines-and-biologicals/immunization-analysis-and-insights/global-monitoring/immunization-coverage/who-unicef-estimates-of-national-immunization-coverage)
+- **Kenya Ministry of Health** — Kenya National Immunisation Programme (EPI) schedule. [health.go.ke](https://www.health.go.ke)
+- **WHO** — *Immunization schedules by antigen*. [who.int](https://www.who.int/teams/immunization-vaccines-and-biologicals/immunization-analysis-and-insights/global-monitoring/immunization-coverage/who-unicef-estimates-of-national-immunization-coverage)
+- **Wozniak, P. & Gorzelanczyk, E.J. (1994)** — *"Optimization of repetition spacing in the practice of learning"*, Acta Neurobiologiae Experimentalis, 54(1), 59–62. Basis of the SM-2 spaced-repetition algorithm.
 
-*The percentage weightings per unit are based on candidate experience and publicly reported NCK examination patterns. Confirm exact weightings with official NCK syllabus documents.*
+*Unit percentage ranges are based on candidate experience and publicly reported NCK examination patterns. Confirm with official NCK syllabus documents.*
     `,
   },
 ];
@@ -193,21 +202,24 @@ This guide is original editorial content by NurseFiti. Clinical reference ranges
 const POSTS_EXTRA: Post[] = [
   {
     slug: 'bscn-nursing-exam-kenya',
-    title: 'BScN NCK Exam: Unit Breakdown, High-Yield Topics & Study Plan',
-    excerpt: 'A detailed breakdown of the BScN NCK exam papers, the highest-yield units, and a 6-week study plan that has helped hundreds of BScN graduates pass first attempt.',
+    title: 'BScN NCK Exam: High-Yield Topics & 6-Week Study Plan (2026)',
+    excerpt: 'Unit breakdown for BScN Paper I and Paper II, the highest-yield topics, and a structured 6-week plan built around the NCK competency exam format.',
     category: 'BScN',
     readTime: '10 min read',
     date: '2026-05-10',
     cadres: ['BScN'],
     content: `
+BScN candidates consistently underestimate Paper II. By the time most realise how much Research, Leadership, and Mental Health are tested, they have already lost the marks. Here's the full breakdown so you don't make that mistake.
+
 ## The BScN NCK Exam at a Glance
 
-BScN candidates sit **2 integrated competency papers**, each with 100 MCQs and a 2-hour time limit. Unlike KRCHN, the BScN papers demand advanced clinical reasoning, evidence-based practice, and leadership thinking — not just protocol recall. Knowing which units to prioritise and how to think through complex scenarios is the key to passing efficiently.
+BScN candidates sit **2 integrated competency papers**, each with 100 MCQs and a 2-hour time limit. Unlike KRCHN, the BScN papers demand advanced clinical reasoning, evidence-based practice, and leadership judgment — not just protocol recall. Knowing which units to prioritise is the difference between passing and resitting.
+
+**[See how NurseFiti structures BScN practice questions →](https://www.nursefiti.co.ke/practice)**
 
 ## Paper Breakdown
 
 ### Paper I — Advanced Adult Health + Specialised Nursing + Maternal/Newborn
-The first paper integrates complex clinical management across acute and specialised settings:
 - Advanced Medical-Surgical Nursing — cardiovascular, respiratory, endocrine, neurological, renal disorders with multi-system complications
 - Critical Care Nursing — shock, sepsis, organ failure, ICU prioritisation
 - Pharmacology — advanced drug interactions, dosage calculations, adverse effects, polypharmacy
@@ -218,15 +230,16 @@ The first paper integrates complex clinical management across acute and speciali
 - Anatomy & Physiology — pathophysiological basis for clinical presentations
 
 ### Paper II — Community/Public Health + Research + Leadership + Mental Health
-The second paper tests independent professional judgment and systems-level thinking:
 - Community Health Nursing — community assessment, public health interventions, Kenya MOH guidelines
-- Mental Health Nursing — mental status examination, psychotic and mood disorders, therapeutic communication, Mental Health Act Kenya
-- Research & Evidence-Based Practice — research methodology, sampling, data analysis, critical appraisal of studies
+- Mental Health Nursing — mental status examination, psychotic and mood disorders, therapeutic communication, Mental Health Act Kenya (2022)
+- Research & Evidence-Based Practice — research methodology, sampling, data analysis, critical appraisal
 - Nursing Management & Leadership — delegation, quality improvement, interdisciplinary coordination
 - Professional Ethics & Law — ethical frameworks, legal accountability, scope of practice
 - Health Systems in Kenya — health policy, levels of care, health financing
 - Infection Prevention & Control — standard and transmission-based precautions
 - Nutrition — nutritional assessment and therapeutic diets across the lifespan
+
+*Unit percentage distributions are based on publicly reported candidate experience. Confirm with official NCK syllabus documents at [nckenya.com](https://www.nckenya.com).*
 
 ## 6-Week BScN Study Plan
 
@@ -237,172 +250,166 @@ The second paper tests independent professional judgment and systems-level think
 **Week 5:** Paper II — Professional Ethics, Health Systems, IPC, Nutrition + mixed practice (80 MCQs/day)
 **Week 6:** Full mock exams (3 per week) + weak unit drilling + flashcard review
 
+**[Build your personalised BScN revision plan on NurseFiti →](https://www.nursefiti.co.ke/revision-plan)**
+
 ## BScN-Specific Tips
 
-**Research and leadership questions:** Many BScN candidates underestimate Paper II. Don't. Research and leadership content is highly scoreable because it is finite and logical. Master research terminology, sampling methods, data analysis concepts, and delegation principles — they repeat across exam cycles.
+**Research and leadership:** Paper II is where BScN candidates gain or lose the exam. Research and leadership content is highly scoreable because it is finite and logical — master the terminology, sampling methods, and delegation principles. They repeat across exam cycles. See also our [NCK past papers guide](https://www.nursefiti.co.ke/blog/nck-past-papers-practice) for how to use question banks effectively.
 
-**Mental health communication:** Questions about therapeutic communication have one rule — always choose the response that acknowledges the patient's feelings and keeps the conversation open. Avoid responses that give advice, minimise feelings, or close the conversation.
+**Mental health communication:** Always choose the response that acknowledges the patient's feelings and keeps the conversation open. Avoid responses that give advice, minimise, or close the conversation.
 
-**Advanced reasoning over recall:** BScN MCQs test analysis, synthesis, and evaluation. When answering, ask yourself: *What is the underlying pathophysiology? What is the priority intervention? What evidence guides this decision?* Rote recall alone will not carry you through Paper I.
+**Advanced reasoning over recall:** Ask yourself: *What is the pathophysiology? What is the priority intervention? What evidence guides this?* Rote recall alone will not carry Paper I.
 
-**Pharmacology integration:** Drug questions appear across both papers. Prioritise: antihypertensives, antidiabetics, antibiotics, anticoagulants, antipsychotics, antidepressants, and critical care medications. Know mechanisms, not just names.
+**Pharmacology integration:** Drug questions appear in both papers. Prioritise: antihypertensives, antidiabetics, antibiotics, anticoagulants, antipsychotics, antidepressants, and critical care medications.
+
+> *Share this: "BScN NCK exam breakdown — Paper I and Paper II with a 6-week plan. Good reference: nursefiti.co.ke/blog/bscn-nursing-exam-kenya"*
 
 ## Sources & Further Reading
 
-This guide is original editorial content by NurseFiti. For official NCK examination information:
-
 - **Nursing Council of Kenya** — official regulations and approved programmes. [nckenya.com](https://www.nckenya.com)
 - **NCK Online Services Portal** — exam registration and results. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
-- **Kenya Mental Health Act (2022)** — Kenya Gazette Supplement, Mental Health (Amendment) Act 2022. Referenced for mental health nursing regulatory content.
+- **Kenya Mental Health (Amendment) Act 2022** — Kenya Gazette Supplement No. 38, 7 April 2022. Referenced for mental health nursing regulatory content.
 - **Tuko.co.ke** — *"NCK exam registration and timetable for the 2026 academic year"*. [tuko.co.ke](https://www.tuko.co.ke/facts-lifehacks/study/539756-nck-exam-registration-timetable-2024-academic-year/)
 
-*Unit percentage breakdowns are based on candidate experience and publicly reported NCK examination patterns. Always verify the current syllabus with NCK directly.*
+*Unit ranges are based on candidate experience. Always verify the current syllabus with NCK directly.*
     `,
   },
   {
     slug: 'nck-past-papers-practice',
-    title: 'How to Use NCK Past Papers Effectively (And Why Most Students Do It Wrong)',
-    excerpt: 'Past papers are powerful — but only if you use them correctly. Learn the active recall method, how to analyse your mistakes, and when to switch from past papers to timed mock exams.',
+    title: 'NCK Past Papers: How to Use Them (Most Students Get This Wrong)',
+    excerpt: 'Passive reading of past papers is almost useless. Learn the retrieval-practice method, how to categorise errors, and when to switch to timed mock exams.',
     category: 'Study Strategy',
     readTime: '8 min read',
     date: '2026-05-15',
     cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
     content: `
+You have been using past papers wrong. Not because you are not working hard — but because passive review of questions and answers produces very little long-term retention. Here's the method that actually works, backed by cognitive science.
+
 ## The Problem with How Most Students Use Past Papers
 
-Most nursing students use past papers the wrong way. They read through questions and answers passively — almost like reading a textbook. This feels productive but produces very little actual learning.
+Most nursing students read through questions and answers passively — almost like reading a textbook. It feels productive. The research says it barely works.
 
-The research on learning is clear: **retrieval practice** (actively trying to recall an answer before seeing it) produces far better long-term retention than passive review.
+The most replicated finding in cognitive psychology is that **retrieval practice** — actively trying to recall an answer before seeing it — produces dramatically better long-term retention than passive review. Roediger & Karpicke (2006) showed that students who practised retrieval retained 50% more content after one week compared to students who re-read the same material.
 
 ## The Right Way to Use NCK Past Papers
 
 ### Step 1: Attempt First, Check Later
-Cover the answer options. Read the question stem. Try to answer it in your head before looking at the options. Then reveal the options and select your answer. Only then check the correct answer.
-
-This extra step — forcing your brain to retrieve before seeing the answer — dramatically improves retention.
+Cover the answer options. Read the question stem. Commit to an answer in your head. Then reveal the options, select, and check. That one extra step — forcing retrieval before exposure — is what makes the difference.
 
 ### Step 2: Analyse Every Wrong Answer
-When you get a question wrong, don't just note the correct answer and move on. Ask:
-- *Why did I choose the wrong option?* (misread the question? knowledge gap? distractor worked?)
+Don't note the correct answer and move on. For every wrong answer, ask:
+- *Why did I choose the wrong option?*
 - *What concept does this question test?*
-- *What is the rule or principle I need to remember?*
+- *What rule or principle do I need to remember?*
 
-Write a one-sentence note for each wrong answer. This is your personal error log — review it weekly.
+Write a one-sentence note per wrong answer. Review this error log weekly.
 
 ### Step 3: Categorise Your Errors
 
-After 50+ questions, you will see patterns. Group your errors:
-1. **Knowledge gaps** — you simply didn't know the content → go back and study that unit
-2. **Application errors** — you knew the content but misapplied it → practice more scenario questions on that topic
-3. **Careless errors** — you misread the question → slow down and read more carefully
-4. **Distractor traps** — you were fooled by a plausible wrong answer → learn to identify distractor patterns
+After 50+ questions, patterns emerge. Group your errors:
+1. **Knowledge gaps** — you didn't know the content → go back and study that unit on NurseFiti
+2. **Application errors** — you knew it but misapplied it → practice more scenario questions
+3. **Careless errors** — you misread → slow down and read the full stem before the options
+4. **Distractor traps** — a plausible wrong answer fooled you → learn to identify distractor patterns
 
 ### Step 4: Know When to Stop Using Past Papers
 
-Past papers are for the **middle phase** of your preparation (weeks 3–5 of an 8-week plan). In the final 2 weeks, switch to **full timed mock exams**. 
-
-Why? Past papers train you on individual questions. Mock exams train you on:
+Past papers are for the **middle phase** of preparation (roughly weeks 3–5 of an 8-week plan). In the final 2 weeks, switch to full timed mock exams. Past papers train you on individual questions. Mock exams train:
 - Time management across 100 questions
 - Mental stamina for 2–3 hours of sustained focus
-- The DigiProctor interface and navigation
-- Exam-day decision-making under pressure
+- The DigiProctor interface and navigation under pressure
+
+**[Take a full DigiProctor-style mock exam on NurseFiti →](https://www.nursefiti.co.ke/mock-exam)**
 
 ## Where to Find NCK Past Papers
 
-NCK does not officially publish past papers. However, question banks compiled from candidate recall are widely circulated. The most reliable source is a structured platform like NurseFiti, where questions are verified, categorised by unit, and accompanied by detailed rationales — not just answer keys.
+NCK does not officially publish past papers. Question banks compiled from candidate recall are widely circulated, but quality varies significantly — errors in unofficial past papers create false confidence. NurseFiti's question bank is verified, categorised by unit, and includes detailed rationales explaining *why* each answer is correct. See also our [DigiProctor exam guide](https://www.nursefiti.co.ke/blog/digiproctor-nck-exam-guide) for how to replicate the real exam environment.
+
+**[Access NurseFiti's verified question bank →](https://www.nursefiti.co.ke/practice)**
 
 ## The Bottom Line
 
-Past papers + active recall + error analysis = a powerful combination. But they are a tool, not a strategy. Use them as part of a structured plan, not as a substitute for one.
+Retrieval practice + error analysis + timed mock exams = the evidence-backed formula. Past papers are a tool inside that system — not the system itself.
+
+> *Share this: "If you've been reading through NCK past papers passively, this explains why that barely works — and what to do instead: nursefiti.co.ke/blog/nck-past-papers-practice"*
 
 ## Sources & Further Reading
 
-The learning science principles in this article — particularly retrieval practice and spaced repetition — are drawn from peer-reviewed cognitive psychology research:
-
-- **Roediger, H.L. & Karpicke, J.D. (2006)** — *"Test-enhanced learning: Taking memory tests improves long-term retention"*, Psychological Science, 17(3), 249–255. The foundational study on retrieval practice and its superiority over passive review.
-- **Kornell, N. & Bjork, R.A. (2008)** — *"Learning concepts and categories: Is spacing the 'enemy of induction'?"*, Psychological Science, 19(6), 585–592. On spaced practice and long-term retention.
+- **Roediger, H.L. & Karpicke, J.D. (2006)** — *"Test-enhanced learning: Taking memory tests improves long-term retention"*, Psychological Science, 17(3), 249–255. [DOI: 10.1111/j.1467-9280.2006.01693.x](https://doi.org/10.1111/j.1467-9280.2006.01693.x)
+- **Kornell, N. & Bjork, R.A. (2008)** — *"Learning concepts and categories: Is spacing the 'enemy of induction'?"*, Psychological Science, 19(6), 585–592. [DOI: 10.1111/j.1467-9280.2008.02127.x](https://doi.org/10.1111/j.1467-9280.2008.02127.x)
 - **Nursing Council of Kenya** — official website. [nckenya.com](https://www.nckenya.com)
 - **NCK Online Services Portal** — exam registration and results. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
 
-*The study strategy framework in this article is original editorial content by NurseFiti, drawing on established learning science principles applied to the NCK examination context.*
+*The study strategy framework is original editorial content by NurseFiti, applying established learning science to the NCK examination context.*
     `,
   },
   {
     slug: 'digiproctor-nck-exam-guide',
-    title: 'DigiProctor NCK Exam: What to Expect and How to Prepare for the Interface',
-    excerpt: 'The NCK now uses DigiProctor for computer-based testing. Here\'s exactly what the interface looks like, how navigation works, and how to practice so the technology doesn\'t slow you down on exam day.',
+    title: 'DigiProctor NCK Exam Interface: What to Expect (2026)',
+    excerpt: 'The NCK exam runs on DigiProctor CBT. Here is exactly what the interface looks like, how the navigator grid works, and how to practise so it is not new on exam day.',
     category: 'Exam Day',
     readTime: '7 min read',
     date: '2026-05-20',
     cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
     content: `
+Candidates who fail the NCK exam because of the DigiProctor interface do so for one reason: they have never used it before. The content is fine. The interface trips them. That is entirely preventable.
+
 ## What is DigiProctor?
 
-DigiProctor is the computer-based testing (CBT) platform used by the Nursing Council of Kenya for the NCK licensure examination. It replaced paper-based exams to improve security, reduce marking errors, and enable faster results.
+DigiProctor is the computer-based testing (CBT) platform used by the Nursing Council of Kenya for all licensure examinations. NCK adopted CBT to improve examination security, reduce marking errors, and accelerate results release.
 
-If you have never used DigiProctor before, the interface can feel unfamiliar on exam day — and unfamiliarity costs time and marks.
+The interface has specific features that, if unfamiliar, cost you time and marks on exam day.
 
 ## The DigiProctor Interface: What You Will See
 
 ### The Exam Screen
 - **Question stem** — displayed prominently in the centre
 - **Answer options** — four options labelled A, B, C, D
-- **Question counter** — shows your current question number and total (e.g., "Question 23 of 100")
-- **Timer** — countdown clock in the top corner; turns red when less than 20 minutes remain
-- **Flag button** — marks a question for review without submitting an answer
-- **Previous / Next buttons** — navigate between questions freely
+- **Question counter** — shows position and total (e.g., "Question 23 of 100")
+- **Timer** — countdown clock; turns red below 20 minutes remaining
+- **Flag button** — marks a question for later review without submitting
+- **Previous / Next buttons** — navigate freely between questions
 
 ### The Question Navigator Grid
-A 10×10 grid showing all 100 questions. Each cell is colour-coded:
+A 10×10 grid showing all 100 questions. Colour-coded:
 - **White/grey** — not yet visited
 - **Blue/teal** — answered
 - **Yellow/amber** — flagged for review
 - **Red** — visited but not answered
 
-Use this grid strategically: answer all questions you are confident about first, flag uncertain ones, then return to flagged questions in the remaining time.
+Use it strategically: answer confident questions first, flag uncertain ones, return to flagged questions before submitting.
 
 ### Submission
-You must manually click "Submit Exam" when done. The system will warn you if there are unanswered questions. If the timer reaches zero, the exam auto-submits with whatever answers you have entered.
+Click "Submit Exam" manually when done. The system warns you of unanswered questions. Auto-submits when the timer reaches zero.
+
+**[Practise on NurseFiti's DigiProctor-style mock exam →](https://www.nursefiti.co.ke/mock-exam)**
 
 ## Common DigiProctor Mistakes
 
-1. **Spending too long on hard questions** — if you are stuck after 90 seconds, flag it and move on. Return at the end.
-2. **Not using the flag feature** — candidates who don't flag questions often forget to return to uncertain ones.
-3. **Panicking when the timer turns red** — this is normal. You have 20 minutes for remaining questions. Stay calm and work through them.
-4. **Not reviewing flagged questions** — always check the navigator grid before submitting to ensure no flagged questions are left unanswered.
-
-## How to Practice for DigiProctor
-
-The only way to be comfortable with DigiProctor on exam day is to practice in a similar environment beforehand. NurseFiti's mock exam module replicates:
-
-- The dark-themed DigiProctor interface
-- The 10×10 question navigator grid
-- The countdown timer with red warning
-- The flag-for-review functionality
-- Auto-submit on timer expiry
-- Full results review with rationales after submission
-
-Take at least 3–4 full mock exams on NurseFiti before your exam date. By the time you sit the real exam, the interface will feel completely natural.
+1. **Spending too long on hard questions** — stuck after 90 seconds? Flag it and move on. Return at the end.
+2. **Not using the flag feature** — candidates who skip flagging regularly forget to return to uncertain questions.
+3. **Panicking when the timer turns red** — normal. Stay methodical and work through remaining questions.
+4. **Submitting without checking the navigator** — always scan the grid before submitting to catch unanswered questions.
 
 ## Exam Day Logistics
 
-- Arrive at the examination centre at least 30 minutes early
-- Bring your national ID and NCK exam admission letter
-- No phones, notes, or electronic devices in the exam room
-- You will be provided with scratch paper for calculations
-- Invigilators will guide you through the login process
+- Arrive at least 30 minutes before your scheduled start time
+- Bring your national ID and NCK exam admission letter — no admission without both
+- No phones, notes, or electronic devices permitted in the exam room
+- Scratch paper provided for calculations
+- Invigilators guide you through login
 
-The exam itself is the same content you have been practising. The only variable is the interface — and now you know exactly what to expect.
+Also read our [full NCK exam preparation guide](https://www.nursefiti.co.ke/blog/nck-exam-preparation-guide-kenya) for the complete content strategy alongside interface familiarity.
+
+> *Share this: "If you haven't practised on DigiProctor before your NCK exam, this is worth reading: nursefiti.co.ke/blog/digiproctor-nck-exam-guide"*
 
 ## Sources & Further Reading
 
-This guide is original editorial content by NurseFiti, based on publicly available information about the DigiProctor CBT platform and NCK examination procedures:
-
 - **Nursing Council of Kenya** — official examination guidelines and centre information. [nckenya.com](https://www.nckenya.com)
-- **NCK Online Services Portal** — admission letters, exam registration, and results. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
+- **NCK Online Services Portal** — admission letters, exam registration, results. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
 - **Scribd — NCK Examination Instructions & Schedule** — *"Annexure 2: Examination instructions and schedule"*, 2025. [scribd.com](https://www.scribd.com/document/862497368/Annexure-2-Examination-instructions-and-schedule-2)
 
-*DigiProctor interface details are based on candidate-reported experience. The actual platform may be updated by NCK. Always follow instructions given by invigilators on exam day.*
+*DigiProctor interface details are based on candidate-reported experience. Follow invigilator instructions on exam day as the platform may be updated.*
     `,
   },
 ];
@@ -410,84 +417,86 @@ This guide is original editorial content by NurseFiti, based on publicly availab
 const POSTS_NEWS: Post[] = [
   {
     slug: 'nck-latest-news-june-2026',
-    title: 'NCK Latest Updates: February 2026 Results Out, May Exams Done & Unaccredited College Warning',
-    excerpt: 'The Nursing Council of Kenya releases February 2026 licensure exam results, the May 2026 sitting wraps up, and NCK warns the public against an unaccredited college. Everything you need to know.',
+    title: 'NCK June 2026: Feb Results, May Exam & Unaccredited College Warning',
+    excerpt: 'NCK releases February 2026 results, May 2026 exam wraps up, and a formal warning is issued against Northlands NIMTC. Here is everything verified.',
     category: 'NCK News',
     readTime: '6 min read',
     date: '2026-06-05',
     cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
     content: `
+If you sat the February 2026 NCK exam, your results are out. If you sat in May, yours are coming. And if someone you know is enrolled at Northlands International Medical Training College — read the warning section before they waste another semester.
+
+*Last verified: 5 June 2026. Always confirm current information at [nckenya.com](https://www.nckenya.com).*
+
 ## February 2026 NCK Licensure Exam Results Released
 
-The Nursing Council of Kenya has released results for the February 2026 Online Licensure Examination. The February series was conducted at approved examination centres across Kenya between **18 and 20 February 2026**.
+The Nursing Council of Kenya has released results for the February 2026 Online Licensure Examination. According to The Kenya Times, NCK confirmed the results were released and directed candidates to the portal. The February series was conducted between **18 and 20 February 2026** at approved centres across Kenya.
 
-To check your results, log in to the NCK Online Services Portal at [osp.nckenya.go.ke](https://osp.nckenya.go.ke). You will need your registration credentials to access your individual result.
+To check your results: log in to the NCK Online Services Portal at [osp.nckenya.go.ke](https://osp.nckenya.go.ke) using your registration credentials.
 
-**What to do if you passed:**
-Apply for your practising licence within **30 days** of the results release. NCK regulations require successful candidates to apply promptly — delays can complicate the licencing process. Applications are processed through the same Online Services Portal.
+**If you passed:** Apply for your practising licence within **30 days** of the results release. NCK requires prompt application — delays complicate the licencing process. Applications are processed through the same OSP portal.
 
-**What to do if you did not pass:**
-You are eligible to resit at the next available sitting. Use the time between now and the August 2026 series to diagnose your weak areas, structured your revision, and practise under timed, exam-like conditions. Candidates who resit without changing their study approach tend to get similar results.
+**If you did not pass:** You are eligible to resit at the next available sitting. Before you register again, be honest about what went wrong. Candidates who resit without changing their preparation approach consistently get similar results. Start with a diagnostic session to identify your weakest units — not your strongest.
+
+**[Start a free diagnostic practice session on NurseFiti →](https://www.nursefiti.co.ke/practice)**
 
 ## May 2026 NCK Licensure Exam — What Happened
 
-The May 2026 NCK licensure examination cycle was scheduled to start on **13 May 2026** for most programmes, with select programmes sitting on 14 and 15 May 2026. The exam follows the standard NCK structure — two integrated papers per cadre, each with 100 MCQs completed in 2 hours on the DigiProctor CBT platform.
+The May 2026 NCK sitting started on **13 May 2026** for most programmes, with select programmes sitting on 14 and 15 May. This follows the standard NCK structure: two integrated papers per cadre, 100 MCQs each, 2 hours each, on the DigiProctor CBT platform. Source: Tuko.co.ke reporting on NCK's 2026 timetable.
 
-Results for the May 2026 series are expected to be released within the standard NCK turnaround window. Check the OSP portal regularly for updates: [osp.nckenya.go.ke](https://osp.nckenya.go.ke).
+Results for the May 2026 series are expected within the standard NCK turnaround window. Check [osp.nckenya.go.ke](https://osp.nckenya.go.ke) regularly.
 
 ## Upcoming: August 2026 Examination Sitting
 
-The next NCK licensure examination sitting is the **August 2026 series**. NCK typically organises three examination sittings per year — February, May, and August/November. 
+The next sitting is the **August 2026 series**. NCK runs three sittings annually: February, May, and August/November. If you are preparing now, you have approximately 6–8 weeks.
 
-If you are preparing for the August 2026 sitting, you have approximately 6–8 weeks of structured preparation time remaining. Use it well:
-- Start with a diagnostic practice session to identify your weakest units
-- Allocate more time to units you score below 60% in
-- Take at least 2–3 full DigiProctor-style mock exams before your sitting date
+Use that time well:
+- Run a diagnostic session to find your weak units
+- Allocate study time proportional to weakness, not comfort
+- Take at least 2–3 full DigiProctor-style mock exams before sitting
 - Review every wrong answer with rationales, not just the correct option
 
-Registration deadlines for the August sitting will be announced on the NCK website at [nckenya.com](https://www.nckenya.com). Check there regularly and do not wait until the last week — late registration is not typically accommodated.
+Registration deadlines will be announced on [nckenya.com](https://www.nckenya.com). Do not wait until the last week — late registration is not accommodated.
+
+**[Build your August 2026 revision plan on NurseFiti →](https://www.nursefiti.co.ke/revision-plan)**
 
 ## NCK Warning: Northlands International Medical Training College
 
-On **21 April 2026**, the Nursing Council of Kenya issued a formal public warning against **Northlands International Medical Training College (NIMTC)**, cautioning prospective students and their guardians against enrolling in nursing or midwifery programmes at the institution.
+On **21 April 2026**, the Nursing Council of Kenya issued a formal public warning against **Northlands International Medical Training College (NIMTC)**. This was reported by Dawan Africa, Citizen Digital, and Kahawa Tungu, all citing NCK's statement directly.
 
-NCK stated that the college is offering nursing courses **without the Council's approval or clearance**, which means any certificates issued by that institution for nursing or midwifery programmes will not be recognised for the purposes of NCK licensure, registration, or lawful nursing practice in Kenya.
+NCK stated that NIMTC is offering nursing courses **without the Council's approval or clearance**. Any certificates issued by NIMTC for nursing or midwifery programmes will not be recognised for NCK licensure, registration, or lawful nursing practice in Kenya.
 
-The Council also clarified an important point: **"Nurse Aid" and "Nursing Assistant" are not recognised programmes** within the professional framework regulated by the Nursing Council of Kenya. Any institution offering such certificates as a pathway to nursing licensure is misrepresenting the regulatory reality. No such certificate qualifies a holder to sit the NCK licensure exam or obtain a practising licence.
+NCK also clarified: **"Nurse Aid" and "Nursing Assistant" are not recognised programmes** within its regulatory framework. No such certificate qualifies the holder to sit the NCK licensure exam or obtain a practising licence.
 
-NCK's official statement directed the public to verify the accreditation status of any institution before enrolling: visit [nckenya.com](https://www.nckenya.com) for the current list of approved nursing and midwifery programmes and institutions.
+NIMTC subsequently responded, as reported by Tuko.co.ke, denying that it was offering unapproved NCK nursing programmes and stating it operates as a TVET institution. That response has been noted — however, NCK's formal regulatory position as of April 2026 remains as stated above. Students and guardians should verify accreditation directly with NCK, not with the institution itself.
 
-**Why this matters for you:**
-If you or someone you know is enrolled — or considering enrolment — at any nursing training institution, verify its NCK approval status first. Spending years and tuition money at an unaccredited institution can end a nursing career before it starts. The NCK website publishes an updated list of approved institutions and programmes.
+NCK directed the public to [nckenya.com](https://www.nckenya.com) for the list of approved programmes and institutions as of April 2026.
 
-## How to Verify an Institution's NCK Accreditation
+## How to Verify Any Institution's NCK Accreditation
 
-1. Go to **[nckenya.com](https://www.nckenya.com)** — the official NCK website
-2. Navigate to the list of approved institutions and programmes
+1. Go to [nckenya.com](https://www.nckenya.com) — the official NCK website
+2. Navigate to the approved institutions and programmes list
 3. Confirm your institution and programme appear on the list
-4. If in doubt, contact NCK directly through their official contact channels on the website
+4. If in doubt, contact NCK directly via the official contacts on the website
 
-Do not rely on the institution itself to confirm its own accreditation — always verify directly with NCK.
+Do not rely on the institution to confirm its own accreditation status.
 
-## Stay Ahead of NCK Updates
+Also see our [NCK exam preparation guide](https://www.nursefiti.co.ke/blog/nck-exam-preparation-guide-kenya) for everything you need to get started once accreditation is confirmed.
 
-NCK announcements — results releases, exam dates, accreditation warnings, and policy changes — are published on the official NCK website and the OSP portal. NurseFiti tracks these updates and publishes timely summaries here on the blog so you always have accurate, verified information.
-
-If you are preparing for an upcoming NCK sitting, NurseFiti gives you adaptive MCQ practice, DigiProctor mock exams, spaced-repetition flashcards, and a personalised revision plan built around your exam date.
+> *Share this: "NCK Feb 2026 results are out — check osp.nckenya.go.ke. Also a warning about Northlands NIMTC that's worth knowing: nursefiti.co.ke/blog/nck-latest-news-june-2026"*
 
 ## Sources & References
 
-The information in this article is sourced from verified news reports and official NCK communications:
+- **The Kenya Times** — *"NCK February 2026 Licensure Exam Results Out"*, 28 April 2026. [thekenyatimes.com](https://thekenyatimes.com/education/nursing-council-releases-latest-licensure-exam-results/)
+- **Tuko.co.ke** — *"NCK exam registration and timetable for the 2026 academic year"*, updated 8 April 2026. [tuko.co.ke](https://www.tuko.co.ke/facts-lifehacks/study/539756-nck-exam-registration-timetable-2024-academic-year/)
+- **Dawan Africa** — *"NCK Warns Public Over Unaccredited Courses at Northlands International Medical Training College"*, 21 April 2026. [dawan.africa](https://www.dawan.africa/news/nck-warns-public-over-unaccredited-courses-at-northlands-international-medical-training-college)
+- **Kahawa Tungu** — *"NCK Flags Unapproved Nursing College"*, April 2026. [kahawatungu.com](https://kahawatungu.com/nck-flags-unapproved-nursing-college/)
+- **Citizen Digital** — *"Nursing Council flags unrecognized courses at Northlands International College"*, April 2026. [citizen.digital](https://citizen.digital/article/nursing-council-flags-unrecognized-courses-at-northlands-international-college-n381170)
+- **Tuko.co.ke** — *"Northlands International Medical Training College Clarifies Accreditation, Programs Amid NCK Notice"*, April 2026 (institution's response). [tuko.co.ke](https://www.tuko.co.ke/kenya/counties/624024-northlands-international-medical-training-college-clarifies-accreditation-programs-nck-notice/)
+- **NCK Online Services Portal** — [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
+- **Official NCK website** — [nckenya.com](https://www.nckenya.com)
 
-- **February 2026 NCK results release** — The Kenya Times, *"NCK February 2026 Licensure Exam Results Out"*, reported 28 April 2026. [thekenyatimes.com](https://thekenyatimes.com/education/nursing-council-releases-latest-licensure-exam-results/)
-- **May 2026 exam dates** — Tuko.co.ke, *"NCK exam registration and timetable for the 2026 academic year"*, updated 8 April 2026. [tuko.co.ke](https://www.tuko.co.ke/facts-lifehacks/study/539756-nck-exam-registration-timetable-2024-academic-year/)
-- **Northlands NIMTC warning** — Dawan Africa, *"NCK Warns Public Over Unaccredited Courses at Northlands International Medical Training College"*, 21 April 2026. [dawan.africa](https://www.dawan.africa/news/nck-warns-public-over-unaccredited-courses-at-northlands-international-medical-training-college)
-- **Northlands NIMTC warning (corroboration)** — Kahawa Tungu, *"NCK Flags Unapproved Nursing College"*, April 2026. [kahawatungu.com](https://kahawatungu.com/nck-flags-unapproved-nursing-college/)
-- **Northlands NIMTC warning (corroboration)** — Citizen Digital, *"Nursing Council flags unrecognized courses at Northlands International College"*, April 2026. [citizen.digital](https://citizen.digital/article/nursing-council-flags-unrecognized-courses-at-northlands-international-college-n381170)
-- **Official NCK portal** — Nursing Council of Kenya Online Services Portal. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
-- **Official NCK website** — Nursing Council of Kenya. [nckenya.com](https://www.nckenya.com)
-
-*Always verify exam dates, results, and accreditation status directly on the official NCK website, as information may change after publication.*
+*Always verify exam dates, results, and accreditation status directly at [nckenya.com](https://www.nckenya.com), as information may change after publication.*
     `,
   },
 ];
