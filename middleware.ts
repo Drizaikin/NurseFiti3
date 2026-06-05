@@ -51,6 +51,8 @@ export async function middleware(req: NextRequest) {
     '/terms',
     '/privacy',
     '/auth/callback',
+    '/sitemap.xml',
+    '/robots.txt',
   ];
 
   const isPublicRoute = publicRoutes.some(
@@ -145,6 +147,6 @@ export const config = {
      * - static file extensions
      * - /api/* routes (handled by route handlers directly, not middleware)
      */
-    '/((?!_next/static|_next/image|favicon.ico|api/|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|api/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|xml|txt)$).*)',
   ],
 };
