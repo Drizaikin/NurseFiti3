@@ -62,7 +62,7 @@ Key features you must know before sitting:
 - **Timer** — auto-submits when it reaches zero; turns red below 20 minutes
 - **Free navigation** — move back and forward between questions at any time
 
-**[Practice the DigiProctor interface on NurseFiti's mock exam →](https://www.nursefiti.co.ke/mock-exam)**
+**[Practice the DigiProctor interface on NurseFiti's mock exam →](https://www.nursefiti.co.ke/signup)**
 
 ## A Proven 8-Week Study Strategy
 
@@ -76,7 +76,7 @@ Work through each unit in order of difficulty:
 3. Review every wrong answer with the rationale — not just the correct option
 4. Add weak concepts to your flashcard deck for spaced repetition
 
-**[Start unit-by-unit practice free on NurseFiti →](https://www.nursefiti.co.ke/practice)**
+**[Start unit-by-unit practice free on NurseFiti →](https://www.nursefiti.co.ke/signup)**
 
 ### Weeks 6–7: Mixed Practice & Mock Exams
 Stop studying unit by unit. Switch to full mixed-topic sessions. Take at least 2 full mock exams per week under timed, DigiProctor-style conditions.
@@ -166,11 +166,11 @@ The KRCHN exam covers a broad range of units. Spaced repetition — reviewing in
 3. Cards answered correctly move to 3-day, then 7-day, then 14-day intervals
 4. Cards answered incorrectly return to daily review
 
-**[Use NurseFiti's spaced-repetition flashcard system — free →](https://www.nursefiti.co.ke/flashcards)**
+**[Use NurseFiti's spaced-repetition flashcard system — free →](https://www.nursefiti.co.ke/signup)**
 
 ## 4-Week KRCHN Revision Plan
 
-**Week 1:** Paper I — Medical-Surgical + Pharmacology (60 MCQs/day on [NurseFiti practice](https://www.nursefiti.co.ke/practice))
+**Week 1:** Paper I — Medical-Surgical + Pharmacology (60 MCQs/day on [NurseFiti practice](https://www.nursefiti.co.ke/signup))
 **Week 2:** Paper I — Midwifery, Maternal & Child Health, Anatomy & Physiology (60 MCQs/day)
 **Week 3:** Paper II — Community Health + Mental Health + Environmental Health + mixed (80 MCQs/day)
 **Week 4:** Full mock exams (2 per week) + flashcard review + weak unit drilling
@@ -215,7 +215,7 @@ BScN candidates consistently underestimate Paper II. By the time most realise ho
 
 BScN candidates sit **2 integrated competency papers**, each with 100 MCQs and a 2-hour time limit. Unlike KRCHN, the BScN papers demand advanced clinical reasoning, evidence-based practice, and leadership judgment — not just protocol recall. Knowing which units to prioritise is the difference between passing and resitting.
 
-**[See how NurseFiti structures BScN practice questions →](https://www.nursefiti.co.ke/practice)**
+**[See how NurseFiti structures BScN practice questions →](https://www.nursefiti.co.ke/signup)**
 
 ## Paper Breakdown
 
@@ -250,7 +250,7 @@ BScN candidates sit **2 integrated competency papers**, each with 100 MCQs and a
 **Week 5:** Paper II — Professional Ethics, Health Systems, IPC, Nutrition + mixed practice (80 MCQs/day)
 **Week 6:** Full mock exams (3 per week) + weak unit drilling + flashcard review
 
-**[Build your personalised BScN revision plan on NurseFiti →](https://www.nursefiti.co.ke/revision-plan)**
+**[Build your personalised BScN revision plan on NurseFiti →](https://www.nursefiti.co.ke/signup)**
 
 ## BScN-Specific Tips
 
@@ -319,13 +319,13 @@ Past papers are for the **middle phase** of preparation (roughly weeks 3–5 of 
 - Mental stamina for 2–3 hours of sustained focus
 - The DigiProctor interface and navigation under pressure
 
-**[Take a full DigiProctor-style mock exam on NurseFiti →](https://www.nursefiti.co.ke/mock-exam)**
+**[Take a full DigiProctor-style mock exam on NurseFiti →](https://www.nursefiti.co.ke/signup)**
 
 ## Where to Find NCK Past Papers
 
 NCK does not officially publish past papers. Question banks compiled from candidate recall are widely circulated, but quality varies significantly — errors in unofficial past papers create false confidence. NurseFiti's question bank is verified, categorised by unit, and includes detailed rationales explaining *why* each answer is correct. See also our [DigiProctor exam guide](https://www.nursefiti.co.ke/blog/digiproctor-nck-exam-guide) for how to replicate the real exam environment.
 
-**[Access NurseFiti's verified question bank →](https://www.nursefiti.co.ke/practice)**
+**[Access NurseFiti's verified question bank →](https://www.nursefiti.co.ke/signup)**
 
 ## The Bottom Line
 
@@ -382,7 +382,7 @@ Use it strategically: answer confident questions first, flag uncertain ones, ret
 ### Submission
 Click "Submit Exam" manually when done. The system warns you of unanswered questions. Auto-submits when the timer reaches zero.
 
-**[Practise on NurseFiti's DigiProctor-style mock exam →](https://www.nursefiti.co.ke/mock-exam)**
+**[Practise on NurseFiti's DigiProctor-style mock exam →](https://www.nursefiti.co.ke/signup)**
 
 ## Common DigiProctor Mistakes
 
@@ -438,7 +438,7 @@ To check your results: log in to the NCK Online Services Portal at [osp.nckenya.
 
 **If you did not pass:** You are eligible to resit at the next available sitting. Before you register again, be honest about what went wrong. Candidates who resit without changing their preparation approach consistently get similar results. Start with a diagnostic session to identify your weakest units — not your strongest.
 
-**[Start a free diagnostic practice session on NurseFiti →](https://www.nursefiti.co.ke/practice)**
+**[Start a free diagnostic practice session on NurseFiti →](https://www.nursefiti.co.ke/signup)**
 
 ## May 2026 NCK Licensure Exam — What Happened
 
@@ -458,7 +458,7 @@ Use that time well:
 
 Registration deadlines will be announced on [nckenya.com](https://www.nckenya.com). Do not wait until the last week — late registration is not accommodated.
 
-**[Build your August 2026 revision plan on NurseFiti →](https://www.nursefiti.co.ke/revision-plan)**
+**[Build your August 2026 revision plan on NurseFiti →](https://www.nursefiti.co.ke/signup)**
 
 ## NCK Warning: Northlands International Medical Training College
 

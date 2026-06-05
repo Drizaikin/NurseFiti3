@@ -6,36 +6,63 @@ export async function middleware(req: NextRequest) {
 
   const { pathname } = req.nextUrl;
 
-  // Never run auth middleware on API routes — let route handlers deal with auth
-  if (pathname.startsWith('/api/')) {
-    return res;
+  // ── Never intercept API routes ────────────────────────────────────────────
+  if (pathname.startsWith('/api/')) return res;
+
+  // ── Admin routes: handle before everything else ───────────────────────────
+  // Redirect unauthenticated visitors to the landing page (not /login) so the
+  // existence of an admin panel is not revealed. Authenticated non-admins are
+  // sent to their own dashboard.
+  if (pathname.startsWith('/admin')) {
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          get(name: string) { return req.cookies.get(name)?.value; },
+          set(name: string, value: string, options: CookieOptions) {
+            req.cookies.set({ name, value, ...options });
+            res = NextResponse.next({ request: { headers: req.headers } });
+            res.cookies.set({ name, value, ...options });
+          },
+          remove(name: string, options: CookieOptions) {
+            req.cookies.set({ name, value: '', ...options });
+            res = NextResponse.next({ request: { headers: req.headers } });
+            res.cookies.set({ name, value: '', ...options });
+          },
+        },
+      }
+    );
+
+    const { data: { session } } = await supabase.auth.getSession();
+
+    // No session → send silently to landing page
+    if (!session) {
+      return NextResponse.redirect(new URL('/', req.url));
+    }
+
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', session.user.id)
+      .single();
+
+    // No profile or not admin → redirect to their own space
+    if (!profile || profile.role !== 'admin') {
+      const dest =
+        profile?.role === 'student' ? '/dashboard' :
+        profile?.role === 'tutor'   ? '/tutor-dashboard' :
+        '/';
+      return NextResponse.redirect(new URL(dest, req.url));
+    }
+
+    // Confirmed admin — allow through, block search engines from indexing admin pages
+    const adminRes = NextResponse.next({ request: { headers: req.headers } });
+    adminRes.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
+    return adminRes;
   }
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return req.cookies.get(name)?.value;
-        },
-        set(name: string, value: string, options: CookieOptions) {
-          req.cookies.set({ name, value, ...options });
-          res = NextResponse.next({ request: { headers: req.headers } });
-          res.cookies.set({ name, value, ...options });
-        },
-        remove(name: string, options: CookieOptions) {
-          req.cookies.set({ name, value: '', ...options });
-          res = NextResponse.next({ request: { headers: req.headers } });
-          res.cookies.set({ name, value: '', ...options });
-        },
-      },
-    }
-  );
-
-  const { data: { session } } = await supabase.auth.getSession();
-
-  // Public routes — no auth required
+  // ── Public routes — no auth required ─────────────────────────────────────
   const publicRoutes = [
     '/',
     '/login',
@@ -61,14 +88,36 @@ export async function middleware(req: NextRequest) {
 
   if (isPublicRoute) return res;
 
-  // Redirect unauthenticated users to login
+  // ── All other protected routes — require session ──────────────────────────
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) { return req.cookies.get(name)?.value; },
+        set(name: string, value: string, options: CookieOptions) {
+          req.cookies.set({ name, value, ...options });
+          res = NextResponse.next({ request: { headers: req.headers } });
+          res.cookies.set({ name, value, ...options });
+        },
+        remove(name: string, options: CookieOptions) {
+          req.cookies.set({ name, value: '', ...options });
+          res = NextResponse.next({ request: { headers: req.headers } });
+          res.cookies.set({ name, value: '', ...options });
+        },
+      },
+    }
+  );
+
+  const { data: { session } } = await supabase.auth.getSession();
+
   if (!session) {
     const redirectUrl = new URL('/login', req.url);
     redirectUrl.searchParams.set('redirect', pathname);
     return NextResponse.redirect(redirectUrl);
   }
 
-  // Get user role from profile
+  // ── Role-based routing ────────────────────────────────────────────────────
   const { data: profile } = await supabase
     .from('profiles')
     .select('role')
@@ -78,14 +127,6 @@ export async function middleware(req: NextRequest) {
   if (!profile) {
     await supabase.auth.signOut();
     return NextResponse.redirect(new URL('/login', req.url));
-  }
-
-  // Admin routes — only admin role allowed
-  const isAdminRoute = pathname.startsWith('/admin');
-  if (isAdminRoute && profile.role !== 'admin') {
-    return NextResponse.redirect(
-      new URL(profile.role === 'student' ? '/dashboard' : profile.role === 'tutor' ? '/tutor-dashboard' : '/login', req.url)
-    );
   }
 
   // Student routes
@@ -98,7 +139,12 @@ export async function middleware(req: NextRequest) {
 
   if (isStudentRoute && profile.role !== 'student') {
     return NextResponse.redirect(
-      new URL(profile.role === 'tutor' ? '/tutor-dashboard' : profile.role === 'admin' ? '/admin' : '/login', req.url)
+      new URL(
+        profile.role === 'tutor'  ? '/tutor-dashboard' :
+        profile.role === 'admin'  ? '/admin' :
+        '/login',
+        req.url
+      )
     );
   }
 
@@ -111,11 +157,16 @@ export async function middleware(req: NextRequest) {
 
   if (isTutorRoute && profile.role !== 'tutor') {
     return NextResponse.redirect(
-      new URL(profile.role === 'student' ? '/dashboard' : profile.role === 'admin' ? '/admin' : '/login', req.url)
+      new URL(
+        profile.role === 'student' ? '/dashboard' :
+        profile.role === 'admin'   ? '/admin' :
+        '/login',
+        req.url
+      )
     );
   }
 
-  // Check tutor verification for tutor routes
+  // Tutor verification check
   if (isTutorRoute && profile.role === 'tutor') {
     if (pathname === '/tutor-pending') return res;
 
@@ -139,14 +190,6 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all paths EXCEPT:
-     * - _next/static (static files)
-     * - _next/image (image optimization)
-     * - favicon.ico
-     * - static file extensions
-     * - /api/* routes (handled by route handlers directly, not middleware)
-     */
     '/((?!_next/static|_next/image|favicon.ico|api/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|xml|txt)$).*)',
   ],
 };

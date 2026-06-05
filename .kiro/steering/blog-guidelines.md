@@ -128,18 +128,18 @@ Every post must contain **exactly 3 calls to action**:
 3. **End CTA** (closing banner) — high-commitment: *"Start your free NurseFiti account — no credit card required"*
 
 ### 5.2 Feature-Content Alignment
-Match the post topic to the NurseFiti feature that solves it:
+Match the post topic to the NurseFiti feature that solves it. **All CTAs from blog posts must link to `/signup` — never directly to authenticated routes like `/practice`, `/mock-exam`, `/flashcards`, or `/revision-plan`.** Unauthenticated readers must be taken to the sign-up page, not dropped inside the app.
 
-| Post Topic | Feature to Promote |
-|---|---|
-| Exam prep guide | Full platform (practice + mock + flashcards + plan) |
-| KRCHN/BScN tips | Practice questions + revision plan |
-| DigiProctor guide | Mock exam module |
-| Past papers | Question bank + rationales |
-| Spaced repetition | Flashcard module |
-| Exam results / news | Sign up to stay updated + start prep |
-| Tutor content | Tutor booking feature |
-| Exam anxiety | Community + tutor + revision plan |
+| Post Topic | Feature to Promote | CTA Link |
+|---|---|---|
+| Exam prep guide | Full platform | `/signup` |
+| KRCHN/BScN tips | Practice questions + revision plan | `/signup` |
+| DigiProctor guide | Mock exam module | `/signup` |
+| Past papers | Question bank + rationales | `/signup` |
+| Spaced repetition | Flashcard module | `/signup` |
+| Exam results / news | Start prep now | `/signup` |
+| Tutor content | Tutor booking | `/signup` |
+| Exam anxiety | Community + tutor | `/signup` |
 
 ### 5.3 Soft Selling (Not Hard Selling)
 NurseFiti's audience is students under financial and academic pressure. Hard selling alienates them. Use value-first positioning:
@@ -295,6 +295,9 @@ Before publishing, confirm all of the following:
 3. Add the hero image entry to `POST_IMAGES` in both files
 4. Add the slug to `app/sitemap.ts` with appropriate `priority` and `changeFrequency`
 5. Push to git — Vercel deploys automatically
+
+### Security Rule — CTA Links
+**Never link from a blog post directly to any authenticated route.** This includes `/practice`, `/mock-exam`, `/flashcards`, `/revision-plan`, `/dashboard`, `/bookings`, `/settings`, `/analytics`, `/admin`, or any tutor route. All CTAs must point to `/signup` or `/login`. Authenticated users who click `/signup` are redirected to their dashboard automatically by the auth flow.
 
 ### Post Object Structure
 ```ts
