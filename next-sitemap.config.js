@@ -33,6 +33,9 @@ module.exports = {
     '/tutor-reviews',
     '/tutor-profile',
     '/tutor-pending',
+    // Admin routes
+    '/admin',
+    '/admin/*',
     // API routes
     '/api/*',
     '/auth/*',
@@ -64,6 +67,8 @@ module.exports = {
           '/tutor-reviews',
           '/tutor-profile',
           '/tutor-pending',
+          '/admin',
+          '/admin/',
         ],
       },
     ],
