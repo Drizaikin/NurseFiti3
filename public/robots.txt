@@ -24,7 +24,7 @@ Disallow: /tutor-profile
 Disallow: /tutor-pending
 
 # Host
-Host: https://nursefiti.co.ke
+Host: https://www.nursefiti.co.ke
 
 # Sitemaps
-Sitemap: https://nursefiti.co.ke/sitemap.xml
+Sitemap: https://www.nursefiti.co.ke/sitemap.xml

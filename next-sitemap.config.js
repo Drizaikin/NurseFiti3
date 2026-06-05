@@ -39,6 +39,11 @@ module.exports = {
     // API routes
     '/api/*',
     '/auth/*',
+    // Static assets
+    '/*.svg',
+    '/*.png',
+    '/*.ico',
+    '/*.xml',
   ],
   robotsTxtOptions: {
     policies: [
