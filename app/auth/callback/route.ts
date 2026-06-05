@@ -4,10 +4,19 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
   const requestUrl = new URL(req.url);
   const code = requestUrl.searchParams.get('code');
+  const type = requestUrl.searchParams.get('type'); // 'recovery' for password reset
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? requestUrl.origin;
 
   if (code) {
     const supabase = createClient();
     await supabase.auth.exchangeCodeForSession(code);
+
+    // Password reset flow — send to the reset-password page
+    // The session is now active so the page can call updateUser({ password })
+    if (type === 'recovery') {
+      return NextResponse.redirect(new URL('/reset-password', siteUrl));
+    }
 
     const { data: { session } } = await supabase.auth.getSession();
 
@@ -21,28 +30,16 @@ export async function GET(req: NextRequest) {
       const profileData = profile as { role: string } | null;
 
       if (profileData?.role === 'student') {
-        return NextResponse.redirect(new URL('/dashboard', req.url));
+        return NextResponse.redirect(new URL('/dashboard', siteUrl));
       }
-
       if (profileData?.role === 'tutor') {
-        const { data: tutorProfile } = await supabase
-          .from('tutor_profiles')
-          .select('verification_status')
-          .eq('id', session.user.id)
-          .maybeSingle();
-
-        const tutorData = tutorProfile as { verification_status: string } | null;
-
-        return NextResponse.redirect(
-          new URL('/tutor-dashboard', req.url)
-        );
+        return NextResponse.redirect(new URL('/tutor-dashboard', siteUrl));
       }
-
       if (profileData?.role === 'admin') {
-        return NextResponse.redirect(new URL('/admin', req.url));
+        return NextResponse.redirect(new URL('/admin', siteUrl));
       }
     }
   }
 
-  return NextResponse.redirect(new URL('/login', req.url));
+  return NextResponse.redirect(new URL('/login', siteUrl));
 }
