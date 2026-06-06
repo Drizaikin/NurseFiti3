@@ -7,6 +7,7 @@ import { Badge } from '../ui/Badge';
 import { Avatar } from '../ui/Avatar';
 import { DarkModeToggle } from '../shared/DarkModeToggle';
 import { NurseFitiLogo } from '../shared/NurseFitiLogo';
+import NotificationsPanel, { useUnreadCount } from '@/components/shared/NotificationsPanel';
 
 interface TutorProfile {
   full_name: string;
@@ -20,12 +21,16 @@ export function TutorTopbar() {
   const supabase = createClient();
   const [profile, setProfile] = useState<TutorProfile | null>(null);
   const [showMenu, setShowMenu] = useState(false);
+  const [showNotifs, setShowNotifs] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+  const unreadCount = useUnreadCount(userId ?? '');
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return;
+        setUserId(user.id);
 
         const [{ data: profileData }, { data: tutorData }] = await Promise.all([
           supabase.from('profiles').select('full_name, avatar_url').eq('id', user.id).single(),
@@ -83,6 +88,20 @@ export function TutorTopbar() {
 
         <DarkModeToggle />
 
+        {/* Notification bell */}
+        <button
+          onClick={() => setShowNotifs(true)}
+          className="relative flex items-center justify-center min-h-[44px] min-w-[44px] hover:opacity-80 transition-opacity"
+          aria-label="Open notifications"
+        >
+          <svg className="w-6 h-6 text-[var(--color-text-secondary)]" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24">
+            <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+          </svg>
+          {unreadCount > 0 && (
+            <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500" />
+          )}
+        </button>
+
         {/* Profile dropdown */}
         <div className="relative">
           <button
@@ -133,6 +152,8 @@ export function TutorTopbar() {
           )}
         </div>
       </div>
+
+      <NotificationsPanel isOpen={showNotifs} onClose={() => setShowNotifs(false)} userId={userId ?? ''} />
     </header>
   );
 }
