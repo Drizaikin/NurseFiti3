@@ -45,6 +45,7 @@ interface TutorDashboardData {
     platform: string;
     status: string;
     cadre: string;
+    join_link: string | null;
   }>;
   pendingBookings: Array<{
     id: string;
@@ -233,7 +234,7 @@ function TutorDashboardInner() {
       const [profileRes, tutorRes, sessionsRes, paymentsRes, questionsRes, notesRes] = await Promise.all([
         supabase.from('profiles').select('full_name, avatar_url').eq('id', user.id).maybeSingle(),
         supabase.from('tutor_profiles').select('*').eq('id', user.id).maybeSingle(),
-        supabase.from('sessions').select('id, session_date, start_time, end_time, topic, platform, status, cadre, student_id').eq('tutor_id', user.id).order('session_date', { ascending: false }).limit(20),
+        supabase.from('sessions').select('id, session_date, start_time, end_time, topic, platform, status, cadre, student_id, join_link').eq('tutor_id', user.id).order('session_date', { ascending: false }).limit(20),
         supabase.from('payments').select('amount, completed_at').eq('user_id', user.id).eq('status', 'completed').eq('type', 'session_booking'),
         supabase.from('questions').select('id').eq('contributor_id', user.id).eq('status', 'approved'),
         supabase.from('study_notes').select('id').eq('contributor_id', user.id).eq('status', 'approved'),
@@ -260,6 +261,7 @@ function TutorDashboardInner() {
         id: s.id, student_name: studentNames[s.student_id] ?? 'Student',
         start_time: s.start_time, end_time: s.end_time, topic: s.topic,
         platform: s.platform, status: s.status, cadre: s.cadre,
+        join_link: s.join_link ?? null,
       }));
 
       const pendingBookings = allSessions
@@ -445,6 +447,27 @@ function TutorDashboardInner() {
                     <div className="flex-1 min-w-0">
                       <p className="font-semibold text-sm text-[var(--color-text)]">{s.student_name}</p>
                       <p className="text-xs text-[var(--color-text-secondary)]">{s.topic ?? 'General Session'} · {s.platform}</p>
+                      {/* Meet link action */}
+                      {s.platform === 'Google Meet' && (
+                        <div className="mt-1.5 flex gap-2">
+                          {s.join_link ? (
+                            <a
+                              href={s.join_link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-success text-white text-xs font-bold hover:bg-success/80 transition-colors"
+                            >
+                              🎥 Join Google Meet
+                            </a>
+                          ) : (
+                            <Link href="/tutor-schedule">
+                              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-accent text-dark text-xs font-bold hover:bg-accent-dark transition-colors cursor-pointer">
+                                ⚠️ Add Meet Link
+                              </span>
+                            </Link>
+                          )}
+                        </div>
+                      )}
                     </div>
                     <div className="text-right flex-shrink-0">
                       <p className="text-sm font-semibold text-primary">{s.start_time.slice(0, 5)}</p>

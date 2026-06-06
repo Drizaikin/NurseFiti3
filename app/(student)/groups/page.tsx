@@ -82,7 +82,7 @@ function ChatPanel({
     const unknownIds = msgs
       .map(m => m.author_id as string)
       .filter(id => !profileCache.current[id]);
-    const uniqueUnknown = [...new Set(unknownIds)];
+    const uniqueUnknown = Array.from(new Set(unknownIds));
 
     if (uniqueUnknown.length > 0) {
       const { data: profiles } = await supabaseRef.current
@@ -200,7 +200,7 @@ function ChatPanel({
     setBody('');
     setReplyTo(null);
 
-    const { data, error } = await supabaseRef.current
+    const { data, error } = await (supabaseRef.current as any)
       .from('community_messages')
       .insert({
         author_id: userId,

@@ -255,7 +255,11 @@ export default function TutorProfilePage() {
   const handleSelectSlot = (slot: BookingSlot) => {
     if (!tutor) return;
     setSelectedSlot(slot);
-    setBookingForm({ topic: '', platform: tutor.session_platform[0] ?? 'Zoom', student_note: '' });
+    // Default to Google Meet if available, otherwise first platform
+    const preferredPlatform = tutor.session_platform.includes('Google Meet')
+      ? 'Google Meet'
+      : tutor.session_platform[0] ?? 'Google Meet';
+    setBookingForm({ topic: '', platform: preferredPlatform, student_note: '' });
     setShowBookingModal(true);
   };
 
@@ -617,15 +621,32 @@ export default function TutorProfilePage() {
             {/* Platform */}
             <div>
               <label className="block text-sm font-medium text-[var(--color-text)] mb-1.5">Platform</label>
-              <select
-                value={bookingForm.platform}
-                onChange={e => setBookingForm(f => ({ ...f, platform: e.target.value }))}
-                className="input text-sm w-full"
-              >
+              <div className="flex flex-wrap gap-2">
                 {tutor.session_platform.map(p => (
-                  <option key={p} value={p}>{p}</option>
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => setBookingForm(f => ({ ...f, platform: p }))}
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-semibold transition-all ${
+                      bookingForm.platform === p
+                        ? 'border-primary bg-primary text-white shadow-glow-teal'
+                        : 'border-[var(--color-border)] text-[var(--color-text)] hover:border-primary/40 hover:bg-primary-light'
+                    }`}
+                  >
+                    {p === 'Google Meet' && <span>🎥</span>}
+                    {p === 'Zoom' && <span>💻</span>}
+                    {p === 'WhatsApp' && <span>📱</span>}
+                    {p}
+                    {p === 'Google Meet' && <span className="text-xs opacity-70">(Recommended)</span>}
+                  </button>
                 ))}
-              </select>
+              </div>
+              {bookingForm.platform === 'Google Meet' && (
+                <p className="text-xs text-[var(--color-text-secondary)] mt-2 flex items-start gap-1.5">
+                  <span>ℹ️</span>
+                  <span>The tutor will add a Google Meet link before the session. You&apos;ll find the join button in your Bookings page.</span>
+                </p>
+              )}
             </div>
 
             {/* Note */}

@@ -330,8 +330,14 @@ export default function BookingsPage() {
                       {canJoin && (
                         <a href={session.join_link!} target="_blank" rel="noopener noreferrer"
                           className="px-3 py-1 rounded-lg bg-success text-white text-xs font-bold hover:bg-success/80 transition-colors">
-                          🎥 Join Session
+                          🎥 {session.platform === 'Google Meet' ? 'Join Google Meet' : 'Join Session'}
                         </a>
+                      )}
+                      {/* Google Meet pending link — session is today but no link yet */}
+                      {isToday && session.status === 'confirmed' && session.platform === 'Google Meet' && !session.join_link && (
+                        <span className="px-3 py-1 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-semibold">
+                          ⏳ Meet link pending from tutor
+                        </span>
                       )}
 
                       {/* Cancel */}

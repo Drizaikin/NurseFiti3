@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Toggle } from '@/components/ui/Toggle';
 import { Spinner } from '@/components/ui/Spinner';
+import { Modal } from '@/components/ui/Modal';
 import toast from 'react-hot-toast';
 
 export const dynamic = 'force-dynamic';
@@ -35,6 +36,7 @@ interface BookedSession {
   topic: string | null;
   platform: string;
   status: string;
+  join_link: string | null;
 }
 
 interface TutorPrefs {
@@ -44,6 +46,14 @@ interface TutorPrefs {
   rate_per_hour: number;
   session_platform: string[];
   is_accepting_bookings: boolean;
+}
+
+interface MeetLinkModal {
+  sessionId: string;
+  studentName: string;
+  sessionDate: string;
+  startTime: string;
+  existingLink: string | null;
 }
 
 interface SlotPickerState {
@@ -211,6 +221,9 @@ export default function TutorSchedulePage() {
   const [weekOffset, setWeekOffset] = useState(0);
   const [slotPicker, setSlotPicker] = useState<SlotPickerState | null>(null);
   const [calSelectedDate, setCalSelectedDate] = useState<Date | null>(null);
+  const [meetModal, setMeetModal] = useState<MeetLinkModal | null>(null);
+  const [meetLinkInput, setMeetLinkInput] = useState('');
+  const [savingMeetLink, setSavingMeetLink] = useState(false);
   const pickerRef = useRef<HTMLDivElement>(null);
 
   // ── Week helpers ──────────────────────────────────────────────────────────
@@ -274,7 +287,7 @@ export default function TutorSchedulePage() {
     const weekStart = getWeekStart();
     const weekEnd = new Date(weekStart); weekEnd.setDate(weekEnd.getDate() + 7);
     const { data: sessData } = await supabase.from('sessions')
-      .select('id, session_date, start_time, end_time, topic, platform, status, student_id')
+      .select('id, session_date, start_time, end_time, topic, platform, status, student_id, join_link')
       .eq('tutor_id', uid)
       .gte('session_date', weekStart.toISOString().split('T')[0])
       .lt('session_date', weekEnd.toISOString().split('T')[0])
@@ -288,7 +301,8 @@ export default function TutorSchedulePage() {
     }
     setSessions(sessArr.map(s => ({
       id: s.id, session_date: s.session_date, start_time: s.start_time, end_time: s.end_time,
-      student_name: nameMap[s.student_id] ?? 'Student', topic: s.topic, platform: s.platform, status: s.status,
+      student_name: nameMap[s.student_id] ?? 'Student', topic: s.topic, platform: s.platform,
+      status: s.status, join_link: s.join_link ?? null,
     })));
   };
 
@@ -405,6 +419,55 @@ export default function TutorSchedulePage() {
   const handleCalendarDateClick = (date: Date) => {
     setCalSelectedDate(date);
     setWeekOffset(weekOffsetForDate(date));
+  };
+
+  // ── Meet link ─────────────────────────────────────────────────────────────
+  const handleOpenMeetModal = (session: BookedSession) => {
+    setMeetLinkInput(session.join_link ?? '');
+    setMeetModal({
+      sessionId: session.id,
+      studentName: session.student_name,
+      sessionDate: session.session_date,
+      startTime: session.start_time,
+      existingLink: session.join_link,
+    });
+  };
+
+  const handleSaveMeetLink = async () => {
+    if (!meetModal) return;
+    setSavingMeetLink(true);
+    try {
+      const { data: { session: authSession } } = await supabase.auth.getSession();
+      const token = authSession?.access_token;
+      if (!token) throw new Error('Not authenticated');
+
+      const body: Record<string, string> = { sessionId: meetModal.sessionId };
+      if (meetLinkInput.trim()) body.meetLink = meetLinkInput.trim();
+
+      const res = await fetch('/api/sessions/meet-link', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Failed to save meet link');
+
+      // Update local state
+      setSessions(prev => prev.map(s =>
+        s.id === meetModal.sessionId ? { ...s, join_link: data.meetLink } : s
+      ));
+
+      toast.success('Google Meet link saved! Student has been notified.');
+      setMeetModal(null);
+    } catch (err: any) {
+      toast.error(err?.message ?? 'Failed to save meet link');
+    } finally {
+      setSavingMeetLink(false);
+    }
   };
 
   // ── Prefs save ────────────────────────────────────────────────────────────
@@ -728,13 +791,41 @@ export default function TutorSchedulePage() {
                     <p className="text-[var(--color-text-secondary)]">
                       {new Date(s.session_date).toLocaleDateString('en-KE', { weekday: 'short', month: 'short', day: 'numeric' })} · {s.start_time.slice(0, 5)}
                     </p>
-                    <div className="flex items-center gap-1 mt-1">
+                    <div className="flex items-center gap-1 mt-1 flex-wrap">
                       <Badge
                         variant={s.status === 'confirmed' ? 'green' : s.status === 'pending_approval' ? 'amber' : 'secondary'}
                         size="sm"
                       >
                         {s.status.replace('_', ' ')}
                       </Badge>
+                      {/* Meet link status & action */}
+                      {s.platform === 'Google Meet' && s.status === 'confirmed' && (
+                        s.join_link ? (
+                          <div className="flex items-center gap-1 flex-wrap">
+                            <a
+                              href={s.join_link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-success/15 text-success text-[10px] font-semibold hover:bg-success/25 transition-colors"
+                            >
+                              🎥 Open Meet
+                            </a>
+                            <button
+                              onClick={() => handleOpenMeetModal(s)}
+                              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-primary/10 text-primary text-[10px] font-semibold hover:bg-primary/20 transition-colors"
+                            >
+                              ✏️ Edit Link
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => handleOpenMeetModal(s)}
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-accent/15 text-accent-dark dark:text-accent text-[10px] font-semibold hover:bg-accent/25 transition-colors"
+                          >
+                            + Add Meet Link
+                          </button>
+                        )
+                      )}
                     </div>
                   </div>
                 ))}
@@ -744,6 +835,90 @@ export default function TutorSchedulePage() {
 
         </div>{/* end right panel */}
       </div>{/* end grid */}
+
+      {/* ── Meet Link Modal ──────────────────────────────────────────────────── */}
+      <Modal
+        isOpen={!!meetModal}
+        onClose={() => !savingMeetLink && setMeetModal(null)}
+        title="Add Google Meet Link"
+      >
+        {meetModal && (
+          <div className="space-y-4">
+            {/* Session info */}
+            <div className="rounded-xl bg-primary/5 border border-primary/20 p-3 text-sm">
+              <p className="font-semibold text-[var(--color-text)]">Session with {meetModal.studentName}</p>
+              <p className="text-[var(--color-text-secondary)] text-xs mt-0.5">
+                {new Date(meetModal.sessionDate).toLocaleDateString('en-KE', { weekday: 'long', day: 'numeric', month: 'long' })} at {meetModal.startTime.slice(0, 5)}
+              </p>
+            </div>
+
+            {/* Instructions */}
+            <div className="rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] p-3 text-xs text-[var(--color-text-secondary)] space-y-2">
+              <p className="font-semibold text-[var(--color-text)]">How to get your Google Meet link:</p>
+              <ol className="space-y-1 list-none">
+                <li className="flex gap-2"><span className="text-primary font-bold">1.</span> Go to <a href="https://meet.google.com" target="_blank" rel="noopener noreferrer" className="text-primary underline">meet.google.com</a> and click <strong>"New meeting"</strong></li>
+                <li className="flex gap-2"><span className="text-primary font-bold">2.</span> Choose <strong>"Create a meeting for later"</strong></li>
+                <li className="flex gap-2"><span className="text-primary font-bold">3.</span> Copy the link and paste it below</li>
+              </ol>
+              <p className="pt-1 border-t border-[var(--color-border)]">
+                Or leave the field empty to auto-generate a Meet room link.
+              </p>
+            </div>
+
+            {/* Link input */}
+            <div>
+              <label className="block text-sm font-medium text-[var(--color-text)] mb-1.5">
+                Google Meet URL <span className="text-[var(--color-text-secondary)] font-normal">(optional — leave empty to auto-generate)</span>
+              </label>
+              <input
+                type="url"
+                placeholder="https://meet.google.com/xxx-xxxx-xxx"
+                value={meetLinkInput}
+                onChange={e => setMeetLinkInput(e.target.value)}
+                className="input text-sm w-full"
+                disabled={savingMeetLink}
+              />
+              <p className="text-xs text-[var(--color-text-secondary)] mt-1">
+                Format: https://meet.google.com/abc-defg-hij
+              </p>
+            </div>
+
+            {/* Existing link */}
+            {meetModal.existingLink && (
+              <div className="rounded-lg bg-success/5 border border-success/20 p-3 text-xs">
+                <p className="font-semibold text-success mb-1">Current link:</p>
+                <a href={meetModal.existingLink} target="_blank" rel="noopener noreferrer"
+                  className="text-primary underline break-all">{meetModal.existingLink}</a>
+              </div>
+            )}
+
+            {/* Actions */}
+            <div className="flex gap-3 pt-2">
+              <Button
+                variant="ghost"
+                className="flex-1"
+                onClick={() => setMeetModal(null)}
+                disabled={savingMeetLink}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                className="flex-1"
+                onClick={handleSaveMeetLink}
+                disabled={savingMeetLink}
+              >
+                {savingMeetLink
+                  ? <Spinner size="sm" color="white" />
+                  : meetLinkInput.trim()
+                    ? 'Save Meet Link'
+                    : 'Auto-Generate Link'
+                }
+              </Button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }
