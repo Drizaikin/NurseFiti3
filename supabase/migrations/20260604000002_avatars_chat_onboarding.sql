@@ -38,13 +38,24 @@ CREATE INDEX IF NOT EXISTS idx_chat_reply_to
 
 -- ── 4. Enable Realtime on community_messages ─────────────────────────────────
 -- (Supabase requires the table to be in the publication for realtime)
-ALTER PUBLICATION supabase_realtime ADD TABLE community_messages;
+-- Idempotent: only add if not already a member of the publication
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_publication_tables
+    WHERE pubname = 'supabase_realtime'
+      AND tablename = 'community_messages'
+  ) THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE community_messages;
+  END IF;
+END $$;
 
 -- ── 5. RLS on community_messages ─────────────────────────────────────────────
 ALTER TABLE community_messages ENABLE ROW LEVEL SECURITY;
 
 -- Any authenticated user can read messages in groups they are a member of
 -- (groups are already "all cadres open" per product spec)
+DROP POLICY IF EXISTS "Members can read group messages" ON community_messages;
 CREATE POLICY "Members can read group messages"
   ON community_messages FOR SELECT
   USING (
@@ -52,11 +63,13 @@ CREATE POLICY "Members can read group messages"
   );
 
 -- Only the author can insert their own messages
+DROP POLICY IF EXISTS "Authors can insert messages" ON community_messages;
 CREATE POLICY "Authors can insert messages"
   ON community_messages FOR INSERT
   WITH CHECK (auth.uid() = author_id);
 
 -- Authors can soft-delete (set is_deleted=true) but not hard-delete
+DROP POLICY IF EXISTS "Authors can update own messages" ON community_messages;
 CREATE POLICY "Authors can update own messages"
   ON community_messages FOR UPDATE
   USING (auth.uid() = author_id)

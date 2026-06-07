@@ -236,9 +236,23 @@ function GroupsInner() {
   const enrich = useCallback(async (rows: Record<string, unknown>[]): Promise<FeedPost[]> => {
     const missing = Array.from(new Set(rows.map(r => r.author_id as string).filter(id => !profileCache.current[id])));
     if (missing.length) {
-      const { data } = await sbRef.current.from('profiles').select('id,full_name,avatar_url').in('id', missing);
-      for (const p of (data ?? []) as any[]) {
-        profileCache.current[p.id] = { name: p.full_name ?? 'User', avatar: p.avatar_url ?? null };
+      // Fetch profiles + student_profiles to honour display_name / hide_real_name
+      const [{ data: profs }, { data: sProfs }] = await Promise.all([
+        sbRef.current.from('profiles').select('id,full_name,avatar_url').in('id', missing),
+        sbRef.current.from('student_profiles').select('id,display_name,username,hide_real_name').in('id', missing),
+      ]);
+      const spMap: Record<string, { display_name: string | null; username: string | null; hide_real_name: boolean }> = {};
+      for (const sp of (sProfs ?? []) as any[]) {
+        spMap[sp.id] = { display_name: sp.display_name ?? null, username: sp.username ?? null, hide_real_name: sp.hide_real_name ?? false };
+      }
+      for (const p of (profs ?? []) as any[]) {
+        const sp = spMap[p.id];
+        // Only substitute display_name/username when the student explicitly hides their real name.
+        // Default is always full_name — students opt in to anonymity, it is never applied automatically.
+        const displayName: string = sp?.hide_real_name
+          ? (sp.display_name ?? (sp.username ? `@${sp.username}` : p.full_name ?? 'Student'))
+          : (p.full_name ?? 'User');
+        profileCache.current[p.id] = { name: displayName, avatar: p.avatar_url ?? null };
       }
     }
     return rows.map(r => {

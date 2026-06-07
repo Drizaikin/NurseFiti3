@@ -1,12 +1,18 @@
 "use client";
 
 /**
- * OnboardingTourGate — tutor version. Same logic, different profile table.
+ * OnboardingTourGate — tutor version.
+ *
+ * To trigger the tour again for new features, increment CURRENT_TOUR_VERSION.
+ * Any tutor with tour_version < CURRENT_TOUR_VERSION will see the tour again.
  */
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { OnboardingTour } from '@/components/shared/OnboardingTour';
+
+// ── Bump this when new tour steps are added or a feature needs re-introduction ──
+const CURRENT_TOUR_VERSION = 1;
 
 export function TutorOnboardingTourGate() {
   const supabase = createClient();
@@ -21,12 +27,15 @@ export function TutorOnboardingTourGate() {
 
       const { data } = await supabase
         .from('tutor_profiles')
-        .select('onboarding_tour_seen')
+        .select('tour_version')
         .eq('id', user.id)
         .maybeSingle();
 
-      if (data && 'onboarding_tour_seen' in data && !(data as { onboarding_tour_seen: boolean }).onboarding_tour_seen) {
-        setShow(true);
+      if (data && 'tour_version' in data) {
+        const seen = (data as { tour_version: number | null }).tour_version ?? 0;
+        if (seen < CURRENT_TOUR_VERSION) {
+          setShow(true);
+        }
       }
     };
     check();
@@ -38,7 +47,7 @@ export function TutorOnboardingTourGate() {
     if (!userId) return;
     await (supabase as any)
       .from('tutor_profiles')
-      .update({ onboarding_tour_seen: true })
+      .update({ tour_version: CURRENT_TOUR_VERSION, onboarding_tour_seen: true })
       .eq('id', userId);
   };
 

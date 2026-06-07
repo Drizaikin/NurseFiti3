@@ -35,7 +35,16 @@ CREATE INDEX IF NOT EXISTS idx_chat_reply_to
   ON community_messages (reply_to_id);
 
 -- Enable Realtime
-ALTER PUBLICATION supabase_realtime ADD TABLE community_messages;
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_publication_tables
+    WHERE pubname = 'supabase_realtime'
+      AND tablename = 'community_messages'
+  ) THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE community_messages;
+  END IF;
+END $$;
 
 -- RLS on community_messages
 ALTER TABLE community_messages ENABLE ROW LEVEL SECURITY;

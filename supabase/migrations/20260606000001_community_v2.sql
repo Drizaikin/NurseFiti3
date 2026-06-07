@@ -26,18 +26,22 @@ CREATE INDEX IF NOT EXISTS idx_tutor_msg_author  ON tutor_messages (author_id);
 
 ALTER TABLE tutor_messages ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Tutors read tutor messages" ON tutor_messages;
 CREATE POLICY "Tutors read tutor messages"
   ON tutor_messages FOR SELECT
   USING (auth.role() = 'authenticated' AND EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role IN ('tutor','admin')));
 
+DROP POLICY IF EXISTS "Tutors insert own messages" ON tutor_messages;
 CREATE POLICY "Tutors insert own messages"
   ON tutor_messages FOR INSERT
   WITH CHECK (auth.uid() = author_id AND EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role IN ('tutor','admin')));
 
+DROP POLICY IF EXISTS "Authors update own tutor messages" ON tutor_messages;
 CREATE POLICY "Authors update own tutor messages"
   ON tutor_messages FOR UPDATE
   USING (auth.uid() = author_id) WITH CHECK (auth.uid() = author_id);
 
+DROP POLICY IF EXISTS "Service role full tutor_messages" ON tutor_messages;
 CREATE POLICY "Service role full tutor_messages"
   ON tutor_messages FOR ALL USING (auth.role() = 'service_role');
 
@@ -53,9 +57,11 @@ CREATE TABLE IF NOT EXISTS community_likes (
 
 ALTER TABLE community_likes ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users manage own likes" ON community_likes;
 CREATE POLICY "Users manage own likes"
   ON community_likes FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Auth users read likes" ON community_likes;
 CREATE POLICY "Auth users read likes"
   ON community_likes FOR SELECT USING (auth.role() = 'authenticated');
 
@@ -75,13 +81,26 @@ CREATE TABLE IF NOT EXISTS notification_reads (
 
 ALTER TABLE notification_reads ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users insert own reads" ON notification_reads;
+DROP POLICY IF EXISTS "Users read own reads" ON notification_reads;
+DROP POLICY IF EXISTS "Service role reads" ON notification_reads;
 CREATE POLICY "Users insert own reads"   ON notification_reads FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Users read own reads"     ON notification_reads FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Service role reads"       ON notification_reads FOR ALL USING (auth.role() = 'service_role');
 
 -- Allow service role to post admin messages to community_messages
+DROP POLICY IF EXISTS "Service role community_messages" ON community_messages;
 CREATE POLICY "Service role community_messages"
   ON community_messages FOR ALL USING (auth.role() = 'service_role');
 
 -- Realtime
-ALTER PUBLICATION supabase_realtime ADD TABLE tutor_messages;
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_publication_tables
+    WHERE pubname = 'supabase_realtime'
+      AND tablename = 'tutor_messages'
+  ) THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE tutor_messages;
+  END IF;
+END $$;

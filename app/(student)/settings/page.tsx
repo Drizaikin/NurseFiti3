@@ -24,6 +24,9 @@ interface ProfileData {
   exam_cycle: string;
   plan_tier: string;
   plan_expires_at: string | null;
+  username: string;
+  display_name: string;
+  hide_real_name: boolean;
 }
 
 interface NotifPrefs {
@@ -397,7 +400,16 @@ export default function SettingsPage() {
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   // Edit profile form state
-  const [editForm, setEditForm] = useState({ full_name: '', phone: '', institution: '', exam_date: '', exam_cycle: '' });
+  const [editForm, setEditForm] = useState({
+    full_name: '',
+    phone: '',
+    institution: '',
+    exam_date: '',
+    exam_cycle: '',
+    username: '',
+    display_name: '',
+    hide_real_name: false,
+  });
   const [isSavingProfile, setIsSavingProfile] = useState(false);
 
   // Password form state
@@ -422,7 +434,7 @@ export default function SettingsPage() {
       (supabase as any).from('profiles').select('full_name, email, phone, avatar_url').eq('id', user.id).single(),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (supabase as any).from('student_profiles')
-        .select('cadre, specialty, institution, exam_date, exam_cycle, plan_tier, plan_expires_at, notif_booking_confirmed, notif_session_reminder, notif_streak_alerts, notif_plan_expiry, notif_weekly_summary, notif_whatsapp')
+        .select('cadre, specialty, institution, exam_date, exam_cycle, plan_tier, plan_expires_at, notif_booking_confirmed, notif_session_reminder, notif_streak_alerts, notif_plan_expiry, notif_weekly_summary, notif_whatsapp, username, display_name, hide_real_name')
         .eq('id', user.id).single(),
     ]);
 
@@ -452,6 +464,9 @@ export default function SettingsPage() {
         exam_cycle: sd.exam_cycle ?? '',
         plan_tier: active,           // always the effective tier
         plan_expires_at: active !== 'free' ? expiresAt : null,
+        username: sd.username ?? '',
+        display_name: sd.display_name ?? '',
+        hide_real_name: sd.hide_real_name ?? false,
       };
       setProfile(p);
       setEditForm({
@@ -460,6 +475,9 @@ export default function SettingsPage() {
         institution: p.institution,
         exam_date: p.exam_date,
         exam_cycle: p.exam_cycle,
+        username: p.username,
+        display_name: p.display_name,
+        hide_real_name: p.hide_real_name,
       });
       setNotifPrefs({
         notif_booking_confirmed: sd.notif_booking_confirmed ?? true,
@@ -490,6 +508,11 @@ export default function SettingsPage() {
   const handleSaveProfile = async () => {
     if (!editForm.full_name.trim()) { toast.error('Full name is required'); return; }
     if (!editForm.phone.trim()) { toast.error('Phone number is required'); return; }
+    // Validate username: alphanumeric + underscores only, 3–30 chars
+    if (editForm.username.trim() && !/^[a-zA-Z0-9_]{3,30}$/.test(editForm.username.trim())) {
+      toast.error('Username must be 3–30 characters: letters, numbers, and underscores only');
+      return;
+    }
     setIsSavingProfile(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
@@ -499,10 +522,23 @@ export default function SettingsPage() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (supabase as any).from('profiles').update({ full_name: editForm.full_name.trim(), phone: editForm.phone.trim() }).eq('id', user.id),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (supabase as any).from('student_profiles').update({ institution: editForm.institution.trim(), exam_date: editForm.exam_date, exam_cycle: editForm.exam_cycle }).eq('id', user.id),
+        (supabase as any).from('student_profiles').update({
+          institution: editForm.institution.trim(),
+          exam_date: editForm.exam_date,
+          exam_cycle: editForm.exam_cycle,
+          username: editForm.username.trim() || null,
+          display_name: editForm.display_name.trim() || null,
+          hide_real_name: editForm.hide_real_name,
+        }).eq('id', user.id),
       ]);
 
-      if (r1.error || r2.error) throw new Error(r1.error?.message ?? r2.error?.message);
+      if (r1.error || r2.error) {
+        const msg = r1.error?.message ?? r2.error?.message ?? '';
+        if (msg.includes('idx_student_profiles_username_unique') || msg.includes('duplicate key')) {
+          throw new Error('That username is already taken. Please choose another.');
+        }
+        throw new Error(msg);
+      }
       toast.success('Profile updated successfully');
       await fetchProfile();
     } catch (err) {
@@ -671,6 +707,53 @@ export default function SettingsPage() {
                     placeholder="Your nursing school or institution"
                   />
                 </FormField>
+
+                {/* ── Community identity ── */}
+                <div className="pt-4 border-t border-[var(--color-border)]">
+                  <p className="text-xs font-bold uppercase tracking-widest text-[var(--color-text-secondary)] mb-3">Community Identity</p>
+                  <div className="space-y-4">
+                    <FormField label="Username" hint="3–30 characters: letters, numbers, underscores. Shown in community if you set one.">
+                      <div className="relative">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-secondary)] text-sm select-none">@</span>
+                        <input
+                          type="text"
+                          value={editForm.username}
+                          onChange={e => setEditForm(f => ({ ...f, username: e.target.value.replace(/\s/g, '') }))}
+                          className={inputClass() + ' pl-7'}
+                          placeholder="nurseamina"
+                          maxLength={30}
+                        />
+                      </div>
+                    </FormField>
+
+                    <FormField label="Display Name" hint="What other students see in community posts. Defaults to your full name if left blank.">
+                      <input
+                        type="text"
+                        value={editForm.display_name}
+                        onChange={e => setEditForm(f => ({ ...f, display_name: e.target.value }))}
+                        className={inputClass()}
+                        placeholder="e.g. Amina K."
+                        maxLength={60}
+                      />
+                    </FormField>
+
+                    <div className="flex items-center justify-between py-2.5 px-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)]">
+                      <div>
+                        <p className="text-sm font-medium text-[var(--color-text)]">Hide my real name</p>
+                        <p className="text-xs text-[var(--color-text-secondary)] mt-0.5">Other students will see your display name or username instead of your full name</p>
+                      </div>
+                      <button
+                        onClick={() => setEditForm(f => ({ ...f, hide_real_name: !f.hide_real_name }))}
+                        className={`relative w-11 h-6 rounded-full transition-colors flex-shrink-0 ml-4 ${editForm.hide_real_name ? 'bg-primary' : 'bg-neutral-border'}`}
+                        role="switch"
+                        aria-checked={editForm.hide_real_name}
+                        type="button"
+                      >
+                        <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${editForm.hide_real_name ? 'translate-x-5' : 'translate-x-0'}`} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField label="Exam Date">

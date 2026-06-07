@@ -2,12 +2,19 @@
 
 /**
  * OnboardingTourGate — client component that checks if the student has seen
- * the tour and shows it if not. Dropped into the student layout.
+ * the current tour version and shows it if not. Dropped into the student layout.
+ *
+ * To trigger the tour again for new features, increment CURRENT_TOUR_VERSION.
+ * Any student with tour_version < CURRENT_TOUR_VERSION will see the tour again.
+ * The old `onboarding_tour_seen` boolean is ignored; tour_version supersedes it.
  */
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { OnboardingTour } from '@/components/shared/OnboardingTour';
+
+// ── Bump this when new tour steps are added or a feature needs re-introduction ──
+const CURRENT_TOUR_VERSION = 1;
 
 export function OnboardingTourGate() {
   const supabase = createClient();
@@ -22,14 +29,16 @@ export function OnboardingTourGate() {
 
       const { data } = await supabase
         .from('student_profiles')
-        .select('onboarding_tour_seen')
+        .select('tour_version')
         .eq('id', user.id)
         .maybeSingle();
 
-      // Show if column exists and is false/null (new account)
-      // If column doesn't exist yet (migration pending), data will be null — don't show
-      if (data && 'onboarding_tour_seen' in data && !(data as { onboarding_tour_seen: boolean }).onboarding_tour_seen) {
-        setShow(true);
+      // Show if tour_version column exists and user hasn't seen current version
+      if (data && 'tour_version' in data) {
+        const seen = (data as { tour_version: number | null }).tour_version ?? 0;
+        if (seen < CURRENT_TOUR_VERSION) {
+          setShow(true);
+        }
       }
     };
     check();
@@ -41,7 +50,7 @@ export function OnboardingTourGate() {
     if (!userId) return;
     await (supabase as any)
       .from('student_profiles')
-      .update({ onboarding_tour_seen: true })
+      .update({ tour_version: CURRENT_TOUR_VERSION, onboarding_tour_seen: true })
       .eq('id', userId);
   };
 
