@@ -67,11 +67,12 @@ export function Modal({
       {/* Panel */}
       <div
         ref={dialogRef}
-        className={`relative w-full ${sizeClasses[size]} bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl shadow-2xl`}
+        className={`relative w-full ${sizeClasses[size]} bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl shadow-2xl flex flex-col`}
+        style={{ maxHeight: 'min(90vh, 700px)' }}
       >
         {/* Header */}
         {title && (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)]">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)] flex-shrink-0">
             <h2 id="modal-title" className="text-lg font-heading font-bold text-[var(--color-text)]">
               {title}
             </h2>
@@ -87,8 +88,8 @@ export function Modal({
           </div>
         )}
 
-        {/* Body */}
-        <div className="px-6 py-5">{children}</div>
+        {/* Body — scrollable */}
+        <div className="px-6 py-5 overflow-y-auto flex-1">{children}</div>
       </div>
     </div>
   );

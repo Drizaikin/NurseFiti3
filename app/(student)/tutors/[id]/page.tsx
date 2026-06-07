@@ -34,6 +34,8 @@ interface TutorProfile {
   allow_group_sessions: boolean;
   session_platform: string[];
   buffer_minutes: number;
+  allow_price_negotiation: boolean;
+  min_negotiated_rate: number;
 }
 
 interface AvailabilitySlot {
@@ -168,6 +170,8 @@ export default function TutorProfilePage() {
         allow_group_sessions: t.allow_group_sessions ?? false,
         session_platform: t.session_platform ?? ['Zoom'],
         buffer_minutes: t.buffer_minutes ?? 30,
+        allow_price_negotiation: t.allow_price_negotiation ?? false,
+        min_negotiated_rate: t.min_negotiated_rate ?? 1000,
       });
 
       setAvailability((availRes.data ?? []) as AvailabilitySlot[]);
@@ -300,10 +304,10 @@ export default function TutorProfilePage() {
 
       // Validate custom amount if provided
       let proposedAmount: number | null = null;
-      if (bookingForm.use_custom_amount && bookingForm.proposed_amount) {
+      if (bookingForm.use_custom_amount && bookingForm.proposed_amount && tutor.allow_price_negotiation) {
         proposedAmount = parseInt(bookingForm.proposed_amount, 10);
-        if (isNaN(proposedAmount) || proposedAmount < 800) {
-          toast.error('Minimum proposed amount is KSh 800');
+        if (isNaN(proposedAmount) || proposedAmount < tutor.min_negotiated_rate) {
+          toast.error(`Minimum proposed amount is KSh ${tutor.min_negotiated_rate.toLocaleString()}`);
           setIsBooking(false);
           return;
         }
@@ -315,21 +319,26 @@ export default function TutorProfilePage() {
       }
 
       // Use the atomic RPC to prevent race-condition double-bookings.
+      const rpcParams: Record<string, unknown> = {
+        p_tutor_id: tutorId,
+        p_student_id: currentUserId,
+        p_session_date: sessionDate,
+        p_start_time: selectedSlot.start_time,
+        p_end_time: selectedSlot.end_time,
+        p_cadre: studentCadre || tutor.cadres_taught[0],
+        p_topic: bookingForm.topic || null,
+        p_platform: bookingForm.platform,
+        p_duration_minutes: durationMinutes,
+        p_rate_per_hour: tutor.rate_per_hour,
+      };
+      // Only include proposed_amount if the tutor allows negotiation and student provided one
+      if (proposedAmount !== null) {
+        rpcParams.p_proposed_amount = proposedAmount;
+      }
+
       const { data: sessionId, error: sessionError } = await (supabase as any).rpc(
         'create_booking_atomic',
-        {
-          p_tutor_id: tutorId,
-          p_student_id: currentUserId,
-          p_session_date: sessionDate,
-          p_start_time: selectedSlot.start_time,
-          p_end_time: selectedSlot.end_time,
-          p_cadre: studentCadre || tutor.cadres_taught[0],
-          p_topic: bookingForm.topic || null,
-          p_platform: bookingForm.platform,
-          p_duration_minutes: durationMinutes,
-          p_rate_per_hour: tutor.rate_per_hour,
-          p_proposed_amount: proposedAmount,
-        }
+        rpcParams
       );
 
       if (sessionError) {
@@ -337,7 +346,13 @@ export default function TutorProfilePage() {
           throw new Error('This slot was just booked by someone else. Please choose a different time.');
         }
         if (sessionError.message?.includes('proposed_amount_too_low')) {
-          throw new Error('Minimum proposed amount is KSh 800.');
+          throw new Error(`Minimum proposed amount is KSh ${tutor.min_negotiated_rate.toLocaleString()}.`);
+        }
+        if (sessionError.message?.includes('negotiation_not_allowed')) {
+          throw new Error('This tutor does not accept custom rates.');
+        }
+        if (sessionError.message?.includes('schema cache') || sessionError.message?.includes('Could not find')) {
+          throw new Error('Booking service is updating — please try again in a moment.');
         }
         throw sessionError;
       }
@@ -712,46 +727,51 @@ export default function TutorProfilePage() {
               />
             </div>
 
-            {/* Custom rate request */}
-            <div className="rounded-xl border border-[var(--color-border)] overflow-hidden">
-              <button
-                type="button"
-                onClick={() => setBookingForm(f => ({ ...f, use_custom_amount: !f.use_custom_amount, proposed_amount: '' }))}
-                className="w-full flex items-center justify-between px-4 py-3 text-sm text-left hover:bg-[var(--color-bg)] transition-colors"
-              >
-                <div>
-                  <p className="font-medium text-[var(--color-text)]">Can&apos;t afford the standard rate?</p>
-                  <p className="text-xs text-[var(--color-text-secondary)] mt-0.5">Propose a different amount — minimum KSh 800</p>
-                </div>
-                <span className={`text-xs font-bold px-2 py-1 rounded-full transition-colors ${bookingForm.use_custom_amount ? 'bg-primary text-white' : 'bg-[var(--color-bg)] text-[var(--color-text-secondary)]'}`}>
-                  {bookingForm.use_custom_amount ? 'On' : 'Off'}
-                </span>
-              </button>
-              {bookingForm.use_custom_amount && (
-                <div className="px-4 pb-4 border-t border-[var(--color-border)] pt-3 bg-[var(--color-bg)]">
-                  <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">Your proposed amount (KSh)</label>
-                  <input
-                    type="number"
-                    min={800}
-                    max={(() => {
-                      if (!selectedSlot) return 99999;
-                      const [sh, sm] = selectedSlot.start_time.split(':').map(Number);
-                      const [eh, em] = selectedSlot.end_time.split(':').map(Number);
-                      const totalMins = (eh * 60 + em) - (sh * 60 + sm);
-                      return Math.round((totalMins / 60) * tutor.rate_per_hour) - 1;
-                    })()}
-                    step={100}
-                    placeholder="e.g. 1200"
-                    value={bookingForm.proposed_amount}
-                    onChange={e => setBookingForm(f => ({ ...f, proposed_amount: e.target.value }))}
-                    className="input text-sm w-full"
-                  />
-                  <p className="text-xs text-[var(--color-text-secondary)] mt-1.5">
-                    The tutor will review your proposal and can accept, counter, or decline it. The session will only be charged once both parties agree.
-                  </p>
-                </div>
-              )}
-            </div>
+            {/* Custom rate request — only shown if tutor has enabled price negotiation */}
+            {tutor.allow_price_negotiation && (
+              <div className="rounded-xl border border-[var(--color-border)] overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setBookingForm(f => ({ ...f, use_custom_amount: !f.use_custom_amount, proposed_amount: '' }))}
+                  className="w-full flex items-center justify-between px-4 py-3 text-sm text-left hover:bg-[var(--color-bg)] transition-colors"
+                >
+                  <div>
+                    <p className="font-medium text-[var(--color-text)]">Can&apos;t afford the standard rate?</p>
+                    <p className="text-xs text-[var(--color-text-secondary)] mt-0.5">
+                      Propose a different amount — minimum KSh {tutor.min_negotiated_rate.toLocaleString()}
+                    </p>
+                  </div>
+                  <span className={`text-xs font-bold px-2 py-1 rounded-full transition-colors flex-shrink-0 ml-3 ${bookingForm.use_custom_amount ? 'bg-primary text-white' : 'bg-[var(--color-bg)] text-[var(--color-text-secondary)]'}`}>
+                    {bookingForm.use_custom_amount ? 'On' : 'Off'}
+                  </span>
+                </button>
+                {bookingForm.use_custom_amount && (
+                  <div className="px-4 pb-4 border-t border-[var(--color-border)] pt-3 bg-[var(--color-bg)]">
+                    <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">
+                      Your proposed amount (KSh)
+                    </label>
+                    <input
+                      type="number"
+                      min={tutor.min_negotiated_rate}
+                      max={(() => {
+                        const [sh, sm] = selectedSlot.start_time.split(':').map(Number);
+                        const [eh, em] = selectedSlot.end_time.split(':').map(Number);
+                        const totalMins = (eh * 60 + em) - (sh * 60 + sm);
+                        return Math.round((totalMins / 60) * tutor.rate_per_hour) - 1;
+                      })()}
+                      step={100}
+                      placeholder={`Min KSh ${tutor.min_negotiated_rate.toLocaleString()}`}
+                      value={bookingForm.proposed_amount}
+                      onChange={e => setBookingForm(f => ({ ...f, proposed_amount: e.target.value }))}
+                      className="input text-sm w-full"
+                    />
+                    <p className="text-xs text-[var(--color-text-secondary)] mt-1.5">
+                      The tutor will review your proposal and can accept, counter, or decline it before payment is taken.
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Booking type info */}
             <div className={`p-3 rounded-xl text-xs ${bookingForm.use_custom_amount ? 'bg-amber/10 border border-amber/20 text-amber-700 dark:text-amber-400' : tutor.allow_instant_booking ? 'bg-success/10 border border-success/20 text-success' : 'bg-accent/10 border border-accent/20 text-accent-dark dark:text-accent'}`}>

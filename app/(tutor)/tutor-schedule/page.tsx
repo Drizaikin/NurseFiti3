@@ -50,6 +50,8 @@ interface TutorPrefs {
   rate_per_hour: number;
   session_platform: string[];
   is_accepting_bookings: boolean;
+  allow_price_negotiation: boolean;
+  min_negotiated_rate: number;
 }
 
 interface MeetLinkModal {
@@ -219,6 +221,8 @@ export default function TutorSchedulePage() {
     rate_per_hour: 1500,
     session_platform: ['Zoom', 'Google Meet', 'WhatsApp'],
     is_accepting_bookings: true,
+    allow_price_negotiation: false,
+    min_negotiated_rate: 1000,
   });
   const [isLoading, setIsLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -316,7 +320,7 @@ export default function TutorSchedulePage() {
 
   const loadPrefs = async (uid: string) => {
     const { data } = await supabase.from('tutor_profiles')
-      .select('allow_instant_booking, allow_group_sessions, buffer_minutes, rate_per_hour, session_platform, is_accepting_bookings')
+      .select('allow_instant_booking, allow_group_sessions, buffer_minutes, rate_per_hour, session_platform, is_accepting_bookings, allow_price_negotiation, min_negotiated_rate')
       .eq('id', uid).maybeSingle();
     if (data) setPrefs(data as TutorPrefs);
   };
@@ -524,8 +528,11 @@ export default function TutorSchedulePage() {
   // ── Prefs save ────────────────────────────────────────────────────────────
   const savePrefs = async () => {
     if (!userId) return;
+    if (prefs.allow_price_negotiation && prefs.min_negotiated_rate < 1000) {
+      toast.error('Minimum negotiated rate must be at least KSh 1,000');
+      return;
+    }
     setSaving(true);
-    // RLS policy allows tutors to update their own row
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { error } = await (supabase as any).from('tutor_profiles').update({
       allow_instant_booking: prefs.allow_instant_booking,
@@ -533,6 +540,8 @@ export default function TutorSchedulePage() {
       buffer_minutes: prefs.buffer_minutes,
       rate_per_hour: prefs.rate_per_hour,
       is_accepting_bookings: prefs.is_accepting_bookings,
+      allow_price_negotiation: prefs.allow_price_negotiation,
+      min_negotiated_rate: prefs.min_negotiated_rate,
     }).eq('id', userId);
     setSaving(false);
     if (error) toast.error('Failed to save preferences');
@@ -811,6 +820,39 @@ export default function TutorSchedulePage() {
                 <label className="block text-sm font-medium text-[var(--color-text)] mb-1.5">Rate per Hour (KSh)</label>
                 <input type="number" className="input text-sm" value={prefs.rate_per_hour} min={500} max={10000} step={100}
                   onChange={e => setPrefs(p => ({ ...p, rate_per_hour: Number(e.target.value) }))} />
+              </div>
+
+              {/* ── Price negotiation ── */}
+              <div className="pt-2 border-t border-[var(--color-border)]">
+                <div className="flex items-center justify-between mb-1">
+                  <div>
+                    <p className="text-sm font-medium text-[var(--color-text)]">Allow Price Negotiation</p>
+                    <p className="text-xs text-[var(--color-text-secondary)]">Students can propose a lower rate</p>
+                  </div>
+                  <Toggle
+                    checked={prefs.allow_price_negotiation}
+                    onChange={v => setPrefs(p => ({ ...p, allow_price_negotiation: v }))}
+                  />
+                </div>
+                {prefs.allow_price_negotiation && (
+                  <div className="mt-3">
+                    <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">
+                      Your minimum rate (KSh) <span className="text-[var(--color-text-secondary)] font-normal">— must be ≥ 1,000</span>
+                    </label>
+                    <input
+                      type="number"
+                      className="input text-sm"
+                      value={prefs.min_negotiated_rate}
+                      min={1000}
+                      max={prefs.rate_per_hour}
+                      step={100}
+                      onChange={e => setPrefs(p => ({ ...p, min_negotiated_rate: Number(e.target.value) }))}
+                    />
+                    <p className="text-xs text-[var(--color-text-secondary)] mt-1">
+                      Students cannot propose below KSh {prefs.min_negotiated_rate.toLocaleString()}
+                    </p>
+                  </div>
+                )}
               </div>
               <Button variant="primary" size="sm" className="w-full" onClick={savePrefs} disabled={saving}>
                 {saving ? <Spinner size="sm" color="white" /> : 'Save Preferences'}
