@@ -93,6 +93,12 @@ export default function AdminOverviewPage() {
             )}
           </Card>
         </Link>
+        <Link href="/admin/email">
+          <Card className="hover:border-primary/40 transition-all cursor-pointer h-full">
+            <h2 className="font-heading font-bold text-[var(--color-text)] mb-1">Bulk Email</h2>
+            <p className="text-sm text-neutral-mid">Send announcements with optional files or images to registered students or tutors.</p>
+          </Card>
+        </Link>
       </div>
     </div>
   );
