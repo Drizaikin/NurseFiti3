@@ -86,45 +86,61 @@ function toDateStr(d: Date) {
 // ── Mini Calendar Component ───────────────────────────────────────────────────
 interface MiniCalendarProps {
   availability: AvailabilitySlot[];
+  sessions: BookedSession[];
   onDateClick: (date: Date) => void;
   selectedDate: Date | null;
 }
 
-function MiniCalendar({ availability, onDateClick, selectedDate }: MiniCalendarProps) {
+function MiniCalendar({ availability, sessions, onDateClick, selectedDate }: MiniCalendarProps) {
   const today = new Date();
   const [calMonth, setCalMonth] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
 
   const year = calMonth.getFullYear();
   const month = calMonth.getMonth();
-  const firstDow = new Date(year, month, 1).getDay(); // 0=Sun
+  const firstDow = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-  // Build set of dates that have availability in this month
-  // For recurring: project forward — every matching day_of_week in this month
-  // For one-time: just the specific_date
-  const recurringDow = new Set(
-    availability.filter(a => a.is_active && a.is_recurring).map(a => a.day_of_week)
-  );
-  const oneTimeDates = new Set(
-    availability.filter(a => a.is_active && !a.is_recurring && a.specific_date).map(a => a.specific_date!)
-  );
-
-  const hasAvailability = (date: Date): { recurring: boolean; oneTime: boolean } => {
-    const dateStr = toDateStr(date);
+  /**
+   * For a given date, determine what dots to show.
+   * Applies the same priority logic as the week grid and day-detail panel:
+   *   1. One-time slots for this exact date override recurring for the same time
+   *   2. A date with NO active slots (all removed) shows no dot even if
+   *      a recurring slot exists for that day_of_week
+   *   3. Booked = has a confirmed/pending_approval session that day
+   */
+  const getDayStatus = (date: Date): { available: boolean; booked: boolean } => {
     const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     const dateMidnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    if (dateMidnight < todayMidnight) return { recurring: false, oneTime: false };
-    return {
-      recurring: recurringDow.has(date.getDay()),
-      oneTime: oneTimeDates.has(dateStr),
-    };
+    if (dateMidnight < todayMidnight) return { available: false, booked: false };
+
+    const dateStr = toDateStr(date);
+    const dow = date.getDay();
+
+    // Collect active slots for this date (one-time takes priority per time slot)
+    const seenTimes = new Set<string>();
+    let hasActiveSlot = false;
+
+    // One-time slots for this exact date
+    availability
+      .filter(a => a.is_active && !a.is_recurring && a.specific_date === dateStr)
+      .forEach(a => { seenTimes.add(a.start_time); hasActiveSlot = true; });
+
+    // Recurring slots — only count times not already covered by a one-time slot
+    availability
+      .filter(a => a.is_active && a.is_recurring && a.day_of_week === dow)
+      .forEach(a => { if (!seenTimes.has(a.start_time)) hasActiveSlot = true; });
+
+    const booked = sessions.some(
+      s => s.session_date === dateStr && ['confirmed', 'pending_approval'].includes(s.status)
+    );
+
+    return { available: hasActiveSlot, booked };
   };
 
   const cells: (Date | null)[] = [
     ...Array(firstDow).fill(null),
     ...Array.from({ length: daysInMonth }, (_, i) => new Date(year, month, i + 1)),
   ];
-  // Pad to complete last row
   while (cells.length % 7 !== 0) cells.push(null);
 
   const monthLabel = calMonth.toLocaleDateString('en-KE', { month: 'long', year: 'numeric' });
@@ -167,8 +183,7 @@ function MiniCalendar({ availability, onDateClick, selectedDate }: MiniCalendarP
           const isSelected = selectedDate && toDateStr(date) === toDateStr(selectedDate);
           const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
           const isPast = new Date(date.getFullYear(), date.getMonth(), date.getDate()) < todayMidnight;
-          const { recurring, oneTime } = hasAvailability(date);
-          const hasAny = recurring || oneTime;
+          const { available, booked } = getDayStatus(date);
 
           return (
             <button
@@ -183,10 +198,11 @@ function MiniCalendar({ availability, onDateClick, selectedDate }: MiniCalendarP
               `}
             >
               <span>{date.getDate()}</span>
-              {hasAny && !isSelected && (
+              {(available || booked) && !isSelected && (
                 <span className="absolute bottom-0.5 flex gap-0.5">
-                  {recurring && <span className="w-1 h-1 rounded-full bg-success inline-block" />}
-                  {oneTime  && <span className="w-1 h-1 rounded-full bg-primary inline-block" />}
+                  {available && !booked && <span className="w-1 h-1 rounded-full bg-success inline-block" />}
+                  {available && booked  && <span className="w-1 h-1 rounded-full bg-amber-400 inline-block" />}
+                  {!available && booked && <span className="w-1 h-1 rounded-full bg-error/50 inline-block" />}
                 </span>
               )}
             </button>
@@ -195,12 +211,15 @@ function MiniCalendar({ availability, onDateClick, selectedDate }: MiniCalendarP
       </div>
 
       {/* Dot legend */}
-      <div className="flex items-center gap-3 mt-3 pt-3 border-t border-[var(--color-border)]">
+      <div className="flex flex-wrap items-center gap-3 mt-3 pt-3 border-t border-[var(--color-border)]">
         <span className="flex items-center gap-1 text-[10px] text-[var(--color-text-secondary)]">
-          <span className="w-2 h-2 rounded-full bg-success inline-block" /> Recurring
+          <span className="w-2 h-2 rounded-full bg-success inline-block" /> Available
         </span>
         <span className="flex items-center gap-1 text-[10px] text-[var(--color-text-secondary)]">
-          <span className="w-2 h-2 rounded-full bg-primary inline-block" /> One-time
+          <span className="w-2 h-2 rounded-full bg-amber-400 inline-block" /> Partially booked
+        </span>
+        <span className="flex items-center gap-1 text-[10px] text-[var(--color-text-secondary)]">
+          <span className="w-2 h-2 rounded-full bg-error/50 inline-block" /> Fully booked
         </span>
       </div>
     </div>
@@ -292,14 +311,18 @@ export default function TutorSchedulePage() {
   };
 
   const loadSessions = async (uid: string) => {
-    const weekStart = getWeekStart();
-    const weekEnd = new Date(weekStart); weekEnd.setDate(weekEnd.getDate() + 7);
+    // Fetch next 60 days — covers the current week grid AND the full calendar overview
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const horizon = new Date(today); horizon.setDate(today.getDate() + 60);
+
     const { data: sessData } = await supabase.from('sessions')
       .select('id, session_date, start_time, end_time, topic, platform, status, student_id, join_link, proposed_amount, agreed_amount, gross_amount, pricing_status')
       .eq('tutor_id', uid)
-      .gte('session_date', toDateStr(weekStart))
-      .lt('session_date', toDateStr(weekEnd))
-      .in('status', ['confirmed', 'pending_approval', 'completed']);
+      .gte('session_date', toDateStr(today))
+      .lte('session_date', toDateStr(horizon))
+      .in('status', ['confirmed', 'pending_approval', 'completed'])
+      .order('session_date', { ascending: true });
+
     const sessArr = (sessData ?? []) as any[];
     const studentIds = Array.from(new Set(sessArr.map(s => s.student_id)));
     let nameMap: Record<string, string> = {};
@@ -307,6 +330,8 @@ export default function TutorSchedulePage() {
       const { data: names } = await supabase.from('profiles').select('id, full_name').in('id', studentIds);
       nameMap = Object.fromEntries((names ?? []).map((n: any) => [n.id, n.full_name]));
     }
+
+    // All sessions stored in state — week grid filters in-memory via getSlotStatus
     setSessions(sessArr.map(s => ({
       id: s.id, session_date: s.session_date, start_time: s.start_time, end_time: s.end_time,
       student_name: nameMap[s.student_id] ?? 'Student', topic: s.topic, platform: s.platform,
@@ -717,6 +742,7 @@ export default function TutorSchedulePage() {
             <h3 className="font-heading font-bold text-[var(--color-text)] mb-4">Availability Overview</h3>
             <MiniCalendar
               availability={availability}
+              sessions={sessions}
               onDateClick={handleCalendarDateClick}
               selectedDate={calSelectedDate}
             />
@@ -885,16 +911,20 @@ export default function TutorSchedulePage() {
           </Card>
 
           {/* ── This week's sessions ──────────────────────────────────────── */}
-          {sessions.length > 0 && (
-            <Card>
-              <h3 className="font-heading font-bold text-[var(--color-text)] mb-3">
-                This Week
-                <span className="ml-2 text-xs font-normal text-[var(--color-text-secondary)]">
-                  {sessions.filter(s => s.status !== 'completed').length} upcoming
-                </span>
-              </h3>
-              <div className="space-y-2">
-                {sessions.map(s => (
+          {(() => {
+            const weekDatesSet = new Set(weekDays.map(d => toDateStr(d)));
+            const thisWeekSessions = sessions.filter(s => weekDatesSet.has(s.session_date) && s.status !== 'completed');
+            if (thisWeekSessions.length === 0) return null;
+            return (
+              <Card>
+                <h3 className="font-heading font-bold text-[var(--color-text)] mb-3">
+                  This Week
+                  <span className="ml-2 text-xs font-normal text-[var(--color-text-secondary)]">
+                    {thisWeekSessions.length} session{thisWeekSessions.length !== 1 ? 's' : ''}
+                  </span>
+                </h3>
+                <div className="space-y-2">
+                  {thisWeekSessions.map(s => (
                   <div key={s.id} className="p-2.5 rounded-lg border border-[var(--color-border)] text-xs">
                     <p className="font-semibold text-[var(--color-text)]">{s.student_name}</p>
                     <p className="text-[var(--color-text-secondary)]">
@@ -954,7 +984,8 @@ export default function TutorSchedulePage() {
                 ))}
               </div>
             </Card>
-          )}
+            );
+          })()}
 
         </div>{/* end right panel */}
       </div>{/* end grid */}
