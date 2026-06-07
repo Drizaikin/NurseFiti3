@@ -64,10 +64,12 @@ export default function BookingsPage() {
     const payment = searchParams.get('payment');
     if (payment === 'success') {
       toast.success('Payment successful! Your session is confirmed.');
-      // Remove the query param so toast doesn't re-fire on re-renders/back navigation
       router.replace('/bookings', { scroll: false });
     } else if (payment === 'pending') {
-      toast('Payment is still processing — your session will be confirmed once payment clears.', { icon: '⏳', duration: 6000 });
+      toast('Payment is still processing — your session will be confirmed once M-Pesa confirms. Check back in a moment.', { icon: '⏳', duration: 8000 });
+      router.replace('/bookings', { scroll: false });
+    } else if (payment === 'failed') {
+      toast.error('Payment was not completed. You can try paying again from your bookings below.');
       router.replace('/bookings', { scroll: false });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

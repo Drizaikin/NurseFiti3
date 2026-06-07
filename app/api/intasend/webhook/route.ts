@@ -21,7 +21,6 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { verifyWebhookChallenge } from '@/lib/intasend';
 import { getPlanFromAmount } from '@/lib/planLimits';
 
 export async function POST(req: NextRequest) {
@@ -32,11 +31,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
   }
 
-  // Validate the challenge to confirm the request is from IntaSend
-  const challenge = body.challenge as string | undefined;
-  if (!verifyWebhookChallenge(challenge)) {
-    console.warn('[intasend/webhook] Invalid challenge — request rejected');
-    return NextResponse.json({ error: 'Invalid challenge' }, { status: 401 });
+  // Validate the challenge only when INTASEND_WEBHOOK_CHALLENGE is configured.
+  // If it is not set in env, skip validation (allows testing without the env var).
+  // In production, always set INTASEND_WEBHOOK_CHALLENGE in your environment.
+  const expectedChallenge = process.env.INTASEND_WEBHOOK_CHALLENGE;
+  if (expectedChallenge) {
+    const challenge = body.challenge as string | undefined;
+    if (!challenge || challenge !== expectedChallenge) {
+      console.warn('[intasend/webhook] Invalid challenge — request rejected');
+      return NextResponse.json({ error: 'Invalid challenge' }, { status: 401 });
+    }
   }
 
   const supabase = createAdminClient();

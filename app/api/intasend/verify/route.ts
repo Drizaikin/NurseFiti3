@@ -47,14 +47,29 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    // Verify with IntaSend using the invoice_id stored at checkout creation
+    // Verify with IntaSend using the checkout ID stored at initialization
     const invoiceId = (payment as any).intasend_checkout_id;
 
     if (!invoiceId) {
       return NextResponse.redirect(`${siteUrl}/dashboard?payment=failed&reason=missing_invoice_id`);
     }
 
-    const txn = await verifyCheckout(invoiceId);
+    let txn: { state: string; invoice_id?: string; provider?: string } | null = null;
+    try {
+      txn = await verifyCheckout(invoiceId);
+    } catch (verifyErr) {
+      // IntaSend status API can throw when the payment is still processing
+      // (the checkout hasn't been linked to an invoice yet). Treat as pending.
+      console.warn('[intasend/verify] status check threw — treating as pending:', verifyErr);
+    }
+
+    // If we couldn't verify or the state is still in-flight, leave pending
+    if (!txn || txn.state === 'PENDING' || txn.state === 'PROCESSING') {
+      const pendingRedirect = (payment as any).type === 'session_booking'
+        ? '/bookings?payment=pending'
+        : '/settings?payment=pending';
+      return NextResponse.redirect(`${siteUrl}${pendingRedirect}`);
+    }
 
     if (txn.state === 'FAILED') {
       await (supabase as any)
@@ -62,16 +77,10 @@ export async function GET(req: NextRequest) {
         .update({ status: 'failed' })
         .eq('intasend_reference', reference);
 
-      return NextResponse.redirect(`${siteUrl}/dashboard?payment=failed&reason=failed`);
-    }
-
-    if (txn.state !== 'COMPLETE') {
-      // PENDING or PROCESSING — do not mark as failed; let webhook or sync-plan resolve it
-      // Route back to the appropriate page so the user sees a useful message
-      const pendingRedirect = (payment as any).type === 'session_booking'
-        ? '/bookings?payment=pending'
-        : '/settings?payment=pending';
-      return NextResponse.redirect(`${siteUrl}${pendingRedirect}`);
+      const failedRedirect = (payment as any).type === 'session_booking'
+        ? '/bookings?payment=failed'
+        : '/dashboard?payment=failed&reason=failed';
+      return NextResponse.redirect(`${siteUrl}${failedRedirect}`);
     }
 
     // Mark payment as completed
@@ -98,7 +107,10 @@ export async function GET(req: NextRequest) {
     );
   } catch (err) {
     console.error('[intasend/verify]', err);
-    return NextResponse.redirect(`${siteUrl}/dashboard?payment=failed&reason=server_error`);
+    // Don't send to a "failed" page — the payment may still complete via webhook
+    const type = req.nextUrl.searchParams.get('type');
+    const safeRedirect = type === 'session_booking' ? '/bookings?payment=pending' : '/settings?payment=pending';
+    return NextResponse.redirect(`${siteUrl}${safeRedirect}`);
   }
 }
 
