@@ -58,6 +58,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               { href: '/admin/questions', label: 'MCQ Review' },
               { href: '/admin/students', label: 'Students' },
               { href: '/admin/tutors', label: 'Tutors' },
+              { href: '/admin/community', label: 'Community' },
             ].map(({ href, label }) => (
               <Link
                 key={href}
