@@ -59,6 +59,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               { href: '/admin/students', label: 'Students' },
               { href: '/admin/tutors', label: 'Tutors' },
               { href: '/admin/community', label: 'Community' },
+              { href: '/admin/email', label: 'Email' },
             ].map(({ href, label }) => (
               <Link
                 key={href}
