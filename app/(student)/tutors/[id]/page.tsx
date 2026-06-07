@@ -41,6 +41,8 @@ interface AvailabilitySlot {
   day_of_week: number;
   start_time: string;
   end_time: string;
+  is_recurring: boolean;
+  specific_date: string | null;
 }
 
 interface Review {
@@ -117,6 +119,8 @@ export default function TutorProfilePage() {
     topic: '',
     platform: '',
     student_note: '',
+    use_custom_amount: false,
+    proposed_amount: '',
   });
   const [isBooking, setIsBooking] = useState(false);
 
@@ -133,7 +137,7 @@ export default function TutorProfilePage() {
         supabase.from('tutor_profiles').select('*').eq('id', tutorId).eq('verification_status', 'verified').maybeSingle(),
         supabase.from('profiles').select('full_name, avatar_url').eq('id', tutorId).maybeSingle(),
         supabase.from('student_profiles').select('cadre').eq('id', user.id).maybeSingle(),
-        supabase.from('tutor_availability').select('id, day_of_week, start_time, end_time').eq('tutor_id', tutorId).eq('is_active', true),
+        supabase.from('tutor_availability').select('id, day_of_week, start_time, end_time, is_recurring, specific_date').eq('tutor_id', tutorId).eq('is_active', true),
         supabase.from('sessions').select('session_date, start_time').eq('tutor_id', tutorId).in('status', ['confirmed', 'pending_approval']).gte('session_date', new Date().toISOString().split('T')[0]),
         supabase.from('session_reviews').select('id, rating, review_text, keywords, created_at, student_id').eq('tutor_id', tutorId).eq('is_published', true).order('created_at', { ascending: false }).limit(10),
       ]);
@@ -212,7 +216,7 @@ export default function TutorProfilePage() {
         filter: `tutor_id=eq.${tutorId}`,
       }, () => {
         // Refresh availability on any change
-        supabase.from('tutor_availability').select('id, day_of_week, start_time, end_time')
+        supabase.from('tutor_availability').select('id, day_of_week, start_time, end_time, is_recurring, specific_date')
           .eq('tutor_id', tutorId).eq('is_active', true)
           .then(({ data }) => setAvailability((data ?? []) as AvailabilitySlot[]));
       })
@@ -240,16 +244,30 @@ export default function TutorProfilePage() {
     return bookedSlots.some(s => s.session_date === dateStr && s.start_time === startTime);
   };
 
-  const isSlotAvailable = (date: Date) => {
-    const dayOfWeek = date.getDay();
-    return availability.filter(a => a.day_of_week === dayOfWeek);
-  };
-
   const getAvailableSlotsForDate = (date: Date): BookingSlot[] => {
-    const slots = isSlotAvailable(date);
-    return slots
+    const dateStr = date.toISOString().split('T')[0];
+    const dayOfWeek = date.getDay();
+    const seenTimes = new Set<string>();
+    const result: BookingSlot[] = [];
+
+    // One-time slots for this exact date take priority
+    availability
+      .filter(a => !a.is_recurring && (a as any).specific_date === dateStr)
       .filter(s => !isSlotBooked(date, s.start_time))
-      .map(s => ({ date, start_time: s.start_time, end_time: s.end_time, day_of_week: date.getDay() }));
+      .forEach(s => {
+        seenTimes.add(s.start_time);
+        result.push({ date, start_time: s.start_time, end_time: s.end_time, day_of_week: dayOfWeek });
+      });
+
+    // Recurring slots for this day_of_week — only if not overridden by a one-time slot
+    availability
+      .filter(a => a.is_recurring && a.day_of_week === dayOfWeek)
+      .filter(s => !seenTimes.has(s.start_time) && !isSlotBooked(date, s.start_time))
+      .forEach(s => {
+        result.push({ date, start_time: s.start_time, end_time: s.end_time, day_of_week: dayOfWeek });
+      });
+
+    return result;
   };
 
   const handleSelectSlot = (slot: BookingSlot) => {
@@ -259,7 +277,7 @@ export default function TutorProfilePage() {
     const preferredPlatform = tutor.session_platform.includes('Google Meet')
       ? 'Google Meet'
       : tutor.session_platform[0] ?? 'Google Meet';
-    setBookingForm({ topic: '', platform: preferredPlatform, student_note: '' });
+    setBookingForm({ topic: '', platform: preferredPlatform, student_note: '', use_custom_amount: false, proposed_amount: '' });
     setShowBookingModal(true);
   };
 
@@ -280,8 +298,23 @@ export default function TutorProfilePage() {
       const durationMinutes = (endH * 60 + endM) - (startH * 60 + startM);
       const grossAmount = Math.round((durationMinutes / 60) * tutor.rate_per_hour);
 
+      // Validate custom amount if provided
+      let proposedAmount: number | null = null;
+      if (bookingForm.use_custom_amount && bookingForm.proposed_amount) {
+        proposedAmount = parseInt(bookingForm.proposed_amount, 10);
+        if (isNaN(proposedAmount) || proposedAmount < 800) {
+          toast.error('Minimum proposed amount is KSh 800');
+          setIsBooking(false);
+          return;
+        }
+        if (proposedAmount >= grossAmount) {
+          toast.error('Proposed amount must be less than the standard rate');
+          setIsBooking(false);
+          return;
+        }
+      }
+
       // Use the atomic RPC to prevent race-condition double-bookings.
-      // The function also computes platform_fee (15%) and net_amount server-side.
       const { data: sessionId, error: sessionError } = await (supabase as any).rpc(
         'create_booking_atomic',
         {
@@ -295,12 +328,16 @@ export default function TutorProfilePage() {
           p_platform: bookingForm.platform,
           p_duration_minutes: durationMinutes,
           p_rate_per_hour: tutor.rate_per_hour,
+          p_proposed_amount: proposedAmount,
         }
       );
 
       if (sessionError) {
         if (sessionError.message?.includes('slot_already_booked')) {
           throw new Error('This slot was just booked by someone else. Please choose a different time.');
+        }
+        if (sessionError.message?.includes('proposed_amount_too_low')) {
+          throw new Error('Minimum proposed amount is KSh 800.');
         }
         throw sessionError;
       }
@@ -319,7 +356,11 @@ export default function TutorProfilePage() {
 
       setShowBookingModal(false);
 
-      if (tutor.allow_instant_booking) {
+      if (proposedAmount) {
+        // Custom amount — session goes to pending until tutor agrees on price
+        toast.success('Booking request sent! The tutor will review your proposed rate and respond shortly.');
+        router.push('/bookings');
+      } else if (tutor.allow_instant_booking) {
         await initiatePayment(sessionId as string, grossAmount);
       } else {
         toast.success('Booking request sent! The tutor will confirm shortly.');
@@ -671,10 +712,53 @@ export default function TutorProfilePage() {
               />
             </div>
 
+            {/* Custom rate request */}
+            <div className="rounded-xl border border-[var(--color-border)] overflow-hidden">
+              <button
+                type="button"
+                onClick={() => setBookingForm(f => ({ ...f, use_custom_amount: !f.use_custom_amount, proposed_amount: '' }))}
+                className="w-full flex items-center justify-between px-4 py-3 text-sm text-left hover:bg-[var(--color-bg)] transition-colors"
+              >
+                <div>
+                  <p className="font-medium text-[var(--color-text)]">Can&apos;t afford the standard rate?</p>
+                  <p className="text-xs text-[var(--color-text-secondary)] mt-0.5">Propose a different amount — minimum KSh 800</p>
+                </div>
+                <span className={`text-xs font-bold px-2 py-1 rounded-full transition-colors ${bookingForm.use_custom_amount ? 'bg-primary text-white' : 'bg-[var(--color-bg)] text-[var(--color-text-secondary)]'}`}>
+                  {bookingForm.use_custom_amount ? 'On' : 'Off'}
+                </span>
+              </button>
+              {bookingForm.use_custom_amount && (
+                <div className="px-4 pb-4 border-t border-[var(--color-border)] pt-3 bg-[var(--color-bg)]">
+                  <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">Your proposed amount (KSh)</label>
+                  <input
+                    type="number"
+                    min={800}
+                    max={(() => {
+                      if (!selectedSlot) return 99999;
+                      const [sh, sm] = selectedSlot.start_time.split(':').map(Number);
+                      const [eh, em] = selectedSlot.end_time.split(':').map(Number);
+                      const totalMins = (eh * 60 + em) - (sh * 60 + sm);
+                      return Math.round((totalMins / 60) * tutor.rate_per_hour) - 1;
+                    })()}
+                    step={100}
+                    placeholder="e.g. 1200"
+                    value={bookingForm.proposed_amount}
+                    onChange={e => setBookingForm(f => ({ ...f, proposed_amount: e.target.value }))}
+                    className="input text-sm w-full"
+                  />
+                  <p className="text-xs text-[var(--color-text-secondary)] mt-1.5">
+                    The tutor will review your proposal and can accept, counter, or decline it. The session will only be charged once both parties agree.
+                  </p>
+                </div>
+              )}
+            </div>
+
             {/* Booking type info */}
-            <div className={`p-3 rounded-xl text-xs ${tutor.allow_instant_booking ? 'bg-success/10 border border-success/20 text-success' : 'bg-accent/10 border border-accent/20 text-accent-dark dark:text-accent'}`}>
-              {tutor.allow_instant_booking
-                ? '⚡ Instant booking — you\'ll be redirected to payment immediately'
+            <div className={`p-3 rounded-xl text-xs ${bookingForm.use_custom_amount ? 'bg-amber/10 border border-amber/20 text-amber-700 dark:text-amber-400' : tutor.allow_instant_booking ? 'bg-success/10 border border-success/20 text-success' : 'bg-accent/10 border border-accent/20 text-accent-dark dark:text-accent'}`}>
+              {bookingForm.use_custom_amount
+                ? '💬 Custom rate — the tutor will review and respond before payment is taken'
+                : tutor.allow_instant_booking
+                ? "⚡ Instant booking — you'll be redirected to payment immediately"
                 : '⏳ This tutor requires approval — you\'ll be notified when confirmed'}
             </div>
 
@@ -683,7 +767,7 @@ export default function TutorProfilePage() {
                 Cancel
               </Button>
               <Button variant="primary" className="flex-1" onClick={handleBookSession} disabled={isBooking}>
-                {isBooking ? <Spinner size="sm" color="white" /> : tutor.allow_instant_booking ? 'Book & Pay' : 'Send Request'}
+                {isBooking ? <Spinner size="sm" color="white" /> : bookingForm.use_custom_amount ? 'Send Request' : tutor.allow_instant_booking ? 'Book & Pay' : 'Send Request'}
               </Button>
             </div>
           </div>

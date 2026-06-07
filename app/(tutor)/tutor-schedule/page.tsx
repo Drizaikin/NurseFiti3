@@ -37,6 +37,10 @@ interface BookedSession {
   platform: string;
   status: string;
   join_link: string | null;
+  proposed_amount: number | null;
+  agreed_amount: number | null;
+  gross_amount: number;
+  pricing_status: string;
 }
 
 interface TutorPrefs {
@@ -287,7 +291,7 @@ export default function TutorSchedulePage() {
     const weekStart = getWeekStart();
     const weekEnd = new Date(weekStart); weekEnd.setDate(weekEnd.getDate() + 7);
     const { data: sessData } = await supabase.from('sessions')
-      .select('id, session_date, start_time, end_time, topic, platform, status, student_id, join_link')
+      .select('id, session_date, start_time, end_time, topic, platform, status, student_id, join_link, proposed_amount, agreed_amount, gross_amount, pricing_status')
       .eq('tutor_id', uid)
       .gte('session_date', weekStart.toISOString().split('T')[0])
       .lt('session_date', weekEnd.toISOString().split('T')[0])
@@ -303,6 +307,10 @@ export default function TutorSchedulePage() {
       id: s.id, session_date: s.session_date, start_time: s.start_time, end_time: s.end_time,
       student_name: nameMap[s.student_id] ?? 'Student', topic: s.topic, platform: s.platform,
       status: s.status, join_link: s.join_link ?? null,
+      proposed_amount: s.proposed_amount ?? null,
+      agreed_amount: s.agreed_amount ?? null,
+      gross_amount: s.gross_amount ?? 0,
+      pricing_status: s.pricing_status ?? 'standard',
     })));
   };
 
@@ -467,6 +475,49 @@ export default function TutorSchedulePage() {
       toast.error(err?.message ?? 'Failed to save meet link');
     } finally {
       setSavingMeetLink(false);
+    }
+  };
+
+  // ── Pricing negotiation ───────────────────────────────────────────────────
+  const [pricingModal, setPricingModal] = useState<{ session: BookedSession; counterAmount: string } | null>(null);
+
+  const handlePricingResponse = async (session: BookedSession, action: 'accept' | 'counter' | 'decline', counterAmount?: number) => {
+    try {
+      if (action === 'accept') {
+        await (supabase as any).from('sessions').update({
+          agreed_amount: session.proposed_amount,
+          pricing_status: 'agreed',
+        }).eq('id', session.id);
+        setSessions(prev => prev.map(s => s.id === session.id
+          ? { ...s, agreed_amount: session.proposed_amount, pricing_status: 'agreed' }
+          : s
+        ));
+        toast.success('Rate accepted. Student will be notified to proceed with payment.');
+      } else if (action === 'counter' && counterAmount) {
+        if (counterAmount < 800) { toast.error('Minimum rate is KSh 800'); return; }
+        await (supabase as any).from('sessions').update({
+          agreed_amount: counterAmount,
+          pricing_status: 'agreed',
+        }).eq('id', session.id);
+        setSessions(prev => prev.map(s => s.id === session.id
+          ? { ...s, agreed_amount: counterAmount, pricing_status: 'agreed' }
+          : s
+        ));
+        toast.success(`Counter offer of KSh ${counterAmount.toLocaleString()} set. Student will be notified.`);
+      } else if (action === 'decline') {
+        await (supabase as any).from('sessions').update({
+          pricing_status: 'declined',
+          agreed_amount: session.gross_amount,
+        }).eq('id', session.id);
+        setSessions(prev => prev.map(s => s.id === session.id
+          ? { ...s, pricing_status: 'declined', agreed_amount: session.gross_amount }
+          : s
+        ));
+        toast('Proposal declined. Session will proceed at standard rate.', { icon: 'ℹ️' });
+      }
+      setPricingModal(null);
+    } catch {
+      toast.error('Failed to update pricing. Please try again.');
     }
   };
 
@@ -798,6 +849,20 @@ export default function TutorSchedulePage() {
                       >
                         {s.status.replace('_', ' ')}
                       </Badge>
+                      {/* Pricing proposal badge */}
+                      {s.pricing_status === 'proposed' && (
+                        <button
+                          onClick={() => setPricingModal({ session: s, counterAmount: '' })}
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-[10px] font-bold hover:bg-amber-200 dark:hover:bg-amber-900/50 transition-colors animate-pulse"
+                        >
+                          💬 KSh {s.proposed_amount?.toLocaleString()} proposed
+                        </button>
+                      )}
+                      {s.pricing_status === 'agreed' && s.agreed_amount && (
+                        <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-success/15 text-success font-semibold">
+                          ✓ KSh {s.agreed_amount.toLocaleString()} agreed
+                        </span>
+                      )}
                       {/* Meet link status & action */}
                       {s.platform === 'Google Meet' && s.status === 'confirmed' && (
                         s.join_link ? (
@@ -835,6 +900,90 @@ export default function TutorSchedulePage() {
 
         </div>{/* end right panel */}
       </div>{/* end grid */}
+
+      {/* ── Pricing Negotiation Modal ────────────────────────────────────────── */}
+      <Modal
+        isOpen={!!pricingModal}
+        onClose={() => setPricingModal(null)}
+        title="Student Rate Proposal"
+      >
+        {pricingModal && (
+          <div className="space-y-4">
+            <div className="rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/40 p-4">
+              <p className="text-sm font-semibold text-[var(--color-text)]">
+                Session with {pricingModal.session.student_name}
+              </p>
+              <p className="text-xs text-[var(--color-text-secondary)] mt-0.5">
+                {new Date(pricingModal.session.session_date).toLocaleDateString('en-KE', { weekday: 'long', day: 'numeric', month: 'long' })} at {pricingModal.session.start_time.slice(0, 5)}
+              </p>
+              <div className="mt-3 flex items-center gap-4 text-sm">
+                <div>
+                  <p className="text-xs text-[var(--color-text-secondary)]">Your standard rate</p>
+                  <p className="font-bold text-[var(--color-text)]">KSh {pricingModal.session.gross_amount.toLocaleString()}</p>
+                </div>
+                <div className="text-[var(--color-text-secondary)]">→</div>
+                <div>
+                  <p className="text-xs text-[var(--color-text-secondary)]">Student proposes</p>
+                  <p className="font-bold text-amber-600 dark:text-amber-400">KSh {pricingModal.session.proposed_amount?.toLocaleString()}</p>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-sm text-[var(--color-text-secondary)]">
+              You can accept the student&apos;s proposed rate, set a counter-offer (minimum KSh 800), or decline and charge your standard rate.
+            </p>
+
+            {/* Counter amount input */}
+            <div>
+              <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">
+                Counter-offer amount (KSh) — optional
+              </label>
+              <input
+                type="number"
+                min={800}
+                max={pricingModal.session.gross_amount - 1}
+                step={100}
+                placeholder={`e.g. ${Math.round(((pricingModal.session.proposed_amount ?? 0) + pricingModal.session.gross_amount) / 2)}`}
+                value={pricingModal.counterAmount}
+                onChange={e => setPricingModal(p => p ? { ...p, counterAmount: e.target.value } : null)}
+                className="input text-sm w-full"
+              />
+              <p className="text-xs text-[var(--color-text-secondary)] mt-1">Minimum KSh 800</p>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 pt-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handlePricingResponse(pricingModal.session, 'decline')}
+              >
+                Decline
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const amt = parseInt(pricingModal.counterAmount, 10);
+                  if (!pricingModal.counterAmount || isNaN(amt)) {
+                    toast.error('Enter a counter-offer amount first');
+                    return;
+                  }
+                  handlePricingResponse(pricingModal.session, 'counter', amt);
+                }}
+              >
+                Counter
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => handlePricingResponse(pricingModal.session, 'accept')}
+              >
+                Accept KSh {pricingModal.session.proposed_amount?.toLocaleString()}
+              </Button>
+            </div>
+          </div>
+        )}
+      </Modal>
 
       {/* ── Meet Link Modal ──────────────────────────────────────────────────── */}
       <Modal
