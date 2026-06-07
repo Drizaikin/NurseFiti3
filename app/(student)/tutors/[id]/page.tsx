@@ -62,6 +62,7 @@ interface BookingSlot {
   start_time: string;
   end_time: string;
   day_of_week: number;
+  isBooked: boolean;
 }
 
 const DAYS_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -98,6 +99,14 @@ function getNext14Days(): Date[] {
     days.push(d);
   }
   return days;
+}
+
+/** Local-date string — avoids UTC offset shifting the date (same as tutor schedule page) */
+function toLocalDateStr(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
 }
 
 export default function TutorProfilePage() {
@@ -140,7 +149,7 @@ export default function TutorProfilePage() {
         supabase.from('profiles').select('full_name, avatar_url').eq('id', tutorId).maybeSingle(),
         supabase.from('student_profiles').select('cadre').eq('id', user.id).maybeSingle(),
         supabase.from('tutor_availability').select('id, day_of_week, start_time, end_time, is_recurring, specific_date').eq('tutor_id', tutorId).eq('is_active', true),
-        supabase.from('sessions').select('session_date, start_time').eq('tutor_id', tutorId).in('status', ['confirmed', 'pending_approval']).gte('session_date', new Date().toISOString().split('T')[0]),
+        supabase.from('sessions').select('session_date, start_time').eq('tutor_id', tutorId).in('status', ['confirmed', 'pending_approval']).gte('session_date', toLocalDateStr(new Date())),
         supabase.from('session_reviews').select('id, rating, review_text, keywords, created_at, student_id').eq('tutor_id', tutorId).eq('is_published', true).order('created_at', { ascending: false }).limit(10),
       ]);
 
@@ -234,7 +243,7 @@ export default function TutorProfilePage() {
         supabase.from('sessions').select('session_date, start_time')
           .eq('tutor_id', tutorId)
           .in('status', ['confirmed', 'pending_approval'])
-          .gte('session_date', new Date().toISOString().split('T')[0])
+          .gte('session_date', toLocalDateStr(new Date()))
           .then(({ data }) => setBookedSlots((data ?? []) as any[]));
       })
       .subscribe();
@@ -244,40 +253,40 @@ export default function TutorProfilePage() {
   }, [tutorId, supabase]);
 
   const isSlotBooked = (date: Date, startTime: string) => {
-    const dateStr = date.toISOString().split('T')[0];
+    const dateStr = toLocalDateStr(date);
     return bookedSlots.some(s => s.session_date === dateStr && s.start_time === startTime);
   };
 
-  const getAvailableSlotsForDate = (date: Date): BookingSlot[] => {
-    const dateStr = date.toISOString().split('T')[0];
+  // Returns ALL slots for a date — available AND booked — so students can see the full picture.
+  // isBooked=true slots are shown greyed out; isBooked=false slots are bookable.
+  const getSlotsForDate = (date: Date): BookingSlot[] => {
+    const dateStr = toLocalDateStr(date);
     const dayOfWeek = date.getDay();
     const seenTimes = new Set<string>();
     const result: BookingSlot[] = [];
 
-    // One-time slots for this exact date take priority
+    // One-time slots for this exact date take priority over recurring
     availability
-      .filter(a => !a.is_recurring && (a as any).specific_date === dateStr)
-      .filter(s => !isSlotBooked(date, s.start_time))
+      .filter(a => !a.is_recurring && a.specific_date === dateStr)
       .forEach(s => {
         seenTimes.add(s.start_time);
-        result.push({ date, start_time: s.start_time, end_time: s.end_time, day_of_week: dayOfWeek });
+        result.push({ date, start_time: s.start_time, end_time: s.end_time, day_of_week: dayOfWeek, isBooked: isSlotBooked(date, s.start_time) });
       });
 
-    // Recurring slots for this day_of_week — only if not overridden by a one-time slot
+    // Recurring slots for this day_of_week — only if no one-time slot already covers that time
     availability
       .filter(a => a.is_recurring && a.day_of_week === dayOfWeek)
-      .filter(s => !seenTimes.has(s.start_time) && !isSlotBooked(date, s.start_time))
+      .filter(s => !seenTimes.has(s.start_time))
       .forEach(s => {
-        result.push({ date, start_time: s.start_time, end_time: s.end_time, day_of_week: dayOfWeek });
+        result.push({ date, start_time: s.start_time, end_time: s.end_time, day_of_week: dayOfWeek, isBooked: isSlotBooked(date, s.start_time) });
       });
 
-    return result;
+    return result.sort((a, b) => a.start_time.localeCompare(b.start_time));
   };
 
   const handleSelectSlot = (slot: BookingSlot) => {
-    if (!tutor) return;
+    if (!tutor || slot.isBooked) return;
     setSelectedSlot(slot);
-    // Default to Google Meet if available, otherwise first platform
     const preferredPlatform = tutor.session_platform.includes('Google Meet')
       ? 'Google Meet'
       : tutor.session_platform[0] ?? 'Google Meet';
@@ -541,11 +550,11 @@ export default function TutorProfilePage() {
             ) : (
               <div className="space-y-3">
                 {next14Days.map(date => {
-                  const slots = getAvailableSlotsForDate(date);
+                  const slots = getSlotsForDate(date);
                   if (slots.length === 0) return null;
                   const isToday = date.toDateString() === new Date().toDateString();
                   return (
-                    <div key={date.toISOString()} className="border border-[var(--color-border)] rounded-xl p-3">
+                    <div key={toLocalDateStr(date)} className="border border-[var(--color-border)] rounded-xl p-3">
                       <p className="text-xs font-semibold text-[var(--color-text-secondary)] mb-2">
                         {isToday ? 'Today' : DAYS_FULL[date.getDay()]},{' '}
                         {date.toLocaleDateString('en-KE', { month: 'short', day: 'numeric' })}
@@ -554,22 +563,26 @@ export default function TutorProfilePage() {
                         {slots.map(slot => (
                           <button
                             key={slot.start_time}
-                            onClick={() => tutor.is_accepting_bookings && handleSelectSlot(slot)}
-                            disabled={!tutor.is_accepting_bookings}
+                            onClick={() => !slot.isBooked && tutor.is_accepting_bookings && handleSelectSlot(slot)}
+                            disabled={slot.isBooked || !tutor.is_accepting_bookings}
+                            title={slot.isBooked ? 'Already booked' : tutor.is_accepting_bookings ? 'Click to book' : 'Not accepting bookings'}
                             className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-                              tutor.is_accepting_bookings
+                              slot.isBooked
+                                ? 'bg-error/8 border-error/25 text-error/60 cursor-not-allowed line-through'
+                                : tutor.is_accepting_bookings
                                 ? 'bg-success/10 border-success/30 text-success hover:bg-success/20 cursor-pointer'
                                 : 'bg-neutral-border/20 border-neutral-border text-neutral-mid cursor-not-allowed opacity-60'
                             }`}
                           >
                             {formatTime(slot.start_time)} – {formatTime(slot.end_time)}
+                            {slot.isBooked && <span className="ml-1 text-[10px] not-italic no-underline font-normal opacity-80">Booked</span>}
                           </button>
                         ))}
                       </div>
                     </div>
                   );
                 })}
-                {next14Days.every(d => getAvailableSlotsForDate(d).length === 0) && (
+                {next14Days.every(d => getSlotsForDate(d).length === 0) && (
                   <div className="text-center py-8">
                     <p className="text-3xl mb-2">🗓️</p>
                     <p className="text-sm text-[var(--color-text-secondary)]">No available slots in the next 14 days</p>
