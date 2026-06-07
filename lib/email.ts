@@ -7,11 +7,18 @@ const nodemailer = require('nodemailer') as {
       subject: string;
       text: string;
       html: string;
+      attachments?: EmailAttachment[];
     }) => Promise<unknown>;
   };
 };
 
 type MailResult = { sent: true } | { sent: false; reason: string };
+
+export type EmailAttachment = {
+  filename: string;
+  content: Buffer;
+  contentType: string;
+};
 
 type SubscriptionEmailParams = {
   to: string | null | undefined;
@@ -105,7 +112,12 @@ function renderHtml(title: string, body: string): string {
 </html>`;
 }
 
-async function sendEmail(to: string | null | undefined, subject: string, text: string): Promise<MailResult> {
+export async function sendEmail(
+  to: string | null | undefined,
+  subject: string,
+  text: string,
+  attachments?: EmailAttachment[]
+): Promise<MailResult> {
   if (!to) return { sent: false, reason: 'Missing recipient email' };
 
   try {
@@ -116,6 +128,7 @@ async function sendEmail(to: string | null | undefined, subject: string, text: s
       subject,
       text,
       html: renderHtml(subject, text),
+      attachments,
     });
 
     return { sent: true };
