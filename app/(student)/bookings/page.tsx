@@ -61,10 +61,17 @@ export default function BookingsPage() {
   const [cancellingId, setCancellingId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (searchParams.get('payment') === 'success') {
+    const payment = searchParams.get('payment');
+    if (payment === 'success') {
       toast.success('Payment successful! Your session is confirmed.');
+      // Remove the query param so toast doesn't re-fire on re-renders/back navigation
+      router.replace('/bookings', { scroll: false });
+    } else if (payment === 'pending') {
+      toast('Payment is still processing — your session will be confirmed once payment clears.', { icon: '⏳', duration: 6000 });
+      router.replace('/bookings', { scroll: false });
     }
-  }, [searchParams]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const fetchSessions = useCallback(async () => {
     setIsLoading(true);

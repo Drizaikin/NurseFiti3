@@ -62,13 +62,27 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Calculate pending payout amount
+    // Calculate pending payout amount — only sessions NOT already covered by a completed payout.
+    // We track this by storing paid-out session IDs in tutor_payouts.session_ids (array).
+    // Fallback: exclude sessions whose booked_at is earlier than the last successful payout.
+    const { data: lastPayout } = await supabase
+      .from('tutor_payouts')
+      .select('initiated_at')
+      .eq('tutor_id', user.id)
+      .in('status', ['success', 'processing'])
+      .order('initiated_at', { ascending: false })
+      .limit(1)
+      .maybeSingle() as any;
+
+    const sinceDate = lastPayout?.initiated_at ?? '1970-01-01T00:00:00Z';
+
     const { data: sessions } = await supabase
       .from('sessions')
       .select('net_amount')
       .eq('tutor_id', user.id)
       .eq('status', 'completed')
-      .eq('payment_status', 'paid');
+      .eq('payment_status', 'paid')
+      .gt('completed_at', sinceDate);
 
     const pendingAmount = (sessions ?? []).reduce(
       (sum, s) => sum + ((s as any).net_amount ?? 0),

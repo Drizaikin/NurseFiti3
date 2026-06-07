@@ -279,43 +279,48 @@ export default function TutorProfilePage() {
       const [endH, endM] = selectedSlot.end_time.split(':').map(Number);
       const durationMinutes = (endH * 60 + endM) - (startH * 60 + startM);
       const grossAmount = Math.round((durationMinutes / 60) * tutor.rate_per_hour);
-      const platformFee = Math.round(grossAmount * 0.30);
-      const netAmount = grossAmount - platformFee;
 
-      // Create session with pending_approval or confirmed (instant booking)
-      const status = tutor.allow_instant_booking ? 'confirmed' : 'pending_approval';
+      // Use the atomic RPC to prevent race-condition double-bookings.
+      // The function also computes platform_fee (15%) and net_amount server-side.
+      const { data: sessionId, error: sessionError } = await (supabase as any).rpc(
+        'create_booking_atomic',
+        {
+          p_tutor_id: tutorId,
+          p_student_id: currentUserId,
+          p_session_date: sessionDate,
+          p_start_time: selectedSlot.start_time,
+          p_end_time: selectedSlot.end_time,
+          p_cadre: studentCadre || tutor.cadres_taught[0],
+          p_topic: bookingForm.topic || null,
+          p_platform: bookingForm.platform,
+          p_duration_minutes: durationMinutes,
+          p_rate_per_hour: tutor.rate_per_hour,
+        }
+      );
 
-      const { data: session, error: sessionError } = await supabase
-        .from('sessions')
-        .insert({
-          student_id: currentUserId,
-          tutor_id: tutorId,
-          session_date: sessionDate,
-          start_time: selectedSlot.start_time,
-          end_time: selectedSlot.end_time,
-          cadre: studentCadre || tutor.cadres_taught[0],
-          topic: bookingForm.topic || null,
-          platform: bookingForm.platform,
-          student_note: bookingForm.student_note || null,
-          duration_minutes: durationMinutes,
-          rate_per_hour: tutor.rate_per_hour,
-          gross_amount: grossAmount,
-          platform_fee: platformFee,
-          net_amount: netAmount,
-          status,
-          payment_status: 'pending',
-        } as any)
-        .select('id')
-        .single();
+      if (sessionError) {
+        if (sessionError.message?.includes('slot_already_booked')) {
+          throw new Error('This slot was just booked by someone else. Please choose a different time.');
+        }
+        throw sessionError;
+      }
 
-      if (sessionError || !session) throw sessionError ?? new Error('Failed to create session');
+      if (!sessionId) throw new Error('Failed to create session');
+
+      // If non-instant booking, update status to pending_approval
+      if (!tutor.allow_instant_booking) {
+        await (supabase as any).from('sessions').update({ status: 'pending_approval' }).eq('id', sessionId);
+      }
+
+      // Save student note if provided
+      if (bookingForm.student_note) {
+        await (supabase as any).from('sessions').update({ student_note: bookingForm.student_note }).eq('id', sessionId);
+      }
 
       setShowBookingModal(false);
 
-      // If instant booking, go straight to payment
-      const sessionRecord = session as { id: string };
       if (tutor.allow_instant_booking) {
-        await initiatePayment(sessionRecord.id, grossAmount);
+        await initiatePayment(sessionId as string, grossAmount);
       } else {
         toast.success('Booking request sent! The tutor will confirm shortly.');
         router.push('/bookings');
@@ -340,11 +345,13 @@ export default function TutorProfilePage() {
         }),
       });
       const data = await res.json();
-      if (data.checkout_url) {
-        window.location.href = data.checkout_url;
-      } else {
-        throw new Error(data.error ?? 'Payment initialization failed');
+      if (!res.ok) {
+        throw new Error(data.error ?? `Payment initialization failed (${res.status})`);
       }
+      if (!data.checkout_url) {
+        throw new Error(data.error ?? 'No checkout URL returned');
+      }
+      window.location.href = data.checkout_url;
     } catch (err: any) {
       toast.error(err?.message ?? 'Payment failed. Please try again.');
     }

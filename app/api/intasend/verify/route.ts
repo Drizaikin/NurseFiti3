@@ -67,7 +67,11 @@ export async function GET(req: NextRequest) {
 
     if (txn.state !== 'COMPLETE') {
       // PENDING or PROCESSING — do not mark as failed; let webhook or sync-plan resolve it
-      return NextResponse.redirect(`${siteUrl}/settings?payment=pending`);
+      // Route back to the appropriate page so the user sees a useful message
+      const pendingRedirect = (payment as any).type === 'session_booking'
+        ? '/bookings?payment=pending'
+        : '/settings?payment=pending';
+      return NextResponse.redirect(`${siteUrl}${pendingRedirect}`);
     }
 
     // Mark payment as completed
