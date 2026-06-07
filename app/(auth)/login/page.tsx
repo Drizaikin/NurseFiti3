@@ -68,9 +68,7 @@ function LoginForm() {
 
       toast.success('Welcome back!');
 
-      router.refresh();
-
-      // Redirect based on role
+      // Redirect based on role — middleware handles auth state from session cookie
       if (profile.role === 'student') {
         router.push('/dashboard');
       } else if (profile.role === 'tutor') {
@@ -90,6 +88,8 @@ function LoginForm() {
         } else {
           router.push('/tutor-dashboard');
         }
+      } else if (profile.role === 'admin') {
+        router.push('/admin');
       } else {
         router.push('/dashboard');
       }
