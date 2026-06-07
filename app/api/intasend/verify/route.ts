@@ -14,7 +14,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { verifyCheckout } from '@/lib/intasend';
 import { addDays } from 'date-fns';
-import { getPlanFromAmount } from '@/lib/planLimits';
+import { getPlanFromAmount, PLAN_PRICING_META } from '@/lib/planLimits';
+import {
+  formatEmailDate,
+  formatEmailDateTime,
+  formatSessionDuration,
+  formatSessionTime,
+  getFirstName,
+  sendSessionBookingEmails,
+  sendSubscriptionConfirmationEmail,
+} from '@/lib/email';
 
 export const dynamic = 'force-dynamic';
 
@@ -123,12 +132,29 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
   switch (payment.type) {
     case 'plan_subscription': {
       const { tier, durationDays } = getPlanFromAmount(payment.amount);
-      const expiresAt = addDays(new Date(), durationDays).toISOString();
+      const activatedAt = new Date();
+      const expiresAt = addDays(activatedAt, durationDays).toISOString();
 
       await supabase
         .from('student_profiles')
         .update({ plan_tier: tier, plan_expires_at: expiresAt })
         .eq('id', payment.user_id);
+
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('full_name, email')
+        .eq('id', payment.user_id)
+        .single();
+
+      await sendSubscriptionConfirmationEmail({
+        to: profile?.email,
+        firstName: getFirstName(profile?.full_name),
+        planName: PLAN_PRICING_META[tier].label,
+        amount: `KSh ${Number(payment.amount).toLocaleString('en-KE')}`,
+        startDate: formatEmailDate(activatedAt),
+        endDate: formatEmailDate(expiresAt),
+        transactionId: txn.invoice_id ?? payment.intasend_reference ?? payment.id,
+      });
       break;
     }
 
@@ -152,7 +178,7 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
 
       const { data: session } = await supabase
         .from('sessions')
-        .select('student_id, tutor_id, session_date, start_time, topic')
+        .select('student_id, tutor_id, session_date, start_time, end_time, topic, cadre, join_link')
         .eq('id', payment.reference_id)
         .single();
 
@@ -177,6 +203,24 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
             action_url: '/tutor-schedule',
           },
         ]);
+
+        const [{ data: studentProfile }, { data: tutorProfile }] = await Promise.all([
+          supabase.from('profiles').select('full_name, email').eq('id', session.student_id).single(),
+          supabase.from('profiles').select('full_name, email').eq('id', session.tutor_id).single(),
+        ]);
+
+        await sendSessionBookingEmails({
+          studentEmail: studentProfile?.email,
+          tutorEmail: tutorProfile?.email,
+          studentName: studentProfile?.full_name ?? 'Student',
+          tutorName: tutorProfile?.full_name ?? 'Tutor',
+          subject: session.topic ?? session.cadre ?? 'General revision',
+          sessionDate: formatEmailDateTime(session.session_date),
+          sessionTime: formatSessionTime(session.start_time, session.end_time),
+          duration: formatSessionDuration(session.start_time, session.end_time),
+          meetingLink: session.join_link ?? 'The tutor will add the meeting link before the session.',
+          bookingId: payment.reference_id,
+        });
       }
       break;
     }

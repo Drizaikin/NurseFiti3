@@ -11,7 +11,12 @@ import { addDays } from 'date-fns';
 import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { verifyCheckout } from '@/lib/intasend';
-import { getPlanFromAmount } from '@/lib/planLimits';
+import { getPlanFromAmount, PLAN_PRICING_META } from '@/lib/planLimits';
+import {
+  formatEmailDate,
+  getFirstName,
+  sendSubscriptionConfirmationEmail,
+} from '@/lib/email';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,6 +47,9 @@ export async function POST() {
       return NextResponse.json({ error: 'No recent plan payment found.' }, { status: 404 });
     }
 
+    const wasAlreadyCompleted = payment.status === 'completed';
+    let transactionId = payment.intasend_invoice_id ?? payment.intasend_reference ?? payment.id;
+
     if (payment.status !== 'completed') {
       const invoiceId = payment.intasend_checkout_id;
       if (!invoiceId) {
@@ -66,6 +74,8 @@ export async function POST() {
           completed_at: new Date().toISOString(),
         })
         .eq('id', payment.id);
+
+      transactionId = txn.invoice_id ?? transactionId;
     }
 
     const { tier, durationDays } = getPlanFromAmount(Number(payment.amount));
@@ -77,6 +87,24 @@ export async function POST() {
       .from('student_profiles')
       .update({ plan_tier: tier, plan_expires_at: expiresAt })
       .eq('id', user.id);
+
+    if (!wasAlreadyCompleted) {
+      const { data: profile } = await (admin as any)
+        .from('profiles')
+        .select('full_name, email')
+        .eq('id', user.id)
+        .single();
+
+      await sendSubscriptionConfirmationEmail({
+        to: profile?.email ?? user.email,
+        firstName: getFirstName(profile?.full_name ?? user.user_metadata?.full_name),
+        planName: PLAN_PRICING_META[tier].label,
+        amount: `KSh ${Number(payment.amount).toLocaleString('en-KE')}`,
+        startDate: formatEmailDate(baseDate),
+        endDate: formatEmailDate(expiresAt),
+        transactionId,
+      });
+    }
 
     return NextResponse.json({
       upgraded: true,

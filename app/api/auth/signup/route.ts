@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { studentSignupSchema } from '@/lib/validations/auth';
+import { getFirstName, sendWelcomeEmail } from '@/lib/email';
 
 /**
  * Admin client using service role key — bypasses RLS.
@@ -150,6 +151,11 @@ export async function POST(req: NextRequest) {
         { status: 500 }
       );
     }
+
+    await sendWelcomeEmail({
+      to: data.email,
+      firstName: getFirstName(data.fullName),
+    });
 
     return NextResponse.json({
       success: true,
