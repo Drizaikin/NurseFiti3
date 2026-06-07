@@ -252,7 +252,7 @@ export function FeedbackWall({
     setItems(prev => prev.map(i =>
       i.id === feedbackId ? { ...i, helpful_count: i.helpful_count + 1 } : i
     ));
-    setHelpfulSet(prev => new Set([...prev, feedbackId]));
+    setHelpfulSet(prev => new Set([...Array.from(prev), feedbackId]));
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
@@ -266,7 +266,7 @@ export function FeedbackWall({
       }
 
       // Insert the vote record (will fail silently on duplicate due to PRIMARY KEY)
-      const { error: insertError } = await supabase
+      const { error: insertError } = await (supabase as any)
         .from('feedback_helpful')
         .insert({ feedback_id: feedbackId, user_id: user.id });
 
@@ -280,7 +280,7 @@ export function FeedbackWall({
       }
 
       // Increment helpful_count in app_feedback
-      await supabase.rpc('increment_helpful_count', { feedback_id: feedbackId });
+      await (supabase as any).rpc('increment_helpful_count', { feedback_id: feedbackId });
 
     } catch {
       // Revert on any unexpected error

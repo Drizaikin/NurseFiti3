@@ -36,12 +36,13 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Duplicate prevention ──────────────────────────────────────────────
-    const { data: existingUpload } = await adminSupabase
+    const { data: existingUploadRaw } = await (adminSupabase as any)
       .from('question_uploads')
       .select('id, status')
       .eq('student_id', user.id)
       .in('status', ['pending', 'approved'])
       .maybeSingle();
+    const existingUpload = existingUploadRaw as { id: string; status: string } | null;
 
     if (existingUpload) {
       const msg = existingUpload.status === 'approved'
@@ -80,11 +81,12 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Get student profile for email ─────────────────────────────────────
-    const { data: profile } = await supabase
+    const { data: profileRaw } = await supabase
       .from('profiles')
       .select('full_name, email')
       .eq('id', user.id)
       .single();
+    const profile = profileRaw as { full_name: string; email: string } | null;
 
     // ── Ensure storage bucket exists ──────────────────────────────────────
     // Auto-creates the bucket if it was never created in the dashboard.
@@ -166,7 +168,7 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Create question_uploads record ────────────────────────────────────
-    const { data: uploadRecord, error: dbError } = await adminSupabase
+    const { data: uploadRecordRaw, error: dbError } = await (adminSupabase as any)
       .from('question_uploads')
       .insert({
         student_id: user.id,
@@ -180,6 +182,7 @@ export async function POST(req: NextRequest) {
       })
       .select('id')
       .single();
+    const uploadRecord = uploadRecordRaw as { id: string } | null;
 
     if (dbError || !uploadRecord) {
       console.error('[question-upload] DB insert error:', dbError);

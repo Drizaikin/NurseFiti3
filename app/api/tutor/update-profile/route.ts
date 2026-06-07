@@ -50,8 +50,8 @@ export async function POST(req: NextRequest) {
 
     // Update both tables in parallel
     const [profileErr, tutorErr] = await Promise.all([
-      admin.from('profiles').update({ full_name }).eq('id', user.id).then(r => r.error),
-      admin.from('tutor_profiles').update(tutorFields).eq('id', user.id).then(r => r.error),
+      (admin as any).from('profiles').update({ full_name }).eq('id', user.id).then((r: any) => r.error),
+      (admin as any).from('tutor_profiles').update(tutorFields).eq('id', user.id).then((r: any) => r.error),
     ]);
 
     if (profileErr) {

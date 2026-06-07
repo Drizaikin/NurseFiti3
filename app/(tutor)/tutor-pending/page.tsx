@@ -51,7 +51,11 @@ export default function TutorPendingPage() {
           return;
         }
 
-        const tutorData = data as TutorProfile;
+        const tutorData = data as TutorProfile | null;
+        if (!tutorData) {
+          setIsLoading(false);
+          return;
+        }
         setProfile(tutorData);
 
         // If verified, redirect to tutor dashboard

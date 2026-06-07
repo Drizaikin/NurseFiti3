@@ -39,7 +39,7 @@ export function OnboardingTourGate() {
   const handleComplete = async () => {
     setShow(false);
     if (!userId) return;
-    await supabase
+    await (supabase as any)
       .from('student_profiles')
       .update({ onboarding_tour_seen: true })
       .eq('id', userId);

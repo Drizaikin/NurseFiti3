@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     const admin = createAdminClient();
 
     // Fetch all published reviews for this tutor
-    const { data: reviews, error: reviewsError } = await admin
+    const { data: reviews, error: reviewsError } = await (admin as any)
       .from('session_reviews')
       .select('rating')
       .eq('tutor_id', tutorId)
@@ -48,10 +48,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true, average_rating: 0 });
     }
 
-    const avg = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+    const avg = (reviews as Array<{ rating: number }>).reduce((sum, r) => sum + r.rating, 0) / reviews.length;
     const rounded = Math.round(avg * 100) / 100;
 
-    const { error: updateError } = await admin
+    const { error: updateError } = await (admin as any)
       .from('tutor_profiles')
       .update({ average_rating: rounded })
       .eq('id', tutorId);

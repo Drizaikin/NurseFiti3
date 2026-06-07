@@ -122,7 +122,7 @@ export function FeedbackWidget({
 
       const finalName = isAnonymous ? 'Anonymous' : (nameInput.trim() || displayName || 'User');
 
-      const { error: insertError } = await supabase.from('app_feedback').insert({
+      const { error: insertError } = await (supabase as any).from('app_feedback').insert({
         user_id: user.id,
         user_role: userRole,
         display_name: finalName,

@@ -313,8 +313,9 @@ export default function TutorProfilePage() {
       setShowBookingModal(false);
 
       // If instant booking, go straight to payment
+      const sessionRecord = session as { id: string };
       if (tutor.allow_instant_booking) {
-        await initiatePayment(session.id, grossAmount);
+        await initiatePayment(sessionRecord.id, grossAmount);
       } else {
         toast.success('Booking request sent! The tutor will confirm shortly.');
         router.push('/bookings');

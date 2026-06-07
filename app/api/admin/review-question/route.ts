@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
             .eq('id', contributorId);
         }
 
-        await admin.from('notifications').insert({
+        await (admin as any).from('notifications').insert({
           user_id:    contributorId,
           type:       'question_approved',
           title:      'Your MCQ was approved! 🎉',
@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
           action_url: '/tutor-studio',
         });
       } else {
-        await admin.from('notifications').insert({
+        await (admin as any).from('notifications').insert({
           user_id:    contributorId,
           type:       'question_rejected',
           title:      'MCQ needs revision',

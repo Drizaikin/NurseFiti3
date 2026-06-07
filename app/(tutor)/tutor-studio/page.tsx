@@ -96,7 +96,7 @@ export default function TutorStudioPage() {
       toast.error('Please fill in all required fields'); return;
     }
     setSubmitting(true);
-    const { error } = await supabase.from('study_notes').insert({
+    const { error } = await (supabase as any).from('study_notes').insert({
       cadre: note.cadre, unit: note.unit, title: note.title, content_markdown: note.content_markdown,
       contributor_id: userId, status: 'pending_review',
     });

@@ -116,22 +116,23 @@ export default function MockExamPage() {
     setIsLoading(true);
 
     // ── STEP 1: Get question IDs the student has already seen in mock exams for this paper ──
-    const { data: seenData } = await supabase
+    const { data: seenData } = await (supabase as any)
       .from('student_answers')
       .select('question_id')
-      .eq('student_id', userId)
+      .eq('student_id', userId!)
       .eq('mode', 'mock_exam')
       .eq('paper', config.paper);
 
-    const seenIds = seenData?.map(a => a.question_id) ?? [];
+    const seenIds = (seenData as Array<{ question_id: string }> | null)?.map(a => a.question_id) ?? [];
 
     // ── STEP 2: Fetch ALL approved questions for this cadre + paper ──
-    const { data: allQuestions, error } = await supabase
+    const { data: allQuestionsRaw, error } = await (supabase as any)
       .from('questions')
       .select('*')
       .eq('cadre', config.cadre)
       .eq('paper', config.paper)
       .eq('status', 'approved');
+    const allQuestions = allQuestionsRaw as any[] | null;
 
     if (error || !allQuestions || allQuestions.length === 0) {
       toast.error('Not enough questions available for this exam. Please try again later.');

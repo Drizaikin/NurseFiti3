@@ -210,7 +210,7 @@ export async function initiateMpesaPayout(
   // Step 2: Approve (required even when auto-approving)
   const approved = await payouts.approve(initiated);
 
-  return approved as SendMoneyResult;
+  return approved as unknown as SendMoneyResult;
 }
 
 // ---------------------------------------------------------------------------

@@ -214,23 +214,18 @@ export default function PracticePage() {
         : Math.min(20, limits.practiceQuestionsPerDay - answeredToday);
 
       // ── STEP 1: Get IDs of questions the student has already answered in this unit/cadre ──
-      let answeredIdsQuery = supabase
+      let answeredIdsQuery = (supabase as any)
         .from('student_answers')
         .select('question_id')
-        .eq('student_id', userId)
+        .eq('student_id', userId!)
         .eq('mode', 'practice');
 
-      // Join to questions table to filter by cadre and unit (via nested select would be ideal,
-      // but Supabase doesn't support subqueries in .not('id', 'in', ...), so we have to do
-      // a two-step: fetch answered IDs, then fetch the questions with unit filter)
-      
-      // Since student_answers now has a `unit` column (denormalized), we can filter directly:
       if (selectedUnit !== 'all') {
         answeredIdsQuery = answeredIdsQuery.eq('unit', selectedUnit);
       }
 
       const { data: answeredData } = await answeredIdsQuery;
-      const answeredIds = answeredData?.map(a => a.question_id) || [];
+      const answeredIds = (answeredData as Array<{ question_id: string }> | null)?.map(a => a.question_id) || [];
 
       // ── STEP 2: Fetch questions, excluding already-answered ones ──
       let query = supabase

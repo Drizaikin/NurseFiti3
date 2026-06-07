@@ -137,9 +137,9 @@ export default function BookingsPage() {
 
     setCancellingId(sessionId);
     try {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('sessions')
-        .update({ status: 'cancelled' } as any)
+        .update({ status: 'cancelled' })
         .eq('id', sessionId);
 
       if (error) throw error;
@@ -179,7 +179,7 @@ export default function BookingsPage() {
       if (reviewError) throw reviewError;
 
       // Mark session as reviewed
-      await supabase.from('sessions').update({ reviewed: true } as any).eq('id', reviewModal.sessionId);
+      await (supabase as any).from('sessions').update({ reviewed: true }).eq('id', reviewModal.sessionId);
 
       // Update tutor average rating via API (students can't write tutor_profiles directly)
       await fetch('/api/tutor/update-rating', {

@@ -76,7 +76,7 @@ export function AvatarUpload({ userId, currentUrl, name, size = 'lg', onUploaded
       const urlWithBust = `${publicUrl}?t=${Date.now()}`;
 
       // Save to profiles table
-      const { error: dbError } = await supabase
+      const { error: dbError } = await (supabase as any)
         .from('profiles')
         .update({ avatar_url: urlWithBust })
         .eq('id', userId);

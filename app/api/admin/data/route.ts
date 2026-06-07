@@ -23,11 +23,12 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { data: profile } = await supabase
+    const { data: profileData } = await supabase
       .from('profiles')
       .select('role')
       .eq('id', user.id)
       .single();
+    const profile = profileData as { role: string } | null;
 
     if (!profile || profile.role !== 'admin') {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
@@ -39,23 +40,23 @@ export async function GET(req: NextRequest) {
 
     if (type === 'uploads') {
       const statusFilter = req.nextUrl.searchParams.get('status');
-      let query = admin
+      let query = (admin as any)
         .from('question_uploads')
         .select('*')
         .order('submitted_at', { ascending: false });
 
       if (statusFilter && statusFilter !== 'all') {
-        query = query.eq('status', statusFilter) as typeof query;
+        query = query.eq('status', statusFilter);
       }
 
       const { data: uploadData } = await query;
       if (!uploadData) return NextResponse.json({ uploads: [] });
 
       // Fetch student names/emails/plans
-      const studentIds = [...new Set((uploadData as Array<{ student_id: string }>).map(u => u.student_id))];
+      const studentIds = Array.from(new Set((uploadData as Array<{ student_id: string }>).map(u => u.student_id)));
       const [profilesRes, spRes] = await Promise.all([
-        admin.from('profiles').select('id, full_name, email').in('id', studentIds),
-        admin.from('student_profiles').select('id, plan_tier').in('id', studentIds),
+        (admin as any).from('profiles').select('id, full_name, email').in('id', studentIds),
+        (admin as any).from('student_profiles').select('id, plan_tier').in('id', studentIds),
       ]);
 
       const profileMap = new Map(
@@ -219,11 +220,11 @@ export async function GET(req: NextRequest) {
       if (!questionsData) return NextResponse.json({ questions: [] });
 
       // Enrich with contributor name
-      const contributorIds = [...new Set((questionsData as Array<{ contributor_id: string | null }>)
-        .map(q => q.contributor_id).filter(Boolean))] as string[];
+      const contributorIds = Array.from(new Set((questionsData as Array<{ contributor_id: string | null }>)
+        .map(q => q.contributor_id).filter(Boolean))) as string[];
 
       const { data: contributorProfiles } = contributorIds.length > 0
-        ? await admin.from('profiles').select('id, full_name').in('id', contributorIds)
+        ? await (admin as any).from('profiles').select('id, full_name').in('id', contributorIds)
         : { data: [] };
 
       const contributorMap = new Map(

@@ -32,11 +32,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { data: profile } = await supabase
+    const { data: profileData } = await supabase
       .from('profiles')
       .select('role')
       .eq('id', user.id)
       .single();
+    const profile = profileData as { role: string } | null;
 
     if (!profile || profile.role !== 'admin') {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
@@ -49,7 +50,7 @@ export async function POST(req: NextRequest) {
 
     const { uploadId, reason, isDuplicate } = body.data;
 
-    await adminSupabase
+    await (adminSupabase as any)
       .from('question_uploads')
       .update({
         status: isDuplicate ? 'duplicate' : 'rejected',

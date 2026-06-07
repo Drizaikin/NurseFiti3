@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
     };
 
     // First check the row exists
-    const { data: existing, error: checkError } = await admin
+    const { data: existing, error: checkError } = await (admin as any)
       .from('tutor_profiles')
       .select('id')
       .eq('id', user.id)
@@ -85,29 +85,24 @@ export async function POST(req: NextRequest) {
 
     if (existing) {
       // Row exists — update only the completion fields
-      const { error } = await admin
+      const { error } = await (admin as any)
         .from('tutor_profiles')
         .update(payload)
         .eq('id', user.id);
       dbError = error;
     } else {
-      // Row missing — signup failed to create it. Fetch what we can from profiles
-      // and build a minimal valid row to insert alongside the completion fields.
       console.warn('[tutor/complete-profile] no existing row for user', user.id, '— building from profiles');
 
-      const { data: profileData } = await admin
+      const { data: profileData } = await (admin as any)
         .from('profiles')
         .select('full_name, phone')
         .eq('id', user.id)
-        .maybeSingle() as any;
+        .maybeSingle();
 
-      // We need nck_reg_number to satisfy NOT NULL — use a placeholder if we have no data.
-      // The admin can correct it in the tutor management page once the row exists.
-      const { error } = await admin
+      const { error } = await (admin as any)
         .from('tutor_profiles')
         .insert({
           id: user.id,
-          // Required columns with safe fallbacks
           nck_reg_number:      'PENDING-' + user.id.slice(0, 8).toUpperCase(),
           professional_title:  profileData?.full_name ?? 'Tutor',
           years_experience:    0,

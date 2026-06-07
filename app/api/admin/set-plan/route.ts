@@ -42,11 +42,12 @@ export async function POST(req: NextRequest) {
     }
 
     // Role check — must be admin
-    const { data: profile } = await supabase
+    const { data: profileData } = await supabase
       .from('profiles')
       .select('role')
       .eq('id', user.id)
       .single();
+    const profile = profileData as { role: string } | null;
 
     if (!profile || profile.role !== 'admin') {
       return NextResponse.json({ error: 'Forbidden — admin access required' }, { status: 403 });
@@ -72,7 +73,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Update student plan
-    const { error: updateError } = await adminSupabase
+    const { error: updateError } = await (adminSupabase as any)
       .from('student_profiles')
       .update({ plan_tier: tier, plan_expires_at: expiresAt })
       .eq('id', studentId);
@@ -84,7 +85,7 @@ export async function POST(req: NextRequest) {
 
     // If an upload was associated, mark it as approved
     if (uploadId) {
-      await adminSupabase
+      await (adminSupabase as any)
         .from('question_uploads')
         .update({
           status: 'approved',
