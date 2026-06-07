@@ -297,8 +297,8 @@ export default function TutorSchedulePage() {
     const { data: sessData } = await supabase.from('sessions')
       .select('id, session_date, start_time, end_time, topic, platform, status, student_id, join_link, proposed_amount, agreed_amount, gross_amount, pricing_status')
       .eq('tutor_id', uid)
-      .gte('session_date', weekStart.toISOString().split('T')[0])
-      .lt('session_date', weekEnd.toISOString().split('T')[0])
+      .gte('session_date', toDateStr(weekStart))
+      .lt('session_date', toDateStr(weekEnd))
       .in('status', ['confirmed', 'pending_approval', 'completed']);
     const sessArr = (sessData ?? []) as any[];
     const studentIds = Array.from(new Set(sessArr.map(s => s.student_id)));
@@ -596,10 +596,15 @@ export default function TutorSchedulePage() {
                     {weekDays.map((d, i) => {
                       const isToday = d.toDateString() === new Date().toDateString();
                       const isCalSelected = calSelectedDate && toDateStr(d) === toDateStr(calSelectedDate);
+                      const dayDateStr = toDateStr(d);
+                      const hasBookings = sessions.some(s => s.session_date === dayDateStr && s.status !== 'completed');
                       return (
                         <th key={i} className={`p-3 text-center ${isCalSelected ? 'bg-primary/5 rounded-t-lg' : ''}`}>
                           <p className={`text-xs font-semibold ${isToday ? 'text-primary' : 'text-[var(--color-text-secondary)]'}`}>{DAYS[d.getDay()]}</p>
                           <p className={`text-lg font-heading font-bold ${isToday ? 'text-primary' : isCalSelected ? 'text-primary' : 'text-[var(--color-text)]'}`}>{d.getDate()}</p>
+                          {hasBookings && (
+                            <span className="block w-1.5 h-1.5 rounded-full bg-accent mx-auto mt-0.5" title="Has bookings" />
+                          )}
                         </th>
                       );
                     })}
@@ -638,7 +643,13 @@ export default function TutorSchedulePage() {
                                 : isPast ? 'Past slot' : 'Click to set availability'
                               }
                             >
-                              {status.type === 'booked' && <span className="truncate px-1 block">{status.session.student_name.split(' ')[0]}</span>}
+                              {status.type === 'booked' && (
+                                <span className="truncate px-1 block text-[9px] leading-tight">
+                                  {status.session.student_name.split(' ')[0]}
+                                  <br/>
+                                  <span className="opacity-70">{status.session.start_time.slice(0,5)}</span>
+                                </span>
+                              )}
                               {isRecurringSlot && <span className="flex items-center justify-center gap-0.5"><span>✓</span><span className="text-[9px] opacity-70">↻</span></span>}
                               {isOneTimeSlot && <span>✓</span>}
                             </button>
@@ -876,9 +887,14 @@ export default function TutorSchedulePage() {
           {/* ── This week's sessions ──────────────────────────────────────── */}
           {sessions.length > 0 && (
             <Card>
-              <h3 className="font-heading font-bold text-[var(--color-text)] mb-3">This Week</h3>
+              <h3 className="font-heading font-bold text-[var(--color-text)] mb-3">
+                This Week
+                <span className="ml-2 text-xs font-normal text-[var(--color-text-secondary)]">
+                  {sessions.filter(s => s.status !== 'completed').length} upcoming
+                </span>
+              </h3>
               <div className="space-y-2">
-                {sessions.slice(0, 5).map(s => (
+                {sessions.map(s => (
                   <div key={s.id} className="p-2.5 rounded-lg border border-[var(--color-border)] text-xs">
                     <p className="font-semibold text-[var(--color-text)]">{s.student_name}</p>
                     <p className="text-[var(--color-text-secondary)]">
