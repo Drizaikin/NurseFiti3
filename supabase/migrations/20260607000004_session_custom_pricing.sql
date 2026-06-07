@@ -97,7 +97,11 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Grant execute permission to authenticated users
-GRANT EXECUTE ON FUNCTION create_booking_atomic TO authenticated;
+-- Must specify full parameter types to disambiguate from the previous overload
+GRANT EXECUTE ON FUNCTION create_booking_atomic(UUID,UUID,DATE,TIME,TIME,TEXT,TEXT,TEXT,INTEGER,INTEGER,INTEGER) TO authenticated;
+
+-- Drop the old overload that had no p_proposed_amount parameter so there is only one version
+DROP FUNCTION IF EXISTS create_booking_atomic(UUID,UUID,DATE,TIME,TIME,TEXT,TEXT,TEXT,INTEGER,INTEGER);
 
 -- RLS: allow tutors to update pricing_status and agreed_amount on their sessions
 DROP POLICY IF EXISTS "Tutors can update session pricing" ON sessions;
