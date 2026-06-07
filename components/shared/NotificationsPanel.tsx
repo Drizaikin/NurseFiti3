@@ -59,14 +59,94 @@ function NotifIcon({ type, isBroadcast }: { type: string; isBroadcast: boolean }
   );
 }
 
+// ─── Single notification row ──────────────────────────────────────────────────
+
+function NotifRow({
+  notif,
+  isExpanded,
+  onToggleExpand,
+  onMarkRead,
+}: {
+  notif: Notification;
+  isExpanded: boolean;
+  onToggleExpand: () => void;
+  onMarkRead: () => void;
+}) {
+  const isLong = notif.body.length > 100;
+
+  return (
+    <li className="border-b border-[var(--color-border)] last:border-0">
+      <div
+        className={`px-4 py-3 transition-colors flex gap-3 items-start ${
+          !notif.is_read ? "bg-primary/[0.03]" : ""
+        }`}
+      >
+        {/* Unread dot */}
+        <div className="flex-shrink-0 mt-1 w-1.5">
+          {!notif.is_read && (
+            <span className="block w-1.5 h-1.5 rounded-full bg-primary mt-1" />
+          )}
+        </div>
+
+        {/* Icon */}
+        <div className="flex-shrink-0 mt-0.5">
+          <NotifIcon type={notif.type} isBroadcast={notif.is_broadcast} />
+        </div>
+
+        {/* Text + actions */}
+        <div className="flex-1 min-w-0">
+          {/* Clickable title area */}
+          <button
+            onClick={onMarkRead}
+            className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 rounded"
+          >
+            <p className={`text-sm text-[var(--color-text)] leading-snug ${!notif.is_read ? "font-semibold" : "font-medium"}`}>
+              {notif.title}
+            </p>
+          </button>
+
+          {/* Body — clamps unless expanded */}
+          <p className={`text-xs text-[var(--color-text-secondary)] mt-0.5 leading-relaxed ${isExpanded ? "" : "line-clamp-2"}`}>
+            {notif.body}
+          </p>
+
+          <div className="flex items-center justify-between mt-1.5 gap-2">
+            <p className="text-[10px] text-[var(--color-text-secondary)] opacity-70">
+              {relativeTime(notif.created_at)}
+            </p>
+
+            {/* Expand/collapse toggle — only shown when body is long */}
+            {isLong && (
+              <button
+                onClick={onToggleExpand}
+                className="text-[10px] font-semibold text-primary hover:text-primary/80 transition-colors flex-shrink-0"
+              >
+                {isExpanded ? "Show less ↑" : "Read more ↓"}
+              </button>
+            )}
+          </div>
+
+          {/* Action link */}
+          {notif.action_url && (
+            <button
+              onClick={onMarkRead}
+              className="mt-1.5 text-[10px] font-bold text-primary hover:underline flex items-center gap-1"
+            >
+              View →
+            </button>
+          )}
+        </div>
+      </div>
+    </li>
+  );
+}
+
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 interface NotificationsPanelProps {
   isOpen: boolean;
   onClose: () => void;
   userId: string;
-  /** Ref to the bell button so the dropdown can align itself */
-  anchorRef?: React.RefObject<HTMLButtonElement>;
 }
 
 // ─── Main dropdown component ──────────────────────────────────────────────────
@@ -79,6 +159,8 @@ export default function NotificationsPanel({
   const router = useRouter();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(false);
+  const [expanded, setExpanded] = useState(false);           // panel-level expand
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set()); // per-item expand
   const supabase = createClient();
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -91,7 +173,7 @@ export default function NotificationsPanel({
       .select("*")
       .eq("user_id", userId)
       .order("created_at", { ascending: false })
-      .limit(30);
+      .limit(50);
     setNotifications((data ?? []) as Notification[]);
     setLoading(false);
   }
@@ -121,6 +203,22 @@ export default function NotificationsPanel({
       .eq("is_read", false);
     setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
   }
+
+  function toggleItemExpand(id: string) {
+    setExpandedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  }
+
+  // Reset expand state when closed
+  useEffect(() => {
+    if (!isOpen) {
+      setExpanded(false);
+      setExpandedIds(new Set());
+    }
+  }, [isOpen]);
 
   // Fetch + realtime when opened
   useEffect(() => {
@@ -157,7 +255,6 @@ export default function NotificationsPanel({
         onClose();
       }
     };
-    // slight delay so the same click that opens it doesn't immediately close it
     const t = setTimeout(() => document.addEventListener("mousedown", handler), 50);
     return () => { clearTimeout(t); document.removeEventListener("mousedown", handler); };
   }, [isOpen, onClose]);
@@ -175,15 +272,18 @@ export default function NotificationsPanel({
 
   if (!isOpen) return null;
 
+  // Panel dimensions — compact vs expanded
+  const panelWidth = expanded ? "w-[min(560px,95vw)]" : "w-80 sm:w-96";
+  const panelMaxH = expanded ? "max-h-[80vh]" : "max-h-[min(480px,80vh)]";
+
   return (
-    // Dropdown container — positioned absolute relative to the bell button's parent
     <div
       ref={panelRef}
       role="dialog"
       aria-modal="true"
       aria-label="Notifications"
-      className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden"
-      style={{ maxHeight: "min(480px, 80vh)" }}
+      className={`absolute right-0 top-full mt-2 ${panelWidth} bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl shadow-2xl z-50 flex flex-col overflow-hidden transition-all duration-200`}
+      style={{ maxHeight: expanded ? "80vh" : "min(480px, 80vh)" }}
     >
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--color-border)] flex-shrink-0">
@@ -195,19 +295,42 @@ export default function NotificationsPanel({
             </span>
           )}
         </div>
-        <div className="flex items-center gap-2">
+
+        <div className="flex items-center gap-1">
           {hasUnread && (
             <button
               onClick={markAllRead}
-              className="text-xs text-primary hover:text-primary/80 transition-colors font-medium"
+              className="text-xs text-primary hover:text-primary/80 transition-colors font-medium px-2 py-1 rounded-lg hover:bg-primary/5"
             >
               Mark all read
             </button>
           )}
+
+          {/* Expand / collapse panel toggle */}
+          <button
+            onClick={() => setExpanded((e) => !e)}
+            aria-label={expanded ? "Collapse panel" : "Expand panel"}
+            title={expanded ? "Collapse" : "Expand to read more"}
+            className="p-1.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors"
+          >
+            {expanded ? (
+              /* collapse icon — arrows pointing inward */
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 9L4 4m0 0v4m0-4h4M15 9l5-5m0 0v4m0-4h-4M9 15l-5 5m0 0v-4m0 4h4M15 15l5 5m0 0v-4m0 4h-4" />
+              </svg>
+            ) : (
+              /* expand icon — arrows pointing outward */
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4m0 0h4M4 4l5 5M20 8V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5M20 16v4m0 0h-4m4 0l-5-5" />
+              </svg>
+            )}
+          </button>
+
+          {/* Close */}
           <button
             onClick={onClose}
             aria-label="Close notifications"
-            className="p-1 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors"
+            className="p-1.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -235,48 +358,34 @@ export default function NotificationsPanel({
         ) : (
           <ul>
             {notifications.map((notif) => (
-              <li key={notif.id} className="border-b border-[var(--color-border)] last:border-0">
-                <button
-                  onClick={() => markAsRead(notif)}
-                  className={`w-full text-left px-4 py-3 hover:bg-[var(--color-bg)] transition-colors flex gap-3 items-start focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
-                    !notif.is_read ? "bg-primary/[0.03]" : ""
-                  }`}
-                >
-                  {/* Unread dot */}
-                  <div className="flex-shrink-0 mt-1 w-1.5">
-                    {!notif.is_read && (
-                      <span className="block w-1.5 h-1.5 rounded-full bg-primary mt-1" />
-                    )}
-                  </div>
-
-                  {/* Icon */}
-                  <div className="flex-shrink-0 mt-0.5">
-                    <NotifIcon type={notif.type} isBroadcast={notif.is_broadcast} />
-                  </div>
-
-                  {/* Text */}
-                  <div className="flex-1 min-w-0">
-                    <p className={`text-sm text-[var(--color-text)] leading-snug ${!notif.is_read ? "font-semibold" : "font-medium"}`}>
-                      {notif.title}
-                    </p>
-                    <p className="text-xs text-[var(--color-text-secondary)] mt-0.5 line-clamp-2 leading-relaxed">
-                      {notif.body}
-                    </p>
-                    <p className="text-[10px] text-[var(--color-text-secondary)] mt-1 opacity-70">
-                      {relativeTime(notif.created_at)}
-                    </p>
-                  </div>
-                </button>
-              </li>
+              <NotifRow
+                key={notif.id}
+                notif={notif}
+                isExpanded={expanded || expandedIds.has(notif.id)}
+                onToggleExpand={() => toggleItemExpand(notif.id)}
+                onMarkRead={() => markAsRead(notif)}
+              />
             ))}
           </ul>
         )}
       </div>
+
+      {/* Footer hint when compact */}
+      {!expanded && notifications.length > 0 && (
+        <div className="flex-shrink-0 px-4 py-2 border-t border-[var(--color-border)] text-center">
+          <button
+            onClick={() => setExpanded(true)}
+            className="text-[10px] text-[var(--color-text-secondary)] hover:text-primary transition-colors"
+          >
+            ↕ Expand to read full notifications
+          </button>
+        </div>
+      )}
     </div>
   );
 }
 
-// ─── Unread count hook (unchanged — used by topbars) ─────────────────────────
+// ─── Unread count hook (used by topbars) ─────────────────────────────────────
 
 export function useUnreadCount(userId: string): number {
   const [count, setCount] = useState(0);
