@@ -11,9 +11,62 @@ import { Spinner } from '@/components/ui/Spinner';
 import { StatCard } from '@/components/shared/StatCard';
 import { getLimits, effectiveTier } from '@/lib/planLimits';
 import { Button } from '@/components/ui/Button';
+import toast from 'react-hot-toast';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
 } from 'recharts';
+
+// ─── Download button for a single past mock exam result ───────────────────────
+
+function DownloadResultButton({ resultId, paper, completedAt }: {
+  resultId: string;
+  paper: string;
+  completedAt: string;
+}) {
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownload = async () => {
+    setIsDownloading(true);
+    try {
+      const res = await fetch('/api/mock-exam/download-result', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resultId }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: 'Download failed' }));
+        throw new Error(err.error ?? 'Download failed');
+      }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const dateStr = new Date(completedAt).toISOString().split('T')[0];
+      a.download = `nursefiti-${paper.replace(/\s+/g, '-').toLowerCase()}-${dateStr}.html`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      toast.success('Download ready — open the file in any browser to view.');
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Download failed');
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleDownload}
+      disabled={isDownloading}
+      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-primary/30 text-primary hover:bg-primary-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+    >
+      {isDownloading
+        ? <><Spinner size="sm" />&nbsp;…</>
+        : '⬇ HTML'}
+    </button>
+  );
+}
 
 interface UnitStat {
   unit: string;
@@ -238,7 +291,8 @@ export default function AnalyticsPage() {
                       <th className="text-left py-2 pr-4 text-neutral-mid font-semibold">Paper</th>
                       <th className="text-left py-2 pr-4 text-neutral-mid font-semibold">Score</th>
                       <th className="text-left py-2 pr-4 text-neutral-mid font-semibold">Time</th>
-                      <th className="text-left py-2 text-neutral-mid font-semibold">Result</th>
+                      <th className="text-left py-2 pr-4 text-neutral-mid font-semibold">Result</th>
+                      <th className="text-left py-2 text-neutral-mid font-semibold">Download</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -252,8 +306,11 @@ export default function AnalyticsPage() {
                           {m.score_percentage.toFixed(0)}%
                         </td>
                         <td className="py-3 pr-4 text-neutral-mid">{m.time_used_minutes}m</td>
-                        <td className="py-3">
+                        <td className="py-3 pr-4">
                           <Badge variant={m.passed ? 'green' : 'red'} size="sm">{m.passed ? 'Pass' : 'Fail'}</Badge>
+                        </td>
+                        <td className="py-3">
+                          <DownloadResultButton resultId={m.id} paper={m.paper} completedAt={m.completed_at} />
                         </td>
                       </tr>
                     ))}

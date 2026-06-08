@@ -78,18 +78,30 @@ export async function POST(req: NextRequest) {
     const studentName = profile?.full_name ?? 'Student';
     const studentEmail = profile?.email ?? user.email ?? '';
 
-    // 5. Load the answers for this exam session (by student + paper + completed_at window)
-    // We match by student_id + mode + paper within a 3h window of the exam completion
+    // 5. Load the answers for this exam session
+    // Primary: use result_id link (reliable, set for all new exams)
+    // Fallback: time-window match within 3h of completion (for older exams)
     const completedAt = new Date(result.completed_at);
     const windowStart = new Date(completedAt.getTime() - 3 * 60 * 60 * 1000).toISOString();
 
-    const { data: answers } = await (admin as any)
+    // Try result_id first
+    let { data: answers } = await (admin as any)
       .from('student_answers')
       .select('question_id, selected_option, is_correct')
       .eq('student_id', user.id)
-      .eq('mode', 'mock_exam')
-      .gte('answered_at', windowStart)
-      .lte('answered_at', result.completed_at);
+      .eq('result_id', resultId);
+
+    // Fallback to time-window if result_id lookup returns nothing (legacy exams)
+    if (!answers || (answers as any[]).length === 0) {
+      const { data: windowAnswers } = await (admin as any)
+        .from('student_answers')
+        .select('question_id, selected_option, is_correct')
+        .eq('student_id', user.id)
+        .eq('mode', 'mock_exam')
+        .gte('answered_at', windowStart)
+        .lte('answered_at', result.completed_at);
+      answers = windowAnswers;
+    }
 
     const answerMap = new Map<string, { selected: string; correct: boolean }>();
     for (const a of (answers ?? []) as Array<{ question_id: string; selected_option: string; is_correct: boolean }>) {

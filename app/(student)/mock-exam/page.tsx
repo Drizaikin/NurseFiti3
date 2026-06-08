@@ -372,10 +372,27 @@ export default function MockExamPage() {
         console.error('mock_exam_results insert error:', insertError.message ?? insertError);
         toast('Results saved locally. Score shown above.', { icon: 'ℹ️', duration: 5000 });
       } else if (insertedResult) {
+        const newResultId = (insertedResult as any).id as string;
         // Update resultId so Download button works
-        setResults(prev => prev ? { ...prev, resultId: (insertedResult as any).id } : prev);
+        setResults(prev => prev ? { ...prev, resultId: newResultId } : prev);
         // Clear backup now that DB has it
         try { localStorage.removeItem('nursefiti_last_exam'); } catch { /* ignore */ }
+
+        // Back-link all answer records to this result for reliable history retrieval.
+        // We match the answers we just inserted (same student, mock_exam mode, same paper,
+        // within the last 2 minutes) and stamp them with the result_id.
+        const linkWindowStart = new Date(Date.now() - 2 * 60 * 1000).toISOString();
+        (supabase as any)
+          .from('student_answers')
+          .update({ result_id: newResultId })
+          .eq('student_id', userId)
+          .eq('mode', 'mock_exam')
+          .eq('paper', config.paper)
+          .gte('answered_at', linkWindowStart)
+          .is('result_id', null)
+          .then(({ error: linkErr }: any) => {
+            if (linkErr) console.error('Failed to link answers to result:', linkErr.message);
+          });
       }
 
       // ── Increment the weekly counter immediately so the gate is correct
