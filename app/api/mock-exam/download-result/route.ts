@@ -80,18 +80,21 @@ export async function POST(req: NextRequest) {
 
     // 5. Load the answers for this exam session
     // Primary: use result_id link (reliable, set for all new exams)
-    // Fallback: time-window match within 3h of completion (for older exams)
+    // Fallback: time-window match for legacy exams
     const completedAt = new Date(result.completed_at);
+    // Window: from 3 hours before completion to 5 minutes AFTER
+    // (answers are inserted after the result row, so completed_at < answered_at is possible)
     const windowStart = new Date(completedAt.getTime() - 3 * 60 * 60 * 1000).toISOString();
+    const windowEnd   = new Date(completedAt.getTime() + 5 * 60 * 1000).toISOString();
 
-    // Try result_id first
+    // Try result_id first (all new exams have this)
     let { data: answers } = await (admin as any)
       .from('student_answers')
       .select('question_id, selected_option, is_correct')
       .eq('student_id', user.id)
       .eq('result_id', resultId);
 
-    // Fallback to time-window if result_id lookup returns nothing (legacy exams)
+    // Fallback to time-window for legacy exams (no result_id)
     if (!answers || (answers as any[]).length === 0) {
       const { data: windowAnswers } = await (admin as any)
         .from('student_answers')
@@ -99,8 +102,23 @@ export async function POST(req: NextRequest) {
         .eq('student_id', user.id)
         .eq('mode', 'mock_exam')
         .gte('answered_at', windowStart)
-        .lte('answered_at', result.completed_at);
+        .lte('answered_at', windowEnd);
       answers = windowAnswers;
+    }
+
+    // Last resort: fetch all mock_exam answers for this cadre+paper on the same calendar day.
+    // This handles cases where the submission timestamp drifted significantly.
+    if (!answers || (answers as any[]).length === 0) {
+      const dayStart = completedAt.toISOString().split('T')[0] + 'T00:00:00.000Z';
+      const dayEnd   = completedAt.toISOString().split('T')[0] + 'T23:59:59.999Z';
+      const { data: dayAnswers } = await (admin as any)
+        .from('student_answers')
+        .select('question_id, selected_option, is_correct')
+        .eq('student_id', user.id)
+        .eq('mode', 'mock_exam')
+        .gte('answered_at', dayStart)
+        .lte('answered_at', dayEnd);
+      answers = dayAnswers;
     }
 
     const answerMap = new Map<string, { selected: string; correct: boolean }>();
