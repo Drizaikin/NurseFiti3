@@ -40,14 +40,51 @@ export async function POST(req: NextRequest) {
     const { tutorId, status, tier, reason } = body.data;
     const admin = createAdminClient();
 
-    await (admin as any)
+    // First check if the tutor_profiles row exists
+    const { data: existing } = await (admin as any)
       .from('tutor_profiles')
-      .update({
+      .select('id, nck_reg_number')
+      .eq('id', tutorId)
+      .maybeSingle();
+
+    if (!existing) {
+      // Row is missing — create a minimal one so we can set the status
+      const { data: tutorProfileData } = await (admin as any)
+        .from('profiles')
+        .select('full_name')
+        .eq('id', tutorId)
+        .single();
+
+      const { error: insertErr } = await (admin as any).from('tutor_profiles').insert({
+        id:                  tutorId,
+        nck_reg_number:      'PENDING-' + tutorId.slice(0, 8).toUpperCase(),
+        professional_title:  tutorProfileData?.full_name ?? 'Tutor',
+        years_experience:    0,
+        current_employer:    'Not provided',
+        cadres_taught:       [],
         verification_status: status,
         verification_tier:   status === 'verified' ? (tier ?? 'standard') : null,
         rejection_reason:    status === 'rejected' ? (reason ?? null) : null,
-      })
-      .eq('id', tutorId);
+      });
+      if (insertErr) {
+        console.error('[verify-tutor] insert error:', insertErr);
+        return NextResponse.json({ error: `Failed to update tutor: ${insertErr.message}` }, { status: 500 });
+      }
+    } else {
+      const { error: updateErr } = await (admin as any)
+        .from('tutor_profiles')
+        .update({
+          verification_status: status,
+          verification_tier:   status === 'verified' ? (tier ?? 'standard') : null,
+          rejection_reason:    status === 'rejected' ? (reason ?? null) : null,
+        })
+        .eq('id', tutorId);
+
+      if (updateErr) {
+        console.error('[verify-tutor] update error:', updateErr);
+        return NextResponse.json({ error: `Failed to update tutor: ${updateErr.message}` }, { status: 500 });
+      }
+    }
 
     // Notify the tutor
     await (admin as any).from('notifications').insert({

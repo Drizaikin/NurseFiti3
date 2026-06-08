@@ -182,8 +182,8 @@ export async function middleware(req: NextRequest) {
       .eq('id', session.user.id)
       .single();
 
-    if (tutorProfile?.verification_status === 'pending') {
-      if (!tutorProfile.nck_certificate_url) {
+    if (!tutorProfile || tutorProfile?.verification_status === 'pending') {
+      if (!tutorProfile?.nck_certificate_url) {
         return NextResponse.redirect(new URL('/tutor-complete-profile', req.url));
       }
       return NextResponse.redirect(new URL('/tutor-pending', req.url));
@@ -192,6 +192,7 @@ export async function middleware(req: NextRequest) {
       await supabase.auth.signOut();
       return NextResponse.redirect(new URL('/login?error=account_rejected', req.url));
     }
+    // verification_status === 'verified' → allow through
   }
 
   return res;

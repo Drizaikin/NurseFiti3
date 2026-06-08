@@ -72,9 +72,41 @@ export default function MockExamPage() {
   const [startedAt, setStartedAt] = useState<Date | null>(null);
   const [results, setResults] = useState<{
     score: number; correct: number; total: number; passed: boolean; timeUsed: number;
+    resultId?: string;
   } | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [showRationale, setShowRationale] = useState<string | null>(null);
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownloadResult = async () => {
+    if (!results?.resultId) { toast.error('Result ID not available. Please retry.'); return; }
+    setIsDownloading(true);
+    try {
+      const res = await fetch('/api/mock-exam/download-result', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resultId: results.resultId }),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error ?? 'Download failed');
+      }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `nursefiti-mock-exam-result.html`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      toast.success('Download started. Open the file in any browser to view or print.');
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Download failed');
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   useEffect(() => {
     const init = async () => {
@@ -164,66 +196,36 @@ export default function MockExamPage() {
       byUnit[unit] = byUnit[unit].sort(() => Math.random() - 0.5);
     }
 
-    // Interleave: round-robin across units so no unit clusters together
-    // Weighted by how many questions each unit has (proportional pick)
+    // Safe round-robin interleave: cycle through units picking one question at a time
+    // This guarantees no NaN indices and distributes units evenly
     const unitNames = Object.keys(byUnit);
     const unitPointers: Record<string, number> = {};
     for (const u of unitNames) unitPointers[u] = 0;
 
-    const interleaved: typeof unseenPool = [];
     const totalNeeded = Math.min(config.totalQuestions, unseenPool.length);
+    const interleaved: typeof unseenPool = [];
 
-    // Build a weighted round-robin order: units with more questions get more slots
-    // proportional to their share of the total pool
-    const totalPoolSize = unseenPool.length;
-    const unitSlots: string[] = [];
-    for (const u of unitNames) {
-      const share = Math.round((byUnit[u].length / totalPoolSize) * totalNeeded);
-      for (let i = 0; i < share; i++) unitSlots.push(u);
-    }
-    // Pad or trim to exact count needed
-    while (unitSlots.length < totalNeeded) unitSlots.push(unitNames[unitSlots.length % unitNames.length]);
-    unitSlots.length = totalNeeded;
+    // Sort units by question count desc so larger units fill more slots proportionally
+    const sortedUnitNames = [...unitNames].sort((a, b) => byUnit[b].length - byUnit[a].length);
 
-    // Shuffle the slots so same-unit questions don't cluster
-    // Use a controlled interleave: spread each unit's slots evenly
-    const spreadSlots: string[] = new Array(totalNeeded).fill('');
-    const unitQueue = [...unitNames];
-    const slotsPerUnit: Record<string, number[]> = {};
-    for (const u of unitNames) slotsPerUnit[u] = [];
-
-    // Assign each unit's positions evenly across the exam
-    let posCounter = 0;
-    for (const u of unitNames) {
-      const count = Math.round((byUnit[u].length / totalPoolSize) * totalNeeded);
-      const gap = totalNeeded / (count || 1);
-      for (let i = 0; i < count; i++) {
-        const pos = Math.round(i * gap + posCounter % gap) % totalNeeded;
-        slotsPerUnit[u].push(pos);
-      }
-      posCounter++;
-    }
-
-    // Fill the interleaved array using the spread positions
-    for (const u of unitNames) {
-      let qi = 0;
-      for (const pos of slotsPerUnit[u]) {
-        if (qi < byUnit[u].length && byUnit[u][qi]) {
-          interleaved[pos] = byUnit[u][qi++];
+    let round = 0;
+    while (interleaved.length < totalNeeded) {
+      let addedThisRound = 0;
+      for (const u of sortedUnitNames) {
+        if (interleaved.length >= totalNeeded) break;
+        const ptr = unitPointers[u];
+        if (ptr < byUnit[u].length) {
+          interleaved.push(byUnit[u][ptr]);
+          unitPointers[u]++;
+          addedThisRound++;
         }
       }
+      // If no unit had any questions left, break to avoid infinite loop
+      if (addedThisRound === 0) break;
+      round++;
     }
 
-    // Fill any gaps (from rounding) with remaining unseen questions
-    const remaining = unseenPool.filter(q => !interleaved.includes(q));
-    let ri = 0;
-    for (let i = 0; i < totalNeeded; i++) {
-      if (!interleaved[i] && ri < remaining.length) {
-        interleaved[i] = remaining[ri++];
-      }
-    }
-
-    const finalQuestions = interleaved.filter(Boolean).slice(0, config.totalQuestions);
+    const finalQuestions = interleaved.slice(0, config.totalQuestions);
 
     if (finalQuestions.length === 0) {
       toast.error('Not enough questions available for this exam. Please try again later.');
@@ -285,7 +287,7 @@ export default function MockExamPage() {
       }
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { error: insertError } = await (supabase.from('mock_exam_results') as any).insert({
+      const { error: insertError, data: insertedResult } = await (supabase.from('mock_exam_results') as any).insert({
         student_id: userId,
         cadre: config.cadre,
         paper: config.paper,
@@ -296,7 +298,7 @@ export default function MockExamPage() {
         passed,
         started_at: startedAt?.toISOString() ?? new Date().toISOString(),
         completed_at: new Date().toISOString(),
-      });
+      }).select('id').single();
       if (insertError) {
         console.error('mock_exam_results insert error:', insertError);
         toast.error('Results could not be saved. Your score is shown below.');
@@ -311,7 +313,7 @@ export default function MockExamPage() {
       }
     }
 
-    setResults({ score, correct, total, passed, timeUsed });
+    setResults({ score, correct, total, passed, timeUsed, resultId: (insertedResult as any)?.id });
     setExamState('results');
     setIsSubmitting(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -599,6 +601,16 @@ export default function MockExamPage() {
         <div className="flex gap-3">
           <Button variant="primary" className="flex-1" onClick={() => setExamState('setup')}>Take Another Exam</Button>
           <Button variant="outline" className="flex-1" onClick={() => router.push('/analytics')}>View Analytics</Button>
+          {results.resultId && (
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={handleDownloadResult}
+              disabled={isDownloading}
+            >
+              {isDownloading ? <><Spinner size="sm" />&nbsp;Preparing…</> : '⬇ Download Results'}
+            </Button>
+          )}
         </div>
       </div>
     );

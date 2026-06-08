@@ -59,28 +59,59 @@ export async function POST(req: NextRequest) {
     }
 
     if (action === 'delete') {
-      // The profiles table has REFERENCES auth.users without ON DELETE CASCADE,
-      // so we must delete public schema rows first, then remove the auth user.
-      // Order matters: child tables (student_profiles / tutor_profiles) reference
-      // profiles, and profiles references auth.users.
+      // The profiles table has REFERENCES auth.users without ON DELETE CASCADE.
+      // We must delete ALL rows that reference profiles before deleting the profile row,
+      // and ALL rows that reference those child tables before them.
+      // The exact order matters — deepest children first.
 
-      // 1. Delete child profile rows (student_profiles or tutor_profiles)
-      await (admin as any).from('student_profiles').delete().eq('id', userId);
-      await (admin as any).from('tutor_profiles').delete().eq('id', userId);
+      // ── Tier 3: rows that reference sessions ────────────────────────────
+      await (admin as any).from('session_reviews').delete().eq('student_id', userId);
+      await (admin as any).from('session_reviews').delete().eq('tutor_id', userId);
+      await (admin as any).from('session_notes').delete().eq('tutor_id', userId);
+      await (admin as any).from('session_notes').delete().eq('student_id', userId);
 
-      // 2. Delete any notifications, payments, etc. that reference this user
-      //    (these reference profiles, so must go before profiles row is deleted)
-      await (admin as any).from('notifications').delete().eq('user_id', userId);
+      // ── Tier 3: rows that reference study_groups ────────────────────────
+      await (admin as any).from('group_members').delete().eq('student_id', userId);
+
+      // ── Tier 3: rows that reference community/tutor messages ────────────
+      // message_reactions references both community_messages and tutor_messages
+      // Delete reactions first, then the messages
+      await (admin as any).from('message_reactions').delete().eq('user_id', userId);
+      await (admin as any).from('tutor_messages').delete().eq('author_id', userId);
+      await (admin as any).from('community_messages').delete().eq('author_id', userId);
+
+      // ── Tier 3: notification reads ───────────────────────────────────────
+      await (admin as any).from('notification_reads').delete().eq('user_id', userId);
+
+      // ── Tier 3: feedback helpful votes ──────────────────────────────────
+      await (admin as any).from('feedback_helpful').delete().eq('user_id', userId);
+
+      // ── Tier 2: rows that directly reference profiles ───────────────────
       await (admin as any).from('student_answers').delete().eq('student_id', userId);
       await (admin as any).from('mock_exam_results').delete().eq('student_id', userId);
       await (admin as any).from('flashcard_progress').delete().eq('student_id', userId);
       await (admin as any).from('student_badges').delete().eq('student_id', userId);
       await (admin as any).from('revision_plans').delete().eq('student_id', userId);
-      await (admin as any).from('group_members').delete().eq('student_id', userId);
       await (admin as any).from('tutor_availability').delete().eq('tutor_id', userId);
+      await (admin as any).from('tutor_payouts').delete().eq('tutor_id', userId);
       await (admin as any).from('payments').delete().eq('user_id', userId);
+      await (admin as any).from('notifications').delete().eq('user_id', userId);
+      await (admin as any).from('study_notes').delete().eq('contributor_id', userId);
+      await (admin as any).from('flagged_questions').delete().eq('student_id', userId);
+      await (admin as any).from('practice_sessions').delete().eq('student_id', userId);
+      await (admin as any).from('app_feedback').delete().eq('user_id', userId);
+      await (admin as any).from('question_uploads').delete().eq('student_id', userId);
+      // sessions reference both student_id and tutor_id
+      await (admin as any).from('sessions').delete().eq('student_id', userId);
+      await (admin as any).from('sessions').delete().eq('tutor_id', userId);
+      // study_groups created by this user
+      await (admin as any).from('study_groups').delete().eq('creator_id', userId);
 
-      // 3. Delete the profiles row
+      // ── Tier 1: child profiles ───────────────────────────────────────────
+      await (admin as any).from('student_profiles').delete().eq('id', userId);
+      await (admin as any).from('tutor_profiles').delete().eq('id', userId);
+
+      // ── Tier 0: the profiles row itself ──────────────────────────────────
       const { error: profileDeleteError } = await (admin as any)
         .from('profiles')
         .delete()
@@ -94,11 +125,11 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      // 4. Now delete from Supabase Auth (no FK blocker remains)
-      const { error } = await admin.auth.admin.deleteUser(userId);
-      if (error) {
-        console.error('[manage-account] deleteUser error:', error);
-        return NextResponse.json({ error: `Failed to delete account: ${error.message}` }, { status: 500 });
+      // ── Auth user (no FK blocker remains) ────────────────────────────────
+      const { error: authDeleteError } = await admin.auth.admin.deleteUser(userId);
+      if (authDeleteError) {
+        console.error('[manage-account] deleteUser error:', authDeleteError);
+        return NextResponse.json({ error: `Failed to delete account: ${authDeleteError.message}` }, { status: 500 });
       }
       return NextResponse.json({ success: true, action: 'deleted' });
     }

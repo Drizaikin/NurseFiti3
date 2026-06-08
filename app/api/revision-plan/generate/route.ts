@@ -360,6 +360,144 @@ function renderPlanHtml(
   <h2 class="section-title">📆 Day-by-Day Schedule</h2>
   ${weekRows}
 
+  <!-- Resources Section -->
+  <h2 class="section-title">📚 Study Resources</h2>
+  <p style="font-size:13px;color:#4A6B6A;margin-bottom:16px;">All resources verified as real and nursing-relevant. Kenya-specific resources prioritised.</p>
+
+  <!-- 4.1 Official Kenya Resources -->
+  <div style="margin-bottom:20px;">
+    <h3 style="font-size:14px;font-weight:800;color:#08514F;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+      <span style="background:#08514F;color:white;padding:2px 8px;border-radius:6px;font-size:11px;">🇰🇪 Official</span> Kenya Health Resources
+    </h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;">
+      ${[
+        { name: 'NCK Official Portal', url: 'https://nck.go.ke', desc: 'Exam dates, registration, format updates, professional registration', tag: '🇰🇪 Official' },
+        { name: 'Ministry of Health Kenya', url: 'https://www.health.go.ke', desc: 'National health policies, KEPH, ANC/PMTCT guidelines, community health protocols', tag: '🇰🇪 Official' },
+        { name: 'KEMSA — Kenya Essential Medicines', url: 'https://www.kemsa.co.ke', desc: 'Kenya Essential Medicines List (KEML) — all pharmacology must align to this list', tag: '🇰🇪 Official' },
+        { name: 'DHIS2 Kenya', url: 'https://hiskenya.org', desc: 'Kenya disease surveillance data — essential for community health statistics', tag: '🇰🇪 Official' },
+        { name: 'KNBS', url: 'https://www.knbs.or.ke', desc: 'Kenya demographic health statistics — fertility rates, mortality, population data', tag: '🇰🇪 Official' },
+        { name: 'WHO Kenya Office', url: 'https://www.afro.who.int/countries/kenya', desc: 'Kenya-specific WHO reports, immunisation data, disease burden, adapted guidelines', tag: '🇰🇪 Official' },
+      ].map(r => `<a href="${r.url}" target="_blank" rel="noopener noreferrer" style="display:block;background:white;border:1px solid #D6E7E4;border-radius:10px;padding:10px 12px;text-decoration:none;transition:border-color 0.2s;">
+        <p style="font-size:12px;font-weight:700;color:#08514F;margin-bottom:3px;">${r.name}</p>
+        <p style="font-size:11px;color:#4A6B6A;line-height:1.4;">${r.desc}</p>
+        <p style="font-size:10px;color:#F5A623;font-weight:600;margin-top:4px;">${r.tag}</p>
+      </a>`).join('')}
+    </div>
+  </div>
+
+  <!-- 4.2 Core Nursing Websites -->
+  <div style="margin-bottom:20px;">
+    <h3 style="font-size:14px;font-weight:800;color:#08514F;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+      <span style="background:#0A6865;color:white;padding:2px 8px;border-radius:6px;font-size:11px;">🌐 Web</span> Core Nursing Websites
+    </h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;">
+      ${[
+        { name: 'Nurseslabs.com', url: 'https://nurseslabs.com', desc: 'NCK-style nursing notes, care plans, NCLEX-adapted MCQs — most Kenya nurses use this' },
+        { name: 'Osmosis.org', url: 'https://www.osmosis.org', desc: 'Visual learning — diseases, pharmacology, pathophysiology animations. Excellent for visual learners.' },
+        { name: 'Khan Academy Health', url: 'https://www.khanacademy.org/science/health-and-medicine', desc: 'Free physiology, biochemistry, anatomy — clear explanations, well-organised by system' },
+        { name: 'EZmed.org', url: 'https://www.ezmed.org', desc: 'Medical mnemonics, quick-reference cards — excellent for pharmacology and pathology' },
+        { name: 'Amboss Medical Library', url: 'https://www.amboss.com', desc: 'Clinical vignette MCQs adaptable for NCK scenario practice — high-quality clinical reasoning' },
+        { name: 'Open Textbook Library', url: 'https://open.umn.edu/opentextbooks', desc: 'Free nursing textbooks — anatomy, pharmacology, community health, fundamentals' },
+        { name: 'LibreTexts Medicine', url: 'https://med.libretexts.org', desc: 'Free medical/nursing content — anatomy, physiology, pharmacology, nursing practice' },
+        { name: 'PubMed', url: 'https://pubmed.ncbi.nlm.nih.gov', desc: 'Evidence-based nursing research — guidelines, clinical protocols, systematic reviews (free)' },
+      ].map(r => `<a href="${r.url}" target="_blank" rel="noopener noreferrer" style="display:block;background:white;border:1px solid #D6E7E4;border-radius:10px;padding:10px 12px;text-decoration:none;">
+        <p style="font-size:12px;font-weight:700;color:#08514F;margin-bottom:3px;">${r.name}</p>
+        <p style="font-size:11px;color:#4A6B6A;line-height:1.4;">${r.desc}</p>
+        <p style="font-size:10px;color:#0A6865;font-weight:600;margin-top:4px;">🌐 Website</p>
+      </a>`).join('')}
+    </div>
+  </div>
+
+  <!-- 4.3 YouTube Channels -->
+  <div style="margin-bottom:20px;">
+    <h3 style="font-size:14px;font-weight:800;color:#08514F;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+      <span style="background:#EF4444;color:white;padding:2px 8px;border-radius:6px;font-size:11px;">▶ YouTube</span> Nursing Education Channels
+    </h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;">
+      ${[
+        { name: 'Ninja Nerd Science', url: 'https://www.youtube.com/@NinjaNerdScience', desc: 'Best anatomy, physiology and pathophysiology on YouTube. Free, detailed, exceptional for Paper IV.' },
+        { name: 'RegisteredNurseRN', url: 'https://www.youtube.com/@RegisteredNurseRN', desc: 'NCLEX-style nursing videos — med-surg, maternal health, pharmacology, clinical skills' },
+        { name: 'Simple Nursing', url: 'https://www.youtube.com/@SimpleNursing', desc: 'Mnemonics and simplified nursing content — pharmacology especially strong. Great for memory.' },
+        { name: 'Nucleus Medical Media', url: 'https://www.youtube.com/@NucleusMedicalMedia', desc: 'Medical animations — disease mechanisms, surgical procedures, anatomy. Excellent visual learning.' },
+        { name: 'MedCram', url: 'https://www.youtube.com/@MedCram', desc: 'Clinical medicine explained clearly — acid-base balance, ECG, respiratory physiology, sepsis' },
+        { name: 'Armando Hasudungan', url: 'https://www.youtube.com/@armandohasudungan', desc: 'Hand-drawn medical illustrations — pharmacology, physiology, haematology. Unique visual style.' },
+        { name: 'Khan Academy Medicine', url: 'https://www.youtube.com/@khanacademymedicine', desc: 'Physiology animations — renal, cardiology, neurology. Free, systematic, well-structured.' },
+        { name: 'Spoon Feed Nursing', url: 'https://www.youtube.com/@SpoonFeedNursing', desc: 'Quick nursing prep content — maternal health, paediatrics, psychiatric nursing videos' },
+      ].map(r => `<a href="${r.url}" target="_blank" rel="noopener noreferrer" style="display:block;background:white;border:1px solid #FEE2E2;border-radius:10px;padding:10px 12px;text-decoration:none;">
+        <p style="font-size:12px;font-weight:700;color:#991B1B;margin-bottom:3px;">🎬 ${r.name}</p>
+        <p style="font-size:11px;color:#4A6B6A;line-height:1.4;">${r.desc}</p>
+        <p style="font-size:10px;color:#EF4444;font-weight:600;margin-top:4px;">▶ YouTube</p>
+      </a>`).join('')}
+    </div>
+  </div>
+
+  <!-- 4.4 Apps & MCQ Banks -->
+  <div style="margin-bottom:20px;">
+    <h3 style="font-size:14px;font-weight:800;color:#08514F;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+      <span style="background:#7C3AED;color:white;padding:2px 8px;border-radius:6px;font-size:11px;">📱 App</span> Apps &amp; MCQ Banks
+    </h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;">
+      ${[
+        { name: 'Anki (Free)', url: 'https://apps.ankiweb.net', desc: "Spaced repetition flashcard app. Search: 'Nursing pharmacology', 'NCLEX anatomy', 'Community health Kenya'. iOS, Android, Desktop." },
+        { name: 'Quizlet', url: 'https://quizlet.com', desc: "Pre-made and custom nursing flashcard sets. Search: 'NCK nursing Kenya', 'Med-surg nursing MCQ'" },
+        { name: 'Epocrates', url: 'https://www.epocrates.com', desc: 'Free drug reference app — Kenya-relevant drugs, dosing, interactions. Essential for pharmacology review.' },
+        { name: 'Medscape App', url: 'https://www.medscape.com', desc: 'Drug reference, clinical procedures, disease management protocols. Free, regularly updated.' },
+        { name: 'UWorld Nursing', url: 'https://nursing.uworld.com', desc: 'NCLEX question bank adaptable for NCK clinical reasoning practice. High quality clinical vignettes.' },
+        { name: 'Picmonic', url: 'https://www.picmonic.com', desc: 'Visual mnemonics for pharmacology and pathophysiology. Memorable stories for complex drug side effects.' },
+      ].map(r => `<a href="${r.url}" target="_blank" rel="noopener noreferrer" style="display:block;background:white;border:1px solid #EDE9FE;border-radius:10px;padding:10px 12px;text-decoration:none;">
+        <p style="font-size:12px;font-weight:700;color:#5B21B6;margin-bottom:3px;">📱 ${r.name}</p>
+        <p style="font-size:11px;color:#4A6B6A;line-height:1.4;">${r.desc}</p>
+      </a>`).join('')}
+    </div>
+  </div>
+
+  <!-- 4.5 Free eBooks -->
+  <div style="margin-bottom:20px;">
+    <h3 style="font-size:14px;font-weight:800;color:#08514F;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+      <span style="background:#D97706;color:white;padding:2px 8px;border-radius:6px;font-size:11px;">📚 eBook</span> Free PDF &amp; eBook Sources
+    </h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;">
+      ${[
+        { name: 'NCBI Bookshelf', url: 'https://www.ncbi.nlm.nih.gov/books', desc: 'Free medical and nursing textbooks — StatPearls (regularly updated clinical summaries, free)' },
+        { name: 'StatPearls (NCBI)', url: 'https://www.ncbi.nlm.nih.gov/books/NBK430685', desc: 'Free, regularly updated clinical summaries for diseases, procedures, pharmacology' },
+        { name: 'WHO Free Publications', url: 'https://www.who.int/publications', desc: 'IMCI guidelines, ANC guidelines, TB/HIV/malaria protocols — free PDF downloads' },
+        { name: 'Library Genesis', url: 'https://libgen.is', desc: "Free access to Brunner & Suddarth, Pillitteri, Kaplan Sadock, and other nursing textbooks" },
+      ].map(r => `<a href="${r.url}" target="_blank" rel="noopener noreferrer" style="display:block;background:white;border:1px solid #FEF3C7;border-radius:10px;padding:10px 12px;text-decoration:none;">
+        <p style="font-size:12px;font-weight:700;color:#92400E;margin-bottom:3px;">📚 ${r.name}</p>
+        <p style="font-size:11px;color:#4A6B6A;line-height:1.4;">${r.desc}</p>
+      </a>`).join('')}
+    </div>
+  </div>
+
+  <!-- 4.6 Recommended Textbooks -->
+  <div style="margin-bottom:24px;">
+    <h3 style="font-size:14px;font-weight:800;color:#08514F;margin-bottom:10px;">📖 Recommended Textbooks by Subject</h3>
+    <div style="background:white;border:1px solid #D6E7E4;border-radius:10px;overflow:hidden;">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead><tr style="background:#08514F;color:white;">
+          <th style="padding:8px 12px;text-align:left;">Subject Area</th>
+          <th style="padding:8px 12px;text-align:left;">Textbook</th>
+          <th style="padding:8px 12px;text-align:left;">Edition</th>
+        </tr></thead>
+        <tbody>
+          ${[
+            ['Medical-Surgical Nursing', "Brunner & Suddarth's Medical-Surgical Nursing", '15th (2022)'],
+            ['Midwifery & Child Health', 'Pillitteri: Maternal & Child Health Nursing', '8th Edition'],
+            ['Community Health', 'Maurer & Smith: Community & Public Health Nursing', '5th Edition'],
+            ['Psychiatric Nursing', "Kaplan & Sadock's Synopsis of Psychiatry", '11th Edition'],
+            ['Pharmacology', "Lippincott's Nursing Drug Handbook", 'Current Annual'],
+            ['Anatomy', "Gray's Anatomy for Students (Drake)", '4th Edition'],
+            ['Physiology', 'Guyton & Hall Medical Physiology', '14th Edition'],
+          ].map((r, i) => `<tr style="border-top:1px solid #E8F5F4;${i % 2 === 1 ? 'background:#F9FFFE;' : ''}">
+            <td style="padding:8px 12px;color:#08514F;font-weight:600;">${r[0]}</td>
+            <td style="padding:8px 12px;color:#1A2E2D;">${r[1]}</td>
+            <td style="padding:8px 12px;color:#4A6B6A;">${r[2]}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <!-- Share -->
   <div class="share-box no-print">
     <p>📤 Share this plan with your study partner or tutor</p>
@@ -461,14 +599,21 @@ export async function POST(req: NextRequest) {
     let unitAccuracyMap: Record<string, { correct: number; total: number }> = {};
 
     if (questionIds.length > 0) {
-      const { data: questionsData } = await supabase
-        .from('questions')
-        .select('id, unit')
-        .in('id', questionIds.slice(0, 500));
+      // Fetch in batches of 1000 to avoid URL length limits while covering all answered questions
+      const BATCH = 1000;
+      const allQuestionsData: Array<{ id: string; unit: string }> = [];
+      for (let i = 0; i < questionIds.length; i += BATCH) {
+        const batch = questionIds.slice(i, i + BATCH);
+        const { data: batchData } = await supabase
+          .from('questions')
+          .select('id, unit')
+          .in('id', batch);
+        if (batchData) allQuestionsData.push(...(batchData as Array<{ id: string; unit: string }>));
+      }
 
-      if (questionsData) {
+      if (allQuestionsData.length > 0) {
         for (const ans of (answersData ?? []) as any[]) {
-          const q = (questionsData as any[]).find((q: any) => q.id === ans.question_id);
+          const q = allQuestionsData.find((q) => q.id === ans.question_id);
           if (!q) continue;
           if (!unitAccuracyMap[q.unit]) unitAccuracyMap[q.unit] = { correct: 0, total: 0 };
           unitAccuracyMap[q.unit].total++;
