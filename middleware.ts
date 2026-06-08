@@ -152,6 +152,7 @@ export async function middleware(req: NextRequest) {
   const tutorRoutes = [
     '/tutor-dashboard', '/tutor-schedule', '/tutor-students',
     '/tutor-studio', '/tutor-earnings', '/tutor-reviews', '/tutor-profile',
+    '/tutor-pending', '/tutor-complete-profile', '/tutor-community',
   ];
   const isTutorRoute = tutorRoutes.some((r) => pathname.startsWith(r));
 
@@ -168,7 +169,11 @@ export async function middleware(req: NextRequest) {
 
   // Tutor verification check
   if (isTutorRoute && profile.role === 'tutor') {
-    if (pathname === '/tutor-pending') return res;
+    // Allow pending/complete-profile pages through without further checks
+    if (
+      pathname === '/tutor-pending' ||
+      pathname.startsWith('/tutor-complete-profile')
+    ) return res;
 
     const { data: tutorProfile } = await supabase
       .from('tutor_profiles')

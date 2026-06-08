@@ -75,7 +75,7 @@ export default function TutorSignupPage() {
         throw new Error(result.error || 'Application submission failed');
       }
 
-      router.push('/tutor-dashboard');
+      router.push('/tutor-complete-profile');
     } catch (error: any) {
       toast.error(error.message || 'Failed to submit application. Please try again.');
     } finally {

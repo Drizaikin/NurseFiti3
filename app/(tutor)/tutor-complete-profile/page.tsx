@@ -167,7 +167,7 @@ export default function TutorCompleteProfilePage() {
       toast.success('Profile completed! Our team will review your application shortly.');
       // Force Next.js to invalidate the dashboard cache before navigating back
       router.refresh();
-      router.push('/tutor-dashboard?refreshed=1');
+      router.push('/tutor-pending');
     } catch (err: any) {
       console.error('[complete-profile]', err);
       toast.error(err.message || 'Failed to save. Please try again.');
