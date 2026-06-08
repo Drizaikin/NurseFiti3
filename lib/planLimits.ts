@@ -114,16 +114,16 @@ export function effectiveTier(tier: string, expiresAt: string | null): PlanTier 
 }
 
 /**
- * Returns the ISO date string for the start of the current week (Monday 00:00 UTC).
- * Used to count mock exams taken this week.
+ * Returns the ISO date string for the start of the current week (Monday 00:00 EAT).
+ * EAT = UTC+3. Using local Monday midnight avoids the UTC-offset issue where
+ * a user at 1–2am EAT on Monday would be counted in the previous week.
  */
 export function getWeekStart(): string {
   const now = new Date();
-  const day = now.getUTCDay(); // 0 = Sunday, 1 = Monday …
+  // Work in local time to respect the user's calendar week
+  const day = now.getDay(); // 0 = Sunday, 1 = Monday …
   const diff = day === 0 ? -6 : 1 - day; // days back to Monday
-  const monday = new Date(now);
-  monday.setUTCDate(now.getUTCDate() + diff);
-  monday.setUTCHours(0, 0, 0, 0);
+  const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + diff, 0, 0, 0, 0);
   return monday.toISOString();
 }
 

@@ -147,6 +147,37 @@ export default function MockExamPage() {
     if (!config) return;
     setIsLoading(true);
 
+    // ── Server-side limit re-check — never trust the cached examsThisWeek state ──
+    // Re-query the DB right before starting so a user can't bypass the gate
+    // by manipulating React state or navigating directly to startExam.
+    const limits = getLimits(planTier);
+    const weeklyLimit = limits.mockExamsPerWeek;
+    const isFreeCheck = planTier === 'free';
+
+    if (isFreeCheck) {
+      // Free users are always blocked here — shouldn't reach startExam anyway
+      toast.error('Mock exams require a paid plan.');
+      setIsLoading(false);
+      return;
+    }
+
+    if (weeklyLimit !== Infinity) {
+      const weekStart = getWeekStart();
+      const { count: liveCount } = await supabase
+        .from('mock_exam_results')
+        .select('id', { count: 'exact', head: true })
+        .eq('student_id', userId!)
+        .gte('completed_at', weekStart);
+      const liveExamsThisWeek = liveCount ?? 0;
+      // Keep local state in sync with the authoritative DB count
+      setExamsThisWeek(liveExamsThisWeek);
+      if (liveExamsThisWeek >= weeklyLimit) {
+        toast.error(`Weekly limit reached — you've used all ${weeklyLimit} mock exam${weeklyLimit !== 1 ? 's' : ''} this week.`);
+        setIsLoading(false);
+        return;
+      }
+    }
+
     // ── STEP 1: Get question IDs the student has already seen in mock exams for this paper ──
     const { data: seenData } = await (supabase as any)
       .from('student_answers')
@@ -346,6 +377,12 @@ export default function MockExamPage() {
         // Clear backup now that DB has it
         try { localStorage.removeItem('nursefiti_last_exam'); } catch { /* ignore */ }
       }
+
+      // ── Increment the weekly counter immediately so the gate is correct
+      // when the user clicks "Take Another Exam" without refreshing the page.
+      // This prevents the stale-state bug where examsThisWeek stays at the old
+      // value and the limit check passes for a 3rd exam on a 2/week plan.
+      setExamsThisWeek(prev => prev + 1);
 
       // Update XP in background — non-blocking, failure is acceptable
       (supabase as any).from('student_profiles').select('xp, level').eq('id', userId).single()
