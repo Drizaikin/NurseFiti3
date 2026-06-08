@@ -448,4 +448,97 @@ export default function AdminTutorsPage() {
         </div>
       )}
 
-      {/* Lock / De
+      {/* Lock / Delete confirm modal */}
+      {confirmAction && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+          <div className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl p-6 max-w-sm w-full">
+            {confirmAction.type === 'delete' ? (
+              <>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-error/10 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-heading font-bold text-error">Delete Account</h3>
+                    <p className="text-xs text-neutral-mid">This cannot be undone</p>
+                  </div>
+                </div>
+                <p className="text-sm text-[var(--color-text)] mb-2">
+                  You are about to <strong>permanently delete</strong> the account of:
+                </p>
+                <div className="bg-error/5 border border-error/20 rounded-xl p-3 mb-4">
+                  <p className="font-semibold text-[var(--color-text)]">{confirmAction.tutor.full_name}</p>
+                  <p className="text-xs text-neutral-mid">{confirmAction.tutor.email}</p>
+                </div>
+                <p className="text-sm text-neutral-mid mb-4">
+                  All their data, profile, documents, and sessions will be permanently erased.
+                </p>
+              </>
+            ) : confirmAction.type === 'lock' ? (
+              <>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-heading font-bold">Lock Account</h3>
+                    <p className="text-xs text-neutral-mid">Tutor will be unable to log in</p>
+                  </div>
+                </div>
+                <p className="text-sm text-[var(--color-text)] mb-2">Lock the account of:</p>
+                <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-3 mb-4">
+                  <p className="font-semibold text-[var(--color-text)]">{confirmAction.tutor.full_name}</p>
+                  <p className="text-xs text-neutral-mid">{confirmAction.tutor.email}</p>
+                </div>
+                <p className="text-sm text-neutral-mid mb-4">
+                  They will be signed out and blocked from logging in. You can unlock them at any time.
+                </p>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-success/10 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-heading font-bold">Unlock Account</h3>
+                    <p className="text-xs text-neutral-mid">Tutor will be able to log in again</p>
+                  </div>
+                </div>
+                <p className="text-sm text-[var(--color-text)] mb-2">Restore access for:</p>
+                <div className="bg-success/5 border border-success/20 rounded-xl p-3 mb-4">
+                  <p className="font-semibold text-[var(--color-text)]">{confirmAction.tutor.full_name}</p>
+                  <p className="text-xs text-neutral-mid">{confirmAction.tutor.email}</p>
+                </div>
+              </>
+            )}
+            <div className="flex gap-3">
+              <Button variant="ghost" className="flex-1" onClick={() => setConfirmAction(null)}
+                disabled={actionLoading !== null}>
+                Cancel
+              </Button>
+              <Button
+                variant={confirmAction.type === 'delete' ? 'danger' : 'primary'}
+                className="flex-1"
+                onClick={handleConfirmedAction}
+                disabled={actionLoading !== null}
+              >
+                {actionLoading
+                  ? <Spinner size="sm" color="white" />
+                  : confirmAction.type === 'delete' ? 'Yes, Delete'
+                  : confirmAction.type === 'lock' ? 'Yes, Lock'
+                  : 'Yes, Unlock'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
