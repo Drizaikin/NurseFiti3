@@ -358,6 +358,27 @@ export default function AdminTutorsPage() {
                       Re-verify
                     </Button>
                   )}
+                  {/* Lock / Delete — always available */}
+                  <div className="border-t border-[var(--color-border)] pt-2 mt-1 flex flex-col gap-1.5">
+                    {t.is_locked ? (
+                      <Button variant="ghost" size="sm"
+                        onClick={() => setConfirmAction({ type: 'unlock', tutor: t })}
+                        disabled={actionLoading !== null}>
+                        🔓 Unlock
+                      </Button>
+                    ) : (
+                      <Button variant="ghost" size="sm"
+                        onClick={() => setConfirmAction({ type: 'lock', tutor: t })}
+                        disabled={actionLoading !== null}>
+                        🔒 Lock
+                      </Button>
+                    )}
+                    <Button variant="danger" size="sm"
+                      onClick={() => setConfirmAction({ type: 'delete', tutor: t })}
+                      disabled={actionLoading !== null}>
+                      Delete
+                    </Button>
+                  </div>
                 </div>
               </div>
             </Card>
@@ -426,6 +447,5 @@ export default function AdminTutorsPage() {
           </div>
         </div>
       )}
-    </div>
-  );
-}
+
+      {/* Lock / De

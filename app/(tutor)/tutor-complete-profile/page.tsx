@@ -278,9 +278,14 @@ export default function TutorCompleteProfilePage() {
                 onChange={e => setBio(e.target.value)}
                 placeholder="Tell students about your experience, teaching style, and what makes you a great tutor..."
               />
-              <p className={`text-xs mt-1 ${bio.length < 200 ? 'text-[var(--color-text-secondary)]' : bio.length > 400 ? 'text-error' : 'text-success'}`}>
-                {bio.length} / 400 characters (minimum 200)
-              </p>
+              {(() => {
+                const trimLen = bio.trim().length;
+                return (
+                  <p className={`text-xs mt-1 ${trimLen < 200 ? 'text-[var(--color-text-secondary)]' : trimLen > 400 ? 'text-error' : 'text-success'}`}>
+                    {trimLen} / 400 characters (minimum 200)
+                  </p>
+                );
+              })()}
             </div>
 
             {/* Session rate */}
