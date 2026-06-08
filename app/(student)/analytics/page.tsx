@@ -120,7 +120,12 @@ export default function AnalyticsPage() {
 
       const [profileRes, answersRes, mockRes, flashRes] = await Promise.all([
         supabase.from('student_profiles').select('plan_tier, plan_expires_at').eq('id', user.id).maybeSingle(),
-        supabase.from('student_answers').select('is_correct, time_taken_seconds, answered_at, question_id').eq('student_id', user.id),
+        // Limit to last 2000 answers to avoid timeout on large accounts
+        supabase.from('student_answers')
+          .select('is_correct, time_taken_seconds, answered_at, question_id')
+          .eq('student_id', user.id)
+          .order('answered_at', { ascending: false })
+          .limit(2000),
         supabase.from('mock_exam_results').select('*').eq('student_id', user.id).order('completed_at', { ascending: false }),
         supabase.from('flashcard_progress').select('id').eq('student_id', user.id),
       ]);
@@ -139,12 +144,16 @@ export default function AnalyticsPage() {
       const accuracy = totalAnswered > 0 ? Math.round((correctAnswers / totalAnswered) * 100) : 0;
       const studyTimeMinutes = Math.round(answers.reduce((s, a) => s + (a.time_taken_seconds ?? 0), 0) / 60);
 
-      // Weekly stats (last 7 days)
+      // Weekly stats (last 7 days) — use local date strings to match EAT timezone
       const weeklyStats: DayStat[] = [];
       for (let i = 6; i >= 0; i--) {
         const d = new Date();
         d.setDate(d.getDate() - i);
-        const dayStr = d.toISOString().split('T')[0];
+        // Local date string avoids UTC-vs-EAT mismatch
+        const yr = d.getFullYear();
+        const mo = String(d.getMonth() + 1).padStart(2, '0');
+        const dy = String(d.getDate()).padStart(2, '0');
+        const dayStr = `${yr}-${mo}-${dy}`;
         const dayAnswers = answers.filter(a => a.answered_at.startsWith(dayStr));
         const dayCorrect = dayAnswers.filter(a => a.is_correct).length;
         weeklyStats.push({
@@ -154,18 +163,28 @@ export default function AnalyticsPage() {
         });
       }
 
-      // Unit stats — need to join with questions
+      // Unit stats — join with questions using a Map (O(n) not O(n²))
       const questionIds = Array.from(new Set(answers.map(a => a.question_id)));
       let unitStats: UnitStat[] = [];
       if (questionIds.length > 0) {
-        const { data: qData } = await supabase.from('questions').select('id, unit').in('id', questionIds.slice(0, 500));
-        if (qData) {
+        // Fetch in batches of 500 to avoid URL length limits
+        const allQData: Array<{ id: string; unit: string }> = [];
+        for (let i = 0; i < questionIds.length; i += 500) {
+          const { data: batch } = await supabase
+            .from('questions')
+            .select('id, unit')
+            .in('id', questionIds.slice(i, i + 500));
+          if (batch) allQData.push(...(batch as Array<{ id: string; unit: string }>));
+        }
+        if (allQData.length > 0) {
+          // Build a lookup Map — O(1) per answer instead of O(n) .find()
+          const qMap = new Map(allQData.map(q => [q.id, q.unit]));
           const unitMap = new Map<string, { total: number; correct: number }>();
           for (const ans of answers) {
-            const q = (qData as Array<{ id: string; unit: string }>).find(q => q.id === ans.question_id);
-            if (!q) continue;
-            const existing = unitMap.get(q.unit) ?? { total: 0, correct: 0 };
-            unitMap.set(q.unit, { total: existing.total + 1, correct: existing.correct + (ans.is_correct ? 1 : 0) });
+            const unit = qMap.get(ans.question_id);
+            if (!unit) continue;
+            const existing = unitMap.get(unit) ?? { total: 0, correct: 0 };
+            unitMap.set(unit, { total: existing.total + 1, correct: existing.correct + (ans.is_correct ? 1 : 0) });
           }
           unitStats = Array.from(unitMap.entries()).map(([unit, s]) => ({
             unit, total: s.total, correct: s.correct,
