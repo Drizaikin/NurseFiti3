@@ -501,7 +501,208 @@ Also see our [NCK exam preparation guide](https://www.nursefiti.co.ke/blog/nck-e
   },
 ];
 
-const ALL_POSTS = [...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA];
+const POSTS_NEW: Post[] = [
+  {
+    slug: 'nck-exam-anxiety-how-to-manage-it',
+    title: 'NCK Exam Anxiety: 7 Evidence-Based Strategies That Work (2026)',
+    excerpt: 'Exam anxiety costs Kenyan nursing candidates real marks. Here are 7 strategies backed by cognitive and clinical research — practical, not generic.',
+    category: 'Study Strategy',
+    readTime: '9 min read',
+    date: '2026-06-08',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+7 in 10 nursing students experience significant exam anxiety. Most of them know their content. The anxiety is what undermines performance. Here's what actually helps — not generic wellness advice, but strategies with clinical and cognitive research behind them.
+
+## Why NCK Exam Anxiety Is Different
+
+The NCK licensing exam carries a specific weight that ordinary university exams do not: failing means 4–6 months before you can resit. No income. No internship. No licence. That is a real, high-stakes consequence — and your nervous system knows it.
+
+Understanding that your anxiety is a rational response to a genuinely high-stakes situation is the first step. It is not a character flaw or a sign you are unprepared. It is your brain treating the exam the way it should — as important.
+
+**[Start with structured practice to build exam confidence →](https://www.nursefiti.co.ke/signup)**
+
+## 1. Reappraise Anxiety as Readiness
+
+Telling yourself to calm down before a high-stakes exam backfires — it tries to suppress arousal your body has already prepared. Harvard researcher Alison Wood Brooks (2014) found that telling yourself "I am excited" rather than "I am calm" before a performance task significantly improved outcomes. The mechanism: excitement and anxiety share the same physiological arousal. Reframing it as readiness uses that energy productively rather than fighting it.
+
+*Try this: Before entering the exam hall, say — out loud if possible — "I am ready."*
+
+## 2. Controlled Breathing — Box Breathing
+
+Box breathing activates the parasympathetic nervous system (your body's "rest" response) within 60 to 90 seconds. It is used by surgical teams, military personnel, and elite athletes before high-performance situations.
+
+**How to do it:**
+- Inhale slowly through your nose for 4 counts
+- Hold for 4 counts
+- Exhale slowly through your mouth for 4 counts
+- Hold for 4 counts
+- Repeat 4 times
+
+Do this sitting in the exam hall before you begin. It costs you less than 2 minutes and measurably reduces cortisol response (Ma et al., 2017).
+
+## 3. Simulate the Exam Environment Repeatedly
+
+Anxiety is highest when something is novel. Every time you practise under exam conditions — timed, full 100 questions, DigiProctor interface — you reduce novelty and therefore anxiety on exam day.
+
+This is called **systematic desensitisation** — a well-validated behavioural technique. The more times your nervous system encounters something that previously triggered fear, under controlled conditions, the weaker the fear response becomes.
+
+**[Practise full timed mock exams on NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+Take at least 3–4 full mock exams before your sitting. Your anxiety in mock exam 4 will be noticeably lower than in mock exam 1.
+
+## 4. The 3-Category Worry Sort
+
+Anxiety often feels like one large undifferentiated mass of dread. Breaking it into specific categories reduces its power considerably.
+
+Write down everything you are worried about. Then sort each item into three categories:
+- **In my control** — units I haven't studied enough, sleep schedule
+- **Partly in my control** — exam day logistics, how I perform under pressure
+- **Outside my control** — the difficulty of questions, other candidates
+
+For category 1, make an action plan. For category 2, have a plan and accept uncertainty. For category 3, deliberately release it — your worry about it produces zero benefit and real cost.
+
+## 5. Study Consistency, Not Intensity
+
+Cramming creates anxiety. Consistent daily practice — even 2 hours — creates competence, and competence is the most reliable long-term antidote to exam anxiety. You cannot feel genuinely confident about content you barely know.
+
+A 7-day streak of 2-hour study sessions produces more retention and more confidence than a single 14-hour session the week before. This is the spacing effect — one of the most replicated findings in learning science (Cepeda et al., 2006). See also our [NCK exam preparation guide](https://www.nursefiti.co.ke/blog/nck-exam-preparation-guide-kenya) for the full 8-week framework.
+
+## 6. Sleep the Night Before — Non-Negotiably
+
+Pulling an all-nighter before the NCK exam will hurt your performance. Sleep deprivation impairs working memory, processing speed, and emotional regulation — the exact cognitive functions the NCK exam tests. Walker (2017) documents in peer-reviewed detail that a single night of poor sleep reduces cognitive performance by an amount equivalent to being mildly intoxicated.
+
+Go to bed at your normal time. Set two alarms. Do not open your notes after 9pm. The content is in your head. Sleep consolidates it there.
+
+## 7. Arrive Early and Build a 10-Minute Buffer
+
+Rushing to an exam amplifies anxiety physiologically. Arriving 30 minutes early allows your cortisol to normalise, lets you find your workstation without stress, and gives you time to do your box breathing before the exam begins.
+
+Prepare everything the night before: ID, admission letter, water, transport. The morning of the exam is for arriving, not planning.
+
+> *Share this: "Practical breakdown of what actually helps with NCK exam anxiety — not generic wellness tips: nursefiti.co.ke/blog/nck-exam-anxiety-how-to-manage-it"*
+
+## Sources & References
+
+- **Wood Brooks, A. (2014)** — *"Get excited: Reappraising pre-performance anxiety as excitement"*, Journal of Experimental Psychology: General, 143(3), 1144–1158. [DOI: 10.1037/a0035325](https://doi.org/10.1037/a0035325)
+- **Ma, X., Yue, Z.Q., Gong, Z.Q., et al. (2017)** — *"The effect of diaphragmatic breathing on attention, negative affect and stress in healthy adults"*, Frontiers in Psychology, 8, 874. [DOI: 10.3389/fpsyg.2017.00874](https://doi.org/10.3389/fpsyg.2017.00874)
+- **Cepeda, N.J., Pashler, H., Vul, E., et al. (2006)** — *"Distributed practice in verbal recall tasks: A review and quantitative synthesis"*, Psychological Bulletin, 132(3), 354–380. [DOI: 10.1037/0033-2909.132.3.354](https://doi.org/10.1037/0033-2909.132.3.354)
+- **Walker, M. (2017)** — *Why We Sleep: Unlocking the Power of Sleep and Dreams*. Scribner. (Underlying research on sleep and cognitive performance.)
+- **Nursing Council of Kenya** — official website. [nckenya.com](https://www.nckenya.com)
+
+*Always verify current NCK exam dates at [nckenya.com](https://www.nckenya.com) before planning your preparation.*
+    `,
+  },
+  {
+    slug: 'nck-pharmacology-calculations-guide',
+    title: 'NCK Pharmacology & Drug Calculations: Complete Guide (2026)',
+    excerpt: 'Pharmacology and drug calculations appear in every NCK paper. Master the formulas, common KEML drugs, and calculation question patterns with worked examples.',
+    category: 'Study Guide',
+    readTime: '11 min read',
+    date: '2026-06-09',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+Pharmacology is the most consistent source of marks across all NCK papers — and the most consistently under-prepared subject. Many candidates treat drug calculations as secondary. Here is why that is a mistake, and exactly what to do about it.
+
+## Why Pharmacology Dominates the NCK Exam
+
+Clinical pharmacology appears across **all NCK papers** — not just as standalone questions but embedded in scenario questions about management, patient safety, and adverse effects. According to candidate experience across multiple exam cycles, pharmacology content accounts for an estimated 15–25% of total NCK marks across both papers. Miss pharmacology, and you are starting with a significant structural disadvantage.
+
+**[Practice pharmacology MCQs on NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+## The Drug Calculation Formulas You Must Memorise
+
+These three formulas cover virtually every calculation question in the NCK exam. Drill them until they are automatic — not just understood, but automatic.
+
+### 1. Dose/Volume Calculation
+**Formula:** Volume to administer = (Desired dose ÷ Available dose) × Stock volume
+
+*Example:* Doctor orders 250mg amoxicillin. Available: 500mg/5mL.
+→ Volume = (250 ÷ 500) × 5 = **2.5mL**
+
+### 2. IV Drip Rate (drops per minute)
+**Formula:** Drops/min = (Volume in mL × Drop factor) ÷ Time in minutes
+
+*Example:* 500mL 0.9% NS over 4 hours, standard IV set (drop factor 15 drops/mL).
+→ Time = 4 × 60 = 240 min
+→ Drops/min = (500 × 15) ÷ 240 = 7,500 ÷ 240 = **31 drops/min**
+
+### 3. Weight-Based Dosing (paediatric)
+**Formula:** Dose = Weight (kg) × Dose per kg
+
+*Example:* Child weighs 12kg. Ordered: paracetamol 15mg/kg.
+→ Dose = 12 × 15 = **180mg**
+
+## Kenya Essential Medicines List (KEML) — What to Know
+
+All NCK pharmacology questions align to the **Kenya Essential Medicines List (KEML)** — not to international drug databases. Source: KEMSA — [kemsa.co.ke](https://www.kemsa.co.ke).
+
+### High-Yield Drug Categories for NCK
+
+**Antibiotics** (appear in almost every paper):
+- First-line for community-acquired pneumonia: Amoxicillin or Amoxicillin-Clavulanate
+- First-line for UTI: Nitrofurantoin or Trimethoprim-Sulfamethoxazole
+- TB standard regimen: 2HRZE/4HR (Isoniazid, Rifampicin, Pyrazinamide, Ethambutol)
+- HIV first-line ART (Kenya guideline 2022): TDF + 3TC + DTG
+
+**Cardiovascular drugs:**
+- ACE inhibitors (Enalapril, Lisinopril) — first-line hypertension; monitor for dry cough
+- Beta-blockers (Atenolol, Carvedilol) — heart failure, post-MI; contraindicated in acute asthma
+- Furosemide — loop diuretic; monitor electrolytes especially potassium
+- Digoxin toxicity signs: yellow-green visual disturbances, bradycardia, nausea
+
+**Diabetes:**
+- Metformin — first-line type 2 DM; contraindicated in renal impairment (eGFR <30)
+- Insulin types: Actrapid (rapid), Mixtard (intermediate), Lantus/Glargine (long-acting)
+- DKA management: IV fluids first, then insulin — never start insulin without correcting dehydration
+
+**Emergency drugs (memorise doses and route):**
+- Adrenaline (Epinephrine) — anaphylaxis: 0.5mg IM (1:1000), anterolateral thigh
+- Magnesium sulphate — eclampsia: 4g IV loading dose, then 1g/hour maintenance
+- Oxytocin — active management of 3rd stage labour, PPH prevention and treatment
+- Atropine — bradycardia: 0.5–1mg IV
+
+**Psychotropics:**
+- Haloperidol — typical antipsychotic; EPS side effects (akathisia, dystonia)
+- Clozapine — atypical antipsychotic; agranulocytosis risk → mandatory WBC monitoring
+- SSRIs (Fluoxetine, Sertraline) — first-line depression; 2–4 week onset delay
+- Lithium — bipolar disorder; narrow therapeutic index; monitor levels and renal function
+
+## Common NCK Pharmacology Exam Traps
+
+1. **"Which finding requires immediate intervention?"** — Know toxicity signs: digoxin (visual changes), lithium (tremors, confusion), gentamicin (tinnitus/hearing loss), warfarin (bleeding)
+2. **Contraindications over indications** — NCK frequently asks which patient should NOT receive a drug (e.g., metformin in renal failure, beta-blockers in asthma)
+3. **Route matters** — adrenaline for anaphylaxis is IM, not IV (unless cardiac arrest). Getting the route wrong = wrong answer
+4. **KEML first-line vs second-line** — NCK follows Kenya MOH guidelines. The first-line drug in the UK or US may not be first-line in Kenya
+
+## A Daily Pharmacology Drill
+
+From today until your exam, spend 20 minutes per day on pharmacology:
+- 10 MCQs on drug mechanisms and adverse effects (use NurseFiti's practice bank)
+- 2 drug calculation problems from the three formulas above
+- Review 5 flashcard entries on drug names, doses, and contraindications
+
+This compounds significantly. 20 minutes × 40 days = 800 minutes of pharmacology drilling. It will show on exam day.
+
+**[Start your pharmacology drill on NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+Also see our [KRCHN revision guide](https://www.nursefiti.co.ke/blog/krchn-exam-revision-tips) for how pharmacology integrates into Paper I strategy.
+
+> *Share this: "Complete NCK pharmacology guide — formulas, KEML drugs, and the traps NCK examiners use. Worth saving: nursefiti.co.ke/blog/nck-pharmacology-calculations-guide"*
+
+## Sources & References
+
+- **Kenya Essential Medicines List (KEML)** — Ministry of Health Kenya / KEMSA. The authoritative reference for all Kenya MOH drug protocols. [kemsa.co.ke](https://www.kemsa.co.ke)
+- **Ministry of Health Kenya** — *Kenya HIV Prevention and Treatment Guidelines 2022* (ART first-line regimen). [health.go.ke](https://www.health.go.ke)
+- **WHO** — *WHO Model Formulary* — reference for drug class information and clinical use. [who.int](https://www.who.int/publications/i/item/978924154704)
+- **Nursing Council of Kenya** — official website. [nckenya.com](https://www.nckenya.com)
+- **NCK Online Services Portal** — exam registration and results. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
+
+*Drug doses and protocols reference the Kenya Essential Medicines List and Kenya MOH guidelines as of 2026. Always verify current clinical protocols before patient care.*
+    `,
+  },
+];
+
+const ALL_POSTS = [...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW];
 
 // ─── generateStaticParams ────────────────────────────────────────────────────
 
@@ -574,6 +775,16 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
   'digiproctor-nck-exam-guide': {
     url: 'https://images.unsplash.com/photo-1588776814546-1ffbb9b0ea79?w=1200&q=80&auto=format&fit=crop',
     alt: 'Computer-based exam testing interface',
+    credit: 'Unsplash',
+  },
+  'nck-exam-anxiety-how-to-manage-it': {
+    url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Nursing student managing exam stress with deep breathing',
+    credit: 'Unsplash',
+  },
+  'nck-pharmacology-calculations-guide': {
+    url: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Nursing pharmacology — medications and drug calculations',
     credit: 'Unsplash',
   },
 };

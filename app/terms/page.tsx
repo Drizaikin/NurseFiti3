@@ -33,6 +33,23 @@ export default function TermsPage() {
             <p className="text-neutral-mid leading-relaxed">All payments are processed via M-Pesa. Subscription fees are non-refundable once the billing period has started. Session bookings may be cancelled up to 24 hours before the session for a full refund.</p>
           </section>
           <section>
+            <h2 className="text-xl font-heading font-bold mb-3">4. Tutor Earnings & Platform Fee</h2>
+            <p className="text-neutral-mid leading-relaxed mb-2">
+              Tutors registered on NurseFiti earn income from 1-on-1 tutoring sessions booked by students on the platform. The following payment terms apply to all tutor accounts:
+            </p>
+            <ul className="list-disc list-inside text-neutral-mid leading-relaxed space-y-1 ml-2">
+              <li><strong className="text-[var(--color-text)]">Platform fee:</strong> NurseFiti deducts a <strong className="text-[var(--color-text)]">23%</strong> platform fee from each confirmed and paid session.</li>
+              <li><strong className="text-[var(--color-text)]">Tutor net earnings:</strong> Tutors receive <strong className="text-[var(--color-text)]">77%</strong> of the gross session amount after the platform fee is applied.</li>
+              <li><strong className="text-[var(--color-text)]">Payout schedule:</strong> Payouts are processed once per week, every Monday, via M-Pesa to the number registered on the tutor&apos;s profile.</li>
+              <li><strong className="text-[var(--color-text)]">Minimum payout:</strong> The minimum payout threshold is KSh 1,000. Earnings below this amount carry over to the following Monday.</li>
+              <li><strong className="text-[var(--color-text)]">Gross amount:</strong> The session gross amount is calculated as <em>(duration in hours × hourly rate)</em>, rounded to the nearest KSh.</li>
+              <li><strong className="text-[var(--color-text)]">Rate setting:</strong> Tutors set their own hourly rate. NurseFiti reserves the right to display this rate publicly on the platform.</li>
+            </ul>
+            <p className="text-neutral-mid leading-relaxed mt-3">
+              NurseFiti reserves the right to adjust the platform fee percentage with 30 days&apos; written notice to active tutors via their registered email address. The current applicable rate is always displayed in the tutor&apos;s Earnings dashboard and in the tutor onboarding guide.
+            </p>
+          </section>
+          <section>
             <h2 className="text-xl font-heading font-bold mb-3">4. Content</h2>
             <p className="text-neutral-mid leading-relaxed">All MCQs, flashcards, and study materials on NurseFiti are for exam preparation purposes only. They do not constitute medical advice.</p>
           </section>

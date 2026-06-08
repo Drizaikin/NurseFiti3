@@ -361,27 +361,30 @@ export default function PracticePage() {
       } | null;
 
       if (currentProfile) {
-        const today = new Date().toISOString().split('T')[0];
+        // Use local calendar date — avoids UTC midnight parsing shifting the date
+        // in EAT (UTC+3) and other timezones east of UTC.
+        const todayLocal = new Date();
+        const todayStr = `${todayLocal.getFullYear()}-${String(todayLocal.getMonth() + 1).padStart(2, '0')}-${String(todayLocal.getDate()).padStart(2, '0')}`;
         const lastStudyDate = currentProfile.last_study_date;
         let newStreak = currentProfile.streak_count;
 
         if (lastStudyDate) {
-          const daysDiff = Math.floor(
-            (new Date(today).getTime() - new Date(lastStudyDate).getTime()) / (1000 * 60 * 60 * 24)
-          );
-          // Fix 2: wrong answers reset streak to 1 (daysDiff > 1), or maintain/increment it
-          if (daysDiff === 1) newStreak += 1;
-          else if (daysDiff > 1) newStreak = 1;
-          // daysDiff === 0 means same day, keep existing streak
+          // Parse last_study_date as local noon to avoid any UTC midnight edge cases
+          const [ly, lm, ld] = lastStudyDate.split('-').map(Number);
+          const lastLocal = new Date(ly, lm - 1, ld, 12, 0, 0);
+          const todayNoon = new Date(todayLocal.getFullYear(), todayLocal.getMonth(), todayLocal.getDate(), 12, 0, 0);
+          const daysDiff = Math.round((todayNoon.getTime() - lastLocal.getTime()) / (1000 * 60 * 60 * 24));
+
+          if (daysDiff === 1) newStreak += 1;        // studied yesterday → increment
+          else if (daysDiff > 1) newStreak = 1;      // gap → reset to 1
+          // daysDiff === 0 → same day → keep existing streak
         } else {
-          newStreak = 1;
+          newStreak = 1; // first ever study day
         }
 
-        // Fix 2: streak_count and last_study_date are always updated
-        // XP and level increments only happen on correct answers
         const profileUpdate: Record<string, unknown> = {
           streak_count: newStreak,
-          last_study_date: today,
+          last_study_date: todayStr,
         };
 
         if (isCorrect) {

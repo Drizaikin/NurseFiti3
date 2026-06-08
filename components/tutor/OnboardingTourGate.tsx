@@ -12,7 +12,7 @@ import { createClient } from '@/lib/supabase/client';
 import { OnboardingTour } from '@/components/shared/OnboardingTour';
 
 // ── Bump this when new tour steps are added or a feature needs re-introduction ──
-const CURRENT_TOUR_VERSION = 1;
+const CURRENT_TOUR_VERSION = 2;
 
 export function TutorOnboardingTourGate() {
   const supabase = createClient();

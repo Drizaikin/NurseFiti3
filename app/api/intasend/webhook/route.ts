@@ -162,9 +162,15 @@ async function provisionAccess(supabase: any, payment: any, txnData: any) {
       const expiresAt = new Date(activatedAt);
       expiresAt.setDate(expiresAt.getDate() + durationDays);
 
+      // Reset tour_version to 1 so the student sees the "What's new on paid plans"
+      // feature announcement tour on their next login (CURRENT_TOUR_VERSION = 2).
       await supabase
         .from('student_profiles')
-        .update({ plan_tier: tier, plan_expires_at: expiresAt.toISOString() })
+        .update({
+          plan_tier: tier,
+          plan_expires_at: expiresAt.toISOString(),
+          tour_version: 1,
+        })
         .eq('id', payment.user_id);
 
       const { data: profile } = await supabase

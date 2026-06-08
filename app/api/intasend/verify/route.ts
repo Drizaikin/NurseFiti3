@@ -135,9 +135,17 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
       const activatedAt = new Date();
       const expiresAt = addDays(activatedAt, durationDays).toISOString();
 
+      // Upgrade the plan and reset tour_version to 1 so the student sees
+      // the "What's new on paid plans" feature tour on their next login.
+      // CURRENT_TOUR_VERSION in OnboardingTourGate is 2, so setting to 1
+      // ensures the tour fires exactly once after upgrading.
       await supabase
         .from('student_profiles')
-        .update({ plan_tier: tier, plan_expires_at: expiresAt })
+        .update({
+          plan_tier: tier,
+          plan_expires_at: expiresAt,
+          tour_version: 1,     // triggers feature announcement tour on next login
+        })
         .eq('id', payment.user_id);
 
       const { data: profile } = await supabase

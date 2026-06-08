@@ -395,10 +395,10 @@ export default function TutorCompleteProfilePage() {
             <div className="bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 rounded-xl p-4">
               <h3 className="font-semibold text-teal-900 dark:text-teal-100 mb-2">Payment Terms</h3>
               <ul className="text-sm text-teal-800 dark:text-teal-200 space-y-1">
-                <li>• NurseFiti takes a 30% platform fee</li>
+                <li>• NurseFiti takes a 23% platform fee</li>
                 <li>• Payments are processed weekly every Monday</li>
                 <li>• Minimum payout threshold: KSh 1,000</li>
-                <li>• You&apos;ll receive 70% of your session rate</li>
+                <li>• You&apos;ll receive 77% of your session rate</li>
               </ul>
             </div>
           </div>

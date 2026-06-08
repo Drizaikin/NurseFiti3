@@ -71,6 +71,24 @@ const POSTS = [
     date: '2026-05-20',
     cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
   },
+  {
+    slug: 'nck-exam-anxiety-how-to-manage-it',
+    title: 'NCK Exam Anxiety: 7 Evidence-Based Strategies That Work (2026)',
+    excerpt: 'Exam anxiety costs Kenyan nursing candidates real marks. Here are 7 strategies backed by cognitive and clinical research — practical, not generic.',
+    category: 'Study Strategy',
+    readTime: '9 min read',
+    date: '2026-06-08',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
+    slug: 'nck-pharmacology-calculations-guide',
+    title: 'NCK Pharmacology & Drug Calculations: Complete Guide (2026)',
+    excerpt: 'Pharmacology and drug calculations appear in every NCK paper. Master the formulas, common KEML drugs, and calculation question patterns with worked examples.',
+    category: 'Study Guide',
+    readTime: '11 min read',
+    date: '2026-06-09',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
 ];
 
 const CATEGORY_STYLES: Record<string, { badge: string }> = {
@@ -89,6 +107,8 @@ const POST_IMAGES: Record<string, string> = {
   'bscn-nursing-exam-kenya':           'https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=800&q=80&auto=format&fit=crop',
   'nck-past-papers-practice':          'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80&auto=format&fit=crop',
   'digiproctor-nck-exam-guide':        'https://images.unsplash.com/photo-1588776814546-1ffbb9b0ea79?w=800&q=80&auto=format&fit=crop',
+  'nck-exam-anxiety-how-to-manage-it': 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80&auto=format&fit=crop',
+  'nck-pharmacology-calculations-guide': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80&auto=format&fit=crop',
 };
 
 function formatDate(dateStr: string) {
@@ -116,6 +136,8 @@ const blogListJsonLd = {
     url: `https://www.nursefiti.co.ke/blog/${p.slug}`,
     datePublished: p.date,
     description: p.excerpt,
+    author: { '@type': 'Organization', name: 'NurseFiti', url: 'https://www.nursefiti.co.ke' },
+    keywords: p.cadres.join(', '),
   })),
 };
 

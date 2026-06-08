@@ -40,9 +40,21 @@ const STUDENT_STEPS: TourStep[] = [
   },
   {
     emoji: '🃏',
-    title: 'Flashcards',
-    description: 'Flashcards use spaced repetition (SM-2 algorithm) to help you memorise key concepts efficiently. Rate each card — the harder ones come back sooner.',
-    tip: 'Available on paid plans.',
+    title: 'Flashcards — Now with Themes',
+    description: 'Flashcards use spaced repetition (SM-2) to help you memorise key concepts. New: choose from 7 study themes — Clinical Focus, Night Owl, Sakura, Ocean Calm, and more — each designed using colour psychology to optimise memory.',
+    tip: 'Available on paid plans. Keyboard shortcuts: Space to flip, 1–4 to rate.',
+  },
+  {
+    emoji: '📝',
+    title: 'Mock Exam — Download Results',
+    description: 'After submitting a mock exam, you can now download your full results — every question, your answer, the correct answer, and the rationale — as a personal study file.',
+    tip: 'Results are watermarked to your account and accessible any time, even after your plan expires.',
+  },
+  {
+    emoji: '🗓️',
+    title: 'Revision Plan — Study Resources',
+    description: 'Generated revision plans now include a curated Resources section with official Kenyan nursing links, top YouTube channels, MCQ apps, free eBooks, and recommended textbooks.',
+    tip: 'Resources are included on every new plan generated going forward.',
   },
   {
     emoji: '📊',
@@ -119,7 +131,7 @@ const TUTOR_STEPS: TourStep[] = [
   {
     emoji: '💰',
     title: 'Earnings & Payouts',
-    description: 'Track your session earnings and request payouts via M-Pesa through the Earnings dashboard. NurseFiti takes a 30% platform fee per session.',
+    description: 'Track your session earnings and request payouts via M-Pesa through the Earnings dashboard. NurseFiti takes a 23% platform fee per session — you keep 77%.',
   },
   {
     emoji: '⭐',
