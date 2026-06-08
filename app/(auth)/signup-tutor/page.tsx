@@ -75,6 +75,22 @@ export default function TutorSignupPage() {
         throw new Error(result.error || 'Application submission failed');
       }
 
+      // Auto sign-in after account creation
+      const { createClient } = await import('@/lib/supabase/client');
+      const supabase = createClient();
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      });
+
+      if (signInError) {
+        toast.success('Application submitted! Please log in to continue.');
+        router.push('/login');
+        return;
+      }
+
+      toast.success('Welcome to NurseFiti! Complete your profile to get verified.');
+      router.refresh();
       router.push('/tutor-complete-profile');
     } catch (error: any) {
       toast.error(error.message || 'Failed to submit application. Please try again.');

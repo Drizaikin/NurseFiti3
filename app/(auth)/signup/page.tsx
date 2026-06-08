@@ -78,8 +78,24 @@ export default function StudentSignupPage() {
         throw new Error(result.error || 'Signup failed');
       }
 
-      toast.success('Account created! You can now log in.');
-      router.push('/login');
+      // Auto sign-in immediately after account creation
+      const { createClient } = await import('@/lib/supabase/client');
+      const supabase = createClient();
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      });
+
+      if (signInError) {
+        // Account created but auto-login failed — send to login page
+        toast.success('Account created! Please log in.');
+        router.push('/login');
+        return;
+      }
+
+      toast.success('Welcome to NurseFiti!');
+      router.refresh();
+      router.push('/dashboard');
     } catch (error: any) {
       toast.error(error.message || 'Failed to create account. Please try again.');
     } finally {

@@ -117,7 +117,7 @@ export async function GET(req: NextRequest) {
       const [profilesRes, spRes] = await Promise.all([
         admin
           .from('profiles')
-          .select('id, full_name, email, created_at')
+          .select('id, full_name, email, created_at, is_locked')
           .eq('role', 'student')
           .order('created_at', { ascending: false })
           .limit(200),
@@ -127,7 +127,7 @@ export async function GET(req: NextRequest) {
       ]);
 
       const profiles = (profilesRes.data ?? []) as Array<{
-        id: string; full_name: string; email: string; created_at: string;
+        id: string; full_name: string; email: string; created_at: string; is_locked: boolean | null;
       }>;
       const spMap = new Map(
         ((spRes.data ?? []) as Array<{
@@ -145,6 +145,7 @@ export async function GET(req: NextRequest) {
           plan_tier:      sp?.plan_tier ?? 'free',
           plan_expires_at: sp?.plan_expires_at ?? null,
           created_at:     p.created_at,
+          is_locked:      p.is_locked ?? false,
         };
       });
 
@@ -155,7 +156,7 @@ export async function GET(req: NextRequest) {
       const [profilesRes, tpRes] = await Promise.all([
         admin
           .from('profiles')
-          .select('id, full_name, email, phone, created_at')
+          .select('id, full_name, email, phone, created_at, is_locked')
           .eq('role', 'tutor')
           .order('created_at', { ascending: false })
           .limit(200),
@@ -165,7 +166,7 @@ export async function GET(req: NextRequest) {
       ]);
 
       const profiles = (profilesRes.data ?? []) as Array<{
-        id: string; full_name: string; email: string; phone: string; created_at: string;
+        id: string; full_name: string; email: string; phone: string; created_at: string; is_locked: boolean | null;
       }>;
       const tpMap = new Map(
         ((tpRes.data ?? []) as Array<{
@@ -202,6 +203,7 @@ export async function GET(req: NextRequest) {
           mpesa_number:              tp?.mpesa_number ?? null,
           rejection_reason:          tp?.rejection_reason ?? null,
           created_at:                p.created_at,
+          is_locked:                 p.is_locked ?? false,
         };
       });
 

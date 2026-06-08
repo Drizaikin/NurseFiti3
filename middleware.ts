@@ -182,6 +182,16 @@ export async function middleware(req: NextRequest) {
       .single();
 
     if (tutorProfile?.verification_status === 'pending') {
+      // If docs not yet uploaded, send them to complete their profile first
+      const { data: fullTutorProfile } = await supabase
+        .from('tutor_profiles')
+        .select('nck_certificate_url')
+        .eq('id', session.user.id)
+        .single();
+
+      if (!fullTutorProfile?.nck_certificate_url) {
+        return NextResponse.redirect(new URL('/tutor-complete-profile', req.url));
+      }
       return NextResponse.redirect(new URL('/tutor-pending', req.url));
     }
     if (tutorProfile?.verification_status === 'rejected') {

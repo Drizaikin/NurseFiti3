@@ -29,7 +29,13 @@ interface Tutor {
   mpesa_number: string | null;
   rejection_reason: string | null;
   created_at: string;
+  is_locked: boolean;
 }
+
+type ConfirmAction =
+  | { type: 'lock';   tutor: Tutor }
+  | { type: 'unlock'; tutor: Tutor }
+  | { type: 'delete'; tutor: Tutor };
 
 const STATUS_BADGE: Record<string, 'green' | 'amber' | 'red'> = {
   verified: 'green',
@@ -50,6 +56,7 @@ export default function AdminTutorsPage() {
   const [rejectReason, setRejectReason] = useState('');
   const [expanded, setExpanded] = useState<string | null>(null);
   const [signedUrls, setSignedUrls] = useState<Record<string, string>>({});
+  const [confirmAction, setConfirmAction] = useState<ConfirmAction | null>(null);
 
   const getSignedUrl = async (path: string | null, bucket = 'documents'): Promise<string | null> => {
     if (!path) return null;
@@ -138,6 +145,34 @@ export default function AdminTutorsPage() {
       toast.success('Tutor application rejected');
       setRejectModal(null);
       setRejectReason('');
+      await loadTutors();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Action failed');
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const handleConfirmedAction = async () => {
+    if (!confirmAction) return;
+    const { tutor } = confirmAction;
+    setActionLoading(tutor.id);
+    try {
+      const res = await fetch('/api/admin/manage-account', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: tutor.id, action: confirmAction.type }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Failed');
+      if (confirmAction.type === 'delete') {
+        toast.success(`${tutor.full_name}'s account has been deleted`);
+      } else if (confirmAction.type === 'lock') {
+        toast.success(`${tutor.full_name}'s account has been locked`);
+      } else {
+        toast.success(`${tutor.full_name}'s account has been unlocked`);
+      }
+      setConfirmAction(null);
       await loadTutors();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Action failed');

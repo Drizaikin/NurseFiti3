@@ -406,8 +406,8 @@ export default function TutorCompleteProfilePage() {
               ← Previous
             </Button>
           ) : (
-            <Button type="button" variant="ghost" onClick={() => router.push('/tutor-dashboard')} disabled={isLoading}>
-              ← Back to Dashboard
+            <Button type="button" variant="ghost" onClick={() => router.push('/tutor-pending')} disabled={isLoading}>
+              ← Back
             </Button>
           )}
 

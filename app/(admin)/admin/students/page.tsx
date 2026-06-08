@@ -16,6 +16,7 @@ interface Student {
   plan_tier: string;
   plan_expires_at: string | null;
   created_at: string;
+  is_locked: boolean;
 }
 
 const TIER_BADGE: Record<string, 'amber' | 'teal' | 'secondary'> = {
@@ -34,15 +35,25 @@ const PLAN_OPTIONS = [
   { tier: 'free',     label: 'Test Yourself (no expiry)',    days: 0   },
 ];
 
+type ConfirmAction =
+  | { type: 'lock';   student: Student }
+  | { type: 'unlock'; student: Student }
+  | { type: 'delete'; student: Student };
+
 export default function AdminStudentsPage() {
   const [students, setStudents] = useState<Student[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+
+  // Plan modal
   const [planModal, setPlanModal] = useState<Student | null>(null);
   const [selectedTier, setSelectedTier] = useState('standard');
   const [selectedDays, setSelectedDays] = useState(30);
+
+  // Confirm modal for lock / delete
+  const [confirmAction, setConfirmAction] = useState<ConfirmAction | null>(null);
 
   const loadStudents = useCallback(async () => {
     setIsLoading(true);
@@ -92,6 +103,35 @@ export default function AdminStudentsPage() {
     }
   };
 
+  const handleConfirmedAction = async () => {
+    if (!confirmAction) return;
+    const { student } = confirmAction;
+    setActionLoading(student.id);
+    try {
+      const res = await fetch('/api/admin/manage-account', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: student.id, action: confirmAction.type }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Failed');
+
+      if (confirmAction.type === 'delete') {
+        toast.success(`${student.full_name}'s account has been deleted`);
+      } else if (confirmAction.type === 'lock') {
+        toast.success(`${student.full_name}'s account has been locked`);
+      } else {
+        toast.success(`${student.full_name}'s account has been unlocked`);
+      }
+      setConfirmAction(null);
+      await loadStudents();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Action failed');
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
@@ -129,7 +169,8 @@ export default function AdminStudentsPage() {
                 <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Plan</th>
                 <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Expires</th>
                 <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Joined</th>
-                <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Action</th>
+                <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Status</th>
+                <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -157,13 +198,38 @@ export default function AdminStudentsPage() {
                     {new Date(s.created_at).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}
                   </td>
                   <td className="px-4 py-3">
-                    <Button variant="outline" size="sm" onClick={() => openPlanModal(s)}>Set Plan</Button>
+                    {s.is_locked
+                      ? <Badge variant="red" size="sm">Locked</Badge>
+                      : <Badge variant="green" size="sm">Active</Badge>
+                    }
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <Button variant="outline" size="sm" onClick={() => openPlanModal(s)}>
+                        Set Plan
+                      </Button>
+                      {s.is_locked ? (
+                        <Button variant="ghost" size="sm"
+                          onClick={() => setConfirmAction({ type: 'unlock', student: s })}>
+                          Unlock
+                        </Button>
+                      ) : (
+                        <Button variant="ghost" size="sm"
+                          onClick={() => setConfirmAction({ type: 'lock', student: s })}>
+                          Lock
+                        </Button>
+                      )}
+                      <Button variant="danger" size="sm"
+                        onClick={() => setConfirmAction({ type: 'delete', student: s })}>
+                        Delete
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))}
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-4 py-10 text-center text-neutral-mid">
+                  <td colSpan={7} className="px-4 py-10 text-center text-neutral-mid">
                     {search ? `No students matching "${search}"` : 'No students registered yet.'}
                   </td>
                 </tr>
@@ -193,6 +259,103 @@ export default function AdminStudentsPage() {
               <Button variant="ghost" className="flex-1" onClick={() => setPlanModal(null)}>Cancel</Button>
               <Button variant="primary" className="flex-1" onClick={handleSetPlan} disabled={actionLoading !== null}>
                 {actionLoading ? <Spinner size="sm" color="white" /> : 'Apply'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Confirm lock / unlock / delete modal */}
+      {confirmAction && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+          <div className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl p-6 max-w-sm w-full">
+            {confirmAction.type === 'delete' ? (
+              <>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-error/10 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-heading font-bold text-error">Delete Account</h3>
+                    <p className="text-xs text-neutral-mid">This cannot be undone</p>
+                  </div>
+                </div>
+                <p className="text-sm text-[var(--color-text)] mb-2">
+                  You are about to <strong>permanently delete</strong> the account of:
+                </p>
+                <div className="bg-error/5 border border-error/20 rounded-xl p-3 mb-4">
+                  <p className="font-semibold text-[var(--color-text)]">{confirmAction.student.full_name}</p>
+                  <p className="text-xs text-neutral-mid">{confirmAction.student.email}</p>
+                </div>
+                <p className="text-sm text-neutral-mid mb-4">
+                  All their data, progress, and subscriptions will be permanently erased.
+                </p>
+              </>
+            ) : confirmAction.type === 'lock' ? (
+              <>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-heading font-bold">Lock Account</h3>
+                    <p className="text-xs text-neutral-mid">User will be unable to log in</p>
+                  </div>
+                </div>
+                <p className="text-sm text-[var(--color-text)] mb-2">
+                  You are about to <strong>lock</strong> the account of:
+                </p>
+                <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-3 mb-4">
+                  <p className="font-semibold text-[var(--color-text)]">{confirmAction.student.full_name}</p>
+                  <p className="text-xs text-neutral-mid">{confirmAction.student.email}</p>
+                </div>
+                <p className="text-sm text-neutral-mid mb-4">
+                  They will be signed out and blocked from logging in. You can unlock them at any time.
+                </p>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-success/10 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-heading font-bold">Unlock Account</h3>
+                    <p className="text-xs text-neutral-mid">User will be able to log in again</p>
+                  </div>
+                </div>
+                <p className="text-sm text-[var(--color-text)] mb-2">
+                  Restore access for:
+                </p>
+                <div className="bg-success/5 border border-success/20 rounded-xl p-3 mb-4">
+                  <p className="font-semibold text-[var(--color-text)]">{confirmAction.student.full_name}</p>
+                  <p className="text-xs text-neutral-mid">{confirmAction.student.email}</p>
+                </div>
+              </>
+            )}
+
+            <div className="flex gap-3">
+              <Button variant="ghost" className="flex-1" onClick={() => setConfirmAction(null)}
+                disabled={actionLoading !== null}>
+                Cancel
+              </Button>
+              <Button
+                variant={confirmAction.type === 'delete' ? 'danger' : confirmAction.type === 'lock' ? 'primary' : 'primary'}
+                className="flex-1"
+                onClick={handleConfirmedAction}
+                disabled={actionLoading !== null}
+              >
+                {actionLoading
+                  ? <Spinner size="sm" color="white" />
+                  : confirmAction.type === 'delete' ? 'Yes, Delete'
+                  : confirmAction.type === 'lock' ? 'Yes, Lock'
+                  : 'Yes, Unlock'}
               </Button>
             </div>
           </div>

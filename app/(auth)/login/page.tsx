@@ -68,6 +68,11 @@ function LoginForm() {
 
       toast.success('Welcome back!');
 
+      // router.refresh() syncs the session cookie with the server before
+      // navigating — without it, middleware may not see the new session
+      // and will loop back to /login (the "freeze" / stays-on-login bug).
+      router.refresh();
+
       // Redirect based on role — middleware handles auth state from session cookie
       if (profile.role === 'student') {
         router.push('/dashboard');
@@ -75,18 +80,25 @@ function LoginForm() {
         // Check tutor verification status
         const { data: tutorProfileData } = await supabase
           .from('tutor_profiles')
-          .select('verification_status')
+          .select('verification_status, nck_certificate_url')
           .eq('id', authData.user.id)
           .single();
 
-        const tutorProfile = tutorProfileData as { verification_status: 'pending' | 'verified' | 'rejected' } | null;
+        const tutorProfile = tutorProfileData as {
+          verification_status: 'pending' | 'verified' | 'rejected';
+          nck_certificate_url: string | null;
+        } | null;
 
-        if (tutorProfile?.verification_status === 'pending') {
+        if (tutorProfile?.verification_status === 'verified') {
           router.push('/tutor-dashboard');
-        } else if (tutorProfile?.verification_status === 'verified') {
-          router.push('/tutor-dashboard');
+        } else if (tutorProfile?.verification_status === 'pending') {
+          if (!tutorProfile.nck_certificate_url) {
+            router.push('/tutor-complete-profile');
+          } else {
+            router.push('/tutor-pending');
+          }
         } else {
-          router.push('/tutor-dashboard');
+          router.push('/tutor-complete-profile');
         }
       } else if (profile.role === 'admin') {
         router.push('/admin');
