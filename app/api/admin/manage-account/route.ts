@@ -59,7 +59,42 @@ export async function POST(req: NextRequest) {
     }
 
     if (action === 'delete') {
-      // Deleting from auth cascades to profiles/student_profiles/tutor_profiles via FK
+      // The profiles table has REFERENCES auth.users without ON DELETE CASCADE,
+      // so we must delete public schema rows first, then remove the auth user.
+      // Order matters: child tables (student_profiles / tutor_profiles) reference
+      // profiles, and profiles references auth.users.
+
+      // 1. Delete child profile rows (student_profiles or tutor_profiles)
+      await (admin as any).from('student_profiles').delete().eq('id', userId);
+      await (admin as any).from('tutor_profiles').delete().eq('id', userId);
+
+      // 2. Delete any notifications, payments, etc. that reference this user
+      //    (these reference profiles, so must go before profiles row is deleted)
+      await (admin as any).from('notifications').delete().eq('user_id', userId);
+      await (admin as any).from('student_answers').delete().eq('student_id', userId);
+      await (admin as any).from('mock_exam_results').delete().eq('student_id', userId);
+      await (admin as any).from('flashcard_progress').delete().eq('student_id', userId);
+      await (admin as any).from('student_badges').delete().eq('student_id', userId);
+      await (admin as any).from('revision_plans').delete().eq('student_id', userId);
+      await (admin as any).from('group_members').delete().eq('student_id', userId);
+      await (admin as any).from('tutor_availability').delete().eq('tutor_id', userId);
+      await (admin as any).from('payments').delete().eq('user_id', userId);
+
+      // 3. Delete the profiles row
+      const { error: profileDeleteError } = await (admin as any)
+        .from('profiles')
+        .delete()
+        .eq('id', userId);
+
+      if (profileDeleteError) {
+        console.error('[manage-account] profile delete error:', profileDeleteError);
+        return NextResponse.json(
+          { error: `Failed to delete account: ${profileDeleteError.message}` },
+          { status: 500 }
+        );
+      }
+
+      // 4. Now delete from Supabase Auth (no FK blocker remains)
       const { error } = await admin.auth.admin.deleteUser(userId);
       if (error) {
         console.error('[manage-account] deleteUser error:', error);
