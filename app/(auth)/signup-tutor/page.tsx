@@ -356,7 +356,7 @@ export default function TutorSignupPage() {
                 {/* Complete-profile nudge */}
                 <div className="bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 rounded-lg p-4">
                   <p className="text-sm text-teal-800 dark:text-teal-200">
-                    After submitting, you can complete your <strong>specialization, documents, and M-Pesa payment details</strong> from your tutor dashboard. We&apos;ll remind you there.
+                    After submitting, you&apos;ll complete your <strong>specialization, documents, and M-Pesa payment details</strong> in the next step before your application is reviewed.
                   </p>
                 </div>
 

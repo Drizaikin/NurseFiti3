@@ -28,6 +28,7 @@ export default function TutorPendingPage() {
   const router = useRouter();
   const [profile, setProfile] = useState<TutorProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  // createClient() is stable — instantiate once outside useEffect
   const supabase = createClient();
 
   useEffect(() => {
@@ -70,7 +71,9 @@ export default function TutorPendingPage() {
     };
 
     fetchProfile();
-  }, [router, supabase]);
+  // supabase client is stable — safe to omit from deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();

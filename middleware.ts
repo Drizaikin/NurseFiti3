@@ -175,21 +175,15 @@ export async function middleware(req: NextRequest) {
       pathname.startsWith('/tutor-complete-profile')
     ) return res;
 
+    // Single query — get both status and docs in one round trip
     const { data: tutorProfile } = await supabase
       .from('tutor_profiles')
-      .select('verification_status')
+      .select('verification_status, nck_certificate_url')
       .eq('id', session.user.id)
       .single();
 
     if (tutorProfile?.verification_status === 'pending') {
-      // If docs not yet uploaded, send them to complete their profile first
-      const { data: fullTutorProfile } = await supabase
-        .from('tutor_profiles')
-        .select('nck_certificate_url')
-        .eq('id', session.user.id)
-        .single();
-
-      if (!fullTutorProfile?.nck_certificate_url) {
+      if (!tutorProfile.nck_certificate_url) {
         return NextResponse.redirect(new URL('/tutor-complete-profile', req.url));
       }
       return NextResponse.redirect(new URL('/tutor-pending', req.url));

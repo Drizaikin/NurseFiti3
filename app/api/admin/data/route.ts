@@ -126,6 +126,15 @@ export async function GET(req: NextRequest) {
           .select('id, cadre, plan_tier, plan_expires_at'),
       ]);
 
+      if (profilesRes.error) {
+        console.error('[admin/data] profiles query error:', profilesRes.error);
+        return NextResponse.json({ error: profilesRes.error.message }, { status: 500 });
+      }
+      if (spRes.error) {
+        console.error('[admin/data] student_profiles query error:', spRes.error);
+        return NextResponse.json({ error: spRes.error.message }, { status: 500 });
+      }
+
       const profiles = (profilesRes.data ?? []) as Array<{
         id: string; full_name: string; email: string; created_at: string; is_locked: boolean | null;
       }>;
@@ -164,6 +173,15 @@ export async function GET(req: NextRequest) {
           .from('tutor_profiles')
           .select('id, professional_title, cadres_taught, years_experience, verification_status, verification_tier, average_rating, total_sessions, rate_per_hour, nck_reg_number, bio, current_employer, nck_certificate_url, academic_qualification_url, national_id_url, mpesa_number, rejection_reason'),
       ]);
+
+      if (profilesRes.error) {
+        console.error('[admin/data] tutor profiles query error:', profilesRes.error);
+        return NextResponse.json({ error: profilesRes.error.message }, { status: 500 });
+      }
+      if (tpRes.error) {
+        console.error('[admin/data] tutor_profiles query error:', tpRes.error);
+        return NextResponse.json({ error: tpRes.error.message }, { status: 500 });
+      }
 
       const profiles = (profilesRes.data ?? []) as Array<{
         id: string; full_name: string; email: string; phone: string; created_at: string; is_locked: boolean | null;

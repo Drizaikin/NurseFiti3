@@ -31,10 +31,11 @@ export interface Database {
           email: string;
           phone: string;
           avatar_url: string | null;
+          is_locked: boolean;
           created_at: string;
         };
-        Insert: Omit<Database['public']['Tables']['profiles']['Row'], 'created_at'>;
-        Update: Partial<Database['public']['Tables']['profiles']['Insert']>;
+        Insert: Omit<Database['public']['Tables']['profiles']['Row'], 'created_at' | 'is_locked'> & { is_locked?: boolean };
+        Update: Partial<Database['public']['Tables']['profiles']['Row']>;
       };
 
       student_profiles: {
