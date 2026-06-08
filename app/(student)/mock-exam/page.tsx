@@ -255,6 +255,8 @@ export default function MockExamPage() {
     setShowConfirm(false);
     const config = EXAM_CONFIGS[selectedExam];
 
+    // ── 1. Calculate results immediately from local state ──────────────────
+    // Do this FIRST so we can show results even if DB writes fail/timeout
     let correct = 0;
     questions.forEach(q => {
       if (answers[q.id] === q.correct_option) correct++;
@@ -264,30 +266,61 @@ export default function MockExamPage() {
     const passed = score >= 50;
     const timeUsed = startedAt ? Math.round((Date.now() - startedAt.getTime()) / 60000) : 0;
 
-    if (!userId) {
-      toast.error('Your session expired. Please note your score before refreshing.');
-    } else {
-      // Save individual question answers for rotation tracking
+    // ── 2. Show results immediately — don't wait for DB ────────────────────
+    // The user can see their score while DB writes happen in the background.
+    // resultId will be filled in once the DB write completes.
+    setResults({ score, correct, total, passed, timeUsed, resultId: undefined });
+    setExamState('results');
+    setIsSubmitting(false);
+
+    // ── 3. Save the full exam state to localStorage as backup ──────────────
+    // If the DB writes fail, the user can at least see their answers in the
+    // current session. On next page load this won't recover (by design —
+    // we only recover during the active session).
+    const examBackup = {
+      questions,
+      answers,
+      score,
+      correct,
+      total,
+      passed,
+      timeUsed,
+      cadre: config.cadre,
+      paper: config.paper,
+      savedAt: Date.now(),
+    };
+    try {
+      localStorage.setItem('nursefiti_last_exam', JSON.stringify(examBackup));
+    } catch { /* ignore quota errors */ }
+
+    // ── 4. DB writes happen in background — don't block the UI ────────────
+    if (!userId) return;
+
+    try {
       const answerRecords = questions.map(q => ({
         student_id: userId,
         question_id: q.id,
-        selected_option: answers[q.id] ?? 'A', // default to A if unanswered (shouldn't happen)
+        selected_option: answers[q.id] ?? 'A',
         is_correct: answers[q.id] === q.correct_option,
-        time_taken_seconds: null, // mock exams don't track per-question time
+        time_taken_seconds: null,
         mode: 'mock_exam' as const,
         unit: q.unit,
         paper: config.paper,
         answered_at: new Date().toISOString(),
       }));
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { error: answersError } = await (supabase.from('student_answers') as any).insert(answerRecords);
+      // Insert answers with a 20-second timeout — don't let it hang forever
+      const answersPromise = (supabase.from('student_answers') as any).insert(answerRecords);
+      const answersTimeout = new Promise<{ error: any }>(resolve =>
+        setTimeout(() => resolve({ error: new Error('timeout') }), 20000)
+      );
+      const { error: answersError } = await Promise.race([answersPromise, answersTimeout]);
       if (answersError) {
-        console.error('student_answers insert error:', answersError);
+        console.error('student_answers insert error:', answersError.message ?? answersError);
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { error: insertError, data: insertedResult } = await (supabase.from('mock_exam_results') as any).insert({
+      // Insert the result row
+      const resultPromise = (supabase.from('mock_exam_results') as any).insert({
         student_id: userId,
         cadre: config.cadre,
         paper: config.paper,
@@ -299,23 +332,36 @@ export default function MockExamPage() {
         started_at: startedAt?.toISOString() ?? new Date().toISOString(),
         completed_at: new Date().toISOString(),
       }).select('id').single();
+      const resultTimeout = new Promise<{ error: any; data: any }>(resolve =>
+        setTimeout(() => resolve({ error: new Error('timeout'), data: null }), 20000)
+      );
+      const { error: insertError, data: insertedResult } = await Promise.race([resultPromise, resultTimeout]);
+
       if (insertError) {
-        console.error('mock_exam_results insert error:', insertError);
-        toast.error('Results could not be saved. Your score is shown below.');
+        console.error('mock_exam_results insert error:', insertError.message ?? insertError);
+        toast('Results saved locally. Score shown above.', { icon: 'ℹ️', duration: 5000 });
+      } else if (insertedResult) {
+        // Update resultId so Download button works
+        setResults(prev => prev ? { ...prev, resultId: (insertedResult as any).id } : prev);
+        // Clear backup now that DB has it
+        try { localStorage.removeItem('nursefiti_last_exam'); } catch { /* ignore */ }
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: spData } = await (supabase as any).from('student_profiles').select('xp, level').eq('id', userId).single();
-      if (spData) {
-        const newXP = (spData.xp ?? 0) + 100;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await (supabase as any).from('student_profiles').update({ xp: newXP, level: Math.floor(newXP / 100) + 1 }).eq('id', userId);
-      }
+      // Update XP in background — non-blocking, failure is acceptable
+      (supabase as any).from('student_profiles').select('xp, level').eq('id', userId).single()
+        .then(({ data: spData }: any) => {
+          if (spData) {
+            const newXP = (spData.xp ?? 0) + 100;
+            (supabase as any).from('student_profiles')
+              .update({ xp: newXP, level: Math.floor(newXP / 100) + 1 })
+              .eq('id', userId);
+          }
+        })
+        .catch((err: any) => console.error('XP update failed:', err));
+
+    } catch (err: any) {
+      console.error('submitExam background error:', err);
     }
-
-    setResults({ score, correct, total, passed, timeUsed, resultId: (insertedResult as any)?.id });
-    setExamState('results');
-    setIsSubmitting(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitting, selectedExam, questions, answers, startedAt, userId]);
 
