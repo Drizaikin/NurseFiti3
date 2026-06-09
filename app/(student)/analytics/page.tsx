@@ -167,17 +167,25 @@ export default function AnalyticsPage() {
       const questionIds = Array.from(new Set(answers.map(a => a.question_id)));
       let unitStats: UnitStat[] = [];
       if (questionIds.length > 0) {
-        // Fetch in batches of 500 to avoid URL length limits
-        const allQData: Array<{ id: string; unit: string }> = [];
-        for (let i = 0; i < questionIds.length; i += 500) {
-          const { data: batch } = await supabase
-            .from('questions')
-            .select('id, unit')
-            .in('id', questionIds.slice(i, i + 500));
-          if (batch) allQData.push(...(batch as Array<{ id: string; unit: string }>));
+        // Fetch ALL question→unit mappings in ONE parallel batch instead of
+        // sequential awaits — avoids the slow serial loop that froze the page
+        const batchSize = 500;
+        const batches = [];
+        for (let i = 0; i < questionIds.length; i += batchSize) {
+          batches.push(
+            supabase
+              .from('questions')
+              .select('id, unit')
+              .in('id', questionIds.slice(i, i + batchSize))
+          );
         }
+        const batchResults = await Promise.all(batches);
+        const allQData: Array<{ id: string; unit: string }> = [];
+        for (const res of batchResults) {
+          if (res.data) allQData.push(...(res.data as Array<{ id: string; unit: string }>));
+        }
+
         if (allQData.length > 0) {
-          // Build a lookup Map — O(1) per answer instead of O(n) .find()
           const qMap = new Map(allQData.map(q => [q.id, q.unit]));
           const unitMap = new Map<string, { total: number; correct: number }>();
           for (const ans of answers) {

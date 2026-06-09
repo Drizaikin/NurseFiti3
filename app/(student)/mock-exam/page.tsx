@@ -401,17 +401,41 @@ export default function MockExamPage() {
       // value and the limit check passes for a 3rd exam on a 2/week plan.
       setExamsThisWeek(prev => prev + 1);
 
-      // Update XP in background — non-blocking, failure is acceptable
-      (supabase as any).from('student_profiles').select('xp, level').eq('id', userId).single()
+      // Update XP and streak in background — non-blocking, failure is acceptable
+      (supabase as any).from('student_profiles').select('xp, level, streak_count, last_study_date').eq('id', userId).single()
         .then(({ data: spData }: any) => {
           if (spData) {
             const newXP = (spData.xp ?? 0) + 100;
+
+            // Update streak — same local-date logic as practice page
+            const todayLocal = new Date();
+            const todayStr = `${todayLocal.getFullYear()}-${String(todayLocal.getMonth() + 1).padStart(2, '0')}-${String(todayLocal.getDate()).padStart(2, '0')}`;
+            const lastStudyDate = spData.last_study_date as string | null;
+            let newStreak = spData.streak_count ?? 0;
+
+            if (lastStudyDate) {
+              const [ly, lm, ld] = lastStudyDate.split('-').map(Number);
+              const lastLocal = new Date(ly, lm - 1, ld, 12, 0, 0);
+              const todayNoon = new Date(todayLocal.getFullYear(), todayLocal.getMonth(), todayLocal.getDate(), 12, 0, 0);
+              const daysDiff = Math.round((todayNoon.getTime() - lastLocal.getTime()) / (1000 * 60 * 60 * 24));
+              if (daysDiff === 1) newStreak += 1;
+              else if (daysDiff > 1) newStreak = 1;
+              // daysDiff === 0 → same day → keep streak
+            } else {
+              newStreak = 1;
+            }
+
             (supabase as any).from('student_profiles')
-              .update({ xp: newXP, level: Math.floor(newXP / 100) + 1 })
+              .update({
+                xp: newXP,
+                level: Math.floor(newXP / 100) + 1,
+                streak_count: newStreak,
+                last_study_date: todayStr,
+              })
               .eq('id', userId);
           }
         })
-        .catch((err: any) => console.error('XP update failed:', err));
+        .catch((err: any) => console.error('XP/streak update failed:', err));
 
     } catch (err: any) {
       console.error('submitExam background error:', err);
