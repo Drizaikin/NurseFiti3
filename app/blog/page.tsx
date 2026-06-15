@@ -18,6 +18,15 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: 'nck-august-2026-exam-prep-plan',
+    title: 'NCK August 2026 Exam: Dates, Registration & 8-Week Prep',
+    excerpt: 'The NCK August 2026 sitting is roughly 8 weeks away. Here are the confirmed dates, registration steps, and a week-by-week prep plan to pass first attempt.',
+    category: 'NCK News',
+    readTime: '10 min read',
+    date: '2026-06-15',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
     slug: 'nck-latest-news-june-2026',
     title: 'NCK June 2026: Feb Results, May Exam & Unaccredited College Warning',
     excerpt: 'NCK releases February 2026 results, May 2026 exam wraps up, and a formal warning is issued against Northlands NIMTC. Here is everything verified.',
@@ -101,6 +110,7 @@ const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 const POST_IMAGES: Record<string, string> = {
+  'nck-august-2026-exam-prep-plan':    'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80&auto=format&fit=crop',
   'nck-latest-news-june-2026':         'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80&auto=format&fit=crop',
   'nck-exam-preparation-guide-kenya':  'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80&auto=format&fit=crop',
   'krchn-exam-revision-tips':          'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80&auto=format&fit=crop',

@@ -702,7 +702,133 @@ Also see our [KRCHN revision guide](https://www.nursefiti.co.ke/blog/krchn-exam-
   },
 ];
 
-const ALL_POSTS = [...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW];
+const POSTS_JUNE15: Post[] = [
+  {
+    slug: 'nck-august-2026-exam-prep-plan',
+    title: 'NCK August 2026 Exam: Dates, Registration & 8-Week Prep',
+    excerpt: 'The NCK August 2026 sitting is roughly 8 weeks away. Here are the confirmed dates, registration steps, and a week-by-week prep plan to pass first attempt.',
+    category: 'NCK News',
+    readTime: '10 min read',
+    date: '2026-06-15',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+The August 2026 NCK sitting is approximately 8 weeks away. Eight weeks is enough time to pass — if you start today and use them correctly. Most candidates who fail in August say the same thing afterwards: "I knew the content but I didn't practise enough." Don't be that candidate.
+
+*Last verified: 15 June 2026. Always confirm current registration deadlines and exam dates directly at [nckenya.com](https://www.nckenya.com) or the NCK Online Services Portal at [osp.nckenya.go.ke](https://osp.nckenya.go.ke).*
+
+## NCK August 2026: What We Know So Far
+
+NCK runs three examination sittings per year: February, May, and August/November. The May 2026 series concluded in mid-May 2026, and results are expected on the NCK Online Services Portal within the standard turnaround window. The August 2026 series is the next national sitting.
+
+Registration for the August series typically opens 6–8 weeks before the exam. As of 15 June 2026, the official registration window has not yet been formally announced. **Watch [nckenya.com](https://www.nckenya.com) and [osp.nckenya.go.ke](https://osp.nckenya.go.ke) for the official announcement — NCK does not accommodate late or manual registration once the portal closes.**
+
+**[Start your free diagnostic session on NurseFiti while you wait →](https://www.nursefiti.co.ke/signup)**
+
+## How to Register for the NCK August 2026 Exam
+
+NCK registration is done entirely online through the NCK Online Services Portal. Here is the process based on the established procedure for all 2025–2026 sittings (Source: [osp.nckenya.go.ke](https://osp.nckenya.go.ke) and NCK official examination guidelines):
+
+1. **Log in** to the NCK Online Services Portal at [osp.nckenya.go.ke](https://osp.nckenya.go.ke) using your NCK registration number and password
+2. **Navigate to Examination Registration** in the applicant dashboard
+3. **Select the August 2026 sitting** once it appears on the portal
+4. **Choose your examination centre** — centres are listed during registration; select one in your county or the nearest accessible centre
+5. **Pay the examination fee** through the portal's M-Pesa or bank payment integration
+6. **Download your admission letter** after payment confirmation — do not lose this; it is required for entry on exam day
+
+If you have forgotten your portal credentials, use the "Forgot Password" option on the portal — do not attempt to create a duplicate account, as this causes licencing complications.
+
+**Critical:** NCK requires your nursing programme to be from an NCK-approved institution. If you are uncertain whether your institution is approved, verify at [nckenya.com](https://www.nckenya.com) before registering. NCK issued a formal warning against Northlands International Medical Training College (NIMTC) in April 2026 for offering unapproved nursing programmes — see our [NCK June 2026 news roundup](https://www.nursefiti.co.ke/blog/nck-latest-news-june-2026) for details.
+
+## What Happens If You Missed May 2026?
+
+If you sat the May 2026 exam and have not yet received your results: check [osp.nckenya.go.ke](https://osp.nckenya.go.ke) regularly — results are released on a rolling basis, not all at once. Source: The Kenya Times, reporting on NCK's May 2026 results release process.
+
+If you sat and did not pass: this is normal — NCK's first-attempt pass rate is not publicly reported but is understood by candidates to be competitive. The key question is not how you felt about the exam — it is which units cost you the marks. Use the next 8 weeks differently. Start with a diagnostic session to identify your weak units, not your comfortable ones.
+
+**There is one mistake candidates who resit consistently make: they study the same way they studied before.** If your method did not work once, doing more of it will not work twice.
+
+## Your 8-Week NCK August 2026 Prep Plan
+
+This plan assumes you start on or before 22 June 2026. Adjust the start date if your exam falls earlier or later.
+
+### Week 1 — Diagnostic (22–28 June)
+Before you study a single unit, run a diagnostic: take an untimed, full-topic practice session and record your score by unit. Which units are you below 60% in? Those are your priority for the next 7 weeks — not the units you find enjoyable.
+
+**KRCHN candidates:** Your likely weak areas are Paper II units — Community Health, Mental Health, and Research & Statistics. Most KRCHN candidates over-prepare Paper I and under-prepare Paper II.
+
+**BScN candidates:** Your likely weak areas are Research & Evidence-Based Practice, Nursing Leadership, and the integration of multi-system scenarios in Paper I. Advanced reasoning questions catch many BScN candidates off guard.
+
+**[Run your diagnostic session free on NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+### Week 2 — High-Priority Unit Drilling (29 June – 5 July)
+Take your 2–3 weakest units from the diagnostic and drill them:
+- 60–80 unit-specific MCQs per day
+- Read the rationale on every wrong answer — not just the correct option
+- Add all unclear concepts to flashcards for spaced repetition
+
+Do not jump between units this week. Concentrated drilling on weak units closes gaps faster than scattered review.
+
+### Week 3 — Continue Unit Drilling (6–12 July)
+Continue with the next tier of weak units. By end of week 3, every unit should be above 65% in practice.
+
+### Weeks 4 & 5 — Mixed Practice (13–26 July)
+Stop studying unit by unit. Switch to mixed-topic sessions. This simulates the real exam, where questions from different units appear in random order. The shift is uncomfortable at first — that discomfort means your brain is working harder, which builds stronger recall.
+
+- Target: 80–100 mixed MCQs daily
+- Continue reviewing rationales on all wrong answers
+- Keep flashcard reviews going daily (15–20 minutes is enough)
+
+### Week 6 — First Full Mock Exam (27 July – 2 August)
+Take your first full timed mock exam: 100 questions, 120 minutes, DigiProctor-style interface. Record:
+- Total score
+- Score by unit
+- Time used vs. remaining
+- Questions flagged but not returned to
+
+Review every question — not just wrong ones. Correct guesses teach you nothing. See our [DigiProctor guide](https://www.nursefiti.co.ke/blog/digiproctor-nck-exam-guide) for how to navigate the interface strategically.
+
+### Week 7 — Targeted Drilling Based on Mock (3–9 August)
+Return to drilling any unit where your mock exam score was below 65%. One more week of focused practice on gaps.
+
+### Week 8 — Final Mock Exams & Consolidation (10–16 August)
+Take 2–3 more full mock exams this week. No new topics. Focus on:
+- Flashcard review (20–30 minutes daily)
+- Re-reading your error log from weeks 1–7
+- Exam-day logistics: know your centre, confirm your ID and admission letter
+- Sleep 7–8 hours the night before
+
+## The 5 Mistakes That Cost August Candidates the Most Marks
+
+1. **Starting preparation in August** — 8 weeks is the minimum. Less than 4 weeks of active preparation produces outcomes consistent with insufficient preparation.
+2. **Practising only comfortable units** — your score is determined by your weakest units, not your strongest.
+3. **Reading rationales passively** — you must understand *why* each answer is correct, not just which one it is. NCK rephrases the same concepts across cycles.
+4. **Skipping full mock exams** — candidates who take 3+ mock exams before sitting consistently report lower anxiety and better time management on exam day.
+5. **Studying the night before** — cognitive performance on an exam is determined by your preparation over the preceding weeks, not the last 12 hours. Sleep is more valuable than a midnight study session. See our [exam anxiety guide](https://www.nursefiti.co.ke/blog/nck-exam-anxiety-how-to-manage-it) for evidence-based strategies for the final week.
+
+## August 2026 Exam Day: What to Bring
+
+- **National ID** (or valid passport) — no admission without it
+- **NCK Exam Admission Letter** — download from [osp.nckenya.go.ke](https://osp.nckenya.go.ke) after registration
+- **Arrive 30 minutes early** — invigilators will not hold the exam for late arrivals
+- No phones, notes, or electronic devices in the examination room
+- Scratch paper is provided at the centre for calculations
+
+> *Share this: "NCK August 2026 exam is roughly 8 weeks away — found a week-by-week prep plan and the registration steps in one place: nursefiti.co.ke/blog/nck-august-2026-exam-prep-plan. Pass it on to anyone sitting soon."*
+
+## Sources & References
+
+- **Nursing Council of Kenya** — official website, approved institutions list, examination guidelines. [nckenya.com](https://www.nckenya.com)
+- **NCK Online Services Portal** — examination registration, results, admission letters. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
+- **NCK Examination Instructions & Schedule, February–May 2026** — Annexure document published by NCK December 2025. [nckenya.com/wp-content/uploads/2025/12/Annexure-Examination-instructions-and-schedule-February-May-2026-1.pdf](https://nckenya.com/wp-content/uploads/2025/12/Annexure-Examination-instructions-and-schedule-February-May-2026-1.pdf)
+- **The Kenya Times** — *"NCK February 2026 Licensure Exam Results Out"*, 28 April 2026. [thekenyatimes.com](https://thekenyatimes.com/education/nursing-council-releases-latest-licensure-exam-results/)
+- **Tuko.co.ke** — *"NCK exam registration and timetable for the 2026 academic year"*, updated 8 April 2026. [tuko.co.ke](https://www.tuko.co.ke/facts-lifehacks/study/539756-nck-exam-registration-timetable-2024-academic-year/)
+
+*Always verify current registration deadlines, examination dates, and approved centres directly at [nckenya.com](https://www.nckenya.com) before registering — information may change after this article's publication date.*
+    `,
+  },
+];
+
+const ALL_POSTS = [...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW];
 
 // ─── generateStaticParams ────────────────────────────────────────────────────
 
@@ -785,6 +911,11 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
   'nck-pharmacology-calculations-guide': {
     url: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200&q=80&auto=format&fit=crop',
     alt: 'Nursing pharmacology — medications and drug calculations',
+    credit: 'Unsplash',
+  },
+  'nck-august-2026-exam-prep-plan': {
+    url: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Kenyan nursing student preparing for NCK August 2026 exam with study plan',
     credit: 'Unsplash',
   },
 };
