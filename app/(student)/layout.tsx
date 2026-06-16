@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Sidebar } from '@/components/student/Sidebar';
 import { Topbar } from '@/components/student/Topbar';
 import { OnboardingTourGate } from '@/components/student/OnboardingTourGate';
+import { ActivityTracker } from '@/components/student/ActivityTracker';
 
 // All student pages are dynamic — they require auth and live Supabase data
 export const dynamic = 'force-dynamic';
@@ -54,6 +55,9 @@ export default function StudentLayout({
 
       {/* Onboarding tour — shown once to new accounts */}
       <OnboardingTourGate />
+
+      {/* Activity tracking — login + page visit events for admin analytics */}
+      <ActivityTracker />
     </div>
   );
 }

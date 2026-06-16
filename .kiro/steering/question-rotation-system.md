@@ -287,11 +287,13 @@ Follow this checklist every time a new batch of questions is seeded:
 
 | Cadre | Paper | Questions | Units Covered |
 |---|---|---|---|
-| KRCHN | Paper I | 121 | A&P, MCH, Midwifery, Med-Surg, Paediatrics, Pharmacology, Surgical |
-| KRCHN | Paper II | 142 | Nutrition, Mental Health, Health Systems, Community Health, Environmental Health, Research & Stats, IPC |
-| BScN | Paper I | 183 | Med-Surg, Surgical, Midwifery, A&P, MCH, Paediatrics, Pharmacology, Critical Care |
-| BScN | Paper II | 62 | Nursing Management, Mental Health, Research, Ethics & Law, Community Health, IPC |
-| **Total** | | **508** | |
+| KRCHN | Paper I | ~181 | A&P, MCH, Midwifery, Med-Surg, Paediatrics, Pharmacology, Surgical |
+| KRCHN | Paper II | ~232 | Nutrition, Mental Health, Health Systems, Community Health, Environmental Health, Research & Stats, IPC |
+| BScN | Paper I | ~233 | Med-Surg, Surgical, Midwifery, A&P, MCH, Paediatrics, Pharmacology, Critical Care, Mental Health |
+| BScN | Paper II | ~172 | Nursing Management, Mental Health, Research & EBP, Ethics & Law, Community Health, IPC, Nutrition |
+| **Total** | | **~818** | |
+
+> **Last batch added:** `20260616000001_seed_answered_mcqs_doc1.sql` — 458 inserts (229 unique questions × both cadres where criteria met). Source: NCK-Answered-MCQs-with-Rationales 1.docx.
 
 > Update this table after each batch is added.
 

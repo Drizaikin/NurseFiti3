@@ -99,6 +99,12 @@ export default function AdminOverviewPage() {
             <p className="text-sm text-neutral-mid">Send announcements with optional files or images to registered students or tutors.</p>
           </Card>
         </Link>
+        <Link href="/admin/analytics">
+          <Card className="hover:border-primary/40 transition-all cursor-pointer h-full">
+            <h2 className="font-heading font-bold text-[var(--color-text)] mb-1">📊 Platform Analytics</h2>
+            <p className="text-sm text-neutral-mid">Daily login counts for students and tutors, most visited pages and tabs, and usage trends over time.</p>
+          </Card>
+        </Link>
       </div>
     </div>
   );

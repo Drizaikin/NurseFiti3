@@ -286,6 +286,64 @@ Both KRCHN and BScN have **2 papers each**, matching the NCK integrated CBT stru
 
 ---
 
+## 13. Seeding Criteria by `exam_year`
+
+The `exam_year` field in the `questions` table is an `INTEGER` (nullable). It records the NCK past paper year from which a question was sourced. It is **admin and analytics use only** — it is never exposed to students.
+
+### 13.1 When to Set `exam_year`
+
+| Situation | `exam_year` value |
+| :---- | :---- |
+| Question sourced from a dated NCK past paper PDF | Set to the **integer year** of that paper (e.g., `2011`, `2012`, `2014`, `2016`, `2018`) |
+| Question sourced from an undated / uncategorised PDF or set | Set to `NULL` |
+| Question is platform-created (not from a past paper) | Set to `NULL` |
+| Question is from a Word document upload with a known year | Set to the **integer year** stated in the document |
+| Question is from a Word document upload with no year stated | Set to `NULL` |
+
+### 13.2 Years Already Seeded (Do Not Duplicate)
+
+The following year/cadre/paper combinations have already been seeded into the database. Before inserting questions from a source document, confirm the year and cadre against this table to avoid duplicates:
+
+| Year | Cadre | Paper | Source description |
+| :---- | :---- | :---- | :---- |
+| 2011 | KRCHN | Paper II | NCK Paper 2 — KRCHN August 2011 |
+| 2011 | KRCHN | Paper I | NCK Paper 3 — KRCHN 2011 set |
+| 2012 | KRCHN | Paper II | NCK Paper 2 — KRCHN August 2012 |
+| 2012 | KRCHN | Paper I | NCK Paper 3 — KRCHN 2012 set |
+| 2014 | KRCHN | Paper II | NCK Paper 2 — KRCHN July 2014 |
+| 2014 | KRCHN | Paper I | NCK Paper 3 — KRCHN 2014 set; Paper 4 — KRCHN July 2014 |
+| 2016 | BScN | Paper II | NCK Paper 2 — BScN August 2016; Paper 4 — BScN August 2016 |
+| 2018 | BScN | Paper II | NCK Paper 2 — BScN April 2018 |
+| NULL | BScN | Paper I / Paper II | Multiple uncategorised sets (Papers 1, 2, 3 — no year on source PDF) |
+| NULL | KRCHN | Paper I / Paper II | Multiple uncategorised sets (Papers 1, 2, 3 — no year on source PDF) |
+
+> **Deduplication rule:** If a question stem already exists in the database (exact or near-identical wording), **do not re-insert it** — even if the source year differs. Use the existing row and update `exam_year` if it was previously `NULL`.
+
+### 13.3 How to Handle an Uploaded Word Document
+
+When a Word document containing questions, answers, and rationales is uploaded for seeding, follow this checklist:
+
+1. **Identify the year** — look for a year on the document title, header, or footer. If found, use that integer as `exam_year`. If not found, use `NULL`.
+2. **Identify the cadre** — determine whether the questions are KRCHN or BScN based on document labelling and question complexity (see Sections 3 and 4). A document may contain both cadres; assign each question individually.
+3. **Assign the paper** — map each question's subject area to `'Paper I'` or `'Paper II'` using the table in Section 12. **Never use Arabic numerals** (`'Paper 1'`, `'Paper 2'`).
+4. **Check for duplicates** — cross-reference against the already-seeded years in Section 13.2 and against existing question stems before inserting.
+5. **Set standard fields** — every inserted question must have:
+   - `status = 'approved'`
+   - `contributor_id = NULL` (platform-owned)
+   - `difficulty` — assign `'easy'`, `'medium'`, or `'hard'` based on cognitive level (recall = easy; application/prioritisation = medium; analysis/synthesis/evaluation = hard)
+6. **One INSERT per question** — do not batch multiple different questions into a single VALUES list that spans a migration; keep one `INSERT INTO questions ... VALUES (...)` block per question for clarity and rollback safety.
+
+### 13.4 `exam_year` vs. Question Content
+
+`exam_year` is a metadata tag only. It does **not** affect:
+- Which paper the question appears in (governed by `paper`)
+- Which cadre sees the question (governed by `cadre`)
+- Question difficulty or weighting
+
+Its sole purpose is to allow admin filtering (e.g., "show all 2014 KRCHN questions") and analytics (e.g., tracking coverage of past paper years).
+
+---
+
 ## References
 
 - https://nckenya.com/examination/
