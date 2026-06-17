@@ -33,15 +33,16 @@ interface FeedPost {
   is_deleted: boolean; is_admin_post: boolean; likes_count: number; views_count: number;
   created_at: string; author_name: string; author_avatar: string | null;
   replies?: FeedPost[];
+  isLiked?: boolean;
 }
 
 /* ── PostCard ────────────────────────────────────────────────────────────── */
 
 function PostCard({ post, userId, onReply, onLike, onDelete, isReply = false }: {
   post: FeedPost; userId: string;
-  onReply: (p: FeedPost) => void;
-  onLike:  (p: FeedPost) => void;
-  onDelete:(p: FeedPost) => void;
+  onReply:  (p: FeedPost) => void;
+  onLike:   (p: FeedPost) => void;
+  onDelete: (p: FeedPost) => void;
   isReply?: boolean;
 }) {
   const isOwn     = post.author_id === userId;
@@ -114,8 +115,8 @@ function PostCard({ post, userId, onReply, onLike, onDelete, isReply = false }: 
                 </button>
 
                 <button onClick={() => onLike(post)}
-                  className="flex items-center gap-1.5 text-xs text-[var(--color-text-secondary)] hover:text-rose-500 transition-colors">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  className={`flex items-center gap-1.5 text-xs transition-colors ${post.isLiked ? 'text-rose-500' : 'text-[var(--color-text-secondary)] hover:text-rose-500'}`}>
+                  <svg className="w-4 h-4" fill={post.isLiked ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                   </svg>
                   <span>{post.likes_count}</span>
@@ -276,6 +277,18 @@ function GroupsInner() {
     return top.reverse();
   };
 
+  /* track views for rendered top-level posts */
+  const trackViews = useCallback(async (posts: FeedPost[]) => {
+    if (!userId || posts.length === 0) return;
+    const topLevel = posts.filter(p => !p.reply_to_id && !p.is_deleted);
+    await Promise.allSettled(
+      topLevel.map(p => (sbRef.current as any).rpc('increment_post_views', { post_id: p.id }))
+    );
+    setFeed(prev => prev.map(p =>
+      topLevel.some(t => t.id === p.id) ? { ...p, views_count: p.views_count + 1 } : p
+    ));
+  }, [userId]);
+
   /* load feed for the selected group */
   const loadFeed = useCallback(async (group: StudyGroup) => {
     setLoadingFeed(true);
@@ -286,10 +299,26 @@ function GroupsInner() {
       .order('created_at', { ascending: false })
       .limit(80) as any;
     if (error) { setLoadingFeed(false); return; }
+    // Fetch which posts the current user has already liked
+    const ids = (data ?? []).map((r: any) => r.id);
+    let likedSet = new Set<string>();
+    if (ids.length > 0) {
+      const { data: likes } = await sbRef.current
+        .from('community_likes')
+        .select('message_id')
+        .eq('user_id', userId)
+        .eq('message_type', 'student')
+        .in('message_id', ids) as any;
+      likedSet = new Set((likes ?? []).map((l: any) => l.message_id));
+    }
     const enriched = await enrich(data ?? []);
-    setFeed(buildThread(enriched));
+    const withLikes = enriched.map(p => ({ ...p, isLiked: likedSet.has(p.id) }));
+    const threaded = buildThread(withLikes);
+    setFeed(threaded);
     setLoadingFeed(false);
-  }, [enrich]);
+    // Track views after render (non-blocking)
+    setTimeout(() => trackViews(withLikes.filter(p => !p.reply_to_id)), 500);
+  }, [enrich, userId, trackViews]);
 
   /* load groups list */
   const loadGroups = useCallback(async (uid: string) => {
@@ -354,8 +383,15 @@ function GroupsInner() {
   };
 
   const likePost = async (post: FeedPost) => {
-    setFeed(prev => prev.map(p => p.id === post.id ? { ...p, likes_count: p.likes_count + 1 } : p));
-    await (sbRef.current as any).from('community_messages').update({ likes_count: post.likes_count + 1 }).eq('id', post.id);
+    // Optimistic update
+    const nowLiked = !post.isLiked;
+    setFeed(prev => prev.map(p =>
+      p.id === post.id
+        ? { ...p, likes_count: nowLiked ? p.likes_count + 1 : Math.max(p.likes_count - 1, 0), isLiked: nowLiked }
+        : p
+    ));
+    // Atomic toggle via SECURITY DEFINER RPC
+    await (sbRef.current as any).rpc('toggle_post_like', { p_post_id: post.id, p_user_id: userId });
   };
 
   const deletePost = async (post: FeedPost) => {
@@ -365,7 +401,8 @@ function GroupsInner() {
   const joinGroup = async (g: StudyGroup) => {
     const { error } = await (sbRef.current as any).from('group_members').insert({ group_id: g.id, student_id: userId, role: 'member' });
     if (error) { toast.error('Could not join.'); return; }
-    await (sbRef.current as any).from('study_groups').update({ member_count: g.member_count + 1 }).eq('id', g.id);
+    // Use SECURITY DEFINER RPC so non-creator members can also increment
+    await (sbRef.current as any).rpc('increment_member_count', { group_id: g.id });
     toast.success(`Joined "${g.name}"!`);
     await loadGroups(userId);
   };

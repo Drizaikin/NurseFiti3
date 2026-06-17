@@ -214,7 +214,7 @@ export default function AnalyticsPage() {
         setIsLoading(false);
       }
     };
-    load().catch(() => setIsLoading(false));
+    load();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
