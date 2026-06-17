@@ -655,11 +655,11 @@ export default function FlashcardsPage() {
 
     if (cardIndex + 1 >= cards.length) {
       const xpEarned = cards.length * 5;
-      const { data: sp } = await (supabase as any).from('student_profiles').select('xp, level').eq('id', userId).single();
-      if (sp) {
-        const newXP = (sp.xp ?? 0) + xpEarned;
-        await (supabase as any).from('student_profiles').update({ xp: newXP, level: Math.floor(newXP / 100) + 1 }).eq('id', userId);
-      }
+      const { error: xpErr } = await (supabase as any).rpc('update_student_xp', {
+        p_student_id: userId,
+        p_xp_delta: xpEarned,
+      });
+      if (xpErr) console.error('Flashcard XP update failed:', xpErr.message ?? xpErr);
       setStudyState('complete');
     } else {
       setCardIndex(i => i + 1);

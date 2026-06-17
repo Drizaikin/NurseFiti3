@@ -348,58 +348,12 @@ export default function PracticePage() {
         clearSavedSession();
       }
 
-      // Fix 2: always fetch profile to update streak/last_study_date regardless of correctness
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: currentProfileRaw } = await (supabase as any)
-        .from('student_profiles')
-        .select('xp, level, last_study_date, streak_count')
-        .eq('id', userId)
-        .single();
-
-      const currentProfile = currentProfileRaw as {
-        xp: number; level: number; last_study_date: string | null; streak_count: number;
-      } | null;
-
-      if (currentProfile) {
-        // Use local calendar date — avoids UTC midnight parsing shifting the date
-        // in EAT (UTC+3) and other timezones east of UTC.
-        const todayLocal = new Date();
-        const todayStr = `${todayLocal.getFullYear()}-${String(todayLocal.getMonth() + 1).padStart(2, '0')}-${String(todayLocal.getDate()).padStart(2, '0')}`;
-        const lastStudyDate = currentProfile.last_study_date;
-        let newStreak = currentProfile.streak_count;
-
-        if (lastStudyDate) {
-          // Parse last_study_date as local noon to avoid any UTC midnight edge cases
-          const [ly, lm, ld] = lastStudyDate.split('-').map(Number);
-          const lastLocal = new Date(ly, lm - 1, ld, 12, 0, 0);
-          const todayNoon = new Date(todayLocal.getFullYear(), todayLocal.getMonth(), todayLocal.getDate(), 12, 0, 0);
-          const daysDiff = Math.round((todayNoon.getTime() - lastLocal.getTime()) / (1000 * 60 * 60 * 24));
-
-          if (daysDiff === 1) newStreak += 1;        // studied yesterday → increment
-          else if (daysDiff > 1) newStreak = 1;      // gap → reset to 1
-          // daysDiff === 0 → same day → keep existing streak
-        } else {
-          newStreak = 1; // first ever study day
-        }
-
-        const profileUpdate: Record<string, unknown> = {
-          streak_count: newStreak,
-          last_study_date: todayStr,
-        };
-
-        if (isCorrect) {
-          const newXP = currentProfile.xp + xpGained;
-          const newLevel = Math.floor(newXP / 100) + 1;
-          profileUpdate.xp = newXP;
-          profileUpdate.level = newLevel;
-        }
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        await (supabase as any)
-          .from('student_profiles')
-          .update(profileUpdate)
-          .eq('id', userId);
-      }
+      // Use atomic SECURITY DEFINER RPC to handle XP, level, and streak
+      const { error: xpErr } = await (supabase as any).rpc('update_student_xp', {
+        p_student_id: userId,
+        p_xp_delta: xpGained,
+      });
+      if (xpErr) console.error('XP/streak update failed:', xpErr.message ?? xpErr);
     } catch (error) {
       console.error('Error handling answer:', error);
     }
