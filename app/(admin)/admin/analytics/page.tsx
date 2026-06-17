@@ -33,6 +33,7 @@ interface AnalyticsData {
   dailyLogins: DailyEntry[];
   dailyVisits: DailyEntry[];
   topPages: PageEntry[];
+  notice?: string;
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -221,6 +222,12 @@ export default function AdminAnalyticsPage() {
 
       {data && !isLoading && (
         <>
+          {/* ── Migration notice ────────────────────────────────────────────── */}
+          {data.notice && (
+            <div className="rounded-xl border border-[var(--color-accent)]/30 bg-[var(--color-accent)]/5 px-4 py-3 text-sm text-[var(--color-text-secondary)]">
+              ℹ️ {data.notice}
+            </div>
+          )}
           {/* ── Summary cards ─────────────────────────────────────────────── */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[

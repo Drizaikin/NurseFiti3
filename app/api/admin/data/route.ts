@@ -266,84 +266,97 @@ export async function GET(req: NextRequest) {
       since.setDate(since.getDate() - days);
       const sinceISO = since.toISOString();
 
-      // Run all analytics queries in parallel
-      const [
-        loginsRaw,
-        visitsRaw,
-        topPagesRaw,
-      ] = await Promise.all([
-        // Daily login counts broken down by role
-        (admin as any)
-          .from('user_logins')
-          .select('role, logged_in_at')
-          .gte('logged_in_at', sinceISO)
-          .order('logged_in_at', { ascending: true }),
+      // Tables may not exist yet if the analytics migration hasn't been applied.
+      // Check gracefully — return empty data rather than a 500.
+      try {
+        const [loginsRaw, visitsRaw, topPagesRaw] = await Promise.all([
+          (admin as any)
+            .from('user_logins')
+            .select('role, logged_in_at')
+            .gte('logged_in_at', sinceISO)
+            .order('logged_in_at', { ascending: true }),
+          (admin as any)
+            .from('page_visits')
+            .select('role, page_slug, visited_at')
+            .gte('visited_at', sinceISO)
+            .order('visited_at', { ascending: true }),
+          (admin as any)
+            .from('page_visits')
+            .select('page_slug, role')
+            .gte('visited_at', sinceISO),
+        ]);
 
-        // Daily page visit counts broken down by role
-        (admin as any)
-          .from('page_visits')
-          .select('role, page_slug, visited_at')
-          .gte('visited_at', sinceISO)
-          .order('visited_at', { ascending: true }),
+        // If the tables don't exist yet, Supabase returns an error on the query
+        if (loginsRaw.error || visitsRaw.error) {
+          // Tables not yet created — return empty analytics rather than crashing
+          return NextResponse.json({
+            days,
+            summary: { totalLogins: 0, studentLogins: 0, tutorLogins: 0, totalVisits: 0 },
+            dailyLogins: [],
+            dailyVisits: [],
+            topPages: [],
+            notice: 'Analytics tables not yet available. Run the migration 20260616000003_admin_activity_tracking.sql first.',
+          });
+        }
 
-        // Top visited pages — all time counts
-        (admin as any)
-          .from('page_visits')
-          .select('page_slug, role')
-          .gte('visited_at', sinceISO),
-      ]);
+        const logins: Array<{ role: string; logged_in_at: string }> = loginsRaw.data ?? [];
+        const visits: Array<{ role: string; page_slug: string; visited_at: string }> = visitsRaw.data ?? [];
+        const allVisits: Array<{ page_slug: string; role: string }> = topPagesRaw.data ?? [];
 
-      const logins: Array<{ role: string; logged_in_at: string }> = loginsRaw.data ?? [];
-      const visits: Array<{ role: string; page_slug: string; visited_at: string }> = visitsRaw.data ?? [];
-      const allVisits: Array<{ page_slug: string; role: string }> = topPagesRaw.data ?? [];
+        const loginByDay: Record<string, { date: string; students: number; tutors: number; total: number }> = {};
+        for (const row of logins) {
+          const date = row.logged_in_at.slice(0, 10);
+          if (!loginByDay[date]) loginByDay[date] = { date, students: 0, tutors: 0, total: 0 };
+          if (row.role === 'student') loginByDay[date].students++;
+          else if (row.role === 'tutor') loginByDay[date].tutors++;
+          loginByDay[date].total++;
+        }
+        const dailyLogins = Object.values(loginByDay).sort((a, b) => a.date.localeCompare(b.date));
 
-      // ── Build daily login series ─────────────────────────────────────────────
-      const loginByDay: Record<string, { date: string; students: number; tutors: number; total: number }> = {};
-      for (const row of logins) {
-        const date = row.logged_in_at.slice(0, 10); // 'YYYY-MM-DD'
-        if (!loginByDay[date]) loginByDay[date] = { date, students: 0, tutors: 0, total: 0 };
-        if (row.role === 'student') loginByDay[date].students++;
-        else if (row.role === 'tutor') loginByDay[date].tutors++;
-        loginByDay[date].total++;
+        const visitByDay: Record<string, { date: string; students: number; tutors: number; total: number }> = {};
+        for (const row of visits) {
+          const date = row.visited_at.slice(0, 10);
+          if (!visitByDay[date]) visitByDay[date] = { date, students: 0, tutors: 0, total: 0 };
+          if (row.role === 'student') visitByDay[date].students++;
+          else if (row.role === 'tutor') visitByDay[date].tutors++;
+          visitByDay[date].total++;
+        }
+        const dailyVisits = Object.values(visitByDay).sort((a, b) => a.date.localeCompare(b.date));
+
+        const pageCounts: Record<string, { page: string; students: number; tutors: number; total: number }> = {};
+        for (const row of allVisits) {
+          if (!pageCounts[row.page_slug]) pageCounts[row.page_slug] = { page: row.page_slug, students: 0, tutors: 0, total: 0 };
+          if (row.role === 'student') pageCounts[row.page_slug].students++;
+          else if (row.role === 'tutor') pageCounts[row.page_slug].tutors++;
+          pageCounts[row.page_slug].total++;
+        }
+        const topPages = Object.values(pageCounts)
+          .sort((a, b) => b.total - a.total)
+          .slice(0, 20);
+
+        return NextResponse.json({
+          days,
+          summary: {
+            totalLogins: logins.length,
+            studentLogins: logins.filter(l => l.role === 'student').length,
+            tutorLogins: logins.filter(l => l.role === 'tutor').length,
+            totalVisits: visits.length,
+          },
+          dailyLogins,
+          dailyVisits,
+          topPages,
+        });
+      } catch {
+        // Network/unexpected error — return empty rather than 500
+        return NextResponse.json({
+          days,
+          summary: { totalLogins: 0, studentLogins: 0, tutorLogins: 0, totalVisits: 0 },
+          dailyLogins: [],
+          dailyVisits: [],
+          topPages: [],
+          notice: 'Analytics unavailable. Check that the migration has been applied.',
+        });
       }
-      const dailyLogins = Object.values(loginByDay).sort((a, b) => a.date.localeCompare(b.date));
-
-      // ── Build daily visit series ─────────────────────────────────────────────
-      const visitByDay: Record<string, { date: string; students: number; tutors: number; total: number }> = {};
-      for (const row of visits) {
-        const date = row.visited_at.slice(0, 10);
-        if (!visitByDay[date]) visitByDay[date] = { date, students: 0, tutors: 0, total: 0 };
-        if (row.role === 'student') visitByDay[date].students++;
-        else if (row.role === 'tutor') visitByDay[date].tutors++;
-        visitByDay[date].total++;
-      }
-      const dailyVisits = Object.values(visitByDay).sort((a, b) => a.date.localeCompare(b.date));
-
-      // ── Top pages by visit count ─────────────────────────────────────────────
-      const pageCounts: Record<string, { page: string; students: number; tutors: number; total: number }> = {};
-      for (const row of allVisits) {
-        if (!pageCounts[row.page_slug]) pageCounts[row.page_slug] = { page: row.page_slug, students: 0, tutors: 0, total: 0 };
-        if (row.role === 'student') pageCounts[row.page_slug].students++;
-        else if (row.role === 'tutor') pageCounts[row.page_slug].tutors++;
-        pageCounts[row.page_slug].total++;
-      }
-      const topPages = Object.values(pageCounts)
-        .sort((a, b) => b.total - a.total)
-        .slice(0, 20);
-
-      // ── Summary totals ───────────────────────────────────────────────────────
-      const totalLogins    = logins.length;
-      const studentLogins  = logins.filter(l => l.role === 'student').length;
-      const tutorLogins    = logins.filter(l => l.role === 'tutor').length;
-      const totalVisits    = visits.length;
-
-      return NextResponse.json({
-        days,
-        summary: { totalLogins, studentLogins, tutorLogins, totalVisits },
-        dailyLogins,
-        dailyVisits,
-        topPages,
-      });
     }
 
     return NextResponse.json({ error: 'Unknown type' }, { status: 400 });
