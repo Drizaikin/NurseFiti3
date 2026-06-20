@@ -828,7 +828,127 @@ Take 2–3 more full mock exams this week. No new topics. Focus on:
   },
 ];
 
-const ALL_POSTS = [...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW];
+const POSTS_INTERN: Post[] = [
+  {
+    slug: 'nck-exam-study-internship-guide',
+    title: 'How to Study for NCK Exam While Working as an Intern (2026)',
+    excerpt: 'Demanding nursing internship in Kenya? Learn a practical study routine, high-yield topics, and how to prepare for the NCK exam and pass first attempt.',
+    category: 'Study Strategy',
+    readTime: '9 min read',
+    date: '2026-06-20',
+    cadres: ['KRCHN', 'BScN'],
+    content: `
+Most nursing interns fail their NCK licensure exam not because they lack clinical knowledge, but because they try to study like full-time students. When you are standing on your feet for 12 hours in a busy ward, standard study schedules are useless. Here is how to pass the NCK exam without burning out.
+
+There is one particular ward task that interns perform daily which double-serves as the highest-yield revision for pharmacology — we will show you how to leverage this below.
+
+## The Reality of NCK Exam Preparation During Internship
+
+Nursing internship in Kenya (whether under the Ministry of Health, faith-based hospitals, or private institutions) is physically and mentally gruelling. You are managing high patient loads, executing doctor's orders, running ward rounds, and documenting care, often on rotating shifts. By the time you get home, the last thing you want to do is open a textbook. 
+
+Typical exam preparation guides tell you to study for 6 to 8 hours a day. For an intern, that is a recipe for severe sleep deprivation, clinical errors, and burnout. You do not need to study *longer*; you need to study *smarter*. The NCK licensing exam does not test your ability to memorise books; it tests your clinical judgment in situations you encounter on the wards every single day. 
+
+**[Practise questions on internship-related clinical cases free on NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+## The "Micro-Study" Method: Leveraging the Ward for Revision
+
+Since you spend 40 to 60 hours a week in the hospital, make the hospital your primary classroom. This is the **Micro-Study Method**, where you turn daily ward tasks into active NCK exam preparation.
+
+### 1. The Medicine Trolley is Your Pharmacology Guide
+Every time you administer a drug, perform a mental 10-second drill:
+- What is the class of this drug?
+- What are the major side effects I must monitor in this patient?
+- What are the absolute contraindications? (e.g., holding Metformin for a patient with an eGFR below 30).
+- Is there a calculation involved? (e.g., calculating paediatric doses using weight or calculating IV drip rates).
+
+This active recall is significantly more effective than memorising lists. When you see a patient experiencing a dry cough from Enalapril, that memory sticks far better than a line in a notebook.
+
+### 2. Patient Handovers are Scenario Practice
+NCK questions are scenario-based: *"A 45-year-old male is admitted with..."* When you receive or give a shift handover report, pay close attention to the prioritisation.
+- Which patient is the most unstable?
+- What is the priority nursing diagnosis?
+- What is the first intervention you should perform?
+Apply the ABCDE (Airway, Breathing, Circulation, Disability, Exposure) primary survey framework to your handover sheet. This directly maps to how Paper I and Paper II prioritize questions.
+
+## The 3-Hour Daily Study Schedule for Busy Interns
+
+You do not need massive blocks of free time. Break your day into three manageable study windows:
+
+### Morning Prep (30 Minutes)
+Before your shift begins, spend 30 minutes on active recall. Do not read notes. Go straight to your flashcard deck. Review 20 to 30 cards using spaced repetition. This primes your brain for the day and keeps key numbers (like normal lab values and vital signs) fresh in your mind.
+
+### The Tea/Lunch Break Drill (30 Minutes)
+Use 20 minutes of your lunch break to practice 15 to 20 MCQs on your phone. Focus on a single unit (e.g., Obstetric Emergencies or Infection Prevention and Control). 
+- Do not worry about timing.
+- Focus on understanding the rationales.
+- If you get a question wrong, take a screenshot or add it to your digital log.
+
+**[NurseFiti's mobile-friendly platform lets you practice MCQs during tea break. Try a free practice session →](https://www.nursefiti.co.ke/signup)**
+
+### Post-Shift Consolidation (2 Hours)
+After your shift, go home, shower, eat, and rest. Allocate a block of 2 hours for focused study before sleep:
+- **First 60 minutes:** Study the underlying theory of the units you got wrong during your lunch break. Use concise summaries, guidelines from the Ministry of Health (MOH), or WHO protocols.
+- **Next 40 minutes:** Practice 30 mixed-topic MCQs under a mild timer.
+- **Last 20 minutes:** Review the rationales of all incorrect answers and add new concepts to your flashcards.
+
+## High-Yield Topics for KRCHN and BScN Interns
+
+Do not study everything equally. Target the topics that NCK examiners test most heavily:
+
+### 1. Midwifery and Obstetric Emergencies (Paper I)
+- Active Management of the Third Stage of Labour (AMTSL) — standard doses of Oxytocin (10 IU IM).
+- Management of Pre-eclampsia and Eclampsia — Magnesium Sulphate loading dose (4g IV) and maintenance protocols.
+- Antepartum and Postpartum Haemorrhage (APH/PPH) identification and immediate nursing interventions.
+
+### 2. Community Health and Public Health (Paper II)
+- The Kenya National Immunisation Programme (EPI) schedule — what antigens are given at birth, 6, 10, 14 weeks, and 9 months.
+- Cold chain management and vaccine storage temperatures (+2°C to +8°C).
+- Primary Health Care (PHC) principles and levels of care in the Kenyan health system (Levels 1 to 6).
+
+### 3. Medical-Surgical Emergencies (Paper I)
+- Diabetic Ketoacidosis (DKA) management protocol (IV fluids first, then insulin titration).
+- Shock types (hypovolaemic, cardiogenic, anaphylactic, septic) and their distinctive clinical signs.
+- Post-operative care and monitoring for early complications (haemorrhage, airway obstruction, deep vein thrombosis).
+
+## Managing Fatigue and Cognitive Load
+
+Studying while fatigued is difficult because your brain's working memory is compromised. Research in cognitive science demonstrates that sleep is not just passive rest; it is the active process where your brain consolidates what you learned during the day (Walker, 2017). 
+
+If you are post-call or have worked a 12-hour night shift, **do not force yourself to study**. Sleep first. A 2-hour study session on a rested brain is five times more productive than a 4-hour session on a sleep-deprived brain. Protect your sleep non-negotiably.
+
+Additionally, maintain a consistent study streak rather than studying in bursts. A 7-day streak of 2 hours daily produces far greater long-term retention than a single 14-hour study marathon on your day off. This is known as the spacing effect, a core pillar of effective learning (Cepeda et al., 2006).
+
+## The Week Before the NCK Exam
+
+As your exam date approaches, your study strategy must shift:
+- **Stop learning new topics:** Focus entirely on consolidating what you already know.
+- **Review your error log:** Go through the screenshots and notes of every question you got wrong over the last 8 weeks.
+- **Run timed mock exams:** Take at least 2 full-length, 100-question mock exams using a DigiProctor simulator. This trains your pacing (72 seconds per question) and reduces anxiety by making the interface familiar.
+- **Sort your logistics:** Download your exam admission letter from [osp.nckenya.go.ke](https://osp.nckenya.go.ke) and ensure you have your original National ID.
+
+## Conclusion
+
+Passing the NCK licensure exam while working as an intern is a test of strategy, not just intelligence. By using the Micro-Study Method and maintaining a consistent daily routine, you can pass on your first attempt and secure your registration.
+
+**[Start your free NurseFiti account — no credit card required →](https://www.nursefiti.co.ke/signup)**
+
+> *Share this: "Demanding nursing internship? Found this practical guide on how to study for the NCK exam while working on the wards — really helpful schedule: nursefiti.co.ke/blog/nck-exam-study-internship-guide"*
+
+## Sources & References
+
+- **Nursing Council of Kenya (NCK)** — Official website for licensure regulations and exam requirements. [nckenya.com](https://www.nckenya.com)
+- **NCK Online Services Portal (OSP)** — Registration, exam schedules, and results portal. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
+- **Ministry of Health Kenya** — *Kenya National Immunisation Programme guidelines & EPI schedules*. [health.go.ke](https://www.health.go.ke)
+- **Walker, M. (2017)** — *Why We Sleep: Unlocking the Power of Sleep and Dreams*. Scribner. (Detailing the role of sleep in cognitive consolidation.)
+- **Cepeda, N.J., Pashler, H., Vul, E., et al. (2006)** — *"Distributed practice in verbal recall tasks: A review and quantitative synthesis"*, Psychological Bulletin, 132(3), 354–380. [DOI: 10.1037/0033-2909.132.3.354](https://doi.org/10.1037/0033-2909.132.3.354)
+- **World Health Organization (WHO)** — *Guidelines for the management of common childhood illnesses and emergency triage (ETAT)*. [who.int](https://www.who.int)
+
+*Disclaimer: Internship duties and shifts vary by hospital. Always ensure patient safety is your primary priority while on the wards. Confirm current exam registration details directly at [nckenya.com](https://www.nckenya.com).*
+    `,
+  },
+];
+
+const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW];
 
 // ─── generateStaticParams ────────────────────────────────────────────────────
 
@@ -873,6 +993,11 @@ export async function generateMetadata({
 
 // Per-post hero images (Unsplash free CDN)
 const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> = {
+  'nck-exam-study-internship-guide': {
+    url: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Nursing intern reviewing patient charts and clinical files in a hospital ward',
+    credit: 'Unsplash',
+  },
   'nck-latest-news-june-2026': {
     url: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200&q=80&auto=format&fit=crop',
     alt: 'Nursing exam results announcement — nurses celebrating',

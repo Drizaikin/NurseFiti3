@@ -18,6 +18,15 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: 'nck-exam-study-internship-guide',
+    title: 'How to Study for NCK Exam While Working as an Intern (2026)',
+    excerpt: 'Demanding nursing internship in Kenya? Learn a practical study routine, high-yield topics, and how to prepare for the NCK exam and pass first attempt.',
+    category: 'Study Strategy',
+    readTime: '9 min read',
+    date: '2026-06-20',
+    cadres: ['KRCHN', 'BScN'],
+  },
+  {
     slug: 'nck-august-2026-exam-prep-plan',
     title: 'NCK August 2026 Exam: Dates, Registration & 8-Week Prep',
     excerpt: 'The NCK August 2026 sitting is roughly 8 weeks away. Here are the confirmed dates, registration steps, and a week-by-week prep plan to pass first attempt.',
@@ -110,6 +119,7 @@ const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 const POST_IMAGES: Record<string, string> = {
+  'nck-exam-study-internship-guide':   'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80&auto=format&fit=crop',
   'nck-august-2026-exam-prep-plan':    'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80&auto=format&fit=crop',
   'nck-latest-news-june-2026':         'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80&auto=format&fit=crop',
   'nck-exam-preparation-guide-kenya':  'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80&auto=format&fit=crop',
