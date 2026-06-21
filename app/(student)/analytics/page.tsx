@@ -149,17 +149,20 @@ export default function AnalyticsPage() {
       const accuracy = totalAnswered > 0 ? Math.round((correctAnswers / totalAnswered) * 100) : 0;
       const studyTimeMinutes = Math.round(answers.reduce((s, a) => s + (a.time_taken_seconds ?? 0), 0) / 60);
 
-      // Weekly stats (last 7 days) — use local date strings to match EAT timezone
+      // Weekly stats (last 7 days) — correctly parsing UTC strings to local dates
       const weeklyStats: DayStat[] = [];
       for (let i = 6; i >= 0; i--) {
         const d = new Date();
         d.setDate(d.getDate() - i);
-        // Local date string avoids UTC-vs-EAT mismatch
-        const yr = d.getFullYear();
-        const mo = String(d.getMonth() + 1).padStart(2, '0');
-        const dy = String(d.getDate()).padStart(2, '0');
-        const dayStr = `${yr}-${mo}-${dy}`;
-        const dayAnswers = answers.filter(a => a.answered_at?.startsWith(dayStr));
+        
+        const dayAnswers = answers.filter(a => {
+          if (!a.answered_at) return false;
+          const ansDate = new Date(a.answered_at);
+          return ansDate.getFullYear() === d.getFullYear() &&
+                 ansDate.getMonth() === d.getMonth() &&
+                 ansDate.getDate() === d.getDate();
+        });
+        
         const dayCorrect = dayAnswers.filter(a => a.is_correct).length;
         weeklyStats.push({
           day: d.toLocaleDateString('en-KE', { weekday: 'short' }),
