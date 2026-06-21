@@ -8,25 +8,9 @@ import { Badge } from '@/components/ui/Badge';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Spinner } from '@/components/ui/Spinner';
 import toast from 'react-hot-toast';
+import { BADGE_DEFS } from '@/lib/badges';
 
-interface BadgeDef {
-  id: string;
-  icon: string;
-  name: string;
-  description: string;
-  condition: string;
-}
 
-const BADGE_DEFS: BadgeDef[] = [
-  { id: 'streak_master',   icon: '🔥', name: 'Streak Master',   description: '14-day study streak',           condition: '14-day streak' },
-  { id: 'pharma_warrior',  icon: '💊', name: 'Pharma Warrior',  description: '100 Pharmacology answers',       condition: '100 Pharmacology Qs' },
-  { id: 'mock_maestro',    icon: '🎯', name: 'Mock Maestro',    description: '3 full mock exams completed',    condition: '3 mock exams' },
-  { id: 'speed_demon',     icon: '⚡', name: 'Speed Demon',     description: 'Finish mock exam 20+ min early', condition: 'Finish early' },
-  { id: 'top_10',          icon: '🏆', name: 'Top 10%',         description: 'Reach 90th percentile',          condition: '90th percentile' },
-  { id: 'knowledge_god',   icon: '🧠', name: 'Knowledge God',   description: 'Answer all 5,000 questions',     condition: '5,000 questions' },
-  { id: 'perfect_score',   icon: '💯', name: 'Perfect Score',   description: 'Score 90%+ on any mock exam',    condition: '90%+ mock score' },
-  { id: 'team_captain',    icon: '👑', name: 'Team Captain',    description: 'Create and lead a study group',  condition: 'Create a group' },
-];
 
 // XP thresholds per level
 function xpForLevel(level: number) { return level <= 1 ? 0 : (level - 1) * 200 + (level - 2) * 100; }
@@ -76,48 +60,7 @@ export default function AchievementsPage() {
 
       setStudent({ ...sp, full_name: profile.full_name });
       const initialEarned = new Set<string>((badgesRes.data ?? []).map((b: { badge_id: string }) => b.badge_id));
-      
-      try {
-        const newlyEarned: string[] = [];
-
-        if (!initialEarned.has('streak_master') && sp.streak_count >= 14) newlyEarned.push('streak_master');
-        if (!initialEarned.has('top_10') && sp.level >= 10) newlyEarned.push('top_10');
-
-        if (!initialEarned.has('pharma_warrior')) {
-          const { count, error } = await (supabase.from('student_answers') as any).select('id, questions!inner(unit)', { count: 'exact', head: true }).eq('student_id', user.id).eq('questions.unit', 'Pharmacology');
-          if (!error && count && count >= 100) newlyEarned.push('pharma_warrior');
-        }
-
-        if (!initialEarned.has('knowledge_god')) {
-          const { count, error } = await (supabase.from('student_answers') as any).select('id', { count: 'exact', head: true }).eq('student_id', user.id);
-          if (!error && count && count >= 5000) newlyEarned.push('knowledge_god');
-        }
-
-        if (!initialEarned.has('mock_maestro') || !initialEarned.has('speed_demon') || !initialEarned.has('perfect_score')) {
-          const { data: mocks, error } = await (supabase.from('mock_exam_results') as any).select('score_percentage, time_used_minutes, total_questions').eq('student_id', user.id);
-          if (!error && mocks && mocks.length > 0) {
-            if (!initialEarned.has('mock_maestro') && mocks.length >= 3) newlyEarned.push('mock_maestro');
-            if (!initialEarned.has('perfect_score') && (mocks as any[]).some(m => m.score_percentage >= 90)) newlyEarned.push('perfect_score');
-            if (!initialEarned.has('speed_demon') && (mocks as any[]).some(m => m.time_used_minutes <= (m.total_questions - 20))) newlyEarned.push('speed_demon');
-          }
-        }
-
-        if (newlyEarned.length > 0) {
-          const insertData = newlyEarned.map(b => ({ student_id: user.id, badge_id: b }));
-          const { error: insertError } = await (supabase.from('student_badges') as any).insert(insertData);
-          if (insertError) {
-            console.error('Failed to save earned badges:', insertError);
-          }
-          newlyEarned.forEach(b => initialEarned.add(b));
-          toast.success(`Congratulations! You earned ${newlyEarned.length} new badge${newlyEarned.length > 1 ? 's' : ''}! 🏆`);
-        }
-
-        setEarnedBadges(new Set(initialEarned));
-      } catch (evalError) {
-        console.error('Badge evaluation error:', evalError);
-        // Failsafe: still render initially earned badges
-        setEarnedBadges(new Set(initialEarned));
-      }
+      setEarnedBadges(initialEarned);
 
       // Build streak calendar (last 31 days)
       const today = new Date().toISOString().split('T')[0];

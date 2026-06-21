@@ -3,6 +3,7 @@ import { Sidebar } from '@/components/student/Sidebar';
 import { Topbar } from '@/components/student/Topbar';
 import { OnboardingTourGate } from '@/components/student/OnboardingTourGate';
 import { ActivityTracker } from '@/components/student/ActivityTracker';
+import { BadgeProvider } from '@/components/student/BadgeProvider';
 
 // All student pages are dynamic — they require auth and live Supabase data
 export const dynamic = 'force-dynamic';
@@ -49,7 +50,9 @@ export default function StudentLayout({
       <div className="relative z-10 lg:pl-64">
         <Topbar />
         <main className="p-4 lg:p-6">
-          {children}
+          <BadgeProvider>
+            {children}
+          </BadgeProvider>
         </main>
       </div>
 
