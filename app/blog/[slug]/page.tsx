@@ -18,6 +18,44 @@ interface Post {
 
 const POSTS: Post[] = [
   {
+    slug: 'fathers-day-appreciation-dads-role',
+    title: 'The Unsung Heroes: Celebrating the Significance of Dads this Father\\'s Day',
+    excerpt: 'A heartfelt reflection on the evolving role of fathers, their impact on our resilience, and why their presence is irreplaceable in our lives.',
+    category: 'Community',
+    readTime: '3 min read',
+    date: '2026-06-21',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+Father’s Day is more than just a date on the calendar; it is a dedicated moment to pause and reflect on the profound impact fathers and father figures have on our lives. While mothers often get (and rightfully deserve) a spotlight for their nurturing warmth, the role of a dad is equally foundational, shaping the trajectory of our lives in quiet, profound ways.
+
+## The Evolution of Fatherhood
+
+The image of the modern dad has evolved significantly. Gone are the days when a father’s sole role was to be the stern breadwinner. Today’s dads are emotionally present, deeply involved in the daily mechanics of parenting, and are comfortable being both vulnerable and strong. They are the bedtime storytellers, the weekend soccer coaches, the math tutors, and the shoulder to cry on.
+
+## The Pillars of Strength and Guidance
+
+Dads have a unique way of teaching us about the world. They are often our first introduction to resilience. When we fall, a father is usually the one who dusts off our knees and tells us to try again. This kind of tough love is not about being unsympathetic; rather, it’s about instilling confidence and a belief that we can overcome adversity.
+
+They also teach us by example. A father's work ethic, the way he treats others, and his integrity serve as a blueprint for our own moral compass. Through their actions, dads teach us about responsibility, commitment, and the importance of showing up, even when it’s hard.
+
+## The Magic of "Dad Energy"
+
+There is a specific kind of magic to "dad energy." It’s the dad jokes that make us groan but secretly smile. It’s the elaborate, sometimes chaotic, pancake breakfasts on Sunday mornings. It’s the way they can turn a simple cardboard box into a spaceship or a rainy afternoon into an adventure. Dads often bring a sense of playfulness and spontaneity that balances the structure of family life.
+
+## A Lasting Impact
+
+The significance of a dad’s presence cannot be overstated. Studies consistently show that children with involved fathers are more likely to have higher self-esteem, better academic performance, and stronger emotional intelligence. But beyond the statistics, the true impact of a father is felt in the heart. It’s the quiet reassurance that no matter how big the world gets, there is always someone in your corner.
+
+## To All the Dads
+
+To the new dads navigating sleepless nights, the seasoned dads watching their children step into adulthood, the grandfathers passing down generations of wisdom, and the father figures who have stepped up to fill a void—thank you.
+
+Thank you for the sacrifices you make, the love you give, and the strength you provide. Your role is not just significant; it is irreplaceable.
+
+Happy Father's Day.
+    `,
+  },
+  {
     slug: 'nck-exam-preparation-guide-kenya',
     title: 'NCK Exam Preparation Guide: Pass First Attempt (2026)',
     excerpt: 'Everything Kenyan nursing graduates need — exam structure, DigiProctor tips, and a proven 8-week study strategy for KRCHN, BScN and Higher Diploma.',

@@ -18,6 +18,15 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: 'fathers-day-appreciation-dads-role',
+    title: 'The Unsung Heroes: Celebrating the Significance of Dads this Father\\'s Day',
+    excerpt: 'A heartfelt reflection on the evolving role of fathers, their impact on our resilience, and why their presence is irreplaceable in our lives.',
+    category: 'Community',
+    readTime: '3 min read',
+    date: '2026-06-21',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
     slug: 'nck-exam-study-internship-guide',
     title: 'How to Study for NCK Exam While Working as an Intern (2026)',
     excerpt: 'Demanding nursing internship in Kenya? Learn a practical study routine, high-yield topics, and how to prepare for the NCK exam and pass first attempt.',
@@ -116,9 +125,11 @@ const CATEGORY_STYLES: Record<string, { badge: string }> = {
   'Study Strategy': { badge: 'bg-accent-light text-accent-dark border border-accent/30' },
   'Exam Day':       { badge: 'bg-[#FFF0F0] text-error border border-error/20 dark:bg-error/10 dark:text-error' },
   'NCK News':       { badge: 'bg-primary-xlight text-primary border border-primary/30' },
+  'Community':      { badge: 'bg-accent-light text-accent-dark border border-accent/20' },
 };
 
 const POST_IMAGES: Record<string, string> = {
+  'fathers-day-appreciation-dads-role': 'https://images.unsplash.com/photo-1596484552834-6a58f850e0a1?w=800&q=80&auto=format&fit=crop',
   'nck-exam-study-internship-guide':   'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80&auto=format&fit=crop',
   'nck-august-2026-exam-prep-plan':    'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80&auto=format&fit=crop',
   'nck-latest-news-june-2026':         'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80&auto=format&fit=crop',
