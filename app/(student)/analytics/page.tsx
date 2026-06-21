@@ -12,9 +12,14 @@ import { StatCard } from '@/components/shared/StatCard';
 import { getLimits, effectiveTier } from '@/lib/planLimits';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
-import {
-  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
-} from 'recharts';
+import dynamic from 'next/dynamic';
+
+const BarChart = dynamic(() => import('recharts').then(m => m.BarChart), { ssr: false });
+const Bar = dynamic(() => import('recharts').then(m => m.Bar), { ssr: false });
+const XAxis = dynamic(() => import('recharts').then(m => m.XAxis), { ssr: false });
+const YAxis = dynamic(() => import('recharts').then(m => m.YAxis), { ssr: false });
+const Tooltip = dynamic(() => import('recharts').then(m => m.Tooltip), { ssr: false });
+const ResponsiveContainer = dynamic(() => import('recharts').then(m => m.ResponsiveContainer), { ssr: false });
 
 // ─── Download button for a single past mock exam result ───────────────────────
 
@@ -122,7 +127,7 @@ export default function AnalyticsPage() {
         supabase.from('student_profiles').select('plan_tier, plan_expires_at').eq('id', user.id).maybeSingle(),
         // Limit to last 2000 answers to avoid timeout on large accounts
         supabase.from('student_answers')
-          .select('is_correct, time_taken_seconds, answered_at, question_id')
+          .select('is_correct, time_taken_seconds, answered_at, question_id, questions(unit)')
           .eq('student_id', user.id)
           .order('answered_at', { ascending: false })
           .limit(2000),
@@ -135,7 +140,7 @@ export default function AnalyticsPage() {
         setPlanTier(effectiveTier(profileData.plan_tier, profileData.plan_expires_at));
       }
 
-      const answers = (answersRes.data ?? []) as Array<{ is_correct: boolean; time_taken_seconds: number | null; answered_at: string; question_id: string }>;
+      const answers = (answersRes.data ?? []) as Array<{ is_correct: boolean; time_taken_seconds: number | null; answered_at: string; question_id: string; questions?: { unit: string } }>;
       const mocks = (mockRes.data ?? []) as MockResult[];
       const flashCount = flashRes.data?.length ?? 0;
 
@@ -163,43 +168,19 @@ export default function AnalyticsPage() {
         });
       }
 
-      // Unit stats — join with questions using a Map (O(n) not O(n²))
-      const questionIds = Array.from(new Set(answers.map(a => a.question_id)));
+      // Unit stats — computed efficiently in memory since questions are already joined
       let unitStats: UnitStat[] = [];
-      if (questionIds.length > 0) {
-        // Fetch ALL question→unit mappings in ONE parallel batch instead of
-        // sequential awaits — avoids the slow serial loop that froze the page
-        const batchSize = 500;
-        const batches = [];
-        for (let i = 0; i < questionIds.length; i += batchSize) {
-          batches.push(
-            supabase
-              .from('questions')
-              .select('id, unit')
-              .in('id', questionIds.slice(i, i + batchSize))
-          );
-        }
-        const batchResults = await Promise.all(batches);
-        const allQData: Array<{ id: string; unit: string }> = [];
-        for (const res of batchResults) {
-          if (res.data) allQData.push(...(res.data as Array<{ id: string; unit: string }>));
-        }
-
-        if (allQData.length > 0) {
-          const qMap = new Map(allQData.map(q => [q.id, q.unit]));
-          const unitMap = new Map<string, { total: number; correct: number }>();
-          for (const ans of answers) {
-            const unit = qMap.get(ans.question_id);
-            if (!unit) continue;
-            const existing = unitMap.get(unit) ?? { total: 0, correct: 0 };
-            unitMap.set(unit, { total: existing.total + 1, correct: existing.correct + (ans.is_correct ? 1 : 0) });
-          }
-          unitStats = Array.from(unitMap.entries()).map(([unit, s]) => ({
-            unit, total: s.total, correct: s.correct,
-            accuracy: Math.round((s.correct / s.total) * 100),
-          })).sort((a, b) => b.total - a.total);
-        }
+      const unitMap = new Map<string, { total: number; correct: number }>();
+      for (const ans of answers) {
+        const unit = ans.questions?.unit;
+        if (!unit) continue;
+        const existing = unitMap.get(unit) ?? { total: 0, correct: 0 };
+        unitMap.set(unit, { total: existing.total + 1, correct: existing.correct + (ans.is_correct ? 1 : 0) });
       }
+      unitStats = Array.from(unitMap.entries()).map(([unit, s]) => ({
+        unit, total: s.total, correct: s.correct,
+        accuracy: Math.round((s.correct / s.total) * 100),
+      })).sort((a, b) => b.total - a.total);
 
       // Readiness score: weighted average of unit accuracies + mock exam average
       const unitAvg = unitStats.length > 0 ? unitStats.reduce((s, u) => s + u.accuracy, 0) / unitStats.length : 0;
