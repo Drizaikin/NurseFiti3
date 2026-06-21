@@ -154,7 +154,7 @@ export default function AnalyticsPage() {
         const mo = String(d.getMonth() + 1).padStart(2, '0');
         const dy = String(d.getDate()).padStart(2, '0');
         const dayStr = `${yr}-${mo}-${dy}`;
-        const dayAnswers = answers.filter(a => a.answered_at.startsWith(dayStr));
+        const dayAnswers = answers.filter(a => a.answered_at?.startsWith(dayStr));
         const dayCorrect = dayAnswers.filter(a => a.is_correct).length;
         weeklyStats.push({
           day: d.toLocaleDateString('en-KE', { weekday: 'short' }),
