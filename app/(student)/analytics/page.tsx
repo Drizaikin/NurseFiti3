@@ -271,7 +271,7 @@ export default function AnalyticsPage() {
                     <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: 'var(--color-text-secondary)' }} axisLine={false} tickLine={false} />
                     <Tooltip
                       contentStyle={{ background: 'var(--color-card)', border: '1px solid var(--color-border)', borderRadius: '8px', fontSize: '12px' }}
-                      formatter={(value, _name, props) => {
+                      formatter={(value: number, _name: string, props: any) => {
                         const payload = props.payload as DayStat;
                         return [`${value}% (${payload.count} Qs)`, 'Score'] as [string, string];
                       }}

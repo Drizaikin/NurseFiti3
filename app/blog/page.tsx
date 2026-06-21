@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 const POSTS = [
   {
     slug: 'fathers-day-appreciation-dads-role',
-    title: 'The Unsung Heroes: Celebrating the Significance of Dads this Father\\'s Day',
+    title: "The Unsung Heroes: Celebrating the Significance of Dads this Father's Day",
     excerpt: 'A heartfelt reflection on the evolving role of fathers, their impact on our resilience, and why their presence is irreplaceable in our lives.',
     category: 'Community',
     readTime: '3 min read',

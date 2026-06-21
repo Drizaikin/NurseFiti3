@@ -194,7 +194,7 @@ export default function TutorEarningsPage() {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data.weeklyChart} margin={{ top: 5, right: 5, bottom: 5, left: -10 }}>
                 <XAxis dataKey="week" tick={{ fontSize: 11, fill: 'var(--color-text-secondary)' }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-secondary)' }} axisLine={false} tickLine={false} tickFormatter={v => `${(v / 1000).toFixed(0)}k`} />
+                <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-secondary)' }} axisLine={false} tickLine={false} tickFormatter={(v: number) => `${(v / 1000).toFixed(0)}k`} />
                 <Tooltip
                   contentStyle={{ background: 'var(--color-card)', border: '1px solid var(--color-border)', borderRadius: '8px', fontSize: '12px' }}
                   formatter={(v: number) => [`KSh ${v.toLocaleString()}`, 'Net Earnings']}
