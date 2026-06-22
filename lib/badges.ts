@@ -31,6 +31,7 @@ export const BADGE_DEFS: BadgeDef[] = [
 
   // Community Badges
   { id: 'social_butterfly', icon: '🦋', name: 'Social Butterfly', description: 'Post 5 Community Messages', condition: '5 Posts' },
+  { id: 'team_captain', icon: '👑', name: 'Team Captain', description: 'Create and lead a study group', condition: 'Create a group' },
 ];
 
 /**
@@ -133,6 +134,16 @@ export async function evaluateUserBadges(supabase: any, userId: string): Promise
       
       if (!commError && count !== null) {
         checkAndAward('social_butterfly', count >= 5);
+      }
+    }
+
+    if (!initialEarned.has('team_captain')) {
+      const { count, error: groupError } = await (supabase.from('study_groups') as any)
+        .select('*', { count: 'exact', head: true })
+        .eq('creator_id', userId);
+      
+      if (!groupError && count !== null) {
+        checkAndAward('team_captain', count >= 1);
       }
     }
 
