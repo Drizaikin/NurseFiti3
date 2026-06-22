@@ -287,7 +287,7 @@ function TutorDashboardInner() {
       const payments = (paymentsRes.data ?? []) as Array<{ amount: number; completed_at: string }>;
       const earningsThisMonth = payments
         .filter(p => new Date(p.completed_at) >= startOfMonth)
-        .reduce((sum, p) => sum + Math.round(p.amount * 0.70), 0);
+        .reduce((sum, p) => sum + Math.round(p.amount * 0.77), 0);
 
       setData({
         tutor: {
@@ -547,11 +547,11 @@ function TutorDashboardInner() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-[var(--color-text-secondary)]">Platform Fee</span>
-                <span className="font-semibold text-[var(--color-text)]">30%</span>
+                <span className="font-semibold text-[var(--color-text)]">23%</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-[var(--color-text-secondary)]">Your Net Rate</span>
-                <span className="font-bold text-success">KSh {Math.round((tutor.rate_per_hour ?? 0) * 0.70).toLocaleString()}</span>
+                <span className="font-bold text-success">KSh {Math.round((tutor.rate_per_hour ?? 0) * 0.77).toLocaleString()}</span>
               </div>
               <div className="pt-2 border-t border-[var(--color-border)]">
                 <div className="flex items-center justify-between">

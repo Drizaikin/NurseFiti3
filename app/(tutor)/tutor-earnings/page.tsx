@@ -55,17 +55,19 @@ export default function TutorEarningsPage() {
   }, []);
 
   const loadEarnings = async (uid: string) => {
-    const [sessionsRes, tutorRes] = await Promise.all([
+    const [sessionsRes, tutorRes, payoutRes] = await Promise.all([
       supabase.from('sessions')
-        .select('id, session_date, duration_minutes, gross_amount, platform_fee, net_amount, status, payment_status, topic, student_id')
+        .select('id, session_date, duration_minutes, gross_amount, platform_fee, net_amount, status, payment_status, topic, student_id, completed_at')
         .eq('tutor_id', uid)
         .in('status', ['confirmed', 'completed'])
         .order('session_date', { ascending: false }),
       supabase.from('tutor_profiles').select('mpesa_number, rate_per_hour').eq('id', uid).maybeSingle(),
+      supabase.from('tutor_payouts').select('initiated_at').eq('tutor_id', uid).in('status', ['success', 'processing']).order('initiated_at', { ascending: false }).limit(1).maybeSingle(),
     ]);
 
     const sessions = (sessionsRes.data ?? []) as any[];
     const tutor = tutorRes.data as any;
+    const lastPayoutDate = (payoutRes.data as any)?.initiated_at ?? '1970-01-01T00:00:00Z';
 
     // Get student names
     const studentIds = Array.from(new Set(sessions.map(s => s.student_id)));
@@ -83,7 +85,9 @@ export default function TutorEarningsPage() {
     const thisMonthGross = thisMonthSessions.reduce((sum, s) => sum + (s.gross_amount ?? 0), 0);
     const thisMonthNet = thisMonthSessions.reduce((sum, s) => sum + (s.net_amount ?? 0), 0);
     const totalYTD = sessions.filter(s => new Date(s.session_date) >= startOfYear).reduce((sum, s) => sum + (s.net_amount ?? 0), 0);
-    const pendingPayout = sessions.filter(s => s.payment_status === 'paid' && s.status === 'completed').reduce((sum, s) => sum + (s.net_amount ?? 0), 0);
+    const pendingPayout = sessions
+      .filter(s => s.payment_status === 'paid' && s.status === 'completed' && s.completed_at && s.completed_at > lastPayoutDate)
+      .reduce((sum, s) => sum + (s.net_amount ?? 0), 0);
 
     // Weekly chart (last 8 weeks)
     const weeklyChart = [];
