@@ -24,6 +24,7 @@ import {
   sendSessionBookingEmails,
   sendSubscriptionConfirmationEmail,
 } from '@/lib/email';
+import { createGoogleMeetRoom } from '@/lib/google-meet';
 
 export const dynamic = 'force-dynamic';
 
@@ -186,7 +187,7 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
 
       const { data: session } = await supabase
         .from('sessions')
-        .select('student_id, tutor_id, session_date, start_time, end_time, topic, cadre, join_link')
+        .select('id, student_id, tutor_id, session_date, start_time, end_time, topic, cadre, join_link')
         .eq('id', payment.reference_id)
         .single();
 
@@ -217,6 +218,32 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
           supabase.from('profiles').select('full_name, email').eq('id', session.tutor_id).single(),
         ]);
 
+        let finalJoinLink = session.join_link;
+
+        // Auto-generate Google Meet link if missing
+        if (!finalJoinLink) {
+          try {
+            const startIso = new Date(`${session.session_date}T${session.start_time}+03:00`).toISOString();
+            const endIso = new Date(`${session.session_date}T${session.end_time}+03:00`).toISOString();
+            const emails = [studentProfile?.email, tutorProfile?.email].filter(Boolean) as string[];
+
+            finalJoinLink = await createGoogleMeetRoom(
+              `NurseFiti Tutoring: ${session.topic || 'Session'}`,
+              `NurseFiti 1-on-1 Session`,
+              startIso,
+              endIso,
+              emails
+            );
+
+            await supabase
+              .from('sessions')
+              .update({ join_link: finalJoinLink })
+              .eq('id', session.id);
+          } catch (meetErr) {
+            console.error('[intasend/verify] Auto meet generation failed:', meetErr);
+          }
+        }
+
         await sendSessionBookingEmails({
           studentEmail: studentProfile?.email,
           tutorEmail: tutorProfile?.email,
@@ -226,7 +253,7 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
           sessionDate: formatEmailDateTime(session.session_date),
           sessionTime: formatSessionTime(session.start_time, session.end_time),
           duration: formatSessionDuration(session.start_time, session.end_time),
-          meetingLink: session.join_link ?? 'The tutor will add the meeting link before the session.',
+          meetingLink: finalJoinLink ?? 'The tutor will add the meeting link before the session.',
           bookingId: payment.reference_id,
         });
       }
