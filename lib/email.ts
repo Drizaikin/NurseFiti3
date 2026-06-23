@@ -337,3 +337,62 @@ NurseFiti Tutor Management Team`;
     sendEmail(params.tutorEmail, 'New NurseFiti tutoring session booked', tutorText),
   ]);
 }
+
+export async function sendSessionReminderEmail(params: SessionEmailParams, timeUntil: string): Promise<MailResult[]> {
+  const studentText = `Dear ${params.studentName},
+
+This is a reminder that your tutor session is starting in ${timeUntil}.
+
+Session Details
+
+Tutor: ${params.tutorName}
+
+Subject: ${params.subject}
+
+Date: ${params.sessionDate}
+
+Time: ${params.sessionTime}
+
+Duration: ${params.duration}
+
+Meeting Link: ${params.meetingLink}
+
+Please ensure you are in a quiet environment with a stable internet connection.
+
+Join the session a few minutes early using the meeting link above.
+
+We wish you a productive session!
+
+Warm Regards,
+
+The NurseFiti Team`;
+
+  const tutorText = `Hello ${params.tutorName},
+
+This is a reminder that your tutoring session with ${params.studentName} is starting in ${timeUntil}.
+
+Session Details
+
+Subject: ${params.subject}
+
+Date: ${params.sessionDate}
+
+Time: ${params.sessionTime}
+
+Duration: ${params.duration}
+
+Meeting Link: ${params.meetingLink}
+
+Please ensure you join the meeting link promptly. 
+
+Thank you for your dedication to our students.
+
+Best Regards,
+
+NurseFiti Tutor Management Team`;
+
+  return Promise.all([
+    sendEmail(params.studentEmail, `Reminder: Your NurseFiti session is starting in ${timeUntil}`, studentText),
+    sendEmail(params.tutorEmail, `Reminder: Tutoring session starting in ${timeUntil}`, tutorText),
+  ]);
+}

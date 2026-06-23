@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
+import { createGoogleMeetRoom } from '@/lib/google-meet';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -19,15 +20,7 @@ function createSupabaseServerClient() {
   );
 }
 
-/**
- * Generate a Google Meet-compatible room code.
- * Format: xxx-xxxx-xxx (lowercase alpha, matching Meet's actual format)
- */
-function generateMeetCode(): string {
-  const chars = 'abcdefghijkmnopqrstuvwxyz'; // no l to avoid confusion
-  const rand = (n: number) => Array.from({ length: n }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
-  return `${rand(3)}-${rand(4)}-${rand(3)}`;
-}
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 // ── POST /api/sessions/meet-link ──────────────────────────────────────────────
 // Body: { sessionId: string; meetLink?: string }
@@ -62,7 +55,7 @@ export async function POST(req: NextRequest) {
     // ── Fetch session and verify ownership ────────────────────────────────
     const { data: session, error: fetchError } = await supabase
       .from('sessions')
-      .select('id, tutor_id, student_id, status, platform, session_date, start_time, join_link')
+      .select('id, tutor_id, student_id, status, platform, session_date, start_time, end_time, join_link, topic, student:student_id(email), tutor:tutor_id(email)')
       .eq('id', sessionId)
       .single();
 
@@ -91,8 +84,31 @@ export async function POST(req: NextRequest) {
       }
       finalLink = meetLink.trim();
     } else {
-      // Auto-generate a Meet-format link
-      finalLink = `https://meet.google.com/${generateMeetCode()}`;
+      // Auto-generate a real Google Meet link via API
+      try {
+        const sDate = (session as any).session_date;
+        const sTime = (session as any).start_time;
+        const eTime = (session as any).end_time;
+        
+        // Convert to ISO 8601 string for Google API (Assuming EAT timezone +03:00)
+        const startIso = new Date(`${sDate}T${sTime}+03:00`).toISOString();
+        const endIso = new Date(`${sDate}T${eTime}+03:00`).toISOString();
+        
+        const studentEmail = (session as any).student?.email;
+        const tutorEmail = (session as any).tutor?.email;
+        const emails = [studentEmail, tutorEmail].filter(Boolean);
+
+        finalLink = await createGoogleMeetRoom(
+          `NurseFiti Tutoring: ${(session as any).topic || 'Session'}`,
+          `NurseFiti 1-on-1 Session`,
+          startIso,
+          endIso,
+          emails
+        );
+      } catch (err) {
+        console.error('Failed to create real google meet link:', err);
+        return NextResponse.json({ error: 'Failed to auto-generate Google Meet link via API. Please ensure your Google API credentials are set or paste a link manually.' }, { status: 500 });
+      }
     }
 
     // ── Save to session ───────────────────────────────────────────────────
