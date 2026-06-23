@@ -148,10 +148,11 @@ export const PLAN_PRICING_META: Record<PlanTier, {
  * Derives the plan tier and duration from a payment amount in KSh.
  * Single source of truth — import this instead of duplicating the thresholds.
  */
-export function getPlanFromAmount(amountKsh: number): { tier: PlanTier; durationDays: number } {
-  if (amountKsh >= 3500) return { tier: 'premium',  durationDays: 90 };
-  if (amountKsh >= 999)  return { tier: 'standard', durationDays: 30 };
-  if (amountKsh >= 299)  return { tier: 'weekly',   durationDays: 7  };
-  if (amountKsh >= 69)   return { tier: 'daily',    durationDays: 1  };
+export function getPlanFromAmount(amountKsh: number | string | null | undefined): { tier: PlanTier; durationDays: number } {
+  const amt = Number(amountKsh) || 0;
+  if (amt >= 3500) return { tier: 'premium',  durationDays: 90 };
+  if (amt >= 999)  return { tier: 'standard', durationDays: 30 };
+  if (amt >= 299)  return { tier: 'weekly',   durationDays: 7  };
+  if (amt >= 69)   return { tier: 'daily',    durationDays: 1  };
   return { tier: 'free', durationDays: 0 };
 }

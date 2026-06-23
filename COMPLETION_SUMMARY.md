@@ -230,6 +230,7 @@ Accessible at `/admin` — admin role only (set via SQL on `profiles.role`).
 
 ### Dashboard & Earnings
 - Session history, upcoming sessions
+- Live Session Tracking: "Start Tracking" and "End Session" buttons record actual durations and formally complete sessions
 - Earnings breakdown, total earned, pending payouts
 - Payout request via IntaSend Transfer API
 
@@ -245,8 +246,10 @@ Accessible at `/admin` — admin role only (set via SQL on `profiles.role`).
 - Public tutor directory at `/tutors` — filter by cadre, availability, rate
 - Individual tutor profile at `/tutors/[id]` — 14-day availability calendar
 - Booking modal: pick slot, set topic, platform, note to tutor
+- Group Sessions: Tutors can enable group sessions allowing multiple students per slot
 - Instant booking (auto-confirmed) or approval-required (tutor confirms)
-- Realtime conflict prevention — booked slots hidden as students browse
+- Realtime conflict prevention — booked slots hidden (or show booking count for group sessions)
+- Disables past times on the current day automatically
 - Payment flow: IntaSend checkout on booking confirmation
 - Platform fee: 30% of session gross amount
 - Session cancellation supported
@@ -410,6 +413,8 @@ Accessible at `/admin` — admin role only (set via SQL on `profiles.role`).
 | `20260603000001_comprehensive_rls_and_schema_fixes.sql` | Full RLS audit |
 | `20260604000001_question_rotation.sql` | unit + paper cols on student_answers |
 | `20260604000002_avatars_chat_onboarding.sql` | community_messages table + onboarding flags |
+| `20260623141500_session_tracking_group.sql` | Session live tracking, triggers, group bookings |
+| `20260623142500_session_reminders.sql` | Email reminder state flags |
 
 ---
 

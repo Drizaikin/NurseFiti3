@@ -22,7 +22,15 @@ export default function ResetPasswordPage() {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    // Verify the user arrived here via a valid recovery session
+    // 1. If PKCE code is present, exchange it via server callback first
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    if (code) {
+      window.location.href = `/auth/callback?code=${code}&type=recovery`;
+      return;
+    }
+
+    // 2. Verify the user arrived here via a valid recovery session (or hash fragment)
     const check = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {

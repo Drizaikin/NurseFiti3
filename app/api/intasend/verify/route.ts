@@ -187,7 +187,7 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
 
       const { data: session } = await supabase
         .from('sessions')
-        .select('id, student_id, tutor_id, session_date, start_time, end_time, topic, cadre, join_link')
+        .select('id, student_id, tutor_id, session_date, start_time, end_time, topic, cadre, platform, join_link')
         .eq('id', payment.reference_id)
         .single();
 
@@ -220,8 +220,8 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
 
         let finalJoinLink = session.join_link;
 
-        // Auto-generate Google Meet link if missing
-        if (!finalJoinLink) {
+        // Auto-generate Google Meet link if missing and platform is Google Meet
+        if (!finalJoinLink && session.platform === 'Google Meet') {
           try {
             const startIso = new Date(`${session.session_date}T${session.start_time}+03:00`).toISOString();
             const endIso = new Date(`${session.session_date}T${session.end_time}+03:00`).toISOString();

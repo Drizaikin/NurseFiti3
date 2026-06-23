@@ -46,6 +46,7 @@ interface TutorDashboardData {
     status: string;
     cadre: string;
     join_link: string | null;
+    actual_start_time: string | null;
   }>;
   pendingBookings: Array<{
     id: string;
@@ -234,7 +235,7 @@ function TutorDashboardInner() {
       const [profileRes, tutorRes, sessionsRes, paymentsRes, questionsRes, notesRes] = await Promise.all([
         supabase.from('profiles').select('full_name, avatar_url').eq('id', user.id).maybeSingle(),
         supabase.from('tutor_profiles').select('*').eq('id', user.id).maybeSingle(),
-        supabase.from('sessions').select('id, session_date, start_time, end_time, topic, platform, status, cadre, student_id, join_link').eq('tutor_id', user.id).order('session_date', { ascending: false }).limit(20),
+        supabase.from('sessions').select('id, session_date, start_time, end_time, topic, platform, status, cadre, student_id, join_link, actual_start_time').eq('tutor_id', user.id).order('session_date', { ascending: false }).limit(20),
         supabase.from('payments').select('amount, completed_at').eq('user_id', user.id).eq('status', 'completed').eq('type', 'session_booking'),
         supabase.from('questions').select('id').eq('contributor_id', user.id).eq('status', 'approved'),
         supabase.from('study_notes').select('id').eq('contributor_id', user.id).eq('status', 'approved'),
@@ -261,7 +262,7 @@ function TutorDashboardInner() {
         id: s.id, student_name: studentNames[s.student_id] ?? 'Student',
         start_time: s.start_time, end_time: s.end_time, topic: s.topic,
         platform: s.platform, status: s.status, cadre: s.cadre,
-        join_link: s.join_link ?? null,
+        join_link: s.join_link ?? null, actual_start_time: s.actual_start_time ?? null,
       }));
 
       const pendingBookings = allSessions
@@ -341,15 +342,50 @@ function TutorDashboardInner() {
   }, [searchParams]);
 
   const approveBooking = async (sessionId: string) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (supabase as any).from('sessions').update({ status: 'confirmed' }).eq('id', sessionId);
-    fetchData();
+    try {
+      const { data: { session: authSession } } = await supabase.auth.getSession();
+      const token = authSession?.access_token;
+      if (!token) throw new Error('Not authenticated');
+
+      const res = await fetch('/api/sessions/approve', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ sessionId }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Failed to approve booking');
+
+      toast.success('Session approved! The student has been notified.');
+      fetchData();
+    } catch (err: any) {
+      toast.error(err?.message ?? 'Failed to approve booking');
+    }
   };
 
   const declineBooking = async (sessionId: string) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await (supabase as any).from('sessions').update({ status: 'cancelled' }).eq('id', sessionId);
     fetchData();
+  };
+
+  const handleLiveAction = async (sessionId: string, action: 'start' | 'end') => {
+    try {
+      const res = await fetch('/api/sessions/live', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId, action })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to update session');
+      import('react-hot-toast').then(mod => mod.default.success(action === 'start' ? 'Session tracking started!' : 'Session ended and marked as completed.'));
+      fetchData();
+    } catch (err: any) {
+      import('react-hot-toast').then(mod => mod.default.error(err.message));
+    }
   };
 
   if (isLoading) {
@@ -449,16 +485,33 @@ function TutorDashboardInner() {
                       <p className="text-xs text-[var(--color-text-secondary)]">{s.topic ?? 'General Session'} · {s.platform}</p>
                       {/* Meet link action */}
                       {s.platform === 'Google Meet' && (
-                        <div className="mt-1.5 flex gap-2">
+                        <div className="mt-1.5 flex gap-2 flex-wrap">
                           {s.join_link ? (
-                            <a
-                              href={s.join_link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-success text-white text-xs font-bold hover:bg-success/80 transition-colors"
-                            >
-                              🎥 Join Google Meet
-                            </a>
+                            <>
+                              <a
+                                href={s.join_link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-success text-white text-xs font-bold hover:bg-success/80 transition-colors"
+                              >
+                                🎥 Join Google Meet
+                              </a>
+                              {!s.actual_start_time ? (
+                                <button
+                                  onClick={() => handleLiveAction(s.id, 'start')}
+                                  className="px-3 py-1 rounded-lg bg-primary text-white text-xs font-bold hover:bg-primary/80 transition-colors"
+                                >
+                                  ▶ Start Tracking
+                                </button>
+                              ) : (
+                                <button
+                                  onClick={() => handleLiveAction(s.id, 'end')}
+                                  className="px-3 py-1 rounded-lg bg-error text-white text-xs font-bold hover:bg-error/80 transition-colors"
+                                >
+                                  ⏹ End Session
+                                </button>
+                              )}
+                            </>
                           ) : (
                             <Link href="/tutor-schedule">
                               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-accent text-dark text-xs font-bold hover:bg-accent-dark transition-colors cursor-pointer">

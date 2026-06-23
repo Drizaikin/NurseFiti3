@@ -566,19 +566,40 @@ export default function FlashcardsPage() {
     if (!deckData) return;
     setDecks(deckData as Deck[]);
 
+    // Batch fetch all cards (only id and deck_id to minimize payload)
+    const { data: allCards } = await (supabase as any).from('flashcards').select('id, deck_id');
+    const cards = (allCards ?? []) as Array<{ id: string, deck_id: string }>;
+
+    // Batch fetch all progress for this student
+    const { data: allProgress } = await (supabase as any).from('flashcard_progress')
+      .select('card_id, next_review_at')
+      .eq('student_id', uid);
+    const progressList = (allProgress ?? []) as Array<{ card_id: string, next_review_at: string }>;
+
+    // Map card_id to next_review_at
+    const progressMap = new Map<string, string>();
+    for (const p of progressList) {
+      progressMap.set(p.card_id, p.next_review_at);
+    }
+
     const now = new Date().toISOString();
     const counts: Record<string, number> = {};
+
     for (const deck of (deckData as Deck[])) {
-      const { data: cardList } = await (supabase as any).from('flashcards').select('id').eq('deck_id', deck.id);
-      const deckCards = (cardList ?? []) as Array<{ id: string }>;
-      if (deckCards.length === 0) { counts[deck.id] = 0; continue; }
-      const cardIds = deckCards.map(c => c.id);
-      const { data: progress } = await (supabase as any).from('flashcard_progress')
-        .select('card_id').eq('student_id', uid).lte('next_review_at', now).in('card_id', cardIds);
-      const progressList = (progress ?? []) as Array<{ card_id: string }>;
-      const reviewedIds = new Set(progressList.map(p => p.card_id));
-      const neverReviewed = cardIds.filter(id => !reviewedIds.has(id));
-      counts[deck.id] = progressList.length + neverReviewed.length;
+      const deckCards = cards.filter(c => c.deck_id === deck.id);
+      if (deckCards.length === 0) { 
+        counts[deck.id] = 0; 
+        continue; 
+      }
+      
+      let due = 0;
+      for (const card of deckCards) {
+        const nextReview = progressMap.get(card.id);
+        if (!nextReview || nextReview <= now) {
+          due++;
+        }
+      }
+      counts[deck.id] = due;
     }
     setDueCount(counts);
   };

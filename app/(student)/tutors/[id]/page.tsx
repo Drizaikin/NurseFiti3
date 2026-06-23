@@ -252,9 +252,30 @@ export default function TutorProfilePage() {
     return () => { supabase.removeChannel(channel); };
   }, [tutorId, supabase]);
 
-  const isSlotBooked = (date: Date, startTime: string) => {
+  const getBookingCount = (date: Date, startTime: string) => {
     const dateStr = toLocalDateStr(date);
-    return bookedSlots.some(s => s.session_date === dateStr && s.start_time === startTime);
+    return bookedSlots.filter(s => s.session_date === dateStr && s.start_time === startTime).length;
+  };
+
+  const isSlotBooked = (date: Date, startTime: string) => {
+    const count = getBookingCount(date, startTime);
+    if (!tutor) return count > 0;
+    if (tutor.allow_group_sessions) return count >= 50; // max limit
+    return count > 0;
+  };
+
+  const isSlotPassed = (date: Date, startTime: string) => {
+    const now = new Date();
+    // If it's a future date, not passed
+    if (date.toDateString() !== now.toDateString() && date > now) return false;
+    // If it's today, check if start_time is in the past
+    if (date.toDateString() === now.toDateString()) {
+      const [h, m] = startTime.split(':').map(Number);
+      const slotTime = new Date(now);
+      slotTime.setHours(h, m, 0, 0);
+      return slotTime <= now;
+    }
+    return true; // past date
   };
 
   // Returns ALL slots for a date — available AND booked — so students can see the full picture.
@@ -560,24 +581,45 @@ export default function TutorProfilePage() {
                         {date.toLocaleDateString('en-KE', { month: 'short', day: 'numeric' })}
                       </p>
                       <div className="flex flex-wrap gap-2">
-                        {slots.map(slot => (
+                        {slots.map(slot => {
+                          const passed = isSlotPassed(slot.date, slot.start_time);
+                          const count = getBookingCount(slot.date, slot.start_time);
+                          const isGroupBookable = tutor.allow_group_sessions && count > 0 && !slot.isBooked;
+                          
+                          let btnClass = 'bg-neutral-border/20 border-neutral-border text-neutral-mid cursor-not-allowed opacity-60';
+                          let title = 'Not accepting bookings';
+                          
+                          if (passed) {
+                            btnClass = 'bg-neutral-border/10 border-neutral-border text-neutral-mid cursor-not-allowed opacity-40 line-through';
+                            title = 'Slot time has passed';
+                          } else if (slot.isBooked) {
+                            btnClass = 'bg-error/8 border-error/25 text-error/60 cursor-not-allowed line-through';
+                            title = 'Slot is full';
+                          } else if (tutor.is_accepting_bookings) {
+                            btnClass = isGroupBookable 
+                              ? 'bg-accent/10 border-accent/30 text-accent hover:bg-accent/20 cursor-pointer'
+                              : 'bg-success/10 border-success/30 text-success hover:bg-success/20 cursor-pointer';
+                            title = 'Click to book';
+                          }
+
+                          return (
                           <button
                             key={slot.start_time}
-                            onClick={() => !slot.isBooked && tutor.is_accepting_bookings && handleSelectSlot(slot)}
-                            disabled={slot.isBooked || !tutor.is_accepting_bookings}
-                            title={slot.isBooked ? 'Already booked' : tutor.is_accepting_bookings ? 'Click to book' : 'Not accepting bookings'}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-                              slot.isBooked
-                                ? 'bg-error/8 border-error/25 text-error/60 cursor-not-allowed line-through'
-                                : tutor.is_accepting_bookings
-                                ? 'bg-success/10 border-success/30 text-success hover:bg-success/20 cursor-pointer'
-                                : 'bg-neutral-border/20 border-neutral-border text-neutral-mid cursor-not-allowed opacity-60'
-                            }`}
+                            onClick={() => !slot.isBooked && !passed && tutor.is_accepting_bookings && handleSelectSlot(slot)}
+                            disabled={slot.isBooked || passed || !tutor.is_accepting_bookings}
+                            title={title}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${btnClass}`}
                           >
                             {formatTime(slot.start_time)} – {formatTime(slot.end_time)}
-                            {slot.isBooked && <span className="ml-1 text-[10px] not-italic no-underline font-normal opacity-80">Booked</span>}
+                            {slot.isBooked && !passed && <span className="ml-1 text-[10px] not-italic no-underline font-normal opacity-80">Full</span>}
+                            {passed && <span className="ml-1 text-[10px] not-italic no-underline font-normal opacity-80">Passed</span>}
+                            {!slot.isBooked && !passed && count > 0 && tutor.allow_group_sessions && (
+                              <span className="ml-1 text-[10px] not-italic no-underline font-bold opacity-100 px-1.5 py-0.5 rounded bg-accent/20 text-accent">
+                                {count} booked
+                              </span>
+                            )}
                           </button>
-                        ))}
+                        )})}
                       </div>
                     </div>
                   );

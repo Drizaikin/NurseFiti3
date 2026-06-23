@@ -20,7 +20,7 @@
 | **Phase 9** | **Pricing Tiers** | 🟢 Complete | 100% | Daily (KSh 69), Weekly (KSh 349), Standard (KSh 1,200), Premium (KSh 3,500) |
 | **Phase 10** | **Admin Dashboard** | 🟢 Complete | 100% | Upload review, student plan management, role-gated middleware |
 | **Phase 11** | **Question Uploads** | 🟢 Complete | 100% | Free users upload 3+ files → admin reviews → auto-upgrade to Standard |
-| **Phase 12** | **Notifications** | 🔴 Not Started | 0% | DB ready. Missing: realtime bell, Twilio WhatsApp, Resend email, cron jobs |
+| **Phase 12** | **Notifications & Live Sessions** | 🟡 In Progress | 80% | Live session tracking, email reminders via cron (24h/1h/15m) |
 | **Phase 13** | **QA & Launch Prep** | 🔴 Not Started | 0% | Missing: Lighthouse audit, RLS adversarial tests, mobile Safari audit, load tests |
 
 ---
@@ -103,6 +103,8 @@
 | `20260524000002_seed_nck_paper2_questions.sql` | ✅ Applied | Paper 2 question seed |
 | `20260524000003_app_feedback.sql` | ✅ Applied | App feedback + helpful votes |
 | `20260524000004_daily_weekly_plans_and_uploads.sql` | 🆕 New — **APPLY NOW** | Extends `plan_tier` CHECK to include daily/weekly; adds `admin` role; creates `question_uploads` table with RLS; admin policies on student_profiles/profiles |
+| `20260623141500_session_tracking_group.sql` | 🆕 New — **APPLY NOW** | Session live tracking, strict completion metrics trigger, group bookings support |
+| `20260623142500_session_reminders.sql` | 🆕 New — **APPLY NOW** | Tracks 24h, 1h, 15m sent status |
 
 ---
 
@@ -128,10 +130,12 @@ RESEND_API_KEY=          # Get free at resend.com (3,000 emails/month free)
 
 ## 🚀 IMMEDIATE ACTIONS REQUIRED BEFORE LAUNCH
 
-### 1. Apply the new migration
+### 1. Apply the new migrations
 Run in Supabase SQL editor or via `supabase db push`:
 ```sql
 -- File: supabase/migrations/20260524000004_daily_weekly_plans_and_uploads.sql
+-- File: supabase/migrations/20260623141500_session_tracking_group.sql
+-- File: supabase/migrations/20260623142500_session_reminders.sql
 ```
 
 ### 2. Create the Supabase Storage bucket

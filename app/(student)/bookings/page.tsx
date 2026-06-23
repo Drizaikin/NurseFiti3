@@ -31,6 +31,7 @@ interface Session {
   reviewed: boolean;
   booked_at: string;
   completed_at: string | null;
+  actual_start_time: string | null;
 }
 
 const STATUS_STYLES: Record<string, { variant: 'teal' | 'amber' | 'green' | 'secondary' | 'error'; label: string }> = {
@@ -83,7 +84,7 @@ export default function BookingsPage() {
 
       const { data, error } = await supabase
         .from('sessions')
-        .select('id, tutor_id, session_date, start_time, end_time, topic, platform, join_link, cadre, gross_amount, status, payment_status, reviewed, booked_at, completed_at')
+        .select('id, tutor_id, session_date, start_time, end_time, topic, platform, join_link, cadre, gross_amount, status, payment_status, reviewed, booked_at, completed_at, actual_start_time')
         .eq('student_id', user.id)
         .order('session_date', { ascending: false });
 
@@ -115,6 +116,7 @@ export default function BookingsPage() {
         reviewed: s.reviewed ?? false,
         booked_at: s.booked_at,
         completed_at: s.completed_at,
+        actual_start_time: s.actual_start_time ?? null,
       })));
     } catch (err) {
       console.error('Bookings fetch error:', err);
@@ -205,6 +207,23 @@ export default function BookingsPage() {
       toast.error(err?.message ?? 'Failed to submit review.');
     } finally {
       setIsSubmittingReview(false);
+    }
+  };
+
+  const handleLiveAction = async (sessionId: string, action: 'start' | 'end') => {
+    try {
+      const res = await fetch('/api/sessions/live', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId, action })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to update session');
+      
+      toast.success(action === 'start' ? 'Session tracking started!' : 'Session ended and marked as completed.');
+      fetchSessions();
+    } catch (err: any) {
+      toast.error(err.message);
     }
   };
 
@@ -337,10 +356,29 @@ export default function BookingsPage() {
 
                       {/* Join session */}
                       {canJoin && (
-                        <a href={session.join_link!} target="_blank" rel="noopener noreferrer"
-                          className="px-3 py-1 rounded-lg bg-success text-white text-xs font-bold hover:bg-success/80 transition-colors">
-                          🎥 {session.platform === 'Google Meet' ? 'Join Google Meet' : 'Join Session'}
-                        </a>
+                        <div className="flex gap-2">
+                          <a href={session.join_link!} target="_blank" rel="noopener noreferrer"
+                            className="px-3 py-1 rounded-lg bg-success text-white text-xs font-bold hover:bg-success/80 transition-colors">
+                            🎥 {session.platform === 'Google Meet' ? 'Join Google Meet' : 'Join Session'}
+                          </a>
+                          
+                          {/* Live Tracking Controls */}
+                          {!session.actual_start_time ? (
+                            <button
+                              onClick={() => handleLiveAction(session.id, 'start')}
+                              className="px-3 py-1 rounded-lg bg-primary text-white text-xs font-bold hover:bg-primary/80 transition-colors"
+                            >
+                              ▶ Start Tracking
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleLiveAction(session.id, 'end')}
+                              className="px-3 py-1 rounded-lg bg-error text-white text-xs font-bold hover:bg-error/80 transition-colors"
+                            >
+                              ⏹ End Session
+                            </button>
+                          )}
+                        </div>
                       )}
                       {/* Google Meet pending link — session is today but no link yet */}
                       {isToday && session.status === 'confirmed' && session.platform === 'Google Meet' && !session.join_link && (
