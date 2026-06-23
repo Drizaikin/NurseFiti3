@@ -76,8 +76,13 @@ export default function ResetPasswordPage() {
       // Sign out so they log in fresh with the new password
       await supabase.auth.signOut();
       setTimeout(() => router.push('/login'), 2500);
-    } catch (err: unknown) {
-      toast.error(err instanceof Error ? err.message : 'Failed to update password. Please try again.');
+    } catch (err: any) {
+      if (err?.status === 403 || err?.message?.toLowerCase().includes('forbidden') || err?.message?.toLowerCase().includes('not allowed')) {
+        toast.error('Session expired or invalid. Please request a new password reset link.');
+        setTimeout(() => router.push('/forgot-password'), 3000);
+      } else {
+        toast.error(err instanceof Error ? err.message : 'Failed to update password. Please try again.');
+      }
     } finally {
       setIsLoading(false);
     }

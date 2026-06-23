@@ -15,6 +15,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true, ignored: true });
     }
 
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.warn('Tracking bypassed: SUPABASE_SERVICE_ROLE_KEY is not set in environment.');
+      return NextResponse.json({ success: true, ignored: true });
+    }
+
     const adminClient = createAdminClient();
     
     // Insert view bypassing RLS for performance
