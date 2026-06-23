@@ -10,10 +10,14 @@ export async function GET(req: NextRequest) {
 
   if (code) {
     const supabase = createClient();
-    await supabase.auth.exchangeCodeForSession(code);
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+    if (error) {
+      // If the code is expired or invalid, redirect them back to forgot password
+      return NextResponse.redirect(new URL('/forgot-password?error=invalid_link', siteUrl));
+    }
 
     // Password reset flow — send to the reset-password page
-    // The session is now active so the page can call updateUser({ password })
     if (type === 'recovery') {
       return NextResponse.redirect(new URL('/reset-password', siteUrl));
     }

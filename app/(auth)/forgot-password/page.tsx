@@ -13,7 +13,17 @@ export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const router = useRouter();
   const supabase = createClient();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('error') === 'invalid_link') {
+      toast.error('Your password reset link was expired or invalid. Please request a new one.');
+      // Clean up URL
+      router.replace('/forgot-password');
+    }
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
