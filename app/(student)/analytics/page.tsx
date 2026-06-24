@@ -66,11 +66,19 @@ function DownloadResultButton({ resultId, paper, completedAt }: {
   );
 }
 
+interface TopicStat {
+  topic: string;
+  total: number;
+  correct: number;
+  accuracy: number;
+}
+
 interface UnitStat {
   unit: string;
   total: number;
   correct: number;
   accuracy: number;
+  topics: TopicStat[];
 }
 
 interface DayStat {
@@ -103,6 +111,49 @@ interface AnalyticsData {
   flashcardsReviewed: number;
 }
 
+function UnitMasteryItem({ u }: { u: UnitStat }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  return (
+    <div className="bg-white dark:bg-[var(--color-card)] rounded-xl border border-[var(--color-border)] overflow-hidden transition-all">
+      <button 
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="w-full flex flex-col px-4 py-3 text-left hover:bg-neutral-light/50 dark:hover:bg-neutral-dark/30 transition-colors"
+      >
+        <div className="flex items-center justify-between mb-2 w-full">
+          <div className="flex items-center gap-2 max-w-[60%]">
+            <span className="text-sm font-semibold text-[var(--color-text)] truncate">{u.unit}</span>
+            <span className="text-xs text-neutral-mid flex-shrink-0">({u.topics.length} topics)</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-medium text-neutral-mid">{u.correct}/{u.total}</span>
+            <Badge size="sm" variant={u.accuracy >= 70 ? 'green' : u.accuracy >= 50 ? 'amber' : 'red'}>{u.accuracy}%</Badge>
+            <span className={`text-neutral-mid text-xs transform transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}>▼</span>
+          </div>
+        </div>
+        <ProgressBar value={u.accuracy} color={u.accuracy >= 70 ? 'green' : u.accuracy >= 50 ? 'amber' : 'red'} size="sm" showLabel={false} />
+      </button>
+
+      {isExpanded && u.topics.length > 0 && (
+        <div className="px-4 pb-4 bg-neutral-light/30 dark:bg-[var(--color-background)] border-t border-[var(--color-border)] space-y-4">
+          {u.topics.map(t => (
+            <div key={t.topic} className="mt-4">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-medium text-[var(--color-text-secondary)] truncate max-w-[70%]">{t.topic}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-neutral-mid">{t.correct}/{t.total}</span>
+                  <span className={`text-xs font-bold ${t.accuracy >= 70 ? 'text-[#10B981]' : t.accuracy >= 50 ? 'text-[#F59E0B]' : 'text-[#EF4444]'}`}>{t.accuracy}%</span>
+                </div>
+              </div>
+              <ProgressBar value={t.accuracy} color={t.accuracy >= 70 ? 'green' : t.accuracy >= 50 ? 'amber' : 'red'} size="sm" showLabel={false} />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function AnalyticsPage() {
   const router = useRouter();
   const supabase = createClient();
@@ -120,7 +171,7 @@ export default function AnalyticsPage() {
         supabase.from('student_profiles').select('plan_tier, plan_expires_at').eq('id', user.id).maybeSingle(),
         // Limit to last 2000 answers to avoid timeout on large accounts
         supabase.from('student_answers')
-          .select('is_correct, time_taken_seconds, answered_at, question_id, questions(unit)')
+          .select('is_correct, time_taken_seconds, answered_at, question_id, questions(unit, topic)')
           .eq('student_id', user.id)
           .order('answered_at', { ascending: false })
           .limit(2000),
@@ -133,7 +184,7 @@ export default function AnalyticsPage() {
         setPlanTier(effectiveTier(profileData.plan_tier, profileData.plan_expires_at));
       }
 
-      const answers = (answersRes.data ?? []) as Array<{ is_correct: boolean; time_taken_seconds: number | null; answered_at: string; question_id: string; questions?: { unit: string } }>;
+      const answers = (answersRes.data ?? []) as Array<{ is_correct: boolean; time_taken_seconds: number | null; answered_at: string; question_id: string; questions?: { unit: string; topic: string | null } }>;
       const mocks = (mockRes.data ?? []) as MockResult[];
       const flashCount = flashRes.data?.length ?? 0;
 
@@ -166,17 +217,40 @@ export default function AnalyticsPage() {
 
       // Unit stats — computed efficiently in memory since questions are already joined
       let unitStats: UnitStat[] = [];
-      const unitMap = new Map<string, { total: number; correct: number }>();
+      const unitMap = new Map<string, { total: number; correct: number; topics: Map<string, { total: number; correct: number }> }>();
       for (const ans of answers) {
         const unit = ans.questions?.unit;
+        const topic = ans.questions?.topic || 'General';
         if (!unit) continue;
-        const existing = unitMap.get(unit) ?? { total: 0, correct: 0 };
-        unitMap.set(unit, { total: existing.total + 1, correct: existing.correct + (ans.is_correct ? 1 : 0) });
+        
+        let unitData = unitMap.get(unit);
+        if (!unitData) {
+          unitData = { total: 0, correct: 0, topics: new Map() };
+          unitMap.set(unit, unitData);
+        }
+        unitData.total++;
+        if (ans.is_correct) unitData.correct++;
+        
+        let topicData = unitData.topics.get(topic);
+        if (!topicData) {
+          topicData = { total: 0, correct: 0 };
+          unitData.topics.set(topic, topicData);
+        }
+        topicData.total++;
+        if (ans.is_correct) topicData.correct++;
       }
-      unitStats = Array.from(unitMap.entries()).map(([unit, s]) => ({
-        unit, total: s.total, correct: s.correct,
-        accuracy: Math.round((s.correct / s.total) * 100),
-      })).sort((a, b) => b.total - a.total);
+
+      unitStats = Array.from(unitMap.entries()).map(([unit, s]) => {
+        const topics: TopicStat[] = Array.from(s.topics.entries()).map(([topic, ts]) => ({
+          topic, total: ts.total, correct: ts.correct, accuracy: Math.round((ts.correct / ts.total) * 100)
+        })).sort((a, b) => b.accuracy - a.accuracy); // Highest accuracy first (positive appraisal)
+
+        return {
+          unit, total: s.total, correct: s.correct,
+          accuracy: Math.round((s.correct / s.total) * 100),
+          topics
+        };
+      }).sort((a, b) => b.total - a.total);
 
       // Readiness score: weighted average of unit accuracies + mock exam average
       const unitAvg = unitStats.length > 0 ? unitStats.reduce((s, u) => s + u.accuracy, 0) / unitStats.length : 0;
@@ -266,18 +340,9 @@ export default function AnalyticsPage() {
           {data.unitStats.length > 0 && (
             <Card>
               <h2 className="text-xl font-heading font-bold mb-4">Unit Mastery</h2>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {data.unitStats.map(u => (
-                  <div key={u.unit}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-medium text-[var(--color-text)] truncate max-w-[60%]">{u.unit}</span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-neutral-mid">{u.correct}/{u.total}</span>
-                        <Badge size="sm" variant={u.accuracy >= 70 ? 'green' : u.accuracy >= 50 ? 'amber' : 'red'}>{u.accuracy}%</Badge>
-                      </div>
-                    </div>
-                    <ProgressBar value={u.accuracy} color={u.accuracy >= 70 ? 'green' : u.accuracy >= 50 ? 'amber' : 'red'} size="sm" showLabel={false} />
-                  </div>
+                  <UnitMasteryItem key={u.unit} u={u} />
                 ))}
               </div>
             </Card>
