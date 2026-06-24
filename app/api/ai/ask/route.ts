@@ -75,17 +75,57 @@ ${sanitisedQuestion}
 
 Please answer the student's question based on this context. Keep your response under 250 words.`;
 
-  try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: prompt,
-    });
+  const models = ['gemini-3-flash-preview', 'gemini-2.5-flash', 'gemini-1.5-flash'];
+  const maxRetries = 3;
+  let attempt = 0;
 
-    const text = response.text;
-    return NextResponse.json({ answer: text });
-  } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    console.error('Gemini API error:', message);
-    return NextResponse.json({ error: message }, { status: 503 });
+  while (attempt < maxRetries) {
+    try {
+      // Fallback to older, more stable models on subsequent retries
+      const currentModel = models[Math.min(attempt, models.length - 1)];
+      
+      const response = await ai.models.generateContent({
+        model: currentModel,
+        contents: prompt,
+      });
+
+      return NextResponse.json({ answer: response.text });
+    } catch (err: any) {
+      attempt++;
+      
+      // Check if it's a 503 Overloaded / Unavailable error
+      const message = err?.message || String(err);
+      const isOverloaded = 
+        message.includes('503') || 
+        message.includes('high demand') || 
+        message.includes('UNAVAILABLE') || 
+        err?.status === 503;
+
+      if (attempt >= maxRetries || !isOverloaded) {
+        console.error(`Gemini API Error (Attempt ${attempt}):`, message);
+        
+        // Return a graceful error message if we exhausted retries on 503s
+        if (isOverloaded) {
+          return NextResponse.json(
+            { error: 'NurseFiti AI is currently experiencing very high demand. Please try asking your question again in a moment.' }, 
+            { status: 503 }
+          );
+        }
+        
+        // For standard errors (e.g. 400 Bad Request)
+        return NextResponse.json(
+          { error: 'NurseFiti AI encountered an unexpected error. Please try again later.' }, 
+          { status: 500 }
+        );
+      }
+
+      // Exponential backoff: Wait 1s, then 2s before retrying
+      const delayMs = Math.pow(2, attempt - 1) * 1000;
+      console.warn(`Gemini API busy (503). Retrying in ${delayMs}ms using fallback model...`);
+      await new Promise(resolve => setTimeout(resolve, delayMs));
+    }
   }
+
+  // Fallback return (should not be reached due to logic above)
+  return NextResponse.json({ error: 'NurseFiti AI is currently experiencing very high demand. Please try asking your question again in a moment.' }, { status: 503 });
 }
