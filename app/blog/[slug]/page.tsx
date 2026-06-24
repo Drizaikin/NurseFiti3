@@ -746,7 +746,7 @@ Also see our [KRCHN revision guide](https://www.nursefiti.co.ke/blog/krchn-exam-
     readTime: '6 min read',
     date: '2026-06-24',
     cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
-    content: \`
+    content: `
 Passing the NCK exam is a massive relief, but it is not the finish line. Every year, graduates who pass their NCK exam find themselves waiting months to start their internship or employment because they delayed or made errors in their licence application. 
 
 Here is exactly how to apply for your Nursing Council of Kenya practising licence and registration certificate so you can start working without unnecessary delays.
@@ -806,7 +806,7 @@ This guide is original editorial content by NurseFiti, informed by official NCK 
 - **Kenya Ministry of Health** — [health.go.ke](https://www.health.go.ke)
 
 *Always verify current application requirements and fees directly at [osp.nckenya.go.ke](https://osp.nckenya.go.ke) before submitting your application.*
-    \`,
+    `,
   },
 ];
 
