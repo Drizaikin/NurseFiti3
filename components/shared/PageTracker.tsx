@@ -19,7 +19,7 @@ export function PageTracker() {
     lastTrackedPath.current = fullPath;
 
     // Fire and forget, don't await, don't block
-    fetch('/api/tracking', {
+    fetch('/api/activity-log', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ path: fullPath }),
