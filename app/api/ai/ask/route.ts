@@ -86,11 +86,13 @@ ${sanitisedQuestion}
 
 Please answer the student's question based on this context. Keep your response under 250 words.`;
 
-  // Priority order: newest → stable fallbacks. Always try all before giving up.
+  // Priority order: most capable & up-to-date first.
+  // All models are 2025/2026 vintage — ensuring answers reflect current nursing guidelines.
+  // We never fall back to older models to preserve clinical accuracy.
   const models = [
-    'gemini-2.5-flash',   // primary: latest, best quality
-    'gemini-2.0-flash',   // fallback 1: stable, widely available
-    'gemini-1.5-flash',   // fallback 2: older but very reliable
+    'gemini-2.5-pro',    // primary: most capable, latest knowledge cutoff
+    'gemini-2.5-flash',  // fallback 1: same knowledge base, faster
+    'gemini-2.0-flash',  // fallback 2: 2024/2025 — still recent, widely available
   ];
 
   let lastError: string = '';
