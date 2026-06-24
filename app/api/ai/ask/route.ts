@@ -2,9 +2,20 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 import { createClient } from '@/lib/supabase/server';
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+
 
 export async function POST(req: NextRequest) {
+  // Guard: API key must be set in Vercel environment variables
+  if (!process.env.GEMINI_API_KEY) {
+    console.error('GEMINI_API_KEY is not set in environment variables.');
+    return NextResponse.json(
+      { error: 'The AI service is not configured. Please contact support.' },
+      { status: 503 }
+    );
+  }
+
+  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
   // Verify the user is authenticated
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();

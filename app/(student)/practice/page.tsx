@@ -322,6 +322,12 @@ export default function PracticePage() {
       });
       if (insertError) {
         console.error('Error saving answer:', insertError);
+        // 42501 = RLS violation, meaning the session has expired mid-practice
+        if (insertError.code === '42501' || insertError.message?.includes('row-level security')) {
+          toast.error('Your session has expired. Redirecting to login...');
+          setTimeout(() => router.push('/login?redirect=/practice'), 1500);
+          return;
+        }
       }
 
       const xpGained = isCorrect ? 8 : 0;
