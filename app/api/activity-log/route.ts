@@ -15,6 +15,17 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true, ignored: true });
     }
 
+    // Exempt admin users from being tracked
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', session.user.id)
+      .maybeSingle();
+
+    if (profile?.role === 'admin') {
+      return NextResponse.json({ success: true, ignored: true });
+    }
+
     if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
       console.warn('Tracking bypassed: SUPABASE_SERVICE_ROLE_KEY is not set in environment.');
       return NextResponse.json({ success: true, ignored: true });

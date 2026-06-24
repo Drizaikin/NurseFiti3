@@ -1,34 +1,34 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Card } from '@/components/ui/Card';
 import { Spinner } from '@/components/ui/Spinner';
 
-type PageView = {
-  id: string;
-  path: string;
-  created_at: string;
+type UserActivity = {
   user_id: string;
-  profiles: {
-    full_name: string;
-    role: string;
-  };
+  full_name: string;
+  role: string;
+  total_pages: number;
+  last_seen: string;
 };
 
 export default function AdminActivityPage() {
-  const [views, setViews] = useState<PageView[]>([]);
+  const [users, setUsers] = useState<UserActivity[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const supabase = createClient();
+  const router = useRouter();
 
   useEffect(() => {
-    const fetchViews = async () => {
+    const fetchActivity = async () => {
       try {
+        // Fetch the last 500 views to group by user meaningfully
         const { data: viewsData, error: viewsError } = await supabase
           .from('page_views')
-          .select('id, path, created_at, user_id')
+          .select('user_id, created_at')
           .order('created_at', { ascending: false })
-          .limit(100);
+          .limit(500);
 
         if (viewsError || !viewsData) {
           console.error('Failed to fetch views:', viewsError);
@@ -36,24 +36,53 @@ export default function AdminActivityPage() {
           return;
         }
 
-        const userIds = Array.from(new Set(viewsData.map(v => v.user_id)));
-        
-        let profileMap = new Map();
-        if (userIds.length > 0) {
-          const { data: profilesData } = await supabase
-            .from('profiles')
-            .select('id, full_name, role')
-            .in('id', userIds);
-            
-          profileMap = new Map(profilesData?.map(p => [p.id, p]) || []);
+        // Group by user_id: count total pages and find last_seen
+        const userMap = new Map<string, { total: number; last_seen: string }>();
+        for (const v of viewsData) {
+          const existing = userMap.get(v.user_id);
+          if (!existing) {
+            userMap.set(v.user_id, { total: 1, last_seen: v.created_at });
+          } else {
+            existing.total++;
+            // Keep earliest last_seen if ordering is descending (first is most recent)
+            if (!existing.last_seen || v.created_at > existing.last_seen) {
+              existing.last_seen = v.created_at;
+            }
+          }
         }
 
-        const formattedViews = viewsData.map(v => ({
-          ...v,
-          profiles: profileMap.get(v.user_id) || null
-        }));
+        const userIds = Array.from(userMap.keys());
+        if (userIds.length === 0) {
+          setIsLoading(false);
+          return;
+        }
 
-        setViews(formattedViews as unknown as PageView[]);
+        const { data: profilesData } = await supabase
+          .from('profiles')
+          .select('id, full_name, role')
+          .in('id', userIds)
+          .neq('role', 'admin'); // exclude admins from the list
+
+        const profileMap = new Map(profilesData?.map(p => [p.id, p]) || []);
+
+        const result: UserActivity[] = Array.from(userMap.entries())
+          .map(([user_id, stats]) => {
+            const profile = profileMap.get(user_id);
+            if (!profile) return null; // skip admins (not in profileMap)
+            return {
+              user_id,
+              full_name: profile.full_name || 'Unknown User',
+              role: profile.role || 'student',
+              total_pages: stats.total,
+              last_seen: stats.last_seen,
+            };
+          })
+          .filter(Boolean) as UserActivity[];
+
+        // Sort by last_seen descending
+        result.sort((a, b) => new Date(b.last_seen).getTime() - new Date(a.last_seen).getTime());
+
+        setUsers(result);
       } catch (err) {
         console.error('Unexpected error:', err);
       } finally {
@@ -61,7 +90,7 @@ export default function AdminActivityPage() {
       }
     };
 
-    fetchViews();
+    fetchActivity();
   }, [supabase]);
 
   if (isLoading) {
@@ -71,7 +100,8 @@ export default function AdminActivityPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-heading font-bold text-primary">User Activity (Last 100 views)</h1>
+        <h1 className="text-2xl font-heading font-bold text-primary">User Activity</h1>
+        <span className="text-sm text-neutral-mid">{users.length} active user{users.length !== 1 ? 's' : ''} tracked</span>
       </div>
 
       <Card className="overflow-hidden p-0">
@@ -81,31 +111,35 @@ export default function AdminActivityPage() {
               <tr>
                 <th className="px-4 py-3 font-semibold">User</th>
                 <th className="px-4 py-3 font-semibold">Role</th>
-                <th className="px-4 py-3 font-semibold">Page Visited</th>
-                <th className="px-4 py-3 font-semibold text-right">Time</th>
+                <th className="px-4 py-3 font-semibold">Pages Visited</th>
+                <th className="px-4 py-3 font-semibold text-right">Last Seen</th>
+                <th className="px-4 py-3 font-semibold text-right">Details</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--color-border)]">
-              {views.length === 0 ? (
+              {users.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-4 py-8 text-center text-neutral-mid">No activity found</td>
+                  <td colSpan={5} className="px-4 py-8 text-center text-neutral-mid">No user activity recorded yet</td>
                 </tr>
               ) : (
-                views.map((v) => (
-                  <tr key={v.id} className="hover:bg-[var(--color-bg)]/50 transition-colors">
-                    <td className="px-4 py-3 font-medium">
-                      {v.profiles?.full_name || 'Unknown User'}
-                    </td>
+                users.map((u) => (
+                  <tr
+                    key={u.user_id}
+                    className="hover:bg-[var(--color-bg)]/50 transition-colors cursor-pointer"
+                    onClick={() => router.push(`/admin/activity/${u.user_id}`)}
+                  >
+                    <td className="px-4 py-3 font-medium">{u.full_name}</td>
                     <td className="px-4 py-3">
                       <span className="px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wide font-bold bg-[var(--color-border)] text-neutral-dark">
-                        {v.profiles?.role || 'none'}
+                        {u.role}
                       </span>
                     </td>
-                    <td className="px-4 py-3 font-mono text-xs text-primary max-w-xs truncate" title={v.path}>
-                      {v.path}
-                    </td>
+                    <td className="px-4 py-3 text-neutral-mid">{u.total_pages} page{u.total_pages !== 1 ? 's' : ''}</td>
                     <td className="px-4 py-3 text-right text-xs text-neutral-mid whitespace-nowrap">
-                      {new Date(v.created_at).toLocaleString()}
+                      {new Date(u.last_seen).toLocaleString()}
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      <span className="text-primary text-xs font-semibold hover:underline">View →</span>
                     </td>
                   </tr>
                 ))
