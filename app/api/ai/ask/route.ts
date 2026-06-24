@@ -75,7 +75,7 @@ ${sanitisedQuestion}
 
 Please answer the student's question based on this context. Keep your response under 250 words.`;
 
-  const models = ['gemini-3-flash-preview', 'gemini-2.5-flash', 'gemini-1.5-flash'];
+  const models = ['gemini-2.0-flash', 'gemini-2.0-flash-lite-preview-02-05', 'gemini-1.5-pro'];
   const maxRetries = 3;
   let attempt = 0;
 

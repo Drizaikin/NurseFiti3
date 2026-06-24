@@ -30,6 +30,7 @@ export function AskAI({ question }: AskAIProps) {
   const [userQuestion, setUserQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState('Thinking…');
   const [error, setError] = useState('');
   const [hasAsked, setHasAsked] = useState(false);
 
@@ -37,9 +38,15 @@ export function AskAI({ question }: AskAIProps) {
     if (!q.trim() || isLoading) return;
 
     setIsLoading(true);
+    setLoadingText('Thinking…');
     setError('');
     setAnswer('');
     setHasAsked(true);
+
+    // Change the loading text if it takes longer than 2.5s (meaning it's likely retrying)
+    const timeoutId = setTimeout(() => {
+      setLoadingText('Network is busy. Trying a fallback model…');
+    }, 2500);
 
     try {
       const res = await fetch('/api/ai/ask', {
@@ -59,6 +66,7 @@ export function AskAI({ question }: AskAIProps) {
     } catch {
       setError('Network error. Please check your connection and try again.');
     } finally {
+      clearTimeout(timeoutId);
       setIsLoading(false);
     }
   };
@@ -154,7 +162,7 @@ export function AskAI({ question }: AskAIProps) {
         {isLoading && (
           <div className="flex items-center gap-3 py-3">
             <Spinner size="sm" color="primary" />
-            <span className="text-sm text-[var(--color-text-secondary)]">Thinking…</span>
+            <span className="text-sm text-[var(--color-text-secondary)]">{loadingText}</span>
           </div>
         )}
 
