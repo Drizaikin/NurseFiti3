@@ -79,7 +79,7 @@ export default function UserActivityDetailPage() {
         </p>
       </div>
 
-      <Card className="overflow-hidden p-0">
+      <Card padding="none" className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm border-collapse">
             <thead className="bg-[var(--color-bg)] border-b border-[var(--color-border)]">

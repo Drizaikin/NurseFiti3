@@ -37,17 +37,16 @@ export default function AdminActivityPage() {
         }
 
         // Group by user_id: count total pages and find last_seen
+        // Data is ordered DESC so the FIRST entry per user is already their most recent visit
         const userMap = new Map<string, { total: number; last_seen: string }>();
         for (const v of viewsData) {
           const existing = userMap.get(v.user_id);
           if (!existing) {
+            // First time we see this user in the DESC list = their most recent view
             userMap.set(v.user_id, { total: 1, last_seen: v.created_at });
           } else {
+            // Just increment; do NOT update last_seen (first entry was already the most recent)
             existing.total++;
-            // Keep earliest last_seen if ordering is descending (first is most recent)
-            if (!existing.last_seen || v.created_at > existing.last_seen) {
-              existing.last_seen = v.created_at;
-            }
           }
         }
 
@@ -104,7 +103,7 @@ export default function AdminActivityPage() {
         <span className="text-sm text-neutral-mid">{users.length} active user{users.length !== 1 ? 's' : ''} tracked</span>
       </div>
 
-      <Card className="overflow-hidden p-0">
+      <Card padding="none" className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm border-collapse">
             <thead className="bg-[var(--color-bg)] border-b border-[var(--color-border)]">
