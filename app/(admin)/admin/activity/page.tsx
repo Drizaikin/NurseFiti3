@@ -23,17 +23,42 @@ export default function AdminActivityPage() {
 
   useEffect(() => {
     const fetchViews = async () => {
-      // Join page_views with profiles
-      const { data, error } = await supabase
-        .from('page_views')
-        .select('id, path, created_at, user_id, profiles(full_name, role)')
-        .order('created_at', { ascending: false })
-        .limit(100);
+      try {
+        const { data: viewsData, error: viewsError } = await supabase
+          .from('page_views')
+          .select('id, path, created_at, user_id')
+          .order('created_at', { ascending: false })
+          .limit(100);
 
-      if (!error && data) {
-        setViews(data as unknown as PageView[]);
+        if (viewsError || !viewsData) {
+          console.error('Failed to fetch views:', viewsError);
+          setIsLoading(false);
+          return;
+        }
+
+        const userIds = Array.from(new Set(viewsData.map(v => v.user_id)));
+        
+        let profileMap = new Map();
+        if (userIds.length > 0) {
+          const { data: profilesData } = await supabase
+            .from('profiles')
+            .select('id, full_name, role')
+            .in('id', userIds);
+            
+          profileMap = new Map(profilesData?.map(p => [p.id, p]) || []);
+        }
+
+        const formattedViews = viewsData.map(v => ({
+          ...v,
+          profiles: profileMap.get(v.user_id) || null
+        }));
+
+        setViews(formattedViews as unknown as PageView[]);
+      } catch (err) {
+        console.error('Unexpected error:', err);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
     fetchViews();
