@@ -675,7 +675,7 @@ export default function FlashcardsPage() {
     setSessionStats(prev => ({ ...prev, reviewed: prev.reviewed + 1, [rating]: prev[rating] + 1 }));
 
     if (cardIndex + 1 >= cards.length) {
-      const xpEarned = cards.length * 5;
+      const xpEarned = cards.length * 15; // 15 XP per card for faster premium progression
       const { error: xpErr } = await (supabase as any).rpc('update_student_xp', {
         p_student_id: userId,
         p_xp_delta: xpEarned,
@@ -796,7 +796,7 @@ export default function FlashcardsPage() {
         <Card className="py-10">
           <div className="text-6xl mb-4">🎉</div>
           <h2 className="text-2xl font-heading font-bold text-primary mb-2">Session Complete!</h2>
-          <p className="text-neutral-mid mb-6">{selectedDeck?.name} · +{cards.length * 5} XP earned</p>
+          <p className="text-neutral-mid mb-6">{selectedDeck?.name} · +{cards.length * 15} XP earned</p>
 
           <div className="grid grid-cols-5 gap-3 mb-8">
             {[

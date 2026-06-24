@@ -43,9 +43,9 @@ export function AskAI({ question }: AskAIProps) {
     setAnswer('');
     setHasAsked(true);
 
-    // Change the loading text if it takes longer than 2.5s (meaning it's likely retrying)
+    // Change the loading text if it takes longer than 2.5s using psychological triggers
     const timeoutId = setTimeout(() => {
-      setLoadingText('Network is busy. Trying a fallback model…');
+      setLoadingText('Synthesizing optimal clinical insights... Take a slow, grounding breath. Your brain is building the neural pathways that save lives.');
     }, 2500);
 
     try {
