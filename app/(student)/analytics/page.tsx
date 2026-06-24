@@ -12,14 +12,7 @@ import { StatCard } from '@/components/shared/StatCard';
 import { getLimits, effectiveTier } from '@/lib/planLimits';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
-import dynamic from 'next/dynamic';
-
-const BarChart = dynamic(() => import('recharts').then(m => m.BarChart), { ssr: false });
-const Bar = dynamic(() => import('recharts').then(m => m.Bar), { ssr: false });
-const XAxis = dynamic(() => import('recharts').then(m => m.XAxis), { ssr: false });
-const YAxis = dynamic(() => import('recharts').then(m => m.YAxis), { ssr: false });
-const Tooltip = dynamic(() => import('recharts').then(m => m.Tooltip), { ssr: false });
-const ResponsiveContainer = dynamic(() => import('recharts').then(m => m.ResponsiveContainer), { ssr: false });
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 // ─── Download button for a single past mock exam result ───────────────────────
 
