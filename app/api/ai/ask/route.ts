@@ -86,15 +86,24 @@ ${sanitisedQuestion}
 
 Please answer the student's question based on this context. Keep your response under 250 words.`;
 
-  const models = ['gemini-2.0-flash', 'gemini-2.0-flash-lite-preview-02-05', 'gemini-1.5-pro'];
-  const maxRetries = 3;
-  let attempt = 0;
+  // Priority order: newest → stable fallbacks. Always try all before giving up.
+  const models = [
+    'gemini-2.5-flash',   // primary: latest, best quality
+    'gemini-2.0-flash',   // fallback 1: stable, widely available
+    'gemini-1.5-flash',   // fallback 2: older but very reliable
+  ];
 
-  while (attempt < maxRetries) {
+  let lastError: string = '';
+
+  for (let i = 0; i < models.length; i++) {
+    const currentModel = models[i];
     try {
-      // Fallback to older, more stable models on subsequent retries
-      const currentModel = models[Math.min(attempt, models.length - 1)];
-      
+      if (i > 0) {
+        // Brief pause before retrying with fallback model
+        await new Promise(resolve => setTimeout(resolve, 500));
+        console.warn(`Retrying with fallback model: ${currentModel}`);
+      }
+
       const response = await ai.models.generateContent({
         model: currentModel,
         contents: prompt,
@@ -102,39 +111,25 @@ Please answer the student's question based on this context. Keep your response u
 
       return NextResponse.json({ answer: response.text });
     } catch (err: any) {
-      attempt++;
-      
-      // Check if it's a 503 Overloaded OR a 404 Invalid Model error (both should trigger fallback)
-      const message = err?.message || String(err);
-      const isOverloaded = message.includes('503') || message.includes('high demand') || message.includes('UNAVAILABLE') || err?.status === 503;
-      const isInvalidModel = message.includes('404') || message.toLowerCase().includes('not found') || err?.status === 404;
-      const shouldRetry = isOverloaded || isInvalidModel;
-
-      if (attempt >= maxRetries || !shouldRetry) {
-        console.error(`Gemini API Error (Attempt ${attempt}):`, message);
-        
-        // Return a graceful error message if we exhausted retries on 503s
-        if (isOverloaded) {
-          return NextResponse.json(
-            { error: 'NurseFiti AI is currently experiencing very high demand. Please try asking your question again in a moment.' }, 
-            { status: 503 }
-          );
-        }
-        
-        // For standard errors (e.g. 400 Bad Request)
-        return NextResponse.json(
-          { error: 'NurseFiti AI encountered an unexpected error. Please try again later.' }, 
-          { status: 500 }
-        );
-      }
-
-      // Exponential backoff: Wait 1s, then 2s before retrying
-      const delayMs = Math.pow(2, attempt - 1) * 1000;
-      console.warn(`Gemini API busy or model unavailable. Retrying in ${delayMs}ms using fallback model...`);
-      await new Promise(resolve => setTimeout(resolve, delayMs));
+      lastError = err?.message || String(err);
+      console.error(`Gemini error on model ${currentModel}:`, lastError);
+      // Continue to next model
     }
   }
 
-  // Fallback return (should not be reached due to logic above)
-  return NextResponse.json({ error: 'NurseFiti AI is currently experiencing very high demand. Please try asking your question again in a moment.' }, { status: 503 });
+  // All models exhausted
+  console.error('All Gemini models failed. Last error:', lastError);
+
+  const isOverloaded = lastError.includes('503') || lastError.includes('UNAVAILABLE') || lastError.includes('high demand');
+  if (isOverloaded) {
+    return NextResponse.json(
+      { error: 'NurseFiti AI is currently experiencing very high demand. Please try asking your question again in a moment.' },
+      { status: 503 }
+    );
+  }
+
+  return NextResponse.json(
+    { error: 'NurseFiti AI encountered an unexpected error. Please try again later.' },
+    { status: 500 }
+  );
 }
