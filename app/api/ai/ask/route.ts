@@ -90,8 +90,8 @@ Please answer the student's question based on this context. Keep your response u
   // Ensures answers reflect the latest Kenyan nursing guidelines and NCK standards.
   // We never fall back to older models to preserve clinical accuracy.
   const models = [
-    'gemini-3.5-flash',      // primary: Gemini 3.5 Flash (GA) — most intelligent, frontier performance
-    'gemini-3.1-flash-lite', // fallback 1: Gemini 3.1 Flash Lite (GA) — same generation, ultra-low latency
+    'gemini-3.1-flash-lite', // primary: Gemini 3.1 Flash Lite (GA) — high-volume, ultra-low latency
+    'gemini-3.5-flash',      // fallback 1: Gemini 3.5 Flash (GA) — most intelligent, frontier performance
     'gemini-2.5-flash',      // fallback 2: Gemini 2.5 Flash — proven stable, still very recent
   ];
 
