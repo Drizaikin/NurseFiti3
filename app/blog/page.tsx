@@ -116,6 +116,15 @@ const POSTS = [
     date: '2026-06-09',
     cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
   },
+  {
+    slug: 'how-to-apply-nck-licence-kenya',
+    title: 'How to Apply for the NCK Practising Licence After Passing (2026)',
+    excerpt: 'You passed the NCK exam — congratulations! Now here is the exact step-by-step process for applying for your practising licence on the OSP portal to avoid delays.',
+    category: 'Study Guide',
+    readTime: '6 min read',
+    date: '2026-06-24',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
 ];
 
 const CATEGORY_STYLES: Record<string, { badge: string }> = {
@@ -140,6 +149,7 @@ const POST_IMAGES: Record<string, string> = {
   'digiproctor-nck-exam-guide':        'https://images.unsplash.com/photo-1588776814546-1ffbb9b0ea79?w=800&q=80&auto=format&fit=crop',
   'nck-exam-anxiety-how-to-manage-it': 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80&auto=format&fit=crop',
   'nck-pharmacology-calculations-guide': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80&auto=format&fit=crop',
+  'how-to-apply-nck-licence-kenya': 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80&auto=format&fit=crop',
 };
 
 function formatDate(dateStr: string) {
