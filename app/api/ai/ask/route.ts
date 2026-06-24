@@ -75,7 +75,7 @@ ${sanitisedQuestion}
 
 Please answer the student's question based on this context. Keep your response under 250 words.`;
 
-  const models = ['gemini-3-flash-preview', 'gemini-2.5-flash', 'gemini-1.5-flash'];
+  const models = ['gemini-2.0-flash', 'gemini-1.5-flash'];
   const maxRetries = 3;
   let attempt = 0;
 
@@ -93,15 +93,13 @@ Please answer the student's question based on this context. Keep your response u
     } catch (err: any) {
       attempt++;
       
-      // Check if it's a 503 Overloaded / Unavailable error
+      // Check if it's a 503 Overloaded OR a 404 Invalid Model error (both should trigger fallback)
       const message = err?.message || String(err);
-      const isOverloaded = 
-        message.includes('503') || 
-        message.includes('high demand') || 
-        message.includes('UNAVAILABLE') || 
-        err?.status === 503;
+      const isOverloaded = message.includes('503') || message.includes('high demand') || message.includes('UNAVAILABLE') || err?.status === 503;
+      const isInvalidModel = message.includes('404') || message.toLowerCase().includes('not found') || err?.status === 404;
+      const shouldRetry = isOverloaded || isInvalidModel;
 
-      if (attempt >= maxRetries || !isOverloaded) {
+      if (attempt >= maxRetries || !shouldRetry) {
         console.error(`Gemini API Error (Attempt ${attempt}):`, message);
         
         // Return a graceful error message if we exhausted retries on 503s
@@ -121,7 +119,7 @@ Please answer the student's question based on this context. Keep your response u
 
       // Exponential backoff: Wait 1s, then 2s before retrying
       const delayMs = Math.pow(2, attempt - 1) * 1000;
-      console.warn(`Gemini API busy (503). Retrying in ${delayMs}ms using fallback model...`);
+      console.warn(`Gemini API busy or model unavailable. Retrying in ${delayMs}ms using fallback model...`);
       await new Promise(resolve => setTimeout(resolve, delayMs));
     }
   }
