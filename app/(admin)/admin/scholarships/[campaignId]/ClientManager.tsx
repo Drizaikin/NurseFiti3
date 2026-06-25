@@ -15,6 +15,7 @@ export default function ClientManager({ campaign }: { campaign: any }) {
   const [fullCount, setFullCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState<string | null>(null);
+  const [viewingDocsApp, setViewingDocsApp] = useState<any | null>(null);
 
   const supabase = createClient() as any;
   const premiumPrice = PLAN_PRICING_META.premium.amountKsh;
@@ -187,6 +188,13 @@ export default function ClientManager({ campaign }: { campaign: any }) {
                     <td className="px-4 py-3 text-right space-x-2 whitespace-nowrap">
                       {app.status === 'pending' && (
                         <>
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            onClick={() => setViewingDocsApp(app)}
+                          >
+                            Verify Docs
+                          </Button>
                           {fullCount < campaign.full_scholarship_slots ? (
                             <Button 
                               size="sm" 
@@ -232,6 +240,58 @@ export default function ClientManager({ campaign }: { campaign: any }) {
           </table>
         </div>
       </Card>
+
+      {/* Docs Verification Modal */}
+      {viewingDocsApp && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+          <div className="bg-white dark:bg-neutral-900 rounded-xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto p-6 relative">
+            <button 
+              onClick={() => setViewingDocsApp(null)}
+              className="absolute top-4 right-4 text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
+            >
+              ✕
+            </button>
+            <h2 className="text-xl font-bold mb-4">Verification Documents: {viewingDocsApp.full_name}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="font-semibold text-sm mb-2 text-neutral-mid">Student ID (Front)</h3>
+                {viewingDocsApp.student_id_front_url ? (
+                  <img src={viewingDocsApp.student_id_front_url} alt="Student ID Front" className="w-full rounded border border-neutral-200" />
+                ) : (
+                  <div className="bg-neutral-100 p-8 text-center text-neutral-400 rounded">Not provided</div>
+                )}
+              </div>
+              <div>
+                <h3 className="font-semibold text-sm mb-2 text-neutral-mid">Student ID (Back)</h3>
+                {viewingDocsApp.student_id_back_url ? (
+                  <img src={viewingDocsApp.student_id_back_url} alt="Student ID Back" className="w-full rounded border border-neutral-200" />
+                ) : (
+                  <div className="bg-neutral-100 p-8 text-center text-neutral-400 rounded">Not provided</div>
+                )}
+              </div>
+              <div>
+                <h3 className="font-semibold text-sm mb-2 text-neutral-mid">National ID (Front)</h3>
+                {viewingDocsApp.national_id_front_url ? (
+                  <img src={viewingDocsApp.national_id_front_url} alt="National ID Front" className="w-full rounded border border-neutral-200" />
+                ) : (
+                  <div className="bg-neutral-100 p-8 text-center text-neutral-400 rounded">Not provided</div>
+                )}
+              </div>
+              <div>
+                <h3 className="font-semibold text-sm mb-2 text-neutral-mid">National ID (Back)</h3>
+                {viewingDocsApp.national_id_back_url ? (
+                  <img src={viewingDocsApp.national_id_back_url} alt="National ID Back" className="w-full rounded border border-neutral-200" />
+                ) : (
+                  <div className="bg-neutral-100 p-8 text-center text-neutral-400 rounded">Not provided</div>
+                )}
+              </div>
+            </div>
+            <div className="mt-6 flex justify-end">
+              <Button onClick={() => setViewingDocsApp(null)}>Close</Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
