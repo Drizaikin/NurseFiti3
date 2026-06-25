@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { Card } from '@/components/ui/Card';
 import { notFound } from 'next/navigation';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
@@ -14,6 +15,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function SponsorDashboardPage({ params }: { params: { slug: string } }) {
   const supabase = createClient() as any;
+  const adminSupabase = createAdminClient() as any;
 
   // Fetch campaign
   const { data: campaign, error: campaignError } = await supabase
@@ -41,18 +43,18 @@ export default async function SponsorDashboardPage({ params }: { params: { slug:
   }
 
   // Fetch all deposits
-  const { data: deposits } = await supabase.from('scholarship_deposits').select('amount_kes').eq('campaign_id', campaign.id);
+  const { data: deposits } = await adminSupabase.from('scholarship_deposits').select('amount_kes').eq('campaign_id', campaign.id);
   const totalDeposits = deposits?.reduce((sum: number, d: any) => sum + (d.amount_kes || 0), 0) || 0;
 
   // Fetch all beneficiaries (with student IDs)
-  const { data: beneficiaries } = await supabase.from('scholarship_beneficiaries').select('*').eq('campaign_id', campaign.id);
+  const { data: beneficiaries } = await adminSupabase.from('scholarship_beneficiaries').select('*').eq('campaign_id', campaign.id);
   const totalAllocated = beneficiaries?.reduce((sum: number, b: any) => sum + (b.allocated_amount_kes || 0), 0) || 0;
   const fullCount = beneficiaries?.filter((b: any) => b.beneficiary_type === 'FULL').length || 0;
   const subCount = beneficiaries?.filter((b: any) => b.beneficiary_type === 'SUBSIDIZED').length || 0;
   const studentIds = beneficiaries?.map((b: any) => b.student_id) || [];
 
   // Fetch applications
-  const { count: totalApps } = await supabase.from('scholarship_applications').select('*', { count: 'exact', head: true }).eq('campaign_id', campaign.id);
+  const { count: totalApps } = await adminSupabase.from('scholarship_applications').select('*', { count: 'exact', head: true }).eq('campaign_id', campaign.id);
 
   // Fetch impact metrics
   let questionsAttempted = 0;
@@ -61,13 +63,13 @@ export default async function SponsorDashboardPage({ params }: { params: { slug:
 
   if (studentIds.length > 0) {
     // We do it in chunks or a single large IN query if studentIds isn't too huge
-    const { count: answersCount } = await supabase
+    const { count: answersCount } = await adminSupabase
       .from('student_answers')
       .select('*', { count: 'exact', head: true })
       .in('student_id', studentIds);
     questionsAttempted = answersCount || 0;
 
-    const { data: mockExams } = await supabase
+    const { data: mockExams } = await adminSupabase
       .from('mock_exam_results')
       .select('score_percentage')
       .in('student_id', studentIds);
