@@ -101,10 +101,14 @@ export default async function ScholarshipApplyPage({ params }: { params: { slug:
           </p>
         </div>
         
-        <ApplyForm campaignId={campaign.id} initialData={{
-          full_name: profile?.full_name || '',
-          email: user.email || '',
-        }} />
+        <ApplyForm 
+          campaignId={campaign.id} 
+          userId={user.id}
+          initialData={{
+            full_name: profile?.full_name || '',
+            email: user.email || '',
+          }} 
+        />
       </div>
     </div>
   );

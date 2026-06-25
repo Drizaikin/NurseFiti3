@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { toast } from 'react-hot-toast';
 import { createClient } from '@/lib/supabase/client';
 
-export default function ApplyForm({ campaignId, initialData }: { campaignId: string, initialData: any }) {
+export default function ApplyForm({ campaignId, userId, initialData }: { campaignId: string, userId: string, initialData: any }) {
   const router = useRouter();
   const supabase = createClient();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -86,10 +86,10 @@ export default function ApplyForm({ campaignId, initialData }: { campaignId: str
         national_id_front_url,
         national_id_back_url
       ] = await Promise.all([
-        uploadFile(files.student_id_front, `${campaignId}/student_id_front`),
-        uploadFile(files.student_id_back, `${campaignId}/student_id_back`),
-        uploadFile(files.national_id_front, `${campaignId}/national_id_front`),
-        uploadFile(files.national_id_back, `${campaignId}/national_id_back`),
+        uploadFile(files.student_id_front, `${userId}/${campaignId}/student_id_front`),
+        uploadFile(files.student_id_back, `${userId}/${campaignId}/student_id_back`),
+        uploadFile(files.national_id_front, `${userId}/${campaignId}/national_id_front`),
+        uploadFile(files.national_id_back, `${userId}/${campaignId}/national_id_back`),
       ]);
 
       setUploadProgress(70);
