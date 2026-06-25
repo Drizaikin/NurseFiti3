@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import SponsorCheckout from './SponsorCheckout';
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const supabase = createClient() as any;
   const { data } = await supabase.from('scholarship_campaigns').select('name').eq('slug', params.slug).single();
