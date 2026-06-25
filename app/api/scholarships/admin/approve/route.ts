@@ -75,14 +75,21 @@ export async function POST(req: NextRequest) {
     // Verify Available Slots for this campaign
     const { data: beneficiaries } = await adminSupabase
       .from('scholarship_beneficiaries')
-      .select('id')
+      .select('beneficiary_type')
       .eq('campaign_id', campaign.id);
       
-    const currentBeneficiariesCount = beneficiaries?.length || 0;
+    const fullCount = beneficiaries?.filter((b: any) => b.beneficiary_type === 'FULL').length || 0;
+    const subCount = beneficiaries?.filter((b: any) => b.beneficiary_type === 'SUBSIDIZED').length || 0;
 
-    if (currentBeneficiariesCount >= campaign.full_scholarship_slots) {
+    if (decision === 'FULL' && fullCount >= campaign.full_scholarship_slots) {
       return NextResponse.json({ 
-        error: `No slots available. Maximum ${campaign.full_scholarship_slots} scholarships reached.`
+        error: `No slots available. Maximum ${campaign.full_scholarship_slots} FULL scholarships reached.`
+      }, { status: 400 });
+    }
+
+    if (decision === 'SUBSIDIZED' && subCount >= campaign.subsidized_scholarship_slots) {
+      return NextResponse.json({ 
+        error: `No slots available. Maximum ${campaign.subsidized_scholarship_slots} SUBSIDIZED scholarships reached.`
       }, { status: 400 });
     }
 

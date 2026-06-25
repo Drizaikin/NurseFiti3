@@ -13,6 +13,7 @@ export default function ClientManager({ campaign }: { campaign: any }) {
   const [totalDeposits, setTotalDeposits] = useState(0);
   const [totalAllocated, setTotalAllocated] = useState(0);
   const [fullCount, setFullCount] = useState(0);
+  const [subCount, setSubCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState<string | null>(null);
   const [viewingDocsApp, setViewingDocsApp] = useState<any | null>(null);
@@ -42,6 +43,9 @@ export default function ClientManager({ campaign }: { campaign: any }) {
       
       const fulls = beneficiaries?.filter((b: any) => b.beneficiary_type === 'FULL').length || 0;
       setFullCount(fulls);
+
+      const subs = beneficiaries?.filter((b: any) => b.beneficiary_type === 'SUBSIDIZED').length || 0;
+      setSubCount(subs);
 
       // 3. Fetch applications
       const { data: apps } = await supabase
@@ -125,7 +129,7 @@ export default function ClientManager({ campaign }: { campaign: any }) {
       </Card>
 
       {/* Ledger Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <Card className="bg-primary text-white border-none">
           <p className="text-primary-light text-sm font-semibold uppercase tracking-wider">Total Deposits</p>
           <p className="text-3xl font-bold mt-2">KES {totalDeposits.toLocaleString()}</p>
@@ -141,6 +145,10 @@ export default function ClientManager({ campaign }: { campaign: any }) {
         <Card className="bg-neutral-800 text-white border-none">
           <p className="text-neutral-400 text-sm font-semibold uppercase tracking-wider">Full Scholarships</p>
           <p className="text-3xl font-bold mt-2">{fullCount} / {campaign.full_scholarship_slots}</p>
+        </Card>
+        <Card className="bg-indigo-600 text-white border-none">
+          <p className="text-indigo-200 text-sm font-semibold uppercase tracking-wider">Subsidized Scholarships</p>
+          <p className="text-3xl font-bold mt-2">{subCount} / {campaign.subsidized_scholarship_slots}</p>
         </Card>
       </div>
 
@@ -203,7 +211,7 @@ export default function ClientManager({ campaign }: { campaign: any }) {
                             >
                               {isProcessing === app.id ? 'Approving...' : 'Approve FULL'}
                             </Button>
-                          ) : availableFunds >= subsidizedPrice ? (
+                          ) : subCount < campaign.subsidized_scholarship_slots && availableFunds >= subsidizedPrice ? (
                             <Button 
                               size="sm" 
                               onClick={() => handleDecision(app.id, 'SUBSIDIZED')}
