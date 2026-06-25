@@ -72,26 +72,17 @@ export async function POST(req: NextRequest) {
       allocatedAmount = Math.round(premiumPrice * discountMult);
     }
 
-    // Verify Available Funds for this campaign
-    // 1. Sum all deposits
-    const { data: deposits } = await adminSupabase
-      .from('scholarship_deposits')
-      .select('amount_kes')
-      .eq('campaign_id', campaign.id);
-    const totalDeposits = deposits?.reduce((sum: number, d: any) => sum + (d.amount_kes || 0), 0) || 0;
-
-    // 2. Sum all allocated amounts
+    // Verify Available Slots for this campaign
     const { data: beneficiaries } = await adminSupabase
       .from('scholarship_beneficiaries')
-      .select('allocated_amount_kes')
+      .select('id')
       .eq('campaign_id', campaign.id);
-    const totalAllocated = beneficiaries?.reduce((sum: number, b: any) => sum + (b.allocated_amount_kes || 0), 0) || 0;
+      
+    const currentBeneficiariesCount = beneficiaries?.length || 0;
 
-    const availableFunds = totalDeposits - totalAllocated;
-
-    if (availableFunds < allocatedAmount) {
+    if (currentBeneficiariesCount >= campaign.full_scholarship_slots) {
       return NextResponse.json({ 
-        error: `Insufficient sponsor funds. Required: KES ${allocatedAmount}. Available: KES ${availableFunds}.`
+        error: `No slots available. Maximum ${campaign.full_scholarship_slots} scholarships reached.`
       }, { status: 400 });
     }
 
@@ -140,7 +131,7 @@ export async function POST(req: NextRequest) {
       beneficiaryType: decision
     });
 
-    return NextResponse.json({ success: true, allocatedAmount, availableFunds: availableFunds - allocatedAmount });
+    return NextResponse.json({ success: true, allocatedAmount });
 
   } catch (error) {
     console.error('Approve error:', error);
