@@ -22,9 +22,12 @@ export default function SponsorCheckout({ campaign }: { campaign: any }) {
   let subsidizedStudents = 0;
 
   if (numAmount > 0) {
-    fullStudents = Math.floor(numAmount / premiumPrice);
-    remainingAmount = numAmount % premiumPrice;
-    subsidizedStudents = Math.floor(remainingAmount / subsidizedPrice);
+    subsidizedStudents = Math.floor(numAmount / subsidizedPrice);
+    remainingAmount = numAmount % subsidizedPrice;
+    
+    // In the new logic, we assume all scholarships funded through this 
+    // mechanism are subsidized since NurseFiti facilitates it at a discount.
+    fullStudents = 0; 
   }
 
   const handleCheckout = async () => {
@@ -90,12 +93,8 @@ export default function SponsorCheckout({ campaign }: { campaign: any }) {
             <h4 className="text-xs font-bold uppercase tracking-wider text-teal-800 mb-3">Estimated Impact</h4>
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm text-teal-900">
-                <span>Full Premium Scholarships ({premiumPrice})</span>
-                <span className="font-bold">{fullStudents} students</span>
-              </div>
-              <div className="flex justify-between items-center text-sm text-teal-900">
-                <span>Subsidized Premium Scholarships ({subsidizedPrice})</span>
-                <span className="font-bold">{subsidizedStudents} students</span>
+                <span>Premium Scholarships Funded (Subsidized @ {subsidizedPrice} KES)</span>
+                <span className="font-bold text-lg">{subsidizedStudents} students</span>
               </div>
             </div>
           </div>
