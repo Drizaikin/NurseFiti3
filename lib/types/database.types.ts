@@ -253,6 +253,12 @@ export interface Database {
           booked_at: string;
           completed_at: string | null;
           reviewed: boolean;
+          reminder_sent_15m?: boolean;
+          reminder_sent_1h?: boolean;
+          reminder_sent_24h?: boolean;
+          actual_start_time?: string | null;
+          actual_end_time?: string | null;
+          actual_duration_seconds?: number | null;
         };
         Insert: Omit<Database['public']['Tables']['sessions']['Row'], 'id' | 'booked_at' | 'reviewed'>;
         Update: Partial<Database['public']['Tables']['sessions']['Row']>;
@@ -496,6 +502,132 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['practice_sessions']['Row'], 'id' | 'questions_answered' | 'correct_answers' | 'started_at'>;
         Update: Partial<Database['public']['Tables']['practice_sessions']['Row']>;
+      };
+
+      activity_logs: {
+        Row: {
+          id: string;
+          user_id: string;
+          role: string;
+          action: string;
+          resource: string;
+          details: any;
+          created_at: string;
+        };
+        Insert: Partial<Database['public']['Tables']['activity_logs']['Row']>;
+        Update: Partial<Database['public']['Tables']['activity_logs']['Row']>;
+      };
+
+      page_views: {
+        Row: {
+          id: string;
+          user_id: string;
+          path: string;
+          query: string | null;
+          duration_seconds: number;
+          created_at: string;
+        };
+        Insert: Partial<Database['public']['Tables']['page_views']['Row']>;
+        Update: Partial<Database['public']['Tables']['page_views']['Row']>;
+      };
+
+      scholarship_campaigns: {
+        Row: {
+          id: string;
+          slug: string;
+          name: string;
+          sponsor_name: string;
+          full_price: number;
+          subsidized_price: number;
+          max_full_slots: number;
+          max_subsidized_slots: number;
+          is_public: boolean;
+          status: string;
+          created_at: string;
+        };
+        Insert: Partial<Database['public']['Tables']['scholarship_campaigns']['Row']>;
+        Update: Partial<Database['public']['Tables']['scholarship_campaigns']['Row']>;
+      };
+
+      scholarship_deposits: {
+        Row: {
+          id: string;
+          campaign_id: string;
+          amount_kes: number;
+          reference: string;
+          status: string;
+          created_at: string;
+        };
+        Insert: Partial<Database['public']['Tables']['scholarship_deposits']['Row']>;
+        Update: Partial<Database['public']['Tables']['scholarship_deposits']['Row']>;
+      };
+
+      scholarship_applications: {
+        Row: {
+          id: string;
+          campaign_id: string;
+          student_id: string;
+          full_name: string;
+          phone_number: string;
+          email: string;
+          institution: string;
+          course: string;
+          exam_date: string | null;
+          county: string;
+          sub_county: string | null;
+          national_id: string | null;
+          student_id_number: string | null;
+          status: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Partial<Database['public']['Tables']['scholarship_applications']['Row']>;
+        Update: Partial<Database['public']['Tables']['scholarship_applications']['Row']>;
+      };
+
+      scholarship_beneficiaries: {
+        Row: {
+          id: string;
+          campaign_id: string;
+          student_id: string;
+          beneficiary_type: string;
+          allocated_amount_kes: number;
+          approved_by: string;
+          activated_at: string;
+          expires_at: string;
+        };
+        Insert: Partial<Database['public']['Tables']['scholarship_beneficiaries']['Row']>;
+        Update: Partial<Database['public']['Tables']['scholarship_beneficiaries']['Row']>;
+      };
+
+      scholarship_allocation_ledger: {
+        Row: {
+          id: string;
+          campaign_id: string;
+          student_id: string;
+          beneficiary_type: string;
+          amount_kes: number;
+          reference: string;
+          status: string;
+          created_at: string;
+        };
+        Insert: Partial<Database['public']['Tables']['scholarship_allocation_ledger']['Row']>;
+        Update: Partial<Database['public']['Tables']['scholarship_allocation_ledger']['Row']>;
+      };
+
+      scholarship_fund_reservations: {
+        Row: {
+          id: string;
+          campaign_id: string;
+          amount_kes: number;
+          student_id: string | null;
+          reason: string;
+          status: string;
+          expires_at: string;
+          created_at: string;
+        };
+        Insert: Partial<Database['public']['Tables']['scholarship_fund_reservations']['Row']>;
+        Update: Partial<Database['public']['Tables']['scholarship_fund_reservations']['Row']>;
       };
     };
     Views: Record<string, never>;

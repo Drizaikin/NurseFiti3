@@ -27,8 +27,8 @@ function createSupabaseServerClient() {
 
 export async function POST(req: NextRequest) {
   try {
-    const supabase = createSupabaseServerClient();
-    const adminSupabase = createAdminClient();
+    const supabase = createSupabaseServerClient() as any;
+    const adminSupabase = createAdminClient() as any;
 
     // ── Auth: get caller identity ─────────────────────────────────────────
     const authHeader = req.headers.get('authorization');

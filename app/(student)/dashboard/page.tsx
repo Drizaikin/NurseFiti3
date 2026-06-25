@@ -313,6 +313,11 @@ interface DashboardData {
     exam_date: string; exam_cycle: string;
     xp: number; level: number; streak_count: number;
     plan_tier: string; plan_expires_at: string | null;
+    scholarship?: {
+      campaign_name: string;
+      sponsor_name: string;
+      beneficiary_type: string;
+    };
   };
   stats: {
     total_questions_answered: number; correct_answers: number;
@@ -327,7 +332,7 @@ interface DashboardData {
 // ── Main page ──────────────────────────────────────────────────────────────
 export default function DashboardPage() {
   const router = useRouter();
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const [data, setData] = useState<DashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -365,7 +370,7 @@ export default function DashboardPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push('/login'); return; }
 
-      const [profileRes, studentRes, answersRes, mockRes, flashRes, sessionsRes] = await Promise.all([
+      const [profileRes, studentRes, answersRes, mockRes, flashRes, sessionsRes, scholarshipRes] = await Promise.all([
         supabase.from('profiles').select('full_name').eq('id', user.id).single(),
         supabase.from('student_profiles').select('*').eq('id', user.id).single(),
         supabase.from('student_answers').select('is_correct, time_taken_seconds').eq('student_id', user.id),
@@ -376,6 +381,7 @@ export default function DashboardPage() {
           .eq('student_id', user.id).eq('status', 'confirmed')
           .gte('session_date', new Date().toISOString().split('T')[0])
           .order('session_date', { ascending: true }).limit(3),
+        supabase.from('scholarship_beneficiaries').select('beneficiary_type, scholarship_campaigns(name, sponsor_name)').eq('student_id', user.id).single()
       ]);
 
       const profileData = profileRes.data as { full_name: string } | null;
@@ -410,6 +416,11 @@ export default function DashboardPage() {
           streak_count: studentData.streak_count ?? 0,
           plan_tier: studentData.plan_tier ?? 'free',
           plan_expires_at: studentData.plan_expires_at ?? null,
+          scholarship: scholarshipRes.data ? {
+            campaign_name: (scholarshipRes.data.scholarship_campaigns as any)?.name,
+            sponsor_name: (scholarshipRes.data.scholarship_campaigns as any)?.sponsor_name,
+            beneficiary_type: scholarshipRes.data.beneficiary_type
+          } : undefined
         },
         stats: {
           total_questions_answered: totalAnswers,
@@ -469,6 +480,26 @@ export default function DashboardPage() {
         examDate={data.student.exam_date}
         examCycle={data.student.exam_cycle}
       />
+
+      {data.student.scholarship && (
+        <Card className="bg-gradient-to-r from-teal-50 to-primary-50 border-teal-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-bold text-primary flex items-center gap-2">
+                🏆 {data.student.scholarship.campaign_name} Scholar
+              </h2>
+              <p className="text-sm text-neutral-dark mt-1">
+                Your <span className="font-semibold">Premium Access</span> is proudly sponsored by <strong>{data.student.scholarship.sponsor_name}</strong>. Keep up the great work!
+              </p>
+            </div>
+            <div className="hidden md:block">
+              <span className="bg-teal-600 text-white text-xs px-3 py-1.5 rounded-full font-bold uppercase tracking-wider">
+                Active Scholarship
+              </span>
+            </div>
+          </div>
+        </Card>
+      )}
 
       {/* ── Stat tiles ─────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">

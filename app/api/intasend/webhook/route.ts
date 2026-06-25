@@ -157,6 +157,26 @@ async function handleSendMoneyEvent(supabase: any, data: any) {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function provisionAccess(supabase: any, payment: any, txnData: any) {
   switch (payment.type) {
+    case 'sponsor_deposit': {
+      if (!payment.reference_id) break;
+
+      await supabase
+        .from('scholarship_deposits')
+        .insert({
+          campaign_id: payment.reference_id,
+          amount_kes: payment.amount,
+          reference: txnData.invoice_id ?? payment.intasend_reference ?? payment.id,
+          notes: 'IntaSend online deposit'
+        });
+
+      await supabase
+        .from('payments')
+        .update({ status: 'completed' })
+        .eq('id', payment.id);
+        
+      break;
+    }
+
     case 'plan_subscription': {
       const { tier, durationDays } = getPlanFromAmount(payment.amount);
       const activatedAt = new Date();

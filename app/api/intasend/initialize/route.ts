@@ -23,7 +23,7 @@ import { z } from 'zod';
 export const dynamic = 'force-dynamic';
 
 const bodySchema = z.object({
-  type: z.enum(['plan_subscription', 'revision_plan', 'session_booking']),
+  type: z.enum(['plan_subscription', 'revision_plan', 'session_booking', 'sponsor_deposit']),
   amountKsh: z.number().int().positive(),
   referenceId: z.string().uuid().optional(),
   metadata: z.record(z.unknown()).optional(),

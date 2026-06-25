@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     const { path } = await req.json();
     if (!path) return NextResponse.json({ error: 'Path required' }, { status: 400 });
 
-    const supabase = createClient();
+    const supabase = createClient() as any;
     const { data: { session } } = await supabase.auth.getSession();
 
     // Only track authenticated users
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true, ignored: true });
     }
 
-    const adminClient = createAdminClient();
+    const adminClient = createAdminClient() as any;
     
     // Insert view bypassing RLS for performance
     await adminClient.from('page_views').insert({

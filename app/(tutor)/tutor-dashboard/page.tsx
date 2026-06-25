@@ -12,6 +12,7 @@ import { Avatar } from '@/components/ui/Avatar';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { FeedbackWidget } from '@/components/shared/FeedbackWidget';
 import { FeedbackWall } from '@/components/shared/FeedbackWall';
+import { toast } from 'react-hot-toast';
 
 export const dynamic = 'force-dynamic';
 

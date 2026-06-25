@@ -131,6 +131,18 @@ export async function GET(req: NextRequest) {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function provisionAccess(supabase: any, payment: any, txn: any) {
   switch (payment.type) {
+    case 'sponsor_deposit': {
+      await supabase
+        .from('scholarship_deposits')
+        .insert({
+          campaign_id: payment.reference_id,
+          amount_kes: payment.amount,
+          reference: txn.invoice_id ?? payment.intasend_reference ?? payment.id,
+          notes: 'IntaSend online deposit'
+        });
+      break;
+    }
+
     case 'plan_subscription': {
       const { tier, durationDays } = getPlanFromAmount(payment.amount);
       const activatedAt = new Date();
@@ -267,6 +279,12 @@ function getSuccessRedirect(type: string): string {
     case 'revision_plan':     return '/revision-plan?payment=success';
     case 'session_booking':   return '/bookings?payment=success';
     case 'plan_subscription': return '/settings?payment=success';
+    case 'sponsor_deposit': {
+      // payment.reference_id has the campaign.id, we'd need slug for redirect, 
+      // but without doing a DB query here, redirecting to /dashboard is safer,
+      // or we can redirect to a generic /sponsor-success page.
+      return '/dashboard?payment=success&type=sponsor';
+    }
     default:                  return '/dashboard?payment=success';
   }
 }

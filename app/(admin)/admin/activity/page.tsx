@@ -17,7 +17,7 @@ type UserActivity = {
 export default function AdminActivityPage() {
   const [users, setUsers] = useState<UserActivity[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const supabase = createClient();
+  const supabase = createClient() as any;
   const router = useRouter();
 
   useEffect(() => {
@@ -62,7 +62,7 @@ export default function AdminActivityPage() {
           .in('id', userIds)
           .neq('role', 'admin'); // exclude admins from the list
 
-        const profileMap = new Map(profilesData?.map(p => [p.id, p]) || []);
+        const profileMap = new Map(profilesData?.map((p: any) => [p.id, p as any]) || []);
 
         const result: UserActivity[] = Array.from(userMap.entries())
           .map(([user_id, stats]) => {
@@ -70,8 +70,8 @@ export default function AdminActivityPage() {
             if (!profile) return null; // skip admins (not in profileMap)
             return {
               user_id,
-              full_name: profile.full_name || 'Unknown User',
-              role: profile.role || 'student',
+              full_name: (profile as any).full_name || 'Unknown User',
+              role: (profile as any).role || 'student',
               total_pages: stats.total,
               last_seen: stats.last_seen,
             };

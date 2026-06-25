@@ -396,3 +396,42 @@ NurseFiti Tutor Management Team`;
     sendEmail(params.tutorEmail, `Reminder: Tutoring session starting in ${timeUntil}`, tutorText),
   ]);
 }
+
+export type ScholarshipWelcomeEmailParams = {
+  to: string | null | undefined;
+  firstName: string;
+  campaignName: string;
+  sponsorName: string;
+  beneficiaryType: string;
+};
+
+export async function sendScholarshipWelcomeEmail(params: ScholarshipWelcomeEmailParams): Promise<MailResult> {
+  const dashboardUrl = `${getSiteUrl()}/dashboard`;
+  const supportEmail = getSupportEmail();
+  const scholarshipType = params.beneficiaryType === 'FULL' ? 'Full Premium Access' : 'Subsidized Premium Access';
+  const text = `Dear ${params.firstName},
+
+Congratulations!
+
+You have been selected as a beneficiary of the ${params.campaignName}.
+
+This scholarship has been proudly sponsored by ${params.sponsorName}.
+
+Your NurseFiti account has been successfully upgraded with ${scholarshipType} for 90 days.
+
+You now have access to our AI features, mock exams, and premium practice materials to help you prepare smarter and succeed in your exams.
+
+Start your preparation now:
+${dashboardUrl}
+
+If you have any questions, our support team is ready to help at:
+${supportEmail}
+
+We wish you immense success in your nursing journey.
+
+Warm Regards,
+
+The NurseFiti Team`;
+
+  return sendEmail(params.to, `Welcome to the ${params.campaignName} Scholarship!`, text);
+}

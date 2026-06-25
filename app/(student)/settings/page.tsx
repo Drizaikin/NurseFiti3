@@ -910,6 +910,27 @@ export default function SettingsPage() {
               {/* Subscription */}
               <SubscriptionCard planTier={profile?.plan_tier ?? 'free'} planExpiresAt={profile?.plan_expires_at ?? null} onUpgradeSuccess={fetchProfile} />
 
+              {/* Scholarships */}
+              <Card>
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h2 className="text-lg font-heading font-bold text-[var(--color-text)]">Scholarships</h2>
+                    <p className="text-sm text-[var(--color-text-secondary)] mt-1">Apply for available nursing scholarships and sponsorship programs.</p>
+                  </div>
+                  <Badge variant="teal">Available</Badge>
+                </div>
+                <div className="p-4 rounded-xl border border-teal-200 bg-teal-50 dark:bg-teal-900/20 mb-4">
+                  <h3 className="font-bold text-teal-900 dark:text-teal-100 mb-1">Samburu Nursing Excellence Scholarship</h3>
+                  <p className="text-xs text-teal-800 dark:text-teal-200">
+                    Sponsored by Senetorial Aspirant, sir. Lokwang Jackson Nadukae. 
+                    Full premium access for 10 students, and subsidized access for 100 students.
+                  </p>
+                </div>
+                <Button variant="primary" onClick={() => router.push('/scholarships/samburu-nursing-excellence/apply')}>
+                  Apply for Scholarship
+                </Button>
+              </Card>
+
               {/* Logout */}
               <Card>
                 <h2 className="text-lg font-heading font-bold text-[var(--color-text)] mb-2">Sign Out</h2>

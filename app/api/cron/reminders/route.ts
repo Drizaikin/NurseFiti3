@@ -10,7 +10,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient();
+    const supabase = createClient() as any;
 
     // Fetch confirmed sessions that haven't started yet
     // We also need student and tutor emails
@@ -32,18 +32,24 @@ export async function GET(req: Request) {
     let emailsSent = 0;
 
     // To minimize DB calls, extract unique user IDs
-    const userIds = Array.from(new Set(sessions.flatMap(s => [s.student_id, s.tutor_id])));
+    const userIds = new Set<string>();
+    sessions.forEach((s: any) => {
+      userIds.add(s.student_id);
+      userIds.add(s.tutor_id);
+    });
     
-    let profilesMap: Record<string, { email: string; full_name: string }> = {};
-    if (userIds.length > 0) {
+    const profilesMap = new Map<string, { email: string; full_name: string }>();
+    if (userIds.size > 0) {
       const { data: profiles } = await supabase
         .from('profiles')
         .select('id, email, full_name')
-        .in('id', userIds);
+        .in('id', Array.from(userIds));
         
-      profilesMap = Object.fromEntries(
-        (profiles || []).map(p => [p.id, { email: p.email, full_name: p.full_name }])
-      );
+      if (profiles) {
+        profiles.forEach((p: any) => {
+          profilesMap.set(p.id, { email: p.email, full_name: p.full_name });
+        });
+      }
     }
 
     for (const session of sessions) {
@@ -57,8 +63,8 @@ export async function GET(req: Request) {
       // Only care about future sessions
       if (diffMinutes < 0) continue;
 
-      const student = profilesMap[session.student_id];
-      const tutor = profilesMap[session.tutor_id];
+      const student = profilesMap.get(session.student_id);
+      const tutor = profilesMap.get(session.tutor_id);
       if (!student || !tutor) continue;
 
       const emailParams = {
