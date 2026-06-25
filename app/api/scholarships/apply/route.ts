@@ -13,7 +13,11 @@ const applySchema = z.object({
   county: z.string().min(2, "County is required"),
   sub_county: z.string().optional(),
   national_id: z.string().optional(),
-  student_id_number: z.string().optional()
+  student_id_number: z.string().optional(),
+  student_id_front_url: z.string().url("Valid URL required for Student ID Front"),
+  student_id_back_url: z.string().url("Valid URL required for Student ID Back"),
+  national_id_front_url: z.string().url("Valid URL required for National ID Front"),
+  national_id_back_url: z.string().url("Valid URL required for National ID Back")
 });
 
 export async function POST(req: NextRequest) {

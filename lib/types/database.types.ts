@@ -577,6 +577,10 @@ export interface Database {
           sub_county: string | null;
           national_id: string | null;
           student_id_number: string | null;
+          student_id_front_url: string | null;
+          student_id_back_url: string | null;
+          national_id_front_url: string | null;
+          national_id_back_url: string | null;
           status: string;
           created_at: string;
           updated_at: string;

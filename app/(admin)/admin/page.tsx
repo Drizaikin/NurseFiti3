@@ -105,6 +105,12 @@ export default function AdminOverviewPage() {
             <p className="text-sm text-neutral-mid">Daily login counts for students and tutors, most visited pages and tabs, and usage trends over time.</p>
           </Card>
         </Link>
+        <Link href="/admin/scholarships">
+          <Card className="hover:border-primary/40 transition-all cursor-pointer h-full border-teal-200 bg-teal-50/50">
+            <h2 className="font-heading font-bold text-teal-700 mb-1">🎓 Scholarships</h2>
+            <p className="text-sm text-neutral-mid">Manage active scholarship campaigns, track sponsor deposits, and review pending student applications.</p>
+          </Card>
+        </Link>
       </div>
     </div>
   );
