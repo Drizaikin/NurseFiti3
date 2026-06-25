@@ -2,6 +2,6 @@
 ALTER TABLE scholarship_campaigns ADD COLUMN IF NOT EXISTS max_subsidized_slots integer DEFAULT 100;
 
 UPDATE scholarship_campaigns 
-SET sponsor_name = 'Senetorial Aspirant, sir. Lokwang Jackson Nadukae',
+SET sponsor_name = 'Senetorial Aspirant, sir. Nadukae Jackson',
     max_subsidized_slots = 100
 WHERE slug = 'samburu-nursing-excellence';

@@ -10,7 +10,7 @@ INSERT INTO public.scholarship_campaigns (
 ) VALUES (
     'samburu-nursing-excellence',
     'Samburu Nursing Excellence Scholarship Initiative',
-    'Sir. Lokwang Jackson Nadukae',
+    'Sir. Nadukae Jackson',
     10,
     25,
     false,
