@@ -331,7 +331,34 @@ export default function DashboardPage() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => { fetchDashboardData(); }, []);
+  useEffect(() => {
+    fetchDashboardData();
+
+    // 1. Supabase Realtime subscription
+    const channel = supabase
+      .channel('student_dashboard_changes')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'student_answers' },
+        () => fetchDashboardData()
+      )
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'mock_exam_results' },
+        () => fetchDashboardData()
+      )
+      .subscribe();
+
+    // 2. Window focus listener
+    const onFocus = () => fetchDashboardData();
+    window.addEventListener('focus', onFocus);
+
+    return () => {
+      supabase.removeChannel(channel);
+      window.removeEventListener('focus', onFocus);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const fetchDashboardData = async () => {
     try {

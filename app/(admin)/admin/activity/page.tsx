@@ -90,6 +90,27 @@ export default function AdminActivityPage() {
     };
 
     fetchActivity();
+
+    // 1. Supabase Realtime subscription
+    const channel = supabase
+      .channel('admin_activity_changes')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'page_views' },
+        () => {
+          fetchActivity();
+        }
+      )
+      .subscribe();
+
+    // 2. Window focus listener for fallback/tab switching
+    const onFocus = () => fetchActivity();
+    window.addEventListener('focus', onFocus);
+
+    return () => {
+      supabase.removeChannel(channel);
+      window.removeEventListener('focus', onFocus);
+    };
   }, [supabase]);
 
   if (isLoading) {
