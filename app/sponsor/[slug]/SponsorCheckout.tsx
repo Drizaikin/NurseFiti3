@@ -52,8 +52,8 @@ export default function SponsorCheckout({ campaign }: { campaign: any }) {
       if (!res.ok) throw new Error(data.error || 'Failed to initialize payment');
       
       // Redirect to IntaSend checkout
-      if (data.url) {
-        window.location.href = data.url;
+      if (data.checkout_url || data.url) {
+        window.location.href = data.checkout_url || data.url;
       } else {
         throw new Error('No checkout URL returned');
       }
