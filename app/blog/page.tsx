@@ -27,6 +27,24 @@ const POSTS = [
     cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
   },
   {
+    slug: 'nck-june-2026-update',
+    title: 'NCK June 2026 Update: Exam Results, May Cycle Wrap‑up & Unaccredited College Warning',
+    excerpt: 'Latest NCK news: February results released, May exam concluded, and a formal warning on unaccredited nursing colleges. Stay informed and prepare.',
+    category: 'NCK News',
+    readTime: '9 min read',
+    date: '2026-06-25',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
+    slug: 'nursefiti-for-nursing-students-undergrads',
+    title: 'NurseFiti Is Not Just for NCK Exam Prep — It Works for Undergrads Too',
+    excerpt: 'Think NurseFiti is only for licensing exam candidates? Nursing undergrads use it to ace unit exams, master clinical concepts, and build study habits that last.',
+    category: 'Study Guide',
+    readTime: '8 min read',
+    date: '2026-06-25',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
     slug: 'fathers-day-appreciation-dads-role',
     title: "The Unsung Heroes: Celebrating the Significance of Dads this Father's Day",
     excerpt: 'A heartfelt reflection on the evolving role of fathers, their impact on our resilience, and why their presence is irreplaceable in our lives.',
@@ -148,6 +166,8 @@ const CATEGORY_STYLES: Record<string, { badge: string }> = {
 
 const POST_IMAGES: Record<string, string> = {
   'nck-exam-warning-unaccredited-colleges-kenya-2026': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200&q=80&auto=format&fit=crop',
+  'nck-june-2026-update':               'https://images.unsplash.com/photo-1531499469544-4d4c6f5a9abf?w=800&q=80&auto=format&fit=crop',
+  'nursefiti-for-nursing-students-undergrads': 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80&auto=format&fit=crop',
   'fathers-day-appreciation-dads-role': 'https://images.unsplash.com/photo-1596484552834-6a58f850e0a1?w=800&q=80&auto=format&fit=crop',
   'nck-exam-study-internship-guide':   'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80&auto=format&fit=crop',
   'nck-august-2026-exam-prep-plan':    'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80&auto=format&fit=crop',

@@ -296,6 +296,26 @@ Before publishing, confirm all of the following:
 4. Add the slug to `app/sitemap.ts` with appropriate `priority` and `changeFrequency`
 5. Push to git — Vercel deploys automatically
 
+### Embedding a Sample Practice Question (Optional, Where Relevant)
+Blog posts may include **one interactive sample MCQ** to give readers a taste of the NurseFiti question experience. Use this only where it adds genuine educational value — do not force a question into every post.
+
+**How it works:**
+1. In the post `content` string, add the embed placeholder where you want the question to appear:
+   ```html
+   <div class="sample-mcq-embed" data-question-slug="your-unique-slug"></div>
+   ```
+2. In `components/blog/BlogSampleMCQ.tsx`, add the question data to the `SAMPLE_QUESTIONS` object, keyed by the slug used above.
+3. The component renders an interactive MCQ card matching the exact design of NurseFiti's practice interface — option selection, submit button, correct/incorrect feedback, and rationale.
+4. The "Ask NurseFiti AI" button is included but **prompts the reader to create a free account** instead of calling the API. This serves as a natural CTA.
+5. The question must be **factually accurate**, sourced from the NurseFiti question bank, and relevant to the post topic.
+
+**Rules:**
+- Only include a sample question where it is **educationally relevant** to the post content
+- The question must be from a topic covered in the post (e.g., a pre-eclampsia question in a midwifery post)
+- Never include more than **1 sample question per post** — it is a taste, not a buffet
+- Always follow the question with a CTA linking to `/signup`
+- The AI prompt in the component must always redirect to `/signup` — never call the actual AI API for unauthenticated readers
+
 ### Security Rule — CTA Links
 **Never link from a blog post directly to any authenticated route.** This includes `/practice`, `/mock-exam`, `/flashcards`, `/revision-plan`, `/dashboard`, `/bookings`, `/settings`, `/analytics`, `/admin`, or any tutor route. All CTAs must point to `/signup` or `/login`. Authenticated users who click `/signup` are redirected to their dashboard automatically by the auth flow.
 

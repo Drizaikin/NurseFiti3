@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Script from 'next/script';
+import { BlogSampleMCQ } from '@/components/blog/BlogSampleMCQ';
 
 // ─── Post data ───────────────────────────────────────────────────────────────
 
@@ -610,6 +611,223 @@ Also see our [NCK exam preparation guide](https://www.nursefiti.co.ke/blog/nck-e
 *Always verify exam dates, results, and accreditation status directly at [nckenya.com](https://www.nckenya.com), as information may change after publication.*
     `,
   },
+  {
+    slug: 'nck-june-2026-update',
+    title: 'NCK June 2026 Update: Exam Results, May Cycle Wrap‑up & Unaccredited College Warning',
+    excerpt: 'Latest NCK news: February results released, May exam concluded, Directorate of Nurses reinstated, and NOYA awards launched. Everything verified.',
+    category: 'NCK News',
+    readTime: '9 min read',
+    date: '2026-06-25',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+The Ministry of Health just reinstated the Directorate of Nurses — a move that changes the leadership landscape for every nurse in Kenya. Meanwhile, NCK has released the February 2026 results, wrapped up the May sitting, and there is a government-backed awards scheme you should know about. Here is everything that happened this month, verified and sourced.
+
+There is one change in this update that affects your career trajectory more than exam results — and most nursing graduates have not heard about it yet. Keep reading.
+
+*Last verified: 25 June 2026. Always confirm current information at [nckenya.com](https://www.nckenya.com).*
+
+## Directorate of Nurses Reinstated by the Ministry of Health
+
+During the International Nurses and Midwives Day celebrations in Nairobi in May 2026, Health Cabinet Secretary Aden Duale announced the **reinstatement of the Directorate of Nurses**. According to the Ministry of Health, the absence of this directorate had long hampered the profession, and its restoration is a constitutional step to improve leadership, management, and empowerment of nurses in Kenya.
+
+This is significant because nurses make up approximately **58% of Kenya's health workforce**, according to the Ministry of Health. Having a dedicated directorate means nurses will have direct representation at the policy-making level — influencing staffing ratios, career progression frameworks, and working conditions.
+
+For nursing students and new graduates: this is the institutional change that creates the environment for better internship placements, improved career pathways, and stronger professional advocacy. It is worth watching closely.
+
+**[Start preparing for the NCK exam that opens these doors — practise free on NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+## Nurse of the Year Awards (NOYA) Launched
+
+Alongside the Directorate reinstatement, the Ministry of Health launched the **Nurses and Midwives Recognition and Awards Scheme**, officially called the **Nurse of the Year Awards (NOYA)**. The scheme was announced during International Nurses Week (6–12 May 2026) under the theme *"Our Nurses, Our Future — Empowered Nurses Save Lives."*
+
+According to The Star, the NOYA scheme is designed to celebrate excellence, promote professionalism, and honour the dedication and leadership of nurses and midwives who serve as the backbone of Kenya's healthcare system.
+
+For current students: this is the kind of professional recognition framework that adds value to your licence. Pass the NCK exam, get licensed, practise with excellence — and this scheme creates a pathway for national recognition.
+
+## February 2026 NCK Licensure Exam Results
+
+The NCK released the February 2026 Online Licensure Examination results. According to The Kenya Times, candidates were directed to the NCK Online Services Portal (OSP) to access their results.
+
+If you passed: Apply for your practising licence within **30 days** at [osp.nckenya.go.ke](https://osp.nckenya.go.ke). Delays complicate the process.
+
+If you did not pass: You are eligible to resit at the next available sitting. Before you register again, take an honest diagnostic of your weak areas. NCK reports that a significant proportion of first-attempt candidates do not pass — the distinguishing factor is structured preparation, not extra hours of casual reading.
+
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+  <strong>Key Takeaway:</strong> Whether you passed or not, the next step requires action now. Passed? Apply for your licence today. Did not pass? Start a structured diagnostic practice session to identify your weakest units before the August sitting.
+</div>
+
+**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+
+## May 2026 Exams Concluded — August Is Next
+
+The May 2026 series of national licensure examinations has officially concluded. Results are expected within the standard NCK turnaround window. Keep checking [osp.nckenya.go.ke](https://osp.nckenya.go.ke).
+
+The next sitting is the **August 2026 series** — approximately **6–8 weeks away**. NCK does not accommodate late registration. Once the deadline passes, you wait for the next cycle, which means 4–6 months lost.
+
+If you are preparing now, here is what matters most in the next 6 weeks:
+
+1. Run a diagnostic to identify your weakest units
+2. Focus 70% of study time on weak areas, not comfort zones
+3. Take at least 3 full mock exams under timed conditions
+4. Review every incorrect answer with the rationale — understand *why*, not just *what*
+5. Use spaced repetition flashcards for high-yield pharmacology and drug calculations
+
+See our [8-week NCK prep plan](https://www.nursefiti.co.ke/blog/nck-august-2026-exam-prep-plan) for a week-by-week breakdown.
+
+## Test Yourself: Sample NCK Question
+
+Here is the type of question you will face on the NCK exam. Try it — select your answer and submit to see the correct answer with a full rationale, exactly as NurseFiti users experience it:
+
+<div class="sample-mcq-embed" data-question-slug="nck-june-2026-update-sample"></div>
+
+Want access to thousands more questions like this, with AI-powered explanations? **[Create your free NurseFiti account →](https://www.nursefiti.co.ke/signup)**
+
+## NCK Warning on Unaccredited Colleges Remains Active
+
+The NCK's formal warning regarding **Northlands International Medical Training College (NIMTC)** remains in effect. The Council stated in April 2026 that NIMTC is offering nursing courses without approval, and certificates from this institution will not be recognised for licensure.
+
+Verify your institution's accreditation directly at [nckenya.com](https://www.nckenya.com). Do not rely on verbal assurances from college administrators.
+
+For the full breakdown of this warning and how to verify any institution, see our [detailed coverage of the NCK unaccredited college alert](https://www.nursefiti.co.ke/blog/nck-exam-warning-unaccredited-colleges-kenya-2026).
+
+**[Start your free NurseFiti account — no credit card required](https://www.nursefiti.co.ke/signup)**
+
+> *Share this: "Big news — the Directorate of Nurses has been reinstated by the Ministry of Health, plus NCK Feb results are out and NOYA awards launched. Full breakdown here: nursefiti.co.ke/blog/nck-june-2026-update"*
+
+---
+
+## Sources & References
+
+- **Ministry of Health Kenya** — Reinstatement of the Directorate of Nurses announcement during International Nurses and Midwives Day celebrations, May 2026. [health.go.ke](https://www.health.go.ke)
+- **The Star** — *"Government launches Nurse of the Year Awards (NOYA) during International Nurses Week"*, May 2026. [the-star.co.ke](https://www.the-star.co.ke)
+- **The Kenya Times** — *"NCK February 2026 Licensure Exam Results Released"*, April 2026. [thekenyatimes.com](https://thekenyatimes.com)
+- **NCK Online Services Portal (OSP)** — Official portal for exam results and licence applications. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
+- **Nursing Council of Kenya** — Official website for accreditation verification and exam information. [nckenya.com](https://www.nckenya.com)
+- **Health Cabinet Secretary Aden Duale** — Public address on the reinstatement of the Directorate of Nurses (as reported by multiple outlets, May 2026).
+
+*Always verify current exam information and institutional accreditation directly at [nckenya.com](https://www.nckenya.com).*
+    `,
+  },
+  {
+    slug: 'nursefiti-for-nursing-students-undergrads',
+    title: 'NurseFiti Is Not Just for NCK Exam Prep — It Works for Undergrads Too',
+    excerpt: 'Think NurseFiti is only for licensing exam candidates? Nursing undergrads use it to ace unit exams, master clinical concepts, and build study habits that last.',
+    category: 'Study Guide',
+    readTime: '8 min read',
+    date: '2026-06-25',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+Most nursing students discover NurseFiti the week before their NCK licensure exam — panicked, cramming, and wishing they had started months earlier. But here is something most people do not realise: the students who pass the NCK exam first attempt are often the ones who started using NurseFiti as undergrads, long before graduation.
+
+There is a specific study technique that top-performing BScN and KRCHN students use throughout their degree — and it has nothing to do with re-reading lecture notes. We will cover it below.
+
+## The Problem with How Nursing Students Study
+
+Let us be direct. The traditional study approach for most Kenyan nursing undergrads looks like this:
+
+1. Attend lectures (or get notes from a friend who attended)
+2. Read notes the night before the unit exam
+3. Memorise as much as possible
+4. Sit the exam
+5. Forget 80% of the content within two weeks
+
+This approach might get you through individual unit exams. But it creates a devastating problem: by the time you graduate and face the NCK licensure exam, you have forgotten most of what you learned in Year 1 and Year 2. You are essentially starting from scratch — with 6 semesters of content to re-learn in a few weeks.
+
+That is why so many first-attempt candidates fail. It is not a knowledge gap — it is a **retention gap**.
+
+**[Start building retention now — practise free on NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+## What Makes NurseFiti Different for Undergrads
+
+NurseFiti was built for the NCK exam — but the study tools work just as powerfully for unit exams, clinical placements, and continuous assessment tests (CATs). Here is why:
+
+### Active Recall Through MCQ Practice
+
+Every question on NurseFiti is designed around **active recall** — the practice of retrieving information from memory rather than passively re-reading it. Research consistently shows that active recall produces significantly stronger long-term retention than re-reading or highlighting.
+
+As an undergrad, you can filter questions by the specific unit you are currently studying — Pharmacology, Medical-Surgical Nursing, Community Health, Midwifery — and practise questions that test the exact concepts your lecturer will examine.
+
+### Spaced Repetition Flashcards
+
+NurseFiti's flashcard system uses **spaced repetition**, an evidence-based method where you review information at increasing intervals. Concepts you struggle with appear more frequently; concepts you know well appear less often.
+
+For undergrads, this means you can create flashcard decks for each semester and maintain your knowledge across the entire degree. By the time you graduate, the content from Year 1 is still fresh — because you have been reviewing it at scientifically optimised intervals.
+
+### AI-Powered Explanations
+
+Every question comes with a detailed rationale explaining why the correct answer is correct and why each distractor is wrong. When you need more depth, NurseFiti AI provides clinical explanations grounded in Kenyan nursing curricula, approved by the Nursing Council of Kenya standards.
+
+This is not a generic AI chatbot. NurseFiti AI understands the Kenyan healthcare context — the Kenya Essential Medicines List (KEML), the county health system structure, the immunisation schedule, and the NCK competency framework.
+
+## Test Yourself: Sample Question
+
+Here is a sample question from the NurseFiti question bank. Select your answer and submit to see the rationale — exactly as you would in the full app:
+
+<div class="sample-mcq-embed" data-question-slug="nursefiti-undergrad-sample"></div>
+
+Want thousands more? **[Create your free NurseFiti account →](https://www.nursefiti.co.ke/signup)**
+
+## How Undergrads Use NurseFiti — A Practical Guide
+
+### During the Semester
+- After each lecture, spend 15 minutes answering 10 MCQs on the topic covered
+- Use flashcards for drug names, dosages, and clinical procedures
+- Review AI explanations for concepts you find confusing
+
+### Before Unit Exams
+- Filter questions by the specific unit being examined
+- Take a timed practice set of 50 questions to simulate exam conditions
+- Focus on questions you got wrong — the rationales are where the real learning happens
+
+### During Clinical Placements
+- Use flashcards offline (on the matatu, during breaks) to maintain knowledge while on the ward
+- After encountering a clinical scenario, practise related MCQs to reinforce the connection between theory and practice
+
+### Preparing for CATs and End-of-Semester Exams
+- Run mixed-topic sessions across all units covered that semester
+- Track your performance in Analytics to identify units below 60% accuracy — those need extra attention
+
+## The Long Game: How Undergrad Practice Pays Off at NCK
+
+Consider this: the NCK exam tests content from **your entire nursing programme** — all years, all units, integrated into two papers. Candidates who try to learn everything in the 8 weeks before the exam are fighting an impossible battle.
+
+But candidates who have been practising throughout their degree? They arrive at the NCK exam with:
+
+- Existing familiarity with 70–80% of the content
+- Strong retrieval pathways from years of active recall
+- Confidence from thousands of practice questions already answered
+- A study habit that makes the final 8 weeks of revision feel like a review, not a rescue mission
+
+This is the difference between passing first attempt and joining the significant proportion of candidates who do not.
+
+## What You Get on the Free Plan
+
+NurseFiti's free tier is designed to let you start building these habits right now, with no financial barrier:
+
+- Practice questions every day with rationales
+- Spaced repetition flashcards
+- Access to NurseFiti AI for deeper explanations
+- Performance analytics showing your strengths and weaknesses
+- A personalised revision plan
+
+You do not need to wait until graduation to start preparing. The best time to start is today — in Year 1, Year 2, or Year 3. The earlier you begin, the easier the NCK exam becomes.
+
+**[Start your free NurseFiti account — no credit card required](https://www.nursefiti.co.ke/signup)**
+
+> *Share this with your classmates: "NurseFiti isn't just for NCK exam prep — it works for unit exams too. Free practice questions, flashcards, and AI explanations. Check it out: nursefiti.co.ke/blog/nursefiti-for-nursing-students-undergrads"*
+
+---
+
+## Sources & References
+
+- **Roediger, H.L. & Butler, A.C. (2011)** — *"The critical role of retrieval practice in long-term retention"*, Trends in Cognitive Sciences, 15(1), 20–27. [DOI: 10.1016/j.tics.2010.09.003](https://doi.org/10.1016/j.tics.2010.09.003)
+- **Cepeda, N.J., Pashler, H., Vul, E., et al. (2006)** — *"Distributed practice in verbal recall tasks: A review and quantitative synthesis"*, Psychological Bulletin, 132(3), 354–380. [DOI: 10.1037/0033-2909.132.3.354](https://doi.org/10.1037/0033-2909.132.3.354)
+- **Nursing Council of Kenya** — Official website for approved curricula and examination standards. [nckenya.com](https://www.nckenya.com)
+- **Ministry of Health Kenya** — Kenya Essential Medicines List and national health workforce data. [health.go.ke](https://www.health.go.ke)
+
+*Always verify current exam and registration information directly at [nckenya.com](https://www.nckenya.com).*
+    `,
+  },
 ];
 
 const POSTS_NEW: Post[] = [
@@ -1179,6 +1397,11 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
     alt: 'Nursing intern reviewing patient charts and clinical files in a hospital ward',
     credit: 'Unsplash',
   },
+  'nck-june-2026-update': {
+    url: 'https://images.unsplash.com/photo-1531499469544-4d4c6f5a9abf?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Nursing exam results announcement — nurses celebrating',
+    credit: 'Unsplash',
+  },
   'nck-exam-warning-unaccredited-colleges-kenya-2026': {
     url: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200&q=80&auto=format&fit=crop',
     alt: 'Nursing exam results announcement — nurses celebrating',
@@ -1234,6 +1457,11 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
     alt: 'Official documents and forms for NCK licence application',
     credit: 'Unsplash',
   },
+  'nursefiti-for-nursing-students-undergrads': {
+    url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Kenyan nursing students studying together at university campus',
+    credit: 'Unsplash',
+  },
 };
 
 const CATEGORY_STYLES: Record<string, { badge: string; dot: string }> = {
@@ -1264,6 +1492,12 @@ function renderContent(content: string) {
     const trimmed = line.trim();
     if (!trimmed) {
       elements.push(<div key={key++} className="h-2" />);
+    } else if (trimmed.includes('sample-mcq-embed')) {
+      // Extract the data-question-slug from the HTML
+      const slugMatch = trimmed.match(/data-question-slug="([^"]+)"/);
+      if (slugMatch) {
+        elements.push(<BlogSampleMCQ key={key++} questionSlug={slugMatch[1]} />);
+      }
     } else if (trimmed.startsWith('### ')) {
       elements.push(
         <h3 key={key++} className="text-xl font-heading font-bold text-[var(--color-text)] mt-8 mb-3">
