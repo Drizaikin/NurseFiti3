@@ -18,6 +18,15 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: 'nck-exam-warning-unaccredited-colleges-kenya-2026',
+    title: 'NCK Exam Warning 2026: The Unaccredited College Alert You Must Know',
+    excerpt: 'The Nursing Council of Kenya has issued a formal warning regarding unaccredited training institutions. Verify your college status to avoid NCK exam disqualification.',
+    category: 'NCK News',
+    readTime: '6 min read',
+    date: '2026-06-25',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
     slug: 'fathers-day-appreciation-dads-role',
     title: "The Unsung Heroes: Celebrating the Significance of Dads this Father's Day",
     excerpt: 'A heartfelt reflection on the evolving role of fathers, their impact on our resilience, and why their presence is irreplaceable in our lives.',
@@ -138,6 +147,7 @@ const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 const POST_IMAGES: Record<string, string> = {
+  'nck-exam-warning-unaccredited-colleges-kenya-2026': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200&q=80&auto=format&fit=crop',
   'fathers-day-appreciation-dads-role': 'https://images.unsplash.com/photo-1596484552834-6a58f850e0a1?w=800&q=80&auto=format&fit=crop',
   'nck-exam-study-internship-guide':   'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80&auto=format&fit=crop',
   'nck-august-2026-exam-prep-plan':    'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80&auto=format&fit=crop',

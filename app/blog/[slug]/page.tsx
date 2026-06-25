@@ -18,6 +18,79 @@ interface Post {
 
 const POSTS: Post[] = [
   {
+    slug: 'nck-exam-warning-unaccredited-colleges-kenya-2026',
+    title: 'NCK Exam Warning 2026: The Unaccredited College Alert You Must Know',
+    excerpt: 'The Nursing Council of Kenya has issued a formal warning regarding unaccredited training institutions. Verify your college status to avoid NCK exam disqualification.',
+    category: 'NCK News',
+    readTime: '6 min read',
+    date: '2026-06-25',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+Imagine spending three years of your life, millions of shillings in tuition, and countless sleepless nights on the ward—only to discover your nursing college wasn't accredited. You try to register for the NCK exam on the OSP portal, and the system rejects you. Your degree or diploma is completely void.
+
+This isn't a theoretical fear. The Nursing Council of Kenya (NCK) has just issued a serious public warning addressing this exact nightmare scenario.
+
+In this update, we cover the latest June 2026 NCK announcements, including the unaccredited institution alert, the status of the February 2026 results, and what happens next for the May 2026 cohort.
+
+## The NCK Warning on Unaccredited Colleges
+
+The NCK has issued formal warnings regarding institutions offering nursing training without proper council accreditation. Specifically, the Council named **Northlands International Medical Training College**, alerting the public that nursing programs from this institution are not currently recognised.
+
+Why does this matter? Because the NCK is the sole regulatory body for nursing education in Kenya. If your college is not accredited by the NCK, you **cannot** sit for the national licensure examination. You will not receive a licence, and you cannot legally practise as a nurse in Kenya.
+
+Before enrolling in any nursing program, or if you are currently enrolled and unsure, you must verify your institution's status. The NCK maintains an updated list of approved training institutions.
+
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+  <strong>Key Takeaway:</strong> Always verify institutional accreditation directly on the official NCK website before paying tuition fees. Do not rely on verbal assurances from college administrators.
+</div>
+
+**[Ready to see if you are prepared for the NCK exam? Start practising on NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+## February 2026 Results are Live
+
+If you sat for the February 2026 NCK licensure examination, the wait is over. The results have been officially released and are accessible via the NCK Online Services Portal (OSP).
+
+For candidates who passed: Congratulations! Your next immediate step is to apply for your practising licence through the same portal. Do not delay this step, as internship postings often require proof of licensure or successful exam completion.
+
+For candidates who did not pass: Do not panic. NCK reports that a significant proportion of first-attempt candidates do not pass — making structured preparation, not casual revision, the distinguishing factor. You will have to wait for the next available cycle to re-sit. Use this time to completely change your study approach. Reading notes doesn't work; active recall and mock exams do.
+
+## May 2026 Exams Concluded
+
+The May 2026 series of national licensure examinations has officially concluded. To all the candidates who just finished, take a well-deserved break. The hard work of studying is behind you.
+
+You are now in the waiting period. NCK will communicate the release date for the results in due course. Keep a close eye on the official OSP portal and your registered email address.
+
+## How to Protect Your Nursing Career
+
+The recent warning about unaccredited colleges is a reminder of how strict the NCK regulations are. The Council does not compromise on standards, whether it's college accreditation or the licensure exam itself.
+
+When it comes to the exam, you need to treat it with the same level of seriousness. The NCK exam format (DigiProctor) is unique, and the questions are designed to test clinical application, not just rote memorisation.
+
+**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+
+## Start Your Preparation Today
+
+Whether you are waiting for your May results, preparing to re-sit after February, or gearing up for the August/November cycles, your preparation strategy dictates your outcome.
+
+Do not wait until the last minute. Structured, spaced repetition and continuous mock exams are the only proven ways to guarantee a first-attempt pass.
+
+**[Start your free NurseFiti account — no credit card required](https://www.nursefiti.co.ke/signup)**
+
+> *Found this — really useful update on the latest NCK news, especially the warning about unaccredited colleges. Also has info on the Feb results. Share with anyone who needs it: nursefiti.co.ke/blog/nck-exam-warning-unaccredited-colleges-kenya-2026*
+
+---
+
+### Sources & References
+
+*Always verify current exam information and institutional accreditation directly at [nckenya.com](https://www.nckenya.com).*
+
+- **NurseFiti Market Intelligence** — Verified NCK operational updates and exam cycle tracking (June 2026).
+- **The Kenya Times** — Coverage on NCK portal operations and licensure processes. [thekenyatimes.com](https://thekenyatimes.com)
+- **Nursing Council of Kenya** — Official website for verifying approved training institutions. [nckenya.com](https://www.nckenya.com)
+- **NCK Online Services Portal (OSP)** — Official portal for exam results and licence applications. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
+    `,
+  },
+  {
     slug: 'fathers-day-appreciation-dads-role',
     title: "The Unsung Heroes: Celebrating the Significance of Dads this Father's Day",
     excerpt: 'A heartfelt reflection on the evolving role of fathers, their impact on our resilience, and why their presence is irreplaceable in our lives.',
@@ -1104,6 +1177,11 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
   'nck-exam-study-internship-guide': {
     url: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=1200&q=80&auto=format&fit=crop',
     alt: 'Nursing intern reviewing patient charts and clinical files in a hospital ward',
+    credit: 'Unsplash',
+  },
+  'nck-exam-warning-unaccredited-colleges-kenya-2026': {
+    url: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Nursing exam results announcement — nurses celebrating',
     credit: 'Unsplash',
   },
   'nck-latest-news-june-2026': {
