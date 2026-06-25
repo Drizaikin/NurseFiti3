@@ -306,10 +306,10 @@ export default function StudentSignupPage() {
                 </label>
                 <input
                   {...register('examDate')}
-                  type="date"
+                  type="month"
                   id="examDate"
                   className="input"
-                  min={new Date().toISOString().split('T')[0]}
+                  min={new Date().toISOString().slice(0, 7)}
                   disabled={isLoading}
                   onChange={(e) => {
                     register('examDate').onChange(e);

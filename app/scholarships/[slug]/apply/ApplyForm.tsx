@@ -19,7 +19,6 @@ export default function ApplyForm({ campaignId, userId, initialData }: { campaig
     phone_number: '',
     institution: '',
     course: '',
-    exam_date: '',
     county: '',
     sub_county: '',
     national_id: '',
@@ -212,10 +211,6 @@ export default function ApplyForm({ campaignId, userId, initialData }: { campaig
             <div className="space-y-2">
               <label className="text-sm font-semibold text-primary">Student ID / Admission No. *</label>
               <input required name="student_id_number" value={formData.student_id_number} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-primary">Expected NCK Exam Date</label>
-              <input type="month" name="exam_date" value={formData.exam_date} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" />
             </div>
           </div>
         </section>

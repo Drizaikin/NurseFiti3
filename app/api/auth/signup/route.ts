@@ -127,13 +127,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const formattedExamDate = data.examDate.length === 7 ? `${data.examDate}-01` : data.examDate;
+
     // ── 6. Create student profile row ─────────────────────────────────────
     const { error: studentError } = await supabase.from('student_profiles').insert({
       id: userId,
       cadre: data.cadre,
       specialty: data.specialty ?? null,
       institution: data.institution,
-      exam_date: data.examDate,
+      exam_date: formattedExamDate,
       exam_cycle: data.examCycle,
       xp: 0,
       level: 1,

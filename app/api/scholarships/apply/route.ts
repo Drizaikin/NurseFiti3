@@ -9,7 +9,6 @@ const applySchema = z.object({
   email: z.string().email("Valid email is required"),
   institution: z.string().min(2, "Institution is required"),
   course: z.string().min(2, "Course is required"),
-  exam_date: z.string().optional(),
   county: z.string().min(2, "County is required"),
   sub_county: z.string().optional(),
   national_id: z.string().optional(),
@@ -48,11 +47,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'You have already applied for this scholarship.' }, { status: 400 });
     }
 
+    // Fetch exam_date from student profile
+    const { data: studentProfile } = await supabase
+      .from('student_profiles')
+      .select('exam_date')
+      .eq('id', user.id)
+      .single();
+
     // Insert application
     const { data: application, error: insertError } = await supabase
       .from('scholarship_applications')
       .insert({
         ...parsed.data,
+        exam_date: studentProfile?.exam_date,
         student_id: user.id,
         status: 'pending'
       })
