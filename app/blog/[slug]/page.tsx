@@ -1398,8 +1398,8 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
     credit: 'Unsplash',
   },
   'nck-june-2026-update': {
-    url: 'https://images.unsplash.com/photo-1531499469544-4d4c6f5a9abf?w=1200&q=80&auto=format&fit=crop',
-    alt: 'Nursing exam results announcement — nurses celebrating',
+    url: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Medical professional reviewing nursing data on digital tablet — NCK June 2026 update',
     credit: 'Unsplash',
   },
   'nck-exam-warning-unaccredited-colleges-kenya-2026': {
@@ -1433,8 +1433,8 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
     credit: 'Unsplash',
   },
   'digiproctor-nck-exam-guide': {
-    url: 'https://images.unsplash.com/photo-1588776814546-1ffbb9b0ea79?w=1200&q=80&auto=format&fit=crop',
-    alt: 'Computer-based exam testing interface',
+    url: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Student hands typing on laptop during computer-based exam — DigiProctor NCK interface',
     credit: 'Unsplash',
   },
   'nck-exam-anxiety-how-to-manage-it': {
@@ -1458,8 +1458,8 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
     credit: 'Unsplash',
   },
   'nursefiti-for-nursing-students-undergrads': {
-    url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80&auto=format&fit=crop',
-    alt: 'Kenyan nursing students studying together at university campus',
+    url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Nursing students collaborating and studying together at university with laptop',
     credit: 'Unsplash',
   },
 };

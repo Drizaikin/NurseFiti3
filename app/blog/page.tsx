@@ -166,8 +166,8 @@ const CATEGORY_STYLES: Record<string, { badge: string }> = {
 
 const POST_IMAGES: Record<string, string> = {
   'nck-exam-warning-unaccredited-colleges-kenya-2026': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200&q=80&auto=format&fit=crop',
-  'nck-june-2026-update':               'https://images.unsplash.com/photo-1531499469544-4d4c6f5a9abf?w=800&q=80&auto=format&fit=crop',
-  'nursefiti-for-nursing-students-undergrads': 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80&auto=format&fit=crop',
+  'nck-june-2026-update':               'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80&auto=format&fit=crop',
+  'nursefiti-for-nursing-students-undergrads': 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80&auto=format&fit=crop',
   'fathers-day-appreciation-dads-role': 'https://images.unsplash.com/photo-1596484552834-6a58f850e0a1?w=800&q=80&auto=format&fit=crop',
   'nck-exam-study-internship-guide':   'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80&auto=format&fit=crop',
   'nck-august-2026-exam-prep-plan':    'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80&auto=format&fit=crop',
@@ -176,7 +176,7 @@ const POST_IMAGES: Record<string, string> = {
   'krchn-exam-revision-tips':          'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80&auto=format&fit=crop',
   'bscn-nursing-exam-kenya':           'https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=800&q=80&auto=format&fit=crop',
   'nck-past-papers-practice':          'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80&auto=format&fit=crop',
-  'digiproctor-nck-exam-guide':        'https://images.unsplash.com/photo-1588776814546-1ffbb9b0ea79?w=800&q=80&auto=format&fit=crop',
+  'digiproctor-nck-exam-guide':        'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80&auto=format&fit=crop',
   'nck-exam-anxiety-how-to-manage-it': 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80&auto=format&fit=crop',
   'nck-pharmacology-calculations-guide': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80&auto=format&fit=crop',
   'how-to-apply-nck-licence-kenya': 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80&auto=format&fit=crop',
