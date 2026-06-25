@@ -3,6 +3,7 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { Card } from '@/components/ui/Card';
 import { notFound } from 'next/navigation';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 import SponsorCheckout from './SponsorCheckout';
 
 export const dynamic = 'force-dynamic';
@@ -88,6 +89,9 @@ export default async function SponsorDashboardPage({ params }: { params: { slug:
       {/* Hero Header */}
       <div className="bg-primary text-white pt-16 pb-20 px-4">
         <div className="max-w-6xl mx-auto text-center space-y-4">
+          <div className="flex justify-center mb-6">
+            <NurseFitiLogo variant="white" size={48} />
+          </div>
           <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-bold tracking-wider uppercase">Impact Report</span>
           <h1 className="text-4xl md:text-5xl font-heading font-bold">{campaign.name}</h1>
           <p className="text-lg text-primary-light">Proudly Sponsored by <span className="font-bold text-white">{campaign.sponsor_name}</span></p>
