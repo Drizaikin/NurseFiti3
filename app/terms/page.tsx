@@ -18,7 +18,7 @@ export default function TermsPage() {
       <div className="max-w-3xl mx-auto">
         <div className="mb-8"><Link href="/"><NurseFitiLogo variant="full" size={48} /></Link></div>
         <h1 className="text-4xl font-heading font-bold text-primary mb-2">Terms of Service</h1>
-        <p className="text-neutral-mid mb-8">Last updated: May 2026</p>
+        <p className="text-neutral-mid mb-8">Last updated: June 2026</p>
         <div className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl p-8 space-y-6 text-[var(--color-text)]">
           <section>
             <h2 className="text-xl font-heading font-bold mb-3">1. Acceptance of Terms</h2>
@@ -50,12 +50,33 @@ export default function TermsPage() {
             </p>
           </section>
           <section>
-            <h2 className="text-xl font-heading font-bold mb-3">4. Content</h2>
-            <p className="text-neutral-mid leading-relaxed">All MCQs, flashcards, and study materials on NurseFiti are for exam preparation purposes only. They do not constitute medical advice.</p>
+            <h2 className="text-xl font-heading font-bold mb-3">5. Educational Platform & Medical Advice Liability</h2>
+            <p className="text-neutral-mid leading-relaxed mb-2"><strong>NurseFiti provides educational content for learning and examination preparation purposes only.</strong></p>
+            <p className="text-neutral-mid leading-relaxed">NurseFiti is strictly an educational platform, not a clinical platform. Information, guidance, or instruction shared on this platform (including by tutors during live sessions) must not replace professional clinical judgment, institutional guidelines, NCK standards, MOH guidelines, or physician orders. NurseFiti shall not be held liable for any clinical actions taken based on content learned or discussed on the platform.</p>
           </section>
           <section>
-            <h2 className="text-xl font-heading font-bold mb-3">5. Contact</h2>
-            <p className="text-neutral-mid">Questions? Email <a href="mailto:support@nursefiti.vercel.app" className="text-primary hover:underline">support@nursefiti.vercel.app</a></p>
+            <h2 className="text-xl font-heading font-bold mb-3">6. Academic Integrity Policy</h2>
+            <p className="text-neutral-mid leading-relaxed mb-2">NurseFiti is committed to promoting honest academic preparation for the NCK examinations. We strictly prohibit:</p>
+            <ul className="list-disc list-inside text-neutral-mid space-y-1 ml-2 mb-2">
+              <li>Possession, distribution, or discussion of leaked official examinations.</li>
+              <li>Stolen exam papers, insider information, or confidential exam materials.</li>
+              <li>Impersonation, cheating assistance, or any form of examination malpractice.</li>
+            </ul>
+            <p className="text-neutral-mid leading-relaxed mb-2">We expressly allow and encourage:</p>
+            <ul className="list-disc list-inside text-neutral-mid space-y-1 ml-2">
+              <li>Syllabus-based predictions and revision.</li>
+              <li>Mock exams and discussion of past publicly available papers.</li>
+              <li>Exam techniques, strategies, and topic mastery.</li>
+            </ul>
+            <p className="text-neutral-mid leading-relaxed">Any user found violating the prohibited actions will be permanently banned from the platform.</p>
+          </section>
+          <section>
+            <h2 className="text-xl font-heading font-bold mb-3">7. Disclaimer & Limitation of Liability</h2>
+            <p className="text-neutral-mid leading-relaxed">While NurseFiti aims to provide high-quality revision resources, we do not guarantee that you will pass the NCK examination. NurseFiti is an independent educational tool and is not an "Official NCK partner", "NCK approved", or "NCK certified" unless expressly stated otherwise. We provide NCK-focused revision resources designed for success. Your use of the platform is at your own risk.</p>
+          </section>
+          <section>
+            <h2 className="text-xl font-heading font-bold mb-3">8. Contact</h2>
+            <p className="text-neutral-mid">Questions? Email <a href="mailto:support@nursefiti.co.ke" className="text-primary hover:underline">support@nursefiti.co.ke</a></p>
           </section>
         </div>
         <div className="mt-6 text-center"><Link href="/" className="text-primary hover:underline text-sm">← Back to NurseFiti</Link></div>

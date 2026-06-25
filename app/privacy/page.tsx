@@ -18,27 +18,40 @@ export default function PrivacyPage() {
       <div className="max-w-3xl mx-auto">
         <div className="mb-8"><Link href="/"><NurseFitiLogo variant="full" size={48} /></Link></div>
         <h1 className="text-4xl font-heading font-bold text-primary mb-2">Privacy Policy</h1>
-        <p className="text-neutral-mid mb-8">Last updated: May 2026</p>
+        <p className="text-neutral-mid mb-8">Last updated: June 2026</p>
         <div className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl p-8 space-y-6 text-[var(--color-text)]">
           <section>
             <h2 className="text-xl font-heading font-bold mb-3">1. Data We Collect</h2>
-            <p className="text-neutral-mid leading-relaxed">We collect your name, email, phone number, institution, and exam details when you register. We also collect your practice answers and performance data to personalise your study experience.</p>
+            <p className="text-neutral-mid leading-relaxed mb-2">To provide our educational services and comply with the Kenya Data Protection Act 2019, NurseFiti collects the following personal data:</p>
+            <ul className="list-disc list-inside text-neutral-mid space-y-1 ml-2">
+              <li><strong>Student Data:</strong> Names, email addresses, phone numbers, nursing school/institution, course details, exam dates, and payment transaction records.</li>
+              <li><strong>Tutor Data:</strong> Names, email addresses, phone numbers, NCK license numbers, professional certificates, ID information, CVs, and professional qualifications.</li>
+              <li><strong>Usage Data:</strong> Practice answers, mock exam scores, and performance metrics to personalise the study experience.</li>
+            </ul>
           </section>
           <section>
             <h2 className="text-xl font-heading font-bold mb-3">2. How We Use Your Data</h2>
-            <p className="text-neutral-mid leading-relaxed">Your data is used to provide the NurseFiti service — personalised study recommendations, progress tracking, tutor matching, and M-Pesa payment processing. We do not sell your data to third parties.</p>
+            <p className="text-neutral-mid leading-relaxed">Your data is collected and processed solely to provide the NurseFiti service. This includes personalised study recommendations, progress tracking, verifying tutor credentials, and processing M-Pesa payments. We do not sell your personal data to third parties.</p>
           </section>
           <section>
-            <h2 className="text-xl font-heading font-bold mb-3">3. Data Storage</h2>
-            <p className="text-neutral-mid leading-relaxed">Your data is stored securely on Supabase (PostgreSQL) with row-level security. All data is encrypted in transit via HTTPS.</p>
+            <h2 className="text-xl font-heading font-bold mb-3">3. Secure Storage & Access Control</h2>
+            <p className="text-neutral-mid leading-relaxed mb-2">Your data is stored securely on encrypted databases with strict Row-Level Security (RLS) policies. All data is transmitted via HTTPS.</p>
+            <ul className="list-disc list-inside text-neutral-mid space-y-1 ml-2">
+              <li><strong>Confidential Documents:</strong> Sensitive documents such as NCK licenses, IDs, and professional certificates are stored in private, non-public storage buckets.</li>
+              <li><strong>Access Control:</strong> Only authorized members of the NurseFiti admin verification team have access to view these confidential documents for the sole purpose of identity and credential verification. These documents are never exposed publicly.</li>
+            </ul>
           </section>
           <section>
-            <h2 className="text-xl font-heading font-bold mb-3">4. Your Rights</h2>
-            <p className="text-neutral-mid leading-relaxed">You can request deletion of your account and all associated data at any time by emailing support@nursefiti.vercel.app. We will process deletion requests within 30 days.</p>
+            <h2 className="text-xl font-heading font-bold mb-3">4. Data Retention Policy</h2>
+            <p className="text-neutral-mid leading-relaxed">We retain your personal data only for as long as necessary to fulfill the purposes outlined in this Privacy Policy, including satisfying any legal, accounting, or reporting requirements. Educational performance data may be anonymized and aggregated for statistical analysis after account deletion.</p>
           </section>
           <section>
-            <h2 className="text-xl font-heading font-bold mb-3">5. Contact</h2>
-            <p className="text-neutral-mid">Privacy questions? Email <a href="mailto:support@nursefiti.vercel.app" className="text-primary hover:underline">support@nursefiti.vercel.app</a></p>
+            <h2 className="text-xl font-heading font-bold mb-3">5. Your Rights & Deletion Requests</h2>
+            <p className="text-neutral-mid leading-relaxed">Under the Data Protection Act 2019, you have the right to access, correct, or request the deletion of your personal data. You can request the complete deletion of your account and all associated identifiable data at any time by emailing <a href="mailto:support@nursefiti.co.ke" className="text-primary hover:underline">support@nursefiti.co.ke</a>. We process deletion requests within 30 days.</p>
+          </section>
+          <section>
+            <h2 className="text-xl font-heading font-bold mb-3">6. Contact</h2>
+            <p className="text-neutral-mid">For privacy-related questions or data requests, email our Data Protection Officer at <a href="mailto:support@nursefiti.co.ke" className="text-primary hover:underline">support@nursefiti.co.ke</a></p>
           </section>
         </div>
         <div className="mt-6 text-center"><Link href="/" className="text-primary hover:underline text-sm">← Back to NurseFiti</Link></div>

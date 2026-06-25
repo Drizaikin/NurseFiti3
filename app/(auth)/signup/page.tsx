@@ -354,12 +354,13 @@ export default function StudentSignupPage() {
               <label htmlFor="agreeToTerms" className="text-sm text-neutral-mid">
                 I agree to the{' '}
                 <Link href="/terms" className="text-primary hover:underline">
-                  Terms and Conditions
+                  Terms of Service
                 </Link>{' '}
                 and{' '}
                 <Link href="/privacy" className="text-primary hover:underline">
                   Privacy Policy
                 </Link>
+                . I understand that NurseFiti is an educational platform and does not provide clinical or medical advice.
               </label>
             </div>
             {errors.agreeToTerms && (

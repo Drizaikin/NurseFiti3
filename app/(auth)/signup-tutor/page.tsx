@@ -372,12 +372,16 @@ export default function TutorSignupPage() {
                       I agree to the{' '}
                       <a href="/terms" target="_blank" className="text-primary font-semibold hover:underline">
                         Terms of Service
-                      </a>{' '}
-                      and{' '}
+                      </a>
+                      ,{' '}
                       <a href="/privacy" target="_blank" className="text-primary font-semibold hover:underline">
                         Privacy Policy
                       </a>
-                      . I understand that my application will be reviewed by the NurseFiti team.{' '}
+                      , and the{' '}
+                      <a href="/tutor-agreement" target="_blank" className="text-primary font-semibold hover:underline">
+                        Tutor Agreement
+                      </a>
+                      . I understand that NurseFiti is an educational platform and I must not provide clinical or medical advice. My application will be reviewed by the NurseFiti team.{' '}
                       <span className="text-error">*</span>
                     </span>
                   </label>
