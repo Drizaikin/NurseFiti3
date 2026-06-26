@@ -922,7 +922,7 @@ export default function SettingsPage() {
                 <div className="p-4 rounded-xl border border-teal-200 bg-teal-50 dark:bg-teal-900/20 mb-4">
                   <h3 className="font-bold text-teal-900 dark:text-teal-100 mb-1">Samburu Nursing Excellence Scholarship</h3>
                   <p className="text-xs text-teal-800 dark:text-teal-200">
-                    Sponsored by Senetorial Aspirant, Nadukae Jackson. 
+                    Sponsored by Nadukae Jackson. 
                     Full premium access for 10 students, and subsidized access for 100 students.
                   </p>
                 </div>

@@ -119,6 +119,42 @@ export default async function SponsorDashboardPage({ params }: { params: { slug:
           </Card>
         </div>
 
+        {/* About the Scholarship / Impact */}
+        <Card className="bg-primary/5 border-primary/20 shadow-md">
+          <h2 className="text-2xl font-bold text-primary mb-4">How Your Support Transforms Lives</h2>
+          <div className="text-neutral-dark space-y-5">
+            <p className="leading-relaxed">
+              Your generous contribution directly removes financial barriers for aspiring nurses, enabling them to focus entirely on their licensure exam preparation. 
+              By sponsoring these students, you are not just funding exam prep—you are investing in the future of healthcare in marginalized communities, bridging the healthcare worker gap, and empowering the next generation of nursing professionals to achieve their dreams.
+            </p>
+            <div className="bg-[var(--color-bg)] p-5 rounded-xl border border-[var(--color-border)] shadow-sm">
+              <h3 className="font-semibold text-primary text-lg mb-3 flex items-center gap-2">
+                <span className="bg-primary/10 text-primary p-1.5 rounded-md text-sm">Target</span>
+                Scholarship Allocation Structure
+              </h3>
+              <ul className="list-none space-y-3">
+                <li className="flex items-start gap-3">
+                  <div className="mt-1 bg-teal-100 text-teal-700 p-1 rounded-full"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                  <div>
+                    <span className="font-bold text-neutral-dark block">First 10 Registrations</span>
+                    <span className="text-teal-600 font-semibold">100% Free Premium Access</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="mt-1 bg-amber-100 text-amber-700 p-1 rounded-full"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                  <div>
+                    <span className="font-bold text-neutral-dark block">Next 100 Registrations</span>
+                    <span className="text-amber-600 font-semibold">25% Subsidized Discount</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <p className="text-sm text-neutral-mid italic">
+              * Your contributions are allocated transparently based on student application dates and merit criteria. Every shilling goes directly toward covering the platform costs for these dedicated learners, ensuring your donation creates maximum, measurable impact.
+            </p>
+          </div>
+        </Card>
+
         {/* Financial Transparency */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card>

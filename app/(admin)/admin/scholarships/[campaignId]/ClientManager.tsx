@@ -17,6 +17,7 @@ export default function ClientManager({ campaign }: { campaign: any }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState<string | null>(null);
   const [viewingDocsApp, setViewingDocsApp] = useState<any | null>(null);
+  const [activeBeneficiaries, setActiveBeneficiaries] = useState<Set<string>>(new Set());
 
   const supabase = createClient() as any;
   const premiumPrice = PLAN_PRICING_META.premium.amountKsh;
@@ -35,7 +36,7 @@ export default function ClientManager({ campaign }: { campaign: any }) {
       // 2. Fetch beneficiaries (allocations)
       const { data: beneficiaries } = await supabase
         .from('scholarship_beneficiaries')
-        .select('allocated_amount_kes, beneficiary_type')
+        .select('student_id, allocated_amount_kes, beneficiary_type')
         .eq('campaign_id', campaign.id);
       
       const allocated = beneficiaries?.reduce((sum: number, b: any) => sum + (b.allocated_amount_kes || 0), 0) || 0;
@@ -46,6 +47,10 @@ export default function ClientManager({ campaign }: { campaign: any }) {
 
       const subs = beneficiaries?.filter((b: any) => b.beneficiary_type === 'SUBSIDIZED').length || 0;
       setSubCount(subs);
+
+      const activeSet = new Set<string>();
+      beneficiaries?.forEach((b: any) => activeSet.add(b.student_id));
+      setActiveBeneficiaries(activeSet);
 
       // 3. Fetch applications
       const { data: apps } = await supabase
@@ -85,6 +90,45 @@ export default function ClientManager({ campaign }: { campaign: any }) {
 
       toast.success(`Application ${decision.toLowerCase()} successfully`);
       await fetchData(); // Refresh all stats
+    } catch (err: any) {
+      toast.error(err.message);
+    } finally {
+      setIsProcessing(null);
+    }
+  };
+
+  const handleRevoke = async (appId: string) => {
+    if (!confirm('Are you sure you want to revoke this scholarship? The student will lose premium access.')) return;
+    setIsProcessing(appId);
+    try {
+      const res = await fetch('/api/scholarships/admin/revoke', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ application_id: appId })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to revoke scholarship');
+      toast.success('Scholarship revoked successfully');
+      await fetchData();
+    } catch (err: any) {
+      toast.error(err.message);
+    } finally {
+      setIsProcessing(null);
+    }
+  };
+
+  const handleRenew = async (appId: string, decision: 'FULL' | 'SUBSIDIZED') => {
+    setIsProcessing(appId);
+    try {
+      const res = await fetch('/api/scholarships/admin/renew', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ application_id: appId, decision })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to renew scholarship');
+      toast.success(`Scholarship renewed (${decision}) successfully`);
+      await fetchData();
     } catch (err: any) {
       toast.error(err.message);
     } finally {
@@ -238,6 +282,37 @@ export default function ClientManager({ campaign }: { campaign: any }) {
                           >
                             Reject
                           </Button>
+                        </>
+                      )}
+                      {app.status === 'approved' && (
+                        <>
+                          {activeBeneficiaries.has(app.student_id) ? (
+                            <Button 
+                              variant="danger" 
+                              size="sm" 
+                              onClick={() => handleRevoke(app.id)}
+                              disabled={isProcessing !== null}
+                            >
+                              {isProcessing === app.id ? 'Revoking...' : 'Revoke'}
+                            </Button>
+                          ) : (
+                            <>
+                              <Button 
+                                size="sm" 
+                                onClick={() => handleRenew(app.id, 'FULL')}
+                                disabled={isProcessing !== null}
+                              >
+                                {isProcessing === app.id ? 'Renewing...' : 'Renew FULL'}
+                              </Button>
+                              <Button 
+                                size="sm" 
+                                onClick={() => handleRenew(app.id, 'SUBSIDIZED')}
+                                disabled={isProcessing !== null}
+                              >
+                                {isProcessing === app.id ? 'Renewing...' : 'Renew SUB.'}
+                              </Button>
+                            </>
+                          )}
                         </>
                       )}
                     </td>
