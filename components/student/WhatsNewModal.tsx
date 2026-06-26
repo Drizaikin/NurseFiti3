@@ -144,6 +144,8 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
           "Every answer and rationale was cross-checked against current MOH Kenya guidelines, WHO protocols, IMNCI, NASCOP ART guidelines, and Myles Textbook for Midwives. No shortcuts.",
         cta: { label: "Practice Now", href: "/practice" },
       },
+    ],
+  },
   // ── Version 4 — Flag Question Feature ──────────────────────────────────────
   {
     version: 4,
