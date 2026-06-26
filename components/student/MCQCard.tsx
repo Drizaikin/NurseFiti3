@@ -5,6 +5,7 @@ import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
 import { AskAI } from './AskAI';
+import toast from 'react-hot-toast';
 
 interface MCQCardProps {
   question: {
@@ -32,6 +33,33 @@ export function MCQCard({ question, onAnswer, showFeedback = true }: MCQCardProp
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [hasAnswered, setHasAnswered] = useState(false);
   const [startTime] = useState(Date.now());
+  const [isFlagModalOpen, setIsFlagModalOpen] = useState(false);
+  const [flagReason, setFlagReason] = useState('Wrong Answer');
+  const [flagDetails, setFlagDetails] = useState('');
+  const [isSubmittingFlag, setIsSubmittingFlag] = useState(false);
+
+  const submitFlag = async () => {
+    setIsSubmittingFlag(true);
+    try {
+      const res = await fetch('/api/questions/flag', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          questionId: question.id,
+          reason: flagReason,
+          details: flagDetails,
+        }),
+      });
+      if (!res.ok) throw new Error('Failed to flag');
+      toast.success('Question flagged for review. Thank you!');
+      setIsFlagModalOpen(false);
+      setFlagDetails('');
+    } catch (error) {
+      toast.error('Could not flag question. Please try again.');
+    } finally {
+      setIsSubmittingFlag(false);
+    }
+  };
 
   const handleOptionSelect = (option: string) => {
     if (hasAnswered) return;
@@ -170,7 +198,7 @@ export function MCQCard({ question, onAnswer, showFeedback = true }: MCQCardProp
       {hasAnswered && showFeedback && (
         <div className="mt-6 space-y-4">
           {/* Result Badge */}
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-between">
             {selectedOption === question.correct_option ? (
               <Badge variant="success" size="lg">
                 ✓ Correct! +8 XP
@@ -180,6 +208,14 @@ export function MCQCard({ question, onAnswer, showFeedback = true }: MCQCardProp
                 ✗ Incorrect
               </Badge>
             )}
+            
+            <button
+              onClick={() => setIsFlagModalOpen(true)}
+              className="text-sm text-neutral-mid hover:text-error transition-colors flex items-center gap-1"
+              title="Report an issue with this question"
+            >
+              <span>🚩</span> Flag Question
+            </button>
           </div>
 
           {/* General Rationale */}
@@ -221,6 +257,62 @@ export function MCQCard({ question, onAnswer, showFeedback = true }: MCQCardProp
 
           {/* AI deeper explanation */}
           <AskAI question={question} />
+        </div>
+      )}
+
+      {/* Flag Modal */}
+      {isFlagModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-white dark:bg-[var(--color-card)] rounded-xl w-full max-w-md p-6 shadow-2xl relative">
+            <button
+              onClick={() => setIsFlagModalOpen(false)}
+              className="absolute top-4 right-4 text-neutral-mid hover:text-neutral-dark dark:hover:text-neutral-light"
+            >
+              ✕
+            </button>
+            <h3 className="text-xl font-bold text-primary mb-4 flex items-center gap-2">
+              <span>🚩</span> Flag Question
+            </h3>
+            <p className="text-sm text-neutral-dark dark:text-neutral-light mb-4">
+              Found an issue with this question? Let us know so our clinical review team can fix it.
+            </p>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold mb-1">Reason</label>
+                <select
+                  className="w-full p-2 border rounded-lg bg-transparent text-sm"
+                  value={flagReason}
+                  onChange={(e) => setFlagReason(e.target.value)}
+                >
+                  <option value="Wrong Answer">Incorrect Answer Marked</option>
+                  <option value="Confusing Rationale">Confusing/Contradictory Rationale</option>
+                  <option value="Typo">Typo / Formatting Issue</option>
+                  <option value="Outdated Information">Outdated Medical Guideline</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-semibold mb-1">Details (Optional)</label>
+                <textarea
+                  className="w-full p-2 border rounded-lg bg-transparent text-sm h-24 resize-none"
+                  placeholder="Tell us what is wrong..."
+                  value={flagDetails}
+                  onChange={(e) => setFlagDetails(e.target.value)}
+                />
+              </div>
+
+              <div className="flex gap-3 justify-end pt-2">
+                <Button variant="outline" onClick={() => setIsFlagModalOpen(false)}>
+                  Cancel
+                </Button>
+                <Button variant="primary" onClick={submitFlag} disabled={isSubmittingFlag}>
+                  {isSubmittingFlag ? 'Submitting...' : 'Submit Report'}
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </Card>

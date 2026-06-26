@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/Button";
 // ❶  RELEASES REGISTRY — edit here to announce new features
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CURRENT_VERSION = 3;
+const CURRENT_VERSION = 4;
 
 interface WhatsNewItem {
   icon: string;
@@ -142,6 +142,20 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
         title: "Rationales Audited Against MOH Kenya & Latest Protocols",
         description:
           "Every answer and rationale was cross-checked against current MOH Kenya guidelines, WHO protocols, IMNCI, NASCOP ART guidelines, and Myles Textbook for Midwives. No shortcuts.",
+        cta: { label: "Practice Now", href: "/practice" },
+      },
+  // ── Version 4 — Flag Question Feature ──────────────────────────────────────
+  {
+    version: 4,
+    date: "26 June 2026",
+    items: [
+      {
+        icon: "🚩",
+        tag: "New Feature",
+        tagColor: "bg-red-500/20 text-red-500",
+        title: "Report Question Errors",
+        description:
+          "Found a typo or disagree with an answer? You can now flag questions directly while practising! Your reports go straight to our clinical review team to ensure top-notch accuracy.",
         cta: { label: "Practice Now", href: "/practice" },
       },
     ],
