@@ -1,0 +1,225 @@
+OPT:a) Anna Benkingham | b) Florence Nightingale | c) Isabella Hampton | d) Margaret Mylos
+ANS:B | Answer: B) Florence Nightingale
+RAT:Rationale: Florence Nightingale is regarded as the founder of modern nursing and the first nurse researcher; through her statistical 'Notes' she produced the first scientific writing in nursing. (Ref: Foundations of Nursing / Nursing research texts.)
+ID:57 | Q:Q2. The graduate nurse's role in research is:
+OPT:a) Intelligent consumption of research findings | b) Research assistant | c) Funding of research | d) Data analysis and cleaning
+ANS:A | Answer: A) Intelligent consumption of research findings
+RAT:Rationale: At the generalist/graduate level the expected competency is to be an intelligent CONSUMER of research - critically appraising and applying evidence (evidence-based practice) to care. Designing and leading studies is the role of nurses with advanced (master's/doctoral) preparation. (Ref: Nursing Research - Kenyan curriculum; Polit & Beck.)
+ID:58 | Q:Q3. A nurse researcher formulated the following hypothesis: “There is a relationship between self-concept and suicidal behaviour”. This implies that:
+OPT:a) The independent variable is suicidal behaviour | b) The hypothesis is directional | c) The type of design suggested would be experimental | d) The dependent variable is suicidal behaviour
+ANS:D | Answer: D) The dependent variable is suicidal behaviour
+RAT:Rationale: Self-concept is the presumed influencing (independent) variable and suicidal behaviour is the outcome (dependent) variable. The statement merely asserts 'a relationship' without specifying its direction, so it is NON-directional, and a relationship hypothesis suggests a correlational (not experimental) design. (Ref: Nursing Research; Polit & Beck.)
+ID:59 | Q:Q4. Theoretical framework refers to:
+OPT:a) A comprehensive list of all the relevant previous research work done in an area of interest | b) Roy's adaptation theory | c) A pictorial presentation of relationships between variables | d) An examination of both the depth and breadth of literature review
+ANS:B | Answer: B) Roy's adaptation theory
+RAT:Rationale: A theoretical framework is the underpinning of a study built on an established, tested theory; Roy's Adaptation Model is a classic example of such a theory used to frame nursing studies. (A) describes a literature review; (C) describes a conceptual framework/model; (D) describes critiquing the literature. (Ref: Nursing Research; Polit & Beck.)
+ID:60 | Q:Q5. Trait leadership theories in nursing:
+OPT:a) Focus on what leaders do in relational and contextual terms | b) Emphasise the degrees of trust and respect between leaders and followers | c) Are independent of personal characteristics of followers | d) Emphasise that physical and emotional characteristics are critical in inspiring others toward a common goal
+ANS:D | Answer: D) Emphasise that physical and emotional characteristics are critical in inspiring others toward a common goal
+RAT:Rationale: Trait theory holds that leaders possess inborn personal characteristics (physical, emotional, intellectual qualities such as drive, self-confidence and integrity) that make them able to lead and inspire others. Behavioural theories focus on what leaders do (A); transformational/relational theories emphasise trust and respect (B). (Ref: Nursing Leadership & Management - Kenyan curriculum.)
+ID:61 | Q:Q6. The main purpose of publishing research findings is to:
+OPT:a) Meet the requirements of the sponsor | b) Solicit for more funds for future research | c) Get recognition in the profession | d) Contribute to scientific literature
+ANS:D | Answer: D) Contribute to scientific literature
+RAT:Rationale: Dissemination through publication adds to the body of scientific/professional knowledge, allowing findings to be utilised and built upon (evidence-based practice). The other options may be secondary benefits but are not the main purpose. (Ref: Nursing Research.)
+ID:62 | Q:Q7. While conducting research among psychiatric patients, the nurse researcher:
+OPT:a) Uses key-informant approach only | b) May interview the patients directly if they attain a specified mental health status | c) Must get consent from relatives and guardians only | d) May use experimental approach
+ANS:B | Answer: B) May interview the patients directly if they attain a specified mental health status
+RAT:Rationale: Psychiatric patients are a vulnerable group; the researcher may interview them directly (and obtain their own informed consent) provided their mental state allows them to understand and consent competently. Consent is not limited to relatives/guardians, and the data source is not restricted to key informants. (Ref: Research ethics - Nursing Research.)
+ID:63 | Q:Q8. Discovery learning approach:
+OPT:a) Is more effective than expounding the principles then engaging the students in learning | b) Takes less time than the exposition learning approach | c) Helps students attain higher-level (life-skill) or methodological objectives as opposed to being passive receivers | d) Is best applied when students need to grasp a few basic concepts
+ANS:C | Answer: C) Helps students attain higher-level (life-skill) or methodological objectives as opposed to being passive receivers
+RAT:Rationale: Discovery (inquiry) learning engages learners actively in finding out for themselves, which is best suited to attaining higher-order/methodological and life-skill objectives rather than producing passive recipients. It typically takes MORE time and is not ideal for transmitting a few simple facts. (Ref: Nursing Education / principles of teaching & learning.)
+ID:64 | Q:Q9. Micro-evaluation:
+OPT:a) Enables the teacher to launch into new lines of argument when the students seem unconvinced | b) Enables students to benefit in some future learning situations | c) Should be minimal and limited if students are working together | d) Comprises absolute evaluation
+ANS:A | Answer: A) Enables the teacher to launch into new lines of argument when the students seem unconvinced
+RAT:Rationale: Micro-evaluation is the moment-to-moment, formative feedback a teacher obtains DURING a lesson (e.g. reading the learners' reactions), allowing immediate adjustment of the teaching - such as opening new lines of explanation when students appear unconvinced. (Ref: Nursing Education / evaluation in teaching.)
+ID:65 | Q:Q1. A leader who is mainly concerned with the day-to-day operations of an organisation with little regard to the future is called a:
+OPT:a) Charismatic leader | b) Transactional leader | c) Transformational leader | d) Traditional leader
+ANS:B | Answer: B) Transactional leader
+RAT:Rationale: A transactional leader focuses on day-to-day operations, supervision, exchange (rewards/penalties) and maintaining the status quo, rather than on vision and future transformation (the focus of a transformational leader). (Ref: Nursing Leadership & Management.)
+ID:66 | Q:Q2. Zero-based budgeting means:
+OPT:a) Multiplying current year expenses by a certain figure | b) Budgeting for purchase of major equipment | c) Use of a decision-making package to justify the current budget needs | d) Budget where accountability, efficiency and economy is emphasized
+ANS:C | Answer: C) Use of a decision-making package to justify the current budget needs
+RAT:Rationale: In zero-based budgeting every programme/activity starts from a 'zero base' and each manager must justify all requested funds afresh each period using decision packages - nothing is automatically carried over from the previous budget. (Ref: Nursing Leadership & Management - budgeting.)
+ID:67 | Q:Q3. Mentors differ from preceptors in that mentors:
+OPT:a) Passively model new staff | b) Choose whom to mentor | c) Have a short relationship with the novice staff | d) Do not assist the novice staff in career development
+ANS:B | Answer: B) Choose whom to mentor
+RAT:Rationale: Mentoring is a voluntary, mutually chosen and usually long-term developmental relationship - the mentor chooses (and is chosen by) the protege and actively supports career development. A preceptor is normally assigned for a defined, shorter orientation period. (Ref: Nursing Leadership & Management / Education.)
+ID:68 | Q:Q4. Over-delegation involves:
+OPT:a) Delegating at the wrong time, to the wrong person, for the wrong reasons | b) Delegating to exceptionally competent employees | c) Transferring too many roles from the manager to the subordinates | d) Delegating authority and responsibility
+ANS:C | Answer: C) Transferring too many roles from the manager to the subordinates
+RAT:Rationale: Over-delegation is delegating TOO MUCH - transferring excessive tasks/roles (often including those the manager should retain) to subordinates, overloading them. (Improper delegation = wrong task/time/person; under-delegation = delegating too little.) (Ref: Nursing Leadership & Management - delegation.)
+ID:69 | Q:Q5. Variables that take only a few discrete values are called:
+OPT:a) Outcome | b) Continuous | c) Extraneous | d) Categorical
+ANS:D | Answer: D) Categorical
+RAT:Rationale: Categorical (discrete) variables take a limited number of distinct values or categories (e.g. sex, blood group), in contrast to continuous variables which can take any value along a range. (Ref: Nursing Research / Biostatistics.)
+ID:70 | Q:Q6. In research journal articles, “blind reviews” means reviewers:
+OPT:a) Are told the names of the researchers and the researchers are not told the identity of the reviewers | b) Are not told the names of the researchers and the researchers are told the identity of the reviewers | c) Are not told the names of the researchers and the researchers are not told the identity of the reviewers | d) Know the names of the researchers and vice versa
+ANS:C | Answer: C) Are not told the names of the researchers and the researchers are not told the identity of the reviewers
+RAT:Rationale: A (double-) blind review is one in which the reviewers are not told who the authors are AND the authors are not told who the reviewers are - protecting objectivity and reducing bias. (Ref: Nursing Research - publication/peer review.)
+ID:71 | Q:Q7. It is difficult to obtain meaningful informed consent in qualitative research because the researcher does not know in advance how the study will evolve. This kind of consent gotten by qualitative research is called:
+OPT:a) Process consent | b) Uninformed consent | c) Implied consent | d) Incomplete consent
+ANS:A | Answer: A) Process consent
+RAT:Rationale: In qualitative research, because the design unfolds, consent is treated as an ongoing process - 'process consent' - in which the researcher repeatedly renegotiates the participant's continued agreement as the study evolves. (Ref: Nursing Research - qualitative methods/ethics.)
+ID:72 | Q:Q8. Random assignment means:
+OPT:a) Probability sampling where each subject has an equal and independent chance of participating in the study | b) Assigning subjects to the control and experimental group without predetermined criteria | c) Assigning subjects to the control group and experimental group such that each has an equal chance of being selected for each group | d) Random sampling method of assigning subjects to control group and experimental group
+ANS:C | Answer: C) Assigning subjects to the control group and experimental group such that each has an equal chance of being selected for each group
+RAT:Rationale: Random assignment (randomisation) is the allocation of subjects to study groups so that each participant has an equal and independent chance of being placed in EITHER the control or the experimental group - it controls for confounding. (Random selection/sampling, by contrast, concerns who gets INTO the study.) (Ref: Nursing Research - experimental design.)
+ID:73 | Q:Q9. Practising nurses need to develop research-critique skills to:
+OPT:a) Challenge fellow nurses doing research-report presentations | b) Be able to do literature review when doing their research studies | c) Participate fully in journal clubs | d) Judge the utility of research findings
+ANS:D | Answer: D) Judge the utility of research findings
+RAT:Rationale: The purpose of developing research-critique (appraisal) skills is to enable nurses to judge the quality and utility of research findings so they can decide whether and how to apply the evidence in practice (evidence-based practice). (Ref: Nursing Research.)
+ID:74 | Q:Q10. Reflective scepticism, a characteristic of critical thinkers, means:
+OPT:a) Asking awkward questions to challenge assumptions | b) Ability to imagine and explore alternatives | c) Taking a critical view of established dogmas and practices, scrutinizing them and questioning their current validity | d) Reflecting on past events and questioning them
+ANS:C | Answer: C) Taking a critical view of established dogmas and practices, scrutinizing them and questioning their current validity
+RAT:Rationale: Reflective scepticism is the disposition not to accept established dogmas/practices at face value - critically scrutinising them and questioning their current validity and evidence base. (Ref: Nursing Education - critical thinking.)
+ID:75 | Q:Q11. Problem-based learning means:
+OPT:a) Learning that results from the process of working towards the resolution of a problem | b) A situation where students learn without any assistance from the teacher | c) Learning that results after the learner gets the solution | d) Learning where teachers use questions only
+ANS:A | Answer: A) Learning that results from the process of working towards the resolution of a problem
+RAT:Rationale: Problem-based learning (PBL) is a student-centred approach in which learning arises from the PROCESS of working to understand and resolve a real or simulated problem; the teacher facilitates rather than abandons the learners. (Ref: Nursing Education - teaching/learning methods.)
+ID:76 | Q:Q12. When an assessment tool measures what it is supposed to measure, it is said to have:
+OPT:a) Validity | b) Reliability | c) Consistency | d) Discrimination
+ANS:A | Answer: A) Validity
+RAT:Rationale: Validity is the degree to which an instrument actually measures what it is intended to measure. Reliability/consistency refers to the stability/reproducibility of the measurement. (Ref: Nursing Research / Educational measurement.)
+ID:77 | Q:Q13. An appropriate method that can be used to teach the acquisition of psychomotor skills is:
+OPT:a) Case studies | b) Demonstration | c) Micro-teaching | d) Brainstorming
+ANS:B | Answer: B) Demonstration
+RAT:Rationale: Psychomotor (practical) skills are best taught by demonstration (and return demonstration), which shows the learner exactly how to perform the procedure step by step. Case studies and brainstorming target cognitive/affective domains. (Ref: Nursing Education - teaching methods.)
+ID:78 | Q:Q14. The decision-making hierarchy is called:
+OPT:a) Scalar chain | b) Span of control | c) Decentralized decision making | d) Centralized decision making
+ANS:A | Answer: A) Scalar chain
+RAT:Rationale: The scalar chain is the formal line of authority and communication running from the top to the bottom of an organisation (the chain of command/hierarchy) along which decisions and instructions flow. Span of control is the number of subordinates a manager supervises. (Ref: Nursing Leadership & Management - organisation.)
+ID:79 | Q:Q1. Pulmonary disorders that cause finger-clubbing include:
+OPT:a) Pneumonia, asthma, emphysema | b) Lung cancer, lung abscess, bronchiectasis | c) Cystic fibrosis, pulmonary hypertension, pneumothorax | d) Pleural effusion, beryllium disease, chronic atelectasis
+ANS:B | Answer: B) Lung cancer, lung abscess, bronchiectasis
+RAT:Rationale: Finger-clubbing is associated with chronic suppurative and neoplastic lung disease - classically bronchiectasis, lung abscess, bronchogenic carcinoma (lung cancer), empyema and pulmonary fibrosis. Asthma, emphysema, pneumonia, pneumothorax and uncomplicated pleural effusion do NOT typically cause clubbing. (Ref: Brunner & Suddarth Medical-Surgical Nursing.)
+ID:80 | Q:Q2. Clinical features of phaeochromocytoma include:
+OPT:a) Muscle weakness, thin skin, raised blood pressure | b) Tingling, muscle spasm, periods of temporary paralysis | c) Excessive facial hair, acne, weight loss | d) Headache, blurring of vision, diaphoresis
+ANS:D | Answer: D) Headache, blurring of vision, diaphoresis
+RAT:Rationale: Phaeochromocytoma is a catecholamine-secreting tumour (usually adrenal medulla) producing the classic triad of severe headache, palpitations and diaphoresis (profuse sweating) together with paroxysmal/sustained hypertension and visual blurring. (Ref: Brunner & Suddarth.)
+ID:81 | Q:Q3. In the management of pemphigus:
+OPT:a) Corticosteroids are administered in high doses until remission is apparent | b) Dapsone is given after screening the patient for glucose-6-phosphate dehydrogenase | c) Systemic prednisone is continued for months in alternate-day doses | d) Fluid and electrolyte balance must be maintained to counteract their loss from the skin
+ANS:A | Answer: A) Corticosteroids are administered in high doses until remission is apparent
+RAT:Rationale: The mainstay of medical management of pemphigus (vulgaris) is high-dose systemic corticosteroids continued until the disease is controlled and the skin is free of blisters (remission), after which the dose is tapered. (Maintaining fluid/electrolyte and protein balance is also an important nursing measure, but the defining first-line therapy is high-dose corticosteroids.) (Ref: Brunner & Suddarth - skin disorders.)
+ID:82 | Q:Q4. Surgical management of peptic ulcers is indicated in:
+OPT:a) Severe Helicobacter pylori infection, H2-receptor antagonist resistance | b) Failure to heal after 12-16 weeks of treatment, Zollinger-Ellison syndrome | c) NSAID-induced ulcers, stress ulcers | d) Cushing's ulcers, Curling ulcers
+ANS:B | Answer: B) Failure to heal after 12-16 weeks of treatment, Zollinger-Ellison syndrome
+RAT:Rationale: Surgery for peptic ulcer disease is reserved for intractable disease (failure of adequate medical therapy, e.g. after 12-16 weeks), Zollinger-Ellison syndrome, and complications (perforation, uncontrolled haemorrhage, gastric outlet obstruction). H. pylori, NSAID-induced, stress, Cushing's and Curling's ulcers are managed medically in the first instance. (Ref: Brunner & Suddarth.)
+ID:83 | Q:Q1. The position of choice for a patient who has had a gastrectomy is:
+OPT:a) Sims | b) Supine | c) Prone | d) Semi-Fowler's
+ANS:D | Answer: D) Semi-Fowler's
+RAT:Rationale: The semi-Fowler's (semi-sitting) position is used after abdominal surgery such as gastrectomy; it eases respiration and abdominal wall tension, promotes drainage and improves comfort. (Ref: Brunner & Suddarth - post-operative positioning.)
+ID:84 | Q:Q2. A child is brought after falling down the stairs, complaining of headache and is now unable to move his feet. Using triage colour coding, this client is categorised as:
+OPT:a) Black | b) Green | c) Yellow | d) Red
+ANS:D | Answer: D) Red
+RAT:Rationale: Inability to move the feet (possible spinal cord injury) following a head injury is a life-/limb-threatening emergency requiring immediate attention - triage RED (immediate). Green = minor, Yellow = urgent but can wait, Black = deceased/expectant. (Ref: MOH Kenya emergency triage - ETAT/MTC.)
+ID:85 | Q:Q1. The condition for which a nurse prepares a woman for emergency caesarean delivery is:
+OPT:a) Prolapsed cord | b) Twin pregnancy | c) Meconium-stained amniotic fluid | d) A non-reactive non-stress test
+ANS:A | Answer: A) Prolapsed cord
+RAT:Rationale: Cord prolapse is a true obstetric emergency: the presenting part compresses the cord, cutting off fetal oxygen, so an immediate (emergency) caesarean section is indicated if delivery is not imminent. Twin pregnancy, meconium-stained liquor and a non-reactive NST are warning signs that require close monitoring but are not, on their own, automatic indications for emergency caesarean. (Ref: Myles Textbook for Midwives; MOH Kenya Basic Emergency Obstetric & Newborn Care guidelines.)
+ID:86 | Q:Q2. To screen for the presence of neural tube defects in the fetus, the test that would be performed on a pregnant woman is:
+OPT:a) Biophysical profile | b) Amniocentesis | c) Serum alpha-fetoprotein | d) TORCH titres
+ANS:C | Answer: C) Serum alpha-fetoprotein
+RAT:Rationale: Maternal serum alpha-fetoprotein (MSAFP) is the standard screening test for open neural tube defects (anencephaly, spina bifida); levels are raised when the defect is open. Amniocentesis is diagnostic/confirmatory (and invasive), the biophysical profile assesses fetal wellbeing, and TORCH titres screen for congenital infection. (Ref: Myles Textbook for Midwives.)
+ID:87 | Q:Q3. During first examination of a normal newborn baby, a nurse would expect to identify:
+OPT:a) Apical pulse rate of 90 beats per minute | b) Hands and feet that have a bluish colour | c) Eye discharge that is yellow and watery | d) Umbilical stump that has two veins and one artery
+ANS:B | Answer: B) Hands and feet that have a bluish colour
+RAT:Rationale: Acrocyanosis (bluish hands and feet) is a normal finding in the newborn during the first 24-48 hours owing to sluggish peripheral circulation. A normal apical rate is 120-160 b/min (90 is bradycardia); yellow watery eye discharge suggests infection; and a normal cord has TWO arteries and ONE vein (a single artery is abnormal). (Ref: Myles Textbook for Midwives; MOH Kenya Newborn care.)
+ID:88 | Q:Q4. For a woman who is in labour and experiencing slight shoulder dystocia the nurse would:
+OPT:a) Place her in knee-chest position | b) Apply fundal pressure to the suprapubic area | c) Prepare for assisted forceps delivery | d) Obtain an order for oxytocin infusion
+ANS:A | Answer: A) Place her in knee-chest position
+RAT:Rationale: The first-line manoeuvre for shoulder dystocia is McRoberts' manoeuvre - sharp hyperflexion of the maternal thighs onto the abdomen (the knee-chest / exaggerated lithotomy position), combined with SUPRAPUBIC (not fundal) pressure. Fundal pressure is contraindicated because it further impacts the shoulder and risks uterine rupture; forceps and oxytocin do not relieve the impacted shoulder. (Ref: Myles Textbook for Midwives; HMS-style obstetric emergency drills.)
+ID:89 | Q:Q5. A labouring woman's husband assists her during the transitional phase of labour. The behaviour that, if exhibited by the husband, would require intervention by a nurse is:
+OPT:a) Offers the woman a bed pan when she needs to have a bowel movement | b) Gives ice-chips to the woman when she says her mouth is dry | c) Provides effleurage when the woman complains of intense abdominal pain | d) Encourages the woman to fix her gaze on him when she experiences a contraction
+ANS:A | Answer: A) Offers the woman a bed pan when she needs to have a bowel movement
+RAT:Rationale: In the transitional phase an urge to move the bowels usually signals descent of the presenting part and imminent second stage; offering a bedpan could result in delivery onto the pan and is unsafe, so the nurse must intervene/assess for full dilatation. Ice-chips, effleurage and using a focal point are all appropriate, supportive comfort measures. (Ref: Myles Textbook for Midwives.)
+ID:90 | Q:Q6. To help a woman recognise the best time for conceiving, a nurse would instruct the woman to monitor for:
+OPT:a) Drop in body temperature lasting several days | b) Increase in the amount of cervical mucus that is clear and stretchy | c) Abdominal bloating that occurs suddenly | d) Breast tenderness accompanied by slight nipple discharge
+ANS:B | Answer: B) Increase in the amount of cervical mucus that is clear and stretchy
+RAT:Rationale: Around ovulation, oestrogen causes cervical mucus to become copious, clear, slippery and stretchy (spinnbarkeit) - the most fertile sign. Basal body temperature RISES (does not drop) by about 0.2-0.5C after ovulation; bloating and breast tenderness are non-specific. (Ref: MOH Kenya/WHO Family Planning Guidelines - fertility awareness methods.)
+ID:91 | Q:Q7. The sign that leads a nurse to suspect that a two-week-old infant who was born prematurely may be having apnoea is:
+OPT:a) Intermittent episodes of acrocyanosis for periods of 10 minutes | b) Random episodes of breath-holding during periods of stress | c) Transient episodes of mottling with environmental temperature changes | d) A lapse of spontaneous breathing for 20 seconds
+ANS:D | Answer: D) A lapse of spontaneous breathing for 20 seconds
+RAT:Rationale: Apnoea of prematurity is defined as cessation of spontaneous breathing for 20 seconds or more, or a shorter pause accompanied by bradycardia/cyanosis/desaturation. Acrocyanosis and mottling with temperature change are normal vasomotor responses. (Ref: MOH Kenya Newborn/Preterm care; Nelson Paediatrics.)
+ID:92 | Q:Q8. When performing a physical assessment of a woman who is 20 weeks pregnant, a nurse would expect to palpate the uterine fundus at:
+OPT:a) Symphysis pubis | b) Midway between symphysis pubis and umbilicus | c) Umbilicus | d) Midway between umbilicus and xyphoid process
+ANS:C | Answer: C) Umbilicus
+RAT:Rationale: By approximately 20-22 weeks' gestation the uterine fundus reaches the level of the umbilicus. The fundus is at the symphysis pubis at ~12 weeks, midway between symphysis and umbilicus at ~16 weeks, and near the xiphisternum at ~36 weeks. (Ref: Myles Textbook for Midwives - abdominal examination.)
+ID:93 | Q:Q9. A woman complains of morning sickness during the first trimester of pregnancy. To alleviate the symptoms, she should:
+OPT:a) Consume a clear liquid diet | b) Take prenatal vitamins with milk | c) Eat foods that are low in protein | d) Avoid exposure to noxious odours
+ANS:D | Answer: D) Avoid exposure to noxious odours
+RAT:Rationale: Nausea of early pregnancy is reduced by avoiding triggers such as strong/noxious odours, taking small frequent dry carbohydrate snacks (e.g. dry toast/crackers before rising), and avoiding an empty stomach. A clear-liquid diet is not advised, iron-containing prenatal vitamins often worsen nausea, and protein should NOT be restricted. (Ref: Myles Textbook for Midwives - minor disorders of pregnancy.)
+ID:94 | Q:Q10. A primigravida who has had no antenatal care is admitted to the labour ward in active labour. Her cervix is eight centimetres dilated. She starts to push with a contraction. During her next contraction, the nurse should:
+OPT:a) Instruct the patient to take a deep breath, hold it and then bear down | b) Instruct the patient to take short rapid breaths | c) Help the patient to assume a semi-sitting position and hold her knees in a flexed position while bearing down | d) Apply firm pressure on the patient's lower back
+ANS:B | Answer: B) Instruct the patient to take short rapid breaths
+RAT:Rationale: At 8 cm the cervix is not yet fully dilated, so pushing must be discouraged to avoid cervical oedema and laceration. The woman is taught to pant / take short rapid breaths through the contractions until full dilatation is confirmed. Active bearing-down techniques are appropriate only in the second stage. (Ref: Myles Textbook for Midwives.)
+ID:95 | Q:Q11. The midwife should suspect pregnancy-induced hypertension if, during a client's assessment, she finds the following:
+OPT:a) Ankle oedema and proteinuria | b) Glycosuria and proteinuria | c) Proteinuria and hypertension | d) Hypertension and hyporeflexia
+ANS:C | Answer: C) Proteinuria and hypertension
+RAT:Rationale: Pre-eclampsia (pregnancy-induced hypertension with proteinuria) is defined by hypertension (BP >=140/90) PLUS proteinuria after 20 weeks. Dependent ankle oedema is common in normal pregnancy, glycosuria suggests gestational diabetes, and pre-eclampsia produces HYPER-reflexia (brisk reflexes/clonus), not hyporeflexia. (Ref: MOH Kenya guidelines on pre-eclampsia/eclampsia; Myles.)
+ID:96 | Q:Q12. The treatment of puerperal mastitis before suppuration occurs is:
+OPT:a) Antibiotics, breast support and ice application | b) Antibiotics, breast support and heat application | c) Antibiotics, aspiration and breast support | d) Antibiotics, incision and drainage, breast support
+ANS:B | Answer: B) Antibiotics, breast support and heat application
+RAT:Rationale: In the inflammatory (cellulitic) stage of mastitis - before an abscess forms - management is antibiotics (anti-staphylococcal), continued breastfeeding/effective breast emptying, breast support and WARM compresses to promote milk flow and drainage. Incision and drainage (or aspiration) is reserved for an established abscess (suppuration). (Ref: Myles Textbook for Midwives; MOH Kenya.)
+ID:97 | Q:Q1. The following are clinical types of poliomyelitis: (i) Flaccid poliomyelitis  (ii) Abortive poliomyelitis  (iii) Non-abortive poliomyelitis  (iv) Non-paralytic poliomyelitis
+OPT:a) i, iii, iv | b) i, ii, iv | c) ii, iv, i | d) iii, iv, ii
+ANS:B | Answer: B) i, ii, iv
+RAT:Rationale: The recognised clinical forms of poliomyelitis are abortive (ii), non-paralytic (iv) and paralytic - the latter being flaccid (i). 'Non-abortive' (iii) is not a recognised type and is the distractor, so the correct combination is i, ii, iv. (Ref: Park's/Kenyan Community Health & communicable disease texts; MOH Kenya EPI.)
+ID:98 | Q:Q2. The following are examples of “spacing methods” of family planning:
+OPT:a) Natural methods, chemical barriers, vasectomy | b) Mechanical barriers, tubectomy, chemical barriers | c) Tubectomy, vasectomy, natural methods | d) Chemical barriers, natural methods, mechanical barriers
+ANS:D | Answer: D) Chemical barriers, natural methods, mechanical barriers
+RAT:Rationale: Spacing (temporary/reversible) methods allow a couple to delay or space births; they include natural/fertility-awareness methods, chemical barriers (spermicides) and mechanical barriers (condoms, diaphragm). Vasectomy and tubectomy are PERMANENT (terminal) methods, so any option containing them is wrong. (Ref: MOH Kenya National Family Planning Guidelines.)
+ID:99 | Q:Q3. In environmental health, water-based diseases are:
+OPT:a) Due to the presence of an aquatic host | b) Caused by vectors that live near aquatic conditions | c) Caused by poor quality of water | d) Due to inadequate quantities of water
+ANS:A | Answer: A) Due to the presence of an aquatic host
+RAT:Rationale: Water-based diseases (e.g. schistosomiasis, guinea-worm) require an aquatic intermediate host to complete the parasite's life cycle. This contrasts with water-borne disease (poor water quality, e.g. cholera/typhoid), water-washed disease (inadequate quantity for hygiene) and water-related vector-borne disease (vectors breeding near water, e.g. malaria). (Ref: Kenyan Environmental Health/Community Health texts.)
+ID:100 | Q:Q4. A child with marasmus will present with the following clinical symptoms:
+OPT:a) Oedema of the legs but not the face | b) Very poor appetite | c) Diffuse depigmentation | d) No hepatic enlargement
+ANS:D | Answer: D) No hepatic enlargement
+RAT:Rationale: Marasmus is severe wasting from energy deficiency: there is NO oedema, NO hepatomegaly, and NO skin/hair depigmentation - the child is markedly wasted ('old man face') and is usually alert with a relatively good appetite. Oedema, poor appetite, hair/skin depigmentation and a fatty enlarged liver are features of KWASHIORKOR. Hence 'no hepatic enlargement' is correct for marasmus. (Ref: Kenya IMNCI; MOH Kenya/WHO management of acute malnutrition.)
+ID:101 | Q:Q5. In focused antenatal care:
+OPT:a) The mother is encouraged to visit the antenatal clinic at least seven times during pregnancy | b) The mother is encouraged to save some money for buying baby clothes when born | c) The mother is encouraged to decide on the place of birth when labour begins | d) The mother is encouraged to make transport arrangements several months before her time of delivery
+ANS:D | Answer: D) The mother is encouraged to make transport arrangements several months before her time of delivery
+RAT:Rationale: Focused (goal-directed) antenatal care emphasises birth preparedness and complication readiness - including arranging transport, finances, a skilled birth attendant and place of delivery well in advance. The classic FANC schedule was 4 goal-oriented visits (not seven), and the place of birth is planned during pregnancy, not when labour begins. (Ref: MOH Kenya Focused Antenatal Care guidelines / WHO.)
+ID:102 | Q:Q6. In determination of disease incidence:
+OPT:a) The total population is considered | b) The ability of disease to recur is not considered | c) Persons-years time at risk is considered | d) All the individuals suffering from the disease are considered
+ANS:C | Answer: C) Persons-years time at risk is considered
+RAT:Rationale: Incidence measures NEW cases arising over time; the incidence rate uses person-time (person-years) at risk as the denominator, counting only those at risk and the time each is observed. Prevalence (not incidence) counts all existing cases. (Ref: Epidemiology - Kenyan Community Health Nursing curriculum.)
+ID:103 | Q:Q7. The demographic trends in Kenya indicate that since 1969 to date:
+OPT:a) The crude birth rate has increased | b) The infant mortality rate has increased | c) Life expectancy at birth has increased | d) Total fertility rate has increased
+ANS:C | Answer: C) Life expectancy at birth has increased
+RAT:Rationale: Over the decades since 1969, Kenya's life expectancy at birth has risen, while the crude birth rate, infant mortality rate and total fertility rate have all declined (demographic transition). (Ref: KNBS / Kenya Demographic and Health Survey trends.)
+ID:104 | Q:Q8. The following should be highly considered when counselling on family planning for an HIV-positive client:
+OPT:a) Drug interactions between hormonal methods and anti-tuberculosis drugs | b) The client's current stage of AIDS | c) The client's nutritional status | d) The client's economic status and source of funding
+ANS:A | Answer: A) Drug interactions between hormonal methods and anti-tuberculosis drugs
+RAT:Rationale: Many HIV-positive clients are on rifampicin-based TB treatment; rifampicin is a potent hepatic enzyme inducer that lowers the blood levels and effectiveness of hormonal contraceptives, so this drug interaction must be considered and an effective/back-up method advised. (Ref: MOH Kenya FP Guidelines; WHO Medical Eligibility Criteria.)
+ID:105 | Q:Q9. When preparing a family for their parents' changed role due to HIV status, an important aspect to consider is:
+OPT:a) Drug therapy instructions | b) Nutritional and diet preparation | c) De-stigmatisation of the infected | d) Exercise schedule for the infected
+ANS:C | Answer: C) De-stigmatisation of the infected
+RAT:Rationale: Helping the family understand and accept the diagnosis - reducing stigma and discrimination (de-stigmatisation) toward the infected member - is the priority psychosocial preparation, as stigma undermines disclosure, support, adherence and the family's ability to adapt to changed roles. (Ref: MOH Kenya / NASCOP HIV psychosocial care guidelines.)
+ID:106 | Q:Q10. The resolution stage of the grief response:
+OPT:a) Lasts less than six months | b) May be prolonged if there has been a love-hate association | c) May be prolonged by anticipatory grieving | d) May be of less intensity if the affected has experienced a number of recent losses
+ANS:B | Answer: B) May be prolonged if there has been a love-hate association
+RAT:Rationale: Resolution of grief is prolonged when the relationship with the deceased was ambivalent (a 'love-hate' association) because of unresolved guilt and conflicting feelings. Anticipatory grieving generally EASES later grief, multiple recent losses tend to INTENSIFY grief, and there is no fixed time limit of under six months. (Ref: Mental Health/Psychiatric Nursing texts.)
+ID:107 | Q:Q11. Mrs. Mama has laid down strict and rigid rules for her baby during toilet training. The characteristics the baby is likely to exhibit in adulthood include: (i) Stubbornness  (ii) Malevolence  (iii) Disorganisation  (iv) Stinginess  (v) Miserliness
+OPT:a) i, iii and iv | b) ii, iii and iv | c) i, iv and v | d) i, ii and iv
+ANS:C | Answer: C) i, iv and v
+RAT:Rationale: According to Freud's psychosexual theory, conflict/over-strictness during the anal stage (toilet training) produces the 'anal-retentive' personality - obstinacy/stubbornness, orderliness, stinginess and miserliness. Hence i, iv and v. Malevolence and disorganisation are not features (disorganisation is the opposite of the anal-retentive trait). (Ref: Psychiatric/Mental Health Nursing; growth & development.)
+ID:108 | Q:Q12. A patient tells a nurse “I felt very bad when my relatives visited me and I refused to talk to them”. The nurse's best response would be:
+OPT:a) “Did they make you feel that way?” | b) “How did you do that?” | c) “Do you think they came to visit you just to annoy you?” | d) “Describe what you were feeling just before your relatives visited you”
+ANS:D | Answer: D) “Describe what you were feeling just before your relatives visited you”
+RAT:Rationale: An open-ended, exploratory statement that invites the patient to describe their feelings ('Describe what you were feeling...') is the therapeutic communication technique of exploring/seeking clarification. The other options are closed, leading or challenging and block communication. (Ref: Therapeutic communication - Mental Health Nursing.)
+ID:109 | Q:Q13. The organic mental syndrome associated with sedative abuse is:
+OPT:a) Dementia | b) Amnestic syndrome | c) Organic hallucinosis | d) Organic mood disorder
+ANS:B | Answer: B) Amnestic syndrome
+RAT:Rationale: Chronic sedative (e.g. benzodiazepine/barbiturate) and alcohol abuse classically produces an amnestic syndrome - an inability to form new memories (short-term/recent memory deficit) with relatively preserved attention and remote memory. (Ref: Psychiatric/Mental Health Nursing.)
+ID:110 | Q:Q14. Mini, a 7-year-old boy, has been diagnosed with Attention Deficit Hyperactivity Disorder (ADHD). The drug group most likely to be used would be:
+OPT:a) Central nervous system depressants | b) Anticonvulsants | c) Major tranquilizers | d) Central nervous system stimulants
+ANS:D | Answer: D) Central nervous system stimulants
+RAT:Rationale: Paradoxically, CNS stimulants (e.g. methylphenidate/Ritalin, dextroamphetamine) are first-line pharmacological treatment for ADHD; they increase dopamine/noradrenaline activity and improve attention and impulse control in affected children. (Ref: Pharmacology / Child & Adolescent Mental Health.)
+ID:111 | Q:Q15. Benzhexol (Artane):
+OPT:a) Should not be administered to patients with parkinsonian syndrome | b) May be used safely in patients with prostatic hypertrophy | c) Should never exceed 15 mg daily dosage | d) Does not cause orthostatic hypotension
+ANS:C | Answer: C) Should never exceed 15 mg daily dosage
+RAT:Rationale: Benzhexol (trihexyphenidyl, Artane) is an anticholinergic used to treat parkinsonism and drug-induced extrapyramidal effects; the usual maximum dose is about 15 mg/day. Being anticholinergic it is CONTRAINDICATED in prostatic hypertrophy (risk of urinary retention) - so (A) and (B) are wrong, and it can contribute to orthostatic hypotension. (Ref: Pharmacology texts; BNF.)
+ID:112 | Q:Q16. Exhibitionism:
+OPT:a) Occurs for less than 6 months | b) Occurs equally in both men and women | c) Is intensified when the perpetrator has excess free time and is under significant stress | d) Is more frequent in men without satisfying sexual relationships

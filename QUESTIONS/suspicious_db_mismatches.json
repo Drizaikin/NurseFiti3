@@ -1,0 +1,29 @@
+[
+  {
+    "id": "c35ea425-f6be-4dea-bfcd-c8183becd2b7",
+    "stem": "When assessing a client with possible Cushing's syndrome you would expect to find:",
+    "indicated_letter": "C",
+    "indicated_text": "Deposits of adipose tissue in the trunk",
+    "best_match_letter": "B",
+    "best_match_text": "Thick coarse skin",
+    "rationale": "Cushing's syndrome (cortisol excess) causes characteristic CENTRAL/truncal adiposity (with thin extremities from muscle wasting), HYPERTENSION (not hypotension), THIN fragile skin with purple striae and easy bruising (not thick coarse), and WEIGHT GAIN (not loss). Option C is correct; options A, B and D are opposites of what Cushing's produces."
+  },
+  {
+    "id": "07b47ffc-af5b-4abc-9df5-2cc56758d984",
+    "stem": "When assessing a client with possible Cushing's syndrome you would expect to find:",
+    "indicated_letter": "C",
+    "indicated_text": "Deposits of adipose tissue in the trunk",
+    "best_match_letter": "B",
+    "best_match_text": "Thick coarse skin",
+    "rationale": "Cushing's syndrome (cortisol excess) causes characteristic CENTRAL/truncal adiposity (with thin extremities from muscle wasting), HYPERTENSION (not hypotension), THIN fragile skin with purple striae and easy bruising (not thick coarse), and WEIGHT GAIN (not loss). Option C is correct; options A, B and D are opposites of what Cushing's produces."
+  },
+  {
+    "id": "86e338a6-3dac-4095-bcaf-f3f064d4c860",
+    "stem": "The function of amniotic fluid includes:",
+    "indicated_letter": "D",
+    "indicated_text": "All of the above",
+    "best_match_letter": "A",
+    "best_match_text": "Protection of the fetus from mechanical injury",
+    "rationale": "AMNIOTIC FLUID FUNCTIONS: PROTECTS the fetus from mechanical injury (cushion against external trauma, cord compression); maintains constant TEMPERATURE; allows free FETAL MOVEMENT (essential for musculoskeletal and pulmonary development); permits symmetrical fetal growth; prevents adhesions between fetal parts and amnion; antibacterial properties; lubricates birth canal at rupture of membranes; assists cervical dilatation (forewaters). All four are true \u2192 option D."
+  }
+]

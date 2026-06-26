@@ -1,0 +1,672 @@
+ID:0 | Q:Q1. Micro-organisms responsible for hospital-acquired pneumonia are:
+OPT:a) Streptococcus pneumoniae, Haemophilus influenzae, Legionella pneumophila | b) Chlamydia pneumoniae, Mycoplasma, parainfluenza virus | c) Pseudomonas aeruginosa, Staphylococcus aureus, Klebsiella pneumoniae | d) Pneumocystis carinii, cytomegalovirus, Aspergillus fumigatus
+ANS:C | Answer: C) Pseudomonas aeruginosa, Staphylococcus aureus, Klebsiella pneumoniae
+RAT:Rationale: Hospital-acquired (nosocomial) pneumonia is typically caused by virulent, often resistant Gram-negative bacilli and Staphylococcus aureus - e.g. Pseudomonas aeruginosa, Klebsiella pneumoniae and S. aureus. Streptococcus pneumoniae and Mycoplasma cause community-acquired pneumonia, while Pneumocystis/CMV/Aspergillus affect the immunocompromised. (Ref: Brunner & Suddarth.)
+ID:1 | Q:Q2. Bioavailability of drugs taken by mouth is affected by:
+OPT:a) Water-solubility, blood flow through the kidneys, normal liver function | b) Capacity of liver enzymes to metabolise, age of the patient, extent of protein binding | c) Distribution volume, weight of the patient, ability of drug to cross membranes | d) Acidity of the stomach, transit time through the digestive tract, presence of food
+ANS:D | Answer: D) Acidity of the stomach, transit time through the digestive tract, presence of food
+RAT:Rationale: Oral bioavailability is the fraction of an oral dose reaching the systemic circulation; it depends mainly on absorption from the gut, which is influenced by gastric acidity (pH), gastrointestinal transit time/motility and the presence of food. (First-pass metabolism also contributes, but the option that directly describes oral absorption factors is D.) (Ref: Pharmacology - pharmacokinetics.)
+ID:2 | Q:Q3. Immunoglobulin G (IgG) is:
+OPT:a) Responsible for secondary antibody response | b) Produced when an antigen is encountered for the first time | c) Responsible for defence against invasion of micro-organisms through the body's mucous membranes | d) The mediator of immediate reactions
+ANS:A | Answer: A) Responsible for secondary antibody response
+RAT:Rationale: IgG is the most abundant immunoglobulin and the principal antibody of the SECONDARY (memory) immune response; it also crosses the placenta to confer passive immunity. IgM is produced on first antigen exposure, IgA protects mucous membranes/secretions, and IgE mediates immediate (allergic) reactions. (Ref: Microbiology/Immunology - Kenyan curriculum.)
+ID:3 | Q:Q4. The cell-mediated immune system is made up of:
+OPT:a) T-lymphocytes and macrophages | b) T-lymphocytes and antibodies | c) Macrophages and B-lymphocytes | d) B-lymphocytes and T-lymphocytes
+ANS:A | Answer: A) T-lymphocytes and macrophages
+RAT:Rationale: Cell-mediated immunity is effected by T-lymphocytes together with phagocytic cells such as macrophages (which present antigen and are activated by T cells). Antibodies and B-lymphocytes belong to humoral immunity. (Ref: Microbiology/Immunology - Kenyan curriculum.)
+ID:4 | Q:Q1. The drugs that are classified as cephalosporins include:
+OPT:a) Cefixime, Loracarbef | b) Cephradine, Laroxyl | c) Ceftriaxone, Lasix | d) Cefaclor, Clonazepam
+ANS:A | Answer: A) Cefixime, Loracarbef
+RAT:Rationale: Cephalosporins are a class of beta-lactam antibiotics; cefixime and loracarbef both belong to this class. The other options pair a cephalosporin with a non-antibiotic - Laroxyl (amitriptyline), Lasix (furosemide) and clonazepam (a benzodiazepine). (Ref: Pharmacology - antimicrobials.)
+ID:5 | Q:Q2. The antitussive agents are indicated for:
+OPT:a) Removing excess mucus from the airway | b) Relieving rhinitis | c) Controlling a productive cough | d) Relieving a dry (non-productive) cough
+ANS:D | Answer: D) Relieving a dry (non-productive) cough
+RAT:Rationale: Antitussives (e.g. codeine, dextromethorphan) suppress the cough reflex and are indicated for a dry, irritating, non-productive cough. They are NOT used for a productive cough (which should be retained to clear secretions). (Ref: Pharmacology - respiratory drugs.)
+ID:6 | Q:Q3. The nurse should instruct a client who is taking an expectorant to:
+OPT:a) Restrict fluids | b) Increase fluid intake | c) Avoid vaporizers | d) Take antihistamines
+ANS:B | Answer: B) Increase fluid intake
+RAT:Rationale: Expectorants (e.g. guaifenesin) increase respiratory tract fluid to liquefy and loosen secretions; the client should increase fluid intake (and humidify the air) to enhance their effect. Antihistamines dry secretions and are counterproductive. (Ref: Pharmacology - respiratory drugs.)
+ID:7 | Q:Q4. The drugs that are classified as narcotic analgesics include:
+OPT:a) Acetylsalicylic acid, Indomethacin | b) Acetaminophen, Ibuprofen | c) Codeine, Morphine | d) Morphine, Diclofenac
+ANS:C | Answer: C) Codeine, Morphine
+RAT:Rationale: Narcotic (opioid) analgesics act on opioid receptors in the CNS - codeine and morphine are both opioids. The other options contain NSAIDs/non-opioids (aspirin, indomethacin, ibuprofen, diclofenac) or mixtures of an opioid with an NSAID. (Ref: Pharmacology - analgesics.)
+ID:8 | Q:Q5. The action of hypnotic drugs is to induce:
+OPT:a) Vomiting | b) Appetite | c) Sleep | d) Calmness
+ANS:C | Answer: C) Sleep
+RAT:Rationale: Hypnotic drugs (e.g. benzodiazepines, zolpidem) act on the CNS to induce and maintain sleep. (Sedatives calm/reduce anxiety; in higher dose hypnotics produce sleep.) (Ref: Pharmacology - CNS depressants.)
+ID:9 | Q:Q6. The antidote for morphine toxicity is:
+OPT:a) Methadone | b) Fentanyl | c) Amphetamine | d) Naloxone
+ANS:D | Answer: D) Naloxone
+RAT:Rationale: Naloxone is a pure opioid antagonist and the specific antidote for morphine (opioid) overdose, rapidly reversing respiratory depression. Methadone and fentanyl are themselves opioids. (Ref: Pharmacology; MOH Kenya emergency management of poisoning.)
+ID:10 | Q:Q7. The extent to which a drug is absorbed and transported to the target tissue is known as:
+OPT:a) Steady-state accumulation | b) Half-life | c) Bioavailability | d) Distribution
+ANS:C | Answer: C) Bioavailability
+RAT:Rationale: Bioavailability is the fraction (extent) of an administered dose that reaches the systemic circulation (and thus the target tissue) in active form. Half-life is the time for the plasma concentration to fall by half. (Ref: Pharmacology - pharmacokinetics.)
+ID:11 | Q:Q8. The actions of the body on the drug are referred to as:
+OPT:a) Pharmacodynamics | b) Pharmacokinetics | c) Pharmacognosy | d) Pharmacogenomics
+ANS:B | Answer: B) Pharmacokinetics
+RAT:Rationale: Pharmacokinetics is what the BODY does to the drug - absorption, distribution, metabolism and excretion (ADME). Pharmacodynamics is what the DRUG does to the body. (Ref: Pharmacology - basic principles.)
+ID:12 | Q:Q9. Atenolol is a/an:
+OPT:a) Beta-2 agonist | b) Beta-blocker | c) ACE inhibitor | d) Calcium channel blocker
+ANS:B | Answer: B) Beta-blocker
+RAT:Rationale: Atenolol is a cardioselective beta-adrenergic blocker (beta-blocker) used in hypertension, angina and after myocardial infarction; it lowers heart rate and myocardial oxygen demand. (Ref: Pharmacology - cardiovascular drugs.)
+ID:13 | Q:Q10. The drugs that are classified as penicillins include:
+OPT:a) Methicillin sodium, Nafcillin sodium | b) Penicillin V, Ciprofloxacin | c) Ampicillin, Doxycycline | d) Erythromycin, Sotalol
+ANS:A | Answer: A) Methicillin sodium, Nafcillin sodium
+RAT:Rationale: Methicillin and nafcillin are both penicillinase-resistant penicillins. The other options pair a penicillin with a non-penicillin - ciprofloxacin (a quinolone), doxycycline (a tetracycline), erythromycin (a macrolide) and sotalol (a beta-blocker). (Ref: Pharmacology - antimicrobials.)
+ID:14 | Q:Q11. An example of a drug derived from a plant is:
+OPT:a) Glibenclamide | b) Quinine | c) Mechlorethamine | d) Rifapentine
+ANS:B | Answer: B) Quinine
+RAT:Rationale: Quinine is an alkaloid obtained from the bark of the cinchona plant - a classic plant-derived (botanical) drug used in malaria. (Ref: Pharmacology - sources of drugs.)
+ID:15 | Q:Q12. The route of drug administration with the highest drug bioavailability is:
+OPT:a) Oral | b) Intramuscular | c) Intradermal | d) Intravenous
+ANS:D | Answer: D) Intravenous
+RAT:Rationale: The intravenous route delivers the drug directly into the bloodstream, giving 100% bioavailability (no absorption barrier and no first-pass metabolism). (Ref: Pharmacology - pharmacokinetics.)
+ID:16 | Q:Q13. The following is an opioid antagonist:
+OPT:a) Flumazenil | b) Naltrexone | c) Sufentanil | d) Methadone
+ANS:B | Answer: B) Naltrexone
+RAT:Rationale: Naltrexone (like naloxone) is an opioid antagonist used in the management of opioid (and alcohol) dependence. Flumazenil is a benzodiazepine antagonist; sufentanil and methadone are opioid agonists. (Ref: Pharmacology - opioids and antagonists.)
+ID:17 | Q:Q14. The drug used for organophosphate poisoning is:
+OPT:a) Atropine | b) Pilocarpine | c) Propranolol | d) Edrophonium
+ANS:A | Answer: A) Atropine
+RAT:Rationale: Atropine (an antimuscarinic) is the antidote for organophosphate (anticholinesterase) poisoning; it reverses the muscarinic effects of acetylcholine excess (usually together with pralidoxime). (Ref: Pharmacology; MOH Kenya management of poisoning.)
+ID:18 | Q:Q15. Local anaesthetics work by:
+OPT:a) Blocking calcium ion channels to prevent depolarization | b) Blocking potassium ion channels to prevent depolarization | c) Blocking sodium ion channels to prevent depolarization | d) Blocking impulse at the neuromuscular junction
+ANS:C | Answer: C) Blocking sodium ion channels to prevent depolarization
+RAT:Rationale: Local anaesthetics (e.g. lignocaine) block voltage-gated SODIUM channels in the nerve membrane, preventing depolarisation and thus the generation and conduction of the nerve impulse. (Ref: Pharmacology - local anaesthetics.)
+ID:19 | Q:Q16. Pregnant women should be advised not to take tetracycline because it has been associated with:
+OPT:a) Gray baby syndrome | b) Tooth and bone defects in the neonate | c) Acne | d) Excessive bleeding
+ANS:B | Answer: B) Tooth and bone defects in the neonate
+RAT:Rationale: Tetracyclines are deposited in developing teeth and bones, causing permanent tooth discoloration and impaired bone growth in the foetus/child; they are therefore contraindicated in pregnancy and in young children. (Gray baby syndrome is caused by chloramphenicol.) (Ref: Pharmacology - drugs in pregnancy.)
+ID:20 | Q:Q17. Acyclovir is a drug of choice for treatment of herpes virus. Its mode of action is to:
+OPT:a) Inhibit viral RNA synthesis | b) Inhibit viral DNA synthesis | c) Inhibit viral protein synthesis | d) Inhibit viral capsule formation
+ANS:B | Answer: B) Inhibit viral DNA synthesis
+RAT:Rationale: Acyclovir is phosphorylated within infected cells and then inhibits viral DNA polymerase, thereby blocking viral DNA synthesis/replication. (Ref: Pharmacology - antivirals.)
+ID:21 | Q:Q18. A drug that prevents the release of histamine from mast cells is:
+OPT:a) Cromolyn | b) Cetirizine | c) Aminophylline | d) Montelukast
+ANS:A | Answer: A) Cromolyn
+RAT:Rationale: Cromolyn (sodium cromoglicate) is a mast-cell stabiliser that prevents the release of histamine and other mediators. Cetirizine is an H1-antihistamine (blocks the receptor), aminophylline is a bronchodilator, and montelukast is a leukotriene-receptor antagonist. (Ref: Pharmacology - anti-allergic drugs.)
+ID:22 | Q:Q19. Oral antidiabetics that work by stimulating beta cells to secrete more insulin and increasing receptor sites in the tissues are classified as:
+OPT:a) Alpha-glucosidase inhibitors | b) Biguanides | c) Sulfonylureas | d) Thiazolidinediones
+ANS:C | Answer: C) Sulfonylureas
+RAT:Rationale: Sulfonylureas (e.g. glibenclamide, gliclazide) lower blood glucose mainly by stimulating insulin secretion from pancreatic beta cells (and increasing tissue insulin sensitivity). Biguanides (metformin) act mainly by reducing hepatic glucose output. (Ref: Pharmacology - oral hypoglycaemics.)
+ID:23 | Q:Q20. The extrapyramidal side effects of antipsychotic drugs include:
+OPT:a) Tardive dyskinesia, opisthotonus, hallucinations | b) Parkinsonism, tardive dyskinesia, opisthotonus | c) Hallucinations, excessive appetite, akinesia | d) Impotence, echolalia, opisthotonus
+ANS:B | Answer: B) Parkinsonism, tardive dyskinesia, opisthotonus
+RAT:Rationale: Extrapyramidal side effects of antipsychotics include drug-induced parkinsonism, acute dystonias (e.g. opisthotonus), akathisia and tardive dyskinesia. Hallucinations are symptoms of the illness, not an extrapyramidal drug effect. (Ref: Pharmacology - antipsychotics.)
+ID:24 | Q:Q21. Combined chemotherapy of tuberculosis is used to:
+OPT:a) Decrease mycobacterial drug resistance | b) Increase mycobacterial drug resistance | c) Decrease the antimicrobial activity | d) Decrease the onset of antimycobacterial drug biotransformation
+ANS:A | Answer: A) Decrease mycobacterial drug resistance
+RAT:Rationale: Tuberculosis is treated with a combination of drugs to prevent (decrease) the emergence of drug-resistant mycobacteria, since resistance readily develops when a single drug is used. (Ref: MOH Kenya National TB programme; Pharmacology.)
+ID:25 | Q:Q22. When teaching about the proper use of antacids, a nurse should instruct the client to:
+OPT:a) Stagger the administration of antacids with other medications | b) Take the antacids with all other medications | c) Take other medications in the daytime and antacids at night | d) Drink a glass of water immediately after taking the antacids
+ANS:A | Answer: A) Stagger the administration of antacids with other medications
+RAT:Rationale: Antacids alter gastric pH and bind many drugs, reducing their absorption; the client should therefore stagger (separate by 1-2 hours) antacid intake from other oral medications. (Ref: Pharmacology - GIT drugs/drug interactions.)
+ID:26 | Q:Q23. A 9-year-old schoolgirl has been diagnosed with taeniasis. The drug of choice in this case would be:
+OPT:a) Ivermectin | b) Praziquantel | c) Diethylcarbamazine | d) Albendazole
+ANS:B | Answer: B) Praziquantel
+RAT:Rationale: Taeniasis (tapeworm infestation) is treated with praziquantel, the drug of choice. Diethylcarbamazine is used for filariasis and ivermectin for onchocerciasis/strongyloidiasis. (Ref: Pharmacology - anthelmintics; MOH Kenya.)
+ID:27 | Q:Q24. 4-aminoquinoline derivative antimalarial drugs include:
+OPT:a) Quinine, amodiaquine, chloroquine | b) Halofantrine, fansidar, hydroxychloroquine | c) Amodiaquine, chloroquine, hydroxychloroquine | d) Mefloquine, artesunate, artemether
+ANS:C | Answer: C) Amodiaquine, chloroquine, hydroxychloroquine
+RAT:Rationale: The 4-aminoquinolines are chloroquine, amodiaquine and hydroxychloroquine. Quinine is a quinoline-methanol; mefloquine is a 4-quinoline-methanol; artesunate/artemether are artemisinin derivatives. (Ref: Pharmacology - antimalarials.)
+ID:28 | Q:Q25. The drugs that are classified as diuretics include:
+OPT:a) Mannitol, Acetazolamide | b) Chlorothiazide, Digoxin | c) Theophylline, Bumetanide | d) Furosemide, Amytal
+ANS:A | Answer: A) Mannitol, Acetazolamide
+RAT:Rationale: Mannitol (an osmotic diuretic) and acetazolamide (a carbonic-anhydrase-inhibitor diuretic) are both diuretics. The distractors pair a diuretic with a non-diuretic - digoxin (cardiac glycoside), theophylline (bronchodilator) and amytal (a barbiturate). (Ref: Pharmacology - diuretics.)
+ID:29 | Q:Q26. The drug used to treat methotrexate toxicity is:
+OPT:a) Folic acid | b) Folinic acid | c) Vitamin B6 | d) Scopolamine
+ANS:B | Answer: B) Folinic acid
+RAT:Rationale: Folinic acid (leucovorin/calcium folinate) is the 'rescue' antidote for methotrexate toxicity; it supplies reduced folate, bypassing the dihydrofolate-reductase block produced by methotrexate. (Ref: Pharmacology - antineoplastics/antidotes.)
+ID:30 | Q:Q1. The major contraindication of Praziquantel is its use in patients with:
+OPT:a) Hepatic dysfunction | b) Ocular cysticercosis | c) Lymphadenopathy | d) Peptic ulcer disease
+ANS:B | Answer: B) Ocular cysticercosis
+RAT:Rationale: Praziquantel is contraindicated in ocular cysticercosis because killing the parasite within the eye provokes an inflammatory reaction that can cause irreversible ocular damage. (Ref: Pharmacology - anthelmintics; WHO.)
+ID:31 | Q:Q2. The major side effects of Indomethacin on the cardiovascular system are:
+OPT:a) Venous thrombosis, bleeding | b) Angina pectoris, hypotension | c) Endocarditis, atrial fibrillation | d) Hypertension, oedema
+ANS:D | Answer: D) Hypertension, oedema
+RAT:Rationale: Indomethacin is an NSAID; by inhibiting prostaglandins it causes sodium and water retention, leading to oedema and raised blood pressure (hypertension). (Ref: Pharmacology - NSAIDs.)
+ID:32 | Q:Q3. The time that is required to reduce the concentration of a drug in the body by one half is called:
+OPT:a) Time course | b) Time period | c) Half-life | d) Half lifespan
+ANS:C | Answer: C) Half-life
+RAT:Rationale: The half-life (t1/2) is the time taken for the plasma concentration (or amount) of a drug in the body to fall by one half; it guides dosing frequency. (Ref: Pharmacology - pharmacokinetics.)
+ID:33 | Q:Q4. The drugs that are classified as sulphonamides include:
+OPT:a) Cotrimoxazole, Sulfamethoxazole, Sulfasalazine | b) Sulfadiazine, Sulfisoxazole, Spironolactone | c) Sulfinpyrazone, Sulfasalazine, Sulfamethoxazole | d) Cefpodoxime proxetil, Cotrimoxazole, Sulfadiazine
+ANS:A | Answer: A) Cotrimoxazole, Sulfamethoxazole, Sulfasalazine
+RAT:Rationale: Sulphonamides include sulfamethoxazole (a component of cotrimoxazole) and sulfasalazine. The distractors include non-sulphonamides such as spironolactone (a diuretic), sulfinpyrazone (a uricosuric) and cefpodoxime (a cephalosporin). (Ref: Pharmacology - antimicrobials.)
+ID:34 | Q:Q5. The drugs that have almost exclusively harmful effects in the body are known as:
+OPT:a) Elixirs | b) Xenobiotics | c) Toxins | d) Poisons
+ANS:D | Answer: D) Poisons
+RAT:Rationale: Poisons are substances whose effects on the body are essentially harmful. (Elixirs are sweetened hydro-alcoholic drug solutions; xenobiotics are any substances foreign to the body, not necessarily harmful.) (Ref: Pharmacology/Toxicology - basic concepts.)
+ID:35 | Q:Q6. The possibility of harmful effects on the foetus during the formative stages of development is referred to as:
+OPT:a) Tetralogy | b) Teratogenicity | c) Mutation | d) Regeneration
+ANS:B | Answer: B) Teratogenicity
+RAT:Rationale: Teratogenicity is the capacity of an agent (drug, chemical, infection, radiation) to cause structural or functional abnormalities in the developing embryo/foetus. (Ref: Pharmacology - drugs in pregnancy.)
+ID:36 | Q:Q7. The mode of action of Nifedipine (Adalat) is that it:
+OPT:a) Inhibits calcium ion influx across cardiac and smooth muscle cells, decreasing myocardial contractility and oxygen demand | b) Stabilizes the neuronal membrane and limits seizure activity | c) Depresses monosynaptic and polysynaptic transmission in the CNS | d) Increases the amount of noradrenaline or serotonin in the central nervous system
+ANS:A | Answer: A) Inhibits calcium ion influx across cardiac and smooth muscle cells, decreasing myocardial contractility and oxygen demand
+RAT:Rationale: Nifedipine is a calcium channel blocker: it inhibits calcium ion influx into cardiac and vascular smooth muscle, causing vasodilatation and reducing myocardial contractility and oxygen demand (used in hypertension and angina). (Ref: Pharmacology - cardiovascular drugs.)
+ID:37 | Q:Q8. Diclofenac sodium produces anti-inflammatory, analgesic and antipyretic effects possibly by inhibiting the synthesis of:
+OPT:a) Dopamine | b) Prostaglandin | c) Serotonin | d) Monoamine oxidase
+ANS:B | Answer: B) Prostaglandin
+RAT:Rationale: Diclofenac is an NSAID that inhibits cyclo-oxygenase, thereby blocking PROSTAGLANDIN synthesis - producing anti-inflammatory, analgesic and antipyretic effects. (Ref: Pharmacology - NSAIDs.)
+ID:38 | Q:Q9. The antiulcer agents include:
+OPT:a) Cimetidine, Laroxyl | b) Omeprazole, Tramadol | c) Famotidine, Sucralfate | d) Praziquantel, Ranitidine hydrochloride
+ANS:C | Answer: C) Famotidine, Sucralfate
+RAT:Rationale: Famotidine (an H2-receptor antagonist) and sucralfate (a mucosal protective agent) are both anti-ulcer drugs. The distractors pair an anti-ulcer drug with an unrelated agent - Laroxyl (amitriptyline), tramadol (an analgesic) and praziquantel (an anthelmintic). (Ref: Pharmacology - drugs for peptic ulcer disease.)
+ID:39 | Q:Q10. The mode of action of salbutamol sulphate is that it:
+OPT:a) Inhibits phosphodiesterase, relaxing bronchial smooth muscle and pulmonary blood vessels | b) Relaxes bronchial and uterine smooth muscle by acting on beta-adrenergic receptors | c) Stimulates alpha and beta adrenergic receptors within the sympathetic nervous system | d) Inhibits vagally mediated reflexes by antagonising acetylcholine
+ANS:B | Answer: B) Relaxes bronchial and uterine smooth muscle by acting on beta-adrenergic receptors
+RAT:Rationale: Salbutamol is a selective beta-2 adrenergic agonist; stimulating beta-2 receptors relaxes bronchial smooth muscle (bronchodilation) and uterine smooth muscle (tocolysis). (Ref: Pharmacology - respiratory drugs.)
+ID:40 | Q:Q11. The anti-anxiety agents include:
+OPT:a) Aminophylline, Halazepam | b) Ranitidine, Buspirone | c) Meprobamate, Chlordiazepoxide | d) Parzepam, Simethicone
+ANS:C | Answer: C) Meprobamate, Chlordiazepoxide
+RAT:Rationale: Meprobamate and chlordiazepoxide are both anxiolytic (anti-anxiety) agents. The distractors include aminophylline (a bronchodilator), ranitidine (an anti-ulcer drug) and simethicone (an anti-flatulent). (Ref: Pharmacology - anxiolytics.)
+ID:41 | Q:Q12. The component of a cell or organism that interacts with a drug and initiates the chain of events leading to the drug's observed effects is called:
+OPT:a) An agonist | b) An antagonist | c) An effector | d) A receptor
+ANS:D | Answer: D) A receptor
+RAT:Rationale: A receptor is the cellular macromolecule with which a drug interacts to initiate its effects. An agonist is a drug that activates a receptor; an antagonist blocks it. (Ref: Pharmacology - pharmacodynamics.)
+ID:42 | Q:Q13. The mode of action of gentamicin sulphate is:
+OPT:a) Inhibition of bacterial cell wall synthesis | b) Inhibition of protein synthesis | c) Inhibition of DNA synthesis | d) Inhibition of folic acid (DHF reductase)
+ANS:B | Answer: B) Inhibition of protein synthesis
+RAT:Rationale: Gentamicin is an aminoglycoside; it binds the 30S bacterial ribosomal subunit and inhibits protein synthesis. (Beta-lactams inhibit cell-wall synthesis; quinolones inhibit DNA synthesis; sulphonamides/trimethoprim inhibit folate synthesis.) (Ref: Pharmacology - antimicrobials.)
+ID:43 | Q:Q14. The effect of combining drugs, where one drug which has no effect increases the effects of another drug, is termed:
+OPT:a) Potentiation | b) Antagonism | c) Addition | d) Agonism
+ANS:A | Answer: A) Potentiation
+RAT:Rationale: Potentiation occurs when a drug that has little or no effect of its own increases (enhances) the effect of another drug. Antagonism is opposition of effects; additive/summation is when two active drugs' effects add up. (Ref: Pharmacology - drug interactions.)
+ID:44 | Q:Q15. Ipratropium bromide is:
+OPT:a) A cholinergic agent used for perennial rhinitis | b) An anticholinergic used for allergic rhinitis and colds | c) Only used in patients with asthma | d) Inappropriate for use in allergic rhinitis
+ANS:B | Answer: B) An anticholinergic used for allergic rhinitis and colds
+RAT:Rationale: Ipratropium bromide is an ANTICHOLINERGIC (antimuscarinic). As an inhaled bronchodilator it is used in asthma and COPD, and as a nasal spray it dries secretions in allergic/non-allergic rhinitis and the common cold - so it is not 'cholinergic' nor limited to asthma. (Ref: Pharmacology - respiratory/autonomic drugs.)
+ID:45 | Q:Q16. The route of drug administration with the highest compliance from patients is:
+OPT:a) Intramuscular | b) Intravenous | c) Oral | d) Intrathecal
+ANS:C | Answer: C) Oral
+RAT:Rationale: The oral route gives the highest patient compliance because it is convenient, non-invasive, painless and can be self-administered. (The intravenous route gives the highest bioavailability but poorer compliance.) (Ref: Pharmacology - routes of administration.)
+ID:46 | Q:Q17. A patient on anti-ulcer therapy complains of reduced libido and impotence. The nurse informs him that it may be associated with:
+OPT:a) Nizatidine | b) Cimetidine | c) Ranitidine | d) Famotidine
+ANS:B | Answer: B) Cimetidine
+RAT:Rationale: Cimetidine has anti-androgenic effects and can cause gynaecomastia, reduced libido and impotence in men (and is also a potent enzyme inhibitor). The other H2-blockers rarely do so. (Ref: Pharmacology - drugs for peptic ulcer disease.)
+ID:47 | Q:Q18. Bulk-forming laxatives:
+OPT:a) Function like dietary fibre | b) Act within 2 to 6 hours | c) Produce a semi-fluid stool | d) Are used to prepare the bowel for diagnostic procedures
+ANS:A | Answer: A) Function like dietary fibre
+RAT:Rationale: Bulk-forming laxatives (e.g. psyllium/methylcellulose) act like dietary fibre - they absorb water and swell to increase faecal bulk, stimulating peristalsis. They act slowly (1-3 days), not in 2-6 hours, and are not used for bowel preparation (that requires stimulant/osmotic agents). (Ref: Pharmacology - GIT drugs.)
+ID:48 | Q:Q19. Diazepam exerts its effects by:
+OPT:a) Binding on GABA receptors in the brain | b) Inhibiting serotonin action | c) Blocking acetylcholine at the synaptic cleft | d) Increasing the influx of sodium into neurons
+ANS:A | Answer: A) Binding on GABA receptors in the brain
+RAT:Rationale: Diazepam is a benzodiazepine; it binds the GABA-A receptor complex and enhances the inhibitory action of GABA (increasing chloride influx), producing anxiolytic, sedative, anticonvulsant and muscle-relaxant effects. (Ref: Pharmacology - CNS depressants.)
+ID:49 | Q:Q20. In a patient suffering from angina, nitroglycerin may be given sublingually because this mode of administration:
+OPT:a) Bypasses the coronary circulation | b) Causes less reflex tachycardia than oral administration | c) Improves patient compliance | d) Avoids first-pass hepatic metabolism
+ANS:D | Answer: D) Avoids first-pass hepatic metabolism
+RAT:Rationale: Sublingual nitroglycerin is absorbed directly into the systemic circulation through the oral mucosa, AVOIDING first-pass hepatic metabolism (which would otherwise inactivate most of the drug), giving rapid relief of angina. (Ref: Pharmacology - antianginal drugs.)
+ID:50 | Q:Q21. The most appropriate drug for treatment of bacillary dysentery in adults is:
+OPT:a) Ciprofloxacin | b) Amoxycillin | c) Erythromycin | d) Gentamicin
+ANS:A | Answer: A) Ciprofloxacin
+RAT:Rationale: Bacillary dysentery (shigellosis) in adults is treated with ciprofloxacin (a fluoroquinolone), the recommended first-line agent owing to widespread resistance to older drugs. (Ref: MOH Kenya/WHO management of dysentery.)
+ID:51 | Q:Q22. The commonest side effect associated with morphine is:
+OPT:a) Development of gastric ulcers | b) Nausea and vomiting | c) Constipation | d) Tachypnoea
+ANS:C | Answer: C) Constipation
+RAT:Rationale: Constipation is the most common and persistent adverse effect of morphine (and other opioids), because opioids reduce gastrointestinal motility; unlike other opioid effects, tolerance to constipation does not develop, so a laxative is usually prescribed. (Ref: Pharmacology - opioid analgesics.)
+ID:52 | Q:Q23. Highly active antiretroviral therapy (HAART) in HIV infection is associated with:
+OPT:a) An increase in the rate of emergence of drug resistance | b) A decrease in CD4 count | c) A decrease in viral RNA in the blood | d) An increased incidence of opportunistic infections
+ANS:C | Answer: C) A decrease in viral RNA in the blood
+RAT:Rationale: Effective HAART suppresses viral replication, producing a fall in plasma viral RNA (viral load), a rise in CD4 count and fewer opportunistic infections. Combination therapy is designed to REDUCE (not increase) the emergence of resistance. (Ref: NASCOP/MOH Kenya ARV guidelines.)
+ID:53 | Q:Q24. Beta-lactamase production is a mechanism of resistance among strains of Haemophilus influenzae and Neisseria gonorrhoeae. Which of the following drugs is effective against the above organisms?
+OPT:a) Amoxicillin | b) Ceftriaxone | c) Clindamycin | d) Ticarcillin
+ANS:B | Answer: B) Ceftriaxone
+RAT:Rationale: Ceftriaxone is a third-generation cephalosporin that is stable to many beta-lactamases and is effective against beta-lactamase-producing H. influenzae and N. gonorrhoeae. Amoxicillin and ticarcillin are readily hydrolysed by beta-lactamases. (Ref: Pharmacology - antimicrobials; MOH Kenya STI guidelines.)
+ID:54 | Q:Q25. Regarding warfarin:
+OPT:a) It is a rapid-acting anticoagulant | b) It has poor absorption across membranes | c) It has teratogenic effects when administered in pregnancy | d) It is administered through the intravenous route
+ANS:C | Answer: C) It has teratogenic effects when administered in pregnancy
+RAT:Rationale: Warfarin is teratogenic (causes fetal warfarin syndrome) and is contraindicated in pregnancy. It is a SLOW-acting ORAL anticoagulant (heparin is the rapid-acting/parenteral agent) and is well absorbed. (Ref: Pharmacology - anticoagulants.)
+ID:55 | Q:Q26. Cromolyn is useful in asthma because it:
+OPT:a) Suppresses the release of histamine | b) Blocks adenosine receptors in the smooth muscles of bronchioles | c) Decreases bronchial hyperreactivity directly | d) Decreases bacterial load in the bronchioles
+ANS:A | Answer: A) Suppresses the release of histamine
+RAT:Rationale: Cromolyn (sodium cromoglicate) is a mast-cell stabiliser; it prevents the release of histamine and other mediators from mast cells, and is used for prophylaxis (not relief) of asthma. (Ref: Pharmacology - anti-asthmatic drugs.)
+ID:56 | Q:Q1. The first scientific paper in nursing was published by:
+OPT:a) Anna Benkingham | b) Florence Nightingale | c) Isabella Hampton | d) Margaret Mylos
+ANS:B | Answer: B) Florence Nightingale
+RAT:Rationale: Florence Nightingale is regarded as the founder of modern nursing and the first nurse researcher; through her statistical 'Notes' she produced the first scientific writing in nursing. (Ref: Foundations of Nursing / Nursing research texts.)
+ID:57 | Q:Q2. The graduate nurse's role in research is:
+OPT:a) Intelligent consumption of research findings | b) Research assistant | c) Funding of research | d) Data analysis and cleaning
+ANS:A | Answer: A) Intelligent consumption of research findings
+RAT:Rationale: At the generalist/graduate level the expected competency is to be an intelligent CONSUMER of research - critically appraising and applying evidence (evidence-based practice) to care. Designing and leading studies is the role of nurses with advanced (master's/doctoral) preparation. (Ref: Nursing Research - Kenyan curriculum; Polit & Beck.)
+ID:58 | Q:Q3. A nurse researcher formulated the following hypothesis: “There is a relationship between self-concept and suicidal behaviour”. This implies that:
+OPT:a) The independent variable is suicidal behaviour | b) The hypothesis is directional | c) The type of design suggested would be experimental | d) The dependent variable is suicidal behaviour
+ANS:D | Answer: D) The dependent variable is suicidal behaviour
+RAT:Rationale: Self-concept is the presumed influencing (independent) variable and suicidal behaviour is the outcome (dependent) variable. The statement merely asserts 'a relationship' without specifying its direction, so it is NON-directional, and a relationship hypothesis suggests a correlational (not experimental) design. (Ref: Nursing Research; Polit & Beck.)
+ID:59 | Q:Q4. Theoretical framework refers to:
+OPT:a) A comprehensive list of all the relevant previous research work done in an area of interest | b) Roy's adaptation theory | c) A pictorial presentation of relationships between variables | d) An examination of both the depth and breadth of literature review
+ANS:B | Answer: B) Roy's adaptation theory
+RAT:Rationale: A theoretical framework is the underpinning of a study built on an established, tested theory; Roy's Adaptation Model is a classic example of such a theory used to frame nursing studies. (A) describes a literature review; (C) describes a conceptual framework/model; (D) describes critiquing the literature. (Ref: Nursing Research; Polit & Beck.)
+ID:60 | Q:Q5. Trait leadership theories in nursing:
+OPT:a) Focus on what leaders do in relational and contextual terms | b) Emphasise the degrees of trust and respect between leaders and followers | c) Are independent of personal characteristics of followers | d) Emphasise that physical and emotional characteristics are critical in inspiring others toward a common goal
+ANS:D | Answer: D) Emphasise that physical and emotional characteristics are critical in inspiring others toward a common goal
+RAT:Rationale: Trait theory holds that leaders possess inborn personal characteristics (physical, emotional, intellectual qualities such as drive, self-confidence and integrity) that make them able to lead and inspire others. Behavioural theories focus on what leaders do (A); transformational/relational theories emphasise trust and respect (B). (Ref: Nursing Leadership & Management - Kenyan curriculum.)
+ID:61 | Q:Q6. The main purpose of publishing research findings is to:
+OPT:a) Meet the requirements of the sponsor | b) Solicit for more funds for future research | c) Get recognition in the profession | d) Contribute to scientific literature
+ANS:D | Answer: D) Contribute to scientific literature
+RAT:Rationale: Dissemination through publication adds to the body of scientific/professional knowledge, allowing findings to be utilised and built upon (evidence-based practice). The other options may be secondary benefits but are not the main purpose. (Ref: Nursing Research.)
+ID:62 | Q:Q7. While conducting research among psychiatric patients, the nurse researcher:
+OPT:a) Uses key-informant approach only | b) May interview the patients directly if they attain a specified mental health status | c) Must get consent from relatives and guardians only | d) May use experimental approach
+ANS:B | Answer: B) May interview the patients directly if they attain a specified mental health status
+RAT:Rationale: Psychiatric patients are a vulnerable group; the researcher may interview them directly (and obtain their own informed consent) provided their mental state allows them to understand and consent competently. Consent is not limited to relatives/guardians, and the data source is not restricted to key informants. (Ref: Research ethics - Nursing Research.)
+ID:63 | Q:Q8. Discovery learning approach:
+OPT:a) Is more effective than expounding the principles then engaging the students in learning | b) Takes less time than the exposition learning approach | c) Helps students attain higher-level (life-skill) or methodological objectives as opposed to being passive receivers | d) Is best applied when students need to grasp a few basic concepts
+ANS:C | Answer: C) Helps students attain higher-level (life-skill) or methodological objectives as opposed to being passive receivers
+RAT:Rationale: Discovery (inquiry) learning engages learners actively in finding out for themselves, which is best suited to attaining higher-order/methodological and life-skill objectives rather than producing passive recipients. It typically takes MORE time and is not ideal for transmitting a few simple facts. (Ref: Nursing Education / principles of teaching & learning.)
+ID:64 | Q:Q9. Micro-evaluation:
+OPT:a) Enables the teacher to launch into new lines of argument when the students seem unconvinced | b) Enables students to benefit in some future learning situations | c) Should be minimal and limited if students are working together | d) Comprises absolute evaluation
+ANS:A | Answer: A) Enables the teacher to launch into new lines of argument when the students seem unconvinced
+RAT:Rationale: Micro-evaluation is the moment-to-moment, formative feedback a teacher obtains DURING a lesson (e.g. reading the learners' reactions), allowing immediate adjustment of the teaching - such as opening new lines of explanation when students appear unconvinced. (Ref: Nursing Education / evaluation in teaching.)
+ID:65 | Q:Q1. A leader who is mainly concerned with the day-to-day operations of an organisation with little regard to the future is called a:
+OPT:a) Charismatic leader | b) Transactional leader | c) Transformational leader | d) Traditional leader
+ANS:B | Answer: B) Transactional leader
+RAT:Rationale: A transactional leader focuses on day-to-day operations, supervision, exchange (rewards/penalties) and maintaining the status quo, rather than on vision and future transformation (the focus of a transformational leader). (Ref: Nursing Leadership & Management.)
+ID:66 | Q:Q2. Zero-based budgeting means:
+OPT:a) Multiplying current year expenses by a certain figure | b) Budgeting for purchase of major equipment | c) Use of a decision-making package to justify the current budget needs | d) Budget where accountability, efficiency and economy is emphasized
+ANS:C | Answer: C) Use of a decision-making package to justify the current budget needs
+RAT:Rationale: In zero-based budgeting every programme/activity starts from a 'zero base' and each manager must justify all requested funds afresh each period using decision packages - nothing is automatically carried over from the previous budget. (Ref: Nursing Leadership & Management - budgeting.)
+ID:67 | Q:Q3. Mentors differ from preceptors in that mentors:
+OPT:a) Passively model new staff | b) Choose whom to mentor | c) Have a short relationship with the novice staff | d) Do not assist the novice staff in career development
+ANS:B | Answer: B) Choose whom to mentor
+RAT:Rationale: Mentoring is a voluntary, mutually chosen and usually long-term developmental relationship - the mentor chooses (and is chosen by) the protege and actively supports career development. A preceptor is normally assigned for a defined, shorter orientation period. (Ref: Nursing Leadership & Management / Education.)
+ID:68 | Q:Q4. Over-delegation involves:
+OPT:a) Delegating at the wrong time, to the wrong person, for the wrong reasons | b) Delegating to exceptionally competent employees | c) Transferring too many roles from the manager to the subordinates | d) Delegating authority and responsibility
+ANS:C | Answer: C) Transferring too many roles from the manager to the subordinates
+RAT:Rationale: Over-delegation is delegating TOO MUCH - transferring excessive tasks/roles (often including those the manager should retain) to subordinates, overloading them. (Improper delegation = wrong task/time/person; under-delegation = delegating too little.) (Ref: Nursing Leadership & Management - delegation.)
+ID:69 | Q:Q5. Variables that take only a few discrete values are called:
+OPT:a) Outcome | b) Continuous | c) Extraneous | d) Categorical
+ANS:D | Answer: D) Categorical
+RAT:Rationale: Categorical (discrete) variables take a limited number of distinct values or categories (e.g. sex, blood group), in contrast to continuous variables which can take any value along a range. (Ref: Nursing Research / Biostatistics.)
+ID:70 | Q:Q6. In research journal articles, “blind reviews” means reviewers:
+OPT:a) Are told the names of the researchers and the researchers are not told the identity of the reviewers | b) Are not told the names of the researchers and the researchers are told the identity of the reviewers | c) Are not told the names of the researchers and the researchers are not told the identity of the reviewers | d) Know the names of the researchers and vice versa
+ANS:C | Answer: C) Are not told the names of the researchers and the researchers are not told the identity of the reviewers
+RAT:Rationale: A (double-) blind review is one in which the reviewers are not told who the authors are AND the authors are not told who the reviewers are - protecting objectivity and reducing bias. (Ref: Nursing Research - publication/peer review.)
+ID:71 | Q:Q7. It is difficult to obtain meaningful informed consent in qualitative research because the researcher does not know in advance how the study will evolve. This kind of consent gotten by qualitative research is called:
+OPT:a) Process consent | b) Uninformed consent | c) Implied consent | d) Incomplete consent
+ANS:A | Answer: A) Process consent
+RAT:Rationale: In qualitative research, because the design unfolds, consent is treated as an ongoing process - 'process consent' - in which the researcher repeatedly renegotiates the participant's continued agreement as the study evolves. (Ref: Nursing Research - qualitative methods/ethics.)
+ID:72 | Q:Q8. Random assignment means:
+OPT:a) Probability sampling where each subject has an equal and independent chance of participating in the study | b) Assigning subjects to the control and experimental group without predetermined criteria | c) Assigning subjects to the control group and experimental group such that each has an equal chance of being selected for each group | d) Random sampling method of assigning subjects to control group and experimental group
+ANS:C | Answer: C) Assigning subjects to the control group and experimental group such that each has an equal chance of being selected for each group
+RAT:Rationale: Random assignment (randomisation) is the allocation of subjects to study groups so that each participant has an equal and independent chance of being placed in EITHER the control or the experimental group - it controls for confounding. (Random selection/sampling, by contrast, concerns who gets INTO the study.) (Ref: Nursing Research - experimental design.)
+ID:73 | Q:Q9. Practising nurses need to develop research-critique skills to:
+OPT:a) Challenge fellow nurses doing research-report presentations | b) Be able to do literature review when doing their research studies | c) Participate fully in journal clubs | d) Judge the utility of research findings
+ANS:D | Answer: D) Judge the utility of research findings
+RAT:Rationale: The purpose of developing research-critique (appraisal) skills is to enable nurses to judge the quality and utility of research findings so they can decide whether and how to apply the evidence in practice (evidence-based practice). (Ref: Nursing Research.)
+ID:74 | Q:Q10. Reflective scepticism, a characteristic of critical thinkers, means:
+OPT:a) Asking awkward questions to challenge assumptions | b) Ability to imagine and explore alternatives | c) Taking a critical view of established dogmas and practices, scrutinizing them and questioning their current validity | d) Reflecting on past events and questioning them
+ANS:C | Answer: C) Taking a critical view of established dogmas and practices, scrutinizing them and questioning their current validity
+RAT:Rationale: Reflective scepticism is the disposition not to accept established dogmas/practices at face value - critically scrutinising them and questioning their current validity and evidence base. (Ref: Nursing Education - critical thinking.)
+ID:75 | Q:Q11. Problem-based learning means:
+OPT:a) Learning that results from the process of working towards the resolution of a problem | b) A situation where students learn without any assistance from the teacher | c) Learning that results after the learner gets the solution | d) Learning where teachers use questions only
+ANS:A | Answer: A) Learning that results from the process of working towards the resolution of a problem
+RAT:Rationale: Problem-based learning (PBL) is a student-centred approach in which learning arises from the PROCESS of working to understand and resolve a real or simulated problem; the teacher facilitates rather than abandons the learners. (Ref: Nursing Education - teaching/learning methods.)
+ID:76 | Q:Q12. When an assessment tool measures what it is supposed to measure, it is said to have:
+OPT:a) Validity | b) Reliability | c) Consistency | d) Discrimination
+ANS:A | Answer: A) Validity
+RAT:Rationale: Validity is the degree to which an instrument actually measures what it is intended to measure. Reliability/consistency refers to the stability/reproducibility of the measurement. (Ref: Nursing Research / Educational measurement.)
+ID:77 | Q:Q13. An appropriate method that can be used to teach the acquisition of psychomotor skills is:
+OPT:a) Case studies | b) Demonstration | c) Micro-teaching | d) Brainstorming
+ANS:B | Answer: B) Demonstration
+RAT:Rationale: Psychomotor (practical) skills are best taught by demonstration (and return demonstration), which shows the learner exactly how to perform the procedure step by step. Case studies and brainstorming target cognitive/affective domains. (Ref: Nursing Education - teaching methods.)
+ID:78 | Q:Q14. The decision-making hierarchy is called:
+OPT:a) Scalar chain | b) Span of control | c) Decentralized decision making | d) Centralized decision making
+ANS:A | Answer: A) Scalar chain
+RAT:Rationale: The scalar chain is the formal line of authority and communication running from the top to the bottom of an organisation (the chain of command/hierarchy) along which decisions and instructions flow. Span of control is the number of subordinates a manager supervises. (Ref: Nursing Leadership & Management - organisation.)
+ID:79 | Q:Q1. Pulmonary disorders that cause finger-clubbing include:
+OPT:a) Pneumonia, asthma, emphysema | b) Lung cancer, lung abscess, bronchiectasis | c) Cystic fibrosis, pulmonary hypertension, pneumothorax | d) Pleural effusion, beryllium disease, chronic atelectasis
+ANS:B | Answer: B) Lung cancer, lung abscess, bronchiectasis
+RAT:Rationale: Finger-clubbing is associated with chronic suppurative and neoplastic lung disease - classically bronchiectasis, lung abscess, bronchogenic carcinoma (lung cancer), empyema and pulmonary fibrosis. Asthma, emphysema, pneumonia, pneumothorax and uncomplicated pleural effusion do NOT typically cause clubbing. (Ref: Brunner & Suddarth Medical-Surgical Nursing.)
+ID:80 | Q:Q2. Clinical features of phaeochromocytoma include:
+OPT:a) Muscle weakness, thin skin, raised blood pressure | b) Tingling, muscle spasm, periods of temporary paralysis | c) Excessive facial hair, acne, weight loss | d) Headache, blurring of vision, diaphoresis
+ANS:D | Answer: D) Headache, blurring of vision, diaphoresis
+RAT:Rationale: Phaeochromocytoma is a catecholamine-secreting tumour (usually adrenal medulla) producing the classic triad of severe headache, palpitations and diaphoresis (profuse sweating) together with paroxysmal/sustained hypertension and visual blurring. (Ref: Brunner & Suddarth.)
+ID:81 | Q:Q3. In the management of pemphigus:
+OPT:a) Corticosteroids are administered in high doses until remission is apparent | b) Dapsone is given after screening the patient for glucose-6-phosphate dehydrogenase | c) Systemic prednisone is continued for months in alternate-day doses | d) Fluid and electrolyte balance must be maintained to counteract their loss from the skin
+ANS:A | Answer: A) Corticosteroids are administered in high doses until remission is apparent
+RAT:Rationale: The mainstay of medical management of pemphigus (vulgaris) is high-dose systemic corticosteroids continued until the disease is controlled and the skin is free of blisters (remission), after which the dose is tapered. (Maintaining fluid/electrolyte and protein balance is also an important nursing measure, but the defining first-line therapy is high-dose corticosteroids.) (Ref: Brunner & Suddarth - skin disorders.)
+ID:82 | Q:Q4. Surgical management of peptic ulcers is indicated in:
+OPT:a) Severe Helicobacter pylori infection, H2-receptor antagonist resistance | b) Failure to heal after 12-16 weeks of treatment, Zollinger-Ellison syndrome | c) NSAID-induced ulcers, stress ulcers | d) Cushing's ulcers, Curling ulcers
+ANS:B | Answer: B) Failure to heal after 12-16 weeks of treatment, Zollinger-Ellison syndrome
+RAT:Rationale: Surgery for peptic ulcer disease is reserved for intractable disease (failure of adequate medical therapy, e.g. after 12-16 weeks), Zollinger-Ellison syndrome, and complications (perforation, uncontrolled haemorrhage, gastric outlet obstruction). H. pylori, NSAID-induced, stress, Cushing's and Curling's ulcers are managed medically in the first instance. (Ref: Brunner & Suddarth.)
+ID:83 | Q:Q1. The position of choice for a patient who has had a gastrectomy is:
+OPT:a) Sims | b) Supine | c) Prone | d) Semi-Fowler's
+ANS:D | Answer: D) Semi-Fowler's
+RAT:Rationale: The semi-Fowler's (semi-sitting) position is used after abdominal surgery such as gastrectomy; it eases respiration and abdominal wall tension, promotes drainage and improves comfort. (Ref: Brunner & Suddarth - post-operative positioning.)
+ID:84 | Q:Q2. A child is brought after falling down the stairs, complaining of headache and is now unable to move his feet. Using triage colour coding, this client is categorised as:
+OPT:a) Black | b) Green | c) Yellow | d) Red
+ANS:D | Answer: D) Red
+RAT:Rationale: Inability to move the feet (possible spinal cord injury) following a head injury is a life-/limb-threatening emergency requiring immediate attention - triage RED (immediate). Green = minor, Yellow = urgent but can wait, Black = deceased/expectant. (Ref: MOH Kenya emergency triage - ETAT/MTC.)
+ID:85 | Q:Q1. The condition for which a nurse prepares a woman for emergency caesarean delivery is:
+OPT:a) Prolapsed cord | b) Twin pregnancy | c) Meconium-stained amniotic fluid | d) A non-reactive non-stress test
+ANS:A | Answer: A) Prolapsed cord
+RAT:Rationale: Cord prolapse is a true obstetric emergency: the presenting part compresses the cord, cutting off fetal oxygen, so an immediate (emergency) caesarean section is indicated if delivery is not imminent. Twin pregnancy, meconium-stained liquor and a non-reactive NST are warning signs that require close monitoring but are not, on their own, automatic indications for emergency caesarean. (Ref: Myles Textbook for Midwives; MOH Kenya Basic Emergency Obstetric & Newborn Care guidelines.)
+ID:86 | Q:Q2. To screen for the presence of neural tube defects in the fetus, the test that would be performed on a pregnant woman is:
+OPT:a) Biophysical profile | b) Amniocentesis | c) Serum alpha-fetoprotein | d) TORCH titres
+ANS:C | Answer: C) Serum alpha-fetoprotein
+RAT:Rationale: Maternal serum alpha-fetoprotein (MSAFP) is the standard screening test for open neural tube defects (anencephaly, spina bifida); levels are raised when the defect is open. Amniocentesis is diagnostic/confirmatory (and invasive), the biophysical profile assesses fetal wellbeing, and TORCH titres screen for congenital infection. (Ref: Myles Textbook for Midwives.)
+ID:87 | Q:Q3. During first examination of a normal newborn baby, a nurse would expect to identify:
+OPT:a) Apical pulse rate of 90 beats per minute | b) Hands and feet that have a bluish colour | c) Eye discharge that is yellow and watery | d) Umbilical stump that has two veins and one artery
+ANS:B | Answer: B) Hands and feet that have a bluish colour
+RAT:Rationale: Acrocyanosis (bluish hands and feet) is a normal finding in the newborn during the first 24-48 hours owing to sluggish peripheral circulation. A normal apical rate is 120-160 b/min (90 is bradycardia); yellow watery eye discharge suggests infection; and a normal cord has TWO arteries and ONE vein (a single artery is abnormal). (Ref: Myles Textbook for Midwives; MOH Kenya Newborn care.)
+ID:88 | Q:Q4. For a woman who is in labour and experiencing slight shoulder dystocia the nurse would:
+OPT:a) Place her in knee-chest position | b) Apply fundal pressure to the suprapubic area | c) Prepare for assisted forceps delivery | d) Obtain an order for oxytocin infusion
+ANS:A | Answer: A) Place her in knee-chest position
+RAT:Rationale: The first-line manoeuvre for shoulder dystocia is McRoberts' manoeuvre - sharp hyperflexion of the maternal thighs onto the abdomen (the knee-chest / exaggerated lithotomy position), combined with SUPRAPUBIC (not fundal) pressure. Fundal pressure is contraindicated because it further impacts the shoulder and risks uterine rupture; forceps and oxytocin do not relieve the impacted shoulder. (Ref: Myles Textbook for Midwives; HMS-style obstetric emergency drills.)
+ID:89 | Q:Q5. A labouring woman's husband assists her during the transitional phase of labour. The behaviour that, if exhibited by the husband, would require intervention by a nurse is:
+OPT:a) Offers the woman a bed pan when she needs to have a bowel movement | b) Gives ice-chips to the woman when she says her mouth is dry | c) Provides effleurage when the woman complains of intense abdominal pain | d) Encourages the woman to fix her gaze on him when she experiences a contraction
+ANS:A | Answer: A) Offers the woman a bed pan when she needs to have a bowel movement
+RAT:Rationale: In the transitional phase an urge to move the bowels usually signals descent of the presenting part and imminent second stage; offering a bedpan could result in delivery onto the pan and is unsafe, so the nurse must intervene/assess for full dilatation. Ice-chips, effleurage and using a focal point are all appropriate, supportive comfort measures. (Ref: Myles Textbook for Midwives.)
+ID:90 | Q:Q6. To help a woman recognise the best time for conceiving, a nurse would instruct the woman to monitor for:
+OPT:a) Drop in body temperature lasting several days | b) Increase in the amount of cervical mucus that is clear and stretchy | c) Abdominal bloating that occurs suddenly | d) Breast tenderness accompanied by slight nipple discharge
+ANS:B | Answer: B) Increase in the amount of cervical mucus that is clear and stretchy
+RAT:Rationale: Around ovulation, oestrogen causes cervical mucus to become copious, clear, slippery and stretchy (spinnbarkeit) - the most fertile sign. Basal body temperature RISES (does not drop) by about 0.2-0.5C after ovulation; bloating and breast tenderness are non-specific. (Ref: MOH Kenya/WHO Family Planning Guidelines - fertility awareness methods.)
+ID:91 | Q:Q7. The sign that leads a nurse to suspect that a two-week-old infant who was born prematurely may be having apnoea is:
+OPT:a) Intermittent episodes of acrocyanosis for periods of 10 minutes | b) Random episodes of breath-holding during periods of stress | c) Transient episodes of mottling with environmental temperature changes | d) A lapse of spontaneous breathing for 20 seconds
+ANS:D | Answer: D) A lapse of spontaneous breathing for 20 seconds
+RAT:Rationale: Apnoea of prematurity is defined as cessation of spontaneous breathing for 20 seconds or more, or a shorter pause accompanied by bradycardia/cyanosis/desaturation. Acrocyanosis and mottling with temperature change are normal vasomotor responses. (Ref: MOH Kenya Newborn/Preterm care; Nelson Paediatrics.)
+ID:92 | Q:Q8. When performing a physical assessment of a woman who is 20 weeks pregnant, a nurse would expect to palpate the uterine fundus at:
+OPT:a) Symphysis pubis | b) Midway between symphysis pubis and umbilicus | c) Umbilicus | d) Midway between umbilicus and xyphoid process
+ANS:C | Answer: C) Umbilicus
+RAT:Rationale: By approximately 20-22 weeks' gestation the uterine fundus reaches the level of the umbilicus. The fundus is at the symphysis pubis at ~12 weeks, midway between symphysis and umbilicus at ~16 weeks, and near the xiphisternum at ~36 weeks. (Ref: Myles Textbook for Midwives - abdominal examination.)
+ID:93 | Q:Q9. A woman complains of morning sickness during the first trimester of pregnancy. To alleviate the symptoms, she should:
+OPT:a) Consume a clear liquid diet | b) Take prenatal vitamins with milk | c) Eat foods that are low in protein | d) Avoid exposure to noxious odours
+ANS:D | Answer: D) Avoid exposure to noxious odours
+RAT:Rationale: Nausea of early pregnancy is reduced by avoiding triggers such as strong/noxious odours, taking small frequent dry carbohydrate snacks (e.g. dry toast/crackers before rising), and avoiding an empty stomach. A clear-liquid diet is not advised, iron-containing prenatal vitamins often worsen nausea, and protein should NOT be restricted. (Ref: Myles Textbook for Midwives - minor disorders of pregnancy.)
+ID:94 | Q:Q10. A primigravida who has had no antenatal care is admitted to the labour ward in active labour. Her cervix is eight centimetres dilated. She starts to push with a contraction. During her next contraction, the nurse should:
+OPT:a) Instruct the patient to take a deep breath, hold it and then bear down | b) Instruct the patient to take short rapid breaths | c) Help the patient to assume a semi-sitting position and hold her knees in a flexed position while bearing down | d) Apply firm pressure on the patient's lower back
+ANS:B | Answer: B) Instruct the patient to take short rapid breaths
+RAT:Rationale: At 8 cm the cervix is not yet fully dilated, so pushing must be discouraged to avoid cervical oedema and laceration. The woman is taught to pant / take short rapid breaths through the contractions until full dilatation is confirmed. Active bearing-down techniques are appropriate only in the second stage. (Ref: Myles Textbook for Midwives.)
+ID:95 | Q:Q11. The midwife should suspect pregnancy-induced hypertension if, during a client's assessment, she finds the following:
+OPT:a) Ankle oedema and proteinuria | b) Glycosuria and proteinuria | c) Proteinuria and hypertension | d) Hypertension and hyporeflexia
+ANS:C | Answer: C) Proteinuria and hypertension
+RAT:Rationale: Pre-eclampsia (pregnancy-induced hypertension with proteinuria) is defined by hypertension (BP >=140/90) PLUS proteinuria after 20 weeks. Dependent ankle oedema is common in normal pregnancy, glycosuria suggests gestational diabetes, and pre-eclampsia produces HYPER-reflexia (brisk reflexes/clonus), not hyporeflexia. (Ref: MOH Kenya guidelines on pre-eclampsia/eclampsia; Myles.)
+ID:96 | Q:Q12. The treatment of puerperal mastitis before suppuration occurs is:
+OPT:a) Antibiotics, breast support and ice application | b) Antibiotics, breast support and heat application | c) Antibiotics, aspiration and breast support | d) Antibiotics, incision and drainage, breast support
+ANS:B | Answer: B) Antibiotics, breast support and heat application
+RAT:Rationale: In the inflammatory (cellulitic) stage of mastitis - before an abscess forms - management is antibiotics (anti-staphylococcal), continued breastfeeding/effective breast emptying, breast support and WARM compresses to promote milk flow and drainage. Incision and drainage (or aspiration) is reserved for an established abscess (suppuration). (Ref: Myles Textbook for Midwives; MOH Kenya.)
+ID:97 | Q:Q1. The following are clinical types of poliomyelitis: (i) Flaccid poliomyelitis  (ii) Abortive poliomyelitis  (iii) Non-abortive poliomyelitis  (iv) Non-paralytic poliomyelitis
+OPT:a) i, iii, iv | b) i, ii, iv | c) ii, iv, i | d) iii, iv, ii
+ANS:B | Answer: B) i, ii, iv
+RAT:Rationale: The recognised clinical forms of poliomyelitis are abortive (ii), non-paralytic (iv) and paralytic - the latter being flaccid (i). 'Non-abortive' (iii) is not a recognised type and is the distractor, so the correct combination is i, ii, iv. (Ref: Park's/Kenyan Community Health & communicable disease texts; MOH Kenya EPI.)
+ID:98 | Q:Q2. The following are examples of “spacing methods” of family planning:
+OPT:a) Natural methods, chemical barriers, vasectomy | b) Mechanical barriers, tubectomy, chemical barriers | c) Tubectomy, vasectomy, natural methods | d) Chemical barriers, natural methods, mechanical barriers
+ANS:D | Answer: D) Chemical barriers, natural methods, mechanical barriers
+RAT:Rationale: Spacing (temporary/reversible) methods allow a couple to delay or space births; they include natural/fertility-awareness methods, chemical barriers (spermicides) and mechanical barriers (condoms, diaphragm). Vasectomy and tubectomy are PERMANENT (terminal) methods, so any option containing them is wrong. (Ref: MOH Kenya National Family Planning Guidelines.)
+ID:99 | Q:Q3. In environmental health, water-based diseases are:
+OPT:a) Due to the presence of an aquatic host | b) Caused by vectors that live near aquatic conditions | c) Caused by poor quality of water | d) Due to inadequate quantities of water
+ANS:A | Answer: A) Due to the presence of an aquatic host
+RAT:Rationale: Water-based diseases (e.g. schistosomiasis, guinea-worm) require an aquatic intermediate host to complete the parasite's life cycle. This contrasts with water-borne disease (poor water quality, e.g. cholera/typhoid), water-washed disease (inadequate quantity for hygiene) and water-related vector-borne disease (vectors breeding near water, e.g. malaria). (Ref: Kenyan Environmental Health/Community Health texts.)
+ID:100 | Q:Q4. A child with marasmus will present with the following clinical symptoms:
+OPT:a) Oedema of the legs but not the face | b) Very poor appetite | c) Diffuse depigmentation | d) No hepatic enlargement
+ANS:D | Answer: D) No hepatic enlargement
+RAT:Rationale: Marasmus is severe wasting from energy deficiency: there is NO oedema, NO hepatomegaly, and NO skin/hair depigmentation - the child is markedly wasted ('old man face') and is usually alert with a relatively good appetite. Oedema, poor appetite, hair/skin depigmentation and a fatty enlarged liver are features of KWASHIORKOR. Hence 'no hepatic enlargement' is correct for marasmus. (Ref: Kenya IMNCI; MOH Kenya/WHO management of acute malnutrition.)
+ID:101 | Q:Q5. In focused antenatal care:
+OPT:a) The mother is encouraged to visit the antenatal clinic at least seven times during pregnancy | b) The mother is encouraged to save some money for buying baby clothes when born | c) The mother is encouraged to decide on the place of birth when labour begins | d) The mother is encouraged to make transport arrangements several months before her time of delivery
+ANS:D | Answer: D) The mother is encouraged to make transport arrangements several months before her time of delivery
+RAT:Rationale: Focused (goal-directed) antenatal care emphasises birth preparedness and complication readiness - including arranging transport, finances, a skilled birth attendant and place of delivery well in advance. The classic FANC schedule was 4 goal-oriented visits (not seven), and the place of birth is planned during pregnancy, not when labour begins. (Ref: MOH Kenya Focused Antenatal Care guidelines / WHO.)
+ID:102 | Q:Q6. In determination of disease incidence:
+OPT:a) The total population is considered | b) The ability of disease to recur is not considered | c) Persons-years time at risk is considered | d) All the individuals suffering from the disease are considered
+ANS:C | Answer: C) Persons-years time at risk is considered
+RAT:Rationale: Incidence measures NEW cases arising over time; the incidence rate uses person-time (person-years) at risk as the denominator, counting only those at risk and the time each is observed. Prevalence (not incidence) counts all existing cases. (Ref: Epidemiology - Kenyan Community Health Nursing curriculum.)
+ID:103 | Q:Q7. The demographic trends in Kenya indicate that since 1969 to date:
+OPT:a) The crude birth rate has increased | b) The infant mortality rate has increased | c) Life expectancy at birth has increased | d) Total fertility rate has increased
+ANS:C | Answer: C) Life expectancy at birth has increased
+RAT:Rationale: Over the decades since 1969, Kenya's life expectancy at birth has risen, while the crude birth rate, infant mortality rate and total fertility rate have all declined (demographic transition). (Ref: KNBS / Kenya Demographic and Health Survey trends.)
+ID:104 | Q:Q8. The following should be highly considered when counselling on family planning for an HIV-positive client:
+OPT:a) Drug interactions between hormonal methods and anti-tuberculosis drugs | b) The client's current stage of AIDS | c) The client's nutritional status | d) The client's economic status and source of funding
+ANS:A | Answer: A) Drug interactions between hormonal methods and anti-tuberculosis drugs
+RAT:Rationale: Many HIV-positive clients are on rifampicin-based TB treatment; rifampicin is a potent hepatic enzyme inducer that lowers the blood levels and effectiveness of hormonal contraceptives, so this drug interaction must be considered and an effective/back-up method advised. (Ref: MOH Kenya FP Guidelines; WHO Medical Eligibility Criteria.)
+ID:105 | Q:Q9. When preparing a family for their parents' changed role due to HIV status, an important aspect to consider is:
+OPT:a) Drug therapy instructions | b) Nutritional and diet preparation | c) De-stigmatisation of the infected | d) Exercise schedule for the infected
+ANS:C | Answer: C) De-stigmatisation of the infected
+RAT:Rationale: Helping the family understand and accept the diagnosis - reducing stigma and discrimination (de-stigmatisation) toward the infected member - is the priority psychosocial preparation, as stigma undermines disclosure, support, adherence and the family's ability to adapt to changed roles. (Ref: MOH Kenya / NASCOP HIV psychosocial care guidelines.)
+ID:106 | Q:Q10. The resolution stage of the grief response:
+OPT:a) Lasts less than six months | b) May be prolonged if there has been a love-hate association | c) May be prolonged by anticipatory grieving | d) May be of less intensity if the affected has experienced a number of recent losses
+ANS:B | Answer: B) May be prolonged if there has been a love-hate association
+RAT:Rationale: Resolution of grief is prolonged when the relationship with the deceased was ambivalent (a 'love-hate' association) because of unresolved guilt and conflicting feelings. Anticipatory grieving generally EASES later grief, multiple recent losses tend to INTENSIFY grief, and there is no fixed time limit of under six months. (Ref: Mental Health/Psychiatric Nursing texts.)
+ID:107 | Q:Q11. Mrs. Mama has laid down strict and rigid rules for her baby during toilet training. The characteristics the baby is likely to exhibit in adulthood include: (i) Stubbornness  (ii) Malevolence  (iii) Disorganisation  (iv) Stinginess  (v) Miserliness
+OPT:a) i, iii and iv | b) ii, iii and iv | c) i, iv and v | d) i, ii and iv
+ANS:C | Answer: C) i, iv and v
+RAT:Rationale: According to Freud's psychosexual theory, conflict/over-strictness during the anal stage (toilet training) produces the 'anal-retentive' personality - obstinacy/stubbornness, orderliness, stinginess and miserliness. Hence i, iv and v. Malevolence and disorganisation are not features (disorganisation is the opposite of the anal-retentive trait). (Ref: Psychiatric/Mental Health Nursing; growth & development.)
+ID:108 | Q:Q12. A patient tells a nurse “I felt very bad when my relatives visited me and I refused to talk to them”. The nurse's best response would be:
+OPT:a) “Did they make you feel that way?” | b) “How did you do that?” | c) “Do you think they came to visit you just to annoy you?” | d) “Describe what you were feeling just before your relatives visited you”
+ANS:D | Answer: D) “Describe what you were feeling just before your relatives visited you”
+RAT:Rationale: An open-ended, exploratory statement that invites the patient to describe their feelings ('Describe what you were feeling...') is the therapeutic communication technique of exploring/seeking clarification. The other options are closed, leading or challenging and block communication. (Ref: Therapeutic communication - Mental Health Nursing.)
+ID:109 | Q:Q13. The organic mental syndrome associated with sedative abuse is:
+OPT:a) Dementia | b) Amnestic syndrome | c) Organic hallucinosis | d) Organic mood disorder
+ANS:B | Answer: B) Amnestic syndrome
+RAT:Rationale: Chronic sedative (e.g. benzodiazepine/barbiturate) and alcohol abuse classically produces an amnestic syndrome - an inability to form new memories (short-term/recent memory deficit) with relatively preserved attention and remote memory. (Ref: Psychiatric/Mental Health Nursing.)
+ID:110 | Q:Q14. Mini, a 7-year-old boy, has been diagnosed with Attention Deficit Hyperactivity Disorder (ADHD). The drug group most likely to be used would be:
+OPT:a) Central nervous system depressants | b) Anticonvulsants | c) Major tranquilizers | d) Central nervous system stimulants
+ANS:D | Answer: D) Central nervous system stimulants
+RAT:Rationale: Paradoxically, CNS stimulants (e.g. methylphenidate/Ritalin, dextroamphetamine) are first-line pharmacological treatment for ADHD; they increase dopamine/noradrenaline activity and improve attention and impulse control in affected children. (Ref: Pharmacology / Child & Adolescent Mental Health.)
+ID:111 | Q:Q15. Benzhexol (Artane):
+OPT:a) Should not be administered to patients with parkinsonian syndrome | b) May be used safely in patients with prostatic hypertrophy | c) Should never exceed 15 mg daily dosage | d) Does not cause orthostatic hypotension
+ANS:C | Answer: C) Should never exceed 15 mg daily dosage
+RAT:Rationale: Benzhexol (trihexyphenidyl, Artane) is an anticholinergic used to treat parkinsonism and drug-induced extrapyramidal effects; the usual maximum dose is about 15 mg/day. Being anticholinergic it is CONTRAINDICATED in prostatic hypertrophy (risk of urinary retention) - so (A) and (B) are wrong, and it can contribute to orthostatic hypotension. (Ref: Pharmacology texts; BNF.)
+ID:112 | Q:Q16. Exhibitionism:
+OPT:a) Occurs for less than 6 months | b) Occurs equally in both men and women | c) Is intensified when the perpetrator has excess free time and is under significant stress | d) Is more frequent in men without satisfying sexual relationships
+ANS:C | Answer: C) Is intensified when the perpetrator has excess free time and is under significant stress
+RAT:Rationale: Exhibitionism is a paraphilic disorder (recurrent urges/behaviour of at least 6 months' duration) seen predominantly in men; the urge to expose intensifies when the person has excessive free time or is under significant stress. Many exhibitionists do have satisfying adult sexual relationships, so (D) is incorrect. (Ref: Psychiatric/Mental Health Nursing; DSM criteria.)
+ID:113 | Q:Q17. Children of divorced parents:
+OPT:a) Experience distress and dysfunction more in the year preceding divorce | b) Experience less severe distress after two years of divorce as compared with those children remaining in conflictual marriages | c) Distress and dysfunction are lowest in the year after divorce | d) Have similar psychological problems with those of non-divorced parents
+ANS:B | Answer: B) Experience less severe distress after two years of divorce as compared with those children remaining in conflictual marriages
+RAT:Rationale: Research shows that, after about two years, children of divorced parents generally adjust and show LESS distress than children who remain in homes with ongoing high parental conflict - i.e., chronic marital conflict is more damaging than the divorce itself once adjustment occurs. (Ref: Child & Family Mental Health.)
+ID:114 | Q:Q18. Mr. Moto has been constantly physically abusing his wife. Mr. Moto:
+OPT:a) Is likely to have a diagnosable mental disorder | b) May predispose his anger on his children | c) May have come from a background in which violence is frequent and tolerated | d) May predispose himself to homicide
+ANS:C | Answer: C) May have come from a background in which violence is frequent and tolerated
+RAT:Rationale: A learned/socialised history of violence - growing up in a family or environment where violence was frequent and tolerated - is the best-supported correlate of becoming a perpetrator of intimate-partner violence. Most abusers do NOT have a diagnosable mental disorder. (Ref: Mental Health Nursing - family/gender-based violence.)
+ID:115 | Q:Q19. The best management of varicose veins during pregnancy is:
+OPT:a) Using supporting tights or crepe bandage, resting with feet elevated | b) Avoiding standing for too long, wearing loose clothing | c) Avoiding sitting for a long time, elevating feet when sleeping | d) Wearing low-heeled shoes, elevating feet when sleeping
+ANS:A | Answer: A) Using supporting tights or crepe bandage, resting with feet elevated
+RAT:Rationale: Varicose veins in pregnancy result from impaired venous return; management is supportive - elastic support tights/stockings or a crepe bandage to aid venous return, plus rest with the legs/feet elevated. Avoiding prolonged standing is also advised but the most complete, correct option is A. (Ref: Myles Textbook for Midwives - minor disorders of pregnancy.)
+ID:116 | Q:Q20. The management of hypotonic uterine action includes:
+OPT:a) Intravenous infusion of 10% dextrose | b) Intravenous infusion of syntocinon in 5% dextrose | c) Intravenous infusion of Buscopan 15 mg | d) Intravenous infusion of syntocinon in normal saline
+ANS:D | Answer: D) Intravenous infusion of syntocinon in normal saline
+RAT:Rationale: Hypotonic (inefficient) uterine action is corrected by augmenting contractions with an oxytocin (syntocinon) infusion. Current practice dilutes oxytocin in NORMAL SALINE (or Ringer's lactate) rather than dextrose, to avoid hyponatraemia/water intoxication. (Ref: Myles Textbook for Midwives; WHO/MOH Kenya labour management.)
+ID:117 | Q:Q21. When the fetal head is well flexed, the presenting diameters are:
+OPT:a) Sub-occipito-bregmatic, sub-occipito-frontal | b) Sub-occipito-bregmatic, biparietal | c) Biparietal, bitemporal | d) Bitemporal, sub-occipito-bregmatic
+ANS:B | Answer: B) Sub-occipito-bregmatic, biparietal
+RAT:Rationale: In a well-flexed vertex presentation the engaging diameters are the sub-occipito-bregmatic (9.5 cm, antero-posterior) and the biparietal (9.5 cm, transverse). The sub-occipito-frontal (10 cm) appears with deflexion, not full flexion. (Ref: Myles Textbook for Midwives - fetal skull.)
+ID:118 | Q:Q22. Past obstetric history includes: (i) Any abnormality during previous pregnancies, labour and puerperium  (ii) Age at menarche  (iii) History of twinning in the family  (iv) Miscarriages and gestation when they occurred  (v) Number of children with ages and birth weight
+OPT:a) i, ii, iii | b) i, iii, v | c) i, iv, v | d) i, ii, iv
+ANS:C | Answer: C) i, iv, v
+RAT:Rationale: Past obstetric history covers the woman's PREVIOUS pregnancies - abnormalities of previous pregnancies/labour/puerperium (i), miscarriages and their gestation (iv), and number, ages and birth weights of children (v): i, iv, v. Age at menarche belongs to menstrual history and a family history of twinning to family history. (Ref: Myles Textbook for Midwives - history taking.)
+ID:119 | Q:Q23. The muscle layer involved in enmeshing bleeding vessels and preventing bleeding after the delivery of the placenta is:
+OPT:a) Inner circular layer | b) Middle oblique layer | c) Outer longitudinal layer | d) Basal layer
+ANS:B | Answer: B) Middle oblique layer
+RAT:Rationale: The middle (oblique) layer of the myometrium has interlacing figure-of-eight fibres surrounding the blood vessels; when it contracts and retracts after the placenta is delivered it compresses the vessels ('living ligatures'), controlling bleeding. (Ref: Myles Textbook for Midwives - the uterus.)
+ID:120 | Q:Q24. During the 2nd trimester of pregnancy, the blood pressure falls due to:
+OPT:a) Effects of progesterone on the smooth muscles causing relaxation and dilatation of the arterial wall | b) Effects of oestrogen on the smooth muscles causing relaxation and dilatation of the arterial wall | c) Effects of progesterone on the smooth muscles causing relaxation | d) Effects of oestrogen on the smooth muscles causing relaxation
+ANS:A | Answer: A) Effects of progesterone on the smooth muscles causing relaxation and dilatation of the arterial wall
+RAT:Rationale: Progesterone relaxes vascular smooth muscle, causing dilatation of the arterial walls and a fall in peripheral resistance; this leads to the mid-pregnancy (2nd-trimester) drop in blood pressure. (Ref: Myles Textbook for Midwives - physiological changes in pregnancy.)
+ID:121 | Q:Q25. At the end of pregnancy the total weight gain is expected to be approximately 12 kg, the largest components being:
+OPT:a) Fetus and blood volume | b) Amniotic fluid and fats | c) Fat and blood volume | d) Fetus and fat
+ANS:D | Answer: D) Fetus and fat
+RAT:Rationale: Of the ~12 kg gained in pregnancy, the two largest single components are the fetus (~3.3-3.5 kg) and maternal fat stores (~3.5 kg); the remainder is shared among placenta, amniotic fluid, uterus, breasts, increased blood volume and extracellular fluid. (Ref: Myles Textbook for Midwives - weight gain in pregnancy.)
+ID:122 | Q:Q26. The following are positive signs of pregnancy except:
+OPT:a) Visualisation of the fetus by ultrasound | b) Fetal heart sound at 20-24 weeks | c) Presence of human chorionic gonadotrophin in blood or urine (positive pregnancy test) | d) Fetal movement palpable from the 22nd week
+ANS:C | Answer: C) Presence of human chorionic gonadotrophin in blood or urine (positive pregnancy test)
+RAT:Rationale: Positive (absolute) signs of pregnancy are those that confirm a fetus - ultrasound visualisation, the fetal heart heard by the examiner, and fetal movements palpated by the examiner. A positive hCG pregnancy test is only a PROBABLE sign (it can be positive in molar pregnancy or be falsely positive), so it is the exception. (Ref: Myles Textbook for Midwives - diagnosis of pregnancy.)
+ID:123 | Q:Q27. The minor disorders of pregnancy that may progress to major complications include:
+OPT:a) Constipation, heart burn | b) Nausea and vomiting, constipation | c) Pica, constipation | d) Excessive salivation, nausea and vomiting
+ANS:D | Answer: D) Excessive salivation, nausea and vomiting
+RAT:Rationale: Nausea and vomiting can progress to hyperemesis gravidarum (with dehydration, electrolyte imbalance and ketosis), and excessive salivation (ptyalism) accompanies and worsens this picture; together they are minor disorders that may become major complications. (Ref: Myles Textbook for Midwives - minor disorders of pregnancy.)
+ID:124 | Q:Q1. Community participation in primary health care (PHC) means the:
+OPT:a) Community must build their health facilities | b) Community assumes responsibility for its health services | c) Leaders of the community should participate in health care | d) Members of the community should engage in health visits
+ANS:B | Answer: B) Community assumes responsibility for its health services
+RAT:Rationale: A core principle of PHC (Alma-Ata) is community participation - the community is actively involved in planning, implementing and taking responsibility/ownership for its own health and health services, not merely receiving them. (Ref: Community Health Nursing - PHC principles; MOH Kenya.)
+ID:125 | Q:Q2. In descriptive epidemiology the important characteristics of study are:
+OPT:a) Demographic data | b) Mortality rates | c) Disease prevalence | d) Disease incidence
+ANS:A | Answer: A) Demographic data
+RAT:Rationale: Descriptive epidemiology characterises the occurrence of disease by PERSON, PLACE and TIME - i.e. demographic data (age, sex, occupation, place, period). Prevalence, incidence and mortality rates are measures of frequency used within (and to support) analytic epidemiology. (Ref: Epidemiology - Kenyan Community Health curriculum.)
+ID:126 | Q:Q3. The group A drugs recommended by WHO for the treatment of gonorrhoea include:
+OPT:a) I.M Spectinomycin 2 g | b) I.M Ceftriaxone 250 mg | c) Amoxycillin 3 g with 1 g of Probenecid orally | d) I.M Kanamycin 2 g
+ANS:B | Answer: B) I.M Ceftriaxone 250 mg
+RAT:Rationale: Ceftriaxone (a third-generation cephalosporin) given as a single intramuscular dose is the WHO/MOH-recommended first-line agent for uncomplicated gonorrhoea (now usually combined with azithromycin owing to resistance). Spectinomycin and others are alternatives/second-line. (Ref: MOH Kenya National STI Management Guidelines; WHO.)
+ID:127 | Q:Q4. To effectively combat endemic malaria, health workers should:
+OPT:a) Distribute insecticide-treated mosquito nets and intensify health education | b) Spray larvicides and cut grass | c) Give more chemoprophylaxis and treat all cases | d) Provide mosquito nets and clear vegetation
+ANS:A | Answer: A) Distribute insecticide-treated mosquito nets and intensify health education
+RAT:Rationale: Sustainable malaria control combines effective, proven vector control - long-lasting insecticide-treated nets (LLINs) - with health education to ensure correct, consistent use and prompt treatment-seeking. This integrated, community-based approach is more effective and sustainable than vegetation clearing or blanket chemoprophylaxis. (Ref: MOH Kenya National Malaria Control Programme guidelines.)
+ID:128 | Q:Q5. The immediate treatment for an infant with severe diarrhoea and sunken eyes and fontanelles includes:
+OPT:a) Giving an anti-diarrhoeal drug and admit immediately | b) Taking a blood slide for malarial parasites and then admit | c) Giving intravenous fluids and then admit | d) Giving oral rehydration solution plus an antibiotic
+ANS:C | Answer: C) Giving intravenous fluids and then admit
+RAT:Rationale: Sunken eyes and a sunken fontanelle indicate SEVERE dehydration; per IMNCI Plan C the child must receive urgent IV rehydration (Ringer's lactate/normal saline) and be admitted. Anti-diarrhoeals are contraindicated in children, and ORS alone is inadequate for severe dehydration. (Ref: Kenya IMNCI; MOH Kenya Basic Paediatric Protocols.)
+ID:129 | Q:Q6. The activities the nurse engages in during the preparatory phase of a home visit include:
+OPT:a) Location of the house | b) Clarifying the source of the referral | c) Recording and reporting | d) Analysing community references
+ANS:B | Answer: B) Clarifying the source of the referral
+RAT:Rationale: The preparatory (pre-visit) phase is done before leaving for the home: the nurse reviews the records and CLARIFIES the source and reason for the referral, gathers relevant information and plans the visit. Locating the house occurs during the visit, and recording/reporting occurs after it. (Ref: Community Health Nursing - the home visit process.)
+ID:130 | Q:Q7. During pregnancy the uterine muscle fibres increase:
+OPT:a) 10 times in length, 5 times in thickness | b) 20 times in length, 10 times in thickness | c) 5 times in length, 10 times in thickness | d) 15 times in length, 10 times in thickness
+ANS:A | Answer: A) 10 times in length, 5 times in thickness
+RAT:Rationale: Uterine enlargement in pregnancy is mainly by hypertrophy of existing muscle fibres, which increase greatly in length (about ten-fold) and to a lesser degree in thickness/width. Of the options the closest to this is 10 times in length. (Ref: Myles Textbook for Midwives - the uterus in pregnancy.)
+ID:131 | Q:Q8. The ischial spines are designated as an important landmark in labour and delivery because the distance between the spines is a measurement of the:
+OPT:a) Floor of the brim | b) Outlet of the birth canal | c) Widest pelvic diameter | d) Narrowest pelvic diameter
+ANS:D | Answer: D) Narrowest pelvic diameter
+RAT:Rationale: The interspinous diameter (between the ischial spines, ~10.5 cm) is the NARROWEST diameter of the pelvic cavity/mid-pelvis; the ischial spines are also the reference point ('station 0') for assessing descent of the presenting part. (Ref: Myles Textbook for Midwives - the female pelvis.)
+ID:132 | Q:Q9. A newborn suffering from hyper-bilirubinaemia can be treated with:
+OPT:a) Antibiotics such as penicillin | b) Salicylate | c) Steroids | d) Intravenous 5% dextrose
+ANS:D | Answer: D) Intravenous 5% dextrose
+RAT:Rationale: Besides phototherapy (and exchange transfusion when severe), adequate hydration with intravenous fluids such as 5% dextrose promotes bilirubin excretion and corrects dehydration. Salicylates and sulpha drugs are AVOIDED because they displace bilirubin from albumin and increase the risk of kernicterus. (Ref: MOH Kenya Basic Paediatric Protocols - neonatal jaundice.)
+ID:133 | Q:Q10. Respiratory distress syndrome (of the newborn) is characterised by:
+OPT:a) Underdeveloped alveoli and deficient surfactant production | b) Decreased pulmonary resistance and underdeveloped alveoli | c) Uninflatable alveoli and overproduction of surfactant | d) Poor alveolar ventilation and pulmonary vasodilatation
+ANS:A | Answer: A) Underdeveloped alveoli and deficient surfactant production
+RAT:Rationale: Neonatal RDS (hyaline membrane disease) results from immaturity of the lungs - underdeveloped alveoli with DEFICIENT surfactant - leading to alveolar collapse, atelectasis and impaired gas exchange. (Ref: MOH Kenya Basic Paediatric Protocols; Nelson Paediatrics.)
+ID:134 | Q:Q11. Preventive measures for ophthalmia neonatorum include:
+OPT:a) Administering systemic penicillin within one hour after birth, isolation of the baby | b) Instillation of penicillin eye drops after birth, taking an eye swab for culture and sensitivity | c) Treatment of abnormal vaginal discharge prenatally, application of 1% tetracycline eye ointment within one hour of birth | d) Treatment of all vaginal discharges prenatally, application of 3% tetracycline eye ointment within one hour of birth
+ANS:C | Answer: C) Treatment of abnormal vaginal discharge prenatally, application of 1% tetracycline eye ointment within one hour of birth
+RAT:Rationale: Ophthalmia neonatorum is prevented by treating maternal genital infection (abnormal vaginal discharge) during the antenatal period and by routine eye prophylaxis - application of 1% tetracycline eye ointment (or equivalent) to both eyes within one hour of birth. (Ref: MOH Kenya newborn care; WHO STI guidelines.)
+ID:135 | Q:Q12. Causes of blood coagulation disorders during pregnancy include:
+OPT:a) Eclampsia, anaemia, thrombophlebitis | b) Dehydration, intrauterine foetal death, pre-eclampsia | c) Ante-partum haemorrhage, eclampsia, intrauterine sepsis | d) Amniotic fluid embolism, malnutrition, iso-immunization
+ANS:C | Answer: C) Ante-partum haemorrhage, eclampsia, intrauterine sepsis
+RAT:Rationale: Disseminated intravascular coagulation (DIC) in pregnancy is triggered by conditions that release thromboplastins or cause endothelial damage - antepartum haemorrhage (especially abruptio placentae), severe pre-eclampsia/eclampsia, intrauterine sepsis, intrauterine fetal death and amniotic fluid embolism. Option C lists three established triggers. (Ref: Myles Textbook for Midwives; MOH Kenya.)
+ID:136 | Q:Q13. Omphalitis predisposes a newborn baby to:
+OPT:a) Anaemia, jaundice, hypothermia | b) Asphyxia neonatorum, constipation, umbilical hernia | c) Apnoeic attacks, haemorrhagic disease of the newborn, neonatal tetanus | d) Jaundice, septicaemia, hepatitis
+ANS:D | Answer: D) Jaundice, septicaemia, hepatitis
+RAT:Rationale: Omphalitis (infection of the umbilical stump) gives organisms direct access to the bloodstream and, via the umbilical vein, to the liver - predisposing the baby to septicaemia, jaundice and hepatic infection (hepatitis/liver abscess). (Neonatal tetanus is also linked to cord contamination, but the triad that follows blood/portal spread of omphalitis is jaundice, septicaemia and hepatitis.) (Ref: MOH Kenya Basic Paediatric Protocols; Myles.)
+ID:137 | Q:Q14. The 1st stage of labour is defined as the period from the onset of:
+OPT:a) Labour pains (true labour) to full dilatation of the cervix | b) Labour pains to crowning of the head | c) True labour to delivery of the baby | d) True labour to dilatation of the cervix
+ANS:A | Answer: A) Labour pains (true labour) to full dilatation of the cervix
+RAT:Rationale: The first stage of labour extends from the onset of true (regular, effective) labour contractions to FULL dilatation of the cervix (10 cm). It comprises a latent and an active phase. The period to delivery of the baby is the second stage. (Ref: Myles Textbook for Midwives.)
+ID:138 | Q:Q15. The indications for the first vaginal examination during labour are to:
+OPT:a) Confirm labour, determine descent, identify the presenting part | b) Determine engagement, confirm lie of the second twin, and examine cervical tears | c) Confirm crowning, ascertain whether membranes have ruptured, assess | d) Confirm cervical dilatation, determine state of the perineum, assess progress of labour
+ANS:A | Answer: A) Confirm labour, determine descent, identify the presenting part
+RAT:Rationale: The first vaginal examination in labour is performed to confirm the diagnosis of labour and assess progress - it identifies the presenting part and position, determines descent/station, and assesses cervical effacement and dilatation and the state of the membranes. (Ref: Myles Textbook for Midwives.)
+ID:139 | Q:Q16. The signs that indicate placental separation include:
+OPT:a) Lengthening of the cord, a gush of blood, rising and hardening of the uterus | b) Rising and hardening of the uterus, heavy bleeding, lengthening of the cord | c) Shortening of the cord, rising and hardening of the uterus, a gush of blood | d) Heavy bleeding, an urge to bear down, lengthening of the cord
+ANS:A | Answer: A) Lengthening of the cord, a gush of blood, rising and hardening of the uterus
+RAT:Rationale: Signs of placental separation in the third stage are: lengthening of the umbilical cord, a small gush of blood, and the uterus rising in the abdomen and becoming firm, hard and globular (rounded). Heavy bleeding and cord SHORTENING are not normal signs of separation. (Ref: Myles Textbook for Midwives - third stage of labour.)
+ID:140 | Q:Q17. Nordette is an example of:
+OPT:a) A biphasic low-dose pill | b) A monophasic low-dose pill | c) A triphasic low-dose pill | d) A quadriphasic low-dose pill
+ANS:B | Answer: B) A monophasic low-dose pill
+RAT:Rationale: Nordette is a combined oral contraceptive in which every active pill contains the same fixed dose of oestrogen and progestogen (levonorgestrel + ethinyloestradiol) - i.e. a monophasic low-dose pill. (Ref: MOH Kenya National Family Planning Guidelines.)
+ID:141 | Q:Q18. A contact disease caused by bacteria is:
+OPT:a) Scabies | b) Impetigo | c) Trachoma | d) Pediculosis
+ANS:B | Answer: B) Impetigo
+RAT:Rationale: Impetigo is a contagious skin infection caused by bacteria (Staphylococcus aureus and/or Streptococcus pyogenes) and spread by contact. Scabies and pediculosis are parasitic (mite/lice) infestations. (Trachoma is bacterial but is an eye disease; the classic 'contact skin disease caused by bacteria' answer is impetigo.) (Ref: Communicable disease / Community Health Nursing.)
+ID:142 | Q:Q19. A child growing within the normal developmental milestones will be able to walk at the age of:
+OPT:a) 3-6 months | b) 6-9 months | c) 12-18 months | d) 20-24 months
+ANS:C | Answer: C) 12-18 months
+RAT:Rationale: Independent walking is normally achieved between about 12 and 18 months of age (most children walk by 12-15 months). Sitting is achieved around 6 months and standing with support before walking. (Ref: Kenya IMNCI / MOH Kenya Child Health - developmental milestones.)
+ID:143 | Q:Q20. The approximate calorie needs for young children under five years are:
+OPT:a) 500 calories/kg/day | b) 200 calories/kg/day | c) 300 calories/kg/day | d) 100 calories/kg/day
+ANS:D | Answer: D) 100 calories/kg/day
+RAT:Rationale: Young children require roughly 100 kilocalories per kilogram of body weight per day - far higher per kg than adults because of rapid growth and high metabolic rate. (Ref: MOH Kenya/WHO nutrition guidelines; Nelson Paediatrics.)
+ID:144 | Q:Q21. The scientific name for ringworm of the scalp is:
+OPT:a) Tinea corporis | b) Tinea pedis | c) Tinea capitis | d) Tinea versicolor
+ANS:C | Answer: C) Tinea capitis
+RAT:Rationale: Dermatophyte (ringworm) infections are named by site: tinea capitis = scalp, tinea corporis = body, tinea pedis = feet (athlete's foot), tinea versicolor (pityriasis versicolor) = trunk discoloration. (Ref: Communicable disease / dermatology.)
+ID:145 | Q:Q22. Diseases of agricultural hazards include:
+OPT:a) Zoonotic diseases, psychological changes | b) Zoonotic diseases, toxic hazards | c) Toxic hazards, psychological changes | d) Ionizing radiation, toxic hazards
+ANS:B | Answer: B) Zoonotic diseases, toxic hazards
+RAT:Rationale: Agricultural occupational hazards classically include zoonotic diseases (transmitted from animals, e.g. brucellosis, anthrax) and toxic chemical hazards (pesticides, fertilisers, organophosphates). (Ref: Occupational/Environmental Health - Community Health Nursing.)
+ID:146 | Q:Q23. The international health agencies that were instrumental in starting the Bamako Initiative are:
+OPT:a) WHO, CARE | b) WHO, FAO | c) UNICEF, UNDP | d) WHO, UNICEF
+ANS:D | Answer: D) WHO, UNICEF
+RAT:Rationale: The Bamako Initiative (1987) was launched jointly by WHO and UNICEF to revitalise primary health care and improve drug availability through community financing/cost-sharing. (Ref: Community Health Nursing - history of PHC.)
+ID:147 | Q:Q24. The safe noise exposure level that does not cause damage to the tympanic membrane is:
+OPT:a) 120 dB | b) 125 dB | c) 85 dB | d) 118 dB
+ANS:C | Answer: C) 85 dB
+RAT:Rationale: The recommended safe occupational noise exposure limit is about 85 decibels (over an 8-hour day); prolonged exposure above this risks noise-induced hearing damage. (Ref: Occupational Health - Community Health Nursing.)
+ID:148 | Q:Q25. The major practice roles of the occupational health nurse include:
+OPT:a) Clinician, administrator | b) Clinician, professional | c) Administrator, environmental modifier | d) Professional, environmental modifier
+ANS:A | Answer: A) Clinician, administrator
+RAT:Rationale: The core practice roles of the occupational health nurse are as clinician (direct care/first aid/health surveillance) and administrator/manager of the occupational health service, in addition to educator, consultant and researcher roles. (Ref: Occupational Health Nursing.)
+ID:149 | Q:Q26. The drugs that may reduce the efficacy of hormonal contraceptives include:
+OPT:a) Rifampicin, ibuprofen | b) Phenytoin, Griseofulvin | c) Griseofulvin, digoxin | d) Rifampicin, chlorpheniramine
+ANS:B | Answer: B) Phenytoin, Griseofulvin
+RAT:Rationale: Hepatic enzyme-inducing drugs accelerate metabolism of contraceptive steroids and reduce their effectiveness - these include phenytoin and griseofulvin (and rifampicin, carbamazepine, barbiturates). The option in which BOTH drugs are enzyme inducers is phenytoin + griseofulvin. (Ibuprofen, digoxin and chlorpheniramine do not reduce contraceptive efficacy.) (Ref: Pharmacology; MOH Kenya FP Guidelines.)
+ID:150 | Q:Q27. The vector that carries the causative organism for trypanosomiasis is:
+OPT:a) Fleas | b) Sand flies | c) Black flies | d) Tsetse flies
+ANS:D | Answer: D) Tsetse flies
+RAT:Rationale: African trypanosomiasis (sleeping sickness, caused by Trypanosoma brucei) is transmitted by the bite of the tsetse fly (Glossina). Sand flies transmit leishmaniasis, black flies onchocerciasis, and fleas plague. (Ref: Communicable disease - Community Health Nursing.)
+ID:151 | Q:Q28. The measures that would appropriately improve the health of the elderly include:
+OPT:a) Mental health services, STI services | b) Immunization, violence prevention programmes | c) Home safety programmes, home-based services | d) STI services, lead-poisoning prevention
+ANS:C | Answer: C) Home safety programmes, home-based services
+RAT:Rationale: Health promotion for the elderly focuses on safety and supporting independence - home safety programmes (preventing falls/injury) and home-based care services are the most appropriate measures for this age group. (Ref: Gerontological / Community Health Nursing.)
+ID:152 | Q:Q29. Prevalence rate is defined as the number of:
+OPT:a) Old and new cases of a specified disease existing at a given time | b) New cases of a disease in a population over a period of time | c) Old cases of a specified disease existing at a given time | d) Deaths from a specified disease or condition at a given time
+ANS:A | Answer: A) Old and new cases of a specified disease existing at a given time
+RAT:Rationale: Prevalence is the total number of existing cases (both old and new) of a disease present in a defined population at a given point (or period) in time. New cases over time describe incidence; deaths describe mortality. (Ref: Epidemiology - Community Health Nursing.)
+ID:153 | Q:Q30. Some of the developmental tasks of a beginning family are:
+OPT:a) Family planning, stabilizing the family unit | b) Family planning, relating to kin network | c) Relating to kin network, maintaining a stable marriage | d) Stabilizing the family unit, socializing children
+ANS:B | Answer: B) Family planning, relating to kin network
+RAT:Rationale: In Duvall's family life-cycle, Stage I (the beginning/married-couple family) tasks include establishing a mutually satisfying marriage, RELATING to the kin network, and FAMILY PLANNING (deciding about children). Socialising children belongs to later stages. (Ref: Family Health / Community Health Nursing - Duvall's developmental tasks.)
+ID:154 | Q:Q31. Some of the indirect client services provided by the community health nurse include:
+OPT:a) Supervising the care provided, teaching | b) Teaching, health planning with consumers | c) Record keeping, bed-side care | d) Record keeping, supervising the care provided
+ANS:D | Answer: D) Record keeping, supervising the care provided
+RAT:Rationale: Indirect care services are those performed on behalf of clients but not in direct face-to-face care - such as record keeping/documentation and supervising the care provided by others. Teaching, planning with consumers and bedside care are DIRECT services. (Ref: Community Health Nursing - roles of the CHN.)
+ID:155 | Q:Q32. The components of the biological environment include:
+OPT:a) Toxic substances, natural resources | b) Water supplies, food | c) Natural resources, geographical features | d) Food, geographical features
+ANS:B | Answer: B) Water supplies, food
+RAT:Rationale: The biological environment comprises living things and the products of living things that surround and sustain humans - including food sources and water supplies (which also harbour micro-organisms, plants and animals). Toxic substances, geographical features and natural resources are elements of the PHYSICAL environment. (Ref: Community Health Nursing - the environment and health.)
+ID:156 | Q:Q33. The major service system of the community that is usually the focus of the citizen and the leadership of the community is:
+OPT:a) Health system | b) Social welfare system | c) Economic system | d) Religious system
+ANS:C | Answer: C) Economic system
+RAT:Rationale: The economic system (production, employment, income and resources) is the service system that most preoccupies community members and their leaders, because livelihoods and the community's capacity to support all other systems (including health) depend on it. (Ref: Community Health Nursing - community as a system/sub-systems.)
+ID:157 | Q:Q34. The demographic parameters the community health nurse will examine while conducting a community diagnosis include:
+OPT:a) Distribution, morbidity | b) Distribution, genetics | c) Genetics, morbidity | d) Genetics, transport services
+ANS:A | Answer: A) Distribution, morbidity
+RAT:Rationale: Demographic parameters describe the population - its size, distribution/composition and vital statistics such as morbidity and mortality. Genetics and transport services are not demographic parameters. (Ref: Community Health Nursing - community diagnosis.)
+ID:158 | Q:Q35. Vector-borne diseases include:
+OPT:a) Plague, dysentery | b) Plague, rubella | c) Rubella, leishmaniasis | d) Plague, leishmaniasis
+ANS:D | Answer: D) Plague, leishmaniasis
+RAT:Rationale: Vector-borne diseases are transmitted by arthropod vectors - plague by fleas and leishmaniasis by sand-flies. Dysentery is faeco-oral (water/food-borne) and rubella is spread by respiratory droplets, so neither is vector-borne. (Ref: Communicable disease / Epidemiology - Community Health Nursing.)
+ID:159 | Q:Q36. A type of schizophrenia characterised mainly by delusions of persecution and auditory hallucinations is:
+OPT:a) Disorganized | b) Paranoid | c) Catatonic | d) Undifferentiated
+ANS:B | Answer: B) Paranoid
+RAT:Rationale: Paranoid schizophrenia is dominated by delusions (especially of persecution and/or grandeur) and auditory hallucinations, with relative preservation of cognition and affect. Disorganized type shows disorganized speech/behaviour and flat affect; catatonic shows marked psychomotor disturbance. (Ref: Psychiatric/Mental Health Nursing.)
+ID:160 | Q:Q37. Postpartum depression (early postnatal mood disturbance) typically appears on:
+OPT:a) The 3rd and 4th day | b) The 4th and 5th day | c) The 1st and 2nd day | d) The 5th and 6th day
+ANS:A | Answer: A) The 3rd and 4th day
+RAT:Rationale: The early, transient postnatal mood disturbance ('postpartum/maternity blues') typically appears about the 3rd-4th day after delivery, coinciding with hormonal changes and the onset of lactation, and usually resolves spontaneously within a few days. (True postpartum depression has a later, more insidious onset over weeks.) (Ref: Myles Textbook for Midwives; Mental Health Nursing.)
+ID:161 | Q:Q38. A type of epilepsy in which psychological features are common is:
+OPT:a) Occipital lobe epilepsy | b) Parietal lobe epilepsy | c) Frontal lobe epilepsy | d) Temporal lobe epilepsy
+ANS:D | Answer: D) Temporal lobe epilepsy
+RAT:Rationale: Temporal lobe epilepsy (complex partial seizures) is characteristically associated with psychological/psychic phenomena - auras, deja vu, fear, hallucinations of smell/taste, automatisms and mood/behavioural changes. (Ref: Psychiatric/Mental Health Nursing; Neurology.)
+ID:162 | Q:Q39. Reciprocal inhibition involves:
+OPT:a) Continuous presentation of the phobic stimulus | b) Hierarchical introduction of anxiety-producing stimuli | c) Elimination of behaviour by introduction of a more adaptive behaviour which is incompatible with the unacceptable behaviour | d) Punishment during which the patient is removed from the environment where the unacceptable behaviour is being exhibited
+ANS:C | Answer: C) Elimination of behaviour by introduction of a more adaptive behaviour which is incompatible with the unacceptable behaviour
+RAT:Rationale: Reciprocal inhibition is a behaviour-therapy principle in which an undesirable response (e.g. anxiety) is inhibited by simultaneously eliciting an incompatible response (e.g. relaxation) - the adaptive behaviour replaces and is incompatible with the maladaptive one. (Ref: Psychiatric/Mental Health Nursing - behaviour therapy.)
+ID:163 | Q:Q40. A behaviour-therapy technique used in the treatment of sexual aversion disorder is:
+OPT:a) Sensate focus | b) Systematic desensitization | c) Squeeze technique | d) Modeling
+ANS:A | Answer: A) Sensate focus
+RAT:Rationale: Sensate focus (graded, non-demand pleasuring exercises) is the behavioural technique used for sexual aversion and related sexual dysfunctions to reduce performance anxiety. The squeeze technique is used for premature ejaculation. (Ref: Psychiatric/Mental Health Nursing - sexual disorders.)
+ID:164 | Q:Q41. Co-dependence means:
+OPT:a) Dysfunctional behaviour evident among members of the family of a chemically dependent person | b) Dysfunctional behaviour evident among members of a social group that abuse the same chemical substances | c) Two or more people portray dependence on the same substance | d) Dysfunctional behaviour evident among members of the social group of a chemically dependent person
+ANS:A | Answer: A) Dysfunctional behaviour evident among members of the family of a chemically dependent person
+RAT:Rationale: Co-dependence describes the dysfunctional behaviours and relationships adopted by FAMILY members of a chemically dependent person - they over-adapt to, enable and revolve their lives around the addicted individual. (Ref: Psychiatric/Mental Health Nursing - substance use disorders.)
+ID:165 | Q:Q1. The male pelvis compared with the female pelvis is ___ and ___:
+OPT:a) Narrower and deeper | b) Narrower and shallower | c) Wider and deeper | d) Wider and shallower
+ANS:A | Answer: A) Narrower and deeper
+RAT:Rationale: The male (android) pelvis is narrower and deeper, with a heart-shaped brim and a narrow sub-pubic arch, making it unsuitable for childbirth. The female (gynaecoid) pelvis is wider and shallower with a rounded brim. (Ref: Myles Textbook for Midwives - the female pelvis.)
+ID:166 | Q:Q2. Which of the following statements is TRUE about contraceptive implants?
+OPT:a) Jadelle - 1 rod - lasts 3 years | b) Norplant - 2 rods - lasts 5 years | c) Sino-implant - 1 rod - lasts 4 years | d) Norplant - 6 capsules
+ANS:D | Answer: D) Norplant - 6 capsules
+RAT:Rationale: Norplant is the original 6-capsule levonorgestrel implant (effective ~5 years). Jadelle has 2 rods (5 years), Implanon 1 rod (3 years) and Sino-implant (Zarin) 2 rods - so the only correct statement is that Norplant consists of 6 capsules. (Ref: MOH Kenya National Family Planning Guidelines.)
+ID:167 | Q:Q3. In the management/prevention of ophthalmia neonatorum:
+OPT:a) Treat the mother for syphilis and apply 1% tetracycline eye ointment (TEO) at birth | b) Treat the eye with penicillin drops at birth | c) Treat abnormal vaginal discharge prenatally and apply 3% TEO within one hour of birth | d) Treat abnormal vaginal discharge prenatally and apply 1% TEO within one hour of birth
+ANS:D | Answer: D) Treat abnormal vaginal discharge prenatally and apply 1% TEO within one hour of birth
+RAT:Rationale: Ophthalmia neonatorum is prevented by treating maternal genital infection (abnormal vaginal discharge) antenatally and giving routine eye prophylaxis with 1% tetracycline eye ointment to both eyes within one hour of birth. (Ref: MOH Kenya newborn care; WHO STI guidelines.)

@@ -40,7 +40,7 @@ export function WhatsNewTrigger({ onClick }: Props) {
         exit={{ opacity: 0, scale: 0.8 }}
         transition={{ type: "spring", damping: 18, stiffness: 260 }}
         onClick={onClick}
-        className="fixed bottom-6 right-5 z-[70] flex items-center gap-2 px-4 py-2.5 rounded-full shadow-xl text-sm font-bold text-white cursor-pointer select-none"
+        className="fixed bottom-24 right-5 z-[70] flex items-center gap-2 px-4 py-2.5 rounded-full shadow-xl text-sm font-bold text-white cursor-pointer select-none"
         style={{
           background: "linear-gradient(135deg, var(--color-accent, #3B82F6) 0%, #7C3AED 100%)",
           boxShadow: "0 4px 24px rgba(59,130,246,0.45), 0 2px 8px rgba(0,0,0,0.3)",

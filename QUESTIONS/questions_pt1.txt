@@ -1,0 +1,225 @@
+ID:0 | Q:Q1. Micro-organisms responsible for hospital-acquired pneumonia are:
+OPT:a) Streptococcus pneumoniae, Haemophilus influenzae, Legionella pneumophila | b) Chlamydia pneumoniae, Mycoplasma, parainfluenza virus | c) Pseudomonas aeruginosa, Staphylococcus aureus, Klebsiella pneumoniae | d) Pneumocystis carinii, cytomegalovirus, Aspergillus fumigatus
+ANS:C | Answer: C) Pseudomonas aeruginosa, Staphylococcus aureus, Klebsiella pneumoniae
+RAT:Rationale: Hospital-acquired (nosocomial) pneumonia is typically caused by virulent, often resistant Gram-negative bacilli and Staphylococcus aureus - e.g. Pseudomonas aeruginosa, Klebsiella pneumoniae and S. aureus. Streptococcus pneumoniae and Mycoplasma cause community-acquired pneumonia, while Pneumocystis/CMV/Aspergillus affect the immunocompromised. (Ref: Brunner & Suddarth.)
+ID:1 | Q:Q2. Bioavailability of drugs taken by mouth is affected by:
+OPT:a) Water-solubility, blood flow through the kidneys, normal liver function | b) Capacity of liver enzymes to metabolise, age of the patient, extent of protein binding | c) Distribution volume, weight of the patient, ability of drug to cross membranes | d) Acidity of the stomach, transit time through the digestive tract, presence of food
+ANS:D | Answer: D) Acidity of the stomach, transit time through the digestive tract, presence of food
+RAT:Rationale: Oral bioavailability is the fraction of an oral dose reaching the systemic circulation; it depends mainly on absorption from the gut, which is influenced by gastric acidity (pH), gastrointestinal transit time/motility and the presence of food. (First-pass metabolism also contributes, but the option that directly describes oral absorption factors is D.) (Ref: Pharmacology - pharmacokinetics.)
+ID:2 | Q:Q3. Immunoglobulin G (IgG) is:
+OPT:a) Responsible for secondary antibody response | b) Produced when an antigen is encountered for the first time | c) Responsible for defence against invasion of micro-organisms through the body's mucous membranes | d) The mediator of immediate reactions
+ANS:A | Answer: A) Responsible for secondary antibody response
+RAT:Rationale: IgG is the most abundant immunoglobulin and the principal antibody of the SECONDARY (memory) immune response; it also crosses the placenta to confer passive immunity. IgM is produced on first antigen exposure, IgA protects mucous membranes/secretions, and IgE mediates immediate (allergic) reactions. (Ref: Microbiology/Immunology - Kenyan curriculum.)
+ID:3 | Q:Q4. The cell-mediated immune system is made up of:
+OPT:a) T-lymphocytes and macrophages | b) T-lymphocytes and antibodies | c) Macrophages and B-lymphocytes | d) B-lymphocytes and T-lymphocytes
+ANS:A | Answer: A) T-lymphocytes and macrophages
+RAT:Rationale: Cell-mediated immunity is effected by T-lymphocytes together with phagocytic cells such as macrophages (which present antigen and are activated by T cells). Antibodies and B-lymphocytes belong to humoral immunity. (Ref: Microbiology/Immunology - Kenyan curriculum.)
+ID:4 | Q:Q1. The drugs that are classified as cephalosporins include:
+OPT:a) Cefixime, Loracarbef | b) Cephradine, Laroxyl | c) Ceftriaxone, Lasix | d) Cefaclor, Clonazepam
+ANS:A | Answer: A) Cefixime, Loracarbef
+RAT:Rationale: Cephalosporins are a class of beta-lactam antibiotics; cefixime and loracarbef both belong to this class. The other options pair a cephalosporin with a non-antibiotic - Laroxyl (amitriptyline), Lasix (furosemide) and clonazepam (a benzodiazepine). (Ref: Pharmacology - antimicrobials.)
+ID:5 | Q:Q2. The antitussive agents are indicated for:
+OPT:a) Removing excess mucus from the airway | b) Relieving rhinitis | c) Controlling a productive cough | d) Relieving a dry (non-productive) cough
+ANS:D | Answer: D) Relieving a dry (non-productive) cough
+RAT:Rationale: Antitussives (e.g. codeine, dextromethorphan) suppress the cough reflex and are indicated for a dry, irritating, non-productive cough. They are NOT used for a productive cough (which should be retained to clear secretions). (Ref: Pharmacology - respiratory drugs.)
+ID:6 | Q:Q3. The nurse should instruct a client who is taking an expectorant to:
+OPT:a) Restrict fluids | b) Increase fluid intake | c) Avoid vaporizers | d) Take antihistamines
+ANS:B | Answer: B) Increase fluid intake
+RAT:Rationale: Expectorants (e.g. guaifenesin) increase respiratory tract fluid to liquefy and loosen secretions; the client should increase fluid intake (and humidify the air) to enhance their effect. Antihistamines dry secretions and are counterproductive. (Ref: Pharmacology - respiratory drugs.)
+ID:7 | Q:Q4. The drugs that are classified as narcotic analgesics include:
+OPT:a) Acetylsalicylic acid, Indomethacin | b) Acetaminophen, Ibuprofen | c) Codeine, Morphine | d) Morphine, Diclofenac
+ANS:C | Answer: C) Codeine, Morphine
+RAT:Rationale: Narcotic (opioid) analgesics act on opioid receptors in the CNS - codeine and morphine are both opioids. The other options contain NSAIDs/non-opioids (aspirin, indomethacin, ibuprofen, diclofenac) or mixtures of an opioid with an NSAID. (Ref: Pharmacology - analgesics.)
+ID:8 | Q:Q5. The action of hypnotic drugs is to induce:
+OPT:a) Vomiting | b) Appetite | c) Sleep | d) Calmness
+ANS:C | Answer: C) Sleep
+RAT:Rationale: Hypnotic drugs (e.g. benzodiazepines, zolpidem) act on the CNS to induce and maintain sleep. (Sedatives calm/reduce anxiety; in higher dose hypnotics produce sleep.) (Ref: Pharmacology - CNS depressants.)
+ID:9 | Q:Q6. The antidote for morphine toxicity is:
+OPT:a) Methadone | b) Fentanyl | c) Amphetamine | d) Naloxone
+ANS:D | Answer: D) Naloxone
+RAT:Rationale: Naloxone is a pure opioid antagonist and the specific antidote for morphine (opioid) overdose, rapidly reversing respiratory depression. Methadone and fentanyl are themselves opioids. (Ref: Pharmacology; MOH Kenya emergency management of poisoning.)
+ID:10 | Q:Q7. The extent to which a drug is absorbed and transported to the target tissue is known as:
+OPT:a) Steady-state accumulation | b) Half-life | c) Bioavailability | d) Distribution
+ANS:C | Answer: C) Bioavailability
+RAT:Rationale: Bioavailability is the fraction (extent) of an administered dose that reaches the systemic circulation (and thus the target tissue) in active form. Half-life is the time for the plasma concentration to fall by half. (Ref: Pharmacology - pharmacokinetics.)
+ID:11 | Q:Q8. The actions of the body on the drug are referred to as:
+OPT:a) Pharmacodynamics | b) Pharmacokinetics | c) Pharmacognosy | d) Pharmacogenomics
+ANS:B | Answer: B) Pharmacokinetics
+RAT:Rationale: Pharmacokinetics is what the BODY does to the drug - absorption, distribution, metabolism and excretion (ADME). Pharmacodynamics is what the DRUG does to the body. (Ref: Pharmacology - basic principles.)
+ID:12 | Q:Q9. Atenolol is a/an:
+OPT:a) Beta-2 agonist | b) Beta-blocker | c) ACE inhibitor | d) Calcium channel blocker
+ANS:B | Answer: B) Beta-blocker
+RAT:Rationale: Atenolol is a cardioselective beta-adrenergic blocker (beta-blocker) used in hypertension, angina and after myocardial infarction; it lowers heart rate and myocardial oxygen demand. (Ref: Pharmacology - cardiovascular drugs.)
+ID:13 | Q:Q10. The drugs that are classified as penicillins include:
+OPT:a) Methicillin sodium, Nafcillin sodium | b) Penicillin V, Ciprofloxacin | c) Ampicillin, Doxycycline | d) Erythromycin, Sotalol
+ANS:A | Answer: A) Methicillin sodium, Nafcillin sodium
+RAT:Rationale: Methicillin and nafcillin are both penicillinase-resistant penicillins. The other options pair a penicillin with a non-penicillin - ciprofloxacin (a quinolone), doxycycline (a tetracycline), erythromycin (a macrolide) and sotalol (a beta-blocker). (Ref: Pharmacology - antimicrobials.)
+ID:14 | Q:Q11. An example of a drug derived from a plant is:
+OPT:a) Glibenclamide | b) Quinine | c) Mechlorethamine | d) Rifapentine
+ANS:B | Answer: B) Quinine
+RAT:Rationale: Quinine is an alkaloid obtained from the bark of the cinchona plant - a classic plant-derived (botanical) drug used in malaria. (Ref: Pharmacology - sources of drugs.)
+ID:15 | Q:Q12. The route of drug administration with the highest drug bioavailability is:
+OPT:a) Oral | b) Intramuscular | c) Intradermal | d) Intravenous
+ANS:D | Answer: D) Intravenous
+RAT:Rationale: The intravenous route delivers the drug directly into the bloodstream, giving 100% bioavailability (no absorption barrier and no first-pass metabolism). (Ref: Pharmacology - pharmacokinetics.)
+ID:16 | Q:Q13. The following is an opioid antagonist:
+OPT:a) Flumazenil | b) Naltrexone | c) Sufentanil | d) Methadone
+ANS:B | Answer: B) Naltrexone
+RAT:Rationale: Naltrexone (like naloxone) is an opioid antagonist used in the management of opioid (and alcohol) dependence. Flumazenil is a benzodiazepine antagonist; sufentanil and methadone are opioid agonists. (Ref: Pharmacology - opioids and antagonists.)
+ID:17 | Q:Q14. The drug used for organophosphate poisoning is:
+OPT:a) Atropine | b) Pilocarpine | c) Propranolol | d) Edrophonium
+ANS:A | Answer: A) Atropine
+RAT:Rationale: Atropine (an antimuscarinic) is the antidote for organophosphate (anticholinesterase) poisoning; it reverses the muscarinic effects of acetylcholine excess (usually together with pralidoxime). (Ref: Pharmacology; MOH Kenya management of poisoning.)
+ID:18 | Q:Q15. Local anaesthetics work by:
+OPT:a) Blocking calcium ion channels to prevent depolarization | b) Blocking potassium ion channels to prevent depolarization | c) Blocking sodium ion channels to prevent depolarization | d) Blocking impulse at the neuromuscular junction
+ANS:C | Answer: C) Blocking sodium ion channels to prevent depolarization
+RAT:Rationale: Local anaesthetics (e.g. lignocaine) block voltage-gated SODIUM channels in the nerve membrane, preventing depolarisation and thus the generation and conduction of the nerve impulse. (Ref: Pharmacology - local anaesthetics.)
+ID:19 | Q:Q16. Pregnant women should be advised not to take tetracycline because it has been associated with:
+OPT:a) Gray baby syndrome | b) Tooth and bone defects in the neonate | c) Acne | d) Excessive bleeding
+ANS:B | Answer: B) Tooth and bone defects in the neonate
+RAT:Rationale: Tetracyclines are deposited in developing teeth and bones, causing permanent tooth discoloration and impaired bone growth in the foetus/child; they are therefore contraindicated in pregnancy and in young children. (Gray baby syndrome is caused by chloramphenicol.) (Ref: Pharmacology - drugs in pregnancy.)
+ID:20 | Q:Q17. Acyclovir is a drug of choice for treatment of herpes virus. Its mode of action is to:
+OPT:a) Inhibit viral RNA synthesis | b) Inhibit viral DNA synthesis | c) Inhibit viral protein synthesis | d) Inhibit viral capsule formation
+ANS:B | Answer: B) Inhibit viral DNA synthesis
+RAT:Rationale: Acyclovir is phosphorylated within infected cells and then inhibits viral DNA polymerase, thereby blocking viral DNA synthesis/replication. (Ref: Pharmacology - antivirals.)
+ID:21 | Q:Q18. A drug that prevents the release of histamine from mast cells is:
+OPT:a) Cromolyn | b) Cetirizine | c) Aminophylline | d) Montelukast
+ANS:A | Answer: A) Cromolyn
+RAT:Rationale: Cromolyn (sodium cromoglicate) is a mast-cell stabiliser that prevents the release of histamine and other mediators. Cetirizine is an H1-antihistamine (blocks the receptor), aminophylline is a bronchodilator, and montelukast is a leukotriene-receptor antagonist. (Ref: Pharmacology - anti-allergic drugs.)
+ID:22 | Q:Q19. Oral antidiabetics that work by stimulating beta cells to secrete more insulin and increasing receptor sites in the tissues are classified as:
+OPT:a) Alpha-glucosidase inhibitors | b) Biguanides | c) Sulfonylureas | d) Thiazolidinediones
+ANS:C | Answer: C) Sulfonylureas
+RAT:Rationale: Sulfonylureas (e.g. glibenclamide, gliclazide) lower blood glucose mainly by stimulating insulin secretion from pancreatic beta cells (and increasing tissue insulin sensitivity). Biguanides (metformin) act mainly by reducing hepatic glucose output. (Ref: Pharmacology - oral hypoglycaemics.)
+ID:23 | Q:Q20. The extrapyramidal side effects of antipsychotic drugs include:
+OPT:a) Tardive dyskinesia, opisthotonus, hallucinations | b) Parkinsonism, tardive dyskinesia, opisthotonus | c) Hallucinations, excessive appetite, akinesia | d) Impotence, echolalia, opisthotonus
+ANS:B | Answer: B) Parkinsonism, tardive dyskinesia, opisthotonus
+RAT:Rationale: Extrapyramidal side effects of antipsychotics include drug-induced parkinsonism, acute dystonias (e.g. opisthotonus), akathisia and tardive dyskinesia. Hallucinations are symptoms of the illness, not an extrapyramidal drug effect. (Ref: Pharmacology - antipsychotics.)
+ID:24 | Q:Q21. Combined chemotherapy of tuberculosis is used to:
+OPT:a) Decrease mycobacterial drug resistance | b) Increase mycobacterial drug resistance | c) Decrease the antimicrobial activity | d) Decrease the onset of antimycobacterial drug biotransformation
+ANS:A | Answer: A) Decrease mycobacterial drug resistance
+RAT:Rationale: Tuberculosis is treated with a combination of drugs to prevent (decrease) the emergence of drug-resistant mycobacteria, since resistance readily develops when a single drug is used. (Ref: MOH Kenya National TB programme; Pharmacology.)
+ID:25 | Q:Q22. When teaching about the proper use of antacids, a nurse should instruct the client to:
+OPT:a) Stagger the administration of antacids with other medications | b) Take the antacids with all other medications | c) Take other medications in the daytime and antacids at night | d) Drink a glass of water immediately after taking the antacids
+ANS:A | Answer: A) Stagger the administration of antacids with other medications
+RAT:Rationale: Antacids alter gastric pH and bind many drugs, reducing their absorption; the client should therefore stagger (separate by 1-2 hours) antacid intake from other oral medications. (Ref: Pharmacology - GIT drugs/drug interactions.)
+ID:26 | Q:Q23. A 9-year-old schoolgirl has been diagnosed with taeniasis. The drug of choice in this case would be:
+OPT:a) Ivermectin | b) Praziquantel | c) Diethylcarbamazine | d) Albendazole
+ANS:B | Answer: B) Praziquantel
+RAT:Rationale: Taeniasis (tapeworm infestation) is treated with praziquantel, the drug of choice. Diethylcarbamazine is used for filariasis and ivermectin for onchocerciasis/strongyloidiasis. (Ref: Pharmacology - anthelmintics; MOH Kenya.)
+ID:27 | Q:Q24. 4-aminoquinoline derivative antimalarial drugs include:
+OPT:a) Quinine, amodiaquine, chloroquine | b) Halofantrine, fansidar, hydroxychloroquine | c) Amodiaquine, chloroquine, hydroxychloroquine | d) Mefloquine, artesunate, artemether
+ANS:C | Answer: C) Amodiaquine, chloroquine, hydroxychloroquine
+RAT:Rationale: The 4-aminoquinolines are chloroquine, amodiaquine and hydroxychloroquine. Quinine is a quinoline-methanol; mefloquine is a 4-quinoline-methanol; artesunate/artemether are artemisinin derivatives. (Ref: Pharmacology - antimalarials.)
+ID:28 | Q:Q25. The drugs that are classified as diuretics include:
+OPT:a) Mannitol, Acetazolamide | b) Chlorothiazide, Digoxin | c) Theophylline, Bumetanide | d) Furosemide, Amytal
+ANS:A | Answer: A) Mannitol, Acetazolamide
+RAT:Rationale: Mannitol (an osmotic diuretic) and acetazolamide (a carbonic-anhydrase-inhibitor diuretic) are both diuretics. The distractors pair a diuretic with a non-diuretic - digoxin (cardiac glycoside), theophylline (bronchodilator) and amytal (a barbiturate). (Ref: Pharmacology - diuretics.)
+ID:29 | Q:Q26. The drug used to treat methotrexate toxicity is:
+OPT:a) Folic acid | b) Folinic acid | c) Vitamin B6 | d) Scopolamine
+ANS:B | Answer: B) Folinic acid
+RAT:Rationale: Folinic acid (leucovorin/calcium folinate) is the 'rescue' antidote for methotrexate toxicity; it supplies reduced folate, bypassing the dihydrofolate-reductase block produced by methotrexate. (Ref: Pharmacology - antineoplastics/antidotes.)
+ID:30 | Q:Q1. The major contraindication of Praziquantel is its use in patients with:
+OPT:a) Hepatic dysfunction | b) Ocular cysticercosis | c) Lymphadenopathy | d) Peptic ulcer disease
+ANS:B | Answer: B) Ocular cysticercosis
+RAT:Rationale: Praziquantel is contraindicated in ocular cysticercosis because killing the parasite within the eye provokes an inflammatory reaction that can cause irreversible ocular damage. (Ref: Pharmacology - anthelmintics; WHO.)
+ID:31 | Q:Q2. The major side effects of Indomethacin on the cardiovascular system are:
+OPT:a) Venous thrombosis, bleeding | b) Angina pectoris, hypotension | c) Endocarditis, atrial fibrillation | d) Hypertension, oedema
+ANS:D | Answer: D) Hypertension, oedema
+RAT:Rationale: Indomethacin is an NSAID; by inhibiting prostaglandins it causes sodium and water retention, leading to oedema and raised blood pressure (hypertension). (Ref: Pharmacology - NSAIDs.)
+ID:32 | Q:Q3. The time that is required to reduce the concentration of a drug in the body by one half is called:
+OPT:a) Time course | b) Time period | c) Half-life | d) Half lifespan
+ANS:C | Answer: C) Half-life
+RAT:Rationale: The half-life (t1/2) is the time taken for the plasma concentration (or amount) of a drug in the body to fall by one half; it guides dosing frequency. (Ref: Pharmacology - pharmacokinetics.)
+ID:33 | Q:Q4. The drugs that are classified as sulphonamides include:
+OPT:a) Cotrimoxazole, Sulfamethoxazole, Sulfasalazine | b) Sulfadiazine, Sulfisoxazole, Spironolactone | c) Sulfinpyrazone, Sulfasalazine, Sulfamethoxazole | d) Cefpodoxime proxetil, Cotrimoxazole, Sulfadiazine
+ANS:A | Answer: A) Cotrimoxazole, Sulfamethoxazole, Sulfasalazine
+RAT:Rationale: Sulphonamides include sulfamethoxazole (a component of cotrimoxazole) and sulfasalazine. The distractors include non-sulphonamides such as spironolactone (a diuretic), sulfinpyrazone (a uricosuric) and cefpodoxime (a cephalosporin). (Ref: Pharmacology - antimicrobials.)
+ID:34 | Q:Q5. The drugs that have almost exclusively harmful effects in the body are known as:
+OPT:a) Elixirs | b) Xenobiotics | c) Toxins | d) Poisons
+ANS:D | Answer: D) Poisons
+RAT:Rationale: Poisons are substances whose effects on the body are essentially harmful. (Elixirs are sweetened hydro-alcoholic drug solutions; xenobiotics are any substances foreign to the body, not necessarily harmful.) (Ref: Pharmacology/Toxicology - basic concepts.)
+ID:35 | Q:Q6. The possibility of harmful effects on the foetus during the formative stages of development is referred to as:
+OPT:a) Tetralogy | b) Teratogenicity | c) Mutation | d) Regeneration
+ANS:B | Answer: B) Teratogenicity
+RAT:Rationale: Teratogenicity is the capacity of an agent (drug, chemical, infection, radiation) to cause structural or functional abnormalities in the developing embryo/foetus. (Ref: Pharmacology - drugs in pregnancy.)
+ID:36 | Q:Q7. The mode of action of Nifedipine (Adalat) is that it:
+OPT:a) Inhibits calcium ion influx across cardiac and smooth muscle cells, decreasing myocardial contractility and oxygen demand | b) Stabilizes the neuronal membrane and limits seizure activity | c) Depresses monosynaptic and polysynaptic transmission in the CNS | d) Increases the amount of noradrenaline or serotonin in the central nervous system
+ANS:A | Answer: A) Inhibits calcium ion influx across cardiac and smooth muscle cells, decreasing myocardial contractility and oxygen demand
+RAT:Rationale: Nifedipine is a calcium channel blocker: it inhibits calcium ion influx into cardiac and vascular smooth muscle, causing vasodilatation and reducing myocardial contractility and oxygen demand (used in hypertension and angina). (Ref: Pharmacology - cardiovascular drugs.)
+ID:37 | Q:Q8. Diclofenac sodium produces anti-inflammatory, analgesic and antipyretic effects possibly by inhibiting the synthesis of:
+OPT:a) Dopamine | b) Prostaglandin | c) Serotonin | d) Monoamine oxidase
+ANS:B | Answer: B) Prostaglandin
+RAT:Rationale: Diclofenac is an NSAID that inhibits cyclo-oxygenase, thereby blocking PROSTAGLANDIN synthesis - producing anti-inflammatory, analgesic and antipyretic effects. (Ref: Pharmacology - NSAIDs.)
+ID:38 | Q:Q9. The antiulcer agents include:
+OPT:a) Cimetidine, Laroxyl | b) Omeprazole, Tramadol | c) Famotidine, Sucralfate | d) Praziquantel, Ranitidine hydrochloride
+ANS:C | Answer: C) Famotidine, Sucralfate
+RAT:Rationale: Famotidine (an H2-receptor antagonist) and sucralfate (a mucosal protective agent) are both anti-ulcer drugs. The distractors pair an anti-ulcer drug with an unrelated agent - Laroxyl (amitriptyline), tramadol (an analgesic) and praziquantel (an anthelmintic). (Ref: Pharmacology - drugs for peptic ulcer disease.)
+ID:39 | Q:Q10. The mode of action of salbutamol sulphate is that it:
+OPT:a) Inhibits phosphodiesterase, relaxing bronchial smooth muscle and pulmonary blood vessels | b) Relaxes bronchial and uterine smooth muscle by acting on beta-adrenergic receptors | c) Stimulates alpha and beta adrenergic receptors within the sympathetic nervous system | d) Inhibits vagally mediated reflexes by antagonising acetylcholine
+ANS:B | Answer: B) Relaxes bronchial and uterine smooth muscle by acting on beta-adrenergic receptors
+RAT:Rationale: Salbutamol is a selective beta-2 adrenergic agonist; stimulating beta-2 receptors relaxes bronchial smooth muscle (bronchodilation) and uterine smooth muscle (tocolysis). (Ref: Pharmacology - respiratory drugs.)
+ID:40 | Q:Q11. The anti-anxiety agents include:
+OPT:a) Aminophylline, Halazepam | b) Ranitidine, Buspirone | c) Meprobamate, Chlordiazepoxide | d) Parzepam, Simethicone
+ANS:C | Answer: C) Meprobamate, Chlordiazepoxide
+RAT:Rationale: Meprobamate and chlordiazepoxide are both anxiolytic (anti-anxiety) agents. The distractors include aminophylline (a bronchodilator), ranitidine (an anti-ulcer drug) and simethicone (an anti-flatulent). (Ref: Pharmacology - anxiolytics.)
+ID:41 | Q:Q12. The component of a cell or organism that interacts with a drug and initiates the chain of events leading to the drug's observed effects is called:
+OPT:a) An agonist | b) An antagonist | c) An effector | d) A receptor
+ANS:D | Answer: D) A receptor
+RAT:Rationale: A receptor is the cellular macromolecule with which a drug interacts to initiate its effects. An agonist is a drug that activates a receptor; an antagonist blocks it. (Ref: Pharmacology - pharmacodynamics.)
+ID:42 | Q:Q13. The mode of action of gentamicin sulphate is:
+OPT:a) Inhibition of bacterial cell wall synthesis | b) Inhibition of protein synthesis | c) Inhibition of DNA synthesis | d) Inhibition of folic acid (DHF reductase)
+ANS:B | Answer: B) Inhibition of protein synthesis
+RAT:Rationale: Gentamicin is an aminoglycoside; it binds the 30S bacterial ribosomal subunit and inhibits protein synthesis. (Beta-lactams inhibit cell-wall synthesis; quinolones inhibit DNA synthesis; sulphonamides/trimethoprim inhibit folate synthesis.) (Ref: Pharmacology - antimicrobials.)
+ID:43 | Q:Q14. The effect of combining drugs, where one drug which has no effect increases the effects of another drug, is termed:
+OPT:a) Potentiation | b) Antagonism | c) Addition | d) Agonism
+ANS:A | Answer: A) Potentiation
+RAT:Rationale: Potentiation occurs when a drug that has little or no effect of its own increases (enhances) the effect of another drug. Antagonism is opposition of effects; additive/summation is when two active drugs' effects add up. (Ref: Pharmacology - drug interactions.)
+ID:44 | Q:Q15. Ipratropium bromide is:
+OPT:a) A cholinergic agent used for perennial rhinitis | b) An anticholinergic used for allergic rhinitis and colds | c) Only used in patients with asthma | d) Inappropriate for use in allergic rhinitis
+ANS:B | Answer: B) An anticholinergic used for allergic rhinitis and colds
+RAT:Rationale: Ipratropium bromide is an ANTICHOLINERGIC (antimuscarinic). As an inhaled bronchodilator it is used in asthma and COPD, and as a nasal spray it dries secretions in allergic/non-allergic rhinitis and the common cold - so it is not 'cholinergic' nor limited to asthma. (Ref: Pharmacology - respiratory/autonomic drugs.)
+ID:45 | Q:Q16. The route of drug administration with the highest compliance from patients is:
+OPT:a) Intramuscular | b) Intravenous | c) Oral | d) Intrathecal
+ANS:C | Answer: C) Oral
+RAT:Rationale: The oral route gives the highest patient compliance because it is convenient, non-invasive, painless and can be self-administered. (The intravenous route gives the highest bioavailability but poorer compliance.) (Ref: Pharmacology - routes of administration.)
+ID:46 | Q:Q17. A patient on anti-ulcer therapy complains of reduced libido and impotence. The nurse informs him that it may be associated with:
+OPT:a) Nizatidine | b) Cimetidine | c) Ranitidine | d) Famotidine
+ANS:B | Answer: B) Cimetidine
+RAT:Rationale: Cimetidine has anti-androgenic effects and can cause gynaecomastia, reduced libido and impotence in men (and is also a potent enzyme inhibitor). The other H2-blockers rarely do so. (Ref: Pharmacology - drugs for peptic ulcer disease.)
+ID:47 | Q:Q18. Bulk-forming laxatives:
+OPT:a) Function like dietary fibre | b) Act within 2 to 6 hours | c) Produce a semi-fluid stool | d) Are used to prepare the bowel for diagnostic procedures
+ANS:A | Answer: A) Function like dietary fibre
+RAT:Rationale: Bulk-forming laxatives (e.g. psyllium/methylcellulose) act like dietary fibre - they absorb water and swell to increase faecal bulk, stimulating peristalsis. They act slowly (1-3 days), not in 2-6 hours, and are not used for bowel preparation (that requires stimulant/osmotic agents). (Ref: Pharmacology - GIT drugs.)
+ID:48 | Q:Q19. Diazepam exerts its effects by:
+OPT:a) Binding on GABA receptors in the brain | b) Inhibiting serotonin action | c) Blocking acetylcholine at the synaptic cleft | d) Increasing the influx of sodium into neurons
+ANS:A | Answer: A) Binding on GABA receptors in the brain
+RAT:Rationale: Diazepam is a benzodiazepine; it binds the GABA-A receptor complex and enhances the inhibitory action of GABA (increasing chloride influx), producing anxiolytic, sedative, anticonvulsant and muscle-relaxant effects. (Ref: Pharmacology - CNS depressants.)
+ID:49 | Q:Q20. In a patient suffering from angina, nitroglycerin may be given sublingually because this mode of administration:
+OPT:a) Bypasses the coronary circulation | b) Causes less reflex tachycardia than oral administration | c) Improves patient compliance | d) Avoids first-pass hepatic metabolism
+ANS:D | Answer: D) Avoids first-pass hepatic metabolism
+RAT:Rationale: Sublingual nitroglycerin is absorbed directly into the systemic circulation through the oral mucosa, AVOIDING first-pass hepatic metabolism (which would otherwise inactivate most of the drug), giving rapid relief of angina. (Ref: Pharmacology - antianginal drugs.)
+ID:50 | Q:Q21. The most appropriate drug for treatment of bacillary dysentery in adults is:
+OPT:a) Ciprofloxacin | b) Amoxycillin | c) Erythromycin | d) Gentamicin
+ANS:A | Answer: A) Ciprofloxacin
+RAT:Rationale: Bacillary dysentery (shigellosis) in adults is treated with ciprofloxacin (a fluoroquinolone), the recommended first-line agent owing to widespread resistance to older drugs. (Ref: MOH Kenya/WHO management of dysentery.)
+ID:51 | Q:Q22. The commonest side effect associated with morphine is:
+OPT:a) Development of gastric ulcers | b) Nausea and vomiting | c) Constipation | d) Tachypnoea
+ANS:C | Answer: C) Constipation
+RAT:Rationale: Constipation is the most common and persistent adverse effect of morphine (and other opioids), because opioids reduce gastrointestinal motility; unlike other opioid effects, tolerance to constipation does not develop, so a laxative is usually prescribed. (Ref: Pharmacology - opioid analgesics.)
+ID:52 | Q:Q23. Highly active antiretroviral therapy (HAART) in HIV infection is associated with:
+OPT:a) An increase in the rate of emergence of drug resistance | b) A decrease in CD4 count | c) A decrease in viral RNA in the blood | d) An increased incidence of opportunistic infections
+ANS:C | Answer: C) A decrease in viral RNA in the blood
+RAT:Rationale: Effective HAART suppresses viral replication, producing a fall in plasma viral RNA (viral load), a rise in CD4 count and fewer opportunistic infections. Combination therapy is designed to REDUCE (not increase) the emergence of resistance. (Ref: NASCOP/MOH Kenya ARV guidelines.)
+ID:53 | Q:Q24. Beta-lactamase production is a mechanism of resistance among strains of Haemophilus influenzae and Neisseria gonorrhoeae. Which of the following drugs is effective against the above organisms?
+OPT:a) Amoxicillin | b) Ceftriaxone | c) Clindamycin | d) Ticarcillin
+ANS:B | Answer: B) Ceftriaxone
+RAT:Rationale: Ceftriaxone is a third-generation cephalosporin that is stable to many beta-lactamases and is effective against beta-lactamase-producing H. influenzae and N. gonorrhoeae. Amoxicillin and ticarcillin are readily hydrolysed by beta-lactamases. (Ref: Pharmacology - antimicrobials; MOH Kenya STI guidelines.)
+ID:54 | Q:Q25. Regarding warfarin:
+OPT:a) It is a rapid-acting anticoagulant | b) It has poor absorption across membranes | c) It has teratogenic effects when administered in pregnancy | d) It is administered through the intravenous route
+ANS:C | Answer: C) It has teratogenic effects when administered in pregnancy
+RAT:Rationale: Warfarin is teratogenic (causes fetal warfarin syndrome) and is contraindicated in pregnancy. It is a SLOW-acting ORAL anticoagulant (heparin is the rapid-acting/parenteral agent) and is well absorbed. (Ref: Pharmacology - anticoagulants.)
+ID:55 | Q:Q26. Cromolyn is useful in asthma because it:
+OPT:a) Suppresses the release of histamine | b) Blocks adenosine receptors in the smooth muscles of bronchioles | c) Decreases bronchial hyperreactivity directly | d) Decreases bacterial load in the bronchioles
+ANS:A | Answer: A) Suppresses the release of histamine
+RAT:Rationale: Cromolyn (sodium cromoglicate) is a mast-cell stabiliser; it prevents the release of histamine and other mediators from mast cells, and is used for prophylaxis (not relief) of asthma. (Ref: Pharmacology - anti-asthmatic drugs.)
+ID:56 | Q:Q1. The first scientific paper in nursing was published by:

@@ -1,0 +1,82 @@
+[
+  {
+    "id": 42,
+    "question": "Q13. The mode of action of gentamicin sulphate is:",
+    "indicated_answer": "B",
+    "indicated_text": "Inhibition of protein synthesis",
+    "best_match_letter": "A",
+    "best_match_score": 4,
+    "indicated_score": 2,
+    "rationale": "Rationale: Gentamicin is an aminoglycoside; it binds the 30S bacterial ribosomal subunit and inhibits protein synthesis. (Beta-lactams inhibit cell-wall synthesis; quinolones inhibit DNA synthesis; sulphonamides/trimethoprim inhibit folate synthesis.) (Ref: Pharmacology - antimicrobials.)"
+  },
+  {
+    "id": 52,
+    "question": "Q23. Highly active antiretroviral therapy (HAART) in HIV infection is associated with:",
+    "indicated_answer": "C",
+    "indicated_text": "A decrease in viral RNA in the blood",
+    "best_match_letter": "A",
+    "best_match_score": 3,
+    "indicated_score": 1,
+    "rationale": "Rationale: Effective HAART suppresses viral replication, producing a fall in plasma viral RNA (viral load), a rise in CD4 count and fewer opportunistic infections. Combination therapy is designed to REDUCE (not increase) the emergence of resistance. (Ref: NASCOP/MOH Kenya ARV guidelines.)"
+  },
+  {
+    "id": 92,
+    "question": "Q8. When performing a physical assessment of a woman who is 20 weeks pregnant, a nurse would expect to palpate the uterine fundus at:",
+    "indicated_answer": "C",
+    "indicated_text": "Umbilicus",
+    "best_match_letter": "B",
+    "best_match_score": 5,
+    "indicated_score": 1,
+    "rationale": "Rationale: By approximately 20-22 weeks' gestation the uterine fundus reaches the level of the umbilicus. The fundus is at the symphysis pubis at ~12 weeks, midway between symphysis and umbilicus at ~16 weeks, and near the xiphisternum at ~36 weeks. (Ref: Myles Textbook for Midwives - abdominal examination.)"
+  },
+  {
+    "id": 96,
+    "question": "Q12. The treatment of puerperal mastitis before suppuration occurs is:",
+    "indicated_answer": "B",
+    "indicated_text": "Antibiotics, breast support and heat application",
+    "best_match_letter": "D",
+    "best_match_score": 5,
+    "indicated_score": 3,
+    "rationale": "Rationale: In the inflammatory (cellulitic) stage of mastitis - before an abscess forms - management is antibiotics (anti-staphylococcal), continued breastfeeding/effective breast emptying, breast support and WARM compresses to promote milk flow and drainage. Incision and drainage (or aspiration) is reserved for an established abscess (suppuration). (Ref: Myles Textbook for Midwives; MOH Kenya.)"
+  },
+  {
+    "id": 101,
+    "question": "Q5. In focused antenatal care:",
+    "indicated_answer": "D",
+    "indicated_text": "The mother is encouraged to make transport arrangements several months before her time of delivery",
+    "best_match_letter": "C",
+    "best_match_score": 5,
+    "indicated_score": 2,
+    "rationale": "Rationale: Focused (goal-directed) antenatal care emphasises birth preparedness and complication readiness - including arranging transport, finances, a skilled birth attendant and place of delivery well in advance. The classic FANC schedule was 4 goal-oriented visits (not seven), and the place of birth is planned during pregnancy, not when labour begins. (Ref: MOH Kenya Focused Antenatal Care guidelines / WHO.)"
+  },
+  {
+    "id": 111,
+    "question": "Q15. Benzhexol (Artane):",
+    "indicated_answer": "C",
+    "indicated_text": "Should never exceed 15 mg daily dosage",
+    "best_match_letter": "B",
+    "best_match_score": 3,
+    "indicated_score": 0,
+    "rationale": "Rationale: Benzhexol (trihexyphenidyl, Artane) is an anticholinergic used to treat parkinsonism and drug-induced extrapyramidal effects; the usual maximum dose is about 15 mg/day. Being anticholinergic it is CONTRAINDICATED in prostatic hypertrophy (risk of urinary retention) - so (A) and (B) are wrong, and it can contribute to orthostatic hypotension. (Ref: Pharmacology texts; BNF.)"
+  },
+  {
+    "id": 121,
+    "question": "Q25. At the end of pregnancy the total weight gain is expected to be approximately 12 kg, the largest components being:",
+    "indicated_answer": "D",
+    "indicated_text": "Fetus and fat",
+    "best_match_letter": "A",
+    "best_match_score": 3,
+    "indicated_score": 1,
+    "rationale": "Rationale: Of the ~12 kg gained in pregnancy, the two largest single components are the fetus (~3.3-3.5 kg) and maternal fat stores (~3.5 kg); the remainder is shared among placenta, amniotic fluid, uterus, breasts, increased blood volume and extracellular fluid. (Ref: Myles Textbook for Midwives - weight gain in pregnancy.)"
+  },
+  {
+    "id": 138,
+    "question": "Q15. The indications for the first vaginal examination during labour are to:",
+    "indicated_answer": "A",
+    "indicated_text": "Confirm labour, determine descent, identify the presenting part",
+    "best_match_letter": "D",
+    "best_match_score": 7,
+    "indicated_score": 5,
+    "rationale": "Rationale: The first vaginal examination in labour is performed to confirm the diagnosis of labour and assess progress - it identifies the presenting part and position, determines descent/station, and assesses cervical effacement and dilatation and the state of the membranes. (Ref: Myles Textbook for Midwives.)"
+  }
+]

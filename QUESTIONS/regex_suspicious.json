@@ -1,0 +1,16 @@
+[
+  {
+    "id": "a824ad61-a26d-4a34-a759-811454a7d2e8",
+    "stem": "When feeding a patient with residual dysphagia due to a cerebral vascular accident, the nurse should avoid:",
+    "db_correct": "A",
+    "rationale_match": "\\bOption\\s*B\\s*is\\s*correct\\b",
+    "rationale": "Patients with dysphagia after stroke have the greatest difficulty controlling THIN LIQUIDS (water, tea, juice) \u2014 these flow rapidly past the impaired pharyngeal phase and are easily aspirated. The nurse should AVOID thin liquids; THICKEN liquids (option B is correct practice); place food on the UNAFFECTED side of the mouth (option C correct); and position the patient sitting UP. Speech and language therapist assessment is standard."
+  },
+  {
+    "id": "17cb68ad-e70d-48eb-a672-467a5a94b98d",
+    "stem": "When feeding a patient with residual dysphagia due to a cerebral vascular accident, the nurse should avoid:",
+    "db_correct": "A",
+    "rationale_match": "\\bOption\\s*B\\s*is\\s*correct\\b",
+    "rationale": "Patients with dysphagia after stroke have the greatest difficulty controlling THIN LIQUIDS (water, tea, juice) \u2014 these flow rapidly past the impaired pharyngeal phase and are easily aspirated. The nurse should AVOID thin liquids; THICKEN liquids (option B is correct practice); place food on the UNAFFECTED side of the mouth (option C correct); and position the patient sitting UP. Speech and language therapist assessment is standard."
+  }
+]
