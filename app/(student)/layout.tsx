@@ -4,6 +4,7 @@ import { Topbar } from '@/components/student/Topbar';
 import { OnboardingTourGate } from '@/components/student/OnboardingTourGate';
 import { ActivityTracker } from '@/components/student/ActivityTracker';
 import { BadgeProvider } from '@/components/student/BadgeProvider';
+import { WhatsNewProvider } from '@/components/student/WhatsNewProvider';
 
 // All student pages are dynamic — they require auth and live Supabase data
 export const dynamic = 'force-dynamic';
@@ -58,6 +59,9 @@ export default function StudentLayout({
 
       {/* Onboarding tour — shown once to new accounts */}
       <OnboardingTourGate />
+
+      {/* What's New — animated modal shown on each new release, with floating re-open trigger */}
+      <WhatsNewProvider />
 
       {/* Activity tracking — login + page visit events for admin analytics */}
       <ActivityTracker />
