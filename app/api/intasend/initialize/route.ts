@@ -112,7 +112,7 @@ export async function POST(req: NextRequest) {
     // has RLS enabled with no INSERT policy for end users, so using the user
     // session client causes a silent rejection.
     const admin = createAdminClient();
-    const { error: insertError } = await admin.from('payments').insert({
+    const insertPayload: any = {
       user_id: user.id,
       type,
       amount: amountKsh,
@@ -124,8 +124,13 @@ export async function POST(req: NextRequest) {
       intasend_signature: result.signature,
       status: 'pending',
       reference_id: referenceId ?? null,
-      metadata: body.data.metadata ?? null,
-    } as any);
+    };
+
+    if (body.data.metadata) {
+      insertPayload.metadata = body.data.metadata;
+    }
+
+    const { error: insertError } = await admin.from('payments').insert(insertPayload);
 
     if (insertError) {
       console.error('[intasend/initialize] payment insert failed:', insertError);
