@@ -2,21 +2,7 @@
 -- Migration: Add pending_payment status and fix booking locking
 -- =============================================================================
 
-DO $$
-DECLARE
-    constraint_name text;
-BEGIN
-    SELECT conname INTO constraint_name
-    FROM pg_constraint
-    WHERE conrelid = 'sessions'::regclass
-      AND contype = 'c'
-      AND pg_get_constraintdef(oid) LIKE '%status%';
-
-    IF constraint_name IS NOT NULL THEN
-        EXECUTE 'ALTER TABLE sessions DROP CONSTRAINT ' || constraint_name;
-    END IF;
-END $$;
-
+ALTER TABLE sessions DROP CONSTRAINT IF EXISTS sessions_status_check;
 ALTER TABLE sessions ADD CONSTRAINT sessions_status_check CHECK (status IN ('pending_payment', 'pending_approval', 'confirmed', 'completed', 'cancelled', 'no_show'));
 
 CREATE OR REPLACE FUNCTION create_booking_atomic(
