@@ -151,6 +151,8 @@ Always use `ON CONFLICT (id) DO NOTHING` on deck inserts.
 | a1000000-…-005 | Mental Health Nursing | BScN | Mental Health Nursing | 5 |
 | a1000000-…-006 | Anatomy & Physiology Quick Review | BScN | Human Anatomy | 5 |
 | a2000000-…-001 | Paediatric Nursing Essentials | KRCHN | Paediatric Nursing | 20 |
+| a2000000-…-002 | Midwifery Essentials | KRCHN | Midwifery | 15 |
+| a2000000-…-003 | Anatomy & Physiology Quick Review | KRCHN | Anatomy & Physiology | 15 |
 | a3000000-…-001 | Community Health & Epidemiology | KRCHN | Community Health Nursing | 20 |
 | a3000000-…-002 | Research Methods & Biostatistics | KRCHN | Research & Statistics | 18 |
 | a3000000-…-003 | Mental Health Nursing — KRCHN | KRCHN | Mental Health Nursing | 18 |
@@ -158,4 +160,4 @@ Always use `ON CONFLICT (id) DO NOTHING` on deck inserts.
 | a5000000-…-001 | BScN Nursing Leadership & Management | BScN | Nursing Management & Leadership | 18 |
 | a5000000-…-002 | BScN Research & Evidence-Based Practice | BScN | Research & Evidence-Based Practice | 15 |
 
-> **Total: ~217 cards across 13 decks.** Update this table after each new batch.
+> **Total: ~247 cards across 15 decks.** Update this table after each new batch.
