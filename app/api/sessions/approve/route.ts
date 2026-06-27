@@ -74,19 +74,33 @@ export async function POST(req: NextRequest) {
 
     if (!finalJoinLink && (session as any).platform === 'Google Meet') {
       try {
-        const startIso = new Date(`${(session as any).session_date}T${(session as any).start_time}+03:00`).toISOString();
-        const endIso = new Date(`${(session as any).session_date}T${(session as any).end_time}+03:00`).toISOString();
-        const studentEmail = (session as any).student?.email;
-        const tutorEmail = (session as any).tutor?.email;
-        const emails = [studentEmail, tutorEmail].filter(Boolean);
+        const { data: existingGroupSession } = await supabase
+          .from('sessions')
+          .select('join_link')
+          .eq('tutor_id', (session as any).tutor_id)
+          .eq('session_date', (session as any).session_date)
+          .eq('start_time', (session as any).start_time)
+          .not('join_link', 'is', null)
+          .limit(1)
+          .maybeSingle();
 
-        finalJoinLink = await createGoogleMeetRoom(
-          `NurseFiti Tutoring: ${(session as any).topic || 'Session'}`,
-          `NurseFiti 1-on-1 Session`,
-          startIso,
-          endIso,
-          emails as string[]
-        );
+        if (existingGroupSession?.join_link) {
+          finalJoinLink = existingGroupSession.join_link;
+        } else {
+          const startIso = new Date(`${(session as any).session_date}T${(session as any).start_time}+03:00`).toISOString();
+          const endIso = new Date(`${(session as any).session_date}T${(session as any).end_time}+03:00`).toISOString();
+          const studentEmail = (session as any).student?.email;
+          const tutorEmail = (session as any).tutor?.email;
+          const emails = [studentEmail, tutorEmail].filter(Boolean);
+
+          finalJoinLink = await createGoogleMeetRoom(
+            `NurseFiti Tutoring: ${(session as any).topic || 'Session'}`,
+            `NurseFiti Session`,
+            startIso,
+            endIso,
+            emails as string[]
+          );
+        }
       } catch (meetErr) {
         console.error('[sessions/approve] Auto meet generation failed:', meetErr);
         // We do not fail the request, but we log the error. The link will be null.

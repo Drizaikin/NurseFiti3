@@ -149,7 +149,7 @@ export default function TutorProfilePage() {
         supabase.from('profiles').select('full_name, avatar_url').eq('id', tutorId).maybeSingle(),
         supabase.from('student_profiles').select('cadre').eq('id', user.id).maybeSingle(),
         supabase.from('tutor_availability').select('id, day_of_week, start_time, end_time, is_recurring, specific_date').eq('tutor_id', tutorId).eq('is_active', true),
-        supabase.from('sessions').select('session_date, start_time').eq('tutor_id', tutorId).in('status', ['confirmed', 'pending_approval']).gte('session_date', toLocalDateStr(new Date())),
+        supabase.from('sessions').select('session_date, start_time, status, booked_at').eq('tutor_id', tutorId).in('status', ['confirmed', 'pending_approval', 'pending_payment']).gte('session_date', toLocalDateStr(new Date())),
         supabase.from('session_reviews').select('id, rating, review_text, keywords, created_at, student_id').eq('tutor_id', tutorId).eq('is_published', true).order('created_at', { ascending: false }).limit(10),
       ]);
 
@@ -240,9 +240,9 @@ export default function TutorProfilePage() {
         filter: `tutor_id=eq.${tutorId}`,
       }, () => {
         // Refresh booked slots on any session change
-        supabase.from('sessions').select('session_date, start_time')
+        supabase.from('sessions').select('session_date, start_time, status, booked_at')
           .eq('tutor_id', tutorId)
-          .in('status', ['confirmed', 'pending_approval'])
+          .in('status', ['confirmed', 'pending_approval', 'pending_payment'])
           .gte('session_date', toLocalDateStr(new Date()))
           .then(({ data }) => setBookedSlots((data ?? []) as any[]));
       })
@@ -254,7 +254,14 @@ export default function TutorProfilePage() {
 
   const getBookingCount = (date: Date, startTime: string) => {
     const dateStr = toLocalDateStr(date);
-    return bookedSlots.filter(s => s.session_date === dateStr && s.start_time === startTime).length;
+    return bookedSlots.filter(s => {
+      if (s.session_date !== dateStr || s.start_time !== startTime) return false;
+      if (s.status === 'pending_payment' && s.booked_at) {
+        const ageMins = (Date.now() - new Date(s.booked_at).getTime()) / 60000;
+        if (ageMins > 7) return false;
+      }
+      return true;
+    }).length;
   };
 
   const isSlotBooked = (date: Date, startTime: string) => {
@@ -406,6 +413,7 @@ export default function TutorProfilePage() {
         toast.success('Booking request sent! The tutor will review your proposed rate and respond shortly.');
         router.push('/bookings');
       } else if (tutor.allow_instant_booking) {
+        toast('Redirecting to payment... You have 7 minutes to complete the payment before this slot is released.', { icon: '⏳', duration: 7000 });
         await initiatePayment(sessionId as string, grossAmount);
       } else {
         toast.success('Booking request sent! The tutor will confirm shortly.');

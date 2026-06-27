@@ -37,6 +37,7 @@ interface Session {
 const STATUS_STYLES: Record<string, { variant: 'teal' | 'amber' | 'green' | 'secondary' | 'error'; label: string }> = {
   confirmed:       { variant: 'green',     label: 'Confirmed' },
   pending_approval:{ variant: 'amber',     label: 'Pending Approval' },
+  pending_payment: { variant: 'amber',     label: 'Awaiting Payment' },
   completed:       { variant: 'teal',      label: 'Completed' },
   cancelled:       { variant: 'secondary', label: 'Cancelled' },
   no_show:         { variant: 'error',     label: 'No Show' },
@@ -128,9 +129,15 @@ export default function BookingsPage() {
   useEffect(() => { fetchSessions(); }, [fetchSessions]);
 
   const today = new Date().toISOString().split('T')[0];
-  const upcomingSessions = sessions.filter(s =>
-    (s.session_date >= today && ['confirmed', 'pending_approval'].includes(s.status))
-  );
+  const upcomingSessions = sessions.filter(s => {
+    if (s.session_date < today) return false;
+    if (['confirmed', 'pending_approval'].includes(s.status)) return true;
+    if (s.status === 'pending_payment') {
+      const ageMins = (Date.now() - new Date(s.booked_at).getTime()) / 60000;
+      return ageMins <= 7;
+    }
+    return false;
+  });
   const pastSessions = sessions.filter(s =>
     s.status === 'completed' || s.status === 'cancelled' || s.status === 'no_show' ||
     (s.session_date < today && s.status !== 'pending_approval')
@@ -325,7 +332,7 @@ export default function BookingsPage() {
                       <Badge variant="secondary" size="sm">{session.cadre}</Badge>
 
                       {/* Pay now if pending payment */}
-                      {session.status === 'confirmed' && session.payment_status === 'pending' && (
+                      {(session.status === 'confirmed' || session.status === 'pending_payment') && session.payment_status === 'pending' && (
                         <button
                           onClick={async () => {
                             try {

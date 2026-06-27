@@ -375,8 +375,8 @@ export default function TutorSchedulePage() {
   const getSlotStatus = (dayOfWeek: number, hour: number, date: Date) => {
     const startTime = `${String(hour).padStart(2, '0')}:00:00`;
     const dateStr = toDateStr(date);
-    const booked = sessions.find(s => s.session_date === dateStr && s.start_time === startTime);
-    if (booked) return { type: 'booked' as const, session: booked };
+    const bookedForSlot = sessions.filter(s => s.session_date === dateStr && s.start_time === startTime);
+    if (bookedForSlot.length > 0) return { type: 'booked' as const, sessions: bookedForSlot };
     if (!isSlotPast(date, hour)) {
       const avail = findActiveSlot(dayOfWeek, hour, date);
       if (avail) return { type: 'available' as const, slot: avail };
@@ -662,7 +662,7 @@ export default function TutorSchedulePage() {
                                   : 'bg-[var(--color-bg)] border border-[var(--color-border)] hover:bg-primary-light hover:border-primary/40 cursor-pointer'
                               }`}
                               title={
-                                status.type === 'booked' ? `${status.session.student_name} — ${status.session.topic ?? 'Session'}`
+                                status.type === 'booked' ? (status.sessions.length > 1 ? `Group Session (${status.sessions.length} students)` : `${status.sessions[0].student_name} — ${status.sessions[0].topic ?? 'Session'}`)
                                 : isRecurringSlot ? 'Recurring every week — click to remove'
                                 : isOneTimeSlot ? 'One-time slot — click to remove'
                                 : isPast ? 'Past slot' : 'Click to set availability'
@@ -670,9 +670,9 @@ export default function TutorSchedulePage() {
                             >
                               {status.type === 'booked' && (
                                 <span className="truncate px-1 block text-[9px] leading-tight">
-                                  {status.session.student_name.split(' ')[0]}
+                                  {status.sessions.length > 1 ? `Group (${status.sessions.length})` : status.sessions[0].student_name.split(' ')[0]}
                                   <br/>
-                                  <span className="opacity-70">{status.session.start_time.slice(0,5)}</span>
+                                  <span className="opacity-70">{status.sessions[0].start_time.slice(0,5)}</span>
                                 </span>
                               )}
                               {isRecurringSlot && <span className="flex items-center justify-center gap-0.5"><span>✓</span><span className="text-[9px] opacity-70">↻</span></span>}

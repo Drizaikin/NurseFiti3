@@ -39,13 +39,11 @@ interface TutorDashboardData {
   };
   todaySessions: Array<{
     id: string;
-    student_name: string;
+    students: Array<{ name: string; cadre: string }>;
     start_time: string;
     end_time: string;
     topic: string | null;
     platform: string;
-    status: string;
-    cadre: string;
     join_link: string | null;
     actual_start_time: string | null;
   }>;
@@ -259,12 +257,28 @@ function TutorDashboardInner() {
         studentNames = Object.fromEntries((names ?? []).map((n: any) => [n.id, n.full_name]));
       }
 
-      const todaySessions = todaySessionIds.map(s => ({
-        id: s.id, student_name: studentNames[s.student_id] ?? 'Student',
-        start_time: s.start_time, end_time: s.end_time, topic: s.topic,
-        platform: s.platform, status: s.status, cadre: s.cadre,
-        join_link: s.join_link ?? null, actual_start_time: s.actual_start_time ?? null,
-      }));
+      const todaySessions = Object.values(
+        todaySessionIds.reduce((acc, s) => {
+          const key = `${s.start_time}-${s.topic}`;
+          if (!acc[key]) {
+            acc[key] = {
+              id: s.id,
+              students: [],
+              start_time: s.start_time,
+              end_time: s.end_time,
+              topic: s.topic,
+              platform: s.platform,
+              join_link: s.join_link ?? null,
+              actual_start_time: s.actual_start_time ?? null,
+            };
+          }
+          acc[key].students.push({
+            name: studentNames[s.student_id] ?? 'Student',
+            cadre: s.cadre,
+          });
+          return acc;
+        }, {} as Record<string, any>)
+      ) as TutorDashboardData['todaySessions'];
 
       const pendingBookings = allSessions
         .filter(s => s.status === 'pending_approval').slice(0, 5)
@@ -479,10 +493,12 @@ function TutorDashboardInner() {
                 {data.todaySessions.map(s => (
                   <div key={s.id} className="flex items-center gap-4 p-3 rounded-xl border" style={{ background: 'rgba(8,81,79,0.05)', borderColor: 'rgba(8,81,79,0.12)' }}>
                     <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                      {s.student_name.charAt(0)}
+                      {s.students.length > 1 ? '👥' : s.students[0].name.charAt(0)}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-sm text-[var(--color-text)]">{s.student_name}</p>
+                      <p className="font-semibold text-sm text-[var(--color-text)]">
+                        {s.students.length > 1 ? `Group Session (${s.students.length} students)` : s.students[0].name}
+                      </p>
                       <p className="text-xs text-[var(--color-text-secondary)]">{s.topic ?? 'General Session'} · {s.platform}</p>
                       {/* Meet link action */}
                       {s.platform === 'Google Meet' && (
@@ -525,7 +541,7 @@ function TutorDashboardInner() {
                     </div>
                     <div className="text-right flex-shrink-0">
                       <p className="text-sm font-semibold text-primary">{s.start_time.slice(0, 5)}</p>
-                      <Badge variant="teal" size="sm">{s.cadre}</Badge>
+                      <Badge variant="teal" size="sm">{s.students.length > 1 ? 'Group' : s.students[0].cadre}</Badge>
                     </div>
                   </div>
                 ))}

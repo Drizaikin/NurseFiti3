@@ -280,22 +280,37 @@ async function provisionAccess(supabase: any, payment: any, txnData: any) {
         // Auto-generate Google Meet link if missing and platform is Google Meet
         if (!finalJoinLink && session.platform === 'Google Meet') {
           try {
-            const startIso = new Date(`${session.session_date}T${session.start_time}+03:00`).toISOString();
-            const endIso = new Date(`${session.session_date}T${session.end_time}+03:00`).toISOString();
-            const emails = [studentProfile?.email, tutorProfile?.email].filter(Boolean) as string[];
-
-            finalJoinLink = await createGoogleMeetRoom(
-              `NurseFiti Tutoring: ${session.topic || 'Session'}`,
-              `NurseFiti 1-on-1 Session`,
-              startIso,
-              endIso,
-              emails
-            );
-
-            await supabase
+            const { data: existingGroupSession } = await supabase
               .from('sessions')
-              .update({ join_link: finalJoinLink })
-              .eq('id', session.id);
+              .select('join_link')
+              .eq('tutor_id', session.tutor_id)
+              .eq('session_date', session.session_date)
+              .eq('start_time', session.start_time)
+              .not('join_link', 'is', null)
+              .limit(1)
+              .maybeSingle();
+
+            if (existingGroupSession?.join_link) {
+              finalJoinLink = existingGroupSession.join_link;
+              await supabase.from('sessions').update({ join_link: finalJoinLink }).eq('id', session.id);
+            } else {
+              const startIso = new Date(`${session.session_date}T${session.start_time}+03:00`).toISOString();
+              const endIso = new Date(`${session.session_date}T${session.end_time}+03:00`).toISOString();
+              const emails = [studentProfile?.email, tutorProfile?.email].filter(Boolean) as string[];
+
+              finalJoinLink = await createGoogleMeetRoom(
+                `NurseFiti Tutoring: ${session.topic || 'Session'}`,
+                `NurseFiti Session`,
+                startIso,
+                endIso,
+                emails
+              );
+
+              await supabase
+                .from('sessions')
+                .update({ join_link: finalJoinLink })
+                .eq('id', session.id);
+            }
           } catch (meetErr) {
             console.error('[intasend/webhook] Auto meet generation failed:', meetErr);
           }
