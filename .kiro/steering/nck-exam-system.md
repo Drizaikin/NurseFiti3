@@ -429,3 +429,68 @@ After every seeding migration is written but **before it is pushed to Supabase**
 - https://nckenya.com/wp-content/uploads/2025/12/Annexure-Examination-instructions-and-schedule-February-May-2026-1.pdf
 - https://osp.nckenya.com/ajax/login
 - https://nckenya.com/downloads/
+
+---
+
+## 15. What's New — Mandatory Release Announcement Protocol
+
+Every new feature, UI change, or batch of new questions **must be announced to students** via the What's New modal. This is not optional. The modal appears automatically to every user on their first visit after the version is bumped.
+
+### 15.1 Files Involved
+
+| File | Purpose |
+| :---- | :---- |
+| `components/student/WhatsNewModal.tsx` | Owns `CURRENT_VERSION`, `STORAGE_KEY`, and `WHATS_NEW_RELEASES` |
+| `components/student/WhatsNewTrigger.tsx` | Floating re-open pill — must mirror `CURRENT_VERSION` from the modal |
+
+### 15.2 Steps to Announce a New Feature or Question Batch
+
+1. **Open `WhatsNewModal.tsx`**
+2. **Increment `CURRENT_VERSION`** (e.g. `5 → 6`). This single number controls which localStorage key is used — bumping it makes the modal re-appear for every user on every device.
+3. **Add an entry to `WHATS_NEW_RELEASES`** at the bottom of the array:
+   ```ts
+   {
+     version: 6,          // must match new CURRENT_VERSION
+     date: "DD Month YYYY",
+     items: [
+       {
+         icon: "🎉",
+         tag: "New",
+         tagColor: "bg-emerald-500/20 text-emerald-400",
+         title: "Short headline",
+         description: "1–2 sentence explanation of what changed and why it matters.",
+         cta: { label: "Try it now", href: "/practice" }, // optional
+       },
+     ],
+   }
+   ```
+4. **Open `WhatsNewTrigger.tsx`** and update its `CURRENT_VERSION` constant to the same new value.
+5. Commit both files together. The modal will auto-show to all users on next page load.
+
+### 15.3 Rules
+
+- **Never skip this step** when shipping a feature or a question batch — students must know what's new.
+- `CURRENT_VERSION` in `WhatsNewModal.tsx` and `WhatsNewTrigger.tsx` must **always match**. A mismatch causes the trigger pill to behave incorrectly (see bug history).
+- Each `version` integer in `WHATS_NEW_RELEASES` must match the `CURRENT_VERSION` at the time it was added — do not retroactively change old entries.
+- The storage key `whats_new_seen_vN` is per-device (localStorage). Bumping the version guarantees every user on every device (mobile, tablet, desktop) sees the announcement, because their old key (`seen_vN-1`) does not match the new key (`seen_vN`).
+- One version can have **multiple items** (carousel slides). Use multiple items when announcing several things at once.
+- Keep descriptions brief and user-facing — not technical. Write for a nursing student, not a developer.
+
+### 15.4 Version History
+
+| Version | Date | Summary |
+| :---- | :---- | :---- |
+| 1 | May 2026 | Platform launch — dashboard, practice questions, mock exams |
+| 2 | June 2026 | Flashcards + Analytics dashboard |
+| 3 | 26 June 2026 | 186 new NCK past-paper questions (compilation 2006–2025) |
+| 4 | 26 June 2026 | Report/flag question errors feature |
+| 5 | 27 June 2026 | Midwifery + Anatomy & Physiology flashcards batch |
+
+---
+
+## References
+
+- https://nckenya.com/examination/
+- https://nckenya.com/wp-content/uploads/2025/12/Annexure-Examination-instructions-and-schedule-February-May-2026-1.pdf
+- https://osp.nckenya.com/ajax/login
+- https://nckenya.com/downloads/

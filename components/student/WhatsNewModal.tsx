@@ -268,65 +268,76 @@ export function WhatsNewModal({ forceOpen = false, onForceClose }: WhatsNewModal
 
   // Slide animation variants
   const variants = {
-    enter: (dir: number) => ({
-      x: dir > 0 ? 80 : -80,
-      opacity: 0,
-      scale: 0.96,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      scale: 1,
-    },
-    exit: (dir: number) => ({
-      x: dir > 0 ? -80 : 80,
-      opacity: 0,
-      scale: 0.96,
-    }),
+    enter: (dir: number) => ({ x: dir > 0 ? 80 : -80, opacity: 0, scale: 0.96 }),
+    center: { x: 0, opacity: 1, scale: 1 },
+    exit: (dir: number) => ({ x: dir > 0 ? -80 : 80, opacity: 0, scale: 0.96 }),
   };
 
   return (
     <AnimatePresence>
       {show && (
-        /* ── Backdrop ──────────────────────────────────────────────────── */
+        /*
+         * Overlay — covers the whole viewport on every device.
+         * On mobile  : the card slides up from the bottom as a sheet.
+         * On desktop : the card is centred with a spring pop-in.
+         * z-[80] sits above sidebar (z-30/50) and topbar (z-20).
+         */
         <motion.div
-          className="fixed inset-0 z-[80] flex items-center justify-center p-4"
+          className="fixed inset-0 z-[80] flex items-end sm:items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
+          transition={{ duration: 0.22 }}
+          // Allow tapping the backdrop to dismiss
+          onClick={(e) => { if (e.target === e.currentTarget) dismiss(); }}
         >
-          {/* Blurred dark overlay */}
+          {/* Dark blurred backdrop */}
           <motion.div
             className="absolute inset-0 bg-black/65 backdrop-blur-sm"
             onClick={dismiss}
             aria-hidden="true"
           />
 
-          {/* ── Card ──────────────────────────────────────────────────── */}
+          {/* ── Card / Sheet ────────────────────────────────────────────── */}
           <motion.div
-            className="relative w-full max-w-md"
-            initial={{ scale: 0.85, y: 48, opacity: 0 }}
-            animate={{ scale: 1, y: 0, opacity: 1 }}
-            exit={{ scale: 0.88, y: 32, opacity: 0 }}
-            transition={{ type: "spring", damping: 22, stiffness: 280 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="What's New"
+            className={[
+              "relative w-full sm:max-w-md",
+              // Mobile: rounded top corners, flush to bottom, safe-area padding
+              "rounded-t-3xl sm:rounded-2xl",
+              // Prevent card from stretching too tall on small screens
+              "max-h-[92dvh] sm:max-h-none overflow-y-auto sm:overflow-visible",
+            ].join(" ")}
+            // Mobile: slide up from bottom. Desktop: scale in from centre.
+            initial={{ y: "100%", opacity: 0, scale: 1 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: "100%", opacity: 0, scale: 1 }}
+            // On sm+ override to the spring pop-in
+            style={{ originY: 1 }}
+            transition={{ type: "spring", damping: 24, stiffness: 280 }}
           >
-            {/* Ambient glow behind card */}
+            {/* Ambient glow — desktop only, would be hidden under sheet on mobile */}
             <div
-              className="absolute -inset-3 rounded-3xl blur-2xl opacity-30 pointer-events-none"
+              className="hidden sm:block absolute -inset-3 rounded-3xl blur-2xl opacity-30 pointer-events-none"
               style={{
                 background:
-                  "radial-gradient(ellipse at 50% 0%, var(--color-accent, #3B82F6) 0%, transparent 70%)",
+                  "radial-gradient(ellipse at 50% 0%, var(--color-accent,#3B82F6) 0%, transparent 70%)",
               }}
               aria-hidden="true"
             />
 
-            <div className="relative bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl shadow-2xl overflow-hidden">
+            <div className="relative bg-[var(--color-card)] border border-[var(--color-border)] rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden">
 
-              {/* ── Header bar ─────────────────────────────────────────── */}
+              {/* Mobile drag handle */}
+              <div className="flex justify-center pt-3 pb-1 sm:hidden" aria-hidden="true">
+                <div className="w-10 h-1 rounded-full bg-[var(--color-border)]" />
+              </div>
+
+              {/* ── Header ────────────────────────────────────────────── */}
               <div className="flex items-center justify-between px-5 py-3.5 border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)]">
                 <div className="flex items-center gap-2.5">
-                  {/* Animated star/sparkle */}
                   <motion.span
                     className="text-lg"
                     animate={{ rotate: [0, 15, -10, 15, 0], scale: [1, 1.2, 1] }}
@@ -344,11 +355,9 @@ export function WhatsNewModal({ forceOpen = false, onForceClose }: WhatsNewModal
                     </span>
                   )}
                 </div>
-
-                {/* Close button */}
                 <button
                   onClick={dismiss}
-                  className="p-1.5 rounded-lg text-[var(--color-text-secondary)] hover:bg-primary/10 hover:text-primary transition-colors"
+                  className="p-1.5 rounded-lg text-[var(--color-text-secondary)] hover:bg-primary/10 hover:text-primary transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
                   aria-label="Dismiss what's new"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -357,8 +366,8 @@ export function WhatsNewModal({ forceOpen = false, onForceClose }: WhatsNewModal
                 </button>
               </div>
 
-              {/* ── Slide area (fixed height to prevent layout shift) ───── */}
-              <div className="relative overflow-hidden" style={{ minHeight: 300 }}>
+              {/* ── Slide area ────────────────────────────────────────── */}
+              <div className="relative overflow-hidden" style={{ minHeight: 280 }}>
                 <AnimatePresence custom={direction} mode="wait">
                   <motion.div
                     key={slideIndex}
@@ -388,7 +397,7 @@ export function WhatsNewModal({ forceOpen = false, onForceClose }: WhatsNewModal
                       </div>
                     </motion.div>
 
-                    {/* Tag pill */}
+                    {/* Tag */}
                     <motion.div
                       className="flex justify-center mb-3"
                       initial={{ opacity: 0, y: 8 }}
@@ -430,7 +439,7 @@ export function WhatsNewModal({ forceOpen = false, onForceClose }: WhatsNewModal
                       >
                         <button
                           onClick={() => handleCta(current.cta!.href)}
-                          className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors group"
+                          className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors min-h-[44px] px-3"
                         >
                           {current.cta.label}
                           <motion.svg
@@ -450,13 +459,12 @@ export function WhatsNewModal({ forceOpen = false, onForceClose }: WhatsNewModal
                 </AnimatePresence>
               </div>
 
-              {/* ── Footer: dots + navigation ───────────────────────────── */}
+              {/* ── Footer: dots + prev/next ──────────────────────────── */}
               <div className="px-6 py-4 border-t border-[var(--color-border)] flex items-center justify-between bg-[var(--color-bg-secondary)]">
-                {/* Prev button */}
                 <button
                   onClick={handlePrev}
                   disabled={slideIndex === 0}
-                  className="p-2 rounded-lg text-[var(--color-text-secondary)] hover:bg-primary/10 hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                  className="p-2 rounded-lg text-[var(--color-text-secondary)] hover:bg-primary/10 hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
                   aria-label="Previous"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -471,23 +479,25 @@ export function WhatsNewModal({ forceOpen = false, onForceClose }: WhatsNewModal
                       key={i}
                       onClick={() => goTo(i)}
                       aria-label={`Go to slide ${i + 1}`}
-                      className="transition-all duration-300 rounded-full"
-                      style={{
-                        width: i === slideIndex ? 20 : 7,
-                        height: 7,
-                        background:
-                          i === slideIndex
-                            ? "var(--color-accent, #3B82F6)"
+                      className="transition-all duration-300 rounded-full min-h-[44px] flex items-center"
+                    >
+                      <span
+                        className="block rounded-full transition-all duration-300"
+                        style={{
+                          width: i === slideIndex ? 20 : 7,
+                          height: 7,
+                          background: i === slideIndex
+                            ? "var(--color-accent,#3B82F6)"
                             : "var(--color-border)",
-                      }}
-                    />
+                        }}
+                      />
+                    </button>
                   ))}
                 </div>
 
-                {/* Next / Done button */}
                 <button
                   onClick={handleNext}
-                  className="p-2 rounded-lg text-[var(--color-text-secondary)] hover:bg-primary/10 hover:text-primary transition-colors"
+                  className="p-2 rounded-lg text-[var(--color-text-secondary)] hover:bg-primary/10 hover:text-primary transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
                   aria-label={slideIndex === total - 1 ? "Done" : "Next"}
                 >
                   {slideIndex === total - 1 ? (
@@ -502,11 +512,14 @@ export function WhatsNewModal({ forceOpen = false, onForceClose }: WhatsNewModal
                 </button>
               </div>
 
-              {/* ── "Dismiss forever" fine-print ───────────────────────── */}
-              <div className="pb-4 text-center">
+              {/* Dismiss fine-print + safe-area bottom padding for notched phones */}
+              <div
+                className="pb-4 text-center"
+                style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
+              >
                 <button
                   onClick={dismiss}
-                  className="text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors underline underline-offset-2"
+                  className="text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors underline underline-offset-2 min-h-[44px] px-4"
                 >
                   Don&apos;t show this again
                 </button>
