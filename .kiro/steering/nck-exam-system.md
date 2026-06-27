@@ -344,6 +344,85 @@ Its sole purpose is to allow admin filtering (e.g., "show all 2014 KRCHN questio
 
 ---
 
+## 14. Question Quality Audit Standards (Mandatory Before Every Seed)
+
+Every question seeded into the database — whether from a Word document upload, a past-paper PDF, or any other source — **must be individually audited** before the INSERT is written. This is not optional. The audit is the last gate before a question reaches students.
+
+### 14.1 Answer Verification
+
+The correct answer must be independently verified against the rationale provided — **do not blindly trust the "correct answer in red" marked in the source document**. Source documents contain errors. The answer that is consistent with the rationale and the reference materials takes precedence.
+
+> **Rule:** If the marked answer and the rationale contradict each other, resolve the contradiction by consulting the reference materials (Section 14.3), correct the answer, and note the correction in the SQL comment above the INSERT.
+
+### 14.2 Rationale Accuracy
+
+The rationale must be audited for clinical and scientific accuracy against the primary reference materials listed in Section 14.3. A rationale that is vague, outdated, or inconsistent with current Kenyan or WHO guidelines must be corrected before insertion.
+
+**Common rationale errors to check:**
+- Incorrect drug concentration (e.g. 3% vs 1% tetracycline eye ointment — always 1% per MOH Kenya)
+- Wrong diluent for IV drugs (e.g. oxytocin in dextrose vs normal saline — current practice is normal saline)
+- Antidote confusion (e.g. folic acid vs folinic acid for methotrexate rescue — always folinic acid)
+- Mechanism errors (e.g. confusing pharmacokinetics with pharmacodynamics)
+- Outdated classification (e.g. first-line agent replaced by a newer protocol)
+- Contraindication errors (e.g. praziquantel mechanism in ocular cysticercosis)
+
+### 14.3 Primary Reference Materials
+
+Every rationale must be traceable to at least one of the following references (listed in priority order for Kenyan NCK context):
+
+| Domain | Reference |
+| :---- | :---- |
+| Community Health, Epidemiology, PHC | MOH Kenya guidelines; Kenya KEPH framework; WHO; Park's Textbook of Preventive & Social Medicine |
+| Midwifery, Obstetrics, Newborn | Myles Textbook for Midwives (African edition); MOH Kenya BEmONC/EmONC guidelines |
+| Paediatrics, IMNCI, Nutrition | Kenya IMNCI chart booklet; MOH Kenya Basic Paediatric Protocols; WHO Child Growth Standards; Nelson Paediatrics |
+| Medical-Surgical, Surgical, Critical Care | Brunner & Suddarth's Medical-Surgical Nursing |
+| Pharmacology, Antidotes, Drug Interactions | Standard Pharmacology texts used in Kenyan nursing training; BNF; MOH Kenya Poisoning guidelines |
+| HIV/AIDS, ARVs | NASCOP/MOH Kenya ART guidelines (current edition); WHO consolidated ARV guidelines |
+| STIs, Gonorrhoea, TB | MOH Kenya National STI Management Guidelines; MOH Kenya NTLP guidelines; WHO STI/TB guidelines |
+| Malaria, Vector-borne diseases | MOH Kenya National Malaria Control Programme (NMCP) guidelines |
+| Family Planning | MOH Kenya National Family Planning Guidelines; WHO Medical Eligibility Criteria (MEC) |
+| Mental Health, Psychiatric | Standard Psychiatric/Mental Health Nursing texts; DSM-5 where referenced |
+| Research, Leadership, Education | Polit & Beck (Nursing Research); standard Nursing Management/Education texts used in Kenyan nursing training; NCK curriculum |
+| Microbiology, Immunology | Standard Microbiology and Immunology texts used in Kenyan nursing training |
+| Professional Ethics, Law | NCK Scope of Practice; Kenyan healthcare law and ethics |
+
+### 14.4 Unit and Topic Field Standards
+
+The `unit` and `topic` fields in the `questions` table must reflect the actual clinical content of the question — **not** a placeholder value such as `unit = 'Nursing'` or `topic = 'General'`.
+
+**Rules:**
+- `unit` must match one of the established unit names listed in the Paper I/Paper II tables in Section 12 (e.g. `'Pharmacology'`, `'Midwifery'`, `'Community Health Nursing'`, `'Mental Health Nursing'`).
+- `topic` must be a specific clinical sub-topic within that unit (e.g. `'Antimicrobials'`, `'Obstetric Emergencies'`, `'Epidemiology'`, `'Leadership Theories'`).
+- If a legacy row has `unit = 'Nursing'` or `topic = 'General'`, it must be corrected in the same migration that seeds or fixes that row.
+
+> **Legacy data check:** After every seeding session, run a verification query to confirm zero rows have `unit = 'Nursing'`, `topic = 'General'`, `paper IS NULL`, or `cadre IS NULL`. Any such rows must be immediately fixed before the migration is pushed.
+
+### 14.5 Deduplication: Exact vs. Paraphrased Stems
+
+The unique constraint on `(stem, cadre)` prevents exact-duplicate stems. However, **paraphrased versions of the same question** (same clinical scenario, same answer choices, different wording) **are allowed** and should be seeded — they test the same knowledge from a different angle and increase question bank variety.
+
+> **Rule:** Only skip a question if the stem is word-for-word identical (or differs only in trivial formatting like punctuation/capitalisation). If the wording is meaningfully different — even if the core knowledge tested is the same — seed it.
+
+### 14.6 Post-Seed Verification Checklist
+
+After every seeding migration is written but **before it is pushed to Supabase**, verify:
+
+| Check | Expected result |
+| :---- | :---- |
+| Every INSERT has `ON CONFLICT (stem, cadre) DO NOTHING` | ✓ |
+| `paper` uses Roman numerals (`'Paper I'`, `'Paper II'`) | ✓ |
+| `status = 'approved'` on every row | ✓ |
+| `contributor_id = NULL` on every row | ✓ |
+| `cadre` is `'BScN'` or `'KRCHN'` (never NULL) | ✓ |
+| `unit` is a valid clinical unit name (not `'Nursing'`) | ✓ |
+| `topic` is a specific sub-topic (not `'General'`) | ✓ |
+| `exam_year` is an integer or NULL (never a string) | ✓ |
+| Correct answer matches the rationale | ✓ |
+| Rationale is accurate per Section 14.3 references | ✓ |
+| Run `SELECT COUNT(*) FROM questions WHERE cadre IS NULL OR paper IS NULL` = 0 after push | ✓ |
+
+---
+
 ## References
 
 - https://nckenya.com/examination/
