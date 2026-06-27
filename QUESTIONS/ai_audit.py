@@ -15,8 +15,8 @@ if not api_key:
 
 genai.configure(api_key=api_key)
 
-# We use the pro model to ensure high reasoning capability for medical facts
-model = genai.GenerativeModel('gemini-1.5-pro-latest')
+# We use flash because of free tier rate limits, while still being very capable
+model = genai.GenerativeModel('gemini-flash-latest')
 
 with open("all_db_questions.json", "r", encoding="utf-8") as f:
     questions = json.load(f)
@@ -51,7 +51,7 @@ output_file = "ai_audit_results.json"
 
 # Process in batches to avoid rate limits
 batch_size = 50
-delay_between_requests = 3 # seconds
+delay_between_requests = 4.5 # seconds (Free tier is 15 RPM for flash)
 
 for i, q in enumerate(questions):
     prompt = f"""

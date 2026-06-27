@@ -1,0 +1,1361 @@
+=== NULL PAPER AUDIT ===
+Run at: 2026-06-27T08:41:05.417Z
+
+
+--- Individual Rows (168 total) ---
+
+ID: 9043ef88-5db6-46c3-91ea-15a0ccee66d5
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q8. The actions of the body on the drug are referred to as:
+  exam_year: (null)
+  paper:     (null)
+
+ID: d8e206e3-7f83-48c9-976e-7879e12fa908
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q9. Atenolol is a/an:
+  exam_year: (null)
+  paper:     (null)
+
+ID: ef913c5e-16c4-4c53-b543-91b8d3a3bcf0
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q10. The drugs that are classified as penicillins include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: b72ac880-7c8a-47b8-9d9b-9d3724f64089
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q11. An example of a drug derived from a plant is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 15df7049-e9cf-443d-9569-586a6842a716
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q12. The route of drug administration with the highest drug bioavailability is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: c85e547c-c826-448a-9429-7e309bb6d8a7
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q13. The following is an opioid antagonist:
+  exam_year: (null)
+  paper:     (null)
+
+ID: acf147ff-6fa9-4e5a-8a1d-e68c82e06051
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q14. The drug used for organophosphate poisoning is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 6fbe3dcd-37fe-45f4-8fea-fb21a49b88c2
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q3. The time that is required to reduce the concentration of a drug in the body 
+  exam_year: (null)
+  paper:     (null)
+
+ID: 3424d8b0-a03c-4bd3-ae47-11d4fa3e465e
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q21. The most appropriate drug for treatment of bacillary dysentery in adults is
+  exam_year: (null)
+  paper:     (null)
+
+ID: 342b0d53-9d62-488b-ad13-17f56d7ba0b5
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q17. Nordette is an example of:
+  exam_year: (null)
+  paper:     (null)
+
+ID: e67ba918-83ea-4b74-8bdb-d4d6fcd826a2
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q27. The vector that carries the causative organism for trypanosomiasis is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 2d838a65-e562-4fa9-82dd-78192ec60dc4
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q1. Micro-organisms responsible for hospital-acquired pneumonia are:
+  exam_year: (null)
+  paper:     (null)
+
+ID: c0a20ce7-a4a8-45b1-975c-e74f4ac45517
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q2. Bioavailability of drugs taken by mouth is affected by:
+  exam_year: (null)
+  paper:     (null)
+
+ID: ac708d67-6c33-4753-9eae-db8c94af878a
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q3. Immunoglobulin G (IgG) is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 02dfd548-8680-4ea0-8927-16abde768596
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q4. The cell-mediated immune system is made up of:
+  exam_year: (null)
+  paper:     (null)
+
+ID: df21f15a-0e91-4e8f-82c3-15ed11c1cfbc
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q1. The drugs that are classified as cephalosporins include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: a1d25f4b-457a-49b1-8fd0-d8f9a0ac95f6
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q2. The antitussive agents are indicated for:
+  exam_year: (null)
+  paper:     (null)
+
+ID: de4c7e56-4eed-4aa1-908a-f1e549a9fa0d
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q3. The nurse should instruct a client who is taking an expectorant to:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 721803f1-f16d-40fb-9ed6-7e92c755c27a
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q4. The drugs that are classified as narcotic analgesics include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 45bd1173-1d7f-47f4-852c-fac85c3516a6
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q5. The action of hypnotic drugs is to induce:
+  exam_year: (null)
+  paper:     (null)
+
+ID: e69a17e2-d114-48df-b70a-ba34a1e92164
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q6. The antidote for morphine toxicity is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: deb815b7-a8ee-460f-b64a-cb58cac24023
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q7. The extent to which a drug is absorbed and transported to the target tissue 
+  exam_year: (null)
+  paper:     (null)
+
+ID: ea33ae82-876c-447e-92af-7e1e65323541
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q15. Local anaesthetics work by:
+  exam_year: (null)
+  paper:     (null)
+
+ID: b30c419c-b17b-464f-bae0-719fbcd0de6a
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q16. Pregnant women should be advised not to take tetracycline because it has be
+  exam_year: (null)
+  paper:     (null)
+
+ID: 87b900b6-401a-462e-99e6-3fa798d19715
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q17. Acyclovir is a drug of choice for treatment of herpes virus. Its mode of ac
+  exam_year: (null)
+  paper:     (null)
+
+ID: 62925b8c-3ecf-4e31-8df3-0049439db615
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q18. A drug that prevents the release of histamine from mast cells is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 7ca79035-a885-4101-b2aa-44df3916bb11
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q19. Oral antidiabetics that work by stimulating beta cells to secrete more insu
+  exam_year: (null)
+  paper:     (null)
+
+ID: 5cf45b0c-9311-4013-a673-f1ad9157f43e
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q20. The extrapyramidal side effects of antipsychotic drugs include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: bf2e6ca7-f6f3-4f18-aba7-e0b8226b7746
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q21. Combined chemotherapy of tuberculosis is used to:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 4b9c0bd1-0ac9-4de6-8d3a-b5c6f76d75f2
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q22. When teaching about the proper use of antacids, a nurse should instruct the
+  exam_year: (null)
+  paper:     (null)
+
+ID: bdc1ff98-a057-44a8-ad7c-33d5b9346ad3
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q23. A 9-year-old schoolgirl has been diagnosed with taeniasis. The drug of choi
+  exam_year: (null)
+  paper:     (null)
+
+ID: 8035fb7c-1ef2-40d5-9893-8de95125660f
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q24. 4-aminoquinoline derivative antimalarial drugs include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 5c983563-6ffd-4d4b-ac56-858c47e69c82
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q25. The drugs that are classified as diuretics include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: a0fece3c-edc0-4e9a-8ee1-bbd5707d935f
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q26. The drug used to treat methotrexate toxicity is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: f3dc0caf-b018-4f21-a9b4-ceb9159b6432
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q1. The major contraindication of Praziquantel is its use in patients with:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 2e7cc0ef-7f1d-40e2-bcf0-2b9ea4017d55
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q2. The major side effects of Indomethacin on the cardiovascular system are:
+  exam_year: (null)
+  paper:     (null)
+
+ID: f230a7fc-b660-42eb-a2d4-0aabd69f2461
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q4. The drugs that are classified as sulphonamides include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: ef17ea26-0068-447c-b518-474d65daaaa1
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q5. The drugs that have almost exclusively harmful effects in the body are known
+  exam_year: (null)
+  paper:     (null)
+
+ID: 94a6b1ea-69bd-49b5-b528-681a7f94fd7a
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q6. The possibility of harmful effects on the foetus during the formative stages
+  exam_year: (null)
+  paper:     (null)
+
+ID: ffb7687d-92b1-450e-9edf-970ad6595944
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q7. The mode of action of Nifedipine (Adalat) is that it:
+  exam_year: (null)
+  paper:     (null)
+
+ID: c3ec25e4-63db-407f-97cd-130e770afe00
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q8. Diclofenac sodium produces anti-inflammatory, analgesic and antipyretic effe
+  exam_year: (null)
+  paper:     (null)
+
+ID: 783b15fa-d0ad-4f67-9fa7-4c1b719427cb
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q9. The antiulcer agents include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 5485fe17-2fbe-44c2-949c-85c54d1f34b6
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q10. The mode of action of salbutamol sulphate is that it:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 5f689b65-7cd1-415a-9c9b-4663e21ce57a
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q11. The anti-anxiety agents include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 7732fdba-8404-4c58-a09a-63338b844e4f
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q12. The component of a cell or organism that interacts with a drug and initiate
+  exam_year: (null)
+  paper:     (null)
+
+ID: c06c4fd1-0b37-4c75-be01-c11ad88dc853
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q13. The mode of action of gentamicin sulphate is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 9acfbca2-4aac-424d-937b-e46f756304cd
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q14. The effect of combining drugs, where one drug which has no effect increases
+  exam_year: (null)
+  paper:     (null)
+
+ID: 484c8db0-41b0-40c4-be92-3b82d4cbb18a
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q15. Ipratropium bromide is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 4d3f48dd-028e-496f-bca2-b63135dea230
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q16. The route of drug administration with the highest compliance from patients 
+  exam_year: (null)
+  paper:     (null)
+
+ID: f901c217-ee79-40b6-8c62-9b5e67b5e663
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q17. A patient on anti-ulcer therapy complains of reduced libido and impotence. 
+  exam_year: (null)
+  paper:     (null)
+
+ID: 8ffd06d9-c5df-47fd-8195-67d01e826637
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q18. Bulk-forming laxatives:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 72d78985-794a-4487-a54d-756a2e8132f2
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q19. Diazepam exerts its effects by:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 9b13b85e-126e-4593-9f9d-3582e346c581
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q20. In a patient suffering from angina, nitroglycerin may be given sublingually
+  exam_year: (null)
+  paper:     (null)
+
+ID: 1bf7581e-f555-4ef2-922b-594c2628bbf5
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q22. The commonest side effect associated with morphine is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: fe03b446-b9d3-4ac3-b3f9-64d12feac84d
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q23. Highly active antiretroviral therapy (HAART) in HIV infection is associated
+  exam_year: (null)
+  paper:     (null)
+
+ID: 0c25a3c9-e966-41fe-a200-145caa3ae01f
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q24. Beta-lactamase production is a mechanism of resistance among strains of Hae
+  exam_year: (null)
+  paper:     (null)
+
+ID: 8ada11a4-d740-435f-a948-d0f460692bb4
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q25. Regarding warfarin:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 64f7d6a9-89f6-4b8f-8a28-260f6b3ac3fb
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q26. Cromolyn is useful in asthma because it:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 7d69876c-25e5-4b51-b1fd-db07780ce1a8
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q1. The first scientific paper in nursing was published by:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 73c6c777-1ec3-4443-9250-9f963b3b1238
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q2. The graduate nurse's role in research is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: f444eaea-8174-4c5f-b32c-2aa386d8385d
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q3. A nurse researcher formulated the following hypothesis: “There is a relation
+  exam_year: (null)
+  paper:     (null)
+
+ID: 15df6902-1834-4889-9426-3b81c392eb0a
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q4. Theoretical framework refers to:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 2f42944d-2b84-4f90-b6d8-e9e85d8a44ee
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q5. Trait leadership theories in nursing:
+  exam_year: (null)
+  paper:     (null)
+
+ID: b00895c1-cd97-44f8-bce3-78e8435ad4eb
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q6. The main purpose of publishing research findings is to:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 367233a3-7b70-470d-bba9-0a3e9e8bb103
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q7. While conducting research among psychiatric patients, the nurse researcher:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 7444870b-3834-4d79-a69a-2120ec35cd1a
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q8. Discovery learning approach:
+  exam_year: (null)
+  paper:     (null)
+
+ID: c0de556c-d504-4dfc-a7e3-82cf6e583a14
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q9. Micro-evaluation:
+  exam_year: (null)
+  paper:     (null)
+
+ID: c90b39b0-38cf-4294-940b-ffb38d9ed173
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q1. A leader who is mainly concerned with the day-to-day operations of an organi
+  exam_year: (null)
+  paper:     (null)
+
+ID: 2cf4245f-2028-42f6-bc91-9c5baac54e96
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q2. Zero-based budgeting means:
+  exam_year: (null)
+  paper:     (null)
+
+ID: dc9e7efb-abaa-46d9-bcdb-dab997d7d729
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q3. Mentors differ from preceptors in that mentors:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 16e5ba6c-2a18-4c46-bb3f-6998b3bedc96
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q4. Over-delegation involves:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 1b3bd664-086f-4a8c-a28d-ab25e8b0e5b7
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q5. Variables that take only a few discrete values are called:
+  exam_year: (null)
+  paper:     (null)
+
+ID: ecda1a13-5f58-4c39-973d-d79a48c95747
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q6. In research journal articles, “blind reviews” means reviewers:
+  exam_year: (null)
+  paper:     (null)
+
+ID: c79848fa-36d5-450d-bdd5-13a6831c786e
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q7. It is difficult to obtain meaningful informed consent in qualitative researc
+  exam_year: (null)
+  paper:     (null)
+
+ID: 32cea38f-1006-48a0-b8db-780558831a71
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q8. Random assignment means:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 5839512b-2bc6-4a58-8393-34d02f52e80e
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q9. Practising nurses need to develop research-critique skills to:
+  exam_year: (null)
+  paper:     (null)
+
+ID: b1216e93-b68d-42f6-9421-325d240e15fc
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q10. Reflective scepticism, a characteristic of critical thinkers, means:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 52d150f0-be90-4555-b03b-51cd734ac7e2
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q11. Problem-based learning means:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 8d285e54-5885-4970-9c51-62291120e9c8
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q12. When an assessment tool measures what it is supposed to measure, it is said
+  exam_year: (null)
+  paper:     (null)
+
+ID: 6bf2c287-a322-485f-ac25-ac9de34fc549
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q13. An appropriate method that can be used to teach the acquisition of psychomo
+  exam_year: (null)
+  paper:     (null)
+
+ID: 4b65f69a-351e-4779-ab92-e4f5b262ed70
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q14. The decision-making hierarchy is called:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 1bd413a8-6e60-40d2-935a-236223d5fd03
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q1. Pulmonary disorders that cause finger-clubbing include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: dcc0b6e3-3be6-4835-a471-18a5b317b929
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q2. Clinical features of phaeochromocytoma include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 2b3070e4-c4f4-4984-895e-e22bd44ce0b0
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q3. In the management of pemphigus:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 0eef7408-75e6-439e-acf7-6d9aec684273
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q4. Surgical management of peptic ulcers is indicated in:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 76102203-7c9b-416e-842b-295844353d86
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q1. The position of choice for a patient who has had a gastrectomy is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: fb8a4775-5e22-46df-bee2-0eaa2bcb11e1
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q2. A child is brought after falling down the stairs, complaining of headache an
+  exam_year: (null)
+  paper:     (null)
+
+ID: 0e9ceece-13c6-4cac-b189-c1488dc912b7
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q1. The condition for which a nurse prepares a woman for emergency caesarean del
+  exam_year: (null)
+  paper:     (null)
+
+ID: 95141ba8-a0c1-47f6-91e6-fb1ca4bfbbc2
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q2. To screen for the presence of neural tube defects in the fetus, the test tha
+  exam_year: (null)
+  paper:     (null)
+
+ID: fb01d254-bea2-421a-ab61-7b833f31f05b
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q3. During first examination of a normal newborn baby, a nurse would expect to i
+  exam_year: (null)
+  paper:     (null)
+
+ID: fc956db3-cf3d-43d2-b135-43681a9d452d
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q4. For a woman who is in labour and experiencing slight shoulder dystocia the n
+  exam_year: (null)
+  paper:     (null)
+
+ID: c62996bd-f384-4aef-bd09-e771d5580e99
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q5. A labouring woman's husband assists her during the transitional phase of lab
+  exam_year: (null)
+  paper:     (null)
+
+ID: 42809ef4-0d99-4313-b386-f31fdfb11586
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q6. To help a woman recognise the best time for conceiving, a nurse would instru
+  exam_year: (null)
+  paper:     (null)
+
+ID: d8f8a085-8f6a-40e4-8e02-57a28d3fb204
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q7. The sign that leads a nurse to suspect that a two-week-old infant who was bo
+  exam_year: (null)
+  paper:     (null)
+
+ID: e8f71dac-8b11-48c8-a36a-c05024825f71
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q8. When performing a physical assessment of a woman who is 20 weeks pregnant, a
+  exam_year: (null)
+  paper:     (null)
+
+ID: 315152e0-f36e-4350-a880-f6a457a5ddc8
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q9. A woman complains of morning sickness during the first trimester of pregnanc
+  exam_year: (null)
+  paper:     (null)
+
+ID: d30f65c4-3380-4337-9c59-0eb720664f62
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q10. A primigravida who has had no antenatal care is admitted to the labour ward
+  exam_year: (null)
+  paper:     (null)
+
+ID: 71ccafe0-90da-4bd6-981e-3e7e638f592c
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q11. The midwife should suspect pregnancy-induced hypertension if, during a clie
+  exam_year: (null)
+  paper:     (null)
+
+ID: 61df1135-bf76-45aa-ad1e-3751c0566d4c
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q12. The treatment of puerperal mastitis before suppuration occurs is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 83b0d6da-c419-402b-bbdc-f7b6381c43c4
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q1. The following are clinical types of poliomyelitis: (i) Flaccid poliomyelitis
+  exam_year: (null)
+  paper:     (null)
+
+ID: 314ecfe5-1690-4e43-a08f-d0b4ee27309d
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q2. The following are examples of “spacing methods” of family planning:
+  exam_year: (null)
+  paper:     (null)
+
+ID: f25f4fee-5162-46d4-96e7-42ee39289569
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q3. In environmental health, water-based diseases are:
+  exam_year: (null)
+  paper:     (null)
+
+ID: e6e5f842-12ce-4d56-9f20-2e3aa7c9d43a
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q4. A child with marasmus will present with the following clinical symptoms:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 1669faab-4ecb-4598-9aff-06a700b93975
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q5. In focused antenatal care:
+  exam_year: (null)
+  paper:     (null)
+
+ID: e3ac081f-a3c8-4030-a54d-2e880b6eaca5
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q6. In determination of disease incidence:
+  exam_year: (null)
+  paper:     (null)
+
+ID: c37bf03a-5d7c-4a13-af6d-72166603a22d
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q7. The demographic trends in Kenya indicate that since 1969 to date:
+  exam_year: (null)
+  paper:     (null)
+
+ID: e077c192-dc6b-4224-ba37-47f1a2ede324
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q8. The following should be highly considered when counselling on family plannin
+  exam_year: (null)
+  paper:     (null)
+
+ID: 466ba08f-dac8-449c-85a2-b4edb93ae347
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q9. When preparing a family for their parents' changed role due to HIV status, a
+  exam_year: (null)
+  paper:     (null)
+
+ID: 25fbde06-c517-45db-a8f7-681346f29cbf
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q10. The resolution stage of the grief response:
+  exam_year: (null)
+  paper:     (null)
+
+ID: a96ba434-bf68-4508-9517-2331109678aa
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q11. Mrs. Mama has laid down strict and rigid rules for her baby during toilet t
+  exam_year: (null)
+  paper:     (null)
+
+ID: ab74c9ce-02b3-4884-989b-65290f77847f
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q12. A patient tells a nurse “I felt very bad when my relatives visited me and I
+  exam_year: (null)
+  paper:     (null)
+
+ID: 7dbe294e-3c19-4ecb-82f5-a7d814b0f6bb
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q13. The organic mental syndrome associated with sedative abuse is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 7861809a-1412-4e3b-bfb8-2830d8449ce3
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q14. Mini, a 7-year-old boy, has been diagnosed with Attention Deficit Hyperacti
+  exam_year: (null)
+  paper:     (null)
+
+ID: 7998948b-3162-41f9-a4e4-1e1ddc50da29
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q15. Benzhexol (Artane):
+  exam_year: (null)
+  paper:     (null)
+
+ID: 76e90d8c-e36e-4fd0-a9a4-1d49e3cd1a19
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q16. Exhibitionism:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 65467b1e-6c81-48b7-9787-b8e952478a79
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q17. Children of divorced parents:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 1dcc1d2a-6f56-4aa9-af84-c812d0b6b2fa
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q18. Mr. Moto has been constantly physically abusing his wife. Mr. Moto:
+  exam_year: (null)
+  paper:     (null)
+
+ID: aa74880c-b8f1-4a0c-9c00-6ded2a986342
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q19. The best management of varicose veins during pregnancy is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 7d6275b8-b3e6-4505-9c68-068e82a22069
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q20. The management of hypotonic uterine action includes:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 77146436-221a-41b6-b094-46b0e42c4347
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q21. When the fetal head is well flexed, the presenting diameters are:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 114e618a-ccdf-4b07-812b-66014b7dcae4
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q22. Past obstetric history includes: (i) Any abnormality during previous pregna
+  exam_year: (null)
+  paper:     (null)
+
+ID: f6759d9f-4c01-4dec-b7f0-57e1b3ab9da6
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q23. The muscle layer involved in enmeshing bleeding vessels and preventing blee
+  exam_year: (null)
+  paper:     (null)
+
+ID: de25c202-1a0b-415a-ba13-df5aa24bfa1b
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q24. During the 2nd trimester of pregnancy, the blood pressure falls due to:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 728d4bc6-e5fd-41a2-9d09-cba43b1f2a5f
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q25. At the end of pregnancy the total weight gain is expected to be approximate
+  exam_year: (null)
+  paper:     (null)
+
+ID: e9e5f0cd-6016-4209-986f-e8d002dbabd1
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q26. The following are positive signs of pregnancy except:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 939cd92f-6acf-4da7-ad28-5aace4f1244b
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q27. The minor disorders of pregnancy that may progress to major complications i
+  exam_year: (null)
+  paper:     (null)
+
+ID: 2e0a5937-fb6e-49d1-af73-0c0b99b2bca7
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q1. Community participation in primary health care (PHC) means the:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 950bb57f-b6bc-4745-8e71-d13e38d57e87
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q2. In descriptive epidemiology the important characteristics of study are:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 4c6d3b49-3c35-4d30-a237-8adb71d64007
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q3. The group A drugs recommended by WHO for the treatment of gonorrhoea include
+  exam_year: (null)
+  paper:     (null)
+
+ID: a64f1a99-9403-4625-9aa8-56adcfa20df6
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q4. To effectively combat endemic malaria, health workers should:
+  exam_year: (null)
+  paper:     (null)
+
+ID: a134dc46-bb30-47aa-8ed9-8f496d7cea14
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q5. The immediate treatment for an infant with severe diarrhoea and sunken eyes 
+  exam_year: (null)
+  paper:     (null)
+
+ID: f9dbf394-0c9c-44ff-b057-4a2458d3fae6
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q6. The activities the nurse engages in during the preparatory phase of a home v
+  exam_year: (null)
+  paper:     (null)
+
+ID: 1cbd390e-7521-4d4e-8c38-b121a3882240
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q7. During pregnancy the uterine muscle fibres increase:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 0f4903be-5fc0-4954-b25f-75f57dfb699f
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q8. The ischial spines are designated as an important landmark in labour and del
+  exam_year: (null)
+  paper:     (null)
+
+ID: 45fa0b29-0435-4bbe-b1af-32a48f38153d
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q9. A newborn suffering from hyper-bilirubinaemia can be treated with:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 520162de-b32f-46f6-956d-43b4b1b7c4e0
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q10. Respiratory distress syndrome (of the newborn) is characterised by:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 131148a7-3582-46a4-b9c0-df677a91a5e9
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q11. Preventive measures for ophthalmia neonatorum include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 1d6ce615-31ed-4a91-aa6b-2faeb971ba58
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q12. Causes of blood coagulation disorders during pregnancy include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: feb1f5d1-d52b-45c9-b96b-378c143bb493
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q13. Omphalitis predisposes a newborn baby to:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 78aea96a-ace1-4b45-b6c0-58108f1a1aaf
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q14. The 1st stage of labour is defined as the period from the onset of:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 9f3e4fec-2c69-4ab5-9c47-db582517040b
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q15. The indications for the first vaginal examination during labour are to:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 639d8910-e311-46c1-a1cd-65baf43e0fe3
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q16. The signs that indicate placental separation include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 5dab8dfa-3b60-413e-bdce-9c87b7554346
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q18. A contact disease caused by bacteria is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: cbc52752-dc74-45b6-bb09-b252e3902754
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q19. A child growing within the normal developmental milestones will be able to 
+  exam_year: (null)
+  paper:     (null)
+
+ID: 80310c1a-cf8a-47f9-8005-c6654a65e429
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q20. The approximate calorie needs for young children under five years are:
+  exam_year: (null)
+  paper:     (null)
+
+ID: f3e578e6-134f-456e-92ac-08bfb021f67b
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q21. The scientific name for ringworm of the scalp is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 712ebb10-1f07-4192-a7b3-e041b62ade72
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q22. Diseases of agricultural hazards include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 3299e47c-fe53-48b4-9b40-d79c08ab7200
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q23. The international health agencies that were instrumental in starting the Ba
+  exam_year: (null)
+  paper:     (null)
+
+ID: 952b7786-7bbe-4313-bfaf-4a91fac9eff8
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q24. The safe noise exposure level that does not cause damage to the tympanic me
+  exam_year: (null)
+  paper:     (null)
+
+ID: 4837984d-49c4-487c-9d7c-167c13e4e818
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q25. The major practice roles of the occupational health nurse include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: c6e7abc4-c102-42da-af53-547d672033c3
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q26. The drugs that may reduce the efficacy of hormonal contraceptives include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: f28f8ef7-3406-4b0d-aa9a-7d9b3986cdd3
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q28. The measures that would appropriately improve the health of the elderly inc
+  exam_year: (null)
+  paper:     (null)
+
+ID: e45658d9-0751-4af3-ac3e-a876137d3d21
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q29. Prevalence rate is defined as the number of:
+  exam_year: (null)
+  paper:     (null)
+
+ID: bb0147b8-840c-4ece-912d-fdd8578dbc88
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q30. Some of the developmental tasks of a beginning family are:
+  exam_year: (null)
+  paper:     (null)
+
+ID: fad2469a-e382-44d2-bdc3-40c0d76c9133
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q31. Some of the indirect client services provided by the community health nurse
+  exam_year: (null)
+  paper:     (null)
+
+ID: f0c382c4-a88f-41c8-94f5-54390fd0513a
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q32. The components of the biological environment include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 91a418bf-6074-48b1-bf86-8536de1f6c80
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q33. The major service system of the community that is usually the focus of the 
+  exam_year: (null)
+  paper:     (null)
+
+ID: 756dbe70-a002-4eda-9d74-c4e1a06d71f6
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q34. The demographic parameters the community health nurse will examine while co
+  exam_year: (null)
+  paper:     (null)
+
+ID: 82359475-5274-4c8e-89d1-ef8eee5b7eb3
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q35. Vector-borne diseases include:
+  exam_year: (null)
+  paper:     (null)
+
+ID: a8e53717-9fe7-4d72-be06-ab93977b34c6
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q36. A type of schizophrenia characterised mainly by delusions of persecution an
+  exam_year: (null)
+  paper:     (null)
+
+ID: 847ca271-1b67-429c-b2f4-916e076369da
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q37. Postpartum depression (early postnatal mood disturbance) typically appears 
+  exam_year: (null)
+  paper:     (null)
+
+ID: 1adc0a23-14fe-46ee-8ba7-80e987ec79eb
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q38. A type of epilepsy in which psychological features are common is:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 20381035-cf7b-4016-a405-6c8338088fa9
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q39. Reciprocal inhibition involves:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 6205b801-9e49-4c7a-8744-283cc724940a
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q40. A behaviour-therapy technique used in the treatment of sexual aversion diso
+  exam_year: (null)
+  paper:     (null)
+
+ID: aeaef1f8-53d4-4d95-a4c0-3fe3a8d8da74
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q41. Co-dependence means:
+  exam_year: (null)
+  paper:     (null)
+
+ID: 062e8551-f3ab-4d83-9625-ef66435d0c85
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q1. The male pelvis compared with the female pelvis is ___ and ___:
+  exam_year: (null)
+  paper:     (null)
+
+ID: f51fdd37-eca6-40a8-94eb-be8394e0990e
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q2. Which of the following statements is TRUE about contraceptive implants?
+  exam_year: (null)
+  paper:     (null)
+
+ID: 2b700f43-791c-4d1b-aa8f-32d799565d9b
+  cadre:     KRCHN
+  unit:      Nursing
+  topic:     General
+  stem:      Q3. In the management/prevention of ophthalmia neonatorum:
+  exam_year: (null)
+  paper:     (null)
+
+
+=== SUMMARY ===
+Total NULL paper rows: 168
+
+Breakdown by cadre:
+  KRCHN: 168
+
+Breakdown by unit:
+  Nursing: 168
+
+Total questions in DB: 1749

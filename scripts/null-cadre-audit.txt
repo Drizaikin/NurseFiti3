@@ -1,0 +1,52 @@
+=== NULL CADRE AUDIT ===
+Run at: 2026-06-27T09:09:26.530Z
+
+1. NULL CADRE COUNT: 0 question(s) have cadre IS NULL
+
+2. BREAKDOWN BY (cadre, paper, unit) — ALL QUESTIONS:
+  (total questions fetched: 1876)
+     30  cadre=BScN | paper=Paper I | unit=Anatomy & Physiology
+      2  cadre=BScN | paper=Paper I | unit=Critical Care Nursing
+     20  cadre=BScN | paper=Paper I | unit=Maternal & Child Health
+    135  cadre=BScN | paper=Paper I | unit=Medical-Surgical Nursing
+     33  cadre=BScN | paper=Paper I | unit=Mental Health Nursing
+      3  cadre=BScN | paper=Paper I | unit=Microbiology
+    101  cadre=BScN | paper=Paper I | unit=Midwifery
+      3  cadre=BScN | paper=Paper I | unit=Nursing Management and Leadership
+     45  cadre=BScN | paper=Paper I | unit=Paediatric Nursing
+     79  cadre=BScN | paper=Paper I | unit=Pharmacology
+     20  cadre=BScN | paper=Paper I | unit=Surgical Nursing
+     93  cadre=BScN | paper=Paper II | unit=Community Health Nursing
+      6  cadre=BScN | paper=Paper II | unit=Infection Prevention & Control
+      1  cadre=BScN | paper=Paper II | unit=Medical-Surgical Nursing
+     13  cadre=BScN | paper=Paper II | unit=Mental Health Nursing
+     10  cadre=BScN | paper=Paper II | unit=Nursing Education
+     79  cadre=BScN | paper=Paper II | unit=Nursing Management & Leadership
+     22  cadre=BScN | paper=Paper II | unit=Nursing Management and Leadership
+     26  cadre=BScN | paper=Paper II | unit=Nursing Research
+      4  cadre=BScN | paper=Paper II | unit=Professional Ethics & Law
+     50  cadre=BScN | paper=Paper II | unit=Research & Evidence-Based Practice
+     17  cadre=KRCHN | paper=Paper I | unit=Anatomy & Physiology
+     25  cadre=KRCHN | paper=Paper I | unit=Maternal & Child Health
+    250  cadre=KRCHN | paper=Paper I | unit=Medical-Surgical Nursing
+      3  cadre=KRCHN | paper=Paper I | unit=Microbiology
+     97  cadre=KRCHN | paper=Paper I | unit=Midwifery
+      2  cadre=KRCHN | paper=Paper I | unit=Nursing Management and Leadership
+    102  cadre=KRCHN | paper=Paper I | unit=Paediatric Nursing
+     82  cadre=KRCHN | paper=Paper I | unit=Pharmacology
+     38  cadre=KRCHN | paper=Paper I | unit=Surgical Nursing
+    233  cadre=KRCHN | paper=Paper II | unit=Community Health Nursing
+      6  cadre=KRCHN | paper=Paper II | unit=Environmental Health
+     71  cadre=KRCHN | paper=Paper II | unit=Health Systems & Management
+     10  cadre=KRCHN | paper=Paper II | unit=Infection Prevention & Control
+      1  cadre=KRCHN | paper=Paper II | unit=Medical-Surgical Nursing
+     84  cadre=KRCHN | paper=Paper II | unit=Mental Health Nursing
+      5  cadre=KRCHN | paper=Paper II | unit=Nursing Education
+      6  cadre=KRCHN | paper=Paper II | unit=Nursing Management and Leadership
+     12  cadre=KRCHN | paper=Paper II | unit=Nursing Research
+     11  cadre=KRCHN | paper=Paper II | unit=Nutrition
+     46  cadre=KRCHN | paper=Paper II | unit=Research & Statistics
+
+3. DETAILS FOR EVERY NULL-CADRE ROW:
+  (none)
+=== END OF AUDIT ===
