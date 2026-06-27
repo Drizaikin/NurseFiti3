@@ -124,6 +124,7 @@ export async function POST(req: NextRequest) {
       intasend_signature: result.signature,
       status: 'pending',
       reference_id: referenceId ?? null,
+      metadata: body.data.metadata ?? null,
     } as any);
 
     if (insertError) {

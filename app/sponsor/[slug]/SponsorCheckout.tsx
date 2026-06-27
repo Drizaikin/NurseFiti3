@@ -8,6 +8,9 @@ import { PLAN_PRICING_META } from '@/lib/planLimits';
 
 export default function SponsorCheckout({ campaign }: { campaign: any }) {
   const [amount, setAmount] = useState<string>('');
+  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
+  const [organization, setOrganization] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const premiumPrice = PLAN_PRICING_META.premium.amountKsh; // e.g. 3500
@@ -44,7 +47,12 @@ export default function SponsorCheckout({ campaign }: { campaign: any }) {
         body: JSON.stringify({
           type: 'sponsor_deposit',
           amountKsh: numAmount,
-          referenceId: campaign.id
+          referenceId: campaign.id,
+          metadata: {
+            allocator_name: name || undefined,
+            allocator_title: title || undefined,
+            allocator_organization: organization || undefined,
+          }
         })
       });
 
@@ -73,7 +81,7 @@ export default function SponsorCheckout({ campaign }: { campaign: any }) {
 
       <div className="space-y-6">
         <div>
-          <label className="text-sm font-semibold text-primary block mb-2">Sponsorship Amount (KES)</label>
+          <label className="text-sm font-semibold text-primary block mb-2">Sponsorship Amount (KES) *</label>
           <div className="relative">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-mid font-bold">KES</span>
             <input 
@@ -81,10 +89,43 @@ export default function SponsorCheckout({ campaign }: { campaign: any }) {
               min="100"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              placeholder="e.g., 100000"
+              placeholder="e.g., 50000"
               className="w-full pl-14 pr-4 py-3 text-lg font-bold rounded-xl border border-[var(--color-border)] focus:outline-none focus:border-primary transition-colors"
             />
           </div>
+        </div>
+
+        <div>
+          <label className="text-sm font-semibold text-primary block mb-2">Sponsor / Allocator Name</label>
+          <input 
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="e.g. Hon. Lati Lelelit"
+            className="w-full px-4 py-3 text-base rounded-xl border border-[var(--color-border)] focus:outline-none focus:border-primary transition-colors"
+          />
+        </div>
+
+        <div>
+          <label className="text-sm font-semibold text-primary block mb-2">Title / Position</label>
+          <input 
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="e.g. Governor"
+            className="w-full px-4 py-3 text-base rounded-xl border border-[var(--color-border)] focus:outline-none focus:border-primary transition-colors"
+          />
+        </div>
+
+        <div>
+          <label className="text-sm font-semibold text-primary block mb-2">Organization</label>
+          <input 
+            type="text"
+            value={organization}
+            onChange={(e) => setOrganization(e.target.value)}
+            placeholder="e.g. Samburu County Government"
+            className="w-full px-4 py-3 text-base rounded-xl border border-[var(--color-border)] focus:outline-none focus:border-primary transition-colors"
+          />
         </div>
 
         {/* Dynamic Impact Calculator */}

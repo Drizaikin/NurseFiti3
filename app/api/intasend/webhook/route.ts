@@ -166,7 +166,10 @@ async function provisionAccess(supabase: any, payment: any, txnData: any) {
           campaign_id: payment.reference_id,
           amount_kes: payment.amount,
           reference: txnData.invoice_id ?? payment.intasend_reference ?? payment.id,
-          notes: 'IntaSend online deposit'
+          notes: 'IntaSend online deposit',
+          allocator_name: payment.metadata?.allocator_name || null,
+          allocator_title: payment.metadata?.allocator_title || null,
+          allocator_organization: payment.metadata?.allocator_organization || null
         });
 
       await supabase
