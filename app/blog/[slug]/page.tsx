@@ -528,6 +528,76 @@ Also read our [full NCK exam preparation guide](https://www.nursefiti.co.ke/blog
 
 const POSTS_NEWS: Post[] = [
   {
+    slug: 'nck-may-2026-exam-results-released',
+    title: 'NCK May 2026 Exam Results Released: How to Check (2026)',
+    excerpt: 'The Nursing Council of Kenya has officially released the May 2026 licensure examination results. Find out how to check and your next steps.',
+    category: 'NCK News',
+    readTime: '6 min read',
+    date: '2026-06-27',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+Most nursing graduates checking their May 2026 NCK results will find exactly what they hoped for. But for some, the portal will show a different outcome — and what you do in the next 24 hours determines whether you waste another 6 months or fix the problem permanently.
+
+The wait is officially over. The Nursing Council of Kenya (NCK) has released the results for the **May 2026 licensure examination**. Whether you sat for KRCHN, BScN, or Higher Diploma papers, you can now access your official standing.
+
+In this update, we will cover exactly how to access your results safely, the immediate next steps for successful candidates, and the one specific mistake unsuccessful candidates must avoid before the August sitting. We will cover that mistake in the re-sit section below — keep reading.
+
+## How to Check Your May 2026 Results
+
+The NCK has made it clear that results are released exclusively through their official digital channels. Do not trust third-party lists or unverified WhatsApp forwards claiming to have "leaked" results. 
+
+Follow these steps to access your official results:
+1. Navigate to the official **NCK Online Services Portal** at [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
+2. Log in using the same credentials you used to register for the exam
+3. Navigate to the "Examinations" or "Results" tab on your dashboard
+4. Your individual result slip will be available for viewing and download
+
+If the portal is slow, it is due to high traffic. NCK typically releases results on a rolling basis, so if yours are not immediately visible, continue checking periodically.
+
+**[Start preparing for the next step of your nursing career with NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+## What to Do If You Passed
+
+Congratulations! Passing the NCK licensure exam is the culmination of years of hard work. 
+
+Your next immediate step is to **[apply for your practising licence](https://www.nursefiti.co.ke/blog/how-to-apply-nck-licence-kenya)** within 30 days of this results release. You must apply through the same OSP portal. Delays in applying can complicate your licensing process and delay your internship or employment postings, which require proof of licensure. 
+
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+  <strong>Key Takeaway:</strong> Passing the exam does not automatically generate your licence. You must actively initiate the application process on the OSP portal.
+</div>
+
+## What to Do If You Did Not Pass
+
+If you did not pass, do not panic. It is a setback, not the end of your nursing career. NCK reports that a significant proportion of first-attempt candidates do not pass. 
+
+However, this brings us to the mistake you must avoid: **Do not simply re-read your old notes and hope for a better result.** 
+
+If your current study strategy resulted in a fail, using it again for the August 2026 sitting will yield the same outcome. The NCK exam tests application and clinical judgment, not rote memorisation. You need a structured revision plan that focuses on your weakest units.
+
+**[NurseFiti's diagnostic mock exams replicate the DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+
+## The Next Sitting: August 2026
+
+The next available NCK sitting is in August 2026. This gives you roughly 8 weeks to prepare. NCK does not accommodate late registration, so keep an eye on the official portal for registration deadlines. Read our **[DigiProctor exam guide](https://www.nursefiti.co.ke/blog/digiproctor-nck-exam-guide)** for a breakdown of the CBT platform interface.
+
+Join the thousands of Kenyan nurses already preparing systematically on NurseFiti. Focus on retrieval practice, spaced repetition, and timed mock exams.
+
+**[Start your free NurseFiti account — no credit card required](https://www.nursefiti.co.ke/signup)**
+
+> *Found this — NCK just released the May 2026 results. You can check them on the OSP portal now. Also has good info on the licence application process: nursefiti.co.ke/blog/nck-may-2026-exam-results-released*
+
+---
+
+### Sources & References
+
+*Always verify current exam information directly at [nckenya.com](https://www.nckenya.com).*
+
+- **NurseFiti Market Intelligence** — Verified NCK operational updates and exam cycle tracking (June 2026).
+- **Nursing Council of Kenya** — Official announcements and examination regulations. [nckenya.com](https://www.nckenya.com)
+- **NCK Online Services Portal (OSP)** — Official portal for exam results and licence applications. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
+    `,
+  },
+  {
     slug: 'nck-latest-news-june-2026',
     title: 'NCK June 2026: Feb Results, May Exam & Unaccredited College Warning',
     excerpt: 'NCK releases February 2026 results, May 2026 exam wraps up, and a formal warning is issued against Northlands NIMTC. Here is everything verified.',

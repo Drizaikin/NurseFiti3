@@ -18,6 +18,15 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: 'nck-may-2026-exam-results-released',
+    title: 'NCK May 2026 Exam Results Released: How to Check (2026)',
+    excerpt: 'The Nursing Council of Kenya has officially released the May 2026 licensure examination results. Find out how to check and your next steps.',
+    category: 'NCK News',
+    readTime: '6 min read',
+    date: '2026-06-27',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
     slug: 'nck-exam-warning-unaccredited-colleges-kenya-2026',
     title: 'NCK Exam Warning 2026: The Unaccredited College Alert You Must Know',
     excerpt: 'The Nursing Council of Kenya has issued a formal warning regarding unaccredited training institutions. Verify your college status to avoid NCK exam disqualification.',
@@ -165,6 +174,7 @@ const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 const POST_IMAGES: Record<string, string> = {
+  'nck-may-2026-exam-results-released': 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80&auto=format&fit=crop',
   'nck-exam-warning-unaccredited-colleges-kenya-2026': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200&q=80&auto=format&fit=crop',
   'nck-june-2026-update':               'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80&auto=format&fit=crop',
   'nursefiti-for-nursing-students-undergrads': 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80&auto=format&fit=crop',
