@@ -50,7 +50,7 @@ export function BadgeCelebrationModal({ badges, onClose }: Props) {
       >
         <motion.div
           key={currentBadge.id} // Re-animate if badge changes
-          className="relative w-full max-w-sm bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-2xl shadow-2xl p-8 text-center overflow-hidden"
+          className="relative w-full max-w-sm bg-slate-900 border border-slate-700/60 rounded-3xl shadow-2xl p-8 text-center overflow-hidden"
           initial={{ scale: 0.8, y: 50, opacity: 0 }}
           animate={{ scale: 1, y: 0, opacity: 1 }}
           exit={{ scale: 0.8, y: -50, opacity: 0 }}
@@ -64,7 +64,7 @@ export function BadgeCelebrationModal({ badges, onClose }: Props) {
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             style={{
               background: 'conic-gradient(from 0deg at 50% 50%, transparent 0deg, var(--color-accent) 90deg, transparent 180deg, var(--color-accent) 270deg, transparent 360deg)',
-              opacity: 0.1,
+              opacity: 0.35,
               scale: 2
             }}
           />
@@ -95,7 +95,7 @@ export function BadgeCelebrationModal({ badges, onClose }: Props) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-3xl font-bold text-[var(--color-text)] mb-2"
+              className="text-3xl font-bold text-white mb-2"
             >
               {currentBadge.name}
             </motion.h2>
@@ -104,7 +104,7 @@ export function BadgeCelebrationModal({ badges, onClose }: Props) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="text-[var(--color-text-secondary)] mb-8"
+              className="text-slate-300 mb-8"
             >
               {currentBadge.description}
             </motion.p>
