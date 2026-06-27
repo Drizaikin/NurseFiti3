@@ -538,16 +538,16 @@ const POSTS_NEWS: Post[] = [
     content: `
 Most nursing graduates checking their May 2026 NCK results will find exactly what they hoped for. But for some, the portal will show a different outcome — and what you do in the next 24 hours determines whether you waste another 6 months or fix the problem permanently.
 
-The wait is officially over. The Nursing Council of Kenya (NCK) has released the results for the **May 2026 licensure examination**. Whether you sat for KRCHN, BScN, or Higher Diploma papers, you can now access your official standing.
+The wait is officially over. The [Nursing Council of Kenya (NCK)](https://www.nckenya.com) has officially released the results for the **May 2026 licensure examination** series. Whether you sat for KRCHN, BScN, or Higher Diploma papers during the mid-May sitting, you can now access your official standing.
 
-In this update, we will cover exactly how to access your results safely, the immediate next steps for successful candidates, and the one specific mistake unsuccessful candidates must avoid. We will cover that mistake below — keep reading.
+In this update, we will cover exactly how to access your results safely, the immediate next steps for successful candidates as mandated by the Council, and the one specific mistake unsuccessful candidates must avoid. We will cover that mistake below — keep reading.
 
 ## How to Check Your May 2026 Results
 
-The NCK has made it clear that results are released exclusively through their official digital channels. Do not trust third-party lists or unverified WhatsApp forwards claiming to have "leaked" results. 
+As per standard Council protocol, results are released exclusively through the [NCK Online Services Portal (OSP)](https://osp.nckenya.go.ke). Do not trust third-party lists or unverified WhatsApp forwards claiming to have "leaked" results. 
 
 Follow these steps to access your official results:
-1. Navigate to the official **NCK Online Services Portal** at [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
+1. Navigate to the official **[NCK Online Services Portal](https://osp.nckenya.go.ke)**
 2. Log in using the same credentials you used to register for the exam
 3. Navigate to the "Examinations" or "Results" tab on your dashboard
 4. Your individual result slip will be available for viewing and download
@@ -560,15 +560,15 @@ If the portal is slow, it is due to high traffic. NCK typically releases results
 
 Congratulations! Passing the NCK licensure exam is the culmination of years of hard work. 
 
-Your next immediate step is to **[apply for your practising licence](https://www.nursefiti.co.ke/blog/how-to-apply-nck-licence-kenya)** within 30 days of this results release. You must apply through the same OSP portal. Delays in applying can complicate your licensing process and delay your internship or employment postings, which require proof of licensure. 
+Your next immediate step is to **[apply for your practising licence](https://www.nursefiti.co.ke/blog/how-to-apply-nck-licence-kenya)**. According to [NCK regulations](https://www.nckenya.com), successful candidates must initiate the licensure process on the OSP portal within 30 days of the results release. Delays in applying can complicate your licensing process and delay your internship or employment postings, which require proof of active licensure. 
 
 <div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
-  <strong>Key Takeaway:</strong> Passing the exam does not automatically generate your licence. You must actively initiate the application process on the OSP portal.
+  <strong>Key Takeaway:</strong> Passing the exam does not automatically generate your licence. You must actively initiate the application process on the <a href="https://osp.nckenya.go.ke" target="_blank" class="text-primary hover:underline">OSP portal</a>.
 </div>
 
 ## What to Do If You Did Not Pass
 
-If you did not pass, do not panic. It is a setback, not the end of your nursing career. NCK reports that a significant proportion of first-attempt candidates do not pass. 
+If you did not pass, do not panic. It is a setback, not the end of your nursing career. NCK reports that a significant proportion of first-attempt candidates do not pass due to the rigorous clinical reasoning required by the [DigiProctor CBT platform](https://www.nckenya.com). 
 
 However, this brings us to the mistake you must avoid: **Do not simply re-read your old notes and hope for a better result.** 
 
