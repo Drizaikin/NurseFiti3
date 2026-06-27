@@ -19,6 +19,64 @@ interface Post {
 
 const POSTS: Post[] = [
   {
+    slug: 'moh-nursing-internship-deployment-kenya-2026',
+    title: 'Ministry of Health 2026 Internship Deployment: What You Must Do By June 29',
+    excerpt: 'The Ministry of Health has confirmed the July 1st, 2026 deployment of 6,360 healthcare interns, including 2,000 BSc Nursing Officers. Here is how to collect your offer letter.',
+    category: 'NCK News',
+    readTime: '4 min read',
+    date: '2026-06-27',
+    cadres: ['BScN'],
+    content: `
+Many nursing graduates spend months anxiously waiting for their internship postings, fearing they might be left out of the national cohort. If you have been waiting, the wait is officially over.
+
+The Ministry of Health has just announced the deployment of 6,360 healthcare interns for the 2026/2027 cohort. Out of this group, 2,000 slots have been specifically allocated to BSc Nursing Officers. The official start date for this internship cycle is July 1, 2026.
+
+If you are one of the designated pre-interns, this update contains critical, time-sensitive instructions on how to secure your placement.
+
+## Offer Letter Collection Details
+
+The Ministry has mandated a strict process for collecting your official offer letter. **All pre-interns must report to Afya House, Nairobi, on Monday, June 29, 2026, to collect their letters in person.**
+
+You will not be allowed to collect your letter without a valid **National ID**. Ensure you have your original identification document ready before travelling.
+
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+  <strong>Key Takeaway:</strong> The collection window is firm. If you miss the June 29 deadline at Afya House, you risk delaying your internship start date or losing your slot entirely in this cohort.
+</div>
+
+**[Are you a KRCHN/BScN candidate still waiting to sit your licensure exam? Start your preparation early on NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+## What to Expect Next
+
+Once you collect your offer letter, your internship will officially commence on July 1, 2026. You will be deployed to various designated internship centres across the country. 
+
+This period is critical for translating your academic knowledge into clinical practice. It is also the stepping stone to full registration with the Nursing Council of Kenya (NCK) after successful completion.
+
+## The Competition is Real
+
+The deployment of 2,000 BSc Nursing Officers is a significant move, but it also highlights how competitive the field has become. Securing your licensure and completing your internship smoothly is non-negotiable. 
+
+If you are still a student or preparing for your upcoming NCK exams, you need to treat your preparation with the same urgency as this internship deployment. 
+
+**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+
+## Start Your Preparation Today
+
+Don't wait until your final year to start worrying about licensure and internships. The best time to start preparing is now. Structured, spaced repetition and continuous mock exams are the proven ways to guarantee a first-attempt pass.
+
+**[Start your free NurseFiti account — no credit card required](https://www.nursefiti.co.ke/signup)**
+
+> *Found this — really important update on the MOH 2026 internship deployment for BSc Nurses. Offer letters are being collected on Monday June 29 at Afya House. Share with anyone who is waiting for their posting: nursefiti.co.ke/blog/moh-nursing-internship-deployment-kenya-2026*
+
+---
+
+### Sources & References
+
+*Always verify official Ministry communications directly at [health.go.ke](https://www.health.go.ke) or official MOH channels.*
+
+- **Ministry of Health, Kenya** — Official announcement regarding the deployment of 6,360 healthcare interns for the 2026/2027 cohort. [health.go.ke](https://www.health.go.ke)
+    `,
+  },
+  {
     slug: 'nck-exam-warning-unaccredited-colleges-kenya-2026',
     title: 'NCK Exam Warning 2026: The Unaccredited College Alert You Must Know',
     excerpt: 'The Nursing Council of Kenya has issued a formal warning regarding unaccredited training institutions. Verify your college status to avoid NCK exam disqualification.',
@@ -1458,6 +1516,11 @@ export async function generateMetadata({
 
 // Per-post hero images (Unsplash free CDN)
 const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> = {
+  'moh-nursing-internship-deployment-kenya-2026': {
+    url: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Medical professional reviewing documents - MOH Internship Deployment',
+    credit: 'Unsplash',
+  },
   'nck-exam-study-internship-guide': {
     url: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=1200&q=80&auto=format&fit=crop',
     alt: 'Nursing intern reviewing patient charts and clinical files in a hospital ward',

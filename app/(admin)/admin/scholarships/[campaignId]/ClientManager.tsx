@@ -18,6 +18,10 @@ export default function ClientManager({ campaign }: { campaign: any }) {
   const [isProcessing, setIsProcessing] = useState<string | null>(null);
   const [viewingDocsApp, setViewingDocsApp] = useState<any | null>(null);
   const [activeBeneficiaries, setActiveBeneficiaries] = useState<Set<string>>(new Set());
+  const [showAllocators, setShowAllocators] = useState(campaign.show_allocators || false);
+  const [isAddingDeposit, setIsAddingDeposit] = useState(false);
+  const [newDeposit, setNewDeposit] = useState({ amount: '', name: '', title: '', org: '' });
+  const [depositsList, setDepositsList] = useState<any[]>([]);
 
   const supabase = createClient() as any;
   const premiumPrice = PLAN_PRICING_META.premium.amountKsh;
@@ -28,10 +32,12 @@ export default function ClientManager({ campaign }: { campaign: any }) {
       // 1. Fetch deposits
       const { data: deposits } = await supabase
         .from('scholarship_deposits')
-        .select('amount_kes')
-        .eq('campaign_id', campaign.id);
+        .select('*')
+        .eq('campaign_id', campaign.id)
+        .order('created_at', { ascending: false });
       const deposited = deposits?.reduce((sum: number, d: any) => sum + (d.amount_kes || 0), 0) || 0;
       setTotalDeposits(deposited);
+      setDepositsList(deposits || []);
 
       // 2. Fetch beneficiaries (allocations)
       const { data: beneficiaries } = await supabase
@@ -136,6 +142,49 @@ export default function ClientManager({ campaign }: { campaign: any }) {
     }
   };
 
+  const handleToggleAllocators = async () => {
+    const newValue = !showAllocators;
+    setShowAllocators(newValue);
+    try {
+      const { error } = await supabase
+        .from('scholarship_campaigns')
+        .update({ show_allocators: newValue })
+        .eq('id', campaign.id);
+      if (error) throw error;
+      toast.success(newValue ? 'Allocators are now visible publicly' : 'Allocators are now hidden');
+    } catch (err: any) {
+      toast.error('Failed to update visibility');
+      setShowAllocators(!newValue);
+    }
+  };
+
+  const handleAddDeposit = async () => {
+    const numAmt = parseInt(newDeposit.amount);
+    if (!numAmt || numAmt <= 0) return toast.error('Valid amount required');
+    
+    setIsProcessing('add_deposit');
+    try {
+      const { error } = await supabase.from('scholarship_deposits').insert([{
+        campaign_id: campaign.id,
+        amount_kes: numAmt,
+        allocator_name: newDeposit.name || null,
+        allocator_title: newDeposit.title || null,
+        allocator_organization: newDeposit.org || null,
+        notes: 'Manually added by admin'
+      }]);
+      
+      if (error) throw error;
+      toast.success('Allocation added successfully');
+      setIsAddingDeposit(false);
+      setNewDeposit({ amount: '', name: '', title: '', org: '' });
+      fetchData();
+    } catch (err: any) {
+      toast.error('Failed to add deposit: ' + err.message);
+    } finally {
+      setIsProcessing(null);
+    }
+  };
+
   if (isLoading) {
     return <div className="py-12 flex justify-center"><Spinner size="lg" color="primary" /></div>;
   }
@@ -170,6 +219,53 @@ export default function ClientManager({ campaign }: { campaign: any }) {
             Copy Application Link
           </Button>
         </div>
+      </Card>
+
+      {/* Campaign Settings & Allocators */}
+      <Card className="bg-[var(--color-bg)] border-[var(--color-border)] p-6 space-y-6">
+        <div className="flex items-center justify-between border-b border-[var(--color-border)] pb-4">
+          <div>
+            <h3 className="font-semibold text-lg text-primary">Allocator & Sponsor Management</h3>
+            <p className="text-sm text-neutral-mid">Manage manual deposits from politicians/sponsors and toggle their public visibility.</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <span className="text-sm font-medium">Publicly Visible</span>
+              <div className="relative inline-block w-12 h-6 align-middle select-none transition duration-200 ease-in">
+                <input type="checkbox" checked={showAllocators} onChange={handleToggleAllocators} className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-neutral-300 checked:border-primary checked:right-0 checked:bg-primary transition-all duration-200" style={{ right: showAllocators ? 0 : '1.5rem', border: showAllocators ? '4px solid var(--color-primary)' : '4px solid #d1d5db', background: showAllocators ? 'var(--color-primary)' : 'white' }} />
+                <div className={`toggle-label block overflow-hidden h-6 rounded-full cursor-pointer transition-colors ${showAllocators ? 'bg-primary/20' : 'bg-neutral-200'}`}></div>
+              </div>
+            </label>
+            <Button onClick={() => setIsAddingDeposit(true)}>+ Add Allocation</Button>
+          </div>
+        </div>
+
+        {depositsList.length > 0 && (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-[var(--color-bg-alt)] border-b border-[var(--color-border)]">
+                <tr>
+                  <th className="px-4 py-2 font-semibold">Date</th>
+                  <th className="px-4 py-2 font-semibold">Allocator Name</th>
+                  <th className="px-4 py-2 font-semibold">Title/Org</th>
+                  <th className="px-4 py-2 font-semibold text-right">Amount (KES)</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[var(--color-border)]">
+                {depositsList.map(dep => (
+                  <tr key={dep.id} className="hover:bg-[var(--color-bg-alt)]/50">
+                    <td className="px-4 py-2 text-neutral-mid">{new Date(dep.created_at).toLocaleDateString()}</td>
+                    <td className="px-4 py-2 font-medium">{dep.allocator_name || <span className="text-neutral-400 italic">Unknown</span>}</td>
+                    <td className="px-4 py-2 text-neutral-mid">
+                      {dep.allocator_title}{dep.allocator_title && dep.allocator_organization ? ', ' : ''}{dep.allocator_organization}
+                    </td>
+                    <td className="px-4 py-2 text-right font-bold text-teal-600">{dep.amount_kes.toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </Card>
 
       {/* Ledger Overview */}
@@ -371,6 +467,38 @@ export default function ClientManager({ campaign }: { campaign: any }) {
             </div>
             <div className="mt-6 flex justify-end">
               <Button onClick={() => setViewingDocsApp(null)}>Close</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add Deposit Modal */}
+      {isAddingDeposit && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+          <div className="bg-white dark:bg-neutral-900 rounded-xl shadow-xl w-full max-w-md p-6 relative">
+            <button onClick={() => setIsAddingDeposit(false)} className="absolute top-4 right-4 text-neutral-500">✕</button>
+            <h2 className="text-xl font-bold mb-4">Record New Allocation</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold mb-1">Amount (KES) *</label>
+                <input type="number" value={newDeposit.amount} onChange={e => setNewDeposit({...newDeposit, amount: e.target.value})} className="w-full border rounded-md p-2" placeholder="e.g. 50000" />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-1">Sponsor / Allocator Name</label>
+                <input type="text" value={newDeposit.name} onChange={e => setNewDeposit({...newDeposit, name: e.target.value})} className="w-full border rounded-md p-2" placeholder="e.g. Hon. Lati Lelelit" />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-1">Title / Position</label>
+                <input type="text" value={newDeposit.title} onChange={e => setNewDeposit({...newDeposit, title: e.target.value})} className="w-full border rounded-md p-2" placeholder="e.g. Governor" />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-1">Organization</label>
+                <input type="text" value={newDeposit.org} onChange={e => setNewDeposit({...newDeposit, org: e.target.value})} className="w-full border rounded-md p-2" placeholder="e.g. Samburu County Government" />
+              </div>
+              <div className="pt-4 flex justify-end gap-2">
+                <Button variant="ghost" onClick={() => setIsAddingDeposit(false)}>Cancel</Button>
+                <Button onClick={handleAddDeposit} disabled={isProcessing === 'add_deposit'}>Save Allocation</Button>
+              </div>
             </div>
           </div>
         </div>

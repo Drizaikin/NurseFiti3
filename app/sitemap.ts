@@ -17,6 +17,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/blog/moh-nursing-internship-deployment-kenya-2026`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/blog/nck-may-2026-exam-results-released`,
       lastModified: new Date(),
       changeFrequency: 'monthly',

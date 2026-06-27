@@ -44,7 +44,7 @@ export default async function SponsorDashboardPage({ params }: { params: { slug:
   }
 
   // Fetch all deposits
-  const { data: deposits } = await adminSupabase.from('scholarship_deposits').select('amount_kes').eq('campaign_id', campaign.id);
+  const { data: deposits } = await adminSupabase.from('scholarship_deposits').select('amount_kes, allocator_name, allocator_title, allocator_organization, created_at').eq('campaign_id', campaign.id).order('created_at', { ascending: false });
   const totalDeposits = deposits?.reduce((sum: number, d: any) => sum + (d.amount_kes || 0), 0) || 0;
 
   // Fetch all beneficiaries (with student IDs)
@@ -90,7 +90,9 @@ export default async function SponsorDashboardPage({ params }: { params: { slug:
       <div className="bg-primary text-white pt-16 pb-20 px-4">
         <div className="max-w-6xl mx-auto text-center space-y-4">
           <div className="flex justify-center mb-6">
-            <NurseFitiLogo variant="white" size={48} />
+            <div className="bg-white p-4 rounded-full shadow-lg inline-flex items-center justify-center">
+              <NurseFitiLogo variant="primary" size={48} />
+            </div>
           </div>
           <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-bold tracking-wider uppercase">Impact Report</span>
           <h1 className="text-4xl md:text-5xl font-heading font-bold">{campaign.name}</h1>
@@ -193,6 +195,35 @@ export default async function SponsorDashboardPage({ params }: { params: { slug:
             </div>
           </Card>
         </div>
+
+        {/* Generous Contributors */}
+        {campaign.show_allocators && deposits && deposits.length > 0 && (
+          <Card className="shadow-md border-primary/20">
+            <h3 className="text-xl font-bold text-primary mb-4 border-b border-[var(--color-border)] pb-2">Generous Contributors</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {deposits.filter((d: any) => d.allocator_name).map((deposit: any, idx: number) => (
+                <div key={idx} className="bg-[var(--color-bg-alt)] border border-[var(--color-border)] rounded-xl p-4 flex flex-col justify-between">
+                  <div>
+                    <h4 className="font-bold text-neutral-dark text-lg">{deposit.allocator_name}</h4>
+                    {deposit.allocator_title && (
+                      <p className="text-sm text-neutral-mid">{deposit.allocator_title}</p>
+                    )}
+                    {deposit.allocator_organization && (
+                      <p className="text-sm font-semibold text-primary/80 mt-1">{deposit.allocator_organization}</p>
+                    )}
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-[var(--color-border)] flex justify-between items-center">
+                    <span className="text-xs text-neutral-mid">Contribution</span>
+                    <span className="font-bold text-teal-600">KES {deposit.amount_kes.toLocaleString()}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {deposits.filter((d: any) => d.allocator_name).length === 0 && (
+              <p className="text-neutral-mid italic">Anonymous contributors have funded this campaign.</p>
+            )}
+          </Card>
+        )}
 
         {/* Sponsor Checkout */}
         <div className="mt-8 max-w-2xl mx-auto">
