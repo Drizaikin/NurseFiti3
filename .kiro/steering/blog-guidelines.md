@@ -38,7 +38,8 @@ Every post must do all three. A post that educates but does not market is incomp
 ## 3. Information Standards — Non-Negotiable
 
 ### 3.1 Accuracy & Sources
-- **Every factual claim must be sourced.** No exceptions.
+- **Absolute Accuracy is required.** Never invent or assume facts. Ensure absolute accuracy in every post.
+- **In-text Citations:** Every single factual claim must be backed by an in-text citation using markdown inline links pointing to the original source. No exceptions.
 - Sources must be one of:
   - Official NCK website: [nckenya.com](https://www.nckenya.com)
   - NCK Online Services Portal: [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
@@ -113,7 +114,7 @@ Break up long sections with:
 Reference content that is "below" in the post to keep readers reading: *"We'll cover exactly how to use this in your revision plan — keep reading."*
 
 ### 4.8 Specificity = Credibility
-Vague claims lose trust. Specific claims build it.
+Blogs must **never** be generic. They must be highly specific to the Kenyan nursing context. Vague or generic claims lose trust. Specific claims build it.
 - ❌ *"Many students fail the exam"*
 - ✅ *"NCK reports that a significant proportion of first-attempt candidates do not pass — making structured preparation, not casual revision, the distinguishing factor"*
 
@@ -257,7 +258,7 @@ Before publishing, confirm all of the following:
 **Content**
 - [ ] Hook in first 3 sentences (agitate pain / challenge belief / open loop)
 - [ ] At least one curiosity gap that resolves later in the post
-- [ ] Every factual claim has an inline source link to the original
+- [ ] Content is highly specific (not generic) and every factual claim has an inline source link for absolute accuracy
 - [ ] Sources section at the end with all citations and disclaimer
 - [ ] No content copied verbatim beyond 30 words from any single source
 - [ ] Time-sensitive info (exam dates, results) verified on nckenya.com on the day of writing
