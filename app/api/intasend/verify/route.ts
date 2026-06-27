@@ -81,7 +81,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.redirect(`${siteUrl}${pendingRedirect}`);
     }
 
-    if (txn.state === 'FAILED') {
+    if (txn.state === 'FAILED' || txn.state === 'CANCELLED' || txn.state === 'REJECTED') {
       await (supabase as any)
         .from('payments')
         .update({ status: 'failed' })
@@ -91,6 +91,14 @@ export async function GET(req: NextRequest) {
         ? '/bookings?payment=failed'
         : '/dashboard?payment=failed&reason=failed';
       return NextResponse.redirect(`${siteUrl}${failedRedirect}`);
+    }
+
+    if (txn.state !== 'COMPLETE' && txn.state !== 'COMPLETED') {
+      // Any other unrecognized state should not provision access!
+      const pendingRedirect = (payment as any).type === 'session_booking'
+        ? '/bookings?payment=pending'
+        : '/settings?payment=pending';
+      return NextResponse.redirect(`${siteUrl}${pendingRedirect}`);
     }
 
     // Mark payment as completed

@@ -116,7 +116,7 @@ async function handleCollectionEvent(supabase: any, data: any) {
 
     // Pass a txnData shape consistent with what provisionAccess expects
     await provisionAccess(supabase, payment, { invoice_id: invoiceId, provider });
-  } else if (state === 'FAILED') {
+  } else if (state === 'FAILED' || state === 'CANCELLED' || state === 'REJECTED') {
     if (payment.status === 'failed') return;
 
     await supabase
