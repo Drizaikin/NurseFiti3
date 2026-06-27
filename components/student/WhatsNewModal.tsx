@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/Button";
 // ❶  RELEASES REGISTRY — edit here to announce new features
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CURRENT_VERSION = 4;
+const CURRENT_VERSION = 5;
 
 interface WhatsNewItem {
   icon: string;
@@ -159,6 +159,22 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
         description:
           "Found a typo or disagree with an answer? You can now flag questions directly while practising! Your reports go straight to our clinical review team to ensure top-notch accuracy.",
         cta: { label: "Practice Now", href: "/practice" },
+      },
+    ],
+  },
+  // ── Version 5 — Flashcards Batch 3 ──────────────────────────────────────────
+  {
+    version: 5,
+    date: "27 June 2026",
+    items: [
+      {
+        icon: "🎴",
+        tag: "New Flashcards",
+        tagColor: "bg-emerald-500/20 text-emerald-400",
+        title: "Midwifery and Anatomy & Physiology Flashcards Added",
+        description:
+          "We've added 30 new high-yield spaced repetition flashcards covering Midwifery Essentials (PPH, eclampsia, AMTSL) and Anatomy & Physiology (cardiac conduction, renal physiology). Perfect for quick reviews!",
+        cta: { label: "Study Flashcards", href: "/flashcards" },
       },
     ],
   },
