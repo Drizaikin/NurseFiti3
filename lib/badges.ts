@@ -1,4 +1,5 @@
 import { SupabaseClient } from '@supabase/supabase-js';
+import { effectiveTier } from './planLimits';
 
 export interface BadgeDef {
   id: string;
@@ -15,6 +16,7 @@ export const BADGE_DEFS: BadgeDef[] = [
 
   // Streak Badges
   { id: 'streak_beginner', icon: '🌱', name: 'Getting Started', description: '3-day study streak', condition: '3 days' },
+  { id: 'streak_7', icon: '📅', name: 'Week Warrior', description: '7-day study streak', condition: '7 days' },
   { id: 'streak_master', icon: '🔥', name: 'Streak Master', description: '14-day study streak', condition: '14 days' },
   { id: 'consistency_king', icon: '👑', name: 'Consistency King', description: '30-day study streak', condition: '30 days' },
   { id: 'century_club', icon: '🏛️', name: 'Century Club', description: '100-day study streak', condition: '100 days' },
@@ -39,7 +41,21 @@ export const BADGE_DEFS: BadgeDef[] = [
 
   // Flashcard Badges
   { id: 'flashcard_newbie', icon: '🎴', name: 'Flashcard Newbie', description: 'Review 50 flashcards', condition: '50 Cards' },
+  { id: 'flashcard_expert', icon: '🚀', name: 'Flashcard Expert', description: 'Review 100 flashcards', condition: '100 Cards' },
   { id: 'flashcard_master', icon: '🤯', name: 'Flashcard Master', description: 'Review 200 flashcards', condition: '200 Cards' },
+  { id: 'flashcard_addict', icon: '🔥', name: 'Flashcard Addict', description: 'Review 500 flashcards', condition: '500 Cards' },
+
+  // Membership Badges
+  { id: 'daily_member', icon: '🎟️', name: 'Daily Scholar', description: 'Subscribed to Exam Boost Daily', condition: 'Daily Plan' },
+  { id: 'standard_member', icon: '🌟', name: 'Success Scholar', description: 'Subscribed to Success Plan', condition: 'Standard Plan' },
+  { id: 'premium_member', icon: '💎', name: 'Elite Scholar', description: 'Subscribed to Elite Prep (90-day)', condition: 'Premium Plan' },
+
+  // Ranking Badges
+  { id: 'top_20_ranking', icon: '🎖️', name: 'Top 20', description: 'Reached Top 20 on the Leaderboard', condition: 'Rank <= 20' },
+  { id: 'top_10_ranking', icon: '🏅', name: 'Top 10', description: 'Reached Top 10 on the Leaderboard', condition: 'Rank <= 10' },
+  { id: 'top_5_ranking', icon: '🥇', name: 'Top 5', description: 'Reached Top 5 on the Leaderboard', condition: 'Rank <= 5' },
+  { id: 'top_3_ranking', icon: '🥉', name: 'Podium Finish', description: 'Reached Top 3 on the Leaderboard', condition: 'Rank <= 3' },
+  { id: 'number_one_ranking', icon: '👑', name: 'The Best', description: 'Ranked #1 on the Leaderboard', condition: 'Rank = 1' },
 
   // Community Badges
   { id: 'social_butterfly', icon: '🦋', name: 'Social Butterfly', description: 'Post 5 Community Messages', condition: '5 Posts' },
@@ -58,7 +74,7 @@ export async function evaluateUserBadges(supabase: any, userId: string): Promise
   try {
     // 1. Fetch current profile stats & already earned badges
     const [profileRes, badgesRes] = await Promise.all([
-      supabase.from('student_profiles').select('level, streak_count').eq('id', userId).maybeSingle(),
+      supabase.from('student_profiles').select('level, streak_count, xp, plan_tier, plan_expires_at').eq('id', userId).maybeSingle(),
       supabase.from('student_badges').select('badge_id').eq('student_id', userId)
     ]);
 
@@ -82,9 +98,34 @@ export async function evaluateUserBadges(supabase: any, userId: string): Promise
     checkAndAward('top_10', sp.level >= 10);
     
     checkAndAward('streak_beginner', sp.streak_count >= 3);
+    checkAndAward('streak_7', sp.streak_count >= 7);
     checkAndAward('streak_master', sp.streak_count >= 14);
     checkAndAward('consistency_king', sp.streak_count >= 30);
     checkAndAward('century_club', sp.streak_count >= 100);
+
+    // Evaluate Membership Badges
+    const tier = effectiveTier(sp.plan_tier, sp.plan_expires_at);
+    checkAndAward('daily_member', tier === 'daily');
+    checkAndAward('standard_member', tier === 'standard');
+    checkAndAward('premium_member', tier === 'premium');
+
+    // Evaluate Ranking Badges
+    const needsRanking = !initialEarned.has('number_one_ranking') || !initialEarned.has('top_3_ranking') || !initialEarned.has('top_5_ranking') || !initialEarned.has('top_10_ranking') || !initialEarned.has('top_20_ranking');
+    if (needsRanking && sp.xp > 0) {
+      // Rank is 1 + (number of students with more XP)
+      const { count, error: rankErr } = await (supabase.from('student_profiles') as any)
+        .select('*', { count: 'exact', head: true })
+        .gt('xp', sp.xp);
+      
+      if (!rankErr && count !== null) {
+        const rank = count + 1;
+        checkAndAward('top_20_ranking', rank <= 20);
+        checkAndAward('top_10_ranking', rank <= 10);
+        checkAndAward('top_5_ranking', rank <= 5);
+        checkAndAward('top_3_ranking', rank <= 3);
+        checkAndAward('number_one_ranking', rank === 1);
+      }
+    }
 
     // Evaluate Unit & Total Question Badges
     const needsWarmUp = !initialEarned.has('warm_up');
@@ -148,7 +189,7 @@ export async function evaluateUserBadges(supabase: any, userId: string): Promise
     }
     
     // Evaluate Flashcard Badges
-    const needsFlashcards = !initialEarned.has('flashcard_newbie') || !initialEarned.has('flashcard_master');
+    const needsFlashcards = !initialEarned.has('flashcard_newbie') || !initialEarned.has('flashcard_expert') || !initialEarned.has('flashcard_master') || !initialEarned.has('flashcard_addict');
     if (needsFlashcards) {
       const { count, error: flashError } = await (supabase.from('flashcard_progress') as any)
         .select('*', { count: 'exact', head: true })
@@ -156,7 +197,9 @@ export async function evaluateUserBadges(supabase: any, userId: string): Promise
         
       if (!flashError && count !== null) {
         checkAndAward('flashcard_newbie', count >= 50);
+        checkAndAward('flashcard_expert', count >= 100);
         checkAndAward('flashcard_master', count >= 200);
+        checkAndAward('flashcard_addict', count >= 500);
       }
     }
 
@@ -188,9 +231,6 @@ export async function evaluateUserBadges(supabase: any, userId: string): Promise
       
       if (insertError) {
         console.error('Failed to save earned badges:', insertError);
-        // If save fails, we shouldn't show them as earned, else they will see it again next load.
-        // But for UX, we might want to show them anyway. Let's return them so the UI can celebrate!
-        // In the future, the DB will sync.
       }
     }
 
