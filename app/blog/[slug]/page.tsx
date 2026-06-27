@@ -540,7 +540,7 @@ Most nursing graduates checking their May 2026 NCK results will find exactly wha
 
 The wait is officially over. The Nursing Council of Kenya (NCK) has released the results for the **May 2026 licensure examination**. Whether you sat for KRCHN, BScN, or Higher Diploma papers, you can now access your official standing.
 
-In this update, we will cover exactly how to access your results safely, the immediate next steps for successful candidates, and the one specific mistake unsuccessful candidates must avoid before the August sitting. We will cover that mistake in the re-sit section below — keep reading.
+In this update, we will cover exactly how to access your results safely, the immediate next steps for successful candidates, and the one specific mistake unsuccessful candidates must avoid. We will cover that mistake below — keep reading.
 
 ## How to Check Your May 2026 Results
 
@@ -575,10 +575,6 @@ However, this brings us to the mistake you must avoid: **Do not simply re-read y
 If your current study strategy resulted in a fail, using it again for the August 2026 sitting will yield the same outcome. The NCK exam tests application and clinical judgment, not rote memorisation. You need a structured revision plan that focuses on your weakest units.
 
 **[NurseFiti's diagnostic mock exams replicate the DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
-
-## The Next Sitting: August 2026
-
-The next available NCK sitting is in August 2026. This gives you roughly 8 weeks to prepare. NCK does not accommodate late registration, so keep an eye on the official portal for registration deadlines. Read our **[DigiProctor exam guide](https://www.nursefiti.co.ke/blog/digiproctor-nck-exam-guide)** for a breakdown of the CBT platform interface.
 
 Join the thousands of Kenyan nurses already preparing systematically on NurseFiti. Focus on retrieval practice, spaced repetition, and timed mock exams.
 
