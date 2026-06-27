@@ -9,13 +9,20 @@ export interface BadgeDef {
 }
 
 export const BADGE_DEFS: BadgeDef[] = [
+  // Level Badges
+  { id: 'first_steps', icon: '👶', name: 'First Steps', description: 'Reach Level 2', condition: 'Level 2' },
+  { id: 'top_10', icon: '🏆', name: 'Top 10%', description: 'Reach Level 10', condition: 'Level 10' },
+
   // Streak Badges
+  { id: 'streak_beginner', icon: '🌱', name: 'Getting Started', description: '3-day study streak', condition: '3 days' },
   { id: 'streak_master', icon: '🔥', name: 'Streak Master', description: '14-day study streak', condition: '14 days' },
   { id: 'consistency_king', icon: '👑', name: 'Consistency King', description: '30-day study streak', condition: '30 days' },
+  { id: 'century_club', icon: '🏛️', name: 'Century Club', description: '100-day study streak', condition: '100 days' },
   
   // Total Volume Badges
+  { id: 'warm_up', icon: '🏃', name: 'Warm Up', description: 'Answer 50 questions total', condition: '50 Qs' },
+  { id: 'dedicated_student', icon: '📚', name: 'Dedicated Student', description: 'Answer 500 questions total', condition: '500 Qs' },
   { id: 'knowledge_god', icon: '🧠', name: 'Knowledge God', description: 'Answer 5,000 questions total', condition: '5,000 Qs' },
-  { id: 'top_10', icon: '🏆', name: 'Top 10%', description: 'Reach Level 10', condition: 'Level 10' },
 
   // Unit Specific Badges
   { id: 'pharma_warrior', icon: '💊', name: 'Pharma Warrior', description: 'Answer 100 Pharma questions', condition: '100 Qs' },
@@ -25,9 +32,14 @@ export const BADGE_DEFS: BadgeDef[] = [
 
   // Mock Exam Badges
   { id: 'mock_maestro', icon: '🎓', name: 'Mock Maestro', description: 'Complete 3 Mock Exams', condition: '3 Exams' },
+  { id: 'exam_conqueror', icon: '⚔️', name: 'Exam Conqueror', description: 'Complete 10 Mock Exams', condition: '10 Exams' },
   { id: 'perfect_score', icon: '⭐', name: 'Perfect Score', description: 'Get 90%+ on a Mock Exam', condition: '90% Score' },
   { id: 'flawless_victory', icon: '💯', name: 'Flawless Victory', description: 'Get 100% on a Mock Exam', condition: '100% Score' },
   { id: 'speed_demon', icon: '⚡', name: 'Speed Demon', description: 'Finish mock 20+ mins early', condition: '-20 mins' },
+
+  // Flashcard Badges
+  { id: 'flashcard_newbie', icon: '🎴', name: 'Flashcard Newbie', description: 'Review 50 flashcards', condition: '50 Cards' },
+  { id: 'flashcard_master', icon: '🤯', name: 'Flashcard Master', description: 'Review 200 flashcards', condition: '200 Cards' },
 
   // Community Badges
   { id: 'social_butterfly', icon: '🦋', name: 'Social Butterfly', description: 'Post 5 Community Messages', condition: '5 Posts' },
@@ -66,25 +78,32 @@ export async function evaluateUserBadges(supabase: any, userId: string): Promise
     };
 
     // Evaluate Profile-based Badges
+    checkAndAward('first_steps', sp.level >= 2);
+    checkAndAward('top_10', sp.level >= 10);
+    
+    checkAndAward('streak_beginner', sp.streak_count >= 3);
     checkAndAward('streak_master', sp.streak_count >= 14);
     checkAndAward('consistency_king', sp.streak_count >= 30);
-    checkAndAward('top_10', sp.level >= 10);
+    checkAndAward('century_club', sp.streak_count >= 100);
 
     // Evaluate Unit & Total Question Badges
-    // We only need to run these queries if they haven't earned all of them yet
+    const needsWarmUp = !initialEarned.has('warm_up');
+    const needsDedicated = !initialEarned.has('dedicated_student');
     const needsTotalQ = !initialEarned.has('knowledge_god');
     const needsPharma = !initialEarned.has('pharma_warrior');
     const needsMedSurg = !initialEarned.has('med_surg_master');
     const needsAnatomy = !initialEarned.has('anatomy_ace');
     const needsObgyn = !initialEarned.has('obgyn_oracle');
 
-    if (needsTotalQ || needsPharma || needsMedSurg || needsAnatomy || needsObgyn) {
-      // Fetch all answers with unit data to count locally (fastest way since no group-by RPC exists yet)
+    if (needsWarmUp || needsDedicated || needsTotalQ || needsPharma || needsMedSurg || needsAnatomy || needsObgyn) {
+      // Fetch all answers with unit data to count locally
       const { data: answers, error: ansError } = await (supabase.from('student_answers') as any)
         .select('questions!inner(unit)')
         .eq('student_id', userId);
       
       if (!ansError && answers) {
+        checkAndAward('warm_up', answers.length >= 50);
+        checkAndAward('dedicated_student', answers.length >= 500);
         checkAndAward('knowledge_god', answers.length >= 5000);
         
         let pharmaCount = 0;
@@ -109,6 +128,7 @@ export async function evaluateUserBadges(supabase: any, userId: string): Promise
 
     // Evaluate Mock Exam Badges
     const needsMocks = !initialEarned.has('mock_maestro') || 
+                       !initialEarned.has('exam_conqueror') ||
                        !initialEarned.has('perfect_score') || 
                        !initialEarned.has('flawless_victory') || 
                        !initialEarned.has('speed_demon');
@@ -120,9 +140,23 @@ export async function evaluateUserBadges(supabase: any, userId: string): Promise
         
       if (!mocksError && mocks && mocks.length > 0) {
         checkAndAward('mock_maestro', mocks.length >= 3);
+        checkAndAward('exam_conqueror', mocks.length >= 10);
         checkAndAward('perfect_score', (mocks as any[]).some(m => m.score_percentage >= 90));
         checkAndAward('flawless_victory', (mocks as any[]).some(m => m.score_percentage >= 100));
         checkAndAward('speed_demon', (mocks as any[]).some(m => m.time_used_minutes <= (m.total_questions - 20)));
+      }
+    }
+    
+    // Evaluate Flashcard Badges
+    const needsFlashcards = !initialEarned.has('flashcard_newbie') || !initialEarned.has('flashcard_master');
+    if (needsFlashcards) {
+      const { count, error: flashError } = await (supabase.from('flashcard_progress') as any)
+        .select('*', { count: 'exact', head: true })
+        .eq('student_id', userId);
+        
+      if (!flashError && count !== null) {
+        checkAndAward('flashcard_newbie', count >= 50);
+        checkAndAward('flashcard_master', count >= 200);
       }
     }
 
