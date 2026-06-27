@@ -8,6 +8,12 @@
  *
  * Drop this once into the student layout — it renders both the modal and the
  * floating trigger button so layout.tsx (a Server Component) stays clean.
+ *
+ * Logic:
+ * - On mount, the modal auto-opens if the user hasn't seen the current version
+ *   (checked via localStorage inside WhatsNewModal).
+ * - The floating trigger pill lets the user re-open the modal manually.
+ * - Only one WhatsNewModal instance is ever rendered at a time.
  */
 
 import { useState } from "react";
@@ -15,18 +21,24 @@ import { WhatsNewModal } from "./WhatsNewModal";
 import { WhatsNewTrigger } from "./WhatsNewTrigger";
 
 export function WhatsNewProvider() {
-  const [open, setOpen] = useState(false);
+  // forceOpen = true when the user clicks the floating trigger pill
+  const [forceOpen, setForceOpen] = useState(false);
 
   return (
     <>
       {/* Floating pill — clicking it re-opens the modal */}
-      <WhatsNewTrigger onClick={() => setOpen(true)} />
+      <WhatsNewTrigger onClick={() => setForceOpen(true)} />
 
-      {/* The modal itself — controlled by this provider's state */}
-      {open && <WhatsNewModal forceOpen onForceClose={() => setOpen(false)} />}
-
-      {/* Auto-open on first visit — rendered separately with its own localStorage gate */}
-      <WhatsNewModal />
+      {/*
+        Single modal instance.
+        - When forceOpen=false: auto-shows on first visit (localStorage gate inside modal).
+        - When forceOpen=true:  shows unconditionally (user manually re-opened).
+        onForceClose resets forceOpen so the modal returns to its auto-show-only behaviour.
+      */}
+      <WhatsNewModal
+        forceOpen={forceOpen}
+        onForceClose={() => setForceOpen(false)}
+      />
     </>
   );
 }

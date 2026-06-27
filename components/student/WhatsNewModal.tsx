@@ -218,22 +218,21 @@ export function WhatsNewModal({ forceOpen = false, onForceClose }: WhatsNewModal
     try {
       const seen = localStorage.getItem(STORAGE_KEY);
       if (!seen) setShow(true);
+      else setShow(false); // forceOpen just turned false — ensure modal stays hidden
     } catch {
       // localStorage blocked (private mode, etc.) — don't show
     }
   }, [forceOpen]);
 
   const dismiss = useCallback(() => {
-    if (!forceOpen) {
-      // Only persist dismissal for auto-show (not force-open re-views)
-      try {
-        localStorage.setItem(STORAGE_KEY, "1");
-      } catch { /* ignore */ }
-    }
+    // Always persist dismissal — ensures the trigger pill hides after any close/done
+    try {
+      localStorage.setItem(STORAGE_KEY, "1");
+    } catch { /* ignore */ }
     setShow(false);
     setSlideIndex(0); // reset for next time it's opened
     onForceClose?.();
-  }, [forceOpen, onForceClose]);
+  }, [onForceClose]);
 
   const goTo = useCallback(
     (idx: number) => {
@@ -263,7 +262,7 @@ export function WhatsNewModal({ forceOpen = false, onForceClose }: WhatsNewModal
     [dismiss, router]
   );
 
-  if ((!show && !forceOpen) || items.length === 0) return null;
+  if (!show || items.length === 0) return null;
 
   const current = items[slideIndex];
 
@@ -288,7 +287,7 @@ export function WhatsNewModal({ forceOpen = false, onForceClose }: WhatsNewModal
 
   return (
     <AnimatePresence>
-      {(show || forceOpen) && (
+      {show && (
         /* ── Backdrop ──────────────────────────────────────────────────── */
         <motion.div
           className="fixed inset-0 z-[80] flex items-center justify-center p-4"
