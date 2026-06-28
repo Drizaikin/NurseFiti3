@@ -33,6 +33,32 @@ export async function POST(req: NextRequest) {
 
     const { application_id } = parsed.data;
 
+    const { data: application, error: appError } = await adminSupabase
+      .from('scholarship_applications')
+      .select('student_id, campaign_id')
+      .eq('id', application_id)
+      .single();
+
+    if (appError || !application) {
+      return NextResponse.json({ error: 'Application not found' }, { status: 404 });
+    }
+
+    // Delete the beneficiary record (if it exists)
+    await adminSupabase
+      .from('scholarship_beneficiaries')
+      .delete()
+      .eq('student_id', application.student_id)
+      .eq('campaign_id', application.campaign_id);
+
+    // Downgrade student profile
+    await adminSupabase
+      .from('student_profiles')
+      .update({
+        plan_tier: 'free',
+        plan_expires_at: null
+      })
+      .eq('id', application.student_id);
+
     // Delete the application
     const { error: delError } = await adminSupabase
       .from('scholarship_applications')
