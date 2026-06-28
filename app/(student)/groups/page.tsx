@@ -342,7 +342,7 @@ function GroupsInner() {
   if (isLoading) return <div className="flex items-center justify-center min-h-[80vh]"><Spinner size="lg" color="primary" /></div>;
 
   const bgStyle = THEME_STYLES[chatTheme].bg;
-  const doodlePattern = theme === 'whatsapp' || theme === 'default' 
+  const doodlePattern = chatTheme === 'whatsapp' || chatTheme === 'default' 
     ? `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.83-26.69 26.69-.83-.83L54.627 0zM3.553 0l.83.83L.83 4.383 0 3.553 3.553 0zM0 54.627l.83-.83 4.383 3.553-.83.83L0 54.627zm56.447 5.373l.83-.83 2.723 2.723-.83.83-2.723-2.723zM5.373 60l-.83-.83 26.69-26.69.83.83L5.373 60zm49.254-60l.83.83-26.69 26.69-.83-.83L54.627 0z' fill='%23000000' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E")` 
     : 'none';
 
