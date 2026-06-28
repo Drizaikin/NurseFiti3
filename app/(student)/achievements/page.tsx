@@ -66,41 +66,33 @@ function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntr
     const nameIndex = Math.floor(randomFloat * KENYAN_NAMES.length);
     const fullName = KENYAN_NAMES[nameIndex];
     
+    // --- EXACTLY SYNCED WEEKLY XP CALCULATION ---
+    let weeklyXp = rng % 30; // Start with a small baseline for the week
+    for (let d = 0; d < daysSinceMonday; d++) {
+      const daySeed = (seed * 13) + d * 97;
+      const dayRng = (daySeed * 9301 + 49297) % 233280;
+      const dayGain = Math.floor((dayRng / 233280) * 131) + 20; // 20-150 XP
+      weeklyXp += dayGain;
+    }
+    
+    // Today's fractional gain
+    const todaySeed = (seed * 13) + daysSinceMonday * 97;
+    const todayRng = (todaySeed * 9301 + 49297) % 233280;
+    const todayMaxGain = Math.floor((todayRng / 233280) * 131) + 20;
+    weeklyXp += Math.floor(today.getHours() * (todayMaxGain / 24));
+    
     let xp = 0;
     let level = 1;
     
     if (leaderTab === 'weekly') {
-      // Calculate day-by-day variance to ensure no obvious pattern
-      let weeklyXp = rng % 30; // Start with a small base (0-29 XP)
-      
-      for (let d = 0; d < daysSinceMonday; d++) {
-        const daySeed = (seed * 13) + d * 97;
-        const dayRng = (daySeed * 9301 + 49297) % 233280;
-        const dayGain = Math.floor((dayRng / 233280) * 131) + 20; // 20 to 150 XP per day
-        weeklyXp += dayGain;
-      }
-      
-      // Add XP for today based on current hour to make it real-time
-      const todaySeed = (seed * 13) + daysSinceMonday * 97;
-      const todayRng = (todaySeed * 9301 + 49297) % 233280;
-      const todayMaxGain = Math.floor((todayRng / 233280) * 131) + 20;
-      weeklyXp += Math.floor(today.getHours() * (todayMaxGain / 24));
-      
       xp = weeklyXp;
       level = Math.floor(xp / 100) + 1; 
     } else {
       // All time
-      // Realistic base scale (0 to 1300), plus incremental growth week over week
+      // Realistic base scale (0 to 1200), plus incremental growth week over week
       const baseProgression = (weekNumber - 26) * 150; 
-      
-      let recentGain = 0;
-      for (let d = 0; d < daysSinceMonday; d++) {
-        const daySeed = (seed * 13) + d * 97;
-        const dayRng = (daySeed * 9301 + 49297) % 233280;
-        recentGain += Math.floor((dayRng / 233280) * 131) + 20;
-      }
-      
-      xp = (rng % 1200) + Math.max(0, baseProgression) + recentGain + Math.floor(today.getHours() * 2);
+      const historicalXp = (rng % 1200) + Math.max(0, baseProgression);
+      xp = historicalXp + weeklyXp;
       level = Math.floor(Math.sqrt(xp / 10)); 
     }
     
@@ -184,7 +176,7 @@ export default function AchievementsPage() {
         const { data: names } = await supabase.from('profiles').select('id, full_name').in('id', ids);
         const nameMap = new Map((names ?? []).map((n: any) => [n.id, n.full_name]));
         realUsers = (lb as Array<any>).map((r) => ({
-          id: r.id, full_name: nameMap.get(r.id) ?? 'Student', xp: r.xp, level: r.level, cadre: r.cadre,
+          id: r.id, full_name: nameMap.get(r.id) ?? 'Nurse', xp: r.xp, level: r.level, cadre: r.cadre,
           isMe: r.id === user.id,
         }));
       }
@@ -194,7 +186,7 @@ export default function AchievementsPage() {
       if (lb) {
         realUsers = (lb as Array<any>).map((r) => ({
           id: r.id, 
-          full_name: r.full_name ?? 'Student', 
+          full_name: r.full_name ?? 'Nurse', 
           xp: Number(r.xp), 
           level: r.level, 
           cadre: r.cadre,
