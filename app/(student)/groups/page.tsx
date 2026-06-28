@@ -499,14 +499,14 @@ function GroupsInner() {
                 ) : (
                   <div>
                     <div className="flex items-center gap-2">
-                      <h2 className={`font-black text-lg leading-tight ${theme === 'cyber-neon' ? 'text-fuchsia-400' : 'text-[var(--color-text)]'}`}>{activeGroup.name}</h2>
+                      <h2 className={`font-black text-lg leading-tight ${chatTheme === 'cyber-neon' ? 'text-fuchsia-400' : 'text-[var(--color-text)]'}`}>{activeGroup.name}</h2>
                       {activeGroup.creator_id === userId && (
                         <button onClick={() => { setEditNameVal(activeGroup.name); setIsEditingName(true); }} className="text-neutral-400 hover:text-primary transition-colors p-1" title="Rename Group">
                           ✏️
                         </button>
                       )}
                     </div>
-                    <p className={`text-xs font-semibold opacity-70 ${theme === 'cyber-neon' ? 'text-cyan-400' : 'text-[var(--color-text-secondary)]'}`}>
+                    <p className={`text-xs font-semibold opacity-70 ${chatTheme === 'cyber-neon' ? 'text-cyan-400' : 'text-[var(--color-text-secondary)]'}`}>
                       {activeGroup.member_count} members
                     </p>
                   </div>
