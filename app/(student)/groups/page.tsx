@@ -102,7 +102,7 @@ function MessageBubble({ post, userId, onReply, onLike, onDelete, theme, animSpe
 
   return (
     <div className={`flex w-full mb-3 ${isOwn ? 'justify-end' : 'justify-start'} ${animClass}`}>
-      <div className={`relative max-w-[85%] md:max-w-[70%] rounded-2xl px-4 py-2 pb-6 shadow-md transition-all ${isOwn ? `${styles.ownBubble} ${styles.textColorOwn} rounded-tr-sm` : `${styles.otherBubble} ${styles.textColorOther} rounded-tl-sm`}`}>
+      <div className={`relative max-w-[92%] sm:max-w-[85%] md:max-w-[75%] lg:max-w-[65%] xl:max-w-[55%] rounded-2xl px-3 py-1.5 pb-6 sm:px-4 sm:py-2 sm:pb-6 shadow-md transition-all ${isOwn ? `${styles.ownBubble} ${styles.textColorOwn} rounded-tr-sm` : `${styles.otherBubble} ${styles.textColorOther} rounded-tl-sm`}`}>
         
         {/* Author row for others */}
         {!isOwn && !isDeleted && (
@@ -125,7 +125,7 @@ function MessageBubble({ post, userId, onReply, onLike, onDelete, theme, animSpe
         )}
 
         {/* Message Body */}
-        <p className={`text-sm whitespace-pre-wrap break-words leading-relaxed ${isDeleted ? 'italic opacity-60' : ''}`}>
+        <p className={`text-[13px] sm:text-sm md:text-[15px] whitespace-pre-wrap break-words leading-relaxed ${isDeleted ? 'italic opacity-60' : ''}`}>
           {isDeleted ? '🚫 This message was deleted' : post.body}
         </p>
 
