@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -24,8 +25,9 @@ export default async function AdminFlaggedQuestionsPage() {
 
   if (profile?.role !== 'admin') return <p>Forbidden</p>;
 
-  // Fetch flagged questions with the question details
-  const { data: flags, error } = await supabase
+  // Use admin client to bypass RLS so we can see all flags
+  const adminClient = createAdminClient();
+  const { data: flags, error } = await adminClient
     .from('flagged_questions')
     .select(`
       id,
