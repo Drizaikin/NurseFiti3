@@ -176,7 +176,7 @@ export default function AchievementsPage() {
         const { data: names } = await supabase.from('profiles').select('id, full_name').in('id', ids);
         const nameMap = new Map((names ?? []).map((n: any) => [n.id, n.full_name]));
         realUsers = (lb as Array<any>).map((r) => ({
-          id: r.id, full_name: nameMap.get(r.id) ?? 'Nurse', xp: r.xp, level: r.level, cadre: r.cadre,
+          id: r.id, full_name: nameMap.get(r.id) ?? 'Student', xp: r.xp, level: r.level, cadre: r.cadre,
           isMe: r.id === user.id,
         }));
       }
@@ -186,7 +186,7 @@ export default function AchievementsPage() {
       if (lb) {
         realUsers = (lb as Array<any>).map((r) => ({
           id: r.id, 
-          full_name: r.full_name ?? 'Nurse', 
+          full_name: r.full_name ?? 'Student', 
           xp: Number(r.xp), 
           level: r.level, 
           cadre: r.cadre,
