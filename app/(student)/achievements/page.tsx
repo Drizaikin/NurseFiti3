@@ -71,14 +71,15 @@ function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntr
     
     if (leaderTab === 'weekly') {
       // Base XP at start of week + daily increments
-      const dailyIncrement = Math.floor((rng % 50) + 20); // 20 to 70 XP per day
-      xp = (rng % 100) + (daysSinceMonday * dailyIncrement) + Math.floor(today.getHours() * (dailyIncrement / 24));
+      const dailyIncrement = Math.floor((rng % 30) + 10); // 10 to 40 XP per day
+      xp = (rng % 30) + (daysSinceMonday * dailyIncrement) + Math.floor(today.getHours() * (dailyIncrement / 24));
       level = Math.floor(xp / 100) + 1; 
     } else {
       // All time
-      const daysActive = 100 + (weekNumber * 7) + daysSinceMonday;
-      const dailyIncrement = Math.floor((rng % 30) + 15); 
-      xp = 1200 + (daysActive * dailyIncrement) + (rng % 500) + Math.floor(today.getHours() * 2);
+      // Realistic base scale (0 to 1300), plus incremental growth week over week (from week 26 / June)
+      const baseProgression = (weekNumber - 26) * 40; 
+      const dailyIncrement = Math.floor((rng % 20) + 10); // 10 to 30 XP per day
+      xp = (rng % 1200) + Math.max(0, baseProgression) + (daysSinceMonday * dailyIncrement) + Math.floor(today.getHours() * 1);
       level = Math.floor(Math.sqrt(xp / 10)); 
     }
     
