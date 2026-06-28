@@ -167,18 +167,15 @@ export default function AchievementsPage() {
         }));
       }
     } else {
-      // For weekly, we approximate by calculating XP gained in the last 7 days from student_answers
-      // Since that is complex, we just fetch all-time and artificially scale it down or just fetch all-time for now
-      // A full weekly implementation would query student_answers grouped by student.
-      // For now, we just use the same all-time query as a fallback for real users, but the bots will scale accurately.
-      const { data: lb } = await supabase.from('student_profiles')
-        .select('id, xp, level, cadre').order('xp', { ascending: false }).limit(20);
+      // Weekly leaderboard using the accurate RPC
+      const { data: lb } = await supabase.rpc('get_weekly_leaderboard');
       if (lb) {
-        const ids = (lb as Array<any>).map(r => r.id);
-        const { data: names } = await supabase.from('profiles').select('id, full_name').in('id', ids);
-        const nameMap = new Map((names ?? []).map((n: any) => [n.id, n.full_name]));
         realUsers = (lb as Array<any>).map((r) => ({
-          id: r.id, full_name: nameMap.get(r.id) ?? 'Student', xp: Math.floor(r.xp * 0.15), level: r.level, cadre: r.cadre,
+          id: r.id, 
+          full_name: r.full_name ?? 'Student', 
+          xp: Number(r.xp), 
+          level: r.level, 
+          cadre: r.cadre,
           isMe: r.id === user.id,
         }));
       }
