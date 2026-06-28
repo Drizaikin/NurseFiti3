@@ -142,6 +142,26 @@ export default function ClientManager({ campaign }: { campaign: any }) {
     }
   };
 
+  const handleDelete = async (appId: string) => {
+    if (!confirm('Are you sure you want to permanently delete this application?')) return;
+    setIsProcessing(appId);
+    try {
+      const res = await fetch('/api/scholarships/admin/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ application_id: appId })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to delete application');
+      toast.success('Application deleted successfully');
+      await fetchData();
+    } catch (err: any) {
+      toast.error(err.message);
+    } finally {
+      setIsProcessing(null);
+    }
+  };
+
   const handleToggleAllocators = async () => {
     const newValue = !showAllocators;
     setShowAllocators(newValue);
@@ -411,6 +431,16 @@ export default function ClientManager({ campaign }: { campaign: any }) {
                           )}
                         </>
                       )}
+                      
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50 mt-1"
+                        onClick={() => handleDelete(app.id)}
+                        disabled={isProcessing !== null}
+                      >
+                        Delete App
+                      </Button>
                     </td>
                   </tr>
                 ))
