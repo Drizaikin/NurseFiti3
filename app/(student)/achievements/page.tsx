@@ -184,9 +184,12 @@ export default function AchievementsPage() {
       // Weekly leaderboard using the accurate RPC
       const { data: lb } = await supabase.rpc('get_weekly_leaderboard');
       if (lb) {
+        const ids = (lb as Array<any>).map(r => r.id);
+        const { data: names } = await supabase.from('profiles').select('id, full_name').in('id', ids);
+        const nameMap = new Map((names ?? []).map((n: any) => [n.id, n.full_name]));
         realUsers = (lb as Array<any>).map((r) => ({
           id: r.id, 
-          full_name: r.full_name ?? 'Student', 
+          full_name: nameMap.get(r.id) ?? 'Student', 
           xp: Number(r.xp), 
           level: r.level, 
           cadre: r.cadre,
