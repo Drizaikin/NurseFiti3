@@ -12,9 +12,9 @@ import { BADGE_DEFS } from '@/lib/badges';
 
 
 
-// XP thresholds per level
-function xpForLevel(level: number) { return level <= 1 ? 0 : (level - 1) * 200 + (level - 2) * 100; }
-function xpToNextLevel(level: number) { return level * 200 + (level - 1) * 100; }
+// XP thresholds per level (100 XP per level)
+function xpForLevel(level: number) { return (level - 1) * 100; }
+function xpToNextLevel(level: number) { return 100; }
 
 interface StudentData {
   full_name: string;
@@ -88,19 +88,19 @@ function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntr
     weeklyXp += Math.floor(today.getHours() * (todayMaxGain / 24));
     
     let xp = 0;
-    let level = 1;
     
     if (leaderTab === 'weekly') {
       xp = weeklyXp;
-      level = Math.floor(xp / 100) + 1; 
     } else {
       // All time
       // Realistic base scale (0 to 1200), plus incremental growth week over week
       const baseProgression = (weekNumber - 26) * 150; 
       const historicalXp = (rng % 1200) + Math.max(0, baseProgression);
       xp = historicalXp + weeklyXp;
-      level = Math.floor(Math.sqrt(xp / 10)); 
     }
+    
+    // Unify level calculation to strictly match backend (100 XP per level)
+    let level = Math.floor(xp / 100) + 1;
     
     bots.push({
       id: `bot-${i}`,
@@ -225,11 +225,9 @@ export default function AchievementsPage() {
   if (isLoading) return <div className="flex items-center justify-center min-h-[60vh]"><Spinner size="lg" color="primary" /></div>;
   if (!student) return null;
 
-  const currentLevelXP = xpForLevel(student.level);
-  const nextLevelXP = xpToNextLevel(student.level);
-  const xpInLevel = student.xp - currentLevelXP;
-  const xpNeeded = nextLevelXP - currentLevelXP;
-  const levelProgress = Math.min(100, Math.round((xpInLevel / xpNeeded) * 100));
+  const currentLevelXP = student.xp % 100;
+  const nextLevelXP = 100;
+  const levelProgress = Math.min(100, Math.max(0, (currentLevelXP / nextLevelXP) * 100));
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -245,7 +243,7 @@ export default function AchievementsPage() {
             <p className="text-sm text-neutral-mid mb-1">Level {student.level}</p>
             <p className="text-2xl font-heading font-bold text-[var(--color-text)] mb-2">{student.xp.toLocaleString()} XP</p>
             <ProgressBar value={levelProgress} color="amber" showLabel={false} />
-            <p className="text-xs text-neutral-mid mt-1">{xpInLevel} / {xpNeeded} XP to Level {student.level + 1}</p>
+            <p className="text-xs text-neutral-mid mt-1">{currentLevelXP} / {nextLevelXP} XP to Level {student.level + 1}</p>
           </div>
           <div className="text-center">
             <p className="text-4xl">🔥</p>
