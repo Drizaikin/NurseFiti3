@@ -66,17 +66,23 @@ function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntr
     const nameIndex = Math.floor(randomFloat * KENYAN_NAMES.length);
     const fullName = KENYAN_NAMES[nameIndex];
     
-    // --- EXACTLY SYNCED WEEKLY XP CALCULATION ---
-    let weeklyXp = rng % 30; // Start with a small baseline for the week
-    for (let d = 0; d < daysSinceMonday; d++) {
-      const daySeed = (seed * 13) + d * 97;
+    // --- EXACTLY SYNCED WEEKLY XP CALCULATION (Last 7 Days) ---
+    let weeklyXp = rng % 30; // Start with a small baseline
+    
+    // Calculate daily XP for the past 6 full days
+    for (let d = 6; d > 0; d--) {
+      const pastDate = new Date();
+      pastDate.setDate(today.getDate() - d);
+      const dayStr = pastDate.toISOString().split('T')[0].replace(/-/g, '');
+      const daySeed = parseInt(dayStr) + i * 13;
       const dayRng = (daySeed * 9301 + 49297) % 233280;
       const dayGain = Math.floor((dayRng / 233280) * 131) + 20; // 20-150 XP
       weeklyXp += dayGain;
     }
     
     // Today's fractional gain
-    const todaySeed = (seed * 13) + daysSinceMonday * 97;
+    const todayStr = today.toISOString().split('T')[0].replace(/-/g, '');
+    const todaySeed = parseInt(todayStr) + i * 13;
     const todayRng = (todaySeed * 9301 + 49297) % 233280;
     const todayMaxGain = Math.floor((todayRng / 233280) * 131) + 20;
     weeklyXp += Math.floor(today.getHours() * (todayMaxGain / 24));
