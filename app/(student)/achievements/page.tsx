@@ -143,7 +143,10 @@ export default function AchievementsPage() {
       const { data: answerDays } = await supabase.from('student_answers')
         .select('answered_at').eq('student_id', user.id)
         .gte('answered_at', new Date(Date.now() - 31 * 86400000).toISOString());
-      const studiedDays = new Set((answerDays ?? []).map((a: { answered_at: string }) => a.answered_at.split('T')[0]));
+      const studiedDays = new Set((answerDays ?? []).map((a: { answered_at: string }) => {
+        if (!a.answered_at) return null;
+        return a.answered_at.split('T')[0];
+      }).filter(Boolean));
       const calendar: Record<string, 'done' | 'missed' | 'today'> = {};
       for (let i = 30; i >= 0; i--) {
         const d = new Date(); d.setDate(d.getDate() - i);
@@ -171,26 +174,26 @@ export default function AchievementsPage() {
     if (tab === 'alltime') {
       const { data: lb } = await supabase.from('student_profiles')
         .select('id, xp, level, cadre').order('xp', { ascending: false }).limit(20);
-      if (lb) {
+      if (lb && (lb as Array<any>).length > 0) {
         const ids = (lb as Array<any>).map(r => r.id);
         const { data: names } = await supabase.from('profiles').select('id, full_name').in('id', ids);
         const nameMap = new Map((names ?? []).map((n: any) => [n.id, n.full_name]));
         realUsers = (lb as Array<any>).map((r) => ({
-          id: r.id, full_name: nameMap.get(r.id) ?? 'Student', xp: r.xp, level: r.level, cadre: r.cadre,
+          id: r.id, full_name: nameMap.get(r.id) ?? 'Student', xp: Number(r.xp || 0), level: r.level, cadre: r.cadre,
           isMe: r.id === user.id,
         }));
       }
     } else {
       // Weekly leaderboard using the accurate RPC
       const { data: lb } = await supabase.rpc('get_weekly_leaderboard');
-      if (lb) {
+      if (lb && (lb as Array<any>).length > 0) {
         const ids = (lb as Array<any>).map(r => r.id);
         const { data: names } = await supabase.from('profiles').select('id, full_name').in('id', ids);
         const nameMap = new Map((names ?? []).map((n: any) => [n.id, n.full_name]));
         realUsers = (lb as Array<any>).map((r) => ({
           id: r.id, 
           full_name: nameMap.get(r.id) ?? 'Student', 
-          xp: Number(r.xp), 
+          xp: Number(r.xp || 0), 
           level: r.level, 
           cadre: r.cadre,
           isMe: r.id === user.id,

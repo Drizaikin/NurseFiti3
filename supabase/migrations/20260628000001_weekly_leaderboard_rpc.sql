@@ -24,7 +24,7 @@ BEGIN
     sp.cadre
   FROM student_answers sa
   JOIN student_profiles sp ON sp.id = sa.student_id
-  WHERE sa.answered_at >= (CURRENT_DATE - INTERVAL '7 days')
+  WHERE sa.answered_at >= date_trunc('week', CURRENT_DATE)
   GROUP BY sa.student_id, sp.level, sp.cadre
   ORDER BY xp DESC
   LIMIT 20;
