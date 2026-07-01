@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/Button";
 // ❶  RELEASES REGISTRY — edit here to announce new features
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CURRENT_VERSION = 5;
+const CURRENT_VERSION = 6;
 
 interface WhatsNewItem {
   icon: string;
@@ -175,6 +175,41 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
         description:
           "We've added 30 new high-yield spaced repetition flashcards covering Midwifery Essentials (PPH, eclampsia, AMTSL) and Anatomy & Physiology (cardiac conduction, renal physiology). Perfect for quick reviews!",
         cta: { label: "Study Flashcards", href: "/flashcards" },
+      },
+    ],
+  },
+
+  // ── Version 6 — Massive Question Bank Expansion ──────────
+  {
+    version: 6,
+    date: "1 July 2026",
+    items: [
+      {
+        icon: "📝",
+        tag: "New Questions",
+        tagColor: "bg-primary/20 text-primary",
+        title: "Massive Question Bank Expansion",
+        description:
+          "We've just seeded 894 brand new NCK past-paper questions into the platform! Every single question has been verified with detailed rationales across all units.",
+        cta: { label: "Start Practising", href: "/practice" },
+      },
+      {
+        icon: "🎓",
+        tag: "BScN Update",
+        tagColor: "bg-amber-500/20 text-amber-400",
+        title: "Hundreds of New BScN Questions",
+        description:
+          "BScN students now have access to 317 new Paper I questions and 137 new Paper II questions. Tackle them in Practice mode or your next Mock Exam.",
+        cta: { label: "Take a Mock Exam", href: "/mock-exam" },
+      },
+      {
+        icon: "🏥",
+        tag: "KRCHN Update",
+        tagColor: "bg-emerald-500/20 text-emerald-400",
+        title: "Hundreds of New KRCHN Questions",
+        description:
+          "KRCHN students now have access to 312 new Paper I questions and 128 new Paper II questions, covering everything from Medical-Surgical to Community Health.",
+        cta: { label: "Practice Now", href: "/practice" },
       },
     ],
   },
