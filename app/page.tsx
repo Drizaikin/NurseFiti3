@@ -93,9 +93,9 @@ const courseJsonLd = {
     },
     {
       '@type': 'Offer',
-      price: '999',
+      price: '1199',
       priceCurrency: 'KES',
-      name: 'Success Plan - KSh 999/month',
+      name: 'Success Plan - KSh 1,199/month',
       url: 'https://www.nursefiti.co.ke/signup',
     },
     {
@@ -230,7 +230,7 @@ const PRICING = [
   },
   {
     name: 'Exam Boost Daily',
-    price: 'KSh 69',
+    price: 'KSh 99',
     period: '/day',
     desc: 'A focused 24-hour push for active revision.',
     features: ['Unlimited MCQ practice', 'AI explanations', '2 mock exams per week', 'Readiness analytics', 'Flashcards', 'Personalized revision plan included'],
@@ -241,7 +241,7 @@ const PRICING = [
   },
   {
     name: 'Exam Boost Weekly',
-    price: 'KSh 299',
+    price: 'KSh 499',
     period: '/week',
     desc: 'Your mass-market exam prep plan for a serious week.',
     features: ['Everything in Exam Boost Daily', '7-day access', 'AI explanations', '2 mock exams per week', 'Flashcards and analytics', 'Personalized revision plan included'],
@@ -252,7 +252,7 @@ const PRICING = [
   },
   {
     name: 'Success Plan',
-    price: 'KSh 999',
+    price: 'KSh 1,199',
     period: '/month',
     desc: 'Everything you need to maximize exam readiness.',
     features: ['Unlimited MCQ practice', '2 mock exams per week', 'Smarter analytics', 'Adaptive revision roadmap', 'Flashcards', 'Tutor priority'],

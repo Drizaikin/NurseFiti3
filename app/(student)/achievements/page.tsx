@@ -48,44 +48,50 @@ function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntr
   const bots: LeaderboardEntry[] = [];
   const today = new Date();
   
-  // Weekly simulation: resets on Monday
-  const dayOfWeek = today.getDay(); // 0 is Sunday
-  const daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1; 
+  // Rolling 7-day window simulation
   
-  // Create a seed based on the week number
+  // Freeze the identity baseline to Week 25 to prevent bot names/xp from randomly scrambling 
+  // every time a new calendar week rolls over.
+  const fixedWeekNumber = 25; 
+  
+  // Use exact fractional weeks since the start of the year for smooth all-time progression
   const startOfYear = new Date(today.getFullYear(), 0, 1);
   const diff = today.getTime() - startOfYear.getTime();
-  const weekNumber = Math.floor(diff / (1000 * 60 * 60 * 24 * 7));
+  const exactWeeks = diff / (1000 * 60 * 60 * 24 * 7);
   
   for (let i = 0; i < 15; i++) {
-    // Deterministic random using weekNumber + i
-    const seed = weekNumber * 100 + i;
+    // Deterministic identity seed based on the frozen week
+    const seed = fixedWeekNumber * 100 + i;
     const rng = (seed * 9301 + 49297) % 233280; // Simple LCG PRNG
     const randomFloat = rng / 233280;
     
     const nameIndex = Math.floor(randomFloat * KENYAN_NAMES.length);
     const fullName = KENYAN_NAMES[nameIndex];
     
-    // --- EXACTLY SYNCED WEEKLY XP CALCULATION (Last 7 Days) ---
+    // --- ROLLING 7-DAY WEEKLY XP CALCULATION ---
     let weeklyXp = rng % 30; // Start with a small baseline
     
     // Calculate daily XP for the past 6 full days
     for (let d = 6; d > 0; d--) {
-      const pastDate = new Date();
+      const pastDate = new Date(today);
       pastDate.setDate(today.getDate() - d);
-      const dayStr = pastDate.toISOString().split('T')[0].replace(/-/g, '');
+      // Use YYYYMMDD to guarantee stability across timezone bounds
+      const dayStr = pastDate.getFullYear() + String(pastDate.getMonth() + 1).padStart(2, '0') + String(pastDate.getDate()).padStart(2, '0');
       const daySeed = parseInt(dayStr) + i * 13;
       const dayRng = (daySeed * 9301 + 49297) % 233280;
       const dayGain = Math.floor((dayRng / 233280) * 131) + 20; // 20-150 XP
       weeklyXp += dayGain;
     }
     
-    // Today's fractional gain
-    const todayStr = today.toISOString().split('T')[0].replace(/-/g, '');
+    // Today's smooth fractional gain
+    const todayStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
     const todaySeed = parseInt(todayStr) + i * 13;
     const todayRng = (todaySeed * 9301 + 49297) % 233280;
     const todayMaxGain = Math.floor((todayRng / 233280) * 131) + 20;
-    weeklyXp += Math.floor(today.getHours() * (todayMaxGain / 24));
+    
+    // Smooth increment by the minute instead of chunking rigidly by the hour
+    const hoursPassed = today.getHours() + (today.getMinutes() / 60);
+    weeklyXp += Math.floor(hoursPassed * (todayMaxGain / 24));
     
     let xp = 0;
     
@@ -93,10 +99,11 @@ function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntr
       xp = weeklyXp;
     } else {
       // All time
-      // Realistic base scale (0 to 1200), plus incremental growth week over week
-      const baseProgression = (weekNumber - 26) * 150; 
-      const historicalXp = (rng % 1200) + Math.max(0, baseProgression);
-      xp = historicalXp + weeklyXp;
+      // Realistic base scale frozen to Week 25, plus smooth growth for time passed since then
+      const weeksSinceFix = Math.max(0, exactWeeks - 25);
+      const smoothProgression = weeksSinceFix * 150; 
+      const historicalXp = (rng % 1200) + smoothProgression;
+      xp = Math.floor(historicalXp + weeklyXp);
     }
     
     // Unify level calculation to strictly match backend (100 XP per level)

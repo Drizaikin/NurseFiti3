@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
     const { type, amountKsh, referenceId } = body.data;
 
     // Enforce valid plan prices for plan_subscription
-    const VALID_PLAN_PRICES = [69, 299, 999, 3500];
+    const VALID_PLAN_PRICES = [99, 499, 1199, 3500];
     if (type === 'plan_subscription' && !VALID_PLAN_PRICES.includes(amountKsh)) {
       return NextResponse.json(
         { error: `Invalid plan price. Must be one of: ${VALID_PLAN_PRICES.join(', ')}` },
