@@ -106,9 +106,9 @@ const PLANS = [
   {
     tier: 'daily',
     name: 'Exam Boost Daily',
-    price: 'KSh 69',
+    price: 'KSh 99',
     period: '/day',
-    amountKsh: 69,
+    amountKsh: 99,
     color: 'border-primary/30 bg-primary-xlight dark:bg-primary/5',
     badge: 'teal' as const,
     features: [
@@ -123,9 +123,9 @@ const PLANS = [
   {
     tier: 'weekly',
     name: 'Exam Boost Weekly',
-    price: 'KSh 299',
+    price: 'KSh 499',
     period: '/week',
-    amountKsh: 299,
+    amountKsh: 499,
     color: 'border-primary/40 bg-primary-xlight dark:bg-primary/5',
     badge: 'teal' as const,
     features: [
@@ -140,9 +140,9 @@ const PLANS = [
   {
     tier: 'standard',
     name: 'Success Plan',
-    price: 'KSh 999',
+    price: 'KSh 1,199',
     period: '/month',
-    amountKsh: 999,
+    amountKsh: 1199,
     color: 'border-primary/40 bg-primary-xlight dark:bg-primary/5',
     badge: 'teal' as const,
     features: [
@@ -232,9 +232,9 @@ function SubscriptionCard({ planTier, planExpiresAt, onUpgradeSuccess }: {
 
   const planSummary: Record<string, string> = {
     premium:  'Elite Prep - KSh 3,500 / exam cycle',
-    standard: 'Success Plan - KSh 999 / month',
-    weekly:   'Exam Boost Weekly - KSh 299 / week',
-    daily:    'Exam Boost Daily - KSh 69 / day',
+    standard: 'Success Plan - KSh 1,199 / month',
+    weekly:   'Exam Boost Weekly - KSh 499 / week',
+    daily:    'Exam Boost Daily - KSh 99 / day',
     free:     'Test Yourself - KSh 0 / forever',
   };
   const planSubtext: Record<string, string> = {
