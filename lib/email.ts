@@ -1,4 +1,4 @@
-﻿const nodemailer = require('nodemailer') as {
+const nodemailer = require('nodemailer') as {
   createTransport: (options: Record<string, unknown>) => {
     sendMail: (message: {
       from: string;
@@ -141,10 +141,10 @@ function emailFooter(siteUrl: string, supportEmail: string): string {
                 </td>
                 <td width="30%" style="vertical-align:top;padding-right:12px;">
                   <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#F7BC55;margin-bottom:12px;">Platform</div>
-                  <a href="${siteUrl}/questions" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Question Bank</a>
-                  <a href="${siteUrl}/mock-exam" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Mock Exams</a>
-                  <a href="${siteUrl}/analytics" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Analytics</a>
-                  <a href="${siteUrl}/flashcards" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;">Flashcards</a>
+                  <a href="${siteUrl}/signup" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Question Bank</a>
+                  <a href="${siteUrl}/signup" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Mock Exams</a>
+                  <a href="${siteUrl}/login" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Analytics</a>
+                  <a href="${siteUrl}/login" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;">Flashcards</a>
                 </td>
                 <td width="30%" style="vertical-align:top;">
                   <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#F7BC55;margin-bottom:12px;">Support</div>
