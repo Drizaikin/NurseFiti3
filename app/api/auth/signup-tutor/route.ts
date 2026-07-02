@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { tutorSignupSchema } from '@/lib/validations/auth';
+import { getFirstName, sendTutorWelcomeEmail } from '@/lib/email';
 
 function getAdminClient() {
   return createClient(
@@ -191,6 +192,12 @@ export async function POST(request: NextRequest) {
         console.error('tutor_profiles insert error:', JSON.stringify(tutorProfileError));
         throw new Error(`Failed to create tutor profile: ${tutorProfileError.message}`);
       }
+
+      // Send welcome email — fire-and-forget (don't fail the signup if email fails)
+      sendTutorWelcomeEmail({
+        to: validatedData.email,
+        firstName: getFirstName(validatedData.fullName),
+      }).catch(err => console.error('[signup-tutor] welcome email failed:', err));
 
       return NextResponse.json(
         { message: 'Application submitted successfully', userId },

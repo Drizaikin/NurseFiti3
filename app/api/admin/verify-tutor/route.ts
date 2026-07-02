@@ -14,6 +14,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { z } from 'zod';
+import { getFirstName, sendTutorVerificationEmail } from '@/lib/email';
 
 export const dynamic = 'force-dynamic';
 
@@ -96,6 +97,21 @@ export async function POST(req: NextRequest) {
         : `Your tutor application was not approved. Reason: ${reason ?? 'See admin email for details.'}`,
       action_url: status === 'verified' ? '/tutor-dashboard' : '/tutor-pending',
     });
+
+    // Send verification decision email
+    const { data: tutorProfile } = await (admin as any)
+      .from('profiles')
+      .select('email, full_name')
+      .eq('id', tutorId)
+      .maybeSingle() as { data: { email: string | null; full_name: string | null } | null };
+
+    sendTutorVerificationEmail({
+      to:        tutorProfile?.email,
+      firstName: getFirstName(tutorProfile?.full_name),
+      status,
+      tier,
+      reason,
+    }).catch(err => console.error('[verify-tutor] email failed:', err));
 
     return NextResponse.json({ success: true });
   } catch (err) {

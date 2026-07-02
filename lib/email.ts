@@ -933,3 +933,247 @@ The NurseFiti Team`;
     buildScholarshipHtml(params, dashboardUrl),
   );
 }
+
+// ─── Tutor Welcome (on signup) ────────────────────────────────────────────────
+
+export type TutorWelcomeEmailParams = {
+  to: string | null | undefined;
+  firstName: string;
+};
+
+function buildTutorWelcomeHtml(firstName: string): string {
+  const safeFirst = escapeHtml(firstName);
+  const siteUrl = getSiteUrl();
+
+  return emailWrapper(`
+    <tr>
+      <td style="background:#ffffff;padding:36px 36px 0;">
+        <h2 style="font-family:Arial,sans-serif;font-size:21px;font-weight:700;color:#08514F;margin:0 0 14px;">
+          Welcome to NurseFiti, <span style="color:#F5A623;">${safeFirst}!</span> 🎓
+        </h2>
+        <p style="font-size:14.5px;color:#1E3535;line-height:1.75;margin:0 0 20px;">
+          Thank you for applying to join the NurseFiti tutor network. Your application has been received and is currently <strong style="color:#08514F;">under review</strong> by our team.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:0 36px 20px;">
+        <div style="background:#F2FAFA;border:1.5px solid #D0E8E7;border-left:4px solid #08514F;border-radius:10px;padding:20px 22px;margin-bottom:16px;">
+          <div style="font-family:Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0A6B68;margin-bottom:14px;">What Happens Next</div>
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="32" style="vertical-align:top;padding-top:1px;">
+                <div style="width:24px;height:24px;background:#08514F;border-radius:50%;font-family:Arial,sans-serif;font-size:11px;font-weight:800;color:white;text-align:center;line-height:24px;">1</div>
+              </td>
+              <td style="padding-left:10px;vertical-align:top;padding-bottom:12px;">
+                <div style="font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:#08514F;margin-bottom:2px;">Document Verification</div>
+                <div style="font-size:12.5px;color:#4A6868;line-height:1.6;">Our admin team will review your NCK certificate, academic qualifications, and national ID.</div>
+              </td>
+            </tr>
+            <tr>
+              <td width="32" style="vertical-align:top;padding-top:1px;">
+                <div style="width:24px;height:24px;background:#08514F;border-radius:50%;font-family:Arial,sans-serif;font-size:11px;font-weight:800;color:white;text-align:center;line-height:24px;">2</div>
+              </td>
+              <td style="padding-left:10px;vertical-align:top;padding-bottom:12px;">
+                <div style="font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:#08514F;margin-bottom:2px;">Profile Review</div>
+                <div style="font-size:12.5px;color:#4A6868;line-height:1.6;">We verify your professional title, years of experience, and specialties to ensure quality for our students.</div>
+              </td>
+            </tr>
+            <tr>
+              <td width="32" style="vertical-align:top;padding-top:1px;">
+                <div style="width:24px;height:24px;background:#F5A623;border-radius:50%;font-family:Arial,sans-serif;font-size:11px;font-weight:800;color:#051F1E;text-align:center;line-height:24px;">3</div>
+              </td>
+              <td style="padding-left:10px;vertical-align:top;">
+                <div style="font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:#08514F;margin-bottom:2px;">Decision Email</div>
+                <div style="font-size:12.5px;color:#4A6868;line-height:1.6;">You will receive an email once a decision has been made — usually within 2–3 business days.</div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div style="background:#FFF8EA;border:1.5px solid rgba(245,166,35,0.2);border-left:4px solid #F5A623;border-radius:10px;padding:16px 20px;margin-bottom:24px;">
+          <div style="font-family:Arial,sans-serif;font-size:12px;font-weight:700;color:#C7841A;margin-bottom:4px;">While You Wait</div>
+          <div style="font-size:13px;color:#1E3535;line-height:1.65;">You can log in to check your application status at any time. If you need to update your documents or profile details, contact our support team.</div>
+        </div>
+        <div style="text-align:center;margin-bottom:28px;">
+          <a href="${siteUrl}/login" style="display:inline-block;background:#08514F;color:white;font-family:Arial,sans-serif;font-size:14px;font-weight:700;padding:15px 36px;border-radius:8px;text-decoration:none;border-bottom:3px solid #051F1E;">Check Application Status &rarr;</a>
+        </div>
+        <div style="border-top:2px solid #D0E8E7;padding-top:18px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="vertical-align:middle;padding-right:14px;">
+              <div style="width:42px;height:42px;background:linear-gradient(135deg,#08514F,#0A6B68);border-radius:50%;text-align:center;line-height:42px;font-family:Arial,sans-serif;font-size:14px;font-weight:800;color:white;">NF</div>
+            </td>
+            <td style="vertical-align:middle;">
+              <div style="font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:#08514F;">The NurseFiti Team</div>
+              <div style="font-size:11.5px;color:#4A6868;margin-top:2px;">Thank you for wanting to be part of our mission.</div>
+            </td>
+          </tr></table>
+        </div>
+      </td>
+    </tr>`, 'Preparing Nurses for Success');
+}
+
+export async function sendTutorWelcomeEmail(params: TutorWelcomeEmailParams): Promise<MailResult> {
+  const text = `Dear ${params.firstName},
+
+Thank you for applying to join the NurseFiti tutor network!
+
+Your application has been received and is currently under review by our team.
+
+What happens next:
+1. Document Verification — We review your NCK certificate, academic qualifications, and national ID.
+2. Profile Review — We verify your professional details and specialties.
+3. Decision Email — You will receive an email once a decision has been made, usually within 2–3 business days.
+
+You can log in to check your application status at any time: ${getSiteUrl()}/login
+
+If you have any questions, please reply to this email.
+
+Warm Regards,
+The NurseFiti Team`;
+
+  return sendEmail(
+    params.to,
+    'Your NurseFiti tutor application has been received',
+    text,
+    undefined,
+    buildTutorWelcomeHtml(params.firstName),
+  );
+}
+
+// ─── Tutor Verification Decision ─────────────────────────────────────────────
+
+export type TutorVerificationEmailParams = {
+  to: string | null | undefined;
+  firstName: string;
+  status: 'verified' | 'rejected';
+  tier?: string;
+  reason?: string;
+};
+
+function buildTutorVerificationHtml(params: TutorVerificationEmailParams): string {
+  const safeFirst = escapeHtml(params.firstName);
+  const siteUrl = getSiteUrl();
+  const isApproved = params.status === 'verified';
+
+  const approvedBody = `
+    <tr>
+      <td style="background:#ffffff;padding:36px 36px 0;">
+        <h2 style="font-family:Arial,sans-serif;font-size:21px;font-weight:700;color:#08514F;margin:0 0 14px;">
+          Congratulations, <span style="color:#F5A623;">${safeFirst}!</span> 🎉 You&rsquo;re Approved
+        </h2>
+        <p style="font-size:14.5px;color:#1E3535;line-height:1.75;margin:0 0 20px;">
+          Your NurseFiti tutor application has been <strong style="color:#08514F;">approved</strong>. You are now a verified tutor on the platform and can start accepting student bookings.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:0 36px 20px;">
+        <div style="background:linear-gradient(135deg,#08514F 0%,#0A6B68 100%);border-radius:12px;padding:22px 24px;margin-bottom:20px;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:rgba(245,166,35,0.12);border-radius:50%;"></div>
+          <div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#F7BC55;margin-bottom:6px;">Verified Tutor</div>
+          <div style="font-family:Arial,sans-serif;font-size:16px;font-weight:700;color:white;margin-bottom:4px;">${safeFirst} &mdash; ${escapeHtml(params.tier === 'gold' ? 'Gold Tier' : 'Standard Tier')}</div>
+          <div style="font-size:12.5px;color:rgba(255,255,255,0.75);">Your profile is now live and visible to students.</div>
+        </div>
+        <div style="background:#F2FAFA;border:1.5px solid #D0E8E7;border-left:4px solid #08514F;border-radius:10px;padding:20px 22px;margin-bottom:16px;">
+          <div style="font-family:Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0A6B68;margin-bottom:14px;">Getting Started</div>
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr><td style="font-size:13px;color:#4A6868;padding-bottom:8px;">✅</td><td style="font-size:13px;color:#1E3535;padding-bottom:8px;padding-left:8px;">Complete your tutor profile — add a photo, update your bio and session rate</td></tr>
+            <tr><td style="font-size:13px;color:#4A6868;padding-bottom:8px;">✅</td><td style="font-size:13px;color:#1E3535;padding-bottom:8px;padding-left:8px;">Set your availability so students can book sessions with you</td></tr>
+            <tr><td style="font-size:13px;color:#4A6868;">✅</td><td style="font-size:13px;color:#1E3535;padding-left:8px;">Ensure your M-Pesa number is up to date to receive payouts</td></tr>
+          </table>
+        </div>
+        <div style="text-align:center;margin-bottom:28px;">
+          <a href="${siteUrl}/tutor-dashboard" style="display:inline-block;background:#F5A623;color:#051F1E;font-family:Arial,sans-serif;font-size:14px;font-weight:800;padding:15px 36px;border-radius:8px;text-decoration:none;border-bottom:3px solid #C7841A;">Go to Tutor Dashboard &rarr;</a>
+        </div>
+        <div style="border-top:2px solid #D0E8E7;padding-top:18px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="vertical-align:middle;padding-right:14px;">
+              <div style="width:42px;height:42px;background:linear-gradient(135deg,#08514F,#0A6B68);border-radius:50%;text-align:center;line-height:42px;font-family:Arial,sans-serif;font-size:14px;font-weight:800;color:white;">NF</div>
+            </td>
+            <td style="vertical-align:middle;">
+              <div style="font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:#08514F;">NurseFiti Tutor Management</div>
+              <div style="font-size:11.5px;color:#4A6868;margin-top:2px;">Welcome to the team — we&rsquo;re excited to have you!</div>
+            </td>
+          </tr></table>
+        </div>
+      </td>
+    </tr>`;
+
+  const rejectedBody = `
+    <tr>
+      <td style="background:#ffffff;padding:36px 36px 0;">
+        <h2 style="font-family:Arial,sans-serif;font-size:21px;font-weight:700;color:#08514F;margin:0 0 14px;">
+          Application Update, <span style="color:#F5A623;">${safeFirst}</span>
+        </h2>
+        <p style="font-size:14.5px;color:#1E3535;line-height:1.75;margin:0 0 20px;">
+          Thank you for your interest in joining the NurseFiti tutor network. After carefully reviewing your application, we are unable to approve it at this time.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:0 36px 20px;">
+        ${params.reason ? `
+        <div style="background:#FFF8EA;border:1.5px solid rgba(245,166,35,0.2);border-left:4px solid #F5A623;border-radius:10px;padding:18px 22px;margin-bottom:20px;">
+          <div style="font-family:Arial,sans-serif;font-size:12px;font-weight:700;color:#C7841A;margin-bottom:6px;">Reason</div>
+          <div style="font-size:13.5px;color:#1E3535;line-height:1.65;">${escapeHtml(params.reason)}</div>
+        </div>` : ''}
+        <div style="background:#F2FAFA;border:1.5px solid #D0E8E7;border-left:4px solid #08514F;border-radius:10px;padding:20px 22px;margin-bottom:20px;">
+          <div style="font-family:Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0A6B68;margin-bottom:10px;">You Can Reapply</div>
+          <div style="font-size:13px;color:#1E3535;line-height:1.65;">If you believe your documents or qualifications meet our requirements, you are welcome to reapply after addressing the reason above. Contact our support team if you need guidance.</div>
+        </div>
+        <div style="border-top:2px solid #D0E8E7;padding-top:18px;">
+          <table cellpadding="0" cellspacing="0"><tr>
+            <td style="vertical-align:middle;padding-right:14px;">
+              <div style="width:42px;height:42px;background:linear-gradient(135deg,#08514F,#0A6B68);border-radius:50%;text-align:center;line-height:42px;font-family:Arial,sans-serif;font-size:14px;font-weight:800;color:white;">NF</div>
+            </td>
+            <td style="vertical-align:middle;">
+              <div style="font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:#08514F;">NurseFiti Tutor Management</div>
+              <div style="font-size:11.5px;color:#4A6868;margin-top:2px;">Thank you for your time and interest in our platform.</div>
+            </td>
+          </tr></table>
+        </div>
+      </td>
+    </tr>`;
+
+  return emailWrapper(isApproved ? approvedBody : rejectedBody, 'Preparing Nurses for Success');
+}
+
+export async function sendTutorVerificationEmail(params: TutorVerificationEmailParams): Promise<MailResult> {
+  const isApproved = params.status === 'verified';
+  const tierLabel = params.tier === 'gold' ? 'Gold Tier' : 'Standard Tier';
+
+  const text = isApproved
+    ? `Dear ${params.firstName},
+
+Congratulations! Your NurseFiti tutor application has been approved.
+
+You are now a verified ${tierLabel} tutor and your profile is live on the platform.
+
+Next steps:
+- Complete your tutor profile (photo, bio, session rate)
+- Set your availability for student bookings
+- Ensure your M-Pesa number is up to date for payouts
+
+Go to your dashboard: ${getSiteUrl()}/tutor-dashboard
+
+Welcome to the team!
+
+Warm Regards,
+NurseFiti Tutor Management`
+    : `Dear ${params.firstName},
+
+Thank you for your interest in joining the NurseFiti tutor network.
+
+After carefully reviewing your application, we are unable to approve it at this time.
+${params.reason ? `\nReason: ${params.reason}\n` : ''}
+You are welcome to reapply after addressing the reason above. Please contact our support team if you need guidance.
+
+Warm Regards,
+NurseFiti Tutor Management`;
+
+  const subject = isApproved
+    ? 'Your NurseFiti tutor application has been approved!'
+    : 'Update on your NurseFiti tutor application';
+
+  return sendEmail(params.to, subject, text, undefined, buildTutorVerificationHtml(params));
+}
