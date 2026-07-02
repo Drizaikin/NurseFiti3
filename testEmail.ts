@@ -1,16 +1,18 @@
 import * as fs from 'fs';
-import { sendEmail } from './lib/email';
+import { sendWelcomeEmail } from './lib/email';
 
 async function test() {
+  // Load environment variables manually
   const envText = fs.readFileSync('.env.local', 'utf8');
   envText.split('\n').forEach(line => {
     const [key, ...rest] = line.split('=');
     if (key && rest.length > 0) {
-      process.env[key.trim()] = rest.join('=').trim();
+      // Remove quotes if present
+      process.env[key.trim()] = rest.join('=').trim().replace(/^['"]|['"]$/g, '');
     }
   });
 
-  console.log('Sending email with config:', {
+  console.log('Sending welcome email with config:', {
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
     user: process.env.SMTP_USER,
@@ -18,7 +20,10 @@ async function test() {
   });
 
   try {
-    const res = await sendEmail('danotyanga@gmail.com', 'Test Subject', 'This is a test email.\n\nIt should work.');
+    const res = await sendWelcomeEmail({ 
+      to: 'danotyanga@gmail.com', 
+      firstName: 'Danotyanga' 
+    });
     console.log('Result:', res);
   } catch (err) {
     console.error('Error:', err);
