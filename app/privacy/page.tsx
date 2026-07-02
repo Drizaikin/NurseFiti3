@@ -47,11 +47,11 @@ export default function PrivacyPage() {
           </section>
           <section>
             <h2 className="text-xl font-heading font-bold mb-3">5. Your Rights & Deletion Requests</h2>
-            <p className="text-neutral-mid leading-relaxed">Under the Data Protection Act 2019, you have the right to access, correct, or request the deletion of your personal data. You can request the complete deletion of your account and all associated identifiable data at any time by emailing <a href="mailto:support@nursefiti.co.ke" className="text-primary hover:underline">support@nursefiti.co.ke</a>. We process deletion requests within 30 days.</p>
+            <p className="text-neutral-mid leading-relaxed">Under the Data Protection Act 2019, you have the right to access, correct, or request the deletion of your personal data. You can request the complete deletion of your account and all associated identifiable data at any time by emailing <a href="mailto:danotyanga@gmail.com" className="text-primary hover:underline">danotyanga@gmail.com</a>. We process deletion requests within 30 days.</p>
           </section>
           <section>
             <h2 className="text-xl font-heading font-bold mb-3">6. Contact</h2>
-            <p className="text-neutral-mid">For privacy-related questions or data requests, email our Data Protection Officer at <a href="mailto:support@nursefiti.co.ke" className="text-primary hover:underline">support@nursefiti.co.ke</a></p>
+            <p className="text-neutral-mid">For privacy-related questions or data requests, email our Data Protection Officer at <a href="mailto:danotyanga@gmail.com" className="text-primary hover:underline">danotyanga@gmail.com</a></p>
           </section>
         </div>
         <div className="mt-6 text-center"><Link href="/" className="text-primary hover:underline text-sm">← Back to NurseFiti</Link></div>

@@ -938,8 +938,8 @@ export default function LandingPage() {
               <h4 className="font-heading font-bold mb-4 text-sm uppercase tracking-wider text-neutral-light">Contact</h4>
               <ul className="space-y-2 text-sm text-neutral-light">
                 <li>
-                  <a href="mailto:support@nursefiti.vercel.app" className="hover:text-white transition-colors">
-                    support@nursefiti.vercel.app
+                  <a href="mailto:danotyanga@gmail.com" className="hover:text-white transition-colors">
+                    danotyanga@gmail.com
                   </a>
                 </li>
                 <li>

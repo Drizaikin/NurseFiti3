@@ -660,7 +660,7 @@ export default function DashboardPage() {
             />
             <div className="mt-3 flex gap-2">
               <a
-                href="mailto:support@nursefiti.co.ke"
+                href="mailto:danotyanga@gmail.com"
                 className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-secondary)] hover:border-primary/40 hover:text-primary transition-colors"
               >
                 ✉️ Email Support

@@ -53,7 +53,7 @@ export default function TutorAgreementPage() {
           </section>
           <section>
             <h2 className="text-xl font-heading font-bold mb-3">6. Contact</h2>
-            <p className="text-neutral-mid">For questions regarding this agreement, email <a href="mailto:support@nursefiti.co.ke" className="text-primary hover:underline">support@nursefiti.co.ke</a></p>
+            <p className="text-neutral-mid">For questions regarding this agreement, email <a href="mailto:danotyanga@gmail.com" className="text-primary hover:underline">danotyanga@gmail.com</a></p>
           </section>
         </div>
         <div className="mt-6 text-center"><Link href="/" className="text-primary hover:underline text-sm">← Back to NurseFiti</Link></div>

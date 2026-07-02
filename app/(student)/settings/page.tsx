@@ -964,7 +964,7 @@ export default function SettingsPage() {
                       <Button
                         variant="danger"
                         disabled={deleteConfirmText !== 'DELETE'}
-                        onClick={() => toast.error('Account deletion requires admin action. Contact support@nursefiti.com')}
+                        onClick={() => toast.error('Account deletion requires admin action. Contact danotyanga@gmail.com')}
                       >
                         Confirm Delete
                       </Button>

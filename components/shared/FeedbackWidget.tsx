@@ -18,7 +18,7 @@ const CATEGORIES: { value: Category; label: string; icon: string; desc: string }
   { value: 'general',     label: 'General',     icon: '💬', desc: 'Anything else on your mind' },
 ];
 
-const SUPPORT_EMAIL = 'support@nursefiti.vercel.app';
+const SUPPORT_EMAIL = 'danotyanga@gmail.com';
 const SUPPORT_WHATSAPP = '254791952703';
 
 // ─── Star picker ──────────────────────────────────────────────────────────────

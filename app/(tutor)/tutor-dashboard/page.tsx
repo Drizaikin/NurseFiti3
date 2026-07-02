@@ -183,7 +183,7 @@ function VerificationBanner({ tutor, onRefresh }: {
           </div>
 
           <p className="text-xs text-[var(--color-text-secondary)] mt-4 text-center">
-            Questions? <a href="mailto:support@nursefiti.co.ke" className="text-primary font-semibold hover:underline">Contact support</a>
+            Questions? <a href="mailto:danotyanga@gmail.com" className="text-primary font-semibold hover:underline">Contact support</a>
           </p>
         </>
       )}
@@ -692,7 +692,7 @@ function TutorDashboardInner() {
             />
             <div className="mt-3 flex gap-2">
               <a
-                href="mailto:support@nursefiti.vercel.app"
+                href="mailto:danotyanga@gmail.com"
                 className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-secondary)] hover:border-primary/40 hover:text-primary transition-colors"
               >
                 ✉️ Email Support

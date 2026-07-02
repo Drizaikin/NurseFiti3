@@ -379,7 +379,7 @@ function buildWelcomeHtml(firstName: string, loginUrl: string): string {
           </td>
           <td style="padding-left:14px;vertical-align:middle;">
             <div style="font-family:Arial,Helvetica,sans-serif;font-size:13.5px;font-weight:700;color:#08514F;">The NurseFiti Team</div>
-            <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4A6868;margin-top:2px;">support@nursefiti.co.ke &middot; nursefiti.co.ke</div>
+            <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4A6868;margin-top:2px;">danotyanga@gmail.com &middot; nursefiti.co.ke</div>
           </td>
         </tr></table>
       </td>
@@ -403,7 +403,7 @@ Log in here: ${loginUrl}
 
 Warm Regards,
 The NurseFiti Team
-support@nursefiti.co.ke`;
+danotyanga@gmail.com`;
 
   return sendEmail(params.to, 'Welcome to NurseFiti — Your journey starts now', text, undefined, buildWelcomeHtml(params.firstName, loginUrl));
 }
@@ -757,7 +757,7 @@ export async function sendTutorVerificationEmail(params: TutorVerificationEmailP
   </div>` : ''}
   <div style="background:#F2FAFA;border:1.5px solid #D0E8E7;border-left:4px solid #08514F;border-radius:10px;padding:20px 22px;margin-bottom:22px;">
     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">You Can Reapply</div>
-    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;line-height:1.65;">If you believe your documents meet our requirements, you are welcome to reapply after addressing the reason above. Contact support@nursefiti.co.ke if you need guidance.</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;line-height:1.65;">If you believe your documents meet our requirements, you are welcome to reapply after addressing the reason above. Contact danotyanga@gmail.com if you need guidance.</div>
   </div>
   ${nfSignature('Thank you for your time and interest in our platform.')}
 </td></tr>`);
