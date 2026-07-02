@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import Link from 'next/link';
@@ -364,19 +365,18 @@ export default async function LandingPage() {
   const supabase = createClient();
   
   const [
-    { count: studentsCount },
     { count: questionsCount },
-    { count: tutorsCount }
+    { count: flashcardsCount }
   ] = await Promise.all([
-    supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'student'),
     supabase.from('questions').select('*', { count: 'exact', head: true }),
-    supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'tutor')
+    supabase.from('flashcards').select('*', { count: 'exact', head: true })
   ]);
 
   const stats = [
-    { value: studentsCount ? studentsCount.toLocaleString() : '12,400+', label: 'Students Enrolled' },
+    { value: '1,000+', label: 'Students Enrolled' },
     { value: questionsCount ? questionsCount.toLocaleString() : '5,000+', label: 'Practice Questions' },
-    { value: tutorsCount ? tutorsCount.toLocaleString() : '60+', label: 'Verified Tutors' },
+    { value: flashcardsCount ? flashcardsCount.toLocaleString() : '2,000+', label: 'Flashcards Available' },
+    { value: '800+', label: 'Revision Plans Generated' },
   ];
   return (
     <div className="min-h-screen bg-neutral-cream dark:bg-dark text-[var(--color-text)]">
@@ -497,7 +497,7 @@ export default async function LandingPage() {
           }}
         />
 
-        <div className="relative z-10 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 text-center text-white pb-6">
+        <div className="relative z-10 max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-white pb-6">
           {stats.map((stat) => (
             <div key={stat.label}>
               <p className="text-3xl font-heading font-bold text-[#F7BC55]">{stat.value}</p>
