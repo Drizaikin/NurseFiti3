@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import Link from 'next/link';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 import { DarkModeToggle } from '@/components/shared/DarkModeToggle';
 import { FeedbackWall } from '@/components/shared/FeedbackWall';
@@ -361,22 +361,22 @@ function VerificationBadge({ tier }: { tier: 'gold' | 'standard' }) {
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default async function LandingPage() {
-  const supabase = createClient();
+  const supabaseAdmin = createAdminClient();
   
   const [
     { count: studentsCount },
     { count: questionsCount },
     { count: tutorsCount }
   ] = await Promise.all([
-    supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'student'),
-    supabase.from('questions').select('*', { count: 'exact', head: true }),
-    supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'tutor')
+    supabaseAdmin.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'student'),
+    supabaseAdmin.from('questions').select('*', { count: 'exact', head: true }),
+    supabaseAdmin.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'tutor')
   ]);
 
   const stats = [
-    { value: studentsCount ? studentsCount.toLocaleString() : '12,400+', label: 'Students Enrolled' },
-    { value: questionsCount ? questionsCount.toLocaleString() : '5,000+', label: 'Practice Questions' },
-    { value: tutorsCount ? tutorsCount.toLocaleString() : '60+', label: 'Verified Tutors' },
+    { value: studentsCount !== null ? studentsCount.toLocaleString() : '12,400+', label: 'Students Enrolled' },
+    { value: questionsCount !== null ? questionsCount.toLocaleString() : '5,000+', label: 'Practice Questions' },
+    { value: tutorsCount !== null ? tutorsCount.toLocaleString() : '60+', label: 'Verified Tutors' },
   ];
 
   return (
