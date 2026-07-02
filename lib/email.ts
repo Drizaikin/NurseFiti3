@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer') as {
+﻿const nodemailer = require('nodemailer') as {
   createTransport: (options: Record<string, unknown>) => {
     sendMail: (message: {
       from: string;
@@ -95,26 +95,30 @@ const LOGO_URL = 'https://www.nursefiti.co.ke/nursefiti-logo.png';
 const ECG_SVG = '<svg width="600" height="44" viewBox="0 0 600 44" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M0,28 L55,28 L67,25 L73,18 L79,25 L95,28 L107,28 L113,32 L119,2 L125,40 L131,28 L141,33 L153,20 L161,28 L255,28 L267,25 L273,18 L279,25 L295,28 L307,28 L313,32 L319,2 L325,40 L331,28 L341,33 L353,20 L361,28 L455,28 L467,25 L473,18 L479,25 L495,28 L507,28 L513,32 L519,2 L525,40 L531,28 L541,33 L553,20 L561,28 L600,28" fill="none" stroke="#F5A623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 function emailHeader(tagline: string): string {
-  return `
-  <tr>
-    <td style="background:linear-gradient(135deg,#051F1E 0%,#08514F 45%,#0A6B68 100%);position:relative;overflow:hidden;width:600px;">
-      <!-- glow -->
-      <div style="position:absolute;top:-60px;right:-60px;width:260px;height:260px;background:radial-gradient(circle,rgba(245,166,35,0.18) 0%,transparent 65%);pointer-events:none;"></div>
-      <!-- dots -->
-      <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.05) 1px,transparent 1px);background-size:18px 18px;pointer-events:none;"></div>
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="position:relative;z-index:2;padding:28px 36px 0;">
+  return `<tr>
+    <td style="padding:0;margin:0;background:#08514F;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr><td height="140" style="background:linear-gradient(160deg,#051F1E 0%,#08514F 55%,#0A6B68 100%);font-size:0;line-height:0;">&nbsp;</td></tr>
         <tr>
-          <td style="background:white;border-radius:10px;padding:7px 16px;display:inline-block;">
-            <img src="https://nursefiti.co.ke/logo.png" alt="NurseFiti" style="height:36px;width:auto;display:block;border:0;"/>
-          </td>
-          <td style="text-align:right;">
-            <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.92);letter-spacing:0.3px;">${escapeHtml(tagline)}</div>
-            <div style="font-family:'Nunito',sans-serif;font-size:10.5px;color:#F7BC55;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;">NCK Exam Preparation Platform</div>
+          <td style="background:linear-gradient(180deg,#0A6B68 0%,#08514F 100%);padding:14px 32px 0;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="vertical-align:middle;">
+                  <div style="background:#ffffff;border-radius:10px;padding:8px 16px;display:inline-block;line-height:0;">
+                    <img src="${LOGO_URL}" alt="NurseFiti" width="110" height="33" style="display:block;border:0;" />
+                  </div>
+                </td>
+                <td style="vertical-align:middle;text-align:right;">
+                  <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.92);">${escapeHtml(tagline)}</div>
+                  <div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:700;color:#F7BC55;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;">NCK Exam Preparation Platform</div>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
+        <tr><td style="background:#08514F;padding:6px 0 0;line-height:0;">${ECG_SVG}</td></tr>
+        <tr><td height="4" style="background:linear-gradient(90deg,#F5A623 0%,#F7BC55 60%,rgba(245,166,35,0.05) 100%);font-size:0;line-height:0;">&nbsp;</td></tr>
       </table>
-      <div style="position:relative;z-index:2;margin-top:10px;">${ECG_SVG}</div>
-      <div style="height:4px;width:100%;background:linear-gradient(90deg,#F5A623 0%,#F7BC55 60%,transparent 100%);"></div>
     </td>
   </tr>`;
 }
@@ -122,38 +126,47 @@ function emailHeader(tagline: string): string {
 function emailFooter(siteUrl: string, supportEmail: string): string {
   const year = new Date().getFullYear();
   return `<tr>
-    <td style="background:#0D1C1C;padding:36px;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:24px;">
-        <tr>
-          <td width="50%" style="vertical-align:top;padding-right:20px;">
-            <div style="background:white;border-radius:7px;padding:5px 12px;display:inline-block;margin-bottom:12px;">
-              <img src="https://nursefiti.co.ke/logo.png" alt="NurseFiti" style="height:28px;width:auto;display:block;border:0;"/>
-            </div>
-            <div style="font-family:'Nunito',sans-serif;font-size:11.5px;color:rgba(255,255,255,0.45);line-height:1.6;max-width:240px;">Empowering Kenyan nurses through quality NCK exam preparation, mock exams, and performance analytics.</div>
-          </td>
-          <td width="25%" style="vertical-align:top;padding-right:16px;">
-            <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#F7BC55;margin-bottom:12px;">Platform</div>
-            <a href="${siteUrl}/questions" style="display:block;font-family:'Nunito',sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Question Bank</a>
-            <a href="${siteUrl}/mock-exam" style="display:block;font-family:'Nunito',sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Mock Exams</a>
-            <a href="${siteUrl}/analytics" style="display:block;font-family:'Nunito',sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Analytics</a>
-            <a href="${siteUrl}/flashcards" style="display:block;font-family:'Nunito',sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;">Flashcards</a>
-          </td>
-          <td width="25%" style="vertical-align:top;">
-            <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#F7BC55;margin-bottom:12px;">Support</div>
-            <a href="${siteUrl}/help" style="display:block;font-family:'Nunito',sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Help Centre</a>
-            <a href="https://wa.me/254700000000" style="display:block;font-family:'Nunito',sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">WhatsApp Community</a>
-            <a href="mailto:${supportEmail}" style="display:block;font-family:'Nunito',sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;">${supportEmail}</a>
-          </td>
-        </tr>
-      </table>
+    <td style="padding:0;">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr><td height="4" style="background:linear-gradient(90deg,#F5A623 0%,#F7BC55 60%,rgba(245,166,35,0.05) 100%);font-size:0;line-height:0;">&nbsp;</td></tr>
         <tr>
-          <td style="vertical-align:middle;">
-            <div style="font-family:'Nunito',sans-serif;font-size:11px;color:rgba(255,255,255,0.3);line-height:1.5;">&copy; ${year} NurseFiti &middot; Nairobi, Kenya<br/>You received this because you created an account at nursefiti.co.ke</div>
-          </td>
-          <td style="vertical-align:middle;text-align:right;">
-            <a href="${siteUrl}/unsubscribe" style="font-family:'Nunito',sans-serif;font-size:11px;color:rgba(255,255,255,0.3);text-decoration:underline;margin-right:12px;">Unsubscribe</a>
-            <a href="${siteUrl}/email-preferences" style="font-family:'Nunito',sans-serif;font-size:11px;color:rgba(255,255,255,0.3);text-decoration:underline;">Email Preferences</a>
+          <td style="background:#0D1C1C;padding:28px 32px 20px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td width="40%" style="vertical-align:top;padding-right:12px;">
+                  <div style="background:#ffffff;border-radius:7px;padding:6px 14px;display:inline-block;line-height:0;margin-bottom:10px;">
+                    <img src="${LOGO_URL}" alt="NurseFiti" width="90" height="27" style="display:block;border:0;" />
+                  </div>
+                  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:rgba(255,255,255,0.45);line-height:1.65;max-width:200px;">Empowering Kenyan nurses through quality NCK exam preparation, mock exams, and performance analytics.</div>
+                </td>
+                <td width="30%" style="vertical-align:top;padding-right:12px;">
+                  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#F7BC55;margin-bottom:12px;">Platform</div>
+                  <a href="${siteUrl}/questions" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Question Bank</a>
+                  <a href="${siteUrl}/mock-exam" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Mock Exams</a>
+                  <a href="${siteUrl}/analytics" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Analytics</a>
+                  <a href="${siteUrl}/flashcards" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;">Flashcards</a>
+                </td>
+                <td width="30%" style="vertical-align:top;">
+                  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#F7BC55;margin-bottom:12px;">Support</div>
+                  <a href="${siteUrl}/help" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Help Centre</a>
+                  <a href="https://wa.me/254700000000" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">WhatsApp Community</a>
+                  <a href="mailto:${supportEmail}" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;">${supportEmail}</a>
+                </td>
+              </tr>
+              <tr><td colspan="5" height="1" style="background:rgba(255,255,255,0.08);font-size:0;padding-top:20px;">&nbsp;</td></tr>
+            </table>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr><td height="16" style="font-size:0;">&nbsp;</td></tr>
+              <tr>
+                <td style="vertical-align:middle;">
+                  <div style="font-family:Arial,Helvetica,sans-serif;font-size:10.5px;color:rgba(255,255,255,0.3);line-height:1.5;">&copy; ${year} NurseFiti &middot; Nairobi, Kenya<br/>You received this because you created an account at nursefiti.co.ke</div>
+                </td>
+                <td style="vertical-align:middle;text-align:right;">
+                  <a href="${siteUrl}/unsubscribe" style="font-family:Arial,Helvetica,sans-serif;font-size:10.5px;color:rgba(255,255,255,0.3);text-decoration:underline;margin-right:10px;">Unsubscribe</a>
+                  <a href="${siteUrl}/email-preferences" style="font-family:Arial,Helvetica,sans-serif;font-size:10.5px;color:rgba(255,255,255,0.3);text-decoration:underline;">Email Preferences</a>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
       </table>
@@ -170,16 +183,11 @@ function emailWrapper(bodyRows: string, tagline = 'Preparing Nurses for Success'
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <meta name="x-apple-disable-message-reformatting"/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<style>
-  *{box-sizing:border-box;}
-  body{margin:0;padding:0;background-color:#E8F4F3;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;font-family:'Nunito',sans-serif;color:#1E3535;}
-</style>
 </head>
 <body style="margin:0;padding:0;background-color:#E8F4F3;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#E8F4F3;">
 <tr><td align="center" style="padding:24px 16px;">
-<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background-color:#F2FAFA;border-radius:4px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);box-shadow:0 8px 40px rgba(0,0,0,0.2);">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background-color:#ffffff;">
 ${emailHeader(tagline)}
 ${bodyRows}
 ${emailFooter(siteUrl, supportEmail)}
@@ -220,10 +228,10 @@ export async function sendEmail(
 
 function buildGenericHtml(title: string, body: string): string {
   const rows = body.split('\n').map(l =>
-    `<tr><td style="font-family:'Nunito',sans-serif;font-size:14px;color:#1E3535;line-height:1.75;padding:0 0 6px;">${escapeHtml(l) || '&nbsp;'}</td></tr>`
+    `<tr><td style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#1E3535;line-height:1.75;padding:0 0 6px;">${escapeHtml(l) || '&nbsp;'}</td></tr>`
   ).join('');
   return emailWrapper(`<tr><td style="padding:32px 36px;">
-    <h2 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:#08514F;margin:0 0 18px;">${escapeHtml(title)}</h2>
+    <h2 style="font-family:Arial,Helvetica,sans-serif;font-size:20px;font-weight:700;color:#08514F;margin:0 0 18px;">${escapeHtml(title)}</h2>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">${rows}</table>
   </td></tr>`);
 }
@@ -266,141 +274,122 @@ function buildWelcomeHtml(firstName: string, loginUrl: string): string {
   const n = escapeHtml(firstName);
   const siteUrl = getSiteUrl();
   return emailWrapper(`
-  <tr>
-    <td style="background:linear-gradient(135deg,#E4F2F1 0%,#F2FAFA 100%);padding:32px 36px 28px;border-bottom:1px solid #D0E8E7;">
-      <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:10px;">Welcome to NurseFiti</div>
-      <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#08514F;line-height:1.2;margin-bottom:8px;">
-        You're in, ${n}. <br/>Let's get you <span style="color:#F5A623;">NCK-ready.</span>
-      </div>
-      <div style="font-family:'Nunito',sans-serif;font-size:14px;color:#4A6868;line-height:1.7;max-width:440px;">
-        Thousands of Kenyan nurses have used NurseFiti to walk into their NCK examinations prepared and confident. Your journey starts right now.
-      </div>
-    </td>
-  </tr>
-  <tr>
-    <td style="background:white;padding:32px 36px;">
-      <!-- 3 feature cards row -->
-      <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:#0A6B68;margin-bottom:14px;">What's waiting for you</div>
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
-        <tr>
-          <td width="32%" style="vertical-align:top;padding-right:8px;">
-            <div style="background:#F2FAFA;border:1.5px solid #D0E8E7;border-top:3px solid #08514F;border-radius:10px;padding:16px 14px;">
-              <div style="font-size:22px;margin-bottom:8px;">📚</div>
-              <div style="font-family:'Syne',sans-serif;font-size:12.5px;font-weight:700;color:#08514F;margin-bottom:5px;">Question Bank</div>
-              <div style="font-family:'Nunito',sans-serif;font-size:11.5px;color:#4A6868;line-height:1.55;">2,400+ past-paper NCK questions with detailed answers and rationales.</div>
-            </div>
-          </td>
-          <td width="4%"></td>
-          <td width="32%" style="vertical-align:top;padding-right:8px;">
-            <div style="background:#F2FAFA;border:1.5px solid #D0E8E7;border-top:3px solid #F5A623;border-radius:10px;padding:16px 14px;">
-              <div style="font-size:22px;margin-bottom:8px;">📝</div>
-              <div style="font-family:'Syne',sans-serif;font-size:12.5px;font-weight:700;color:#08514F;margin-bottom:5px;">Mock Exams</div>
-              <div style="font-family:'Nunito',sans-serif;font-size:11.5px;color:#4A6868;line-height:1.55;">Timed, full-length mock exams that mirror the real NCK format exactly.</div>
-            </div>
-          </td>
-          <td width="4%"></td>
-          <td width="32%" style="vertical-align:top;">
-            <div style="background:#F2FAFA;border:1.5px solid #D0E8E7;border-top:3px solid #0A6B68;border-radius:10px;padding:16px 14px;">
-              <div style="font-size:22px;margin-bottom:8px;">📊</div>
-              <div style="font-family:'Syne',sans-serif;font-size:12.5px;font-weight:700;color:#08514F;margin-bottom:5px;">Analytics</div>
-              <div style="font-family:'Nunito',sans-serif;font-size:11.5px;color:#4A6868;line-height:1.55;">Know exactly which topics to focus on with your personal performance insights.</div>
-            </div>
-          </td>
-        </tr>
-      </table>
-
-      <!-- DIVIDER -->
-      <div style="height:1px;background:#D5E8E8;margin-bottom:24px;"></div>
-
-      <!-- GETTING STARTED -->
-      <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:#0A6B68;margin-bottom:14px;">Your first 3 steps</div>
-
-      <!-- Step 1 -->
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
-        <tr>
-          <td width="36" style="vertical-align:top;padding-top:1px;">
-            <div style="width:28px;height:28px;background:#08514F;border-radius:50%;text-align:center;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:white;line-height:28px;">1</div>
-          </td>
-          <td style="padding-left:12px;vertical-align:top;">
-            <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#08514F;margin-bottom:3px;">Complete your profile</div>
-            <div style="font-family:'Nunito',sans-serif;font-size:13px;color:#4A6868;line-height:1.6;">Tell us your cadre (BScN, KRCHN, Higher Diploma) and your exam date &mdash; we use this to personalise your revision plan.</div>
-          </td>
-        </tr>
-      </table>
-      <!-- Step 2 -->
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
-        <tr>
-          <td width="36" style="vertical-align:top;padding-top:1px;">
-            <div style="width:28px;height:28px;background:#08514F;border-radius:50%;text-align:center;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:white;line-height:28px;">2</div>
-          </td>
-          <td style="padding-left:12px;vertical-align:top;">
-            <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#08514F;margin-bottom:3px;">Run your diagnostic mock</div>
-            <div style="font-family:'Nunito',sans-serif;font-size:13px;color:#4A6868;line-height:1.6;">A short 30-question exam that maps your strengths and weak spots so you study the right things from day one.</div>
-          </td>
-        </tr>
-      </table>
-      <!-- Step 3 -->
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;">
-        <tr>
-          <td width="36" style="vertical-align:top;padding-top:1px;">
-            <div style="width:28px;height:28px;background:#08514F;border-radius:50%;text-align:center;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:white;line-height:28px;">3</div>
-          </td>
-          <td style="padding-left:12px;vertical-align:top;">
-            <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#08514F;margin-bottom:3px;">Build your revision streak</div>
-            <div style="font-family:'Nunito',sans-serif;font-size:13px;color:#4A6868;line-height:1.6;">Even 20 minutes a day compounds fast. Use our spaced-repetition flashcards to lock in your weak areas.</div>
-          </td>
-        </tr>
-      </table>
-
-      <!-- PRIMARY CTA -->
-      <div style="text-align:center;margin-bottom:28px;">
-        <a href="${loginUrl}" style="display:inline-block;background:#08514F;color:white;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;padding:15px 36px;border-radius:8px;text-decoration:none;letter-spacing:0.3px;border-bottom:3px solid #051F1E;">Go to My Dashboard &rarr;</a>
-      </div>
-
-      <!-- DIVIDER -->
-      <div style="height:1px;background:#D5E8E8;margin-bottom:24px;"></div>
-
-      <!-- UPGRADE NUDGE CARD -->
-      <div style="background:linear-gradient(135deg,#08514F 0%,#0A6B68 100%);border-radius:12px;padding:22px 24px;margin-bottom:24px;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:rgba(245,166,35,0.12);border-radius:50%;pointer-events:none;"></div>
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="position:relative;z-index:2;">
-          <tr>
-            <td style="vertical-align:top;">
-              <div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#F7BC55;margin-bottom:6px;">Unlock Everything</div>
-              <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:white;margin-bottom:6px;line-height:1.3;">Upgrade to Premium</div>
-              <div style="font-family:'Nunito',sans-serif;font-size:12.5px;color:rgba(255,255,255,0.7);line-height:1.6;">Unlimited mock exams, full question bank access, and in-depth analytics. Pay once via M-Pesa &mdash; no subscription needed.</div>
-            </td>
-            <td width="120" style="vertical-align:middle;text-align:right;padding-left:16px;">
-              <a href="${siteUrl}/pricing" style="display:inline-block;background:#F5A623;color:#051F1E;font-family:'Syne',sans-serif;font-size:12px;font-weight:800;padding:11px 20px;border-radius:8px;text-decoration:none;white-space:nowrap;border-bottom:3px solid #C7841A;">See Plans</a>
-            </td>
-          </tr>
+<tr><td style="padding:36px 36px 20px;">
+  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:10px;">Welcome to NurseFiti</div>
+  <h1 style="font-family:Arial,Helvetica,sans-serif;font-size:28px;font-weight:800;color:#08514F;line-height:1.2;margin:0 0 14px;">You&#39;re in, ${n}.<br/>Let&#39;s get you <span style="color:#F5A623;">NCK-ready.</span></h1>
+  <p style="font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#1E3535;line-height:1.75;margin:0;">Thousands of Kenyan nurses have used NurseFiti to walk into their NCK examinations prepared and confident. Your journey starts right now.</p>
+</td></tr>
+<tr><td style="padding:0 36px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td height="1" style="background:#D5E8E8;font-size:0;">&nbsp;</td></tr></table></td></tr>
+<tr><td style="padding:22px 36px 0;">
+  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:16px;">What&#39;s Waiting for You</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td width="32%" style="vertical-align:top;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1.5px solid #D0E8E7;border-top:3px solid #08514F;border-radius:10px;background:#F2FAFA;">
+          <tr><td style="padding:16px 14px;">
+            <div style="font-size:24px;margin-bottom:8px;">&#x1F4DA;</div>
+            <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#08514F;margin-bottom:5px;">Question Bank</div>
+            <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4A6868;line-height:1.55;">2,400+ past-paper NCK questions with detailed answers and rationales.</div>
+          </td></tr>
         </table>
-      </div>
-
-      <!-- SIGN OFF -->
-      <div style="font-family:'Nunito',sans-serif;font-size:14px;color:#4A6868;line-height:1.75;margin-bottom:20px;">
-        We're genuinely glad you're here, ${n}. If you have any questions about the platform or need help getting started, reply to this email &mdash; a real person will get back to you.
-      </div>
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:2px solid #D0E8E7;">
-        <tr><td height="18" style="font-size:0;">&nbsp;</td></tr>
-        <tr>
-          <td>
-            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td width="42" style="vertical-align:middle;">
-                  <div style="width:42px;height:42px;background:linear-gradient(135deg,#08514F,#0A6B68);border-radius:50%;text-align:center;line-height:42px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:white;">NF</div>
-                </td>
-                <td style="padding-left:14px;vertical-align:middle;">
-                  <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#08514F;">The NurseFiti Team</div>
-                  <div style="font-family:'Nunito',sans-serif;font-size:11.5px;color:#4A6868;margin-top:2px;">support@nursefiti.co.ke &middot; nursefiti.co.ke</div>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
+      </td>
+      <td width="2%" style="font-size:0;">&nbsp;</td>
+      <td width="32%" style="vertical-align:top;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1.5px solid #D0E8E7;border-top:3px solid #F5A623;border-radius:10px;background:#F2FAFA;">
+          <tr><td style="padding:16px 14px;">
+            <div style="font-size:24px;margin-bottom:8px;">&#x1F4DD;</div>
+            <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#08514F;margin-bottom:5px;">Mock Exams</div>
+            <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4A6868;line-height:1.55;">Timed, full-length mock exams that mirror the real NCK format exactly.</div>
+          </td></tr>
+        </table>
+      </td>
+      <td width="2%" style="font-size:0;">&nbsp;</td>
+      <td width="32%" style="vertical-align:top;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1.5px solid #D0E8E7;border-top:3px solid #0A6B68;border-radius:10px;background:#F2FAFA;">
+          <tr><td style="padding:16px 14px;">
+            <div style="font-size:24px;margin-bottom:8px;">&#x1F4CA;</div>
+            <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#08514F;margin-bottom:5px;">Analytics</div>
+            <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4A6868;line-height:1.55;">Know exactly which topics to focus on with your personal performance insights.</div>
+          </td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</td></tr>
+<tr><td style="padding:0 36px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:22px;"><tr><td height="1" style="background:#D5E8E8;font-size:0;">&nbsp;</td></tr></table></td></tr>
+<tr><td style="padding:22px 36px 0;">
+  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:16px;">Your First 3 Steps</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:14px;"><tr>
+    <td width="36" style="vertical-align:top;padding-top:2px;">
+      <table cellpadding="0" cellspacing="0" border="0"><tr><td width="28" height="28" align="center" valign="middle" style="background:#08514F;border-radius:50%;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:800;color:#ffffff;line-height:28px;text-align:center;">1</td></tr></table>
     </td>
-  </tr>`);
+    <td style="padding-left:12px;vertical-align:top;">
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:13.5px;font-weight:700;color:#08514F;margin-bottom:3px;">Complete your profile</div>
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#4A6868;line-height:1.6;">Tell us your cadre (BScN, KRCHN, Higher Diploma) and your exam date &mdash; we use this to personalise your revision plan.</div>
+    </td>
+  </tr></table>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:14px;"><tr>
+    <td width="36" style="vertical-align:top;padding-top:2px;">
+      <table cellpadding="0" cellspacing="0" border="0"><tr><td width="28" height="28" align="center" valign="middle" style="background:#08514F;border-radius:50%;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:800;color:#ffffff;line-height:28px;text-align:center;">2</td></tr></table>
+    </td>
+    <td style="padding-left:12px;vertical-align:top;">
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:13.5px;font-weight:700;color:#08514F;margin-bottom:3px;">Run your diagnostic mock</div>
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#4A6868;line-height:1.6;">A short 30-question exam that maps your strengths and weak spots so you study the right things from day one.</div>
+    </td>
+  </tr></table>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:22px;"><tr>
+    <td width="36" style="vertical-align:top;padding-top:2px;">
+      <table cellpadding="0" cellspacing="0" border="0"><tr><td width="28" height="28" align="center" valign="middle" style="background:#08514F;border-radius:50%;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:800;color:#ffffff;line-height:28px;text-align:center;">3</td></tr></table>
+    </td>
+    <td style="padding-left:12px;vertical-align:top;">
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:13.5px;font-weight:700;color:#08514F;margin-bottom:3px;">Build your revision streak</div>
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#4A6868;line-height:1.6;">Even 20 minutes a day compounds fast. Use our spaced-repetition flashcards to lock in your weak areas.</div>
+    </td>
+  </tr></table>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
+    <tr><td align="center">
+      <a href="${loginUrl}" style="display:block;background:#08514F;color:#ffffff;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:700;text-align:center;text-decoration:none;padding:16px 36px;border-radius:8px;border-bottom:3px solid #051F1E;">Go to My Dashboard &rarr;</a>
+    </td></tr>
+  </table>
+</td></tr>
+<tr><td style="padding:0 36px 24px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:linear-gradient(135deg,#08514F 0%,#0A6B68 100%);border-radius:10px;">
+    <tr><td style="padding:22px 24px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td style="vertical-align:middle;">
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#F7BC55;margin-bottom:6px;">Unlock Everything</div>
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:700;color:#ffffff;margin-bottom:6px;line-height:1.3;">Upgrade to Premium</div>
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.75);line-height:1.6;">Unlimited mock exams, full question bank access, and in-depth analytics. Pay once via M-Pesa &mdash; no subscription needed.</div>
+        </td>
+        <td width="110" style="vertical-align:middle;text-align:right;padding-left:16px;">
+          <a href="${siteUrl}/pricing" style="display:inline-block;background:#F5A623;color:#051F1E;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:800;padding:12px 20px;border-radius:8px;text-decoration:none;white-space:nowrap;border-bottom:3px solid #C7841A;">See Plans</a>
+        </td>
+      </tr></table>
+    </td></tr>
+  </table>
+</td></tr>
+<tr><td style="padding:0 36px 20px;">
+  <p style="font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#4A6868;line-height:1.75;margin:0;">We&#39;re genuinely glad you&#39;re here, ${n}. If you have any questions about the platform or need help getting started, reply to this email &mdash; a real person will get back to you.</p>
+</td></tr>
+<tr><td style="padding:0 36px 32px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:0;">
+    <tr><td height="1" style="background:#D5E8E8;font-size:0;">&nbsp;</td></tr>
+    <tr><td height="20" style="font-size:0;">&nbsp;</td></tr>
+    <tr>
+      <td>
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+          <td width="52" style="vertical-align:middle;">
+            <table cellpadding="0" cellspacing="0" border="0"><tr><td width="44" height="44" align="center" valign="middle" style="background:linear-gradient(135deg,#08514F,#0A6B68);border-radius:50%;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:800;color:#ffffff;line-height:44px;text-align:center;">NF</td></tr></table>
+          </td>
+          <td style="padding-left:14px;vertical-align:middle;">
+            <div style="font-family:Arial,Helvetica,sans-serif;font-size:13.5px;font-weight:700;color:#08514F;">The NurseFiti Team</div>
+            <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4A6868;margin-top:2px;">support@nursefiti.co.ke &middot; nursefiti.co.ke</div>
+          </td>
+        </tr></table>
+      </td>
+    </tr>
+  </table>
+</td></tr>`);
 }
 
 export async function sendWelcomeEmail(params: WelcomeEmailParams): Promise<MailResult> {
@@ -428,8 +417,8 @@ support@nursefiti.co.ke`;
 function detailsTable(rows: Array<[string, string]>): string {
   return rows.map(([label, value]) => `
     <tr>
-      <td style="font-family:'Nunito',sans-serif;font-size:13px;color:#4A6868;padding-bottom:10px;width:140px;">${escapeHtml(label)}</td>
-      <td style="font-family:'Nunito',sans-serif;font-size:13px;color:#1E3535;font-weight:600;padding-bottom:10px;">${escapeHtml(value)}</td>
+      <td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#4A6868;padding-bottom:10px;width:140px;">${escapeHtml(label)}</td>
+      <td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;font-weight:600;padding-bottom:10px;">${escapeHtml(value)}</td>
     </tr>`).join('');
 }
 
@@ -437,31 +426,31 @@ function buildSubscriptionHtml(params: SubscriptionEmailParams, dashboardUrl: st
   const n = escapeHtml(params.firstName);
   return emailWrapper(`
 <tr><td style="padding:36px 36px 24px;">
-  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:10px;">Payment Confirmed</div>
-  <h2 style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#08514F;margin:0 0 12px;">Your subscription is <span style="color:#F5A623;">active</span>, ${n}.</h2>
-  <p style="font-family:'Nunito',sans-serif;font-size:14.5px;color:#1E3535;line-height:1.75;margin:0 0 22px;">You now have full access to all features included in your plan. Start studying smarter today.</p>
+  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:10px;">Payment Confirmed</div>
+  <h2 style="font-family:Arial,Helvetica,sans-serif;font-size:24px;font-weight:800;color:#08514F;margin:0 0 12px;">Your subscription is <span style="color:#F5A623;">active</span>, ${n}.</h2>
+  <p style="font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#1E3535;line-height:1.75;margin:0 0 22px;">You now have full access to all features included in your plan. Start studying smarter today.</p>
   <div style="background:#F2FAFA;border:1.5px solid #D0E8E7;border-left:4px solid #08514F;border-radius:10px;padding:20px 22px;margin-bottom:20px;">
-    <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0A6B68;margin-bottom:12px;">Subscription Details</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0A6B68;margin-bottom:12px;">Subscription Details</div>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
       ${detailsTable([['Plan', params.planName], ['Amount Paid', params.amount], ['Activation Date', params.startDate], ['Expiry Date', params.endDate], ['Transaction Ref', params.transactionId]])}
     </table>
   </div>
   <div style="background:#FFF8EA;border:1.5px solid rgba(245,166,35,0.2);border-left:4px solid #F5A623;border-radius:10px;padding:16px 20px;margin-bottom:24px;">
-    <div style="font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:#C7841A;margin-bottom:4px;">What&#39;s Included</div>
-    <div style="font-family:'Nunito',sans-serif;font-size:13px;color:#1E3535;line-height:1.65;">Unlimited mock exams &middot; Full question bank &middot; Detailed analytics &middot; AI tutor assistance &middot; Spaced-repetition flashcards</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;color:#C7841A;margin-bottom:4px;">What&#39;s Included</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;line-height:1.65;">Unlimited mock exams &middot; Full question bank &middot; Detailed analytics &middot; AI tutor assistance &middot; Spaced-repetition flashcards</div>
   </div>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
-    <tr><td align="center"><a href="${dashboardUrl}" style="display:inline-block;background:#08514F;color:#ffffff;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;padding:15px 40px;border-radius:8px;text-decoration:none;border-bottom:3px solid #051F1E;">Go to Dashboard &rarr;</a></td></tr>
+    <tr><td align="center"><a href="${dashboardUrl}" style="display:inline-block;background:#08514F;color:#ffffff;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;padding:15px 40px;border-radius:8px;text-decoration:none;border-bottom:3px solid #051F1E;">Go to Dashboard &rarr;</a></td></tr>
   </table>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:8px;">
     <tr><td height="1" style="background:#D5E8E8;font-size:0;">&nbsp;</td></tr>
     <tr><td height="16" style="font-size:0;">&nbsp;</td></tr>
     <tr><td>
       <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
-        <td width="52" style="vertical-align:middle;"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="44" height="44" align="center" valign="middle" style="background:linear-gradient(135deg,#08514F,#0A6B68);border-radius:50%;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;color:#ffffff;line-height:44px;text-align:center;">NF</td></tr></table></td>
+        <td width="52" style="vertical-align:middle;"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="44" height="44" align="center" valign="middle" style="background:linear-gradient(135deg,#08514F,#0A6B68);border-radius:50%;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:800;color:#ffffff;line-height:44px;text-align:center;">NF</td></tr></table></td>
         <td style="padding-left:14px;vertical-align:middle;">
-          <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#08514F;">The NurseFiti Team</div>
-          <div style="font-family:'Nunito',sans-serif;font-size:12px;color:#4A6868;margin-top:2px;">Thank you for trusting NurseFiti as your learning partner.</div>
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#08514F;">The NurseFiti Team</div>
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4A6868;margin-top:2px;">Thank you for trusting NurseFiti as your learning partner.</div>
         </td>
       </tr></table>
     </td></tr>
@@ -493,15 +482,15 @@ The NurseFiti Team`;
 
 function sessionDetailsCard(rows: Array<[string, string]>): string {
   return `<div style="background:#F2FAFA;border:1.5px solid #D0E8E7;border-left:4px solid #08514F;border-radius:10px;padding:20px 22px;margin-bottom:18px;">
-    <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0A6B68;margin-bottom:12px;">Session Details</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0A6B68;margin-bottom:12px;">Session Details</div>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">${detailsTable(rows)}</table>
   </div>`;
 }
 
 function meetingLinkCard(link: string): string {
   return `<div style="background:#FFF8EA;border:1.5px solid rgba(245,166,35,0.2);border-left:4px solid #F5A623;border-radius:10px;padding:16px 20px;margin-bottom:20px;">
-    <div style="font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:#C7841A;margin-bottom:4px;">Meeting Link</div>
-    <a href="${escapeHtml(link)}" style="font-family:'Nunito',sans-serif;font-size:13px;color:#08514F;font-weight:600;word-break:break-all;text-decoration:none;">${escapeHtml(link)}</a>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;color:#C7841A;margin-bottom:4px;">Meeting Link</div>
+    <a href="${escapeHtml(link)}" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#08514F;font-weight:600;word-break:break-all;text-decoration:none;">${escapeHtml(link)}</a>
   </div>`;
 }
 
@@ -511,10 +500,10 @@ function nfSignature(subtitle: string): string {
     <tr><td height="16" style="font-size:0;">&nbsp;</td></tr>
     <tr><td>
       <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
-        <td width="52" style="vertical-align:middle;"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="44" height="44" align="center" valign="middle" style="background:linear-gradient(135deg,#08514F,#0A6B68);border-radius:50%;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;color:#ffffff;line-height:44px;text-align:center;">NF</td></tr></table></td>
+        <td width="52" style="vertical-align:middle;"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="44" height="44" align="center" valign="middle" style="background:linear-gradient(135deg,#08514F,#0A6B68);border-radius:50%;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:800;color:#ffffff;line-height:44px;text-align:center;">NF</td></tr></table></td>
         <td style="padding-left:14px;vertical-align:middle;">
-          <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#08514F;">The NurseFiti Team</div>
-          <div style="font-family:'Nunito',sans-serif;font-size:12px;color:#4A6868;margin-top:2px;">${escapeHtml(subtitle)}</div>
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#08514F;">The NurseFiti Team</div>
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4A6868;margin-top:2px;">${escapeHtml(subtitle)}</div>
         </td>
       </tr></table>
     </td></tr>
@@ -526,7 +515,7 @@ function ctaButton(href: string, label: string, amber = false): string {
   const fg = amber ? '#051F1E' : '#ffffff';
   const border = amber ? '#C7841A' : '#051F1E';
   return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
-    <tr><td align="center"><a href="${escapeHtml(href)}" style="display:inline-block;background:${bg};color:${fg};font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;padding:15px 40px;border-radius:8px;text-decoration:none;border-bottom:3px solid ${border};">${escapeHtml(label)} &rarr;</a></td></tr>
+    <tr><td align="center"><a href="${escapeHtml(href)}" style="display:inline-block;background:${bg};color:${fg};font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;padding:15px 40px;border-radius:8px;text-decoration:none;border-bottom:3px solid ${border};">${escapeHtml(label)} &rarr;</a></td></tr>
   </table>`;
 }
 
@@ -537,9 +526,9 @@ export async function sendSessionBookingEmails(params: SessionEmailParams): Prom
 
   const studentHtml = emailWrapper(`
 <tr><td style="padding:36px 36px 24px;">
-  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">Session Confirmed</div>
-  <h2 style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:800;color:#08514F;margin:0 0 12px;">Your session is booked, ${escapeHtml(params.studentName)}! &#x2705;</h2>
-  <p style="font-family:'Nunito',sans-serif;font-size:14px;color:#1E3535;line-height:1.75;margin:0 0 20px;">Your tutor session has been successfully confirmed. Please join a few minutes early.</p>
+  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">Session Confirmed</div>
+  <h2 style="font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:800;color:#08514F;margin:0 0 12px;">Your session is booked, ${escapeHtml(params.studentName)}! &#x2705;</h2>
+  <p style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#1E3535;line-height:1.75;margin:0 0 20px;">Your tutor session has been successfully confirmed. Please join a few minutes early.</p>
   ${sessionDetailsCard([['Tutor', params.tutorName], ['Subject', params.subject], ['Date', params.sessionDate], ['Time', params.sessionTime], ['Duration', params.duration], ['Booking Ref', params.bookingId]])}
   ${meetingLinkCard(params.meetingLink)}
   ${ctaButton(params.meetingLink, 'Join Session', true)}
@@ -548,9 +537,9 @@ export async function sendSessionBookingEmails(params: SessionEmailParams): Prom
 
   const tutorHtml = emailWrapper(`
 <tr><td style="padding:36px 36px 24px;">
-  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">New Booking</div>
-  <h2 style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:800;color:#08514F;margin:0 0 12px;">New session booked, ${escapeHtml(params.tutorName)}!</h2>
-  <p style="font-family:'Nunito',sans-serif;font-size:14px;color:#1E3535;line-height:1.75;margin:0 0 20px;">A new tutoring session has been booked and payment confirmed. Please prepare accordingly.</p>
+  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">New Booking</div>
+  <h2 style="font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:800;color:#08514F;margin:0 0 12px;">New session booked, ${escapeHtml(params.tutorName)}!</h2>
+  <p style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#1E3535;line-height:1.75;margin:0 0 20px;">A new tutoring session has been booked and payment confirmed. Please prepare accordingly.</p>
   ${sessionDetailsCard([['Student', params.studentName], ['Subject', params.subject], ['Date', params.sessionDate], ['Time', params.sessionTime], ['Duration', params.duration], ['Booking ID', params.bookingId]])}
   ${ctaButton(tutorDashboardUrl, 'View in Dashboard')}
   ${nfSignature('Thank you for being part of NurseFiti and helping students succeed.')}
@@ -570,9 +559,9 @@ export async function sendSessionBookingEmails(params: SessionEmailParams): Prom
 export async function sendSessionReminderEmail(params: SessionEmailParams, timeUntil: string): Promise<MailResult[]> {
   const studentHtml = emailWrapper(`
 <tr><td style="padding:36px 36px 24px;">
-  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">Session Reminder</div>
-  <h2 style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:800;color:#08514F;margin:0 0 12px;">&#x23F0; Your session starts in <span style="color:#F5A623;">${escapeHtml(timeUntil)}</span></h2>
-  <p style="font-family:'Nunito',sans-serif;font-size:14px;color:#1E3535;line-height:1.75;margin:0 0 20px;">Hi ${escapeHtml(params.studentName)}, your session is coming up. Make sure you&#39;re in a quiet environment with a stable connection.</p>
+  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">Session Reminder</div>
+  <h2 style="font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:800;color:#08514F;margin:0 0 12px;">&#x23F0; Your session starts in <span style="color:#F5A623;">${escapeHtml(timeUntil)}</span></h2>
+  <p style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#1E3535;line-height:1.75;margin:0 0 20px;">Hi ${escapeHtml(params.studentName)}, your session is coming up. Make sure you&#39;re in a quiet environment with a stable connection.</p>
   ${sessionDetailsCard([['Tutor', params.tutorName], ['Subject', params.subject], ['Date', params.sessionDate], ['Time', params.sessionTime], ['Duration', params.duration]])}
   ${meetingLinkCard(params.meetingLink)}
   ${ctaButton(params.meetingLink, 'Join Now', true)}
@@ -581,9 +570,9 @@ export async function sendSessionReminderEmail(params: SessionEmailParams, timeU
 
   const tutorHtml = emailWrapper(`
 <tr><td style="padding:36px 36px 24px;">
-  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">Session Reminder</div>
-  <h2 style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:800;color:#08514F;margin:0 0 12px;">&#x23F0; Your session starts in <span style="color:#F5A623;">${escapeHtml(timeUntil)}</span></h2>
-  <p style="font-family:'Nunito',sans-serif;font-size:14px;color:#1E3535;line-height:1.75;margin:0 0 20px;">Hi ${escapeHtml(params.tutorName)}, your session with ${escapeHtml(params.studentName)} is starting soon. Please join on time.</p>
+  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">Session Reminder</div>
+  <h2 style="font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:800;color:#08514F;margin:0 0 12px;">&#x23F0; Your session starts in <span style="color:#F5A623;">${escapeHtml(timeUntil)}</span></h2>
+  <p style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#1E3535;line-height:1.75;margin:0 0 20px;">Hi ${escapeHtml(params.tutorName)}, your session with ${escapeHtml(params.studentName)} is starting soon. Please join on time.</p>
   ${sessionDetailsCard([['Student', params.studentName], ['Subject', params.subject], ['Date', params.sessionDate], ['Time', params.sessionTime], ['Duration', params.duration]])}
   ${meetingLinkCard(params.meetingLink)}
   ${ctaButton(params.meetingLink, 'Join Session')}
@@ -616,24 +605,24 @@ export async function sendScholarshipWelcomeEmail(params: ScholarshipWelcomeEmai
 
   const html = emailWrapper(`
 <tr><td style="padding:36px 36px 24px;">
-  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">Scholarship Award</div>
-  <h2 style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#08514F;margin:0 0 12px;">Congratulations, ${n}! &#x1F393;</h2>
-  <p style="font-family:'Nunito',sans-serif;font-size:14.5px;color:#1E3535;line-height:1.75;margin:0 0 22px;">You have been selected as a beneficiary of the <strong style="color:#08514F;">${escapeHtml(params.campaignName)}</strong>. This is a tremendous opportunity to accelerate your NCK preparation.</p>
+  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">Scholarship Award</div>
+  <h2 style="font-family:Arial,Helvetica,sans-serif;font-size:24px;font-weight:800;color:#08514F;margin:0 0 12px;">Congratulations, ${n}! &#x1F393;</h2>
+  <p style="font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#1E3535;line-height:1.75;margin:0 0 22px;">You have been selected as a beneficiary of the <strong style="color:#08514F;">${escapeHtml(params.campaignName)}</strong>. This is a tremendous opportunity to accelerate your NCK preparation.</p>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:linear-gradient(135deg,#08514F 0%,#0A6B68 100%);border-radius:12px;margin-bottom:22px;">
     <tr><td style="padding:22px 24px;">
-      <div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#F7BC55;margin-bottom:6px;">Scholarship Award</div>
-      <div style="font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;color:#ffffff;margin-bottom:4px;">${escapeHtml(scholarshipType)} &mdash; 90 Days</div>
-      <div style="font-family:'Nunito',sans-serif;font-size:12.5px;color:rgba(255,255,255,0.75);">Sponsored by <strong style="color:#F7BC55;">${escapeHtml(params.sponsorName)}</strong></div>
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#F7BC55;margin-bottom:6px;">Scholarship Award</div>
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:700;color:#ffffff;margin-bottom:4px;">${escapeHtml(scholarshipType)} &mdash; 90 Days</div>
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.75);">Sponsored by <strong style="color:#F7BC55;">${escapeHtml(params.sponsorName)}</strong></div>
     </td></tr>
   </table>
   <div style="background:#F2FAFA;border:1.5px solid #D0E8E7;border-left:4px solid #08514F;border-radius:10px;padding:20px 22px;margin-bottom:22px;">
-    <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0A6B68;margin-bottom:12px;">What You Now Have Access To</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0A6B68;margin-bottom:12px;">What You Now Have Access To</div>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-      <tr><td style="font-size:13px;color:#4A6868;padding-bottom:8px;width:20px;">&#x2705;</td><td style="font-family:'Nunito',sans-serif;font-size:13px;color:#1E3535;padding-bottom:8px;padding-left:8px;">Unlimited mock exams mirroring the real NCK format</td></tr>
-      <tr><td style="font-size:13px;color:#4A6868;padding-bottom:8px;">&#x2705;</td><td style="font-family:'Nunito',sans-serif;font-size:13px;color:#1E3535;padding-bottom:8px;padding-left:8px;">Full 2,400+ question bank with detailed rationales</td></tr>
-      <tr><td style="font-size:13px;color:#4A6868;padding-bottom:8px;">&#x2705;</td><td style="font-family:'Nunito',sans-serif;font-size:13px;color:#1E3535;padding-bottom:8px;padding-left:8px;">AI-powered nursing tutor assistant</td></tr>
-      <tr><td style="font-size:13px;color:#4A6868;padding-bottom:8px;">&#x2705;</td><td style="font-family:'Nunito',sans-serif;font-size:13px;color:#1E3535;padding-bottom:8px;padding-left:8px;">Personal performance analytics &amp; insights</td></tr>
-      <tr><td style="font-size:13px;color:#4A6868;">&#x2705;</td><td style="font-family:'Nunito',sans-serif;font-size:13px;color:#1E3535;padding-left:8px;">Spaced-repetition flashcard system</td></tr>
+      <tr><td style="font-size:13px;color:#4A6868;padding-bottom:8px;width:20px;">&#x2705;</td><td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;padding-bottom:8px;padding-left:8px;">Unlimited mock exams mirroring the real NCK format</td></tr>
+      <tr><td style="font-size:13px;color:#4A6868;padding-bottom:8px;">&#x2705;</td><td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;padding-bottom:8px;padding-left:8px;">Full 2,400+ question bank with detailed rationales</td></tr>
+      <tr><td style="font-size:13px;color:#4A6868;padding-bottom:8px;">&#x2705;</td><td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;padding-bottom:8px;padding-left:8px;">AI-powered nursing tutor assistant</td></tr>
+      <tr><td style="font-size:13px;color:#4A6868;padding-bottom:8px;">&#x2705;</td><td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;padding-bottom:8px;padding-left:8px;">Personal performance analytics &amp; insights</td></tr>
+      <tr><td style="font-size:13px;color:#4A6868;">&#x2705;</td><td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;padding-left:8px;">Spaced-repetition flashcard system</td></tr>
     </table>
   </div>
   ${ctaButton(dashboardUrl, 'Start Studying Now', true)}
@@ -667,38 +656,38 @@ export async function sendTutorWelcomeEmail(params: TutorWelcomeEmailParams): Pr
 
   const html = emailWrapper(`
 <tr><td style="padding:36px 36px 24px;">
-  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">Application Received</div>
-  <h2 style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#08514F;margin:0 0 12px;">Welcome to NurseFiti, ${n}! &#x1F393;</h2>
-  <p style="font-family:'Nunito',sans-serif;font-size:14.5px;color:#1E3535;line-height:1.75;margin:0 0 22px;">Thank you for applying to join the NurseFiti tutor network. Your application has been received and is currently <strong style="color:#08514F;">under review</strong> by our team.</p>
+  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">Application Received</div>
+  <h2 style="font-family:Arial,Helvetica,sans-serif;font-size:24px;font-weight:800;color:#08514F;margin:0 0 12px;">Welcome to NurseFiti, ${n}! &#x1F393;</h2>
+  <p style="font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#1E3535;line-height:1.75;margin:0 0 22px;">Thank you for applying to join the NurseFiti tutor network. Your application has been received and is currently <strong style="color:#08514F;">under review</strong> by our team.</p>
   <div style="background:#F2FAFA;border:1.5px solid #D0E8E7;border-left:4px solid #08514F;border-radius:10px;padding:20px 22px;margin-bottom:20px;">
-    <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0A6B68;margin-bottom:14px;">What Happens Next</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0A6B68;margin-bottom:14px;">What Happens Next</div>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
       <tr>
-        <td width="30" style="vertical-align:top;padding-top:2px;"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="22" height="22" align="center" valign="middle" style="background:#08514F;border-radius:50%;font-family:'Syne',sans-serif;font-size:11px;font-weight:800;color:#ffffff;line-height:22px;text-align:center;">1</td></tr></table></td>
+        <td width="30" style="vertical-align:top;padding-top:2px;"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="22" height="22" align="center" valign="middle" style="background:#08514F;border-radius:50%;font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:800;color:#ffffff;line-height:22px;text-align:center;">1</td></tr></table></td>
         <td style="padding-left:10px;vertical-align:top;padding-bottom:12px;">
-          <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#08514F;margin-bottom:2px;">Document Verification</div>
-          <div style="font-family:'Nunito',sans-serif;font-size:12.5px;color:#4A6868;line-height:1.6;">Our admin team will review your NCK certificate, academic qualifications, and national ID.</div>
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#08514F;margin-bottom:2px;">Document Verification</div>
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:#4A6868;line-height:1.6;">Our admin team will review your NCK certificate, academic qualifications, and national ID.</div>
         </td>
       </tr>
       <tr>
-        <td width="30" style="vertical-align:top;padding-top:2px;"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="22" height="22" align="center" valign="middle" style="background:#08514F;border-radius:50%;font-family:'Syne',sans-serif;font-size:11px;font-weight:800;color:#ffffff;line-height:22px;text-align:center;">2</td></tr></table></td>
+        <td width="30" style="vertical-align:top;padding-top:2px;"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="22" height="22" align="center" valign="middle" style="background:#08514F;border-radius:50%;font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:800;color:#ffffff;line-height:22px;text-align:center;">2</td></tr></table></td>
         <td style="padding-left:10px;vertical-align:top;padding-bottom:12px;">
-          <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#08514F;margin-bottom:2px;">Profile Review</div>
-          <div style="font-family:'Nunito',sans-serif;font-size:12.5px;color:#4A6868;line-height:1.6;">We verify your professional title, years of experience, and specialties.</div>
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#08514F;margin-bottom:2px;">Profile Review</div>
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:#4A6868;line-height:1.6;">We verify your professional title, years of experience, and specialties.</div>
         </td>
       </tr>
       <tr>
-        <td width="30" style="vertical-align:top;padding-top:2px;"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="22" height="22" align="center" valign="middle" style="background:#F5A623;border-radius:50%;font-family:'Syne',sans-serif;font-size:11px;font-weight:800;color:#051F1E;line-height:22px;text-align:center;">3</td></tr></table></td>
+        <td width="30" style="vertical-align:top;padding-top:2px;"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="22" height="22" align="center" valign="middle" style="background:#F5A623;border-radius:50%;font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:800;color:#051F1E;line-height:22px;text-align:center;">3</td></tr></table></td>
         <td style="padding-left:10px;vertical-align:top;">
-          <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#08514F;margin-bottom:2px;">Decision Email</div>
-          <div style="font-family:'Nunito',sans-serif;font-size:12.5px;color:#4A6868;line-height:1.6;">You will receive an email once a decision is made &mdash; usually within 2&ndash;3 business days.</div>
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#08514F;margin-bottom:2px;">Decision Email</div>
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:#4A6868;line-height:1.6;">You will receive an email once a decision is made &mdash; usually within 2&ndash;3 business days.</div>
         </td>
       </tr>
     </table>
   </div>
   <div style="background:#FFF8EA;border:1.5px solid rgba(245,166,35,0.2);border-left:4px solid #F5A623;border-radius:10px;padding:16px 20px;margin-bottom:22px;">
-    <div style="font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:#C7841A;margin-bottom:4px;">While You Wait</div>
-    <div style="font-family:'Nunito',sans-serif;font-size:13px;color:#1E3535;line-height:1.65;">You can log in to check your application status at any time. Reply to this email if you need to update your documents.</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;color:#C7841A;margin-bottom:4px;">While You Wait</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;line-height:1.65;">You can log in to check your application status at any time. Reply to this email if you need to update your documents.</div>
   </div>
   ${ctaButton(`${siteUrl}/login`, 'Check Application Status')}
   ${nfSignature('Thank you for wanting to be part of our mission.')}
@@ -739,22 +728,22 @@ export async function sendTutorVerificationEmail(params: TutorVerificationEmailP
 
   const approvedHtml = emailWrapper(`
 <tr><td style="padding:36px 36px 24px;">
-  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">Application Approved</div>
-  <h2 style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#08514F;margin:0 0 12px;">Congratulations, ${n}! You&#39;re approved. &#x1F389;</h2>
-  <p style="font-family:'Nunito',sans-serif;font-size:14.5px;color:#1E3535;line-height:1.75;margin:0 0 20px;">Your NurseFiti tutor application has been <strong style="color:#08514F;">approved</strong>. Your profile is now live and visible to students.</p>
+  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">Application Approved</div>
+  <h2 style="font-family:Arial,Helvetica,sans-serif;font-size:24px;font-weight:800;color:#08514F;margin:0 0 12px;">Congratulations, ${n}! You&#39;re approved. &#x1F389;</h2>
+  <p style="font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#1E3535;line-height:1.75;margin:0 0 20px;">Your NurseFiti tutor application has been <strong style="color:#08514F;">approved</strong>. Your profile is now live and visible to students.</p>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:linear-gradient(135deg,#08514F 0%,#0A6B68 100%);border-radius:12px;margin-bottom:20px;">
     <tr><td style="padding:20px 24px;">
-      <div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#F7BC55;margin-bottom:6px;">Verified Tutor</div>
-      <div style="font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;color:#ffffff;margin-bottom:4px;">${n} &mdash; ${escapeHtml(tierLabel)}</div>
-      <div style="font-family:'Nunito',sans-serif;font-size:12.5px;color:rgba(255,255,255,0.75);">Your profile is now live and visible to students.</div>
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#F7BC55;margin-bottom:6px;">Verified Tutor</div>
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:700;color:#ffffff;margin-bottom:4px;">${n} &mdash; ${escapeHtml(tierLabel)}</div>
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.75);">Your profile is now live and visible to students.</div>
     </td></tr>
   </table>
   <div style="background:#F2FAFA;border:1.5px solid #D0E8E7;border-left:4px solid #08514F;border-radius:10px;padding:20px 22px;margin-bottom:20px;">
-    <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0A6B68;margin-bottom:10px;">Getting Started</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0A6B68;margin-bottom:10px;">Getting Started</div>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-      <tr><td style="font-size:13px;color:#4A6868;padding-bottom:8px;width:20px;">&#x2705;</td><td style="font-family:'Nunito',sans-serif;font-size:13px;color:#1E3535;padding-bottom:8px;padding-left:8px;">Complete your profile — add a photo, update your bio and session rate</td></tr>
-      <tr><td style="font-size:13px;color:#4A6868;padding-bottom:8px;">&#x2705;</td><td style="font-family:'Nunito',sans-serif;font-size:13px;color:#1E3535;padding-bottom:8px;padding-left:8px;">Set your availability so students can book sessions with you</td></tr>
-      <tr><td style="font-size:13px;color:#4A6868;">&#x2705;</td><td style="font-family:'Nunito',sans-serif;font-size:13px;color:#1E3535;padding-left:8px;">Ensure your M-Pesa number is up to date to receive payouts</td></tr>
+      <tr><td style="font-size:13px;color:#4A6868;padding-bottom:8px;width:20px;">&#x2705;</td><td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;padding-bottom:8px;padding-left:8px;">Complete your profile — add a photo, update your bio and session rate</td></tr>
+      <tr><td style="font-size:13px;color:#4A6868;padding-bottom:8px;">&#x2705;</td><td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;padding-bottom:8px;padding-left:8px;">Set your availability so students can book sessions with you</td></tr>
+      <tr><td style="font-size:13px;color:#4A6868;">&#x2705;</td><td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;padding-left:8px;">Ensure your M-Pesa number is up to date to receive payouts</td></tr>
     </table>
   </div>
   ${ctaButton(`${siteUrl}/tutor-dashboard`, 'Go to Tutor Dashboard', true)}
@@ -763,16 +752,16 @@ export async function sendTutorVerificationEmail(params: TutorVerificationEmailP
 
   const rejectedHtml = emailWrapper(`
 <tr><td style="padding:36px 36px 24px;">
-  <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">Application Update</div>
-  <h2 style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:800;color:#08514F;margin:0 0 12px;">Application Update, ${n}</h2>
-  <p style="font-family:'Nunito',sans-serif;font-size:14.5px;color:#1E3535;line-height:1.75;margin:0 0 20px;">Thank you for your interest in joining the NurseFiti tutor network. After carefully reviewing your application, we are unable to approve it at this time.</p>
+  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">Application Update</div>
+  <h2 style="font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:800;color:#08514F;margin:0 0 12px;">Application Update, ${n}</h2>
+  <p style="font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#1E3535;line-height:1.75;margin:0 0 20px;">Thank you for your interest in joining the NurseFiti tutor network. After carefully reviewing your application, we are unable to approve it at this time.</p>
   ${params.reason ? `<div style="background:#FFF8EA;border:1.5px solid rgba(245,166,35,0.2);border-left:4px solid #F5A623;border-radius:10px;padding:18px 22px;margin-bottom:20px;">
-    <div style="font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:#C7841A;margin-bottom:6px;">Reason</div>
-    <div style="font-family:'Nunito',sans-serif;font-size:13.5px;color:#1E3535;line-height:1.65;">${escapeHtml(params.reason)}</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;color:#C7841A;margin-bottom:6px;">Reason</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13.5px;color:#1E3535;line-height:1.65;">${escapeHtml(params.reason)}</div>
   </div>` : ''}
   <div style="background:#F2FAFA;border:1.5px solid #D0E8E7;border-left:4px solid #08514F;border-radius:10px;padding:20px 22px;margin-bottom:22px;">
-    <div style="font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">You Can Reapply</div>
-    <div style="font-family:'Nunito',sans-serif;font-size:13px;color:#1E3535;line-height:1.65;">If you believe your documents meet our requirements, you are welcome to reapply after addressing the reason above. Contact support@nursefiti.co.ke if you need guidance.</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">You Can Reapply</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;line-height:1.65;">If you believe your documents meet our requirements, you are welcome to reapply after addressing the reason above. Contact support@nursefiti.co.ke if you need guidance.</div>
   </div>
   ${nfSignature('Thank you for your time and interest in our platform.')}
 </td></tr>`);
