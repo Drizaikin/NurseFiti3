@@ -276,22 +276,22 @@ const PRICING = [
 
 const TESTIMONIALS = [
   {
-    name: 'Cynthia Achieng',
-    cadre: 'KRCHN · August 2025',
-    text: 'I failed my first attempt and was devastated. NurseFiti\'s weak-area drill and the DigiProctor mock exams completely changed how I prepared. Passed with 74% on my second attempt.',
-    initials: 'CA',
+    name: 'Grace',
+    cadre: 'KRCHN',
+    text: 'Great studying platform. Love the analytics as they help in planning for focused studies.',
+    initials: 'GR',
   },
   {
-    name: 'Brian Kamau',
-    cadre: 'BScN · May 2025',
-    text: 'The revision plan generator was worth every shilling. It told me exactly which units to focus on given my 6 weeks left. I didn\'t waste a single study session.',
-    initials: 'BK',
+    name: 'Dan',
+    cadre: 'BScN',
+    text: 'Great app, nurses will love it!',
+    initials: 'DA',
   },
   {
-    name: 'Mercy Njeri',
-    cadre: 'Higher Diploma (Critical Care) · November 2025',
-    text: 'Booked 3 sessions with Dr. Amina through NurseFiti. She knew exactly what NCK examiners look for in Critical Care. First attempt pass.',
-    initials: 'MN',
+    name: 'Sharon',
+    cadre: 'BScN',
+    text: 'Excellent for NCK preparation.',
+    initials: 'SH',
   },
 ];
 
