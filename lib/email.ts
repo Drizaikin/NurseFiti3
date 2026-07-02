@@ -131,7 +131,7 @@ function emailFooter(siteUrl: string, supportEmail: string): string {
         <tr><td height="4" style="background:linear-gradient(90deg,#F5A623 0%,#F7BC55 60%,rgba(245,166,35,0.05) 100%);font-size:0;line-height:0;">&nbsp;</td></tr>
         <tr>
           <td style="background:#0D1C1C;padding:28px 32px 20px;">
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.08);">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
               <tr>
                 <td width="40%" style="vertical-align:top;padding-right:12px;">
                   <div style="background:#ffffff;border-radius:7px;padding:6px 14px;display:inline-block;line-height:0;margin-bottom:10px;">
@@ -153,8 +153,10 @@ function emailFooter(siteUrl: string, supportEmail: string): string {
                   <a href="mailto:${supportEmail}" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;">${supportEmail}</a>
                 </td>
               </tr>
+              <tr><td colspan="5" height="1" style="background:rgba(255,255,255,0.08);font-size:0;padding-top:20px;">&nbsp;</td></tr>
             </table>
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="padding-top:16px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr><td height="16" style="font-size:0;">&nbsp;</td></tr>
               <tr>
                 <td style="vertical-align:middle;">
                   <div style="font-family:Arial,Helvetica,sans-serif;font-size:10.5px;color:rgba(255,255,255,0.3);line-height:1.5;">&copy; ${year} NurseFiti &middot; Nairobi, Kenya<br/>You received this because you created an account at nursefiti.co.ke</div>
@@ -369,16 +371,24 @@ function buildWelcomeHtml(firstName: string, loginUrl: string): string {
 <tr><td style="padding:0 36px 20px;">
   <p style="font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#4A6868;line-height:1.75;margin:0;">We&#39;re genuinely glad you&#39;re here, ${n}. If you have any questions about the platform or need help getting started, reply to this email &mdash; a real person will get back to you.</p>
 </td></tr>
-<tr><td style="padding:0 36px 32px;border-top:1.5px solid #D5E8E8;">
-  <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:20px;"><tr>
-    <td width="52" style="vertical-align:middle;">
-      <table cellpadding="0" cellspacing="0" border="0"><tr><td width="44" height="44" align="center" valign="middle" style="background:linear-gradient(135deg,#08514F,#0A6B68);border-radius:50%;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:800;color:#ffffff;line-height:44px;text-align:center;">NF</td></tr></table>
-    </td>
-    <td style="padding-left:14px;vertical-align:middle;">
-      <div style="font-family:Arial,Helvetica,sans-serif;font-size:13.5px;font-weight:700;color:#08514F;">The NurseFiti Team</div>
-      <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4A6868;margin-top:2px;">support@nursefiti.co.ke &middot; nursefiti.co.ke</div>
-    </td>
-  </tr></table>
+<tr><td style="padding:0 36px 32px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:0;">
+    <tr><td height="1" style="background:#D5E8E8;font-size:0;">&nbsp;</td></tr>
+    <tr><td height="20" style="font-size:0;">&nbsp;</td></tr>
+    <tr>
+      <td>
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+          <td width="52" style="vertical-align:middle;">
+            <table cellpadding="0" cellspacing="0" border="0"><tr><td width="44" height="44" align="center" valign="middle" style="background:linear-gradient(135deg,#08514F,#0A6B68);border-radius:50%;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:800;color:#ffffff;line-height:44px;text-align:center;">NF</td></tr></table>
+          </td>
+          <td style="padding-left:14px;vertical-align:middle;">
+            <div style="font-family:Arial,Helvetica,sans-serif;font-size:13.5px;font-weight:700;color:#08514F;">The NurseFiti Team</div>
+            <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4A6868;margin-top:2px;">support@nursefiti.co.ke &middot; nursefiti.co.ke</div>
+          </td>
+        </tr></table>
+      </td>
+    </tr>
+  </table>
 </td></tr>`);
 }
 
@@ -432,15 +442,19 @@ function buildSubscriptionHtml(params: SubscriptionEmailParams, dashboardUrl: st
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
     <tr><td align="center"><a href="${dashboardUrl}" style="display:inline-block;background:#08514F;color:#ffffff;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;padding:15px 40px;border-radius:8px;text-decoration:none;border-bottom:3px solid #051F1E;">Go to Dashboard &rarr;</a></td></tr>
   </table>
-  <div style="border-top:1.5px solid #D5E8E8;padding-top:18px;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
-      <td width="52" style="vertical-align:middle;"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="44" height="44" align="center" valign="middle" style="background:linear-gradient(135deg,#08514F,#0A6B68);border-radius:50%;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:800;color:#ffffff;line-height:44px;text-align:center;">NF</td></tr></table></td>
-      <td style="padding-left:14px;vertical-align:middle;">
-        <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#08514F;">The NurseFiti Team</div>
-        <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4A6868;margin-top:2px;">Thank you for trusting NurseFiti as your learning partner.</div>
-      </td>
-    </tr></table>
-  </div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:8px;">
+    <tr><td height="1" style="background:#D5E8E8;font-size:0;">&nbsp;</td></tr>
+    <tr><td height="16" style="font-size:0;">&nbsp;</td></tr>
+    <tr><td>
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td width="52" style="vertical-align:middle;"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="44" height="44" align="center" valign="middle" style="background:linear-gradient(135deg,#08514F,#0A6B68);border-radius:50%;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:800;color:#ffffff;line-height:44px;text-align:center;">NF</td></tr></table></td>
+        <td style="padding-left:14px;vertical-align:middle;">
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#08514F;">The NurseFiti Team</div>
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4A6868;margin-top:2px;">Thank you for trusting NurseFiti as your learning partner.</div>
+        </td>
+      </tr></table>
+    </td></tr>
+  </table>
 </td></tr>`);
 }
 
@@ -481,15 +495,19 @@ function meetingLinkCard(link: string): string {
 }
 
 function nfSignature(subtitle: string): string {
-  return `<div style="border-top:1.5px solid #D5E8E8;padding-top:18px;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
-      <td width="52" style="vertical-align:middle;"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="44" height="44" align="center" valign="middle" style="background:linear-gradient(135deg,#08514F,#0A6B68);border-radius:50%;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:800;color:#ffffff;line-height:44px;text-align:center;">NF</td></tr></table></td>
-      <td style="padding-left:14px;vertical-align:middle;">
-        <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#08514F;">The NurseFiti Team</div>
-        <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4A6868;margin-top:2px;">${escapeHtml(subtitle)}</div>
-      </td>
-    </tr></table>
-  </div>`;
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:8px;">
+    <tr><td height="1" style="background:#D5E8E8;font-size:0;">&nbsp;</td></tr>
+    <tr><td height="16" style="font-size:0;">&nbsp;</td></tr>
+    <tr><td>
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td width="52" style="vertical-align:middle;"><table cellpadding="0" cellspacing="0" border="0"><tr><td width="44" height="44" align="center" valign="middle" style="background:linear-gradient(135deg,#08514F,#0A6B68);border-radius:50%;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:800;color:#ffffff;line-height:44px;text-align:center;">NF</td></tr></table></td>
+        <td style="padding-left:14px;vertical-align:middle;">
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#08514F;">The NurseFiti Team</div>
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#4A6868;margin-top:2px;">${escapeHtml(subtitle)}</div>
+        </td>
+      </tr></table>
+    </td></tr>
+  </table>`;
 }
 
 function ctaButton(href: string, label: string, amber = false): string {
