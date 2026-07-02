@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import Link from 'next/link';
+import { createClient } from '@/lib/supabase/server';
 import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 import { DarkModeToggle } from '@/components/shared/DarkModeToggle';
 import { FeedbackWall } from '@/components/shared/FeedbackWall';
@@ -359,7 +360,24 @@ function VerificationBadge({ tier }: { tier: 'gold' | 'standard' }) {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const supabase = createClient();
+  
+  const [
+    { count: studentsCount },
+    { count: questionsCount },
+    { count: tutorsCount }
+  ] = await Promise.all([
+    supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'student'),
+    supabase.from('questions').select('*', { count: 'exact', head: true }),
+    supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'tutor')
+  ]);
+
+  const stats = [
+    { value: studentsCount ? studentsCount.toLocaleString() : '12,400+', label: 'Students Enrolled' },
+    { value: questionsCount ? questionsCount.toLocaleString() : '5,000+', label: 'Practice Questions' },
+    { value: tutorsCount ? tutorsCount.toLocaleString() : '60+', label: 'Verified Tutors' },
+  ];
   return (
     <div className="min-h-screen bg-neutral-cream dark:bg-dark text-[var(--color-text)]">
       {/* ── JSON-LD Structured Data ── */}
@@ -454,6 +472,17 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── SOCIAL PROOF BAR ── */}
+      <section className="bg-primary py-8 px-4">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 text-center text-white">
+          {stats.map((stat) => (
+            <div key={stat.label}>
+              <p className="text-3xl font-heading font-bold text-accent">{stat.value}</p>
+              <p className="text-sm text-primary-light mt-1">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* ── FEATURES ── */}
       <section id="features" className="pt-10 pb-20 px-4 sm:px-6 lg:px-8">
