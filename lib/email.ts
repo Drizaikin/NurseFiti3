@@ -121,7 +121,7 @@ function emailHeader(tagline: string): string {
       <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.05) 1px,transparent 1px);background-size:18px 18px;pointer-events:none;"></div>
       <div style="position:relative;z-index:2;padding:28px 36px 0;display:flex;align-items:center;justify-content:space-between;gap:20px;">
         <div style="background:white;border-radius:10px;padding:7px 16px;display:inline-block;">
-          <img src="data:image/png;base64,${LOGO_BASE64}" alt="NurseFiti" style="height:36px;width:auto;display:block;"/>
+          <img src="https://nursefiti.co.ke/logo.png" alt="NurseFiti" style="height:36px;width:auto;display:block;"/>
         </div>
         <div style="text-align:right;">
           <div style="font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.9);">${escapeHtml(tagline)}</div>
@@ -145,7 +145,7 @@ function emailFooter(siteUrl: string, supportEmail: string): string {
           <tr>
             <td width="50%" style="vertical-align:top;padding-right:20px;">
               <div style="background:white;border-radius:7px;padding:5px 12px;display:inline-block;margin-bottom:8px;">
-                <img src="data:image/png;base64,${LOGO_BASE64}" alt="NurseFiti" style="height:28px;width:auto;display:block;"/>
+                <img src="https://nursefiti.co.ke/logo.png" alt="NurseFiti" style="height:28px;width:auto;display:block;"/>
               </div>
               <div style="font-size:11.5px;color:rgba(255,255,255,0.45);line-height:1.6;max-width:220px;margin-top:4px;">Preparing nursing students across Kenya for NCK exam success.</div>
             </td>
@@ -177,7 +177,7 @@ function emailWrapper(bodyRows: string, tagline = 'Preparing Nurses for Success'
   return `<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 </head>
 <body style="margin:0;padding:0;background:#E8F4F3;font-family:Arial,Helvetica,sans-serif;">

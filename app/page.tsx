@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import Link from 'next/link';
-import { createAdminClient } from '@/lib/supabase/admin';
 import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 import { DarkModeToggle } from '@/components/shared/DarkModeToggle';
 import { FeedbackWall } from '@/components/shared/FeedbackWall';
@@ -360,25 +359,7 @@ function VerificationBadge({ tier }: { tier: 'gold' | 'standard' }) {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-export default async function LandingPage() {
-  const supabaseAdmin = createAdminClient();
-  
-  const [
-    { count: studentsCount },
-    { count: questionsCount },
-    { count: tutorsCount }
-  ] = await Promise.all([
-    supabaseAdmin.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'student'),
-    supabaseAdmin.from('questions').select('*', { count: 'exact', head: true }),
-    supabaseAdmin.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'tutor')
-  ]);
-
-  const stats = [
-    { value: studentsCount !== null ? studentsCount.toLocaleString() : '12,400+', label: 'Students Enrolled' },
-    { value: questionsCount !== null ? questionsCount.toLocaleString() : '5,000+', label: 'Practice Questions' },
-    { value: tutorsCount !== null ? tutorsCount.toLocaleString() : '60+', label: 'Verified Tutors' },
-  ];
-
+export default function LandingPage() {
   return (
     <div className="min-h-screen bg-neutral-cream dark:bg-dark text-[var(--color-text)]">
       {/* ── JSON-LD Structured Data ── */}
@@ -473,17 +454,6 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* ── SOCIAL PROOF BAR ── */}
-      <section className="bg-primary py-8 px-4">
-        <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 text-center text-white">
-          {stats.map((stat) => (
-            <div key={stat.label}>
-              <p className="text-3xl font-heading font-bold text-accent">{stat.value}</p>
-              <p className="text-sm text-primary-light mt-1">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* ── FEATURES ── */}
       <section id="features" className="py-20 px-4 sm:px-6 lg:px-8">
