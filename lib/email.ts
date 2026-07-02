@@ -158,12 +158,8 @@ function emailFooter(siteUrl: string, supportEmail: string): string {
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
               <tr><td height="16" style="font-size:0;">&nbsp;</td></tr>
               <tr>
-                <td style="vertical-align:middle;">
-                  <div style="font-family:Arial,Helvetica,sans-serif;font-size:10.5px;color:rgba(255,255,255,0.3);line-height:1.5;">&copy; ${year} NurseFiti &middot; Nairobi, Kenya<br/>You received this because you created an account at nursefiti.co.ke</div>
-                </td>
-                <td style="vertical-align:middle;text-align:right;">
-                  <a href="${siteUrl}/unsubscribe" style="font-family:Arial,Helvetica,sans-serif;font-size:10.5px;color:rgba(255,255,255,0.3);text-decoration:underline;margin-right:10px;">Unsubscribe</a>
-                  <a href="${siteUrl}/email-preferences" style="font-family:Arial,Helvetica,sans-serif;font-size:10.5px;color:rgba(255,255,255,0.3);text-decoration:underline;">Email Preferences</a>
+                <td style="vertical-align:middle;text-align:center;">
+                  <div style="font-family:Arial,Helvetica,sans-serif;font-size:10.5px;color:rgba(255,255,255,0.3);line-height:1.5;">&copy; ${year} NurseFiti &middot; Kiambu, Kenya<br/>You received this because you created an account at nursefiti.co.ke</div>
                 </td>
               </tr>
             </table>
