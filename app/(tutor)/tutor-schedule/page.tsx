@@ -1094,8 +1094,8 @@ export default function TutorSchedulePage() {
             <div className="rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] p-3 text-xs text-[var(--color-text-secondary)] space-y-2">
               <p className="font-semibold text-[var(--color-text)]">How to get your Google Meet link:</p>
               <ol className="space-y-1 list-none">
-                <li className="flex gap-2"><span className="text-primary font-bold">1.</span> Go to <a href="https://meet.google.com" target="_blank" rel="noopener noreferrer" className="text-primary underline">meet.google.com</a> and click <strong>"New meeting"</strong></li>
-                <li className="flex gap-2"><span className="text-primary font-bold">2.</span> Choose <strong>"Create a meeting for later"</strong></li>
+                <li className="flex gap-2"><span className="text-primary font-bold">1.</span> Go to <a href="https://meet.google.com" target="_blank" rel="noopener noreferrer" className="text-primary underline">meet.google.com</a> and click <strong>&quot;New meeting&quot;</strong></li>
+                <li className="flex gap-2"><span className="text-primary font-bold">2.</span> Choose <strong>&quot;Create a meeting for later&quot;</strong></li>
                 <li className="flex gap-2"><span className="text-primary font-bold">3.</span> Copy the link and paste it below</li>
               </ol>
               <p className="pt-1 border-t border-[var(--color-border)]">

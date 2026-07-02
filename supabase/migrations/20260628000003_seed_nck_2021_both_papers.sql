@@ -92,12 +92,15 @@ VALUES('KRCHN','Paper I','Paediatric Nursing','Growth and Development','When ass
 INSERT INTO questions (cadre,paper,unit,topic,stem,option_a,option_b,option_c,option_d,correct_option,rationale,difficulty,exam_year,status,contributor_id)
 VALUES('BScN','Paper I','Paediatric Nursing','Growth and Development','When assessing growth and development in a 5-year-old pupil:','All individuals follow cephalo-caudal and proximo-distal patterns','All individuals follow a standard growth rate','Rate and pattern of growth can always be modified','Different parts of the body grow at the same rate','A','Growth and development follow cephalo-caudal and proximo-distal directional patterns universally (Kenya Basic Paediatric Protocols).','easy',2021,'approved',NULL)ON CONFLICT(stem,cadre)DO NOTHING;
 
--- Q9: MOH 613 — involuntary admission legal form
+-- Q9: MOH 614 — involuntary admission legal form
+-- CORRECTION (2026-07-02): original seed incorrectly had correct_option='A' (MOH 613).
+-- MOH 613 = VOLUNTARY admission (adult); MOH 614 = INVOLUNTARY (compulsory) admission.
+-- Corrected to option C. See migration 20260702000001_fix_mental_health_admission_data.sql.
 INSERT INTO questions (cadre,paper,unit,topic,stem,option_a,option_b,option_c,option_d,correct_option,rationale,difficulty,exam_year,status,contributor_id)
-VALUES('KRCHN','Paper II','Mental Health Nursing','Mental Health Legislation','The legal document used for involuntary psychiatric admission in Kenya is:','MOH 613','MOH 637','MOH 614','MOH 638','A','Involuntary (compulsory) admission of a mentally ill person in Kenya is effected on form MOH 613 under the Mental Health Act Cap 248 (Kenya Mental Health Act).','easy',2021,'approved',NULL)ON CONFLICT(stem,cadre)DO NOTHING;
+VALUES('KRCHN','Paper II','Mental Health Nursing','Mental Health Legislation','The legal document used for involuntary psychiatric admission in Kenya is:','MOH 613','MOH 637','MOH 614','MOH 638','C','Under the Kenya Mental Health (Amendment) Act 2022: MOH 613 = voluntary admission (adult); MOH 614 = involuntary (compulsory) admission; MOH 637 = voluntary admission of a minor by parent/guardian; MOH 638 = emergency/forensic pathway. Involuntary admission requires documented psychiatric assessment and tribunal review. Ref: Kenya Mental Health (Amendment) Act 2022; Kenya MOH forms.','easy',2021,'approved',NULL)ON CONFLICT(stem,cadre)DO NOTHING;
 
 INSERT INTO questions (cadre,paper,unit,topic,stem,option_a,option_b,option_c,option_d,correct_option,rationale,difficulty,exam_year,status,contributor_id)
-VALUES('BScN','Paper II','Mental Health Nursing','Mental Health Legislation','The legal document used for involuntary psychiatric admission in Kenya is:','MOH 613','MOH 637','MOH 614','MOH 638','A','Involuntary admission in Kenya is effected on MOH 613 under the Mental Health Act Cap 248.','easy',2021,'approved',NULL)ON CONFLICT(stem,cadre)DO NOTHING;
+VALUES('BScN','Paper II','Mental Health Nursing','Mental Health Legislation','The legal document used for involuntary psychiatric admission in Kenya is:','MOH 613','MOH 637','MOH 614','MOH 638','C','Under the Kenya Mental Health (Amendment) Act 2022: MOH 613 = voluntary admission (adult); MOH 614 = involuntary (compulsory) admission; MOH 637 = voluntary admission of a minor; MOH 638 = emergency/forensic pathway. Involuntary admission requires documented assessment and tribunal review; no patient can be detained indefinitely. Ref: Kenya Mental Health (Amendment) Act 2022; Kenya MOH forms.','easy',2021,'approved',NULL)ON CONFLICT(stem,cadre)DO NOTHING;
 
 -- Q10: School health records
 INSERT INTO questions (cadre,paper,unit,topic,stem,option_a,option_b,option_c,option_d,correct_option,rationale,difficulty,exam_year,status,contributor_id)

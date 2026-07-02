@@ -403,7 +403,11 @@ export default function AnalyticsPage() {
                           <Badge variant={m.passed ? 'green' : 'red'} size="sm">{m.passed ? 'Pass' : 'Fail'}</Badge>
                         </td>
                         <td className="py-3">
-                          <DownloadResultButton resultId={m.id} paper={m.paper} completedAt={m.completed_at} />
+                          {(planTier === 'standard' || planTier === 'premium') ? (
+                            <DownloadResultButton resultId={m.id} paper={m.paper} completedAt={m.completed_at} />
+                          ) : (
+                            <span className="text-xs text-neutral-mid">Upgrade to Success/Elite to download</span>
+                          )}
                         </td>
                       </tr>
                     ))}

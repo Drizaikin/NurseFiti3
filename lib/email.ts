@@ -96,18 +96,79 @@ function escapeHtml(value: string): string {
 function renderHtml(title: string, body: string): string {
   const paragraphs = body
     .split('\n\n')
-    .map(part => `<p>${escapeHtml(part).replace(/\n/g, '<br />')}</p>`)
+    .map(part => {
+      if (part.includes('✓') || part.includes('- ')) {
+        const items = part.split('\n').map(item => {
+          const content = item.replace(/^(✓|-)\s*/, '');
+          return `<li style="margin-bottom: 8px;">${escapeHtml(content)}</li>`;
+        }).join('');
+        return `<ul style="padding-left: 20px; margin: 16px 0; color: #334155;">${items}</ul>`;
+      }
+      
+      if (part.endsWith('Details') || part.endsWith('Information') || part === 'Great news!' || part === 'Congratulations!') {
+        return `<h3 style="color: #0f172a; font-size: 18px; margin: 24px 0 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">${escapeHtml(part)}</h3>`;
+      }
+
+      return `<p style="margin: 0 0 16px;">${escapeHtml(part).replace(/\n/g, '<br />')}</p>`;
+    })
     .join('\n');
 
+  const parsedParagraphs = paragraphs.replace(
+    /(https?:\/\/[^\s<]+)/g,
+    '<a href="$1" style="color: #0f766e; text-decoration: none; font-weight: 600;">$1</a>'
+  );
+
   return `<!doctype html>
-<html>
-  <body style="margin:0;padding:0;background:#f7fbfa;font-family:Arial,sans-serif;color:#053b36;">
-    <div style="max-width:640px;margin:0 auto;padding:32px 20px;">
-      <div style="background:#ffffff;border:1px solid #d6e7e4;border-radius:12px;padding:28px;">
-        <h1 style="margin:0 0 20px;font-size:24px;color:#035c55;">${escapeHtml(title)}</h1>
-        <div style="font-size:15px;line-height:1.65;color:#153f3b;">${paragraphs}</div>
-      </div>
-    </div>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${escapeHtml(title)}</title>
+  </head>
+  <body style="margin: 0; padding: 0; background-color: #f1f5f9; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #334155; -webkit-font-smoothing: antialiased;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #f1f5f9; width: 100%; margin: 0; padding: 40px 0;">
+      <tr>
+        <td align="center">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);">
+            <!-- Hero Image -->
+            <tr>
+              <td>
+                <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=600&auto=format&fit=crop" alt="Medical Banner" width="100%" style="display: block; width: 100%; height: 180px; object-fit: cover;" />
+              </td>
+            </tr>
+            <!-- Header Title -->
+            <tr>
+              <td style="background-color: #0f766e; padding: 24px 40px; text-align: center;">
+                <h1 style="margin: 0; font-size: 22px; color: #ffffff; font-weight: 700; letter-spacing: -0.5px;">${escapeHtml(title)}</h1>
+              </td>
+            </tr>
+            <!-- Body Content -->
+            <tr>
+              <td style="padding: 40px;">
+                <div style="font-size: 16px; line-height: 1.6; color: #475569;">
+                  ${parsedParagraphs}
+                </div>
+              </td>
+            </tr>
+            <!-- Footer -->
+            <tr>
+              <td style="background-color: #f8fafc; padding: 24px 40px; text-align: center; border-top: 1px solid #e2e8f0;">
+                <p style="margin: 0 0 8px; font-size: 14px; color: #64748b; font-weight: 600;">NurseFiti - NCK Exam Preparation</p>
+                <p style="margin: 0 0 16px; font-size: 12px; color: #94a3b8;">Empowering nursing students across Kenya to learn smarter and achieve excellence.</p>
+                <div style="margin: 0;">
+                  <a href="https://www.nursefiti.co.ke" style="color: #0f766e; text-decoration: none; font-size: 13px; font-weight: 600; margin: 0 8px;">Visit Website</a>
+                  <span style="color: #cbd5e1;">|</span>
+                  <a href="mailto:danotyanga@gmail.com" style="color: #0f766e; text-decoration: none; font-size: 13px; font-weight: 600; margin: 0 8px;">Contact Support</a>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <p style="text-align: center; font-size: 12px; color: #94a3b8; margin-top: 24px;">
+            &copy; ${new Date().getFullYear()} NurseFiti. All rights reserved.
+          </p>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>`;
 }

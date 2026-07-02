@@ -39,7 +39,7 @@ export default function TutorAgreementPage() {
             <ul className="list-disc list-inside text-neutral-mid space-y-1 ml-2">
               <li>Your teaching content is educational and syllabus-based.</li>
               <li>Your content is NOT confidential examination material.</li>
-              <li>You will never claim to possess "leaked" exam papers or "know" the exact questions that will appear on the official NCK exam.</li>
+              <li>You will never claim to possess &quot;leaked&quot; exam papers or &quot;know&quot; the exact questions that will appear on the official NCK exam.</li>
             </ul>
             <p className="text-neutral-mid leading-relaxed mt-2">Any tutor found offering, distributing, or claiming to possess confidential examination materials will be immediately banned and reported to the relevant authorities.</p>
           </section>

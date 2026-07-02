@@ -72,7 +72,7 @@ export default function TermsPage() {
           </section>
           <section>
             <h2 className="text-xl font-heading font-bold mb-3">7. Disclaimer & Limitation of Liability</h2>
-            <p className="text-neutral-mid leading-relaxed">While NurseFiti aims to provide high-quality revision resources, we do not guarantee that you will pass the NCK examination. NurseFiti is an independent educational tool and is not an "Official NCK partner", "NCK approved", or "NCK certified" unless expressly stated otherwise. We provide NCK-focused revision resources designed for success. Your use of the platform is at your own risk.</p>
+            <p className="text-neutral-mid leading-relaxed">While NurseFiti aims to provide high-quality revision resources, we do not guarantee that you will pass the NCK examination. NurseFiti is an independent educational tool and is not an &quot;Official NCK partner&quot;, &quot;NCK approved&quot;, or &quot;NCK certified&quot; unless expressly stated otherwise. We provide NCK-focused revision resources designed for success. Your use of the platform is at your own risk.</p>
           </section>
           <section>
             <h2 className="text-xl font-heading font-bold mb-3">8. Contact</h2>

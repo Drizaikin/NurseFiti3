@@ -696,7 +696,7 @@ export default function MockExamPage() {
         <div className="flex gap-3">
           <Button variant="primary" className="flex-1" onClick={() => setExamState('setup')}>Take Another Exam</Button>
           <Button variant="outline" className="flex-1" onClick={() => router.push('/analytics')}>View Analytics</Button>
-          {results.resultId && (
+          {results.resultId && (planTier === 'standard' || planTier === 'premium') && (
             <Button
               variant="outline"
               className="flex-1"

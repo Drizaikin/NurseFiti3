@@ -328,8 +328,16 @@ INSERT INTO flashcards (deck_id, front_text, back_text, back_highlight, cadre, u
 
 ('a1000000-0000-0000-0000-000000000005',
   'Under the Mental Health Act Kenya 2022, what are the admission types?',
-  'Voluntary admission: patient consents to treatment. Involuntary admission: patient lacks capacity or is a danger to self/others — requires documented assessment and tribunal review within specified period. No patient can be detained indefinitely without review. Informed consent applies to all competent patients.',
-  'Voluntary = consents · Involuntary = danger/incapacity + tribunal review',
+  'Under the Kenya Mental Health (Amendment) Act 2022, there are three admission pathways:
+
+1. VOLUNTARY ADMISSION — MOH 613 (adults) / MOH 637 (minors under 16, by parent or guardian): Patient consents to treatment. May leave after giving 72 hours'' written notice.
+
+2. INVOLUNTARY (COMPULSORY) ADMISSION — MOH 614: Patient lacks insight, refuses treatment, and is a danger to self or others. Requires documented psychiatric assessment. Must be reviewed by a tribunal — no patient can be detained indefinitely without review.
+
+3. EMERGENCY / PROTECTIVE CUSTODY: Authorised persons (police Inspector+, chief, assistant chief) may take a person into protective custody if mentally disordered and dangerous, neglected, or acting indecently. Person must reach a hospital within 24 hours. Initial assessment period up to 72 hours.
+
+Informed consent applies to all competent voluntary patients.',
+  'MOH 613 = Voluntary · MOH 614 = Involuntary · MOH 637 = Minor · Emergency = 24 hrs to hospital',
   'BScN', 'Mental Health Nursing');
 
 -- ─── Deck 6: Anatomy & Physiology (All cadres, Paper IV) ─────────────────────

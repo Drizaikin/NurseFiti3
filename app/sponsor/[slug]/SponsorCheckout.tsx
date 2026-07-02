@@ -76,7 +76,7 @@ export default function SponsorCheckout({ campaign }: { campaign: any }) {
     <Card className="shadow-lg border-primary/20">
       <h3 className="text-xl font-heading font-bold text-primary mb-4">Fund this Campaign</h3>
       <p className="text-sm text-neutral-mid mb-6">
-        Enter the amount you wish to sponsor. Your contribution directly funds nursing students' premium exam preparation.
+        Enter the amount you wish to sponsor. Your contribution directly funds nursing students&apos; premium exam preparation.
       </p>
 
       <div className="space-y-6">
