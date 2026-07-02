@@ -414,7 +414,7 @@ export default function LandingPage() {
       </header>
 
       {/* ── HERO ── */}
-      <section className="relative overflow-hidden pt-20 pb-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden pt-20 pb-10 px-4 sm:px-6 lg:px-8">
         {/* Background decoration */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-primary/5 dark:bg-primary/10 blur-3xl" />
@@ -456,7 +456,7 @@ export default function LandingPage() {
 
 
       {/* ── FEATURES ── */}
-      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8">
+      <section id="features" className="pt-10 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-[var(--color-text)] mb-4">
