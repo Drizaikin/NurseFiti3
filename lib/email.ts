@@ -88,38 +88,20 @@ function escapeHtml(value: string): string {
 
 // ─── Shared branded template pieces ──────────────────────────────────────────
 
-// Logo hosted at nursefiti.co.ke — used in header and footer
-const LOGO_URL = 'https://www.nursefiti.co.ke/nursefiti-logo.png';
-
-// Plain amber ECG line — no SVG filters (Gmail strips them)
-const ECG_SVG = '<svg width="600" height="44" viewBox="0 0 600 44" xmlns="http://www.w3.org/2000/svg" style="display:block;"><path d="M0,28 L55,28 L67,25 L73,18 L79,25 L95,28 L107,28 L113,32 L119,2 L125,40 L131,28 L141,33 L153,20 L161,28 L255,28 L267,25 L273,18 L279,25 L295,28 L307,28 L313,32 L319,2 L325,40 L331,28 L341,33 L353,20 L361,28 L455,28 L467,25 L473,18 L479,25 L495,28 L507,28 L513,32 L519,2 L525,40 L531,28 L541,33 L553,20 L561,28 L600,28" fill="none" stroke="#F5A623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+// Logo hosted in public/ — public/logo.png served at the site URL
+const LOGO_URL = 'https://www.nursefiti.co.ke/logo.png';
 
 function emailHeader(tagline: string): string {
+  const siteUrl = getSiteUrl();
   return `<tr>
-    <td style="padding:0;margin:0;background:#08514F;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr><td height="140" style="background:linear-gradient(160deg,#051F1E 0%,#08514F 55%,#0A6B68 100%);font-size:0;line-height:0;">&nbsp;</td></tr>
-        <tr>
-          <td style="background:linear-gradient(180deg,#0A6B68 0%,#08514F 100%);padding:14px 32px 0;">
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td style="vertical-align:middle;">
-                  <div style="background:#ffffff;border-radius:10px;padding:8px 16px;display:inline-block;line-height:0;">
-                    <img src="${LOGO_URL}" alt="NurseFiti" width="110" height="33" style="display:block;border:0;" />
-                  </div>
-                </td>
-                <td style="vertical-align:middle;text-align:right;">
-                  <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.92);">${escapeHtml(tagline)}</div>
-                  <div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;font-weight:700;color:#F7BC55;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;">NCK Exam Preparation Platform</div>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <tr><td style="background:#08514F;padding:6px 0 0;line-height:0;">${ECG_SVG}</td></tr>
-        <tr><td height="4" style="background:linear-gradient(90deg,#F5A623 0%,#F7BC55 60%,rgba(245,166,35,0.05) 100%);font-size:0;line-height:0;">&nbsp;</td></tr>
-      </table>
+    <td align="center" style="background-color:#0D2020; padding:0; margin:0;">
+      <a href="${siteUrl}" target="_blank" style="text-decoration:none; display:block;">
+        <img src="${siteUrl}/images/email-banner.png" alt="NurseFiti - ${escapeHtml(tagline)}" width="600" style="display:block; width:100%; max-width:600px; height:auto; border:0; outline:none; text-decoration:none;" />
+      </a>
     </td>
+  </tr>
+  <tr>
+    <td height="16" style="font-size:0; line-height:0; background-color:#ffffff;">&nbsp;</td>
   </tr>`;
 }
 
@@ -141,15 +123,15 @@ function emailFooter(siteUrl: string, supportEmail: string): string {
                 </td>
                 <td width="30%" style="vertical-align:top;padding-right:12px;">
                   <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#F7BC55;margin-bottom:12px;">Platform</div>
-                  <a href="${siteUrl}/signup" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Question Bank</a>
-                  <a href="${siteUrl}/signup" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Mock Exams</a>
-                  <a href="${siteUrl}/login" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Analytics</a>
-                  <a href="${siteUrl}/login" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;">Flashcards</a>
+                  <a href="${siteUrl}/questions" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Question Bank</a>
+                  <a href="${siteUrl}/mock-exam" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Mock Exams</a>
+                  <a href="${siteUrl}/analytics" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Analytics</a>
+                  <a href="${siteUrl}/flashcards" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;">Flashcards</a>
                 </td>
                 <td width="30%" style="vertical-align:top;">
                   <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#F7BC55;margin-bottom:12px;">Support</div>
                   <a href="${siteUrl}/help" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Help Centre</a>
-                  <a href="https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">WhatsApp Community</a>
+                  <a href="https://wa.me/254791952703" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">WhatsApp Support</a>
                   <a href="mailto:${supportEmail}" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;">${supportEmail}</a>
                 </td>
               </tr>
