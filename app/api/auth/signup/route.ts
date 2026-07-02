@@ -154,10 +154,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await sendWelcomeEmail({
+    // Fire-and-forget — email failure must never block a successful signup
+    sendWelcomeEmail({
       to: data.email,
       firstName: getFirstName(data.fullName),
-    });
+    }).catch(err => console.error('[signup] welcome email failed:', err));
 
     return NextResponse.json({
       success: true,
