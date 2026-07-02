@@ -1,4 +1,4 @@
-﻿const nodemailer = require('nodemailer') as {
+const nodemailer = require('nodemailer') as {
   createTransport: (options: Record<string, unknown>) => {
     sendMail: (message: {
       from: string;
@@ -371,20 +371,7 @@ function buildWelcomeHtml(firstName: string, loginUrl: string): string {
           <a href="${loginUrl}" style="display:inline-block;background:#08514F;color:white;font-family:Arial,sans-serif;font-size:14px;font-weight:700;padding:15px 36px;border-radius:8px;text-decoration:none;border-bottom:3px solid #051F1E;">Go to My Dashboard &rarr;</a>
         </div>
         <div style="height:1px;background:#D5E8E8;margin-bottom:24px;"></div>
-        <div style="background:#F2FAFA;border:1.5px solid #D0E8E7;border-radius:10px;padding:16px 20px;margin-bottom:24px;">
-          <div style="font-size:13.5px;color:#1E3535;line-height:1.7;font-style:italic;">&ldquo;I failed my NCK twice before NurseFiti. After two months of mock exams and analytics, I passed with 78%. The platform showed me exactly what I didn&rsquo;t know.&rdquo;</div>
-          <div style="margin-top:10px;">
-            <table cellpadding="0" cellspacing="0"><tr>
-              <td style="vertical-align:middle;padding-right:10px;">
-                <div style="width:32px;height:32px;background:#08514F;border-radius:50%;text-align:center;line-height:32px;font-family:Arial,sans-serif;font-size:12px;font-weight:700;color:white;">NK</div>
-              </td>
-              <td style="vertical-align:middle;">
-                <div style="font-family:Arial,sans-serif;font-size:12px;font-weight:700;color:#08514F;">Nurse Kamau</div>
-                <div style="font-size:11px;color:#4A6868;">BScN &middot; Nairobi, Kenya</div>
-              </td>
-            </tr></table>
-          </div>
-        </div>
+
         <div style="border-top:2px solid #D0E8E7;padding-top:18px;">
           <table cellpadding="0" cellspacing="0"><tr>
             <td style="vertical-align:middle;padding-right:14px;">
