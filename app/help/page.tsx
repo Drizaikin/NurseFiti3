@@ -37,7 +37,7 @@ export default function HelpPage() {
           <p className="font-semibold mb-2">Still need help?</p>
           <a href="mailto:support@nursefiti.vercel.app" className="text-accent font-bold hover:underline">support@nursefiti.vercel.app</a>
           <span className="mx-3 opacity-40">·</span>
-          <a href="https://wa.me/254791952703" target="_blank" rel="noopener noreferrer" className="text-accent font-bold hover:underline">WhatsApp Support</a>
+          <a href="https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m" target="_blank" rel="noopener noreferrer" className="text-accent font-bold hover:underline">WhatsApp Community</a>
         </div>
         <div className="mt-6 text-center"><Link href="/" className="text-primary hover:underline text-sm">← Back to NurseFiti</Link></div>
       </div>

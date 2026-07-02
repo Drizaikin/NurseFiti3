@@ -149,7 +149,7 @@ function emailFooter(siteUrl: string, supportEmail: string): string {
                 <td width="30%" style="vertical-align:top;">
                   <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#F7BC55;margin-bottom:12px;">Support</div>
                   <a href="${siteUrl}/help" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">Help Centre</a>
-                  <a href="https://wa.me/254700000000" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">WhatsApp Community</a>
+                  <a href="https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:8px;">WhatsApp Community</a>
                   <a href="mailto:${supportEmail}" style="display:block;font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:rgba(255,255,255,0.65);text-decoration:none;">${supportEmail}</a>
                 </td>
               </tr>

@@ -666,12 +666,12 @@ export default function DashboardPage() {
                 ✉️ Email Support
               </a>
               <a
-                href="https://wa.me/254791952703"
+                href="https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-secondary)] hover:border-success/40 hover:text-success transition-colors"
               >
-                💬 WhatsApp
+                💬 WhatsApp Community
               </a>
             </div>
           </Card>

@@ -944,12 +944,12 @@ export default function LandingPage() {
                 </li>
                 <li>
                   <a
-                    href="https://wa.me/254791952703"
+                    href="https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-white transition-colors"
                   >
-                    WhatsApp Support
+                    WhatsApp Community
                   </a>
                 </li>
                 <li>
