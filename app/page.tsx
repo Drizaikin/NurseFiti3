@@ -560,7 +560,11 @@ export default async function LandingPage() {
                   {f.icon}
                 </div>
                 <h3 className="text-lg font-heading font-bold text-[var(--color-text)] mb-2">{f.title}</h3>
-                <p className="text-sm text-neutral-mid leading-relaxed">{f.desc}</p>
+                <p className="text-sm text-neutral-mid leading-relaxed">
+                  {f.title === 'Adaptive MCQ Bank' && questionsCount 
+                    ? f.desc.replace('5,000', questionsCount.toLocaleString()) 
+                    : f.desc}
+                </p>
               </div>
             ))}
           </div>
