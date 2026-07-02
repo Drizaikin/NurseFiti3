@@ -38,15 +38,15 @@ WHERE
 
 UPDATE flashcards
 SET
-  back_text = 'Under the Kenya Mental Health (Amendment) Act 2022, there are three admission pathways:
+  back_text = 'Under the Kenya Mental Health (Amendment) Act 2022, there are three primary admission pathways along with supported decision making:
 
 1. VOLUNTARY ADMISSION (MOH 613 for adults; MOH 637 for minors under 16 by parent/guardian): Patient consents to treatment. May leave after giving 72 hours'' written notice.
 
 2. INVOLUNTARY (COMPULSORY) ADMISSION (MOH 614): Patient lacks insight, refuses treatment, and is a danger to self or others. Requires documented psychiatric assessment and review tribunal. No patient can be detained indefinitely without review.
 
-3. EMERGENCY / PROTECTIVE CUSTODY: Authorised persons (police Inspector+, chiefs, assistant chiefs) may take a person into protective custody if they are mentally disordered and are dangerous, neglected, or acting indecently. Person must reach a hospital within 24 hours. Initial assessment period up to 72 hours.
+3. EMERGENCY / FORENSIC (MOH 638): Authorised persons (police Inspector+, chiefs, assistant chiefs) may take a person into protective custody if they are mentally disordered and are dangerous, neglected, or acting indecently. Person must reach a hospital within 24 hours. Initial assessment period up to 72 hours.
 
-Informed consent applies to all competent voluntary patients.',
-  back_highlight = 'MOH 613 = Voluntary · MOH 614 = Involuntary · MOH 637 = Minor · Emergency = 24 hrs to hospital'
+Note: The 2022 Amendment heavily emphasizes "Supported Decision Making", allowing patients to appoint a representative to assist in treatment decisions. Informed consent applies to all competent voluntary patients.',
+  back_highlight = 'MOH 613 = Voluntary · MOH 614 = Involuntary · MOH 637 = Minor · MOH 638 = Emergency (24 hrs)'
 WHERE
   front_text = 'Under the Mental Health Act Kenya 2022, what are the admission types?';

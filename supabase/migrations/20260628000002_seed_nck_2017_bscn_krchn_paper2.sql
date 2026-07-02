@@ -127,7 +127,7 @@ VALUES (
   'The defense mechanism of repression is associated with:-',
   'Schizophrenia.', 'Dissociative identity disorder.', 'Phobias.', 'Generalized anxiety disorder.',
   'B',
-  'Repression (unconscious blocking of traumatic memories) is the core mechanism underlying dissociative identity disorder (Stuart Psychiatric Nursing; psychodynamic theory; DSM-5).',
+  'Repression underlies many disorders; it is most centrally linked to dissociative conditions in psychodynamic formulations. It involves unconscious blocking of traumatic memories (Stuart Psychiatric Nursing; psychodynamic theory; DSM-5).',
   'easy', 2017, 'approved', NULL
 ) ON CONFLICT (stem, cadre) DO NOTHING;
 

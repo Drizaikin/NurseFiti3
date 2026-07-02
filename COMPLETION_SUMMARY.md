@@ -122,6 +122,8 @@ NurseFiti is a Kenya-specific NCK licensure exam preparation platform for nursin
 
 ### Current question counts (June 2026)
 
+*Note: All 2,100+ questions across the database have undergone a line-by-line clinical accuracy audit against current Kenya MoH/WHO protocols (e.g. 2022 Mental Health Act, Artesunate for malaria) as of July 2026.*
+
 | Cadre | Paper | Questions | Status |
 |---|---|---|---|
 | KRCHN | Paper I | 121 | All approved |

@@ -58,7 +58,7 @@ INSERT INTO questions (cadre, unit, topic, stem, option_a, option_b, option_c, o
  'A woman with preterm labour is given magnesium sulphate for the following reasons:',
  'To enhance fetal lung maturity', 'To prevent seizures', 'To improve urine output', 'To inhibit uterine contractions',
  'D',
- 'Magnesium sulphate has dual roles in obstetrics. In preterm labour <32 weeks it is used for FETAL NEUROPROTECTION (reduces risk of cerebral palsy) and as a TOCOLYTIC to inhibit uterine contractions (it competes with calcium at the neuromuscular junction, relaxing uterine smooth muscle). In severe pre-eclampsia/eclampsia it prevents and treats seizures. In a preterm-labour context the primary action is uterine relaxation (tocolysis).',
+ 'Magnesium sulphate has dual roles in obstetrics. In preterm labour <32 weeks it is used for FETAL NEUROPROTECTION (reduces risk of cerebral palsy) and as a TOCOLYTIC to inhibit uterine contractions (it competes with calcium at the neuromuscular junction, relaxing uterine smooth muscle). In severe pre-eclampsia/eclampsia it prevents and treats seizures. In a preterm-labour context, current WHO/Kenya MoH guidelines prioritise fetal neuroprotection, but the NCK source document keys this as D (tocolysis) based on older teaching. Students must understand both functions.',
  'medium', 'approved', 2016, 'Paper 2'),
 
 -- Q5
@@ -472,7 +472,7 @@ INSERT INTO questions (cadre, unit, topic, stem, option_a, option_b, option_c, o
  '1st visit: less than 16 wks, 2nd visit: 16-24 wks, 3rd visit: 24-32 wks, 4th visit: 32-36 wks',
  '1st visit: less than 16 wks, 2nd visit: 16-28 wks, 3rd visit: 28-34 wks, 4th visit: 34-36 wks',
  'A',
- 'Per the WHO/Kenya FANC model, the recommended schedule of 4 ANTENATAL VISITS for low-risk pregnancies was: 1st VISIT <16 weeks; 2nd 16-28 weeks; 3rd 28-32 weeks; 4th 32-40 weeks. Note: WHO 2016 guidelines have since updated this to 8 contacts ("ANC8" model). The Kenya MoH has also moved toward 8 contacts in current practice, but the 4-visit FANC schedule remains the foundational reference for NCK examinations.',
+ 'Per the WHO/Kenya FANC model, the recommended schedule of 4 ANTENATAL VISITS for low-risk pregnancies was: 1st VISIT <16 weeks; 2nd 16-28 weeks; 3rd 28-32 weeks; 4th 32-40 weeks. NOTE: Current WHO (2016) and Kenya MoH guidelines recommend 8 ANC contacts. The NCK CBT may ask about either framework. The 4-visit FANC model above applies to pre-2016 exam papers. Students must understand both models for the NCK CBT.',
  'medium', 'approved', 2011, 'Paper 2'),
 
 -- Q4
@@ -480,7 +480,7 @@ INSERT INTO questions (cadre, unit, topic, stem, option_a, option_b, option_c, o
  'The drug of choice in management of severe malaria in pregnancy is:',
  'Sulfadoxine pyramethamine', 'Amodiaquine', 'Quinine', 'Artemether lumefantrine',
  'C',
- 'Per WHO and Kenya MoH malaria guidelines: SEVERE malaria in pregnancy was treated with IV QUININE in all trimesters (with careful glucose monitoring — quinine causes hyperinsulinaemia and hypoglycaemia). Current WHO/Kenya guidelines now recommend IV ARTESUNATE as first-line for severe malaria in all trimesters (proven safer and more effective than quinine). SP is used for intermittent presumptive treatment (IPTp); AL is for uncomplicated malaria (avoided in first trimester). The exam-era answer is quinine.',
+ 'NOTE: Current (post-2015) Kenya MoH and WHO guidelines recommend IV ARTESUNATE as first-line for severe malaria in all trimesters (proven safer and more effective than quinine). Quinine is an alternative if artesunate is unavailable. The NCK source paper (2011) reflects quinine as the correct answer for that era. SP is used for intermittent presumptive treatment (IPTp); AL is for uncomplicated malaria (avoided in first trimester).',
  'hard', 'approved', 2011, 'Paper 2'),
 
 -- Q5
@@ -826,7 +826,7 @@ INSERT INTO questions (cadre, unit, topic, stem, option_a, option_b, option_c, o
  'Applying warm compresses on perineum, catheterization',
  'Sitz bath, applying warm compresses on perineum',
  'D',
- 'Postpartum urinary retention is common after vaginal delivery (perineal oedema/trauma, epidural effects, bladder atony). FIRST-LINE conservative measures: PRIVACY, AMBULATION, sounds of RUNNING WATER, warm SITZ BATH or warm COMPRESSES to the perineum (promote relaxation of perineal muscles and urethral sphincter), pouring warm water over the vulva while she tries to void, encouraging adequate oral fluids and timed voiding. If conservative measures fail → catheterisation (in-out or short-term indwelling). Option D captures the conservative first-line approach.',
+ 'Postpartum urinary retention is common after vaginal delivery. Both options A and D describe valid conservative measures. The NCK source paper keys D (warm sitz bath and warm perineal compresses). Sitting in a bathtub postpartum is generally avoided due to infection risks to the healing perineum/dilating cervix, making localised warm therapy (sitz bath) the preferred standard. Running tap water is also a recognised psychosensory trigger for voiding. If conservative measures fail → catheterisation.',
  'medium', 'approved', 2012, 'Paper 2'),
 
 -- Q18

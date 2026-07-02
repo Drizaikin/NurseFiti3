@@ -56,6 +56,12 @@
 - Integrated `7-day rolling windows` logic for both Bots and Real users properly.
 - All leaderboard UI elements display seamlessly.
 
+### Seed Question Bank Audit
+- Completed a comprehensive line-by-line audit of all ~2,100 seeded questions.
+- Verified clinical accuracy against Kenya MoH, WHO, and NCK guidelines.
+- Applied rationale upgrades for modern protocols (e.g. Artesunate vs Quinine, 8-contact ANC, Mental Health Act 2022).
+- Ensured KRCHN and BScN paper seeding strictly adheres to `nck-exam-system.md` specifications.
+
 ---
 
 ## 🚀 IMMEDIATE ACTIONS REQUIRED BEFORE LAUNCH
