@@ -473,15 +473,70 @@ export default async function LandingPage() {
       </section>
 
       {/* ── SOCIAL PROOF BAR ── */}
-      <section className="bg-primary py-8 px-4">
-        <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 text-center text-white">
+      <section 
+        className="relative py-12 px-4 overflow-hidden" 
+        style={{
+          background: 'linear-gradient(135deg, #051F1E 0%, #08514F 45%, #0A6B68 100%)'
+        }}
+      >
+        {/* Radial glow top-right */}
+        <div 
+          className="absolute pointer-events-none" 
+          style={{
+            top: '-60px', right: '-60px', width: '260px', height: '260px',
+            background: 'radial-gradient(circle, rgba(245,166,35,0.18) 0%, transparent 65%)'
+          }}
+        />
+        
+        {/* Dot-grid texture */}
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px)',
+            backgroundSize: '18px 18px'
+          }}
+        />
+
+        <div className="relative z-10 max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 text-center text-white pb-6">
           {stats.map((stat) => (
             <div key={stat.label}>
-              <p className="text-3xl font-heading font-bold text-accent">{stat.value}</p>
-              <p className="text-sm text-primary-light mt-1">{stat.label}</p>
+              <p className="text-3xl font-heading font-bold text-[#F7BC55]">{stat.value}</p>
+              <p className="text-sm text-[#E4F2F1] mt-1">{stat.label}</p>
             </div>
           ))}
         </div>
+
+        {/* ECG SVG */}
+        <div className="absolute bottom-1 left-0 right-0 w-full overflow-hidden pointer-events-none z-10 flex justify-center opacity-80">
+          <svg className="w-full h-auto min-w-[600px] max-w-5xl" viewBox="0 0 600 52" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="glowBanner">
+                <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <linearGradient id="ecgFadeBanner" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#F5A623" stopOpacity="0"/>
+                <stop offset="12%" stopColor="#F5A623" stopOpacity="0.7"/>
+                <stop offset="75%" stopColor="#F5A623" stopOpacity="1"/>
+                <stop offset="100%" stopColor="#F5A623" stopOpacity="0.3"/>
+              </linearGradient>
+            </defs>
+            <path d="
+              M -10,36 L 60,36 L 72,33 L 78,26 L 84,33 L 100,36 L 112,36 
+              L 118,40 L 124,6 L 130,48 L 136,36 L 146,41 L 158,28 L 166,36 
+              L 260,36 L 272,33 L 278,26 L 284,33 L 300,36 L 312,36 L 318,40 
+              L 324,6 L 330,48 L 336,36 L 346,41 L 358,28 L 366,36 L 460,36 
+              L 472,33 L 478,26 L 484,33 L 500,36 L 512,36 L 518,40 L 524,6 
+              L 530,48 L 536,36 L 546,41 L 558,28 L 566,36 L 610,36
+            " fill="none" stroke="url(#ecgFadeBanner)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" filter="url(#glowBanner)"/>
+          </svg>
+        </div>
+
+        {/* Amber bottom stripe */}
+        <div 
+          className="absolute bottom-0 left-0 w-full h-1 z-20"
+          style={{ background: 'linear-gradient(90deg, #F5A623 0%, #F7BC55 60%, transparent 100%)' }}
+        />
       </section>
 
       {/* ── FEATURES ── */}
