@@ -268,7 +268,7 @@ const PRICING = [
     price: 'KSh 3,500',
     period: '/exam cycle',
     desc: 'Premium support for serious candidates.',
-    features: ['Everything in Success Plan', 'Unlimited mock exams & downloads', 'Tutor priority', 'WhatsApp mentorship', 'AI coaching', 'Accountability tracking'],
+    features: ['Everything in Success Plan', 'Unlimited mock exams & downloads', 'Tutor priority', 'Exam registration reminders'],
     cta: 'Join Elite Prep',
     href: '/signup',
     highlight: false,

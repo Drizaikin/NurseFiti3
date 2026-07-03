@@ -113,10 +113,9 @@ const PLANS = [
     badge: 'teal' as const,
     features: [
       'Unlimited MCQ practice',
-      '2 mock exams per week',
+      '2 mock exams (1 download)',
       'Readiness analytics',
       'Spaced repetition flashcards',
-      'Personalized revision plan included',
     ],
     note: '24-hour focused revision',
   },
@@ -130,8 +129,8 @@ const PLANS = [
     badge: 'teal' as const,
     features: [
       'Everything in Exam Boost Daily',
-      '2 mock exams per week',
       '7-day access',
+      '3 mock exams (2 downloads)',
       'Personalized revision plan included',
     ],
     note: 'Best value for short-term exam prep',
@@ -147,7 +146,7 @@ const PLANS = [
     badge: 'teal' as const,
     features: [
       'Unlimited MCQ practice',
-      '2 mock exams per week',
+      '3 mock exams/week (unlimited downloads)',
       'Smarter analytics',
       'Spaced repetition flashcards',
       'Adaptive revision roadmap',
@@ -165,11 +164,8 @@ const PLANS = [
     badge: 'amber' as const,
     features: [
       'Everything in Success Plan',
-      'Unlimited mock exams',
+      'Unlimited mock exams & downloads',
       'Tutor priority',
-      'WhatsApp mentorship',
-      'AI coaching',
-      'Accountability tracking',
       'Exam registration reminders',
     ],
     note: 'Full exam-cycle support',

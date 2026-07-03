@@ -306,6 +306,44 @@ function FlashcardStudy({
   onFlip: () => void;
   onRate: (r: Rating) => void;
 }) {
+  const [showAiExplanation, setShowAiExplanation] = useState(false);
+  const [aiExplanation, setAiExplanation] = useState('');
+  const [isGeneratingAi, setIsGeneratingAi] = useState(false);
+
+  // Reset AI state when card changes
+  useEffect(() => {
+    setShowAiExplanation(false);
+    setAiExplanation('');
+    setIsGeneratingAi(false);
+  }, [card.id]);
+
+  const handleAskAI = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowAiExplanation(true);
+    if (aiExplanation || isGeneratingAi) return;
+    setIsGeneratingAi(true);
+    setAiExplanation('');
+    try {
+      const res = await fetch('/api/ai/flashcard-explain', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ front: card.front_text, back: card.back_text, highlight: card.back_highlight }),
+      });
+      if (!res.body) throw new Error('No stream');
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        setAiExplanation(prev => prev + decoder.decode(value));
+      }
+    } catch (err) {
+      setAiExplanation('Sorry, NurseFiti AI could not generate an explanation at this time.');
+    } finally {
+      setIsGeneratingAi(false);
+    }
+  };
+
   const isFront = flipState === 'front';
   const bg = isFront ? theme.frontBg : theme.backBg;
   const textColor = isFront ? theme.frontText : theme.backText;
@@ -397,7 +435,34 @@ function FlashcardStudy({
               </p>
             </>
           )}
+
+          {/* AI Explanation Drawer (Inline) */}
+          {!isFront && showAiExplanation && (
+            <div 
+              className="mt-6 p-4 rounded-xl text-left bg-[var(--color-bg)]/80 backdrop-blur border shadow-inner w-full"
+              style={{ borderColor: border, color: textColor }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-lg">🤖</span>
+                <span className="font-bold text-sm">NurseFiti AI</span>
+                {isGeneratingAi && <Spinner size="sm" className="ml-auto opacity-50" />}
+              </div>
+              <p className="text-sm leading-relaxed whitespace-pre-wrap">{aiExplanation || 'Thinking...'}</p>
+            </div>
+          )}
         </div>
+
+        {/* Ask AI Button (Absolute positioned on back) */}
+        {!isFront && !showAiExplanation && (
+          <button
+            onClick={handleAskAI}
+            className="absolute top-4 right-4 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-transform hover:scale-105 active:scale-95 bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur"
+            style={{ color: textColor }}
+          >
+            🤖 Ask AI
+          </button>
+        )}
 
         {/* Face indicator */}
         <div

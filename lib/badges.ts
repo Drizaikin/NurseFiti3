@@ -60,6 +60,11 @@ export const BADGE_DEFS: BadgeDef[] = [
   // Community Badges
   { id: 'social_butterfly', icon: '🦋', name: 'Social Butterfly', description: 'Post 5 Community Messages', condition: '5 Posts' },
   { id: 'team_captain', icon: '👑', name: 'Team Captain', description: 'Create and lead a study group', condition: 'Create a group' },
+
+  // Timing Badges (New)
+  { id: 'early_bird', icon: '🌅', name: 'Early Bird', description: 'Answered a question before 8 AM', condition: 'Study < 8 AM' },
+  { id: 'night_owl', icon: '🦉', name: 'Night Owl', description: 'Answered a question after 10 PM', condition: 'Study > 10 PM' },
+  { id: 'weekend_warrior', icon: '⚔️', name: 'Weekend Warrior', description: 'Answered 50 questions on a weekend', condition: '50 Qs on Weekend' },
 ];
 
 /**
@@ -127,7 +132,7 @@ export async function evaluateUserBadges(supabase: any, userId: string): Promise
       }
     }
 
-    // Evaluate Unit & Total Question Badges
+    // Evaluate Unit & Total Question & Timing Badges
     const needsWarmUp = !initialEarned.has('warm_up');
     const needsDedicated = !initialEarned.has('dedicated_student');
     const needsTotalQ = !initialEarned.has('knowledge_god');
@@ -135,11 +140,14 @@ export async function evaluateUserBadges(supabase: any, userId: string): Promise
     const needsMedSurg = !initialEarned.has('med_surg_master');
     const needsAnatomy = !initialEarned.has('anatomy_ace');
     const needsObgyn = !initialEarned.has('obgyn_oracle');
+    const needsEarlyBird = !initialEarned.has('early_bird');
+    const needsNightOwl = !initialEarned.has('night_owl');
+    const needsWeekendWarrior = !initialEarned.has('weekend_warrior');
 
-    if (needsWarmUp || needsDedicated || needsTotalQ || needsPharma || needsMedSurg || needsAnatomy || needsObgyn) {
+    if (needsWarmUp || needsDedicated || needsTotalQ || needsPharma || needsMedSurg || needsAnatomy || needsObgyn || needsEarlyBird || needsNightOwl || needsWeekendWarrior) {
       // Fetch all answers with unit data to count locally
       const { data: answers, error: ansError } = await (supabase.from('student_answers') as any)
-        .select('questions!inner(unit)')
+        .select('answered_at, questions!inner(unit)')
         .eq('student_id', userId);
       
       if (!ansError && answers) {
@@ -151,6 +159,9 @@ export async function evaluateUserBadges(supabase: any, userId: string): Promise
         let medSurgCount = 0;
         let anatomyCount = 0;
         let obgynCount = 0;
+        let hasEarlyBird = false;
+        let hasNightOwl = false;
+        let weekendCount = 0;
 
         for (const ans of answers) {
           const unit = ans.questions?.unit || '';
@@ -158,12 +169,24 @@ export async function evaluateUserBadges(supabase: any, userId: string): Promise
           else if (unit.includes('Medical Surgical') || unit.includes('Med-Surg')) medSurgCount++;
           else if (unit.includes('Anatomy')) anatomyCount++;
           else if (unit.includes('Midwifery') || unit.includes('OBGYN')) obgynCount++;
+
+          if (ans.answered_at) {
+            const d = new Date(ans.answered_at);
+            const hour = d.getHours();
+            const day = d.getDay();
+            if (hour < 8) hasEarlyBird = true;
+            if (hour >= 22 || hour < 4) hasNightOwl = true;
+            if (day === 0 || day === 6) weekendCount++;
+          }
         }
 
         checkAndAward('pharma_warrior', pharmaCount >= 100);
         checkAndAward('med_surg_master', medSurgCount >= 100);
         checkAndAward('anatomy_ace', anatomyCount >= 100);
         checkAndAward('obgyn_oracle', obgynCount >= 100);
+        checkAndAward('early_bird', hasEarlyBird);
+        checkAndAward('night_owl', hasNightOwl);
+        checkAndAward('weekend_warrior', weekendCount >= 50);
       }
     }
 
