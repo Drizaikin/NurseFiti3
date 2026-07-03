@@ -16,19 +16,20 @@ export type PlanTier = 'free' | 'daily' | 'weekly' | 'standard' | 'premium';
 /**
  * Mock exam limits:
  *   free     — 0 (blocked unless they upload questions — handled separately)
- *   daily    — 2 per week (same as standard; resets Monday 00:00 EAT)
- *   weekly   — 2 per week (same as standard; resets Monday 00:00 EAT)
- *   standard — 2 per week (resets Monday 00:00 EAT)
+ *   daily    — 2 per week (resets Monday 00:00 EAT)
+ *   weekly   — 3 per week (resets Monday 00:00 EAT)
+ *   standard — 3 per week (resets Monday 00:00 EAT)
  *   premium  — Infinity (effectively 1/day = ~7/week, no hard cap)
  */
 export const PLAN_LIMITS = {
   free: {
     practiceQuestionsPerDay: 30,
     mockExamsPerWeek: 0,          // blocked; upload-to-unlock handled in mock-exam page
+    mockExamDownloads: 0,
     flashcardsAccess: false,
     analyticsLevel: 'basic' as const,
     tutorBookingAccess: true,
-    revisionPlanPriceKsh: 0,
+    revisionPlanAccess: false,
     communityGroups: true,
     leaderboard: false,
     whatsappSupport: false,
@@ -37,10 +38,11 @@ export const PLAN_LIMITS = {
   daily: {
     practiceQuestionsPerDay: Infinity,
     mockExamsPerWeek: 2,
+    mockExamDownloads: 1,
     flashcardsAccess: true,
     analyticsLevel: 'full' as const,
     tutorBookingAccess: true,
-    revisionPlanPriceKsh: 0,
+    revisionPlanAccess: false,
     communityGroups: true,
     leaderboard: false,
     whatsappSupport: false,
@@ -48,11 +50,12 @@ export const PLAN_LIMITS = {
   },
   weekly: {
     practiceQuestionsPerDay: Infinity,
-    mockExamsPerWeek: 2,
+    mockExamsPerWeek: 3,
+    mockExamDownloads: 2,
     flashcardsAccess: true,
     analyticsLevel: 'full' as const,
     tutorBookingAccess: true,
-    revisionPlanPriceKsh: 0,
+    revisionPlanAccess: true,
     communityGroups: true,
     leaderboard: false,
     whatsappSupport: false,
@@ -60,11 +63,12 @@ export const PLAN_LIMITS = {
   },
   standard: {
     practiceQuestionsPerDay: Infinity,
-    mockExamsPerWeek: 2,
+    mockExamsPerWeek: 3,
+    mockExamDownloads: Infinity,
     flashcardsAccess: true,
     analyticsLevel: 'full' as const,
     tutorBookingAccess: true,
-    revisionPlanPriceKsh: 0,
+    revisionPlanAccess: true,
     communityGroups: true,
     leaderboard: false,
     whatsappSupport: false,
@@ -73,10 +77,11 @@ export const PLAN_LIMITS = {
   premium: {
     practiceQuestionsPerDay: Infinity,
     mockExamsPerWeek: Infinity,   // 1 per day effectively; no hard weekly cap
+    mockExamDownloads: Infinity,
     flashcardsAccess: true,
     analyticsLevel: 'full' as const,
     tutorBookingAccess: true,
-    revisionPlanPriceKsh: 0,
+    revisionPlanAccess: true,
     communityGroups: true,
     leaderboard: true,
     whatsappSupport: true,
@@ -85,10 +90,11 @@ export const PLAN_LIMITS = {
 } as const satisfies Record<PlanTier, {
   practiceQuestionsPerDay: number;
   mockExamsPerWeek: number;
+  mockExamDownloads: number;
   flashcardsAccess: boolean;
   analyticsLevel: 'basic' | 'full';
   tutorBookingAccess: boolean;
-  revisionPlanPriceKsh: number;
+  revisionPlanAccess: boolean;
   communityGroups: boolean;
   leaderboard: boolean;
   whatsappSupport: boolean;

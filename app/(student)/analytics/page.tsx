@@ -389,7 +389,7 @@ export default function AnalyticsPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.mockExams.map(m => (
+                    {data.mockExams.map((m, i) => (
                       <tr key={m.id} className="border-b border-[var(--color-border)] last:border-0">
                         <td className="py-3 pr-4 text-[var(--color-text)]">
                           {new Date(m.completed_at).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}
@@ -403,10 +403,10 @@ export default function AnalyticsPage() {
                           <Badge variant={m.passed ? 'green' : 'red'} size="sm">{m.passed ? 'Pass' : 'Fail'}</Badge>
                         </td>
                         <td className="py-3">
-                          {(planTier === 'standard' || planTier === 'premium') ? (
+                          {(limits.mockExamDownloads === Infinity || i < limits.mockExamDownloads) ? (
                             <DownloadResultButton resultId={m.id} paper={m.paper} completedAt={m.completed_at} />
                           ) : (
-                            <span className="text-xs text-neutral-mid">Upgrade to Success/Elite to download</span>
+                            <span className="text-xs text-neutral-mid">Limit reached</span>
                           )}
                         </td>
                       </tr>

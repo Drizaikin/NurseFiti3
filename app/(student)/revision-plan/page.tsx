@@ -17,7 +17,7 @@ const PLAN_ACCESS: Record<string, { label: string; variant: 'teal' | 'amber' | '
   premium:  { label: 'Elite Prep',         variant: 'amber',     included: true },
   standard: { label: 'Success Plan',       variant: 'teal',      included: true },
   weekly:   { label: 'Exam Boost Weekly',  variant: 'teal',      included: true },
-  daily:    { label: 'Exam Boost Daily',   variant: 'teal',      included: true },
+  daily:    { label: 'Exam Boost Daily',   variant: 'teal',      included: false },
   free:     { label: 'Test Yourself',      variant: 'secondary', included: false },
 };
 

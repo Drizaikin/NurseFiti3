@@ -695,8 +695,8 @@ export default function MockExamPage() {
 
         <div className="flex gap-3">
           <Button variant="primary" className="flex-1" onClick={() => setExamState('setup')}>Take Another Exam</Button>
-          <Button variant="outline" className="flex-1" onClick={() => router.push('/analytics')}>View Analytics</Button>
-          {results.resultId && (planTier === 'standard' || planTier === 'premium') && (
+          <Button variant="ghost" className="flex-1 border border-[#1E3535] text-white" onClick={() => router.push('/analytics')}>View Analytics</Button>
+          {results.resultId && (getLimits(planTier).mockExamDownloads === Infinity || examsThisWeek <= getLimits(planTier).mockExamDownloads) && (
             <Button
               variant="outline"
               className="flex-1"

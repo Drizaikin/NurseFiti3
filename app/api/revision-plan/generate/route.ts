@@ -17,7 +17,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { effectiveTier } from '@/lib/planLimits';
+import { effectiveTier, getLimits } from '@/lib/planLimits';
 import { z } from 'zod';
 import { randomUUID } from 'crypto';
 
@@ -546,7 +546,7 @@ export async function POST(req: NextRequest) {
 
     const profileRow = profile as any;
     const activeTier = effectiveTier(profileRow.plan_tier, profileRow.plan_expires_at);
-    const hasIncludedRevisionPlan = activeTier !== 'free';
+    const hasIncludedRevisionPlan = getLimits(activeTier).revisionPlanAccess;
 
     // Verify payment reference exists and is completed for users without an active paid plan.
     if (!hasIncludedRevisionPlan && paymentRef !== 'free_premium') {
