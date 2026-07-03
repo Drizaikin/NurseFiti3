@@ -46,6 +46,17 @@ function DownloadResultButton({ resultId, paper, completedAt }: {
       a.remove();
       URL.revokeObjectURL(url);
       toast.success('Download ready — open the file in any browser to view.');
+      
+      try {
+        const downloaded = JSON.parse(localStorage.getItem('downloaded_mocks') || '[]');
+        if (!downloaded.includes(resultId)) {
+          downloaded.push(resultId);
+          localStorage.setItem('downloaded_mocks', JSON.stringify(downloaded));
+          window.dispatchEvent(new Event('mock_downloaded'));
+        }
+      } catch (e) {
+        console.error('Error tracking download', e);
+      }
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Download failed');
     } finally {
@@ -160,6 +171,7 @@ export default function AnalyticsPage() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [planTier, setPlanTier] = useState<string>('free');
+  const [downloadedMocks, setDownloadedMocks] = useState<string[]>([]);
 
   useEffect(() => {
     const load = async () => {
@@ -286,9 +298,19 @@ export default function AnalyticsPage() {
     const onFocus = () => load();
     window.addEventListener('focus', onFocus);
 
+    // 3. Downloads listener
+    const syncDownloads = () => {
+      try {
+        setDownloadedMocks(JSON.parse(localStorage.getItem('downloaded_mocks') || '[]'));
+      } catch (e) {}
+    };
+    syncDownloads();
+    window.addEventListener('mock_downloaded', syncDownloads);
+
     return () => {
       supabase.removeChannel(channel);
       window.removeEventListener('focus', onFocus);
+      window.removeEventListener('mock_downloaded', syncDownloads);
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -403,11 +425,17 @@ export default function AnalyticsPage() {
                           <Badge variant={m.passed ? 'green' : 'red'} size="sm">{m.passed ? 'Pass' : 'Fail'}</Badge>
                         </td>
                         <td className="py-3">
-                          {(limits.mockExamDownloads === Infinity || i < limits.mockExamDownloads) ? (
-                            <DownloadResultButton resultId={m.id} paper={m.paper} completedAt={m.completed_at} />
-                          ) : (
-                            <span className="text-xs text-neutral-mid">Limit reached</span>
-                          )}
+                          {(() => {
+                            const isDownloaded = downloadedMocks.includes(m.id);
+                            const canDownloadNew = downloadedMocks.length < limits.mockExamDownloads;
+                            const showDownload = limits.mockExamDownloads > 0 && (limits.mockExamDownloads === Infinity || isDownloaded || canDownloadNew);
+
+                            return showDownload ? (
+                              <DownloadResultButton resultId={m.id} paper={m.paper} completedAt={m.completed_at} />
+                            ) : (
+                              <span className="text-xs text-neutral-mid">Limit reached</span>
+                            );
+                          })()}
                         </td>
                       </tr>
                     ))}

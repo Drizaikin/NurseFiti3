@@ -77,6 +77,7 @@ export default function MockExamPage() {
   const [userId, setUserId] = useState<string | null>(null);
   const [showRationale, setShowRationale] = useState<string | null>(null);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadedMocks, setDownloadedMocks] = useState<string[]>([]);
 
   const handleDownloadResult = async () => {
     if (!results?.resultId) { toast.error('Result ID not available. Please retry.'); return; }
@@ -101,6 +102,17 @@ export default function MockExamPage() {
       a.remove();
       URL.revokeObjectURL(url);
       toast.success('Download started. Open the file in any browser to view or print.');
+      try {
+        const downloaded = JSON.parse(localStorage.getItem('downloaded_mocks') || '[]');
+        if (!downloaded.includes(results.resultId)) {
+          downloaded.push(results.resultId);
+          localStorage.setItem('downloaded_mocks', JSON.stringify(downloaded));
+          setDownloadedMocks(downloaded);
+          window.dispatchEvent(new Event('mock_downloaded'));
+        }
+      } catch (e) {
+        console.error('Error tracking download', e);
+      }
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Download failed');
     } finally {
@@ -136,6 +148,9 @@ export default function MockExamPage() {
           .gte('completed_at', weekStart);
         setExamsThisWeek(count ?? 0);
       }
+      try {
+        setDownloadedMocks(JSON.parse(localStorage.getItem('downloaded_mocks') || '[]'));
+      } catch (e) {}
       setIsLoading(false);
     };
     init();
@@ -696,16 +711,23 @@ export default function MockExamPage() {
         <div className="flex gap-3">
           <Button variant="primary" className="flex-1" onClick={() => setExamState('setup')}>Take Another Exam</Button>
           <Button variant="ghost" className="flex-1 border border-[#1E3535] text-white" onClick={() => router.push('/analytics')}>View Analytics</Button>
-          {results.resultId && (getLimits(planTier).mockExamDownloads === Infinity || examsThisWeek <= getLimits(planTier).mockExamDownloads) && (
-            <Button
-              variant="outline"
-              className="flex-1"
-              onClick={handleDownloadResult}
-              disabled={isDownloading}
-            >
-              {isDownloading ? <><Spinner size="sm" />&nbsp;Preparing…</> : '⬇ Download Results'}
-            </Button>
-          )}
+          {(() => {
+            const limits = getLimits(planTier);
+            const isDownloaded = results.resultId && downloadedMocks.includes(results.resultId);
+            const canDownloadNew = downloadedMocks.length < limits.mockExamDownloads;
+            const showDownload = limits.mockExamDownloads > 0 && results.resultId && (limits.mockExamDownloads === Infinity || isDownloaded || canDownloadNew);
+
+            return showDownload ? (
+              <Button
+                variant="outline"
+                className="flex-1"
+                onClick={handleDownloadResult}
+                disabled={isDownloading}
+              >
+                {isDownloading ? <><Spinner size="sm" />&nbsp;Preparing…</> : '⬇ Download Results'}
+              </Button>
+            ) : null;
+          })()}
         </div>
       </div>
     );

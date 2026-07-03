@@ -35,7 +35,7 @@ Flashcard Answer: "${highlight ? highlight + ' - ' : ''}${back}"
 Provide a highly concise, encouraging, and clear clinical rationale explaining WHY this is the correct answer. 
 Limit your response to 2 short paragraphs. Speak directly to the student. Do not use markdown headers.`;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
     const result = await model.generateContentStream(prompt);
 
     const stream = new ReadableStream({
