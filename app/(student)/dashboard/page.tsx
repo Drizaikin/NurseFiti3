@@ -323,11 +323,55 @@ interface DashboardData {
     total_questions_answered: number; correct_answers: number;
     accuracy_percentage: number; total_study_time_minutes: number;
     mock_exams_taken: number; flashcards_reviewed: number;
+    badges: Array<{ name: string; description: string; icon: string; rarity: 'easy' | 'moderate' | 'hard' }>;
   };
   upcomingSessions: Array<{
     id: string; tutor_name: string; session_date: string; start_time: string; topic: string;
   }>;
 }
+
+const computeBadges = (answers: any[], streakCount: number, level: number) => {
+  const badges: Array<{ name: string; description: string; icon: string; rarity: 'easy' | 'moderate' | 'hard' }> = [];
+
+  let weekendAnswers = 0;
+  let earlyBirdAnswers = 0;
+  let nightOwlAnswers = 0;
+
+  answers.forEach(a => {
+    if (!a.created_at) return;
+    const date = new Date(a.created_at);
+    
+    const day = date.getDay();
+    if (day === 0 || day === 6) weekendAnswers++;
+
+    const hour = date.getHours();
+    if (hour >= 4 && hour < 8) earlyBirdAnswers++;
+    if (hour >= 22 || hour < 3) nightOwlAnswers++;
+  });
+
+  // Easy
+  if (answers.length >= 1) badges.push({ name: 'First Step', description: 'Answered your first question', icon: '🐣', rarity: 'easy' });
+  if (weekendAnswers >= 10) badges.push({ name: 'Weekend Warrior', description: 'Answered 10+ questions on weekends', icon: '⚔️', rarity: 'easy' });
+
+  // Moderate
+  if (earlyBirdAnswers >= 10) badges.push({ name: 'Early Bird', description: 'Answered 10+ questions between 4AM-8AM', icon: '🌅', rarity: 'moderate' });
+  if (nightOwlAnswers >= 10) badges.push({ name: 'Night Owl', description: 'Answered 10+ questions between 10PM-3AM', icon: '🦉', rarity: 'moderate' });
+  if (streakCount >= 3) badges.push({ name: 'Consistency', description: 'Maintained a 3+ day streak', icon: '🔥', rarity: 'moderate' });
+
+  // Hard
+  if (answers.length >= 100) badges.push({ name: 'Marathoner', description: 'Answered 100+ questions in total', icon: '🏃‍♂️', rarity: 'hard' });
+  if (level >= 5) badges.push({ name: 'Master', description: 'Reached Level 5', icon: '👑', rarity: 'hard' });
+
+  if (answers.length >= 50) {
+    const last50 = answers.slice(-50);
+    const correctLast50 = last50.filter(a => a.is_correct).length;
+    if (correctLast50 / 50 >= 0.9) {
+      badges.push({ name: 'Sharpshooter', description: '90%+ accuracy over the last 50 questions', icon: '🎯', rarity: 'hard' });
+    }
+  }
+
+  return badges;
+};
 
 // ── Main page ──────────────────────────────────────────────────────────────
 export default function DashboardPage() {
@@ -373,7 +417,7 @@ export default function DashboardPage() {
       const [profileRes, studentRes, answersRes, mockRes, flashRes, sessionsRes, scholarshipRes] = await Promise.all([
         supabase.from('profiles').select('full_name').eq('id', user.id).single(),
         supabase.from('student_profiles').select('*').eq('id', user.id).single(),
-        supabase.from('student_answers').select('is_correct, time_taken_seconds').eq('student_id', user.id),
+        supabase.from('student_answers').select('is_correct, time_taken_seconds, created_at').eq('student_id', user.id).order('created_at', { ascending: true }),
         supabase.from('mock_exam_results').select('id').eq('student_id', user.id),
         supabase.from('flashcard_progress').select('id').eq('student_id', user.id),
         supabase.from('sessions')
@@ -393,11 +437,13 @@ export default function DashboardPage() {
 
       if (!studentData) { router.push('/onboarding'); return; }
 
-      const answers = (answersRes.data ?? []) as Array<{ is_correct: boolean; time_taken_seconds: number | null }>;
+      const answers = (answersRes.data ?? []) as Array<{ is_correct: boolean; time_taken_seconds: number | null; created_at: string }>;
       const totalAnswers = answers.length;
       const correctAnswers = answers.filter(a => a.is_correct).length;
       const accuracy = totalAnswers > 0 ? (correctAnswers / totalAnswers) * 100 : 0;
       const studyTime = Math.floor(answers.reduce((s, a) => s + (a.time_taken_seconds ?? 0), 0) / 60);
+      
+      const earnedBadges = computeBadges(answers, studentData.streak_count ?? 0, studentData.level ?? 1);
 
       const sessions = (sessionsRes.data ?? []) as Array<{
         id: string; session_date: string; start_time: string; topic: string | null;
@@ -429,6 +475,7 @@ export default function DashboardPage() {
           total_study_time_minutes: studyTime,
           mock_exams_taken: mockRes.data?.length ?? 0,
           flashcards_reviewed: flashRes.data?.length ?? 0,
+          badges: earnedBadges,
         },
         upcomingSessions: sessions.map(s => ({
           id: s.id,

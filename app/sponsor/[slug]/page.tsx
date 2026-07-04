@@ -91,7 +91,7 @@ export default async function SponsorDashboardPage({ params }: { params: { slug:
         <div className="max-w-6xl mx-auto text-center space-y-4">
           <div className="flex justify-center mb-6">
             <div className="bg-white p-4 rounded-full shadow-lg inline-flex items-center justify-center">
-              <NurseFitiLogo variant="primary" size={48} />
+              <NurseFitiLogo variant="full" size={48} />
             </div>
           </div>
           <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-bold tracking-wider uppercase">Impact Report</span>

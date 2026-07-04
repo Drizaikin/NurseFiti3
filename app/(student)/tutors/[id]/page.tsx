@@ -117,7 +117,7 @@ export default function TutorProfilePage() {
 
   const [tutor, setTutor] = useState<TutorProfile | null>(null);
   const [availability, setAvailability] = useState<AvailabilitySlot[]>([]);
-  const [bookedSlots, setBookedSlots] = useState<Array<{ session_date: string; start_time: string }>>([]);
+  const [bookedSlots, setBookedSlots] = useState<Array<{ session_date: string; start_time: string; status: string; booked_at: string | null }>>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);

@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/Button";
 // ❶  RELEASES REGISTRY — edit here to announce new features
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CURRENT_VERSION = 6;
+const CURRENT_VERSION = 7;
 
 interface WhatsNewItem {
   icon: string;
@@ -211,6 +211,41 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
           "KRCHN students now have access to 312 new Paper I questions and 128 new Paper II questions, covering everything from Medical-Surgical to Community Health.",
         cta: { label: "Practice Now", href: "/practice" },
       },
+    ],
+  },
+
+  // ── Version 7 — Badges, Flashcard AI, Upgraded Models ──────────
+  {
+    version: 7,
+    date: "4 July 2026",
+    items: [
+      {
+        icon: "🏆",
+        tag: "Achievement Unlocked",
+        tagColor: "bg-amber-500/20 text-amber-500",
+        title: "Don't Fall Behind Your Peers!",
+        description:
+          "The new NurseFiti Badges system is here. Top students are already securing streaks and unlocking rare badges. Start practising daily to claim yours and prove you have what it takes to crush the NCK exam.",
+        cta: { label: "Claim Your First Badge", href: "/dashboard" },
+      },
+      {
+        icon: "🤖",
+        tag: "Unfair Advantage",
+        tagColor: "bg-emerald-500/20 text-emerald-400",
+        title: "NurseFiti AI in Flashcards",
+        description:
+          "Stuck on a tough concept? Tap 'Ask AI' and get an instant, clinical rationale tailored exactly to NCK standards. It’s like having a private tutor in your pocket — use it to cut your study time in half.",
+        cta: { label: "Try the AI Now", href: "/flashcards" },
+      },
+      {
+        icon: "⚡",
+        tag: "Upgraded",
+        tagColor: "bg-blue-500/20 text-blue-400",
+        title: "Blazing Fast AI Engine",
+        description:
+          "We've upgraded our entire AI engine to Gemini 3.5. Getting fast, accurate clinical explanations is no longer a luxury—it's the secret weapon the smartest students use to dominate Mock Exams.",
+        cta: { label: "Test Your Knowledge", href: "/mock-exam" },
+      }
     ],
   },
 ];

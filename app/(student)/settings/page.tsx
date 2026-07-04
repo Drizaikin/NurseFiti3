@@ -235,7 +235,7 @@ function SubscriptionCard({ planTier, planExpiresAt, onUpgradeSuccess }: {
   };
   const planSubtext: Record<string, string> = {
     premium:  'You are on the highest plan with exam-cycle mentorship and accountability.',
-    standard: 'Upgrade to Elite Prep for unlimited mocks, WhatsApp mentorship, and stronger accountability.',
+    standard: 'Upgrade to Elite Prep for unlimited mock exams, unlimited downloads, and exam registration reminders.',
     weekly:   'Upgrade to Success Plan or Elite Prep for longer access and deeper support.',
     daily:    'Upgrade to Exam Boost Weekly, Success Plan, or Elite Prep for longer access.',
     free:     'Upgrade to unlock unlimited practice, mock exams, flashcards, and included revision plans.',

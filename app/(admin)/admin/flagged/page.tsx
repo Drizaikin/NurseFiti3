@@ -17,11 +17,13 @@ export default async function AdminFlaggedQuestionsPage() {
   if (!user) return <p>Unauthorized</p>;
 
   // Check if they are actually an admin
-  const { data: profile } = await supabase
+  const { data } = await supabase
     .from('profiles')
     .select('role')
     .eq('id', user.id)
     .single();
+
+  const profile = data as { role: string } | null;
 
   if (profile?.role !== 'admin') return <p>Forbidden</p>;
 

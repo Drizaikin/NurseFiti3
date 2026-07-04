@@ -362,7 +362,7 @@ function GroupsInner() {
       return;
     }
     setIsSavingName(true);
-    const { error } = await sbRef.current
+    const { error } = await (sbRef.current as any)
       .from('study_groups')
       .update({ name: editNameVal.trim() })
       .eq('id', activeGroup.id);

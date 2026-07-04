@@ -35,8 +35,43 @@ Flashcard Answer: "${highlight ? highlight + ' - ' : ''}${back}"
 Provide a highly concise, encouraging, and clear clinical rationale explaining WHY this is the correct answer. 
 Limit your response to 2 short paragraphs. Speak directly to the student. Do not use markdown headers.`;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    const result = await model.generateContentStream(prompt);
+    const models = [
+      'gemini-3.1-flash-lite', // primary: Gemini 3.1 Flash Lite (GA)
+      'gemini-3.5-flash',      // fallback 1: Gemini 3.5 Flash (GA)
+      'gemini-2.5-flash',      // fallback 2: Gemini 2.5 Flash
+    ];
+
+    let result: any;
+    let lastError = '';
+
+    for (let i = 0; i < models.length; i++) {
+      const currentModel = models[i];
+      try {
+        if (i > 0) {
+          await new Promise(resolve => setTimeout(resolve, 500));
+          console.warn(`Retrying flashcard AI with fallback model: ${currentModel}`);
+        }
+        
+        const model = genAI.getGenerativeModel({ model: currentModel });
+        result = await model.generateContentStream(prompt);
+        break; // Success, exit loop
+      } catch (err: any) {
+        lastError = err?.message || String(err);
+        console.error(`Gemini error on model ${currentModel}:`, lastError);
+      }
+    }
+
+    if (!result) {
+      console.error('All Gemini models failed. Last error:', lastError);
+      const isOverloaded = lastError.includes('503') || lastError.includes('UNAVAILABLE') || lastError.includes('high demand');
+      if (isOverloaded) {
+        return NextResponse.json(
+          { error: 'NurseFiti AI is currently experiencing very high demand.' },
+          { status: 503 }
+        );
+      }
+      return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    }
 
     const stream = new ReadableStream({
       async start(controller) {

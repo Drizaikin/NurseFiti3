@@ -329,6 +329,7 @@ function FlashcardStudy({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ front: card.front_text, back: card.back_text, highlight: card.back_highlight }),
       });
+      if (!res.ok) throw new Error('Failed to generate explanation');
       if (!res.body) throw new Error('No stream');
       const reader = res.body.getReader();
       const decoder = new TextDecoder();

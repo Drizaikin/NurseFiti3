@@ -400,8 +400,23 @@ function detailsTable(rows: Array<[string, string]>): string {
     </tr>`).join('');
 }
 
+function getFeaturesForPlanName(planName: string): string {
+  const lower = planName.toLowerCase();
+  if (lower.includes('daily')) {
+    return 'Unlimited MCQ practice &middot; 2 mock exams (1 download) &middot; Readiness analytics &middot; Spaced-repetition flashcards';
+  }
+  if (lower.includes('weekly')) {
+    return 'Unlimited MCQ practice &middot; 3 mock exams (2 downloads) &middot; Personalized revision plan &middot; Readiness analytics &middot; Flashcards';
+  }
+  if (lower.includes('success')) {
+    return 'Unlimited MCQ practice &middot; 3 mock exams/week (unlimited downloads) &middot; Adaptive revision roadmap &middot; Smarter analytics &middot; Flashcards &middot; Tutor priority';
+  }
+  return 'Everything in Success Plan &middot; Unlimited mock exams &amp; downloads &middot; Tutor priority &middot; Exam registration reminders';
+}
+
 function buildSubscriptionHtml(params: SubscriptionEmailParams, dashboardUrl: string): string {
   const n = escapeHtml(params.firstName);
+  const planFeatures = getFeaturesForPlanName(params.planName);
   return emailWrapper(`
 <tr><td style="padding:36px 36px 24px;">
   <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:10px;">Payment Confirmed</div>
@@ -415,7 +430,7 @@ function buildSubscriptionHtml(params: SubscriptionEmailParams, dashboardUrl: st
   </div>
   <div style="background:#FFF8EA;border:1.5px solid rgba(245,166,35,0.2);border-left:4px solid #F5A623;border-radius:10px;padding:16px 20px;margin-bottom:24px;">
     <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;color:#C7841A;margin-bottom:4px;">What&#39;s Included</div>
-    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;line-height:1.65;">Unlimited mock exams &middot; Full question bank &middot; Detailed analytics &middot; AI tutor assistance &middot; Spaced-repetition flashcards</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1E3535;line-height:1.65;">${planFeatures}</div>
   </div>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
     <tr><td align="center"><a href="${dashboardUrl}" style="display:inline-block;background:#08514F;color:#ffffff;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;padding:15px 40px;border-radius:8px;text-decoration:none;border-bottom:3px solid #051F1E;">Go to Dashboard &rarr;</a></td></tr>
