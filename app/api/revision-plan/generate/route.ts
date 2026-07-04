@@ -30,6 +30,7 @@ const bodySchema = z.object({
   studyHoursWeekday: z.number().int().min(1).max(8),
   studyHoursWeekend: z.number().int().min(1).max(12),
   workSchoolStatus:  z.enum(['working_full_time', 'working_part_time', 'student_only']),
+  recoveryDayInterval: z.number().int().min(0).max(30).optional().default(14),
   paymentRef:        z.string().min(1).optional(),
 });
 
@@ -205,9 +206,20 @@ function renderPlanHtml(
 ): string {
   const totalDays = days.length;
   const totalWeeks = Math.ceil(totalDays / 7);
-  const weakUnits = units.filter(u => (u.accuracy ?? 50) < 70);
-  const strongUnits = units.filter(u => (u.accuracy ?? 100) >= 70 && u.answeredCount && u.answeredCount > 0);
+  
+  const isTested = (u: UnitData) => (u.answeredCount ?? 0) >= 10;
+  const isWeak = (u: UnitData) => isTested(u) && (u.accuracy ?? 50) < 70;
+  const isStrong = (u: UnitData) => isTested(u) && (u.accuracy ?? 50) >= 70;
+  
+  const weakUnits = units.filter(isWeak);
+  const strongUnits = units.filter(isStrong);
+  const untestedUnits = units.filter(u => !isTested(u));
+  
   const mockExamDays = days.filter(d => d.isMockExamDay).length;
+  const recoveryDays = days.filter(d => d.tasks.some(t => t.includes('Recovery'))).length;
+  const flashcardDays = days.filter(d => d.isFlashcardDay).length;
+  const totalStudyHours = days.reduce((sum, d) => sum + d.studyHours, 0);
+  const estMCQs = (totalStudyHours * 30) + (mockExamDays * 100);
 
   // Group days by week
   const weeks: DayPlan[][] = [];
@@ -217,7 +229,7 @@ function renderPlanHtml(
 
   const weekRows = weeks.map((week, wi) => {
     const dayCards = week.map(day => `
-      <div class="day-card ${day.isMockExamDay ? 'mock-day' : ''} ${day.isWeekend ? 'weekend' : ''}">
+      <div class="day-card ${day.isMockExamDay ? 'mock-day' : ''} ${day.isWeekend ? 'weekend' : ''} ${day.tasks.some(t => t.includes('Recovery') || t.includes('Taper')) ? 'recovery-day' : ''}">
         <div class="day-header">
           <span class="day-label">${day.dayLabel}</span>
           ${day.isMockExamDay ? '<span class="badge badge-mock">Mock Exam</span>' : ''}
@@ -239,8 +251,8 @@ function renderPlanHtml(
   }).join('');
 
   const unitRows = units.map(u => {
-    const acc = u.accuracy != null ? `${u.accuracy.toFixed(0)}%` : 'No data';
-    const status = u.accuracy == null ? '⚪ Not started' : u.accuracy >= 70 ? '✅ On track' : '🔴 Needs work';
+    const acc = isTested(u) ? `${u.accuracy?.toFixed(0)}%` : 'Low data';
+    const status = !isTested(u) ? '⚪ Needs practice' : isStrong(u) ? '✅ On track' : '🔴 Needs work';
     return `<tr>
       <td>${u.name}</td>
       <td><span class="tier-badge tier-${u.tier}">Tier ${u.tier}</span></td>
@@ -269,9 +281,9 @@ function renderPlanHtml(
   .plan-meta-item strong { display: block; font-size: 18px; font-weight: 700; }
 
   /* Summary */
-  .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
   .summary-card { background: white; border: 1px solid #E0EAE9; border-radius: 12px; padding: 16px; text-align: center; }
-  .summary-card .value { font-size: 28px; font-weight: 800; color: #08514F; }
+  .summary-card .value { font-size: 24px; font-weight: 800; color: #08514F; }
   .summary-card .label { font-size: 12px; color: #6B8F8E; margin-top: 2px; }
 
   /* Section titles */
@@ -293,6 +305,7 @@ function renderPlanHtml(
   .day-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
   .day-card { background: white; border: 1px solid #E0EAE9; border-radius: 10px; padding: 12px; }
   .day-card.mock-day { border-color: #F5A623; background: #FFFBF0; }
+  .day-card.recovery-day { border-color: #10B981; background: #ECFDF5; }
   .day-card.weekend { background: #F9FFFE; }
   .day-header { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
   .day-label { font-weight: 700; font-size: 13px; flex: 1; }
@@ -327,7 +340,7 @@ function renderPlanHtml(
     <div class="plan-meta">
       <div class="plan-meta-item"><strong>${escapeHtml(cadre)}</strong>Cadre</div>
       <div class="plan-meta-item"><strong>${new Date(examDate).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}</strong>Exam Date</div>
-      <div class="plan-meta-item"><strong>${totalDays} days</strong>Study Period</div>
+      <div class="plan-meta-item"><strong>${totalStudyHours}</strong>Study Hours</div>
       <div class="plan-meta-item"><strong>${mockExamDays}</strong>Mock Exams</div>
     </div>
   </div>
@@ -335,9 +348,9 @@ function renderPlanHtml(
   <!-- Summary stats -->
   <div class="summary-grid">
     <div class="summary-card"><div class="value">${totalWeeks}</div><div class="label">Study Weeks</div></div>
-    <div class="summary-card"><div class="value">${units.length}</div><div class="label">Units Covered</div></div>
-    <div class="summary-card"><div class="value">${weakUnits.length}</div><div class="label">Weak Areas Targeted</div></div>
-    <div class="summary-card"><div class="value">${mockExamDays}</div><div class="label">Mock Exams Scheduled</div></div>
+    <div class="summary-card"><div class="value">${estMCQs.toLocaleString()}</div><div class="label">Est. MCQs</div></div>
+    <div class="summary-card"><div class="value">${flashcardDays}</div><div class="label">Flashcard Sessions</div></div>
+    <div class="summary-card"><div class="value">${recoveryDays}</div><div class="label">Recovery Days</div></div>
   </div>
 
   <!-- Unit mastery overview -->
@@ -350,10 +363,11 @@ function renderPlanHtml(
   <!-- Study tips -->
   <h2 class="section-title">💡 Study Strategy</h2>
   <div style="background:white;border:1px solid #E0EAE9;border-radius:12px;padding:16px;margin-bottom:24px;font-size:13px;">
-    <p style="margin-bottom:8px;"><strong>🔴 Weak areas (below 70%):</strong> ${weakUnits.length > 0 ? weakUnits.map(u => u.name).join(', ') : 'None — great work!'} — allocated extra time in your schedule.</p>
+    <p style="margin-bottom:8px;"><strong>🔴 Weak areas (< 70%):</strong> ${weakUnits.length > 0 ? weakUnits.map(u => u.name).join(', ') : 'None'} — allocated 1.5x extra time.</p>
+    <p style="margin-bottom:8px;"><strong>⚪ Low Data:</strong> ${untestedUnits.length > 0 ? untestedUnits.map(u => u.name).join(', ') : 'None'} — insufficient practice data (<10 questions). Scheduled for heavy practice.</p>
     <p style="margin-bottom:8px;"><strong>✅ Strong areas:</strong> ${strongUnits.length > 0 ? strongUnits.map(u => u.name).join(', ') : 'Keep practising to build your baseline.'} — maintenance practice only.</p>
-    <p style="margin-bottom:8px;"><strong>⏱️ Mock exams:</strong> ${mockExamDays} full mock exams in the final 2 weeks. Review every wrong answer — rationale is more important than the score.</p>
-    <p><strong>🎴 Flashcards:</strong> Review 20 cards every other day. The SRS algorithm on NurseFiti schedules them at the optimal moment.</p>
+    <p style="margin-bottom:8px;"><strong>⏱️ Mocks:</strong> ${mockExamDays} full mock exams strategically placed. Review every wrong answer!</p>
+    <p><strong>🔄 Interleaving:</strong> Subjects are mixed across days to boost your long-term memory.</p>
   </div>
 
   <!-- Weekly schedule -->
@@ -530,7 +544,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid request', details: body.error.flatten() }, { status: 400 });
     }
 
-    const { examDate, studyHoursWeekday, studyHoursWeekend, workSchoolStatus, paymentRef } = body.data;
+    const { examDate, studyHoursWeekday, studyHoursWeekend, workSchoolStatus, recoveryDayInterval, paymentRef } = body.data;
 
     // Paid prep plans include revision plans. Free users still need a verified one-off
     // legacy payment reference if they arrive from an old checkout link.

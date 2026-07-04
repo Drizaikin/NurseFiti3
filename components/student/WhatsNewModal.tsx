@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/Button";
 // ❶  RELEASES REGISTRY — edit here to announce new features
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CURRENT_VERSION = 7;
+const CURRENT_VERSION = 8;
 
 interface WhatsNewItem {
   icon: string;
@@ -245,6 +245,32 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
         description:
           "We've upgraded our entire AI engine to Gemini 3.5. Getting fast, accurate clinical explanations is no longer a luxury—it's the secret weapon the smartest students use to dominate Mock Exams.",
         cta: { label: "Test Your Knowledge", href: "/mock-exam" },
+      }
+    ],
+  },
+
+  // ── Version 8 — Revision Plan Generator V2 ──────────
+  {
+    version: 8,
+    date: "4 July 2026",
+    items: [
+      {
+        icon: "📅",
+        tag: "Game Changer",
+        tagColor: "bg-primary/20 text-primary",
+        title: "Stop Randomly Studying. Get a Strategy.",
+        description:
+          "Studying blindly without a plan is why smart students fail. We've just launched our intelligent Revision Plan Engine. It analyses your exact weak areas, interleaves your subjects to boost long-term retention, and automatically schedules mock exams and recovery days.",
+        cta: { label: "Generate Your Plan", href: "/revision-plan" },
+      },
+      {
+        icon: "🧠",
+        tag: "Science Backed",
+        tagColor: "bg-emerald-500/20 text-emerald-400",
+        title: "Built on Learning Science",
+        description:
+          "Your new personalized study schedule uses proven cognitive science. We interleave units and enforce a pre-exam taper day so you walk into the exam room fresh, confident, and with maximum retention.",
+        cta: { label: "Generate Your Plan", href: "/revision-plan" },
       }
     ],
   },

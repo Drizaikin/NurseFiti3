@@ -36,6 +36,7 @@ interface FormData {
   studyHoursWeekday: number;
   studyHoursWeekend: number;
   workSchoolStatus: string;
+  recoveryDayInterval: number;
 }
 
 interface SavedPlan {
@@ -87,6 +88,7 @@ export default function RevisionPlanPage() {
     studyHoursWeekday: 3,
     studyHoursWeekend: 5,
     workSchoolStatus: 'student_only',
+    recoveryDayInterval: 14,
   });
   const [savedPlans, setSavedPlans] = useState<SavedPlan[]>([]);
   const [activePlan, setActivePlan] = useState<SavedPlan | null>(null);
@@ -438,6 +440,27 @@ export default function RevisionPlanPage() {
               </div>
             </div>
 
+            <div>
+              <label className="block text-sm font-semibold text-[var(--color-text)] mb-2">Planned Recovery Days</label>
+              <div className="space-y-2">
+                {[
+                  { value: 0, label: 'No recovery days', desc: 'Push straight through (not recommended)' },
+                  { value: 7, label: 'Every 7 days', desc: 'Weekly lighter day to catch up' },
+                  { value: 10, label: 'Every 10 days', desc: 'Balanced interval for recovery' },
+                  { value: 14, label: 'Every 14 days', desc: 'Standard interval for long-term prep' },
+                ].map(opt => (
+                  <label key={opt.value} className={`flex items-start gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all ${formData.recoveryDayInterval === opt.value ? 'border-primary bg-primary-light' : 'border-[var(--color-border)] hover:border-primary/40'}`}>
+                    <input type="radio" name="recoveryInterval" value={opt.value} checked={formData.recoveryDayInterval === opt.value} onChange={() => setFormData(f => ({ ...f, recoveryDayInterval: opt.value }))} className="sr-only" />
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-[var(--color-text)]">{opt.label}</p>
+                      <p className="text-xs text-[var(--color-text-secondary)]">{opt.desc}</p>
+                    </div>
+                    {formData.recoveryDayInterval === opt.value && <span className="text-primary text-lg">✓</span>}
+                  </label>
+                ))}
+              </div>
+            </div>
+
             <div className="flex gap-3">
               <Button variant="ghost" className="flex-1" onClick={() => setStep(1)}>← Back</Button>
               <Button variant="primary" className="flex-1" onClick={() => setStep(3)}>Next: Review & Pay →</Button>
@@ -465,6 +488,7 @@ export default function RevisionPlanPage() {
                 { label: 'Weekday study', value: `${formData.studyHoursWeekday} hours/day` },
                 { label: 'Weekend study', value: `${formData.studyHoursWeekend} hours/day` },
                 { label: 'Status', value: WORK_STATUS_OPTIONS.find(o => o.value === formData.workSchoolStatus)?.label ?? '' },
+                { label: 'Recovery days', value: formData.recoveryDayInterval > 0 ? `Every ${formData.recoveryDayInterval} days` : 'None' },
               ].map(({ label, value }) => (
                 <div key={label} className="flex items-center justify-between text-sm">
                   <span className="text-[var(--color-text-secondary)]">{label}</span>
