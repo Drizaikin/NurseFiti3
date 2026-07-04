@@ -29,6 +29,7 @@ interface Flashcard {
   front_text: string;
   back_text: string;
   back_highlight: string | null;
+  image_url: string | null;
   unit: string;
 }
 
@@ -414,6 +415,15 @@ function FlashcardStudy({
           {isFront ? (
             <>
               <Badge variant="secondary" className="mb-4">{card.unit}</Badge>
+              {card.image_url && (
+                <div className="mb-4 w-full flex justify-center">
+                  <img 
+                    src={card.image_url} 
+                    alt="Flashcard diagram" 
+                    className="max-h-[180px] object-contain rounded-lg shadow-sm"
+                  />
+                </div>
+              )}
               <p className="text-xl font-semibold leading-relaxed" style={{ color: textColor }}>
                 {card.front_text}
               </p>

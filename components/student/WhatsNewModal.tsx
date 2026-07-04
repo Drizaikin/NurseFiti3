@@ -258,19 +258,19 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
         icon: "📅",
         tag: "Game Changer",
         tagColor: "bg-primary/20 text-primary",
-        title: "Stop Randomly Studying. Get a Strategy.",
+        title: "Stop Randomly Studying. Get an Unfair Advantage.",
         description:
-          "Studying blindly without a plan is why smart students fail. We've just launched our intelligent Revision Plan Engine. It analyses your exact weak areas, interleaves your subjects to boost long-term retention, and automatically schedules mock exams and recovery days.",
-        cta: { label: "Generate Your Plan", href: "/revision-plan" },
+          "Studying blindly without a timetable is the #1 reason students fail. You can now get instant help generating a personalised, highly optimised revision plan. Stop guessing and let the engine optimise your content input and retention so you pass the exam faster.",
+        cta: { label: "Generate Timetable", href: "/revision-plan" },
       },
       {
         icon: "🧠",
         tag: "Science Backed",
         tagColor: "bg-emerald-500/20 text-emerald-400",
-        title: "Built on Learning Science",
+        title: "Accelerate Your Learning Process",
         description:
-          "Your new personalized study schedule uses proven cognitive science. We interleave units and enforce a pre-exam taper day so you walk into the exam room fresh, confident, and with maximum retention.",
-        cta: { label: "Generate Your Plan", href: "/revision-plan" },
+          "Your new personalized study schedule uses proven cognitive science to speed up your learning. We intelligently interleave units and schedule recovery days to maximize your retention and prevent burnout, ensuring you walk into the exam room fully prepared to crush it.",
+        cta: { label: "Get Your Plan", href: "/revision-plan" },
       }
     ],
   },
