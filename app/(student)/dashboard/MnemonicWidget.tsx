@@ -246,7 +246,7 @@ export function MnemonicWidget() {
       <div style={{
         position: "absolute", bottom: -60, left: -40,
         width: 240, height: 240,
-        background: \`radial-gradient(circle, rgba(8,81,79,0.25) 0%, transparent 65%)\`,
+        background: `radial-gradient(circle, rgba(8,81,79,0.25) 0%, transparent 65%)`,
         pointerEvents: "none",
       }} />
 
@@ -362,11 +362,11 @@ export function MnemonicWidget() {
             <div style={{ display: "flex", gap: 10 }}>
               <button style={{
                 flex: 1,
-                background: \`linear-gradient(135deg, \${AMBER}, #E09415)\`,
+                background: `linear-gradient(135deg, ${AMBER}, #E09415)`,
                 border: "none", borderRadius: 13, padding: "13px 0",
                 fontFamily: "'Syne',sans-serif", fontSize: 12.5, fontWeight: 800,
                 color: "#060F0F", cursor: "pointer",
-                borderBottom: \`2.5px solid \${AMBER_D}\`,
+                borderBottom: `2.5px solid ${AMBER_D}`,
                 boxShadow: "0 4px 18px rgba(245,166,35,0.32)",
               }}>⬇ Download PDF</button>
               <Link href="/mnemonics" style={{

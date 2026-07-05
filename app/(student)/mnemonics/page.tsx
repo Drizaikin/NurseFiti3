@@ -229,7 +229,7 @@ export default function StudentMnemonicsPage() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "#F2FAFA", fontFamily: "'Nunito', sans-serif" }}>
-      <style dangerouslySetInnerHTML={{ __html: \`
+      <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap');
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(14px); }
@@ -239,11 +239,11 @@ export default function StudentMnemonicsPage() {
           from { opacity: 0; transform: translateY(20px) scale(0.97); }
           to   { opacity: 1; transform: translateY(0) scale(1); }
         }
-      \`}} />
+      `}} />
 
       {/* STICKY HEADER */}
       <div style={{
-        background: \`linear-gradient(135deg, \${TEAL_D} 0%, \${TEAL} 100%)\`,
+        background: `linear-gradient(135deg, ${TEAL_D} 0%, ${TEAL} 100%)`,
         padding: "18px 16px 0",
         position: "sticky", top: 0, zIndex: 100,
       }}>
@@ -298,7 +298,7 @@ export default function StudentMnemonicsPage() {
               <button key={f} onClick={() => setFilter(f)} style={{
                 flexShrink: 0,
                 background: active ? (c?.bg || AMBER) : "rgba(255,255,255,0.09)",
-                border: \`1px solid \${active ? (c?.bg || AMBER) : "rgba(255,255,255,0.18)"}\`,
+                border: `1px solid ${active ? (c?.bg || AMBER) : "rgba(255,255,255,0.18)"}`,
                 borderRadius: 20, padding: "6px 15px",
                 fontFamily: "'Syne',sans-serif", fontSize: 11, fontWeight: 700,
                 color: active ? (c?.text || "#060F0F") : "rgba(255,255,255,0.62)",
@@ -315,7 +315,7 @@ export default function StudentMnemonicsPage() {
         
         {/* Stats strip */}
         <div style={{
-          background: \`linear-gradient(135deg, \${TEAL}, #0A6B68)\`,
+          background: `linear-gradient(135deg, ${TEAL}, #0A6B68)`,
           borderRadius: 16, padding: "16px 20px",
           display: "flex", justifyContent: "space-between", alignItems: "center",
           boxShadow: "0 4px 20px rgba(8,81,79,0.2)",
@@ -376,8 +376,8 @@ export default function StudentMnemonicsPage() {
               borderRadius: 18,
               overflow: "hidden",
               boxShadow: "0 2px 16px rgba(8,81,79,0.08), 0 1px 4px rgba(0,0,0,0.05)",
-              borderTop: \`3.5px solid \${cat.bg}\`,
-              animation: \`cardIn 0.4s ease \${i * 0.055}s both\`,
+              borderTop: `3.5px solid ${cat.bg}`,
+              animation: `cardIn 0.4s ease ${i * 0.055}s both`,
             }}>
               <div style={{ padding: "16px 16px 0" }}>
                 {/* Header row */}
@@ -385,7 +385,7 @@ export default function StudentMnemonicsPage() {
                   <div style={{ flex: 1, paddingRight: 10 }}>
                     <div style={{
                       display: "inline-block",
-                      background: cat.soft, border: \`1px solid \${cat.border}\`,
+                      background: cat.soft, border: `1px solid ${cat.border}`,
                       borderRadius: 7, padding: "2px 9px", marginBottom: 7,
                     }}>
                       <span style={{
@@ -400,8 +400,8 @@ export default function StudentMnemonicsPage() {
                   </div>
 
                   <button onClick={() => setExpanded(isOpen ? null : m.id)} style={{
-                    background: isOpen ? \`\${cat.soft}\` : "rgba(0,0,0,0.04)",
-                    border: \`1.5px solid \${isOpen ? cat.border : "rgba(0,0,0,0.1)"}\`,
+                    background: isOpen ? `${cat.soft}` : "rgba(0,0,0,0.04)",
+                    border: `1.5px solid ${isOpen ? cat.border : "rgba(0,0,0,0.1)"}`,
                     borderRadius: 10, width: 34, height: 34,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     cursor: "pointer", flexShrink: 0, transition: "all 0.22s ease",
@@ -416,9 +416,9 @@ export default function StudentMnemonicsPage() {
                 </div>
 
                 <div style={{
-                  background: \`linear-gradient(135deg, \${cat.soft}, rgba(245,166,35,0.03))\`,
-                  border: \`1px solid \${cat.border}\`,
-                  borderLeft: \`2.5px solid \${cat.bg}\`,
+                  background: `linear-gradient(135deg, ${cat.soft}, rgba(245,166,35,0.03))`,
+                  border: `1px solid ${cat.border}`,
+                  borderLeft: `2.5px solid ${cat.bg}`,
                   borderRadius: 11, padding: "11px 13px",
                   marginBottom: isOpen ? 16 : 0,
                 }}>
@@ -444,7 +444,7 @@ export default function StudentMnemonicsPage() {
                         display: "flex", gap: 11,
                         padding: "9px 0",
                         borderBottom: bi < m.breakdown.length - 1 ? "1px solid rgba(8,81,79,0.07)" : "none",
-                        animation: \`fadeUp 0.25s ease \${bi * 0.05}s both\`,
+                        animation: `fadeUp 0.25s ease ${bi * 0.05}s both`,
                       }}>
                         <span style={{ fontSize: 18, minWidth: 22, lineHeight: 1.45 }}>{item.emoji}</span>
                         <div>
@@ -480,7 +480,7 @@ export default function StudentMnemonicsPage() {
                   fontFamily: "'Syne',sans-serif", fontSize: 11, fontWeight: 700,
                   color: "#060F0F", cursor: "pointer",
                   display: "flex", alignItems: "center", gap: 5,
-                  borderBottom: \`2px solid \${AMBER_D}\`,
+                  borderBottom: `2px solid ${AMBER_D}`,
                 }}>
                   ⬇ Save
                 </button>
