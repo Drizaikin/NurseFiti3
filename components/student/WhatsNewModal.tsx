@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/Button";
 // ❶  RELEASES REGISTRY — edit here to announce new features
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CURRENT_VERSION = 8;
+const CURRENT_VERSION = 9;
 
 interface WhatsNewItem {
   icon: string;
@@ -271,6 +271,41 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
         description:
           "Your new personalized study schedule uses proven cognitive science to speed up your learning. We intelligently interleave units and schedule recovery days to maximize your retention and prevent burnout, ensuring you walk into the exam room fully prepared to crush it.",
         cta: { label: "Get Your Plan", href: "/revision-plan" },
+      }
+    ],
+  },
+
+  // ── Version 9 — Mnemonics and Smart Ratings ──────────
+  {
+    version: 9,
+    date: "5 July 2026",
+    items: [
+      {
+        icon: "🧠",
+        tag: "New Feature",
+        tagColor: "bg-emerald-500/20 text-emerald-400",
+        title: "Mnemonic of the Day",
+        description:
+          "Memorize high-yield nursing concepts effortlessly! A new beautifully styled mnemonic will appear on your dashboard every single day to keep your memory sharp for the NCK exam.",
+        cta: { label: "View on Dashboard", href: "/dashboard" },
+      },
+      {
+        icon: "📚",
+        tag: "Premium",
+        tagColor: "bg-amber-500/20 text-amber-500",
+        title: "The Ultimate Mnemonic Archive",
+        description:
+          "Need more than just the mnemonic of the day? Premium students can now access the full archive of hundreds of past mnemonics and download them directly as a PDF for offline studying.",
+        cta: { label: "Go to Archive", href: "/mnemonics" },
+      },
+      {
+        icon: "🌟",
+        tag: "Community",
+        tagColor: "bg-blue-500/20 text-blue-400",
+        title: "Smart App Rating & Reviews",
+        description:
+          "We love hearing from you! NurseFiti will now occasionally ask for your feedback. Your 4-star and 5-star reviews help other nursing students find us and help us improve the platform for everyone.",
+        cta: { label: "Keep Learning", href: "/practice" },
       }
     ],
   },
