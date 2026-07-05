@@ -193,8 +193,9 @@ export async function POST(request: NextRequest) {
         throw new Error(`Failed to create tutor profile: ${tutorProfileError.message}`);
       }
 
-      // Send welcome email — fire-and-forget (don't fail the signup if email fails)
-      sendTutorWelcomeEmail({
+      // Await the email so Vercel doesn't kill the serverless function before it sends.
+      // The .catch() ensures that an SMTP failure still returns a 201 Created signup response.
+      await sendTutorWelcomeEmail({
         to: validatedData.email,
         firstName: getFirstName(validatedData.fullName),
       }).catch(err => console.error('[signup-tutor] welcome email failed:', err));

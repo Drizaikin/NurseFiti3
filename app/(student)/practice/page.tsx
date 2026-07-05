@@ -167,14 +167,13 @@ export default function PracticePage() {
 
   const fetchUnits = async (cadre: string) => {
     try {
-      const { data: unitsRaw } = await supabase
-        .from('questions')
-        .select('unit')
-        .eq('cadre', cadre)
-        .eq('status', 'approved');
-
+      const { data: unitsRaw, error } = await supabase.rpc('get_active_units', { p_cadre: cadre });
+      if (error) {
+        console.error('Error fetching units via RPC:', error);
+        return;
+      }
       if (unitsRaw) {
-        const uniqueUnits = Array.from(new Set((unitsRaw as Array<{ unit: string }>).map(q => q.unit))).sort();
+        const uniqueUnits = unitsRaw.map((r: { unit: string }) => r.unit);
         setUnits(uniqueUnits);
       }
     } catch (error) {
@@ -213,45 +212,22 @@ export default function PracticePage() {
         ? 20
         : Math.min(20, limits.practiceQuestionsPerDay - answeredToday);
 
-      // ── STEP 1: Get IDs of questions the student has already answered in this unit/cadre ──
-      let answeredIdsQuery = (supabase as any)
-        .from('student_answers')
-        .select('question_id')
-        .eq('student_id', userId!)
-        .eq('mode', 'practice');
+      const limitToFetch = remaining * 2;
 
-      if (selectedUnit !== 'all') {
-        answeredIdsQuery = answeredIdsQuery.eq('unit', selectedUnit);
-      }
+      // ── STEP 1: Fetch unanswered questions using optimized RPC ──
+      const { data, error } = await supabase.rpc('get_unanswered_practice_questions', {
+        p_student_id: userId,
+        p_cadre: studentCadre,
+        p_unit: selectedUnit,
+        p_limit: limitToFetch
+      });
 
-      const { data: answeredData } = await answeredIdsQuery;
-      const answeredIds = (answeredData as Array<{ question_id: string }> | null)?.map(a => a.question_id) || [];
+      if (error) { console.error('Error fetching questions via RPC:', error); return; }
 
-      // ── STEP 2: Fetch questions, excluding already-answered ones ──
-      let query = supabase
-        .from('questions')
-        .select('*')
-        .eq('cadre', studentCadre)
-        .eq('status', 'approved');
-
-      if (selectedUnit !== 'all') {
-        query = query.eq('unit', selectedUnit);
-      }
-
-      // Exclude answered question IDs
-      if (answeredIds.length > 0) {
-        query = query.not('id', 'in', `(${answeredIds.join(',')})`);
-      }
-
-      // Fetch double the remaining count to allow for shuffling, then slice
-      const { data, error } = await query.limit(remaining * 2);
-
-      if (error) { console.error('Error fetching questions:', error); return; }
-
-      // ── STEP 3: If not enough unseen questions, reset cycle (fetch all) ──
+      // ── STEP 2: If not enough unseen questions, reset cycle (fetch random) ──
       let finalQuestions = data || [];
       if (finalQuestions.length < remaining) {
-        // All questions in this unit have been answered — reset the cycle
+        // Fallback: fetch random questions regardless of whether they were answered
         let resetQuery = supabase
           .from('questions')
           .select('*')
@@ -262,7 +238,7 @@ export default function PracticePage() {
           resetQuery = resetQuery.eq('unit', selectedUnit);
         }
 
-        const { data: allData } = await resetQuery.limit(remaining * 2);
+        const { data: allData } = await resetQuery.limit(limitToFetch);
         finalQuestions = allData || [];
         
         if (finalQuestions.length === 0) {
@@ -271,12 +247,13 @@ export default function PracticePage() {
           return;
         }
 
-        // Notify student the cycle has restarted
-        if (answeredIds.length > 0) {
+        // Notify student the cycle has restarted (only if they had some answered ones before)
+        if (finalQuestions.length > (data?.length || 0)) {
           toast('🔄 You\'ve gone through all questions in this unit — starting the cycle again!', { duration: 4000 });
         }
       }
 
+      // ── STEP 3: Shuffle and slice exactly to the remaining count ──
       const shuffled = [...finalQuestions].sort(() => Math.random() - 0.5).slice(0, remaining);
       const newSession: PracticeSession = { questionsAnswered: 0, correctAnswers: 0, xpEarned: 0 };
 

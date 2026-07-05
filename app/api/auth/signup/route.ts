@@ -154,8 +154,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Fire-and-forget — email failure must never block a successful signup
-    sendWelcomeEmail({
+    // Await the email so Vercel doesn't kill the serverless function before it sends.
+    // The .catch() ensures that an SMTP failure still returns a 200 OK signup response.
+    await sendWelcomeEmail({
       to: data.email,
       firstName: getFirstName(data.fullName),
     }).catch(err => console.error('[signup] welcome email failed:', err));
