@@ -12,6 +12,8 @@ import { Spinner } from '@/components/ui/Spinner';
 import { FeedbackWidget } from '@/components/shared/FeedbackWidget';
 import { FeedbackWall } from '@/components/shared/FeedbackWall';
 import { effectiveTier, PLAN_PRICING_META } from '@/lib/planLimits';
+import { MnemonicWidget } from './MnemonicWidget';
+import { AppRatingModal } from './AppRatingModal';
 
 // ── Time-aware greeting (uses browser local time = user's timezone) ────────
 function useGreeting() {
@@ -548,6 +550,9 @@ export default function DashboardPage() {
         </Card>
       )}
 
+      {/* ── Mnemonic of The Day ────────────────────────────────────────── */}
+      <MnemonicWidget />
+
       {/* ── Stat tiles ─────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatTile label="Questions Answered" value={data.stats.total_questions_answered} sub={`${data.stats.accuracy_percentage.toFixed(0)}% accuracy`} icon="📝" color="teal" />
@@ -748,6 +753,9 @@ export default function DashboardPage() {
           View all reviews →
         </a>
       </Card>
+      
+      {/* ── Hidden modals/tracking ─────────────────────────────────────── */}
+      <AppRatingModal />
     </div>
   );
 }
