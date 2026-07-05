@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { toast } from 'react-hot-toast';
 import { effectiveTier } from '@/lib/planLimits';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { Spinner } from '@/components/ui/Spinner';
 
 interface BreakdownItem {
   emoji: string;
@@ -14,14 +15,23 @@ interface BreakdownItem {
   meaning: string;
 }
 
+interface PracticeQuestion { question: string; options: string[]; answer: string; explanation: string; }
+
 interface Mnemonic {
   id: string;
   topic: string;
   category: string;
+  specialty: string;
   phrases: string[];
   breakdown: BreakdownItem[];
   tags: string[];
   created_at: string;
+  clinical_significance: string;
+  causes: string[];
+  exam_traps: string;
+  memory_pearl: string;
+  high_yield_tip: string;
+  practice_question: PracticeQuestion | null;
 }
 
 const TEAL = "#08514F";
@@ -41,6 +51,105 @@ const CAT: Record<string, any> = {
 };
 
 const FILTERS = ["All", "Pharmacology", "Anatomy", "Obstetrics", "Neurology", "Med-Surgical", "Emergency"];
+
+// ── Archive section block ─────────────────────────────────────────────────────
+function ArchiveSectionBlock({ icon, title, accent, soft, children }: {
+  icon: string; title: string; accent: string; soft?: boolean; children: React.ReactNode;
+}) {
+  return (
+    <div style={{
+      background: soft ? `${accent}12` : "rgba(255,255,255,0.6)",
+      border: `1.5px solid ${soft ? `${accent}30` : "var(--color-border)"}`,
+      borderLeft: `4px solid ${accent}`,
+      borderRadius: 12, padding: "14px 16px", marginTop: 12,
+    }}>
+      <div className="font-heading font-extrabold" style={{
+        fontSize: 10, color: accent, letterSpacing: "0.13em",
+        textTransform: "uppercase", marginBottom: 7,
+        display: "flex", alignItems: "center", gap: 5,
+      }}>
+        <span style={{ fontSize: 13 }}>{icon}</span> {title}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+// ── Archive practice question (stateful per-card) ─────────────────────────────
+function ArchivePracticeQuestion({ pq, catColor }: {
+  pq: { question: string; options: string[]; answer: string; explanation: string };
+  catColor: string;
+}) {
+  const [revealed, setRevealed] = React.useState(false);
+  const [selected, setSelected] = React.useState<string | null>(null);
+
+  return (
+    <div style={{
+      background: "rgba(255,255,255,0.6)", border: "1.5px solid var(--color-border)",
+      borderLeft: `4px solid ${catColor}`, borderRadius: 12, padding: "14px 16px", marginTop: 12,
+    }}>
+      <div className="font-heading font-extrabold" style={{
+        fontSize: 10, color: catColor, letterSpacing: "0.13em",
+        textTransform: "uppercase", marginBottom: 10,
+        display: "flex", alignItems: "center", gap: 5,
+      }}>
+        <span style={{ fontSize: 13 }}>❓</span> Practice Question
+      </div>
+      <p className="font-body" style={{ fontSize: 13.5, color: "var(--color-dark)", fontWeight: 600, lineHeight: 1.65, marginBottom: 12 }}>
+        {pq.question}
+      </p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 7, marginBottom: 12 }}>
+        {pq.options.map((opt, i) => {
+          const letter = opt.charAt(0);
+          const isCorrect = letter === pq.answer;
+          const isSelected = selected === letter;
+          let bg = "rgba(255,255,255,0.8)";
+          let border = "var(--color-border)";
+          let color = "var(--color-dark)";
+          if (revealed) {
+            if (isCorrect)       { bg = "rgba(26,158,117,0.10)"; border = "#1A9E75"; color = "#1A9E75"; }
+            else if (isSelected) { bg = "rgba(232,69,69,0.08)";  border = "#E84545"; color = "#E84545"; }
+          } else if (isSelected) { bg = "var(--color-primary-light)"; border = "var(--color-primary)"; color = "var(--color-primary)"; }
+          return (
+            <button key={i} onClick={() => { if (!revealed) setSelected(letter); }} style={{
+              background: bg, border: `1.5px solid ${border}`, borderRadius: 9,
+              padding: "10px 14px", textAlign: "left",
+              cursor: revealed ? "default" : "pointer", transition: "all 0.15s ease",
+            }}>
+              <span className="font-body" style={{ fontSize: 13, color, lineHeight: 1.5 }}>{opt}</span>
+            </button>
+          );
+        })}
+      </div>
+      {!revealed ? (
+        <button onClick={() => { if (selected) setRevealed(true); }}
+          className="font-heading font-extrabold"
+          style={{
+            background: selected ? `${catColor}` : "var(--color-primary-light)",
+            border: "none", borderRadius: 9, padding: "9px 18px",
+            fontSize: 11, color: selected ? "white" : "var(--color-neutral-mid)",
+            cursor: selected ? "pointer" : "not-allowed",
+            letterSpacing: "0.08em", textTransform: "uppercase",
+          }}>
+          {selected ? "Reveal Answer" : "Select an option"}
+        </button>
+      ) : (
+        <div style={{
+          background: "rgba(26,158,117,0.07)", border: "1.5px solid rgba(26,158,117,0.25)",
+          borderRadius: 9, padding: "11px 14px",
+        }}>
+          <div className="font-heading font-extrabold"
+               style={{ fontSize: 10, color: "#1A9E75", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 5 }}>
+            ✓ Correct Answer: {pq.answer}
+          </div>
+          <p className="font-body" style={{ fontSize: 12.5, color: "var(--color-neutral-mid)", lineHeight: 1.65, margin: 0 }}>
+            {pq.explanation}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function StudentMnemonicsPage() {
   const supabase = createClient();
@@ -67,7 +176,7 @@ export default function StudentMnemonicsPage() {
         .eq('id', user.id)
         .single();
 
-      const tier = effectiveTier(profile?.plan_tier, profile?.plan_expires_at);
+      const tier = effectiveTier((profile as any)?.plan_tier, (profile as any)?.plan_expires_at);
       setPlanTier(tier);
 
       if (tier === 'free') {
@@ -86,15 +195,21 @@ export default function StudentMnemonicsPage() {
         return;
       }
 
-      // Map db fields
-      const mapped = (data || []).map(d => ({
-        id: d.id,
-        topic: d.title,
-        category: d.category || 'Pharmacology',
-        phrases: d.phrases || [],
-        breakdown: d.breakdown || [],
-        tags: d.tags || [],
-        created_at: d.created_at
+      const mapped = ((data as any[]) || []).map(d => ({
+        id:                    d.id,
+        topic:                 d.title,
+        category:              d.category || 'Pharmacology',
+        specialty:             d.specialty || 'General',
+        phrases:               d.phrases   || [],
+        breakdown:             d.breakdown || [],
+        tags:                  d.tags      || [],
+        created_at:            d.created_at,
+        clinical_significance: d.clinical_significance || '',
+        causes:                d.causes    || [],
+        exam_traps:            d.exam_traps || '',
+        memory_pearl:          d.memory_pearl || '',
+        high_yield_tip:        d.high_yield_tip || '',
+        practice_question:     d.practice_question || null,
       }));
 
       setMnemonics(mapped);
@@ -180,7 +295,7 @@ export default function StudentMnemonicsPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+        <Spinner size="lg" />
       </div>
     );
   }
@@ -228,9 +343,8 @@ export default function StudentMnemonicsPage() {
   });
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "#F2FAFA", fontFamily: "'Nunito', sans-serif" }}>
-      <style dangerouslySetInnerHTML={{ __html: `
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap');
+    <div className="flex flex-col min-h-screen font-body" style={{ background:'var(--color-bg)' }}>
+      <style>{`
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(14px); }
           to   { opacity: 1; transform: translateY(0); }
@@ -239,7 +353,7 @@ export default function StudentMnemonicsPage() {
           from { opacity: 0; transform: translateY(20px) scale(0.97); }
           to   { opacity: 1; transform: translateY(0) scale(1); }
         }
-      `}} />
+      `}</style>
 
       {/* STICKY HEADER */}
       <div style={{
@@ -255,10 +369,13 @@ export default function StudentMnemonicsPage() {
             cursor: "pointer", color: "white", fontSize: 18, lineHeight: 1, textDecoration: "none"
           }}>←</Link>
           <div style={{ flex: 1 }}>
-            <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 19, fontWeight: 800, color: "white" }}>
-              Mnemonic Archive
+            <div className="font-heading font-extrabold" style={{ fontSize: 19, color: "white" }}>
+              <span className="logo-nurse-dark" style={{ fontWeight: 400 }}>Nurse</span>
+              <span className="logo-fiti-dark">Fiti</span>
+              <span style={{ color: "rgba(255,255,255,0.55)", fontWeight: 400, margin: "0 6px" }}>·</span>
+              <span>Archive</span>
             </div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", marginTop: 1 }}>
+            <div className="font-body" style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", marginTop: 1 }}>
               {filtered.length} mnemonics · Updated daily
             </div>
           </div>
@@ -279,13 +396,13 @@ export default function StudentMnemonicsPage() {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search topics or phrases..."
+            className="font-body"
             style={{
               width: "100%",
               background: "rgba(255,255,255,0.12)",
               border: "1px solid rgba(255,255,255,0.18)",
               borderRadius: 13, padding: "11px 13px 11px 38px",
-              color: "white", fontSize: 13,
-              fontFamily: "'Nunito',sans-serif", outline: "none",
+              color: "white", fontSize: 13, outline: "none",
             }}
           />
         </div>
@@ -295,23 +412,25 @@ export default function StudentMnemonicsPage() {
             const active = filter === f;
             const c = CAT[f];
             return (
-              <button key={f} onClick={() => setFilter(f)} style={{
-                flexShrink: 0,
-                background: active ? (c?.bg || AMBER) : "rgba(255,255,255,0.09)",
-                border: `1px solid ${active ? (c?.bg || AMBER) : "rgba(255,255,255,0.18)"}`,
-                borderRadius: 20, padding: "6px 15px",
-                fontFamily: "'Syne',sans-serif", fontSize: 11, fontWeight: 700,
-                color: active ? (c?.text || "#060F0F") : "rgba(255,255,255,0.62)",
-                cursor: "pointer", transition: "all 0.2s ease",
-                letterSpacing: 0.3,
-              }}>{f}</button>
+              <button key={f} onClick={() => setFilter(f)}
+                className="font-heading font-bold"
+                style={{
+                  flexShrink: 0,
+                  background: active ? (c?.bg || AMBER) : "rgba(255,255,255,0.09)",
+                  border: `1px solid ${active ? (c?.bg || AMBER) : "rgba(255,255,255,0.18)"}`,
+                  borderRadius: 20, padding: "6px 15px",
+                  fontSize: 11,
+                  color: active ? (c?.text || "#060F0F") : "rgba(255,255,255,0.62)",
+                  cursor: "pointer", transition: "all 0.2s ease",
+                  letterSpacing: "0.04em",
+                }}>{f}</button>
             );
           })}
         </div>
       </div>
 
       {/* BODY */}
-      <div style={{ padding: "16px", display: "flex", flexDirection: "column", gap: 12, flex: 1, maxWidth: "600px", margin: "0 auto", width: "100%" }}>
+      <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: 20, flex: 1, maxWidth: "850px", margin: "0 auto", width: "100%" }}>
         
         {/* Stats strip */}
         <div style={{
@@ -327,35 +446,53 @@ export default function StudentMnemonicsPage() {
             { n: "100%", l: "Free to Use" },
           ].map((s, i) => (
             <div key={i} style={{ textAlign: "center" }}>
-              <div style={{
-                fontFamily: "'Syne',sans-serif", fontSize: 18, fontWeight: 800, color: AMBER, lineHeight: 1,
-              }}>{s.n}</div>
-              <div style={{ fontSize: 9.5, color: "rgba(255,255,255,0.55)", fontWeight: 600, marginTop: 3 }}>{s.l}</div>
+              <div className="font-heading font-extrabold"
+                   style={{ fontSize: 18, color: AMBER, lineHeight: 1 }}>{s.n}</div>
+              <div className="font-body font-semibold"
+                   style={{ fontSize: 9.5, color: "rgba(255,255,255,0.55)", marginTop: 3 }}>{s.l}</div>
             </div>
           ))}
         </div>
 
-        {/* Download notice */}
+        {/* Download notice — screenshot style button */}
         <div style={{
-          background: "rgba(245,166,35,0.08)",
-          border: "1px solid rgba(245,166,35,0.22)",
-          borderRadius: 12, padding: "11px 14px",
-          display: "flex", alignItems: "center", gap: 10,
+          background: "var(--color-accent-light)",
+          border: "1px solid rgba(245,166,35,0.30)",
+          borderRadius: 18, padding: "16px 20px",
+          display: "flex", alignItems: "center", gap: 14,
         }}>
-          <span style={{ fontSize: 15 }}>⬇</span>
+          <span style={{ fontSize: 22, flexShrink: 0 }}>⬇</span>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 11.5, fontWeight: 700, color: "#7A5200", fontFamily: "'Syne',sans-serif" }}>
+            <div className="font-heading font-bold"
+                 style={{ fontSize: 13, color: "var(--color-accent-dark)" }}>
               Download access by plan
             </div>
-            <div style={{ fontSize: 10.5, color: "rgba(122,82,0,0.75)", marginTop: 1 }}>
-              Weekly: last 7 · Monthly & 90-Day: all mnemonics
+            <div className="font-body"
+                 style={{ fontSize: 11.5, color: "rgba(122,82,0,0.70)", marginTop: 2 }}>
+              Weekly: last 7 · Monthly &amp; 90-Day: all mnemonics
             </div>
           </div>
-          <button onClick={handleDownload} style={{
-            background: AMBER, border: "none", borderRadius: 8, padding: "6px 12px",
-            fontFamily: "'Syne',sans-serif", fontSize: 11, fontWeight: 700, color: "#060F0F", cursor: "pointer",
-          }}>
-            Download PDF
+          <button onClick={handleDownload}
+            style={{
+              background: "linear-gradient(135deg,var(--color-accent) 0%,var(--color-accent-dark) 100%)",
+              border: "none", borderRadius: 14,
+              padding: "11px 16px",
+              boxShadow: "var(--shadow-glow-amber)",
+              display: "flex", alignItems: "center", gap: 8,
+              cursor: "pointer", flexShrink: 0,
+            }}>
+            <span style={{ fontSize: 16, lineHeight: 1 }}>⬇</span>
+            <div style={{ textAlign: "left" }}>
+              <div className="font-heading font-extrabold"
+                   style={{ fontSize: 12, color: "var(--color-dark)", lineHeight: 1.2 }}>
+                Download All
+              </div>
+              <div className="font-body"
+                   style={{ fontSize: 10, color: "rgba(15,28,28,0.50)", marginTop: 1 }}>
+                Save as HTML file
+              </div>
+            </div>
+            <span style={{ color: "rgba(15,28,28,0.40)", fontSize: 14 }}>›</span>
           </button>
         </div>
 
@@ -363,8 +500,8 @@ export default function StudentMnemonicsPage() {
         {filtered.length === 0 ? (
           <div style={{ textAlign: "center", padding: "40px 20px", color: "rgba(8,81,79,0.4)" }}>
             <div style={{ fontSize: 32, marginBottom: 12 }}>🔍</div>
-            <div style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700 }}>No mnemonics found</div>
-            <div style={{ fontSize: 12, marginTop: 6 }}>Try a different search or category</div>
+            <div className="font-heading font-bold">No mnemonics found</div>
+            <div className="font-body" style={{ fontSize: 12, marginTop: 6 }}>Try a different search or category</div>
           </div>
         ) : filtered.map((m, i) => {
           const cat = CAT[m.category] || CAT.Pharmacology;
@@ -372,40 +509,40 @@ export default function StudentMnemonicsPage() {
           
           return (
             <div key={m.id} style={{
-              background: "white",
-              borderRadius: 18,
+              background: "var(--color-card)",
+              borderRadius: 24,
               overflow: "hidden",
-              boxShadow: "0 2px 16px rgba(8,81,79,0.08), 0 1px 4px rgba(0,0,0,0.05)",
-              borderTop: `3.5px solid ${cat.bg}`,
+              boxShadow: "var(--shadow-card)",
+              borderTop: `4px solid ${cat.bg}`,
               animation: `cardIn 0.4s ease ${i * 0.055}s both`,
             }}>
-              <div style={{ padding: "16px 16px 0" }}>
+              <div style={{ padding: "24px 24px 0" }}>
                 {/* Header row */}
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 11 }}>
-                  <div style={{ flex: 1, paddingRight: 10 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
+                  <div style={{ flex: 1, paddingRight: 16 }}>
                     <div style={{
                       display: "inline-block",
                       background: cat.soft, border: `1px solid ${cat.border}`,
-                      borderRadius: 7, padding: "2px 9px", marginBottom: 7,
+                      borderRadius: 8, padding: "4px 12px", marginBottom: 10,
                     }}>
-                      <span style={{
-                        fontSize: 9.5, fontWeight: 700, fontFamily: "'Syne',sans-serif",
-                        color: cat.bg, letterSpacing: 0.8, textTransform: "uppercase",
-                      }}>{m.category}</span>
+                      <span className="font-heading font-extrabold"
+                            style={{ fontSize: 11, color: cat.bg, letterSpacing: 1, textTransform: "uppercase" }}>
+                        {m.category}
+                      </span>
                     </div>
-                    <div style={{
-                      fontFamily: "'Syne',sans-serif", fontSize: 16, fontWeight: 800,
-                      color: "#0B2020", lineHeight: 1.2,
-                    }}>{m.topic}</div>
+                    <div className="font-heading font-extrabold"
+                         style={{ fontSize: 22, color: "var(--color-dark)", lineHeight: 1.2 }}>
+                      {m.topic}
+                    </div>
                   </div>
 
                   <button onClick={() => setExpanded(isOpen ? null : m.id)} style={{
-                    background: isOpen ? `${cat.soft}` : "rgba(0,0,0,0.04)",
-                    border: `1.5px solid ${isOpen ? cat.border : "rgba(0,0,0,0.1)"}`,
-                    borderRadius: 10, width: 34, height: 34,
+                    background: isOpen ? cat.soft : "rgba(8,81,79,0.05)",
+                    border: `1.5px solid ${isOpen ? cat.border : "var(--color-border)"}`,
+                    borderRadius: 12, width: 44, height: 44,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     cursor: "pointer", flexShrink: 0, transition: "all 0.22s ease",
-                    color: cat.bg, fontSize: 16,
+                    color: cat.bg, fontSize: 20,
                   }}>
                     <span style={{
                       display: "block", lineHeight: 1,
@@ -415,74 +552,156 @@ export default function StudentMnemonicsPage() {
                   </button>
                 </div>
 
+                {/* Phrases block */}
                 <div style={{
-                  background: `linear-gradient(135deg, ${cat.soft}, rgba(245,166,35,0.03))`,
+                  background: cat.soft,
                   border: `1px solid ${cat.border}`,
-                  borderLeft: `2.5px solid ${cat.bg}`,
-                  borderRadius: 11, padding: "11px 13px",
-                  marginBottom: isOpen ? 16 : 0,
+                  borderLeft: `4px solid ${cat.bg}`,
+                  borderRadius: 14, padding: "16px 20px",
+                  marginBottom: isOpen ? 20 : 0,
                 }}>
-                  <span style={{
-                    fontFamily: "'Courier New', monospace",
-                    fontSize: 12.5, fontStyle: "italic",
-                    color: cat.bg, lineHeight: 1.65,
-                    display: "block",
-                  }}>
+                  <span className="font-heading font-semibold"
+                        style={{ fontSize: 15, color: "var(--color-primary)", lineHeight: 1.65, display: "block" }}>
                     {m.phrases.join(", ")}.
                   </span>
                 </div>
 
+                {/* Breakdown + rich sections (expanded) */}
                 {isOpen && (
                   <div style={{ animation: "fadeUp 0.25s ease both" }}>
-                    <div style={{
-                      fontFamily: "'Syne',sans-serif", fontSize: 10, fontWeight: 700,
-                      color: cat.bg, letterSpacing: 1.5, textTransform: "uppercase",
-                      marginBottom: 6,
-                    }}>Breakdown</div>
+                    {/* Breakdown */}
+                    <div className="font-heading font-extrabold"
+                         style={{ fontSize: 11, color: cat.bg, letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>
+                      📖 Meaning
+                    </div>
                     {m.breakdown.map((item, bi) => (
                       <div key={bi} style={{
-                        display: "flex", gap: 11,
-                        padding: "9px 0",
-                        borderBottom: bi < m.breakdown.length - 1 ? "1px solid rgba(8,81,79,0.07)" : "none",
+                        display: "flex", gap: 14, padding: "12px 0",
+                        borderBottom: bi < m.breakdown.length - 1 ? "1px solid var(--color-border)" : "none",
                         animation: `fadeUp 0.25s ease ${bi * 0.05}s both`,
                       }}>
-                        <span style={{ fontSize: 18, minWidth: 22, lineHeight: 1.45 }}>{item.emoji}</span>
+                        <div style={{
+                          width: 40, height: 40, borderRadius: 12, flexShrink: 0,
+                          background: "var(--color-primary-light)", border: "1px solid var(--color-border)",
+                          display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20,
+                        }}>{item.emoji}</div>
                         <div>
-                          <div style={{ fontSize: 11, fontWeight: 700, color: TEAL, marginBottom: 2 }}>{item.phrase}</div>
-                          <div style={{ fontSize: 11.5, color: "#4A6868", lineHeight: 1.5 }}>{item.meaning}</div>
+                          <div className="font-heading font-extrabold"
+                               style={{ fontSize: 14, color: "var(--color-dark)", marginBottom: 3 }}>
+                            {item.phrase}
+                          </div>
+                          <div className="font-body"
+                               style={{ fontSize: 13, color: "var(--color-neutral-mid)", lineHeight: 1.6, fontWeight: 500 }}>
+                            {item.meaning}
+                          </div>
                         </div>
                       </div>
                     ))}
+
+                    {/* Clinical Significance */}
+                    {m.clinical_significance && (
+                      <ArchiveSectionBlock icon="🩺" title="Clinical Significance" accent="var(--color-primary)">
+                        <p className="font-body" style={{ fontSize: 13.5, color: "var(--color-neutral-mid)", lineHeight: 1.7, margin: 0 }}>
+                          {m.clinical_significance}
+                        </p>
+                      </ArchiveSectionBlock>
+                    )}
+
+                    {/* Causes */}
+                    {m.causes.length > 0 && (
+                      <ArchiveSectionBlock icon="💊" title="Common Causes" accent="var(--color-accent-dark)">
+                        <ul style={{ margin: 0, paddingLeft: 16, display: "flex", flexDirection: "column", gap: 3 }}>
+                          {m.causes.map((c, ci) => (
+                            <li key={ci} className="font-body"
+                                style={{ fontSize: 13, color: "var(--color-neutral-mid)", lineHeight: 1.6 }}>{c}</li>
+                          ))}
+                        </ul>
+                      </ArchiveSectionBlock>
+                    )}
+
+                    {/* Exam Traps */}
+                    {m.exam_traps && (
+                      <ArchiveSectionBlock icon="⚠️" title="Common NCK Exam Traps" accent="#EF4444">
+                        <p className="font-body" style={{ fontSize: 13.5, color: "var(--color-neutral-mid)", lineHeight: 1.7, margin: 0, whiteSpace: "pre-line" }}>
+                          {m.exam_traps}
+                        </p>
+                      </ArchiveSectionBlock>
+                    )}
+
+                    {/* Memory Pearl */}
+                    {m.memory_pearl && (
+                      <ArchiveSectionBlock icon="💡" title="NurseFiti Memory Pearl" accent="#F5A623" soft>
+                        <p className="font-heading font-bold"
+                           style={{ fontSize: 14, color: "var(--color-accent-dark)", lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>
+                          {m.memory_pearl}
+                        </p>
+                      </ArchiveSectionBlock>
+                    )}
+
+                    {/* High-Yield Tip */}
+                    {m.high_yield_tip && (
+                      <ArchiveSectionBlock icon="🎯" title="NCK High-Yield Tip" accent="var(--color-primary)" soft>
+                        <p className="font-body" style={{ fontSize: 13.5, color: "var(--color-primary)", lineHeight: 1.7, margin: 0, whiteSpace: "pre-line" }}>
+                          {m.high_yield_tip}
+                        </p>
+                      </ArchiveSectionBlock>
+                    )}
+
+                    {/* Practice Question */}
+                    {m.practice_question && (
+                      <ArchivePracticeQuestion pq={m.practice_question} catColor={cat.bg} />
+                    )}
                   </div>
                 )}
               </div>
 
+              {/* Card footer — tags + download button in screenshot style */}
               <div style={{
-                padding: "10px 16px 13px",
+                padding: "16px 24px 20px",
                 display: "flex", justifyContent: "space-between", alignItems: "center",
-                borderTop: isOpen ? "1px solid rgba(8,81,79,0.08)" : "none",
-                marginTop: isOpen ? 10 : 0,
+                borderTop: isOpen ? "1px solid var(--color-border)" : "none",
+                marginTop: isOpen ? 14 : 0, gap: 12,
               }}>
-                <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
+                {/* Tags */}
+                <div style={{ display: "flex", gap: 7, flexWrap: "wrap", flex: 1 }}>
                   {m.tags.map((tag, ti) => (
-                    <span key={ti} style={{
-                      background: "#F2FAFA", border: "1px solid #D0E8E7",
-                      borderRadius: 20, padding: "2px 9px",
-                      fontSize: 9.5, color: "#4A6868", fontWeight: 600,
-                    }}>{tag}</span>
+                    <span key={ti} className="font-body font-bold"
+                          style={{
+                            background: "var(--color-primary-light)",
+                            border: "1px solid var(--color-border)",
+                            borderRadius: 999, padding: "4px 12px",
+                            fontSize: 11, color: "var(--color-primary)",
+                          }}>
+                      #{tag}
+                    </span>
                   ))}
                 </div>
 
-                <button onClick={handleDownload} style={{
-                  background: AMBER,
-                  border: "none", borderRadius: 9,
-                  padding: "7px 13px",
-                  fontFamily: "'Syne',sans-serif", fontSize: 11, fontWeight: 700,
-                  color: "#060F0F", cursor: "pointer",
-                  display: "flex", alignItems: "center", gap: 5,
-                  borderBottom: `2px solid ${AMBER_D}`,
-                }}>
-                  ⬇ Save
+                {/* Download button — screenshot style: icon + bold title + subtitle + chevron */}
+                <button
+                  onClick={handleDownload}
+                  style={{
+                    background: "linear-gradient(135deg,var(--color-accent) 0%,var(--color-accent-dark) 100%)",
+                    border: "none", borderRadius: 14,
+                    padding: "12px 18px",
+                    boxShadow: "var(--shadow-glow-amber)",
+                    display: "flex", alignItems: "center", gap: 10,
+                    cursor: "pointer", flexShrink: 0,
+                    minWidth: 160,
+                  }}
+                >
+                  <span style={{ fontSize: 20, lineHeight: 1, flexShrink: 0 }}>⬇</span>
+                  <div style={{ flex: 1, textAlign: "left" }}>
+                    <div className="font-heading font-extrabold"
+                         style={{ fontSize: 13, color: "var(--color-dark)", lineHeight: 1.2 }}>
+                      Download PDF
+                    </div>
+                    <div className="font-body"
+                         style={{ fontSize: 10, color: "rgba(15,28,28,0.55)", marginTop: 2 }}>
+                      Save to device
+                    </div>
+                  </div>
+                  <span style={{ color: "rgba(15,28,28,0.45)", fontSize: 15 }}>›</span>
                 </button>
               </div>
             </div>

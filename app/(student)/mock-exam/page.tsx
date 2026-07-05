@@ -78,6 +78,7 @@ export default function MockExamPage() {
   const [showRationale, setShowRationale] = useState<string | null>(null);
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadedMocks, setDownloadedMocks] = useState<string[]>([]);
+  const [examProgress, setExamProgress] = useState<Record<string, { totalSets: number; completedSets: number; uniqueSeen: number; totalQuestions: number; isFetching: boolean }>>({});
 
   const handleDownloadResult = async () => {
     if (!results?.resultId) { toast.error('Result ID not available. Please retry.'); return; }
@@ -156,6 +157,52 @@ export default function MockExamPage() {
     init();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const fetchProgress = async () => {
+      if (!userId || !studentCadre) return;
+      const examsToFetch = Object.entries(EXAM_CONFIGS).filter(([_, config]) => config.cadre === studentCadre);
+      if (examsToFetch.length === 0) return;
+
+      const newProgress: Record<string, any> = {};
+      
+      setExamProgress(prev => {
+        const next = { ...prev };
+        for (const [key] of examsToFetch) {
+          next[key] = { ...(prev[key] || { totalSets: 0, completedSets: 0, uniqueSeen: 0, totalQuestions: 0 }), isFetching: true };
+        }
+        return next;
+      });
+
+      for (const [key, config] of examsToFetch) {
+        const { count: totalQ } = await supabase.from('questions')
+          .select('id', { count: 'exact', head: true })
+          .eq('cadre', config.cadre).eq('paper', config.paper).eq('status', 'approved');
+
+        const { data: seenData } = await supabase.from('student_answers')
+          .select('question_id')
+          .eq('student_id', userId)
+          .eq('mode', 'mock_exam')
+          .eq('paper', config.paper);
+
+        const uniqueSeen = new Set((seenData as Array<{ question_id: string }> | null)?.map(d => d.question_id) ?? []).size;
+        const total = totalQ ?? 0;
+        const setSize = config.totalQuestions;
+
+        newProgress[key] = {
+          totalSets: Math.floor(total / setSize),
+          completedSets: Math.floor(uniqueSeen / setSize),
+          uniqueSeen,
+          totalQuestions: total,
+          isFetching: false
+        };
+      }
+      setExamProgress(prev => ({ ...prev, ...newProgress }));
+    };
+
+    fetchProgress();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId, studentCadre]);
 
   const startExam = async () => {
     const config = EXAM_CONFIGS[selectedExam];
@@ -300,7 +347,7 @@ export default function MockExamPage() {
       toast('🔄 You\'ve completed a full exam cycle — questions are now repeating from the full bank.', { duration: 4000 });
     }
 
-    setQuestions(finalQuestions);
+    setQuestions(finalQuestions as Question[]);
     setAnswers({});
     setFlagged(new Set());
     setCurrentIndex(0);
@@ -615,16 +662,36 @@ export default function MockExamPage() {
         <Card>
           <h2 className="text-xl font-heading font-bold mb-4">Select Your Paper</h2>
           <div className="space-y-3 mb-6">
-            {availableExams.map(([key, config]) => (
-              <label key={key} className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${selectedExam === key ? 'border-primary bg-primary-light' : 'border-[var(--color-border)] hover:border-primary/40'}`}>
-                <input type="radio" name="exam" value={key} checked={selectedExam === key} onChange={() => setSelectedExam(key)} className="sr-only" />
-                <div className="flex-1">
-                  <p className="font-semibold text-[var(--color-text)]">{config.cadre} — {config.paper}</p>
-                  <p className="text-sm text-neutral-mid">{config.totalQuestions} questions · {config.totalMinutes} minutes</p>
+            {availableExams.map(([key, config]) => {
+              const progress = examProgress[key];
+              return (
+              <label key={key} className={`flex flex-col gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${selectedExam === key ? 'border-primary bg-primary-light' : 'border-[var(--color-border)] hover:border-primary/40'}`}>
+                <div className="flex items-center gap-4">
+                  <input type="radio" name="exam" value={key} checked={selectedExam === key} onChange={() => setSelectedExam(key)} className="sr-only" />
+                  <div className="flex-1">
+                    <p className="font-semibold text-[var(--color-text)]">{config.cadre} — {config.paper}</p>
+                    <p className="text-sm text-neutral-mid">{config.totalQuestions} questions · {config.totalMinutes} minutes</p>
+                  </div>
+                  {selectedExam === key && <span className="text-primary text-xl">✓</span>}
                 </div>
-                {selectedExam === key && <span className="text-primary text-xl">✓</span>}
+                {progress && !progress.isFetching && progress.totalSets > 0 && (
+                  <div className="mt-1 flex flex-col gap-1.5">
+                    <div className="flex items-center justify-between text-xs text-neutral-mid">
+                      <span>Unique Mock Sets Completed:</span>
+                      <span className="font-bold text-primary">{progress.completedSets} of {progress.totalSets}</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-neutral-light/50 rounded-full overflow-hidden">
+                      <div className="h-full bg-primary transition-all duration-500 rounded-full" style={{ width: `${Math.min(100, (progress.completedSets / progress.totalSets) * 100)}%` }} />
+                    </div>
+                    {progress.completedSets >= progress.totalSets && (
+                      <p className="text-[10px] text-accent-dark dark:text-accent font-medium leading-tight mt-0.5">
+                        All unique sets completed. Taking this exam again will reset your cycle and shuffle from all available questions.
+                      </p>
+                    )}
+                  </div>
+                )}
               </label>
-            ))}
+            )})}
           </div>
           <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mb-6 text-sm text-neutral-mid space-y-1">
             <p className="font-semibold text-accent-dark dark:text-accent">⚠️ Exam Rules</p>

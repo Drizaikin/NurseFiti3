@@ -167,13 +167,13 @@ export default function PracticePage() {
 
   const fetchUnits = async (cadre: string) => {
     try {
-      const { data: unitsRaw, error } = await supabase.rpc('get_active_units', { p_cadre: cadre });
+      const { data: unitsRaw, error } = await supabase.rpc('get_active_units', { p_cadre: cadre } as any);
       if (error) {
         console.error('Error fetching units via RPC:', error);
         return;
       }
       if (unitsRaw) {
-        const uniqueUnits = unitsRaw.map((r: { unit: string }) => r.unit);
+        const uniqueUnits = (unitsRaw as any[]).map((r: { unit: string }) => r.unit);
         setUnits(uniqueUnits);
       }
     } catch (error) {
@@ -220,12 +220,12 @@ export default function PracticePage() {
         p_cadre: studentCadre,
         p_unit: selectedUnit,
         p_limit: limitToFetch
-      });
+      } as any);
 
       if (error) { console.error('Error fetching questions via RPC:', error); return; }
 
       // ── STEP 2: If not enough unseen questions, reset cycle (fetch random) ──
-      let finalQuestions = data || [];
+      let finalQuestions = (data as any[]) || [];
       if (finalQuestions.length < remaining) {
         // Fallback: fetch random questions regardless of whether they were answered
         let resetQuery = supabase
@@ -239,7 +239,7 @@ export default function PracticePage() {
         }
 
         const { data: allData } = await resetQuery.limit(limitToFetch);
-        finalQuestions = allData || [];
+        finalQuestions = (allData as any[]) || [];
         
         if (finalQuestions.length === 0) {
           toast.error('No questions available for the selected filters. Try different filters.');
@@ -248,7 +248,7 @@ export default function PracticePage() {
         }
 
         // Notify student the cycle has restarted (only if they had some answered ones before)
-        if (finalQuestions.length > (data?.length || 0)) {
+        if (finalQuestions.length > ((data as any[])?.length || 0)) {
           toast('🔄 You\'ve gone through all questions in this unit — starting the cycle again!', { duration: 4000 });
         }
       }

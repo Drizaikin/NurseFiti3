@@ -12,7 +12,7 @@ import { Spinner } from '@/components/ui/Spinner';
 import { FeedbackWidget } from '@/components/shared/FeedbackWidget';
 import { FeedbackWall } from '@/components/shared/FeedbackWall';
 import { effectiveTier, PLAN_PRICING_META } from '@/lib/planLimits';
-import { MnemonicWidget } from './MnemonicWidget';
+
 import { AppRatingModal } from './AppRatingModal';
 
 // ── Time-aware greeting (uses browser local time = user's timezone) ────────
@@ -161,6 +161,20 @@ function HeroBanner({
                 backdropFilter: 'blur(8px)',
               }}>
                 <span>⏱️</span> Take Mock Exam
+              </button>
+            </Link>
+            <Link href="/mnemonics/today">
+              <button className="
+                inline-flex items-center gap-2 px-5 py-2.5 rounded-full
+                font-semibold text-sm text-white
+                border border-white/25
+                transition-all duration-200 active:scale-[0.97]
+                hover:bg-white/10
+              " style={{
+                background: 'rgba(255,255,255,0.08)',
+                backdropFilter: 'blur(8px)',
+              }}>
+                <span>🧠</span> Mnemonic of the Day
               </button>
             </Link>
           </div>
@@ -419,7 +433,7 @@ export default function DashboardPage() {
       const [profileRes, studentRes, answersRes, mockRes, flashRes, sessionsRes, scholarshipRes] = await Promise.all([
         supabase.from('profiles').select('full_name').eq('id', user.id).single(),
         supabase.from('student_profiles').select('*').eq('id', user.id).single(),
-        supabase.from('student_answers').select('is_correct, time_taken_seconds, created_at').eq('student_id', user.id).order('created_at', { ascending: true }),
+        supabase.from('student_answers').select('is_correct, time_taken_seconds, answered_at').eq('student_id', user.id).order('answered_at', { ascending: true }),
         supabase.from('mock_exam_results').select('id').eq('student_id', user.id),
         supabase.from('flashcard_progress').select('id').eq('student_id', user.id),
         supabase.from('sessions')
@@ -439,7 +453,7 @@ export default function DashboardPage() {
 
       if (!studentData) { router.push('/onboarding'); return; }
 
-      const answers = (answersRes.data ?? []) as Array<{ is_correct: boolean; time_taken_seconds: number | null; created_at: string }>;
+      const answers = (answersRes.data ?? []) as Array<{ is_correct: boolean; time_taken_seconds: number | null; answered_at: string }>;
       const totalAnswers = answers.length;
       const correctAnswers = answers.filter(a => a.is_correct).length;
       const accuracy = totalAnswers > 0 ? (correctAnswers / totalAnswers) * 100 : 0;
@@ -550,8 +564,6 @@ export default function DashboardPage() {
         </Card>
       )}
 
-      {/* ── Mnemonic of The Day ────────────────────────────────────────── */}
-      <MnemonicWidget />
 
       {/* ── Stat tiles ─────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">

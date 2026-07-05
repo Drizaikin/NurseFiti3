@@ -64,12 +64,11 @@ export function Spinner({ size = 'md', className = '' }: SpinnerProps) {
           {/* ECG Trace (Teal/Primary) */}
           <path
             d="M 9,41 L 17,41 L 20,35 L 23,41 L 27,41 L 29,19 L 31,57 L 33,41 L 40,41"
-            stroke="currentColor"
+            stroke="#08514F"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"
             fill="none"
-            className="text-primary"
           />
           {/* Yellow Tick */}
           <path

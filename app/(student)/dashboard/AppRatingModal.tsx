@@ -85,18 +85,18 @@ export function AppRatingModal() {
         .eq('id', user.id)
         .single();
 
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('app_feedback')
         .insert([{
           user_id: user.id,
           user_role: 'student',
-          display_name: profile?.full_name || 'Anonymous Student',
-          cadre: studentProfile?.cadre || 'Student',
+          display_name: (profile as any)?.full_name || 'Anonymous Student',
+          cadre: (studentProfile as any)?.cadre || 'Student',
           category: rating >= 4 ? 'praise' : 'suggestion',
           rating: rating,
           message: message.trim() || 'No written review provided.',
           is_approved: rating >= 4 
-        }]);
+        } as any]);
 
       if (error) throw error;
       
