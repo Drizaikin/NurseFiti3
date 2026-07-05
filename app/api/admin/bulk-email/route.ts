@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { getFirstName, sendEmail, type EmailAttachment } from '@/lib/email';
+import { getFirstName, sendEmail, emailWrapper, type EmailAttachment } from '@/lib/email';
+import { convert } from 'html-to-text';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,14 +25,32 @@ function isAllowedAttachment(file: File): boolean {
   return file.type.startsWith('image/') || ALLOWED_ATTACHMENT_TYPES.has(file.type);
 }
 
-function renderBulkEmail(firstName: string, message: string): string {
+function renderBulkEmailText(firstName: string, textMessage: string): string {
   return `Dear ${firstName},
 
-${message.trim()}
+${textMessage.trim()}
 
 Warm Regards,
 
 The NurseFiti Team`;
+}
+
+function renderBulkEmailHtml(firstName: string, htmlMessage: string): string {
+  const content = `
+    <tr><td style="padding:32px 36px;">
+      <p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#1E3535;margin-bottom:16px;">
+        Dear ${firstName},
+      </p>
+      <div style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#1E3535;line-height:1.6;">
+        ${htmlMessage}
+      </div>
+      <p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#1E3535;margin-top:24px;">
+        Warm Regards,<br/><br/>
+        The NurseFiti Team
+      </p>
+    </td></tr>
+  `;
+  return emailWrapper(content);
 }
 
 export async function POST(req: NextRequest) {
@@ -108,15 +127,19 @@ export async function POST(req: NextRequest) {
     let sent = 0;
     const failures: Array<{ email: string; reason: string }> = [];
 
+    const plainTextMessage = convert(message, { wordwrap: 130 });
+
     for (let index = 0; index < validRecipients.length; index += BATCH_SIZE) {
       const batch = validRecipients.slice(index, index + BATCH_SIZE);
       const results = await Promise.all(
         batch.map(async recipient => {
+          const firstName = getFirstName(recipient.full_name);
           const result = await sendEmail(
             recipient.email,
             subject,
-            renderBulkEmail(getFirstName(recipient.full_name), message),
-            attachments
+            renderBulkEmailText(firstName, plainTextMessage),
+            attachments,
+            renderBulkEmailHtml(firstName, message)
           );
 
           return { recipient, result };

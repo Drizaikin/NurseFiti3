@@ -5,6 +5,10 @@ import toast from 'react-hot-toast';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Spinner } from '@/components/ui/Spinner';
+import dynamic from 'next/dynamic';
+import 'react-quill/dist/quill.snow.css';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 type TargetRole = 'student' | 'tutor';
 
@@ -122,14 +126,23 @@ export default function AdminEmailPage() {
 
           <div>
             <label htmlFor="message" className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Message</label>
-            <textarea
-              id="message"
-              value={message}
-              onChange={event => setMessage(event.target.value)}
-              rows={12}
-              placeholder="Write the announcement. The email will automatically start with the recipient's first name and end with the NurseFiti signature."
-              className="w-full px-4 py-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-primary/40 resize-y"
-            />
+            <div className="bg-[var(--color-card)] rounded-xl overflow-hidden [&_.ql-toolbar]:border-[var(--color-border)] [&_.ql-container]:border-[var(--color-border)] [&_.ql-editor]:min-h-[250px] [&_.ql-editor]:text-sm [&_.ql-editor]:leading-relaxed focus-within:ring-2 focus-within:ring-primary/40 focus-within:border-transparent transition-all">
+              <ReactQuill
+                theme="snow"
+                value={message}
+                onChange={setMessage}
+                placeholder="Write the announcement. The email will automatically start with the recipient's first name and end with the NurseFiti signature."
+                modules={{
+                  toolbar: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['link', 'clean']
+                  ]
+                }}
+              />
+            </div>
           </div>
 
           <div>

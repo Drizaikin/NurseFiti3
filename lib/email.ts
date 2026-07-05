@@ -152,7 +152,7 @@ function emailFooter(siteUrl: string, supportEmail: string): string {
   </tr>`;
 }
 
-function emailWrapper(bodyRows: string, tagline = 'Preparing Nurses for Success'): string {
+export function emailWrapper(bodyRows: string, tagline = 'Preparing Nurses for Success'): string {
   const siteUrl = getSiteUrl();
   const supportEmail = getSupportEmail();
   return `<!doctype html>
