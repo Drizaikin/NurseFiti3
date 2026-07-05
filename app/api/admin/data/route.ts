@@ -114,30 +114,33 @@ export async function GET(req: NextRequest) {
     }
 
     if (type === 'students') {
-      const [profilesRes, spRes] = await Promise.all([
-        admin
+      const profilesRes = await admin
           .from('profiles')
           .select('id, full_name, email, created_at, is_locked')
           .eq('role', 'student')
           .order('created_at', { ascending: false })
-          .limit(200),
-        admin
-          .from('student_profiles')
-          .select('id, cadre, plan_tier, plan_expires_at'),
-      ]);
+          .limit(200);
 
       if (profilesRes.error) {
         console.error('[admin/data] profiles query error:', profilesRes.error);
         return NextResponse.json({ error: profilesRes.error.message }, { status: 500 });
       }
+
+      const profiles = (profilesRes.data ?? []) as Array<{
+        id: string; full_name: string; email: string; created_at: string; is_locked: boolean | null;
+      }>;
+
+      const profileIds = profiles.map(p => p.id);
+      
+      const spRes = profileIds.length > 0 
+        ? await admin.from('student_profiles').select('id, cadre, plan_tier, plan_expires_at').in('id', profileIds)
+        : { data: [], error: null };
+
       if (spRes.error) {
         console.error('[admin/data] student_profiles query error:', spRes.error);
         return NextResponse.json({ error: spRes.error.message }, { status: 500 });
       }
 
-      const profiles = (profilesRes.data ?? []) as Array<{
-        id: string; full_name: string; email: string; created_at: string; is_locked: boolean | null;
-      }>;
       const spMap = new Map(
         ((spRes.data ?? []) as Array<{
           id: string; cadre: string; plan_tier: string; plan_expires_at: string | null;
@@ -162,30 +165,36 @@ export async function GET(req: NextRequest) {
     }
 
     if (type === 'tutors') {
-      const [profilesRes, tpRes] = await Promise.all([
-        admin
+      const profilesRes = await admin
           .from('profiles')
           .select('id, full_name, email, phone, created_at, is_locked')
           .eq('role', 'tutor')
           .order('created_at', { ascending: false })
-          .limit(200),
-        admin
-          .from('tutor_profiles')
-          .select('id, professional_title, cadres_taught, years_experience, verification_status, verification_tier, average_rating, total_sessions, rate_per_hour, nck_reg_number, bio, current_employer, nck_certificate_url, academic_qualification_url, national_id_url, mpesa_number, rejection_reason'),
-      ]);
+          .limit(200);
 
       if (profilesRes.error) {
         console.error('[admin/data] tutor profiles query error:', profilesRes.error);
         return NextResponse.json({ error: profilesRes.error.message }, { status: 500 });
       }
+
+      const profiles = (profilesRes.data ?? []) as Array<{
+        id: string; full_name: string; email: string; phone: string; created_at: string; is_locked: boolean | null;
+      }>;
+
+      const profileIds = profiles.map(p => p.id);
+
+      const tpRes = profileIds.length > 0
+        ? await admin
+          .from('tutor_profiles')
+          .select('id, professional_title, cadres_taught, years_experience, verification_status, verification_tier, average_rating, total_sessions, rate_per_hour, nck_reg_number, bio, current_employer, nck_certificate_url, academic_qualification_url, national_id_url, mpesa_number, rejection_reason')
+          .in('id', profileIds)
+        : { data: [], error: null };
+
       if (tpRes.error) {
         console.error('[admin/data] tutor_profiles query error:', tpRes.error);
         return NextResponse.json({ error: tpRes.error.message }, { status: 500 });
       }
 
-      const profiles = (profilesRes.data ?? []) as Array<{
-        id: string; full_name: string; email: string; phone: string; created_at: string; is_locked: boolean | null;
-      }>;
       const tpMap = new Map(
         ((tpRes.data ?? []) as Array<{
           id: string; professional_title: string; cadres_taught: string[];

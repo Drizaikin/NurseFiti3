@@ -642,41 +642,19 @@ export default function FlashcardsPage() {
     if (!deckData) return;
     setDecks(deckData as Deck[]);
 
-    // Batch fetch all cards (only id and deck_id to minimize payload)
-    const { data: allCards } = await (supabase as any).from('flashcards').select('id, deck_id');
-    const cards = (allCards ?? []) as Array<{ id: string, deck_id: string }>;
-
-    // Batch fetch all progress for this student
-    const { data: allProgress } = await (supabase as any).from('flashcard_progress')
-      .select('card_id, next_review_at')
-      .eq('student_id', uid);
-    const progressList = (allProgress ?? []) as Array<{ card_id: string, next_review_at: string }>;
-
-    // Map card_id to next_review_at
-    const progressMap = new Map<string, string>();
-    for (const p of progressList) {
-      progressMap.set(p.card_id, p.next_review_at);
-    }
-
-    const now = new Date().toISOString();
+    // Fetch due counts using the new lightweight RPC
+    const { data: dueCountsData } = await (supabase as any).rpc('get_due_flashcard_counts', { p_student_id: uid });
+    
     const counts: Record<string, number> = {};
-
+    // Initialize all to 0
     for (const deck of (deckData as Deck[])) {
-      const deckCards = cards.filter(c => c.deck_id === deck.id);
-      if (deckCards.length === 0) { 
-        counts[deck.id] = 0; 
-        continue; 
-      }
-      
-      let due = 0;
-      for (const card of deckCards) {
-        const nextReview = progressMap.get(card.id);
-        if (!nextReview || nextReview <= now) {
-          due++;
-        }
-      }
-      counts[deck.id] = due;
+      counts[deck.id] = 0;
     }
+    // Update with actual counts
+    for (const row of (dueCountsData ?? []) as any[]) {
+      counts[row.deck_id] = Number(row.due_count);
+    }
+    
     setDueCount(counts);
   };
 

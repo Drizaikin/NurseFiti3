@@ -203,28 +203,28 @@ export default function MockExamPage() {
 
     const seenIds = (seenData as Array<{ question_id: string }> | null)?.map(a => a.question_id) ?? [];
 
-    // ── STEP 2: Fetch ALL approved questions for this cadre + paper ──
+    // ── STEP 2: Fetch ONLY IDs and units for ALL approved questions for this cadre + paper ──
     const { data: allQuestionsRaw, error } = await (supabase as any)
       .from('questions')
-      .select('*')
+      .select('id, unit')
       .eq('cadre', config.cadre)
       .eq('paper', config.paper)
       .eq('status', 'approved');
-    const allQuestions = allQuestionsRaw as any[] | null;
+    const allQuestionsMeta = allQuestionsRaw as Array<{ id: string, unit: string | null }> | null;
 
-    if (error || !allQuestions || allQuestions.length === 0) {
+    if (error || !allQuestionsMeta || allQuestionsMeta.length === 0) {
       toast.error('Not enough questions available for this exam. Please try again later.');
       setIsLoading(false);
       return;
     }
 
     // ── STEP 3: Prefer unseen questions; if not enough, reset cycle ──
-    let unseenPool = allQuestions.filter(q => !seenIds.includes(q.id));
+    let unseenPool = allQuestionsMeta.filter(q => !seenIds.includes(q.id));
     let cycleReset = false;
 
     if (unseenPool.length < config.totalQuestions) {
       // Cycle complete — use the full question bank again
-      unseenPool = allQuestions;
+      unseenPool = allQuestionsMeta;
       cycleReset = true;
     }
 
@@ -271,13 +271,30 @@ export default function MockExamPage() {
       round++;
     }
 
-    const finalQuestions = interleaved.slice(0, config.totalQuestions);
+    const finalQuestionsMeta = interleaved.slice(0, config.totalQuestions);
 
-    if (finalQuestions.length === 0) {
+    if (finalQuestionsMeta.length === 0) {
       toast.error('Not enough questions available for this exam. Please try again later.');
       setIsLoading(false);
       return;
     }
+
+    // ── STEP 5: Fetch FULL payloads ONLY for the interleaved final set ──
+    const finalQuestionIds = finalQuestionsMeta.map(q => q.id);
+    const { data: finalQuestionsData, error: finalError } = await (supabase as any)
+      .from('questions')
+      .select('*')
+      .in('id', finalQuestionIds);
+
+    if (finalError || !finalQuestionsData) {
+      toast.error('Failed to load final questions. Please try again later.');
+      setIsLoading(false);
+      return;
+    }
+
+    // Preserve the carefully interleaved order
+    const questionsMap = new Map(finalQuestionsData.map((q: any) => [q.id, q]));
+    const finalQuestions = finalQuestionsMeta.map(q => questionsMap.get(q.id)).filter(Boolean);
 
     if (cycleReset) {
       toast('🔄 You\'ve completed a full exam cycle — questions are now repeating from the full bank.', { duration: 4000 });

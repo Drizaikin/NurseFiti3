@@ -81,19 +81,20 @@ export default function TutorStudentsPage() {
     const [profilesRes, studentProfilesRes, answersRes] = await Promise.all([
       supabase.from('profiles').select('id, full_name').in('id', studentIds),
       supabase.from('student_profiles').select('id, cadre, xp, level').in('id', studentIds),
-      supabase.from('student_answers').select('student_id, is_correct').in('student_id', studentIds),
+      (supabase as any).rpc('get_student_accuracy', { p_student_ids: studentIds }),
     ]);
 
     const profiles = Object.fromEntries((profilesRes.data ?? []).map((p: any) => [p.id, p.full_name]));
     const spMap = Object.fromEntries((studentProfilesRes.data ?? []).map((p: any) => [p.id, p]));
-    const answers = (answersRes.data ?? []) as Array<{ student_id: string; is_correct: boolean }>;
+    const accMap = Object.fromEntries(((answersRes.data ?? []) as any[]).map((a: any) => [a.student_id, a]));
 
     const enriched: Student[] = studentIds.map(id => {
       const meta = studentMap.get(id)!;
       const sp = spMap[id] as any;
-      const studentAnswers = answers.filter(a => a.student_id === id);
-      const correct = studentAnswers.filter(a => a.is_correct).length;
-      const accuracy = studentAnswers.length > 0 ? Math.round((correct / studentAnswers.length) * 100) : 0;
+      const acc = accMap[id] || { total_answers: 0, correct_answers: 0 };
+      const total_answers = Number(acc.total_answers);
+      const correct = Number(acc.correct_answers);
+      const accuracy = total_answers > 0 ? Math.round((correct / total_answers) * 100) : 0;
       return {
         id,
         full_name: profiles[id] ?? 'Student',
@@ -101,10 +102,10 @@ export default function TutorStudentsPage() {
         xp: sp?.xp ?? 0,
         level: sp?.level ?? 1,
         accuracy,
-        total_answers: studentAnswers.length,
+        total_answers,
         sessions_count: meta.sessions,
         last_session_date: meta.last_date,
-        is_at_risk: accuracy < 60 && studentAnswers.length > 10,
+        is_at_risk: accuracy < 60 && total_answers > 10,
       };
     });
 
