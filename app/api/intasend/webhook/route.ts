@@ -88,15 +88,19 @@ async function handleCollectionEvent(supabase: any, data: any) {
   const apiRef = data.api_ref as string; // our reference (NF-xxx)
   const provider = data.provider as string;
 
-  // Find our payment record by our own api_ref
-  const { data: payment } = await supabase
-    .from('payments')
-    .select('*')
-    .eq('intasend_reference', apiRef)
-    .single();
+  // Find our payment record by our own api_ref or fallback to invoice ID
+  let query = supabase.from('payments').select('*');
+  if (apiRef) {
+    query = query.or(`intasend_reference.eq.${apiRef},intasend_checkout_id.eq.${invoiceId},intasend_invoice_id.eq.${invoiceId}`);
+  } else {
+    query = query.or(`intasend_checkout_id.eq.${invoiceId},intasend_invoice_id.eq.${invoiceId}`);
+  }
+
+  const { data: payments } = await query.limit(1);
+  const payment = payments?.[0];
 
   if (!payment) {
-    console.warn(`[intasend/webhook] Payment not found for api_ref: ${apiRef}`);
+    console.warn(`[intasend/webhook] Payment not found for api_ref: ${apiRef} or invoice: ${invoiceId}`);
     return;
   }
 
