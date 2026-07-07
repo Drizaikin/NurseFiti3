@@ -58,6 +58,7 @@ export default function TutorProfilePage() {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [platformSettings, setPlatformSettings] = useState<any>(null);
   const [stats, setStats] = useState({ total_students: 0, total_sessions: 0, average_rating: 0, pass_rate: 0 });
 
   useEffect(() => {
@@ -73,12 +74,14 @@ export default function TutorProfilePage() {
   }, []);
 
   const loadProfile = async (uid: string) => {
-    const [profileRes, tutorRes] = await Promise.all([
+    const [profileRes, tutorRes, settingsRes] = await Promise.all([
       supabase.from('profiles').select('full_name, avatar_url').eq('id', uid).maybeSingle(),
       supabase.from('tutor_profiles').select('*').eq('id', uid).maybeSingle(),
+      supabase.from('platform_settings').select('*').eq('id', 1).maybeSingle(),
     ]);
     const profile = profileRes.data as any;
     const tutor = tutorRes.data as any;
+    if (settingsRes.data) setPlatformSettings(settingsRes.data);
     if (!profile || !tutor) return;
 
     setAvatarUrl(profile.avatar_url ?? null);
@@ -268,7 +271,10 @@ export default function TutorProfilePage() {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-semibold mb-1.5">Rate per Hour (KSh)</label>
-                <input type="number" className="input text-sm" min={500} max={10000} step={100} value={form.rate_per_hour} onChange={e => setForm(f => ({ ...f, rate_per_hour: Number(e.target.value) }))} />
+                <input type="number" className="input text-sm" min={500} max={10000} step={100} value={form.rate_per_hour} onChange={e => setForm(f => ({ ...f, rate_per_hour: Number(e.target.value) }))} disabled={platformSettings && !platformSettings.allow_tutor_custom_pricing} />
+                {platformSettings && !platformSettings.allow_tutor_custom_pricing && (
+                  <p className="text-xs text-warning mt-2">Platform is currently enforcing standardized pricing. Custom rates are disabled.</p>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-semibold mb-2">Session Platforms</label>

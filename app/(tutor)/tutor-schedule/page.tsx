@@ -244,6 +244,7 @@ export default function TutorSchedulePage() {
     min_negotiated_rate: 1000,
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [platformSettings, setPlatformSettings] = useState<any>(null);
   const [saving, setSaving] = useState(false);
   const [weekOffset, setWeekOffset] = useState(0);
   const [slotPicker, setSlotPicker] = useState<SlotPickerState | null>(null);
@@ -282,7 +283,13 @@ export default function TutorSchedulePage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push('/login'); return; }
       setUserId(user.id);
-      await Promise.all([loadAvailability(user.id), loadSessions(user.id), loadPrefs(user.id)]);
+      const [settingsRes] = await Promise.all([
+        supabase.from('platform_settings').select('*').eq('id', 1).maybeSingle(),
+        loadAvailability(user.id), 
+        loadSessions(user.id), 
+        loadPrefs(user.id)
+      ]);
+      if (settingsRes.data) setPlatformSettings(settingsRes.data);
       setIsLoading(false);
     };
     init();
@@ -856,7 +863,12 @@ export default function TutorSchedulePage() {
               <div>
                 <label className="block text-sm font-medium text-[var(--color-text)] mb-1.5">Rate per Hour (KSh)</label>
                 <input type="number" className="input text-sm" value={prefs.rate_per_hour} min={500} max={10000} step={100}
-                  onChange={e => setPrefs(p => ({ ...p, rate_per_hour: Number(e.target.value) }))} />
+                  onChange={e => setPrefs(p => ({ ...p, rate_per_hour: Number(e.target.value) }))}
+                  disabled={platformSettings && !platformSettings.allow_tutor_custom_pricing} 
+                />
+                {platformSettings && !platformSettings.allow_tutor_custom_pricing && (
+                  <p className="text-xs text-warning mt-2">Platform is currently enforcing standardized pricing. Custom rates are disabled.</p>
+                )}
               </div>
 
               {/* ── Price negotiation ── */}
@@ -868,6 +880,7 @@ export default function TutorSchedulePage() {
                   </div>
                   <Toggle
                     checked={prefs.allow_price_negotiation}
+                    disabled={platformSettings && !platformSettings.allow_tutor_custom_pricing}
                     onChange={v => setPrefs(p => ({ ...p, allow_price_negotiation: v }))}
                   />
                 </div>

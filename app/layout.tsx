@@ -77,7 +77,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${syne.variable} ${nunito.variable} font-body antialiased`}>
+      <body className={`${syne.variable} ${nunito.variable} font-body antialiased overflow-x-hidden w-full`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
