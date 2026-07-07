@@ -1481,7 +1481,7 @@ const POSTS_LATEST_RESEARCH: Post[] = [
     readTime: '8 min read',
     date: '2026-07-07',
     cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
-    content: \`
+    content: `
 For decades, Kenyan nurses have formed the backbone of the healthcare system, yet they have been underrepresented in the rooms where healthcare policies and budgets are actually decided. As the country moves towards the 2027 general elections and further deepens devolution, the need for nurses to step into political and leadership roles has never been more urgent.
 
 If you are a nursing practitioner frustrated by the systemic issues in Kenyan healthcare—from delayed internship deployments to inadequate facility funding—complaining in WhatsApp groups is no longer enough. The most effective way to change the system is to lead it.
@@ -1546,7 +1546,7 @@ The political landscape in Kenya is shifting, and there is a growing demand for 
 - **The Constitution of Kenya (2010)** — Schedule 4 on the distribution of functions between National and County Governments (Health as a devolved function). [klr.go.ke](http://www.kenyalaw.org/)
 - **Ministry of Health Kenya** — Health Act (2017) guidelines on healthcare leadership and facility management. [health.go.ke](https://www.health.go.ke)
 - **National Nurses Association of Kenya (NNAK)** — Advocacy and leadership guidelines for nursing professionals. [nnak.or.ke](https://nnak.or.ke/)
-    \`
+    `
   },
   {
     slug: 'nursing-forums-networks-kenya',
@@ -1556,7 +1556,7 @@ The political landscape in Kenya is shifting, and there is a growing demand for 
     readTime: '7 min read',
     date: '2026-07-07',
     cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
-    content: \`
+    content: `
 Nursing in Kenya can often feel isolating, especially when you are assigned to a remote rural dispensary or when you are pulling an all-nighter studying for the NCK licensure exam. But you don't have to navigate this journey alone. 
 
 Building a strong professional network is just as important as mastering your clinical skills. Whether you are looking for past papers, seeking advice on internship deployments, or exploring specialized nursing fields, joining the right forums can accelerate your career. 
@@ -1619,7 +1619,7 @@ Your nursing career in Kenya will be defined not just by what you know, but by w
 - **National Nurses Association of Kenya (NNAK)** — Official membership guidelines and professional development resources. [nnak.or.ke](https://nnak.or.ke/)
 - **Kenya National Union of Nurses (KNUN)** — Information on labor rights and membership for Kenyan nurses.
 - **Nursing Council of Kenya (NCK)** — Official regulatory body for nursing practice and education. [nckenya.com](https://www.nckenya.com)
-    \`
+    `
   }
 ];
 
