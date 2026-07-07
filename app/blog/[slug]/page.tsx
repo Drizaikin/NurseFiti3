@@ -1472,8 +1472,6 @@ Passing the NCK licensure exam while working as an intern is a test of strategy,
   },
 ];
 
-];
-
 const POSTS_LATEST_RESEARCH: Post[] = [
   {
     slug: 'nursing-politics-leadership-kenya',
