@@ -21,7 +21,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { getPlanFromAmount, PLAN_PRICING_META } from '@/lib/planLimits';
+import { fetchPlatformSettings, getDynamicPlanFromAmount, buildDynamicPlanPricingMeta } from '@/lib/platformSettings';
 import {
   formatEmailDate,
   formatEmailDateTime,
@@ -185,7 +185,8 @@ async function provisionAccess(supabase: any, payment: any, txnData: any) {
     }
 
     case 'plan_subscription': {
-      const { tier, durationDays } = getPlanFromAmount(payment.amount);
+      const settings = await fetchPlatformSettings(supabase);
+      const { tier, durationDays } = getDynamicPlanFromAmount(payment.amount, settings);
       const activatedAt = new Date();
       const expiresAt = new Date(activatedAt);
       expiresAt.setDate(expiresAt.getDate() + durationDays);
@@ -207,10 +208,12 @@ async function provisionAccess(supabase: any, payment: any, txnData: any) {
         .eq('id', payment.user_id)
         .single();
 
+      const dynamicMeta = buildDynamicPlanPricingMeta(settings);
+
       await sendSubscriptionConfirmationEmail({
         to: profile?.email,
         firstName: getFirstName(profile?.full_name),
-        planName: PLAN_PRICING_META[tier].label,
+        planName: (dynamicMeta as any)[tier]?.label ?? 'Plan',
         amount: `KSh ${Number(payment.amount).toLocaleString('en-KE')}`,
         startDate: formatEmailDate(activatedAt),
         endDate: formatEmailDate(expiresAt),

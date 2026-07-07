@@ -11,7 +11,7 @@ import { addDays } from 'date-fns';
 import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { verifyCheckout } from '@/lib/intasend';
-import { getPlanFromAmount, PLAN_PRICING_META } from '@/lib/planLimits';
+import { fetchPlatformSettings, getDynamicPlanFromAmount, buildDynamicPlanPricingMeta } from '@/lib/platformSettings';
 import {
   formatEmailDate,
   getFirstName,
@@ -78,7 +78,8 @@ export async function POST() {
       transactionId = txn.invoice_id ?? transactionId;
     }
 
-    const { tier, durationDays } = getPlanFromAmount(Number(payment.amount));
+    const settings = await fetchPlatformSettings(admin as any);
+    const { tier, durationDays } = getDynamicPlanFromAmount(Number(payment.amount), settings);
     // Use the original payment completion time so double-clicking sync doesn't shorten the subscription
     const baseDate = payment.completed_at ? new Date(payment.completed_at) : new Date();
     const expiresAt = addDays(baseDate, durationDays).toISOString();
@@ -95,10 +96,11 @@ export async function POST() {
         .eq('id', user.id)
         .single();
 
+      const dynamicMeta = buildDynamicPlanPricingMeta(settings);
       await sendSubscriptionConfirmationEmail({
         to: profile?.email ?? user.email,
         firstName: getFirstName(profile?.full_name ?? user.user_metadata?.full_name),
-        planName: PLAN_PRICING_META[tier].label,
+        planName: (dynamicMeta as any)[tier]?.label ?? 'Plan',
         amount: `KSh ${Number(payment.amount).toLocaleString('en-KE')}`,
         startDate: formatEmailDate(baseDate),
         endDate: formatEmailDate(expiresAt),

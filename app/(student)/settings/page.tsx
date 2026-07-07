@@ -8,7 +8,8 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Spinner } from '@/components/ui/Spinner';
 import toast from 'react-hot-toast';
-import { effectiveTier, PLAN_PRICING_META } from '@/lib/planLimits';
+import { effectiveTier } from '@/lib/planLimits';
+import { fetchPlatformSettings, buildDynamicPlanPricingMeta, PlatformSettings } from '@/lib/platformSettings';
 import { AvatarUpload } from '@/components/shared/AvatarUpload';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -102,80 +103,84 @@ function Toggle({ checked, onChange, label, sub }: {
 
 // ─── Subscription Card ────────────────────────────────────────────────────────
 
-const PLANS = [
-  {
-    tier: 'daily',
-    name: 'Exam Boost Daily',
-    price: 'KSh 99',
-    period: '/day',
-    amountKsh: 99,
-    color: 'border-primary/30 bg-primary-xlight dark:bg-primary/5',
-    badge: 'teal' as const,
-    features: [
-      'Unlimited MCQ practice',
-      '2 mock exams (1 download)',
-      'Readiness analytics',
-      'Spaced repetition flashcards',
-    ],
-    note: '24-hour focused revision',
-  },
-  {
-    tier: 'weekly',
-    name: 'Exam Boost Weekly',
-    price: 'KSh 499',
-    period: '/week',
-    amountKsh: 499,
-    color: 'border-primary/40 bg-primary-xlight dark:bg-primary/5',
-    badge: 'teal' as const,
-    features: [
-      'Everything in Exam Boost Daily',
-      '7-day access',
-      '3 mock exams (2 downloads)',
-      'Personalized revision plan included',
-    ],
-    note: 'Best value for short-term exam prep',
-    highlight: true,
-  },
-  {
-    tier: 'standard',
-    name: 'Success Plan',
-    price: 'KSh 1,199',
-    period: '/month',
-    amountKsh: 1199,
-    color: 'border-primary/40 bg-primary-xlight dark:bg-primary/5',
-    badge: 'teal' as const,
-    features: [
-      'Unlimited MCQ practice',
-      '3 mock exams/week (unlimited downloads)',
-      'Smarter analytics',
-      'Spaced repetition flashcards',
-      'Adaptive revision roadmap',
-      'Tutor priority',
-    ],
-    note: '30-day access',
-  },
-  {
-    tier: 'premium',
-    name: 'Elite Prep',
-    price: 'KSh 3,500',
-    period: '/exam cycle',
-    amountKsh: 3500,
-    color: 'border-accent/40 bg-accent-light dark:bg-accent/5',
-    badge: 'amber' as const,
-    features: [
-      'Everything in Success Plan',
-      'Unlimited mock exams & downloads',
-      'Tutor priority',
-      'Exam registration reminders',
-    ],
-    note: 'Full exam-cycle support',
-  },
-];
+function buildDynamicPlans(settings: PlatformSettings | null) {
+  const meta = buildDynamicPlanPricingMeta(settings || ({} as any));
+  return [
+    {
+      tier: 'daily',
+      name: 'Exam Boost Daily',
+      price: meta.daily?.price || 'KSh 99',
+      period: '/day',
+      amountKsh: meta.daily?.amountKsh || 99,
+      color: 'border-primary/30 bg-primary-xlight dark:bg-primary/5',
+      badge: 'teal' as const,
+      features: [
+        'Unlimited MCQ practice',
+        '2 mock exams (1 download)',
+        'Readiness analytics',
+        'Spaced repetition flashcards',
+      ],
+      note: '24-hour focused revision',
+    },
+    {
+      tier: 'weekly',
+      name: 'Exam Boost Weekly',
+      price: meta.weekly?.price || 'KSh 499',
+      period: '/week',
+      amountKsh: meta.weekly?.amountKsh || 499,
+      color: 'border-primary/40 bg-primary-xlight dark:bg-primary/5',
+      badge: 'teal' as const,
+      features: [
+        'Everything in Exam Boost Daily',
+        '7-day access',
+        '3 mock exams (2 downloads)',
+        'Personalized revision plan included',
+      ],
+      note: 'Best value for short-term exam prep',
+      highlight: true,
+    },
+    {
+      tier: 'standard',
+      name: 'Success Plan',
+      price: meta.standard?.price || 'KSh 1,199',
+      period: '/month',
+      amountKsh: meta.standard?.amountKsh || 1199,
+      color: 'border-primary/40 bg-primary-xlight dark:bg-primary/5',
+      badge: 'teal' as const,
+      features: [
+        'Unlimited MCQ practice',
+        '3 mock exams/week (unlimited downloads)',
+        'Smarter analytics',
+        'Spaced repetition flashcards',
+        'Adaptive revision roadmap',
+        'Tutor priority',
+      ],
+      note: '30-day access',
+    },
+    {
+      tier: 'premium',
+      name: 'Elite Prep',
+      price: meta.premium?.price || 'KSh 3,500',
+      period: '/exam cycle',
+      amountKsh: meta.premium?.amountKsh || 3500,
+      color: 'border-accent/40 bg-accent-light dark:bg-accent/5',
+      badge: 'amber' as const,
+      features: [
+        'Everything in Success Plan',
+        'Unlimited mock exams & downloads',
+        'Tutor priority',
+        'Exam registration reminders',
+      ],
+      note: 'Full exam-cycle support',
+    },
+  ];
+}
 
-function SubscriptionCard({ planTier, planExpiresAt, onUpgradeSuccess }: {
+function SubscriptionCard({ planTier, planExpiresAt, onUpgradeSuccess, settings }: {
   planTier: string;
   planExpiresAt: string | null;
   onUpgradeSuccess: () => void;
+  settings: PlatformSettings | null;
 }) {
   const [isUpgrading, setIsUpgrading] = useState<string | null>(null);
   const [isSyncingPayment, setIsSyncingPayment] = useState(false);
@@ -183,7 +188,9 @@ function SubscriptionCard({ planTier, planExpiresAt, onUpgradeSuccess }: {
   // Use the effective tier — falls back to 'free' if expired
   const activeTier = effectiveTier(planTier, planExpiresAt);
   const isExpired = planTier !== 'free' && activeTier === 'free';
-  const meta = PLAN_PRICING_META[activeTier];
+  const dynamicMeta = buildDynamicPlanPricingMeta(settings || ({} as any));
+  const meta = (dynamicMeta as any)[activeTier] || dynamicMeta.free;
+  const PLANS = buildDynamicPlans(settings);
 
   const handleUpgrade = async (amountKsh: number, tier: string) => {
     setIsUpgrading(tier);
@@ -227,11 +234,11 @@ function SubscriptionCard({ planTier, planExpiresAt, onUpgradeSuccess }: {
   const currentOrder = TIER_ORDER[activeTier] ?? 0;
 
   const planSummary: Record<string, string> = {
-    premium:  'Elite Prep - KSh 3,500 / exam cycle',
-    standard: 'Success Plan - KSh 1,199 / month',
-    weekly:   'Exam Boost Weekly - KSh 499 / week',
-    daily:    'Exam Boost Daily - KSh 99 / day',
-    free:     'Test Yourself - KSh 0 / forever',
+    premium:  `Elite Prep - ${dynamicMeta.premium?.price} / exam cycle`,
+    standard: `Success Plan - ${dynamicMeta.standard?.price} / month`,
+    weekly:   `Exam Boost Weekly - ${dynamicMeta.weekly?.price} / week`,
+    daily:    `Exam Boost Daily - ${dynamicMeta.daily?.price} / day`,
+    free:     `Test Yourself - KSh 0 / forever`,
   };
   const planSubtext: Record<string, string> = {
     premium:  'You are on the highest plan with exam-cycle mentorship and accountability.',
@@ -383,6 +390,7 @@ export default function SettingsPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [platformSettings, setPlatformSettings] = useState<PlatformSettings | null>(null);
   const [notifPrefs, setNotifPrefs] = useState<NotifPrefs>({
     notif_booking_confirmed: true,
     notif_session_reminder: true,
@@ -446,6 +454,9 @@ export default function SettingsPage() {
           .update({ plan_tier: 'free', plan_expires_at: null })
           .eq('id', user.id);
       }
+
+      const settings = await fetchPlatformSettings(supabase as any);
+      setPlatformSettings(settings);
 
       setAvatarUrl((pd as any).avatar_url ?? null);
 
@@ -638,10 +649,10 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-heading font-bold text-[var(--color-text)]">Profile Information</h2>
                 <Badge
-                  variant={PLAN_PRICING_META[profile?.plan_tier as keyof typeof PLAN_PRICING_META]?.badge ?? 'secondary'}
+                  variant={(buildDynamicPlanPricingMeta(platformSettings || ({} as any)) as any)[profile?.plan_tier || 'free']?.badge ?? 'secondary'}
                   size="sm"
                 >
-                  {PLAN_PRICING_META[profile?.plan_tier as keyof typeof PLAN_PRICING_META]?.label ?? 'Free'} Plan
+                  {(buildDynamicPlanPricingMeta(platformSettings || ({} as any)) as any)[profile?.plan_tier || 'free']?.label ?? 'Free'} Plan
                 </Badge>
               </div>
 
@@ -902,10 +913,13 @@ export default function SettingsPage() {
 
           {/* ── ACCOUNT SECTION ── */}
           {activeSection === 'account' && (
-            <div className="space-y-4">
-              {/* Subscription */}
-              <SubscriptionCard planTier={profile?.plan_tier ?? 'free'} planExpiresAt={profile?.plan_expires_at ?? null} onUpgradeSuccess={fetchProfile} />
-
+            <div className="space-y-6">
+              <SubscriptionCard
+                planTier={profile?.plan_tier ?? 'free'}
+                planExpiresAt={profile?.plan_expires_at ?? null}
+                onUpgradeSuccess={handlePaymentSuccess}
+                settings={platformSettings}
+              />
               {/* Scholarships */}
               <Card>
                 <div className="flex items-center justify-between mb-4">

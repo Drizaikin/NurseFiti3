@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
+import { fetchPlatformSettings, PlatformSettings } from '@/lib/platformSettings';
 import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 import { DarkModeToggle } from '@/components/shared/DarkModeToggle';
 import { FeedbackWall } from '@/components/shared/FeedbackWall';
@@ -218,7 +219,7 @@ const STEPS = [
   { n: '04', title: 'Pass your NCK exam', desc: 'Walk in confident. You\'ve already sat the exam dozens of times on NurseFiti.' },
 ];
 
-const PRICING = [
+const getPricing = (settings: PlatformSettings) => [
   {
     name: 'Test Yourself',
     price: 'KSh 0',
@@ -232,7 +233,7 @@ const PRICING = [
   },
   {
     name: 'Exam Boost Daily',
-    price: 'KSh 99',
+    price: `KSh ${settings.plan_daily_price.toLocaleString()}`,
     period: '/day',
     desc: 'A focused 24-hour push for active revision.',
     features: ['Unlimited MCQ practice', 'AI explanations', '2 mock exams (1 download)', 'Readiness analytics', 'Flashcards'],
@@ -243,7 +244,7 @@ const PRICING = [
   },
   {
     name: 'Exam Boost Weekly',
-    price: 'KSh 499',
+    price: `KSh ${settings.plan_weekly_price.toLocaleString()}`,
     period: '/week',
     desc: 'Your mass-market exam prep plan for a serious week.',
     features: ['Everything in Exam Boost Daily', '7-day access', 'AI explanations', '3 mock exams (2 downloads)', 'Flashcards and analytics', 'Personalized revision plan included'],
@@ -254,7 +255,7 @@ const PRICING = [
   },
   {
     name: 'Success Plan',
-    price: 'KSh 1,199',
+    price: `KSh ${settings.plan_standard_price.toLocaleString()}`,
     period: '/month',
     desc: 'Everything you need to maximize exam readiness.',
     features: ['Unlimited MCQ practice', '3 mock exams/week (unlimited downloads)', 'Smarter analytics', 'Adaptive revision roadmap', 'Flashcards', 'Tutor priority'],
@@ -265,7 +266,7 @@ const PRICING = [
   },
   {
     name: 'Elite Prep',
-    price: 'KSh 3,500',
+    price: `KSh ${settings.plan_premium_price.toLocaleString()}`,
     period: '/exam cycle',
     desc: 'Premium support for serious candidates.',
     features: ['Everything in Success Plan', 'Unlimited mock exams & downloads', 'Tutor priority', 'Exam registration reminders'],
@@ -361,8 +362,10 @@ function VerificationBadge({ tier }: { tier: 'gold' | 'standard' }) {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-export default async function LandingPage() {
+export default async function Home() {
   const supabase = createClient();
+  const settings = await fetchPlatformSettings(supabase as any);
+  const PRICING = getPricing(settings);
   
   const [
     { count: questionsCount },

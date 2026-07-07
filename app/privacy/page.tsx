@@ -42,15 +42,19 @@ export default function PrivacyPage() {
             </ul>
           </section>
           <section>
-            <h2 className="text-xl font-heading font-bold mb-3">4. Data Retention Policy</h2>
+            <h2 className="text-xl font-heading font-bold mb-3">4. Tutor Anonymity & Privacy</h2>
+            <p className="text-neutral-mid leading-relaxed">Under the Data Protection Act 2019, and to protect the privacy and professional standing of tutors—including those employed by the Government of Kenya or other institutions—NurseFiti provides an anonymity feature. Tutors may opt to use a pseudonym (pseudo name) when interacting with students on the platform. While NurseFiti internally verifies and stores the tutor&apos;s true credentials securely for quality assurance, their real identity remains strictly confidential and is not disclosed to students or the public, safeguarding them from potential conflicts of interest.</p>
+          </section>
+          <section>
+            <h2 className="text-xl font-heading font-bold mb-3">5. Data Retention Policy</h2>
             <p className="text-neutral-mid leading-relaxed">We retain your personal data only for as long as necessary to fulfill the purposes outlined in this Privacy Policy, including satisfying any legal, accounting, or reporting requirements. Educational performance data may be anonymized and aggregated for statistical analysis after account deletion.</p>
           </section>
           <section>
-            <h2 className="text-xl font-heading font-bold mb-3">5. Your Rights & Deletion Requests</h2>
+            <h2 className="text-xl font-heading font-bold mb-3">6. Your Rights & Deletion Requests</h2>
             <p className="text-neutral-mid leading-relaxed">Under the Data Protection Act 2019, you have the right to access, correct, or request the deletion of your personal data. You can request the complete deletion of your account and all associated identifiable data at any time by emailing <a href="mailto:danotyanga@gmail.com" className="text-primary hover:underline">danotyanga@gmail.com</a>. We process deletion requests within 30 days.</p>
           </section>
           <section>
-            <h2 className="text-xl font-heading font-bold mb-3">6. Contact</h2>
+            <h2 className="text-xl font-heading font-bold mb-3">7. Contact</h2>
             <p className="text-neutral-mid">For privacy-related questions or data requests, email our Data Protection Officer at <a href="mailto:danotyanga@gmail.com" className="text-primary hover:underline">danotyanga@gmail.com</a></p>
           </section>
         </div>

@@ -25,6 +25,8 @@ const bodySchema = z.object({
   rate_per_hour:        z.number().min(500).max(10000),
   session_platform:     z.array(z.string()).optional().default(['Zoom', 'Google Meet', 'WhatsApp']),
   is_accepting_bookings: z.boolean().optional().default(true),
+  is_anonymous:         z.boolean().optional().default(false),
+  pseudonym:            z.string().optional().default(''),
 });
 
 export async function POST(req: NextRequest) {

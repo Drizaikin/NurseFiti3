@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Script from 'next/script';
+import Image from 'next/image';
 import { BlogSampleMCQ } from '@/components/blog/BlogSampleMCQ';
 
 // ─── Post data ───────────────────────────────────────────────────────────────
@@ -1796,12 +1797,12 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         {/* Hero image */}
         {heroImg && (
           <div className="relative w-full h-56 sm:h-72 rounded-2xl overflow-hidden mb-10 shadow-card">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={heroImg.url}
               alt={heroImg.alt}
-              className="w-full h-full object-cover"
-              loading="eager"
+              fill
+              className="object-cover"
+              priority
             />
             {/* Brand teal gradient overlay */}
             <div
@@ -1877,8 +1878,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                   >
                     {rpImg && (
                       <div className="relative h-28 overflow-hidden">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={rpImg.url} alt={rpImg.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+                        <Image src={rpImg.url} alt={rpImg.alt} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
                         <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, transparent 40%, rgba(8,81,79,0.5) 100%)' }} />
                       </div>
                     )}

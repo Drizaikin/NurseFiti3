@@ -15,6 +15,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.nursefiti.co.ke',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
     ],
     formats: ['image/avif', 'image/webp'],
   },

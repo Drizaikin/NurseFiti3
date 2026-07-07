@@ -4,16 +4,12 @@ import { useState } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { toast } from 'react-hot-toast';
-import { PLAN_PRICING_META } from '@/lib/planLimits';
-
-export default function SponsorCheckout({ campaign }: { campaign: any }) {
+export default function SponsorCheckout({ campaign, premiumPrice }: { campaign: any; premiumPrice: number }) {
   const [amount, setAmount] = useState<string>('');
   const [name, setName] = useState('');
   const [title, setTitle] = useState('');
   const [organization, setOrganization] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  const premiumPrice = PLAN_PRICING_META.premium.amountKsh; // e.g. 3500
   const subsidyPercent = campaign.subsidy_discount_percentage || 25;
   const subsidizedPrice = Math.round(premiumPrice * ((100 - subsidyPercent) / 100)); // e.g. 2625
 

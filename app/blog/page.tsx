@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Script from 'next/script';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Blog — NCK Exam Tips & Guides',
@@ -278,12 +279,12 @@ export default function BlogIndexPage() {
               {/* Hero image */}
               {featuredImg && (
                 <div className="relative h-56 sm:h-72 overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={featuredImg}
                     alt={featured.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="eager"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    priority
                   />
                   <div
                     className="absolute inset-0"
@@ -337,15 +338,13 @@ export default function BlogIndexPage() {
                 href={`/blog/${post.slug}`}
                 className="group block bg-[var(--color-card)] border border-[var(--color-border)] hover:border-primary/40 rounded-2xl overflow-hidden transition-all hover:shadow-card-hover"
               >
-                {/* Card image */}
                 {imgUrl && (
                   <div className="relative h-36 overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={imgUrl}
                       alt={post.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div
                       className="absolute inset-0"

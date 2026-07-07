@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Securely make online payments with IntaSend</title>
+    <link rel="shortcut icon" type="image/jpg" href="https://intasend-prod-static.s3.amazonaws.com/img/favicon-16x16.png" />
+
+    <!-- MAIN CSS -->
+    
+<link href="https://intasend-prod-static.s3.amazonaws.com/css/tailwind.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://intasend-prod-static.s3.amazonaws.com/css/theme.css">
+    <link rel="stylesheet" href="https://intasend-prod-static.s3.amazonaws.com/css/payscreens.css">
+    
+    
+    <style>
+        .checkout-label {
+            color: #000000 !important;
+        }
+        .checkout-screen {
+            background-color: #F7FAFC !important;
+        }
+        .btn-primary {
+            background-color:  #056BD5 !important;
+            color: #fff !important;
+            border-color: #056BD5 !important;
+        }
+        input, select {
+            background-color: #FFFFFF !important;
+            border-color: #CCCCCC !important;
+            color: #000 !important;
+            border-radius: 10px !important;
+        }
+    </style>
+    
+    
+</head>
+
+<body class="flex flex-col lg:flex-row overflow-auto checkout-screen">
+    
+    <div class="flex flex-1 flex-col lg:h-screen py-8 lg:py-20 text-center lg:text-left lg:justify-between ">
+        <div class="lg:px-20 flex flex-col justify-center lg:justify-between">
+    
+            <div class="flex lg:block justify-center items-center">
+                
+
+                
+            </div>
+    
+            <div class="lg:block flex flex-col mt-4 checkout-label">
+                
+                <h2 class="font-light text-xl lg:text-2xl capitalize">Pay Dan Otyanga</h2>
+                
+                <div class="font-bold text-2xl">
+                    KES 99.00
+                </div>
+                
+                
+            </div>
+    
+        </div>
+    
+        <div class="lg:px-20 hidden flex flex-row lg:flex items-center opacicty-70 text-sm text-gray-500">
+            <div class=" text-center border-r">
+                <a target="_blank" href="https://intasend.com/" class="mr-4">powered by <span
+                        class="font-bold">IntaSend</span></a>
+            </div>
+            <div class="ml-4 mr-4 text-center ">
+                <a href="https://intasend.com/terms/" target="_blank" class="border-rignt ">Terms</span></a>
+            </div>
+            <div class="text-center ">
+                <a href="https://intasend.com/privacy-policy/" target="_blank" class="border-rignt ">Privacy</span></a>
+            </div>
+    
+        </div>
+    
+        <!-- <div class="left-watermark">&nbsp;</div> -->
+    </div>
+
+    <div class="flex flex-1 flex-col shadow">
+        <div class="self-center w-full py-8 lg:py-20 justify-between space-y-6">
+            
+<div class="w-full flex px-4 lg:px-8 justify-center">
+    <div class="flex flex-col w-full lg:w-2/3 z-10">
+        
+        <div class=" px-4 lg:px-8 py-6 flex flex-row space-x-2">
+            <div class="flex flex-col justify-center">
+                <h1 class="font-semibold checkout-label text-lg">Check Out</h1>
+                
+                <p class="checkout-label text-sm">Reference No. :<span>#NF-1783278380573-NVOPZY</span></p>
+                
+            </div>
+        </div>
+        <div class="px-4 lg:px-8 rounded-b-lg">
+            <form action="javascript:;" class="w-full flex flex-col" name="paymentForm">
+                <!-- <div class="flex flex-row justify-between">
+                    <div class="text-sm checkout-label flex flex-col justify-center">Amount</div>
+                    <div class="text-2xl">KES 99.00</div>
+                </div> -->
+                <div class="pt-3 pb-2">
+                    <h2 class="my-1 checkout-label font-semibold">Your Details</h2>
+                    <div class="border-b border-gray-200"></div>
+                </div>
+                
+                <div class="flex flex-col py-2 space-y-1">
+                    <div class="w-full text-sm checkout-label">Name</div>
+                    <div class="w-full checkout-label">Grace Njoki</div>
+                </div>
+                
+                
+                <div class="flex flex-col py-2 space-y-1">
+                    <div class="w-full text-sm checkout-label">Email</div>
+                    <div class="w-full checkout-label"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7c1b0e1d1f191218191b0b1d4e4d443c1b111d1510521f1311">[email&#160;protected]</a></div>
+                </div>
+                
+                
+                <div class="flex flex-col py-2 space-y-1">
+                    <div class="w-full text-sm checkout-label">Phone Number</div>
+                    <div class="w-full checkout-label">254715939357</div>
+                </div>
+                
+                
+                
+                
+
+                <div class="flex flex-col lg:flex-row lg:justify-between mt-2">
+                    
+                    <div class="flex-1">
+                        <button type="submit"
+                            class="btn btn-primary btn-block">Pay KES 99.00
+                        </button>
+                    </div>
+                    
+                </div>
+            </form>
+
+            <div class="lg:px-8 mt-4 lg:block pt-4">
+                <img src="https://intasend-prod-static.s3.amazonaws.com/img/payscreens/svg/trust_badge2.svg" height="50px" alt="IntaSend-Trust-Badge-Light">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+
+    <div class="right-watermark">&nbsp;</div>
+    <!-- Bootstrap Core JavaScript -->
+    
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous">
+</script>
+
+<!-- IntaSend Inline SDK Setup -->
+<script src="https://unpkg.com/intasend-inlinejs-sdk@4.0.7/build/intasend-inline.js"></script>
+    
+
+<script>
+    $(document).ready(function () {
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            } else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+
+        $("form[name='paymentForm']").submit(function () {
+            let intaSend = new window.IntaSend({
+                styles: JSON.parse('{"componentBackgroundColor": "#F7FAFC", "unselectedCardBackgroundColor": "#FFFFFF", "selectedCardBackgroundColor": "#FFFFFF", "selectedBorderColor": "2px solid #056BD5", "unselectedBorderColor": "2px solid #A0AEC0", "selectedFontColor": "#056BD5", "unselectedFontColor": "#333333", "selectedCardShadow": "0px 0px 7px rgba(5, 107, 213, 0.5)", "unselectedCardShadow": "none", "borderRadius": "10px", "inputLabelColor": "#000000", "inputTextColor": "#000", "inputBackgroundColor": "#FFFFFF", "inputBorderColor": "#CCCCCC", "inputBorderRadius": "10px", "ctaBgColor": "#056BD5", "ctaFontColor": "#fff", "fontFamily": "", "fontWeight": "light"}'),
+                methods: JSON.parse('["card", "apple-pay", "gpay", "mpesa"]'),
+                layout: "tabs"
+            })
+
+            intaSend.continue({
+                signature: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZSI6ImV4cHJlc3MtY2hlY2tvdXQiLCJpc3MiOiJJbnRhU2VuZCBTb2x1dGlvbnMgTGltaXRlZCIsImF1ZCI6WyIyNTE3OTI5Ni03NzkzLTQzZGEtYTZhZC05ZjFlOGM2ODc4YmIiXSwiaWF0IjoxNzgzMjgwMjE1LCJleHAiOjE3ODMyODIwMTUsImFjY291bnRJRCI6IjBYNTQ4REsiLCJyZWZlcmVuY2UiOiIyNTE3OTI5Ni03NzkzLTQzZGEtYTZhZC05ZjFlOGM2ODc4YmIifQ.WXjWQVu7ZeZq_QQZA_EHfLYFiD2EXbnnQq5VBGA89-Y",
+                checkoutID: "25179296-7793-43da-a6ad-9f1e8c6878bb",
+                live: "live".toLowerCase() === 'live'
+            }).on("COMPLETE", (resp) => {
+                console.log("Complete event", resp)
+                intaSend.exitPay()
+                let redirectURL =
+                    "https://www.nursefiti.co.ke/api/intasend/verify?reference=NF-1783278380573-NVOPZY"
+                if (redirectURL) {
+                    redirectURL = updateQueryStringParameter(redirectURL, "tracking_id", resp
+                        .tracking_id)
+                    redirectURL = updateQueryStringParameter(redirectURL, "signature",
+                        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzY29wZSI6ImV4cHJlc3MtY2hlY2tvdXQiLCJpc3MiOiJJbnRhU2VuZCBTb2x1dGlvbnMgTGltaXRlZCIsImF1ZCI6WyIyNTE3OTI5Ni03NzkzLTQzZGEtYTZhZC05ZjFlOGM2ODc4YmIiXSwiaWF0IjoxNzgzMjgwMjE1LCJleHAiOjE3ODMyODIwMTUsImFjY291bnRJRCI6IjBYNTQ4REsiLCJyZWZlcmVuY2UiOiIyNTE3OTI5Ni03NzkzLTQzZGEtYTZhZC05ZjFlOGM2ODc4YmIifQ.WXjWQVu7ZeZq_QQZA_EHfLYFiD2EXbnnQq5VBGA89-Y")
+                    redirectURL = updateQueryStringParameter(redirectURL, "checkout_id",
+                        "25179296-7793-43da-a6ad-9f1e8c6878bb")
+
+                    let apiRef = "NF-1783278380573-NVOPZY"
+                    if(apiRef){
+                        redirectURL = updateQueryStringParameter(redirectURL, "api_ref", "NF-1783278380573-NVOPZY")
+                    }
+
+                    window.location.replace(redirectURL)
+                } else {
+                    window.location.replace("/checkout/25179296-7793-43da-a6ad-9f1e8c6878bb/" + resp.tracking_id +
+                        "/status/")
+                }
+            })
+        })
+    })
+</script>
+
+
+</body>
+
+</html>

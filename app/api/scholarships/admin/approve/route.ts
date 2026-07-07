@@ -3,7 +3,8 @@ import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { z } from 'zod';
 import { sendScholarshipWelcomeEmail } from '@/lib/email';
-import { PLAN_PRICING_META } from '@/lib/planLimits';
+import { addDays } from 'date-fns';
+import { fetchPlatformSettings } from '@/lib/platformSettings';
 
 const approveSchema = z.object({
   application_id: z.string().uuid(),
@@ -61,7 +62,8 @@ export async function POST(req: NextRequest) {
     }
 
     const campaign = application.scholarship_campaigns;
-    const premiumPrice = PLAN_PRICING_META.premium.amountKsh; // e.g. 3500
+    const settings = await fetchPlatformSettings(adminSupabase);
+    const premiumPrice = settings.plan_premium_price; // dynamic
 
     let allocatedAmount = 0;
     

@@ -11,7 +11,8 @@ import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Spinner } from '@/components/ui/Spinner';
 import { FeedbackWidget } from '@/components/shared/FeedbackWidget';
 import { FeedbackWall } from '@/components/shared/FeedbackWall';
-import { effectiveTier, PLAN_PRICING_META } from '@/lib/planLimits';
+import { effectiveTier } from '@/lib/planLimits';
+import { fetchPlatformSettings, buildDynamicPlanPricingMeta } from '@/lib/platformSettings';
 
 import { AppRatingModal } from './AppRatingModal';
 
@@ -389,11 +390,11 @@ const computeBadges = (answers: any[], streakCount: number, level: number) => {
   return badges;
 };
 
-// ── Main page ──────────────────────────────────────────────────────────────
 export default function DashboardPage() {
   const router = useRouter();
   const supabase = createClient() as any;
   const [data, setData] = useState<DashboardData | null>(null);
+  const [dynamicMeta, setDynamicMeta] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -430,7 +431,7 @@ export default function DashboardPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push('/login'); return; }
 
-      const [profileRes, studentRes, answersRes, mockRes, flashRes, sessionsRes, scholarshipRes] = await Promise.all([
+      const [profileRes, studentRes, answersRes, mockRes, flashRes, sessionsRes, scholarshipRes, settingsRes] = await Promise.all([
         supabase.from('profiles').select('full_name').eq('id', user.id).single(),
         supabase.from('student_profiles').select('*').eq('id', user.id).single(),
         supabase.from('student_answers').select('is_correct, time_taken_seconds, answered_at').eq('student_id', user.id).order('answered_at', { ascending: true }),
@@ -441,8 +442,17 @@ export default function DashboardPage() {
           .eq('student_id', user.id).eq('status', 'confirmed')
           .gte('session_date', new Date().toISOString().split('T')[0])
           .order('session_date', { ascending: true }).limit(3),
-        supabase.from('scholarship_beneficiaries').select('beneficiary_type, scholarship_campaigns(name, sponsor_name)').eq('student_id', user.id).single()
+        supabase.from('scholarship_beneficiaries').select('beneficiary_type, scholarship_campaigns(name, sponsor_name)').eq('student_id', user.id).single(),
+        supabase.from('platform_settings').select('*').eq('id', 1).maybeSingle()
       ]);
+
+      const settings = settingsRes.data || {
+        plan_daily_price: 99,
+        plan_weekly_price: 499,
+        plan_standard_price: 1199,
+        plan_premium_price: 3500,
+      };
+      setDynamicMeta(buildDynamicPlanPricingMeta(settings as any));
 
       const profileData = profileRes.data as { full_name: string } | null;
       const studentData = studentRes.data as {
@@ -634,7 +644,7 @@ export default function DashboardPage() {
               {/* Active plan */}
               {(() => {
                 const tier = effectiveTier(data.student.plan_tier, data.student.plan_expires_at);
-                const meta = PLAN_PRICING_META[tier];
+                const meta = dynamicMeta ? ((dynamicMeta as any)[tier] || dynamicMeta.free) : { label: '...', badge: 'secondary' };
                 const isExpired = data.student.plan_tier !== 'free' && tier === 'free';
                 const expiresAt = data.student.plan_expires_at;
                 return (

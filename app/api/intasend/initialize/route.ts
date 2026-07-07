@@ -18,6 +18,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createCheckout, generateReference } from '@/lib/intasend';
+import { fetchPlatformSettings } from '@/lib/platformSettings';
 import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
@@ -70,7 +71,13 @@ export async function POST(req: NextRequest) {
     const { type, amountKsh, referenceId } = body.data;
 
     // Enforce valid plan prices for plan_subscription
-    const VALID_PLAN_PRICES = [99, 499, 1199, 3500];
+    const settings = await fetchPlatformSettings(supabase as any);
+    const VALID_PLAN_PRICES = [
+      Number(settings.plan_daily_price),
+      Number(settings.plan_weekly_price),
+      Number(settings.plan_standard_price),
+      Number(settings.plan_premium_price)
+    ];
     if (type === 'plan_subscription' && !VALID_PLAN_PRICES.includes(amountKsh)) {
       return NextResponse.json(
         { error: `Invalid plan price. Must be one of: ${VALID_PLAN_PRICES.join(', ')}` },

@@ -21,16 +21,25 @@
 | **Phase 10** | **Admin Dashboard** | 🟢 Complete | 100% | Upload review, student plan management, role-gated middleware, scholarships, flagged questions |
 | **Phase 11** | **Question Uploads** | 🟢 Complete | 100% | Free users upload 3+ files → admin reviews → auto-upgrade to Standard |
 | **Phase 12** | **Notifications & Live Sessions** | 🟢 Complete | 100% | Live session tracking, email reminders via cron, automated high-quality templated emails |
-| **Phase 13** | **Gamification & Leaderboard bots** | 🟢 Complete | 100% | Global/Weekly Leaderboards. Automated bot progression synchronized with real user 7-day rolling window constraints. |
+| **Phase 13** | **Gamification & Bots** | 🟢 Complete | 100% | Global/Weekly Leaderboards. Automated bot progression synchronized with real user 7-day rolling window constraints. |
+| **Phase 14** | **Platform Configuration** | 🟢 Complete | 100% | Dynamic real-time settings for prices, rates, toggles directly stored in DB. |
+| **Phase 15** | **Tutor Anonymity** | 🟢 Complete | 100% | Added pseudonyms and privacy protection for government-employed tutors. |
+| **Phase 16** | **Legal Policies** | 🟢 Complete | 100% | Terms and Privacy updated for sponsor liability protection, anonymity, Data Protection Act 2019 compliance. |
+| **Phase 17** | **UI & Performance** | 🟢 Complete | 100% | Replaced raw `<img>` tags with Next.js optimized `<Image>` components across dashboard, flashcards, and blog. Fixed TypeScript regressions in API. |
 
 ---
 
 ## 🗂️ MAJOR RECENT UPDATES (July 2026)
 
-### Core Pricing Update
-- **Pricing adjusted:** Daily to 99, Weekly to 499, Success Plan (Monthly) to 1199, Elite Prep to 3500.
-- Updated `planLimits.ts` and `app/api/intasend/initialize/route.ts` as the single sources of truth.
-- Synchronized frontend landing page pricing cards to correctly render SEO JSON and visual prices.
+### Core Pricing Update & Platform Settings
+- **Dynamic Configuration:** Extracted all pricing (Daily KSh 99, Weekly KSh 499, Success Plan KSh 1199, Elite Prep KSh 3500) and tutor rates out of hardcoded frontend files into the `platform_settings` table.
+- Admins can now instantly change pricing and toggle settings from the new **Admin Settings (`/admin/settings`)** dashboard.
+- Frontend rendering, payment initialization, webhooks, and scholarship discounts are now fully dynamic and query `platform_settings` directly using cached helpers.
+
+### Legal Protection & Tutor Anonymity
+- **Tutor Anonymity:** Integrated a robust anonymity toggle allowing tutors to hide their real names using a "Pseudonym" across the platform, protecting professionals with potential conflicts of interest.
+- **Liability Absolution:** Updated `Terms of Service` and `Privacy Policy` to explicitly absolve NurseFiti, its founders, and partners/sponsors (e.g., Samburu Excellence Scholarship, Nadukae) from legal liability.
+- **Data Protection Act 2019:** Properly cited Kenyan law to ensure full compliance.
 
 ### IntaSend Payment Overhaul
 - Converted from Paystack to IntaSend completely.
@@ -61,6 +70,12 @@
 - Verified clinical accuracy against Kenya MoH, WHO, and NCK guidelines.
 - Applied rationale upgrades for modern protocols (e.g. Artesunate vs Quinine, 8-contact ANC, Mental Health Act 2022).
 - Ensured KRCHN and BScN paper seeding strictly adheres to `nck-exam-system.md` specifications.
+
+### Final QA Audit & TypeScript Verification
+- Audited the entire application utilizing `npx tsc --noEmit`.
+- Resolved TypeScript mismatches within `app/api/intasend/initialize/route.ts` and `app/api/admin/settings/route.ts` resulting from dynamically-typed `platform_settings` Supabase queries.
+- Cleaned up unused imports (e.g., `checkPaymentStatus` in `app/api/intasend/verify/route.ts`).
+- Upgraded `<img>` tags to `next/image` in `ClientManager.tsx`, `flashcards/page.tsx`, and the `blog` routes.
 
 ---
 

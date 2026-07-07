@@ -28,6 +28,8 @@ interface ProfileForm {
   rate_per_hour: number;
   session_platform: string[];
   is_accepting_bookings: boolean;
+  is_anonymous: boolean;
+  pseudonym: string;
 }
 
 interface VerificationStatus {
@@ -46,6 +48,7 @@ export default function TutorProfilePage() {
     full_name: '', professional_title: '', bio: '', whatsapp_number: '',
     years_experience: 0, cadres_taught: [], specialties: [], rate_per_hour: 1500,
     session_platform: ['Zoom', 'Google Meet', 'WhatsApp'], is_accepting_bookings: true,
+    is_anonymous: false, pseudonym: '',
   });
   const [verification, setVerification] = useState<VerificationStatus>({
     identity: false, nck: false, academic: false, mpesa: false,
@@ -90,6 +93,8 @@ export default function TutorProfilePage() {
       rate_per_hour: tutor.rate_per_hour ?? 1500,
       session_platform: tutor.session_platform ?? ['Zoom', 'Google Meet', 'WhatsApp'],
       is_accepting_bookings: tutor.is_accepting_bookings ?? true,
+      is_anonymous: tutor.is_anonymous ?? false,
+      pseudonym: tutor.pseudonym ?? '',
     });
     setVerification({
       identity: !!tutor.national_id_url,
@@ -138,6 +143,7 @@ export default function TutorProfilePage() {
     if (!userId) return;
     if (!form.bio || form.bio.length < 200) { toast.error('Bio must be at least 200 characters'); return; }
     if (form.cadres_taught.length === 0) { toast.error('Select at least one cadre'); return; }
+    if (form.is_anonymous && !form.pseudonym.trim()) { toast.error('You must set a pseudonym if you want to be anonymous'); return; }
     setSaving(true);
     try {
       const res = await fetch('/api/tutor/update-profile', {
@@ -206,6 +212,21 @@ export default function TutorProfilePage() {
                 <p className={`text-xs mt-1 ${form.bio.length < 200 ? 'text-error' : form.bio.length > 400 ? 'text-error' : 'text-success'}`}>
                   {form.bio.length} / 400 characters
                 </p>
+              </div>
+              <div className="pt-4 border-t border-[var(--color-border)]">
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <p className="text-sm font-medium text-[var(--color-text)]">Teach Anonymously</p>
+                    <p className="text-xs text-[var(--color-text-secondary)]">Hide your real name and profile picture from students</p>
+                  </div>
+                  <Toggle checked={form.is_anonymous} onChange={v => setForm(f => ({ ...f, is_anonymous: v }))} />
+                </div>
+                {form.is_anonymous && (
+                  <div>
+                    <label className="block text-sm font-semibold mb-1.5">Your Pseudonym *</label>
+                    <input className="input text-sm" placeholder="e.g., Nurse Tutor J, Mentor 42" value={form.pseudonym} onChange={e => setForm(f => ({ ...f, pseudonym: e.target.value }))} />
+                  </div>
+                )}
               </div>
             </div>
           </Card>
@@ -311,16 +332,24 @@ export default function TutorProfilePage() {
             <p className="text-xs font-semibold text-primary mb-3 uppercase tracking-wider">Student View Preview</p>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <AvatarUpload
-                  userId={userId!}
-                  currentUrl={avatarUrl}
-                  name={form.full_name}
-                  size="md"
-                  onUploaded={setAvatarUrl}
-                  showNudge={true}
-                />
+                {form.is_anonymous ? (
+                  <div className="w-12 h-12 rounded-full bg-neutral-border/30 flex items-center justify-center text-neutral-mid shrink-0">
+                    <span className="text-xl">🕵️</span>
+                  </div>
+                ) : (
+                  <AvatarUpload
+                    userId={userId!}
+                    currentUrl={avatarUrl}
+                    name={form.full_name}
+                    size="md"
+                    onUploaded={setAvatarUrl}
+                    showNudge={true}
+                  />
+                )}
                 <div>
-                  <p className="font-heading font-bold text-sm text-[var(--color-text)]">{form.full_name || 'Your Name'}</p>
+                  <p className="font-heading font-bold text-sm text-[var(--color-text)]">
+                    {form.is_anonymous ? (form.pseudonym || 'Your Pseudonym') : (form.full_name || 'Your Name')}
+                  </p>
                   <p className="text-xs text-[var(--color-text-secondary)]">{form.professional_title || 'Professional Title'}</p>
                 </div>
               </div>

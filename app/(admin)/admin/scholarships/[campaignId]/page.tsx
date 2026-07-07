@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { fetchPlatformSettings } from '@/lib/platformSettings';
 import ClientManager from './ClientManager';
 
 export const metadata = {
@@ -13,6 +14,9 @@ export default async function ManageCampaignPage({ params }: { params: { campaig
     .select('*')
     .eq('id', params.campaignId)
     .single();
+
+  const settings = await fetchPlatformSettings(supabase);
+  const premiumPrice = settings.plan_premium_price;
 
   if (error || !campaign) {
     return (
@@ -32,7 +36,7 @@ export default async function ManageCampaignPage({ params }: { params: { campaig
       </div>
       
       {/* The client component handles fetching deposits, beneficiaries, and applications to allow live updates without page reload */}
-      <ClientManager campaign={campaign} />
+      <ClientManager campaign={campaign} premiumPrice={premiumPrice} />
     </div>
   );
 }

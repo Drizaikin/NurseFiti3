@@ -142,66 +142,84 @@ export default function TutorsPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push('/login'); return; }
 
-      let query = supabase
-        .from('tutor_profiles')
-        .select(`
-          id,
-          professional_title,
-          bio,
-          years_experience,
-          cadres_taught,
-          specialties,
-          rate_per_hour,
-          verification_tier,
-          average_rating,
-          total_students,
-          total_sessions,
-          pass_rate,
-          is_accepting_bookings,
-          allow_instant_booking,
-          allow_group_sessions,
-          session_platform,
-          profiles!inner(full_name, avatar_url)
-        `)
-        .eq('verification_status', 'verified');
+      const [tutorsDataRes, studentRes, settingsRes] = await Promise.all([
+        supabase
+          .from('tutor_profiles')
+          .select(`
+            id,
+            professional_title,
+            bio,
+            years_experience,
+            cadres_taught,
+            specialties,
+            rate_per_hour,
+            verification_tier,
+            average_rating,
+            total_students,
+            total_sessions,
+            pass_rate,
+            is_accepting_bookings,
+            allow_instant_booking,
+            allow_group_sessions,
+            session_platform,
+            is_anonymous,
+            pseudonym,
+            profiles!inner(full_name, avatar_url)
+          `)
+          .eq('verification_status', 'verified'),
+        supabase.from('student_profiles').select('cadre').eq('id', user.id).maybeSingle(),
+        supabase.from('platform_settings').select('*').eq('id', 1).single()
+      ]);
+
+      let queryData = tutorsDataRes.data ?? [];
 
       if (instantOnly) {
-        query = query.eq('allow_instant_booking', true).eq('is_accepting_bookings', true);
+        queryData = queryData.filter((t: any) => t.allow_instant_booking && t.is_accepting_bookings);
       }
+
+      const sCadre = (studentRes.data as any)?.cadre ?? '';
+      const pSettings = settingsRes.data || { allow_tutor_custom_pricing: true, krchn_hourly_rate: 1500, bscn_hourly_rate: 1800 };
+
+      // Determine default forced rate if custom pricing is off
+      const defaultForcedRate = sCadre === 'BScN' ? Number(pSettings.bscn_hourly_rate) : Number(pSettings.krchn_hourly_rate);
 
       if (maxRate) {
-        query = query.lte('rate_per_hour', maxRate);
+        queryData = queryData.filter((t: any) => {
+          const effectiveRate = pSettings.allow_tutor_custom_pricing ? t.rate_per_hour : defaultForcedRate;
+          return effectiveRate <= maxRate;
+        });
       }
 
-      // Sort
-      if (sortBy === 'rating') query = query.order('average_rating', { ascending: false });
-      else if (sortBy === 'rate_asc') query = query.order('rate_per_hour', { ascending: true });
-      else if (sortBy === 'rate_desc') query = query.order('rate_per_hour', { ascending: false });
-      else if (sortBy === 'sessions') query = query.order('total_sessions', { ascending: false });
+      let results: Tutor[] = queryData.map((t: any) => {
+        const isAnon = t.is_anonymous === true && !!t.pseudonym;
+        const effectiveRate = pSettings.allow_tutor_custom_pricing ? (t.rate_per_hour ?? 0) : defaultForcedRate;
+        return {
+          id: t.id,
+          full_name: isAnon ? t.pseudonym : (t.profiles?.full_name ?? 'Tutor'),
+          avatar_url: isAnon ? null : (t.profiles?.avatar_url ?? null),
+          professional_title: t.professional_title ?? '',
+          bio: t.bio ?? null,
+          years_experience: t.years_experience ?? 0,
+          cadres_taught: t.cadres_taught ?? [],
+          specialties: t.specialties ?? null,
+          rate_per_hour: effectiveRate,
+          verification_tier: t.verification_tier ?? null,
+          average_rating: t.average_rating ?? 0,
+          total_students: t.total_students ?? 0,
+          total_sessions: t.total_sessions ?? 0,
+          pass_rate: t.pass_rate ?? 0,
+          is_accepting_bookings: t.is_accepting_bookings ?? false,
+          allow_instant_booking: t.allow_instant_booking ?? false,
+          allow_group_sessions: t.allow_group_sessions ?? false,
+          session_platform: t.session_platform ?? [],
+        };
+      });
 
-      const { data, error } = await query;
-      if (error) throw error;
-
-      let results: Tutor[] = (data ?? []).map((t: any) => ({
-        id: t.id,
-        full_name: t.profiles?.full_name ?? 'Tutor',
-        avatar_url: t.profiles?.avatar_url ?? null,
-        professional_title: t.professional_title ?? '',
-        bio: t.bio ?? null,
-        years_experience: t.years_experience ?? 0,
-        cadres_taught: t.cadres_taught ?? [],
-        specialties: t.specialties ?? null,
-        rate_per_hour: t.rate_per_hour ?? 0,
-        verification_tier: t.verification_tier ?? null,
-        average_rating: t.average_rating ?? 0,
-        total_students: t.total_students ?? 0,
-        total_sessions: t.total_sessions ?? 0,
-        pass_rate: t.pass_rate ?? 0,
-        is_accepting_bookings: t.is_accepting_bookings ?? false,
-        allow_instant_booking: t.allow_instant_booking ?? false,
-        allow_group_sessions: t.allow_group_sessions ?? false,
-        session_platform: t.session_platform ?? [],
-      }));
+      // Client-side sort
+      if (sortBy === 'rating') results.sort((a, b) => b.average_rating - a.average_rating);
+      else if (sortBy === 'rate_asc') results.sort((a, b) => a.rate_per_hour - b.rate_per_hour);
+      else if (sortBy === 'rate_desc') results.sort((a, b) => b.rate_per_hour - a.rate_per_hour);
+      else if (sortBy === 'sessions') results.sort((a, b) => b.total_sessions - a.total_sessions);
 
       // Client-side cadre filter
       if (cadreFilter !== 'All') {

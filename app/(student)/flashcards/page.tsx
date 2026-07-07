@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Spinner } from '@/components/ui/Spinner';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { getLimits, effectiveTier } from '@/lib/planLimits';
+import Image from 'next/image';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -416,11 +417,12 @@ function FlashcardStudy({
             <>
               <Badge variant="secondary" className="mb-4">{card.unit}</Badge>
               {card.image_url && (
-                <div className="mb-4 w-full flex justify-center">
-                  <img 
+                <div className="mb-4 w-full flex justify-center relative aspect-[2] overflow-hidden">
+                  <Image 
                     src={card.image_url} 
                     alt="Flashcard diagram" 
-                    className="max-h-[180px] object-contain rounded-lg shadow-sm"
+                    fill
+                    className="object-contain rounded-lg shadow-sm"
                   />
                 </div>
               )}

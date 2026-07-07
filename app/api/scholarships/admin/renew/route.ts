@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { z } from 'zod';
-import { PLAN_PRICING_META } from '@/lib/planLimits';
+import { fetchPlatformSettings } from '@/lib/platformSettings';
 
 const renewSchema = z.object({
   application_id: z.string().uuid(),
@@ -63,7 +63,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Student is already an active beneficiary.' }, { status: 400 });
     }
 
-    const premiumPrice = PLAN_PRICING_META.premium.amountKsh; // e.g. 3500
+    const settings = await fetchPlatformSettings(adminSupabase as any);
+    const premiumPrice = settings.plan_premium_price; // dynamic
 
     let allocatedAmount = 0;
     

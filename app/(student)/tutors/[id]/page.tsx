@@ -144,13 +144,14 @@ export default function TutorProfilePage() {
       if (!user) { router.push('/login'); return; }
       setCurrentUserId(user.id);
 
-      const [tutorRes, profileRes, studentRes, availRes, sessionsRes, reviewsRes] = await Promise.all([
+      const [tutorRes, profileRes, studentRes, availRes, sessionsRes, reviewsRes, settingsRes] = await Promise.all([
         supabase.from('tutor_profiles').select('*').eq('id', tutorId).eq('verification_status', 'verified').maybeSingle(),
         supabase.from('profiles').select('full_name, avatar_url').eq('id', tutorId).maybeSingle(),
         supabase.from('student_profiles').select('cadre').eq('id', user.id).maybeSingle(),
         supabase.from('tutor_availability').select('id, day_of_week, start_time, end_time, is_recurring, specific_date').eq('tutor_id', tutorId).eq('is_active', true),
         supabase.from('sessions').select('session_date, start_time, status, booked_at').eq('tutor_id', tutorId).in('status', ['confirmed', 'pending_approval', 'pending_payment']).gte('session_date', toLocalDateStr(new Date())),
         supabase.from('session_reviews').select('id, rating, review_text, keywords, created_at, student_id').eq('tutor_id', tutorId).eq('is_published', true).order('created_at', { ascending: false }).limit(10),
+        supabase.from('platform_settings').select('*').eq('id', 1).single()
       ]);
 
       if (!tutorRes.data || !profileRes.data) {
@@ -159,16 +160,27 @@ export default function TutorProfilePage() {
       }
 
       const t = tutorRes.data as any;
+      const sCadre = (studentRes.data as any)?.cadre ?? '';
+      const pSettings = settingsRes.data || { allow_tutor_custom_pricing: true, krchn_hourly_rate: 1500, bscn_hourly_rate: 1800 };
+
+      // Cadre based dynamic pricing enforcement
+      let effectiveRate = t.rate_per_hour ?? 0;
+      if (!pSettings.allow_tutor_custom_pricing) {
+        effectiveRate = sCadre === 'BScN' ? Number(pSettings.bscn_hourly_rate) : Number(pSettings.krchn_hourly_rate);
+      }
+
+      const isAnon = t.is_anonymous === true && !!t.pseudonym;
+
       setTutor({
         id: tutorId,
-        full_name: (profileRes.data as any).full_name,
-        avatar_url: (profileRes.data as any).avatar_url,
+        full_name: isAnon ? t.pseudonym : (profileRes.data as any).full_name,
+        avatar_url: isAnon ? null : (profileRes.data as any).avatar_url,
         professional_title: t.professional_title ?? '',
         bio: t.bio ?? null,
         years_experience: t.years_experience ?? 0,
         cadres_taught: t.cadres_taught ?? [],
         specialties: t.specialties ?? null,
-        rate_per_hour: t.rate_per_hour ?? 0,
+        rate_per_hour: effectiveRate,
         verification_tier: t.verification_tier ?? null,
         average_rating: t.average_rating ?? 0,
         total_students: t.total_students ?? 0,
@@ -179,7 +191,7 @@ export default function TutorProfilePage() {
         allow_group_sessions: t.allow_group_sessions ?? false,
         session_platform: t.session_platform ?? ['Zoom'],
         buffer_minutes: t.buffer_minutes ?? 30,
-        allow_price_negotiation: t.allow_price_negotiation ?? false,
+        allow_price_negotiation: pSettings.allow_tutor_custom_pricing ? (t.allow_price_negotiation ?? false) : false,
         min_negotiated_rate: t.min_negotiated_rate ?? 1000,
       });
 

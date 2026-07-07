@@ -6,9 +6,9 @@ import { Card } from '@/components/ui/Card';
 import { Spinner } from '@/components/ui/Spinner';
 import { Button } from '@/components/ui/Button';
 import { toast } from 'react-hot-toast';
-import { PLAN_PRICING_META } from '@/lib/planLimits';
+import Image from 'next/image';
 
-export default function ClientManager({ campaign }: { campaign: any }) {
+export default function ClientManager({ campaign, premiumPrice }: { campaign: any; premiumPrice: number }) {
   const [applications, setApplications] = useState<any[]>([]);
   const [totalDeposits, setTotalDeposits] = useState(0);
   const [totalAllocated, setTotalAllocated] = useState(0);
@@ -24,7 +24,6 @@ export default function ClientManager({ campaign }: { campaign: any }) {
   const [depositsList, setDepositsList] = useState<any[]>([]);
 
   const supabase = createClient() as any;
-  const premiumPrice = PLAN_PRICING_META.premium.amountKsh;
   const subsidizedPrice = Math.round(premiumPrice * ((100 - campaign.subsidy_discount_percentage) / 100));
 
   const fetchData = async () => {
@@ -465,7 +464,9 @@ export default function ClientManager({ campaign }: { campaign: any }) {
               <div>
                 <h3 className="font-semibold text-sm mb-2 text-neutral-mid">Student ID (Front)</h3>
                 {viewingDocsApp.student_id_front_url ? (
-                  <img src={viewingDocsApp.student_id_front_url} alt="Student ID Front" className="w-full rounded border border-neutral-200" />
+                  <div className="relative w-full aspect-[1.5] rounded border border-neutral-200 overflow-hidden">
+                    <Image src={viewingDocsApp.student_id_front_url} alt="Student ID Front" fill className="object-contain" />
+                  </div>
                 ) : (
                   <div className="bg-neutral-100 p-8 text-center text-neutral-400 rounded">Not provided</div>
                 )}
@@ -473,7 +474,9 @@ export default function ClientManager({ campaign }: { campaign: any }) {
               <div>
                 <h3 className="font-semibold text-sm mb-2 text-neutral-mid">Student ID (Back)</h3>
                 {viewingDocsApp.student_id_back_url ? (
-                  <img src={viewingDocsApp.student_id_back_url} alt="Student ID Back" className="w-full rounded border border-neutral-200" />
+                  <div className="relative w-full aspect-[1.5] rounded border border-neutral-200 overflow-hidden">
+                    <Image src={viewingDocsApp.student_id_back_url} alt="Student ID Back" fill className="object-contain" />
+                  </div>
                 ) : (
                   <div className="bg-neutral-100 p-8 text-center text-neutral-400 rounded">Not provided</div>
                 )}
@@ -481,7 +484,9 @@ export default function ClientManager({ campaign }: { campaign: any }) {
               <div>
                 <h3 className="font-semibold text-sm mb-2 text-neutral-mid">National ID (Front)</h3>
                 {viewingDocsApp.national_id_front_url ? (
-                  <img src={viewingDocsApp.national_id_front_url} alt="National ID Front" className="w-full rounded border border-neutral-200" />
+                  <div className="relative w-full aspect-[1.5] rounded border border-neutral-200 overflow-hidden">
+                    <Image src={viewingDocsApp.national_id_front_url} alt="National ID Front" fill className="object-contain" />
+                  </div>
                 ) : (
                   <div className="bg-neutral-100 p-8 text-center text-neutral-400 rounded">Not provided</div>
                 )}
@@ -489,7 +494,9 @@ export default function ClientManager({ campaign }: { campaign: any }) {
               <div>
                 <h3 className="font-semibold text-sm mb-2 text-neutral-mid">National ID (Back)</h3>
                 {viewingDocsApp.national_id_back_url ? (
-                  <img src={viewingDocsApp.national_id_back_url} alt="National ID Back" className="w-full rounded border border-neutral-200" />
+                  <div className="relative w-full aspect-[1.5] rounded border border-neutral-200 overflow-hidden">
+                    <Image src={viewingDocsApp.national_id_back_url} alt="National ID Back" fill className="object-contain" />
+                  </div>
                 ) : (
                   <div className="bg-neutral-100 p-8 text-center text-neutral-400 rounded">Not provided</div>
                 )}

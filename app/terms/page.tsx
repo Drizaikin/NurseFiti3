@@ -50,12 +50,17 @@ export default function TermsPage() {
             </p>
           </section>
           <section>
-            <h2 className="text-xl font-heading font-bold mb-3">5. Educational Platform & Medical Advice Liability</h2>
+            <h2 className="text-xl font-heading font-bold mb-3">5. Tutor Anonymity & Conflict of Interest</h2>
+            <p className="text-neutral-mid leading-relaxed mb-2">In accordance with the Constitution of Kenya and the Data Protection Act 2019 regarding the right to privacy, NurseFiti provides tutors the option to operate under a pseudonym. This feature allows tutors, including those employed by the Government of Kenya or other institutions, to share their expertise without conflict of interest or public exposure.</p>
+            <p className="text-neutral-mid leading-relaxed">Students agree to respect this anonymity. NurseFiti assumes no liability for claims related to the true identity of anonymous tutors, provided they have been internally vetted by our team.</p>
+          </section>
+          <section>
+            <h2 className="text-xl font-heading font-bold mb-3">6. Educational Platform & Medical Advice Liability</h2>
             <p className="text-neutral-mid leading-relaxed mb-2"><strong>NurseFiti provides educational content for learning and examination preparation purposes only.</strong></p>
             <p className="text-neutral-mid leading-relaxed">NurseFiti is strictly an educational platform, not a clinical platform. Information, guidance, or instruction shared on this platform (including by tutors during live sessions) must not replace professional clinical judgment, institutional guidelines, NCK standards, MOH guidelines, or physician orders. NurseFiti shall not be held liable for any clinical actions taken based on content learned or discussed on the platform.</p>
           </section>
           <section>
-            <h2 className="text-xl font-heading font-bold mb-3">6. Academic Integrity Policy</h2>
+            <h2 className="text-xl font-heading font-bold mb-3">7. Academic Integrity Policy</h2>
             <p className="text-neutral-mid leading-relaxed mb-2">NurseFiti is committed to promoting honest academic preparation for the NCK examinations. We strictly prohibit:</p>
             <ul className="list-disc list-inside text-neutral-mid space-y-1 ml-2 mb-2">
               <li>Possession, distribution, or discussion of leaked official examinations.</li>
@@ -71,11 +76,12 @@ export default function TermsPage() {
             <p className="text-neutral-mid leading-relaxed">Any user found violating the prohibited actions will be permanently banned from the platform.</p>
           </section>
           <section>
-            <h2 className="text-xl font-heading font-bold mb-3">7. Disclaimer & Limitation of Liability</h2>
-            <p className="text-neutral-mid leading-relaxed">While NurseFiti aims to provide high-quality revision resources, we do not guarantee that you will pass the NCK examination. NurseFiti is an independent educational tool and is not an &quot;Official NCK partner&quot;, &quot;NCK approved&quot;, or &quot;NCK certified&quot; unless expressly stated otherwise. We provide NCK-focused revision resources designed for success. Your use of the platform is at your own risk.</p>
+            <h2 className="text-xl font-heading font-bold mb-3">8. Disclaimer, Sponsors & Limitation of Liability</h2>
+            <p className="text-neutral-mid leading-relaxed mb-2">While NurseFiti aims to provide high-quality revision resources, we do not guarantee that you will pass the NCK examination. NurseFiti is an independent educational tool and is not an &quot;Official NCK partner&quot;, &quot;NCK approved&quot;, or &quot;NCK certified&quot; unless expressly stated otherwise. Your use of the platform is at your own risk.</p>
+            <p className="text-neutral-mid leading-relaxed"><strong>Sponsors and Partners Liability Protection:</strong> NurseFiti actively partners with sponsors—such as the Samburu Excellence Scholarship and Nadukae—to provide subsidized access to nursing students. By using the platform, you agree that NurseFiti, its founders, and all associated partners and sponsors are fully indemnified and bear no legal liability arising from interactions, transactions, content accuracy, or outcomes related to the platform. This provision is designed to protect the platform&apos;s intent—to serve as a smart, efficient revision tool while empowering students and tutors—from any undue legal exposure under Kenyan law.</p>
           </section>
           <section>
-            <h2 className="text-xl font-heading font-bold mb-3">8. Contact</h2>
+            <h2 className="text-xl font-heading font-bold mb-3">9. Contact</h2>
             <p className="text-neutral-mid">Questions? Email <a href="mailto:danotyanga@gmail.com" className="text-primary hover:underline">danotyanga@gmail.com</a></p>
           </section>
         </div>

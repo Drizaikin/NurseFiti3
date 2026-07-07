@@ -3,6 +3,7 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { Card } from '@/components/ui/Card';
 import { notFound } from 'next/navigation';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { fetchPlatformSettings } from '@/lib/platformSettings';
 import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 import SponsorCheckout from './SponsorCheckout';
 
@@ -42,6 +43,9 @@ export default async function SponsorDashboardPage({ params }: { params: { slug:
       return <div className="p-12 text-center font-bold text-red-600">This dashboard is private.</div>;
     }
   }
+
+  const settings = await fetchPlatformSettings(supabase);
+  const premiumPrice = settings.plan_premium_price;
 
   // Fetch all deposits
   const { data: deposits } = await adminSupabase.from('scholarship_deposits').select('amount_kes, allocator_name, allocator_title, allocator_organization, created_at').eq('campaign_id', campaign.id).order('created_at', { ascending: false });
@@ -227,7 +231,7 @@ export default async function SponsorDashboardPage({ params }: { params: { slug:
 
         {/* Sponsor Checkout */}
         <div className="mt-8 max-w-2xl mx-auto">
-          <SponsorCheckout campaign={campaign} />
+          <SponsorCheckout campaign={campaign} premiumPrice={premiumPrice} />
         </div>
       </div>
     </div>
