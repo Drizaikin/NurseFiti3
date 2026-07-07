@@ -25,6 +25,11 @@ let cachedSettings: PlatformSettings | null = null;
 let lastFetchTime = 0;
 const CACHE_TTL_MS = 60 * 1000; // 1 minute cache
 
+export function clearPlatformSettingsCache() {
+  cachedSettings = null;
+  lastFetchTime = 0;
+}
+
 export async function fetchPlatformSettings(supabase: SupabaseClient, forceRefresh = false): Promise<PlatformSettings> {
   const now = Date.now();
   if (!forceRefresh && cachedSettings && (now - lastFetchTime < CACHE_TTL_MS)) {

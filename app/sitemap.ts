@@ -1,8 +1,16 @@
 import { MetadataRoute } from 'next';
+import { POSTS } from '@/lib/blogData';
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.nursefiti.co.ke';
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const blogEntries: MetadataRoute.Sitemap = POSTS.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }));
+
   return [
     {
       url: `${baseUrl}`,
@@ -16,102 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.9,
     },
-    {
-      url: `${baseUrl}/blog/moh-nursing-internship-deployment-kenya-2026`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog/nck-may-2026-exam-results-released`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog/nck-exam-warning-unaccredited-colleges-kenya-2026`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog/nck-june-2026-update`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog/nursefiti-for-nursing-students-undergrads`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/nck-exam-study-internship-guide`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog/nck-august-2026-exam-prep-plan`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog/nck-latest-news-june-2026`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/blog/nck-exam-preparation-guide-kenya`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/krchn-exam-revision-tips`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/bscn-nursing-exam-kenya`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/nck-past-papers-practice`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/digiproctor-nck-exam-guide`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/nck-exam-anxiety-how-to-manage-it`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/nck-pharmacology-calculations-guide`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog/how-to-apply-nck-licence-kenya`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
+    ...blogEntries,
     {
       url: `${baseUrl}/tutors`,
       lastModified: new Date(),

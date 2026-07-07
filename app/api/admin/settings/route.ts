@@ -3,8 +3,10 @@
  * Update global platform settings.
  */
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
+import { clearPlatformSettingsCache } from '@/lib/platformSettings';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,6 +36,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Failed to update settings' }, { status: 500 });
     }
 
+    clearPlatformSettingsCache();
+    revalidatePath('/');
+    
     return NextResponse.json({ success: true });
   } catch (err: any) {
     console.error('[admin/settings]', err);

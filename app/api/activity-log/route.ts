@@ -34,9 +34,10 @@ export async function POST(req: Request) {
     const adminClient = createAdminClient() as any;
     
     // Insert view bypassing RLS for performance
-    await adminClient.from('page_views').insert({
+    await adminClient.from('page_visits').insert({
       user_id: session.user.id,
-      path: path,
+      role: profile?.role || 'student', // default to student if undefined
+      page_slug: path,
     });
 
     return NextResponse.json({ success: true });
