@@ -1472,7 +1472,160 @@ Passing the NCK licensure exam while working as an intern is a test of strategy,
   },
 ];
 
-const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW];
+];
+
+const POSTS_LATEST_RESEARCH: Post[] = [
+  {
+    slug: 'nursing-politics-leadership-kenya',
+    title: 'Nursing and Politics in Kenya: Leadership Opportunities for Practitioners (2026)',
+    excerpt: 'As Kenya approaches the 2027 elections, the intersection of nursing and politics has never been more critical. Discover political and leadership seats available for nursing practitioners to advocate for better healthcare policies.',
+    category: 'Community',
+    readTime: '8 min read',
+    date: '2026-07-07',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: \`
+For decades, Kenyan nurses have formed the backbone of the healthcare system, yet they have been underrepresented in the rooms where healthcare policies and budgets are actually decided. As the country moves towards the 2027 general elections and further deepens devolution, the need for nurses to step into political and leadership roles has never been more urgent.
+
+If you are a nursing practitioner frustrated by the systemic issues in Kenyan healthcare—from delayed internship deployments to inadequate facility funding—complaining in WhatsApp groups is no longer enough. The most effective way to change the system is to lead it.
+
+## Why Nurses Belong in Politics
+
+Nurses understand the realities of the Kenyan healthcare system better than career politicians. When a hospital lacks basic supplies like gloves or oxygen, or when the Ministry of Health delays the deployment of BScN interns, it is the nurses who bear the brunt of the crisis on the frontlines. 
+
+By running for office or seeking high-level appointments, nurses can advocate for:
+- **Adequate Health Budgets:** Ensuring that health budgets at the county level are ring-fenced and not diverted to other projects.
+- **Better Working Conditions:** Pushing for the implementation of the Collective Bargaining Agreements (CBAs).
+- **Policy Reform:** Shaping the Universal Health Coverage (UHC) agenda to ensure it serves both patients and practitioners.
+
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+  <strong>Key Takeaway:</strong> Without nurses in parliament and county assemblies, healthcare policies will continue to be drafted by people who have never worked a 12-hour night shift on a busy ward.
+</div>
+
+**[Are you a nursing student interested in leadership? Start by joining the NurseFiti community and passing your NCK exam first →](https://www.nursefiti.co.ke/signup)**
+
+## Political Seats Available for Nursing Practitioners
+
+If you are considering a transition into politics or policy, several avenues are available:
+
+### 1. Member of County Assembly (MCA)
+Health is a devolved function under the Kenyan Constitution (2010). This means that county governments control the majority of the healthcare budget, hospital infrastructure, and the hiring of county healthcare workers. 
+Serving as an MCA—particularly on the County Assembly Health Committee—allows you to directly oversee the county health budget, advocate for the employment of more nurses, and hold the County Executive Committee (CEC) for Health accountable.
+
+### 2. Member of Parliament (MP) and Senate
+At the national level, MPs and Senators legislate on national health acts, oversee the Ministry of Health's budget, and manage funds like the National Government Constituencies Development Fund (NG-CDF), which can be used to build and upgrade local dispensaries. A nurse in the National Assembly can sponsor bills that protect healthcare workers and regulate training institutions.
+
+### 3. Woman Representative
+The Woman Representative role has a strong mandate for social welfare, maternal health, and community empowerment. A nurse in this position can leverage the National Government Affirmative Action Fund (NGAAF) to champion maternal and child health initiatives across the county.
+
+## Appointive Leadership Positions
+
+You do not have to run for elective office to influence policy. Several appointive positions require the clinical and administrative expertise of a nurse:
+- **County Executive Committee (CEC) Member for Health:** The equivalent of a minister at the county level.
+- **Chief Officer of Health:** The accounting officer for the county department of health.
+- **Hospital Management Boards:** County and national referral hospitals require board members with clinical backgrounds to ensure quality service delivery.
+
+## How to Prepare for Leadership
+
+Transitioning from the ward to the political arena requires strategic preparation:
+1. **Understand the Law:** Familiarize yourself with the Health Act (2017) and the County Governments Act.
+2. **Build a Network:** Join professional bodies like the National Nurses Association of Kenya (NNAK) and the Kenya National Union of Nurses (KNUN).
+3. **Upskill:** Consider pursuing a Master's degree in Public Health, Health Economics, or Public Administration to complement your clinical background.
+
+**[Stay updated with the latest in the Kenyan nursing community. Join the NurseFiti WhatsApp channel →](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)**
+
+## Conclusion
+
+The political landscape in Kenya is shifting, and there is a growing demand for leaders with technical expertise rather than just political rhetoric. Nursing practitioners possess the empathy, resilience, and firsthand knowledge required to transform the Kenyan healthcare system from the top down. It is time for nurses to take their rightful seats at the decision-making table.
+
+**[Pass your NCK exam and kickstart your nursing career with NurseFiti — no credit card required](https://www.nursefiti.co.ke/signup)**
+
+> *Found this — an inspiring breakdown of why nurses need to get into Kenyan politics and the specific seats they can run for to change the healthcare system. Share with any nurse who has leadership potential: nursefiti.co.ke/blog/nursing-politics-leadership-kenya*
+
+---
+
+### Sources & References
+
+- **The Constitution of Kenya (2010)** — Schedule 4 on the distribution of functions between National and County Governments (Health as a devolved function). [klr.go.ke](http://www.kenyalaw.org/)
+- **Ministry of Health Kenya** — Health Act (2017) guidelines on healthcare leadership and facility management. [health.go.ke](https://www.health.go.ke)
+- **National Nurses Association of Kenya (NNAK)** — Advocacy and leadership guidelines for nursing professionals. [nnak.or.ke](https://nnak.or.ke/)
+    \`
+  },
+  {
+    slug: 'nursing-forums-networks-kenya',
+    title: 'The Ultimate Guide to Nursing Forums & Networks in Kenya (2026)',
+    excerpt: 'Connecting with other nursing professionals is crucial for exam prep, job hunting, and career growth. Explore the top nursing forums, unions, and networks every Kenyan nursing student and practitioner should join.',
+    category: 'Community',
+    readTime: '7 min read',
+    date: '2026-07-07',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: \`
+Nursing in Kenya can often feel isolating, especially when you are assigned to a remote rural dispensary or when you are pulling an all-nighter studying for the NCK licensure exam. But you don't have to navigate this journey alone. 
+
+Building a strong professional network is just as important as mastering your clinical skills. Whether you are looking for past papers, seeking advice on internship deployments, or exploring specialized nursing fields, joining the right forums can accelerate your career. 
+
+Here is the ultimate guide to the nursing forums, unions, and networks you should join in Kenya.
+
+## 1. Professional Associations and Unions
+
+To practice safely and advocate for your rights, you must be aligned with the official national bodies:
+
+- **National Nurses Association of Kenya (NNAK):** This is the premier professional association for nurses in Kenya. NNAK provides a platform for professional development, mentorship, and networking. They frequently organize scientific conferences which are excellent for meeting senior practitioners and earning CPD points.
+- **Kenya National Union of Nurses (KNUN):** If you are working in the public sector, KNUN is your primary advocate for labor rights, better working conditions, and the implementation of Collective Bargaining Agreements (CBAs).
+- **Midwives Association of Kenya (MAK):** For nurses specializing in midwifery, MAK offers specialized resources, international networking opportunities (through the International Confederation of Midwives), and specific advocacy for maternal health.
+
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+  <strong>Key Takeaway:</strong> Joining a recognized union or association is not just about networking; it provides legal and professional protection during your clinical practice.
+</div>
+
+## 2. Digital Communities and WhatsApp Groups
+
+The fastest way to get real-time information—such as updates on the OSP portal, internship release dates, or NCK exam results—is through active digital communities.
+
+### The NurseFiti WhatsApp Channel
+For students preparing for the NCK exam and recently graduated nurses, the NurseFiti WhatsApp channel is the most active and verified source of information. Unlike generic groups that are filled with spam, this channel provides:
+- Verified NCK updates and news.
+- High-yield revision tips and daily MCQs.
+- Alerts on internship deployments and licensure processes.
+
+**[Join the official NurseFiti WhatsApp Channel here →](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)**
+
+### Specialty-Specific Facebook Groups
+There are several active Facebook groups dedicated to Kenyan nurses. Look for groups that focus on specific niches, such as "Kenyan Nurses in the UK/USA" if you are considering practicing abroad, or "Critical Care Nurses Kenya" if you want to specialize. Ensure you verify any regulatory advice shared in these groups directly with the NCK.
+
+## 3. Study and Exam Prep Networks
+
+Preparing for the NCK exam is incredibly stressful. Forming or joining a study network can drastically improve your chances of passing on the first attempt.
+
+- **College Study Groups:** Form small groups of 3 to 4 peers from your graduating class. Use the Micro-Study Method to test each other on pharmacology and standard procedures.
+- **NurseFiti Platform:** Beyond just being a question bank, NurseFiti allows you to track your progress against a standard competency framework. You can engage with structured rationales that mimic the DigiProctor experience, ensuring you are not studying blindly.
+
+**[Start practicing with the NurseFiti community today — no credit card required](https://www.nursefiti.co.ke/signup)**
+
+## How to Get the Most Out of Your Networks
+
+Simply joining a forum is not enough. To truly benefit:
+1. **Be Active:** Ask questions, share resources, and participate in discussions.
+2. **Verify Information:** Misinformation spreads quickly in informal groups. Always cross-check exam dates, fees, and requirements on the official NCK website ([nckenya.com](https://www.nckenya.com)).
+3. **Seek Mentorship:** Use these platforms to find senior nurses who can guide you through career transitions, such as moving from general practice to a specialty.
+
+## Conclusion
+
+Your nursing career in Kenya will be defined not just by what you know, but by who you know and how well you collaborate. By joining professional bodies, digital channels, and study networks, you build a support system that will carry you from your intern days to senior leadership.
+
+> *Found this — a great list of all the nursing unions, associations, and WhatsApp groups every Kenyan nurse should join for networking and updates. Check it out: nursefiti.co.ke/blog/nursing-forums-networks-kenya*
+
+---
+
+### Sources & References
+
+- **National Nurses Association of Kenya (NNAK)** — Official membership guidelines and professional development resources. [nnak.or.ke](https://nnak.or.ke/)
+- **Kenya National Union of Nurses (KNUN)** — Information on labor rights and membership for Kenyan nurses.
+- **Nursing Council of Kenya (NCK)** — Official regulatory body for nursing practice and education. [nckenya.com](https://www.nckenya.com)
+    \`
+  }
+];
+
+const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH];
 
 // ─── generateStaticParams ────────────────────────────────────────────────────
 
@@ -1590,6 +1743,16 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
   'nursefiti-for-nursing-students-undergrads': {
     url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80&auto=format&fit=crop',
     alt: 'Nursing students collaborating and studying together at university with laptop',
+    credit: 'Unsplash',
+  },
+  'nursing-politics-leadership-kenya': {
+    url: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Kenyan leaders in a parliament or conference session discussing policy',
+    credit: 'Unsplash',
+  },
+  'nursing-forums-networks-kenya': {
+    url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Nursing professionals networking and collaborating in a group',
     credit: 'Unsplash',
   },
 };

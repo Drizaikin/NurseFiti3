@@ -113,10 +113,14 @@ Break up long sections with:
 ### 4.7 The Zeigarnik Effect
 Reference content that is "below" in the post to keep readers reading: *"We'll cover exactly how to use this in your revision plan — keep reading."*
 
-### 4.8 Specificity = Credibility
+### 4.8 Specificity = Credibility & Accuracy
 Blogs must **never** be generic. They must be highly specific to the Kenyan nursing context. Vague or generic claims lose trust. Specific claims build it.
+- Ensure all claims and facts are specific, accurate, well-cited (in-text), and referenced adequately at the end of the post under "Sources & References".
 - ❌ *"Many students fail the exam"*
 - ✅ *"NCK reports that a significant proportion of first-attempt candidates do not pass — making structured preparation, not casual revision, the distinguishing factor"*
+
+### 4.9 WhatsApp Channel Integration
+Include the link to the NurseFiti WhatsApp channel (`https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m`) where relevant in the blog so that interested users can easily join the community. This should be woven naturally into the content or as part of a CTA.
 
 ---
 

@@ -152,6 +152,24 @@ export const POSTS = [
     date: '2026-06-24',
     cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
   },
+  {
+    slug: 'nursing-politics-leadership-kenya',
+    title: 'Nursing and Politics in Kenya: Leadership Opportunities for Practitioners (2026)',
+    excerpt: 'As Kenya approaches the 2027 elections, the intersection of nursing and politics has never been more critical. Discover political and leadership seats available for nursing practitioners to advocate for better healthcare policies.',
+    category: 'Community',
+    readTime: '8 min read',
+    date: '2026-07-07',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
+    slug: 'nursing-forums-networks-kenya',
+    title: 'The Ultimate Guide to Nursing Forums & Networks in Kenya (2026)',
+    excerpt: 'Connecting with other nursing professionals is crucial for exam prep, job hunting, and career growth. Explore the top nursing forums, unions, and networks every Kenyan nursing student and practitioner should join.',
+    category: 'Community',
+    readTime: '7 min read',
+    date: '2026-07-07',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
 ];
 
 export const CATEGORY_STYLES: Record<string, { badge: string }> = {
@@ -182,4 +200,6 @@ export const POST_IMAGES: Record<string, string> = {
   'nck-exam-anxiety-how-to-manage-it': 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80&auto=format&fit=crop',
   'nck-pharmacology-calculations-guide': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80&auto=format&fit=crop',
   'how-to-apply-nck-licence-kenya': 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80&auto=format&fit=crop',
+  'nursing-politics-leadership-kenya': 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80&auto=format&fit=crop',
+  'nursing-forums-networks-kenya': 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80&auto=format&fit=crop',
 };
