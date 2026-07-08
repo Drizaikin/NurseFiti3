@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/Button";
 // ❶  RELEASES REGISTRY — edit here to announce new features
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CURRENT_VERSION = 9;
+const CURRENT_VERSION = 10;
 
 interface WhatsNewItem {
   icon: string;
@@ -306,6 +306,32 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
         description:
           "We love hearing from you! NurseFiti will now occasionally ask for your feedback. Your 4-star and 5-star reviews help other nursing students find us and help us improve the platform for everyone.",
         cta: { label: "Keep Learning", href: "/practice" },
+      }
+    ],
+  },
+
+  // ── Version 10 — NCK MCQ Compilation 2026 ──────────
+  {
+    version: 10,
+    date: "8 July 2026",
+    items: [
+      {
+        icon: "📚",
+        tag: "New Questions",
+        tagColor: "bg-primary/20 text-primary",
+        title: "Over 500 New 2026 NCK MCQs",
+        description:
+          "We've just seeded 540 brand new past-paper questions from the 2026 NCK Compilation. Fully deduplicated and verified, this release includes 305 questions for Paper I and 235 questions for Paper II.",
+        cta: { label: "Start Practising", href: "/practice" },
+      },
+      {
+        icon: "✅",
+        tag: "Quality",
+        tagColor: "bg-emerald-500/20 text-emerald-400",
+        title: "Audited & Fixed",
+        description:
+          "Every question has been fully audited against MOH Kenya guidelines and NCK standards. Missing options were fixed and rationales cross-checked to give you the most accurate practice possible.",
+        cta: { label: "Take a Mock Exam", href: "/mock-exam" },
       }
     ],
   },

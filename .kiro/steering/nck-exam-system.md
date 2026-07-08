@@ -399,9 +399,12 @@ The `unit` and `topic` fields in the `questions` table must reflect the actual c
 
 ### 14.5 Deduplication: Exact vs. Paraphrased Stems
 
-The unique constraint on `(stem, cadre)` prevents exact-duplicate stems. However, **paraphrased versions of the same question** (same clinical scenario, same answer choices, different wording) **are allowed** and should be seeded — they test the same knowledge from a different angle and increase question bank variety.
+The unique constraint on `(stem, cadre)` prevents exact-duplicate stems within the same cadre. 
+A word-for-word duplicate is defined as a question where the **stem is exactly the same, AND it is assigned to the same cadre**.
 
-> **Rule:** Only skip a question if the stem is word-for-word identical (or differs only in trivial formatting like punctuation/capitalisation). If the wording is meaningfully different — even if the core knowledge tested is the same — seed it.
+> **Rule:** Only skip a question if the stem is word-for-word identical (or differs only in trivial formatting like punctuation/capitalisation) AND it is for the same cadre. 
+> - If the wording is meaningfully different — even if the core knowledge tested is the same — seed it.
+> - If the stem is an exact duplicate but is being seeded for a **different cadre** from the existing one in the database, it must be allowed and seeded. The database `UNIQUE (stem, cadre)` constraint natively supports this.
 
 ### 14.6 Post-Seed Verification Checklist
 
