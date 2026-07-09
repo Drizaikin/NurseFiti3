@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
 import { Card } from '@/components/ui/Card';
 import { Spinner } from '@/components/ui/Spinner';
 
-type PageView = {
+type PageVisit = {
   id: string;
-  path: string;
-  created_at: string;
+  page_slug: string;
+  visited_at: string;
 };
 
 type UserProfile = {
@@ -20,10 +19,9 @@ type UserProfile = {
 export default function UserActivityDetailPage() {
   const { userId } = useParams<{ userId: string }>();
   const router = useRouter();
-  const supabase = createClient();
 
   const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [views, setViews] = useState<PageView[]>([]);
+  const [views, setViews] = useState<PageVisit[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -31,18 +29,15 @@ export default function UserActivityDetailPage() {
 
     const fetchData = async () => {
       try {
-        const [{ data: profileData }, { data: viewsData, error: viewsError }] = await Promise.all([
-          supabase.from('profiles').select('full_name, role').eq('id', userId).maybeSingle(),
-          supabase
-            .from('page_views')
-            .select('id, path, created_at')
-            .eq('user_id', userId)
-            .order('created_at', { ascending: false })
-            .limit(200),
-        ]);
+        const res = await fetch(`/api/admin/data?type=user-activity&userId=${userId}`);
+        const data = await res.json();
 
-        if (profileData) setProfile(profileData);
-        if (!viewsError && viewsData) setViews(viewsData);
+        if (data.error) {
+          console.error('User activity fetch error:', data.error);
+        } else {
+          if (data.profile) setProfile(data.profile);
+          if (data.views) setViews(data.views);
+        }
       } catch (err) {
         console.error('Error fetching user activity:', err);
       } finally {
@@ -51,7 +46,7 @@ export default function UserActivityDetailPage() {
     };
 
     fetchData();
-  }, [userId, supabase]);
+  }, [userId]);
 
   if (isLoading) {
     return <div className="flex justify-center py-12"><Spinner size="lg" color="primary" /></div>;
@@ -96,9 +91,9 @@ export default function UserActivityDetailPage() {
               ) : (
                 views.map((v) => (
                   <tr key={v.id} className="hover:bg-[var(--color-bg)]/50 transition-colors">
-                    <td className="px-4 py-3 font-mono text-xs text-primary">{v.path}</td>
+                    <td className="px-4 py-3 font-mono text-xs text-primary">{v.page_slug}</td>
                     <td className="px-4 py-3 text-right text-xs text-neutral-mid whitespace-nowrap">
-                      {new Date(v.created_at).toLocaleString()}
+                      {new Date(v.visited_at).toLocaleString()}
                     </td>
                   </tr>
                 ))

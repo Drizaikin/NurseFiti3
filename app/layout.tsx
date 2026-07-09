@@ -3,8 +3,7 @@ import { Syne, Nunito } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Toaster } from "react-hot-toast";
-import { PageTracker } from "@/components/shared/PageTracker";
-import { Suspense } from "react";
+
 
 const syne = Syne({
   subsets: ["latin"],
@@ -85,9 +84,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <Suspense fallback={null}>
-            <PageTracker />
-          </Suspense>
+
           <Toaster
             position="top-right"
             toastOptions={{

@@ -368,6 +368,99 @@ export async function GET(req: NextRequest) {
       }
     }
 
+    // ─── Activity — user activity list (for admin/activity page) ────────────
+    if (type === 'activity') {
+      try {
+        // Fetch recent page visits, grouped by user
+        const { data: visitsData, error: visitsError } = await (admin as any)
+          .from('page_visits')
+          .select('user_id, page_slug, visited_at')
+          .order('visited_at', { ascending: false })
+          .limit(500);
+
+        if (visitsError || !visitsData) {
+          return NextResponse.json({ users: [], notice: 'page_visits table may not exist yet.' });
+        }
+
+        // Group by user_id: count total pages and find last_seen
+        const userMap = new Map<string, { total: number; last_seen: string }>();
+        for (const v of visitsData as Array<{ user_id: string; page_slug: string; visited_at: string }>) {
+          const existing = userMap.get(v.user_id);
+          if (!existing) {
+            userMap.set(v.user_id, { total: 1, last_seen: v.visited_at });
+          } else {
+            existing.total++;
+          }
+        }
+
+        const userIds = Array.from(userMap.keys());
+        if (userIds.length === 0) {
+          return NextResponse.json({ users: [] });
+        }
+
+        const { data: profilesData } = await (admin as any)
+          .from('profiles')
+          .select('id, full_name, role')
+          .in('id', userIds)
+          .neq('role', 'admin');
+
+        const profileMap = new Map(
+          ((profilesData ?? []) as Array<{ id: string; full_name: string; role: string }>)
+            .map((p) => [p.id, p])
+        );
+
+        const users = Array.from(userMap.entries())
+          .map(([user_id, stats]) => {
+            const profile = profileMap.get(user_id);
+            if (!profile) return null;
+            return {
+              user_id,
+              full_name: profile.full_name || 'Unknown User',
+              role: profile.role || 'student',
+              total_pages: stats.total,
+              last_seen: stats.last_seen,
+            };
+          })
+          .filter(Boolean)
+          .sort((a: any, b: any) => new Date(b.last_seen).getTime() - new Date(a.last_seen).getTime());
+
+        return NextResponse.json({ users });
+      } catch {
+        return NextResponse.json({ users: [], notice: 'Failed to load activity data.' });
+      }
+    }
+
+    // ─── User Activity — specific user's page visit history ──────────────
+    if (type === 'user-activity') {
+      const targetUserId = req.nextUrl.searchParams.get('userId');
+      if (!targetUserId) {
+        return NextResponse.json({ error: 'userId param required' }, { status: 400 });
+      }
+
+      try {
+        const [profileRes, visitsRes] = await Promise.all([
+          (admin as any)
+            .from('profiles')
+            .select('full_name, role')
+            .eq('id', targetUserId)
+            .maybeSingle(),
+          (admin as any)
+            .from('page_visits')
+            .select('id, page_slug, visited_at')
+            .eq('user_id', targetUserId)
+            .order('visited_at', { ascending: false })
+            .limit(200),
+        ]);
+
+        return NextResponse.json({
+          profile: profileRes.data ?? null,
+          views: (visitsRes.data ?? []) as Array<{ id: string; page_slug: string; visited_at: string }>,
+        });
+      } catch {
+        return NextResponse.json({ profile: null, views: [] });
+      }
+    }
+
     return NextResponse.json({ error: 'Unknown type' }, { status: 400 });
   } catch (err) {
     console.error('[admin/data]', err);

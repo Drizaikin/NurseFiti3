@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
 import { Card } from '@/components/ui/Card';
 import { Spinner } from '@/components/ui/Spinner';
 
@@ -17,101 +16,39 @@ type UserActivity = {
 export default function AdminActivityPage() {
   const [users, setUsers] = useState<UserActivity[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const supabase = createClient() as any;
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchActivity = async () => {
-      try {
-        // Fetch the last 500 views to group by user meaningfully
-        const { data: viewsData, error: viewsError } = await supabase
-          .from('page_views')
-          .select('user_id, created_at')
-          .order('created_at', { ascending: false })
-          .limit(500);
-
-        if (viewsError || !viewsData) {
-          console.error('Failed to fetch views:', viewsError);
-          setIsLoading(false);
-          return;
-        }
-
-        // Group by user_id: count total pages and find last_seen
-        // Data is ordered DESC so the FIRST entry per user is already their most recent visit
-        const userMap = new Map<string, { total: number; last_seen: string }>();
-        for (const v of viewsData) {
-          const existing = userMap.get(v.user_id);
-          if (!existing) {
-            // First time we see this user in the DESC list = their most recent view
-            userMap.set(v.user_id, { total: 1, last_seen: v.created_at });
-          } else {
-            // Just increment; do NOT update last_seen (first entry was already the most recent)
-            existing.total++;
-          }
-        }
-
-        const userIds = Array.from(userMap.keys());
-        if (userIds.length === 0) {
-          setIsLoading(false);
-          return;
-        }
-
-        const { data: profilesData } = await supabase
-          .from('profiles')
-          .select('id, full_name, role')
-          .in('id', userIds)
-          .neq('role', 'admin'); // exclude admins from the list
-
-        const profileMap = new Map(profilesData?.map((p: any) => [p.id, p as any]) || []);
-
-        const result: UserActivity[] = Array.from(userMap.entries())
-          .map(([user_id, stats]) => {
-            const profile = profileMap.get(user_id);
-            if (!profile) return null; // skip admins (not in profileMap)
-            return {
-              user_id,
-              full_name: (profile as any).full_name || 'Unknown User',
-              role: (profile as any).role || 'student',
-              total_pages: stats.total,
-              last_seen: stats.last_seen,
-            };
-          })
-          .filter(Boolean) as UserActivity[];
-
-        // Sort by last_seen descending
-        result.sort((a, b) => new Date(b.last_seen).getTime() - new Date(a.last_seen).getTime());
-
-        setUsers(result);
-      } catch (err) {
-        console.error('Unexpected error:', err);
-      } finally {
-        setIsLoading(false);
+  const fetchActivity = useCallback(async () => {
+    try {
+      const res = await fetch('/api/admin/data?type=activity');
+      const data = await res.json();
+      if (data.error) {
+        console.error('Activity fetch error:', data.error);
+      } else {
+        setUsers(data.users ?? []);
       }
-    };
+    } catch (err) {
+      console.error('Unexpected error:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
+  useEffect(() => {
     fetchActivity();
 
-    // 1. Supabase Realtime subscription
-    const channel = supabase
-      .channel('admin_activity_changes')
-      .on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'page_views' },
-        () => {
-          fetchActivity();
-        }
-      )
-      .subscribe();
-
-    // 2. Window focus listener for fallback/tab switching
+    // Refresh on window focus (fallback for when user switches tabs)
     const onFocus = () => fetchActivity();
     window.addEventListener('focus', onFocus);
 
+    // Poll every 30s for near-real-time updates
+    const interval = setInterval(fetchActivity, 30_000);
+
     return () => {
-      supabase.removeChannel(channel);
       window.removeEventListener('focus', onFocus);
+      clearInterval(interval);
     };
-  }, [supabase]);
+  }, [fetchActivity]);
 
   if (isLoading) {
     return <div className="flex justify-center py-12"><Spinner size="lg" color="primary" /></div>;
