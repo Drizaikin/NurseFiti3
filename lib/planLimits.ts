@@ -23,7 +23,7 @@ export type PlanTier = 'free' | 'daily' | 'weekly' | 'standard' | 'premium';
  */
 export const PLAN_LIMITS = {
   free: {
-    practiceQuestionsPerDay: 30,
+    practiceQuestionsPerDay: 20,
     mockExamsPerWeek: 0,          // blocked; upload-to-unlock handled in mock-exam page
     mockExamDownloads: 0,
     flashcardsAccess: false,
@@ -36,7 +36,7 @@ export const PLAN_LIMITS = {
     examReminders: false,
   },
   daily: {
-    practiceQuestionsPerDay: Infinity,
+    practiceQuestionsPerDay: 120,
     mockExamsPerWeek: 2,
     mockExamDownloads: 1,
     flashcardsAccess: true,
@@ -49,7 +49,7 @@ export const PLAN_LIMITS = {
     examReminders: false,
   },
   weekly: {
-    practiceQuestionsPerDay: Infinity,
+    practiceQuestionsPerDay: 200,
     mockExamsPerWeek: 3,
     mockExamDownloads: 2,
     flashcardsAccess: true,

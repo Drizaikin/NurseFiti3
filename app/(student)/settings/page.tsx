@@ -115,7 +115,7 @@ function buildDynamicPlans(settings: PlatformSettings | null) {
       color: 'border-primary/30 bg-primary-xlight dark:bg-primary/5',
       badge: 'teal' as const,
       features: [
-        'Unlimited MCQ practice',
+        '120 practice questions/day',
         '2 mock exams (1 download)',
         'Readiness analytics',
         'Spaced repetition flashcards',
@@ -132,6 +132,7 @@ function buildDynamicPlans(settings: PlatformSettings | null) {
       badge: 'teal' as const,
       features: [
         'Everything in Exam Boost Daily',
+        '200 practice questions/day',
         '7-day access',
         '3 mock exams (2 downloads)',
         'Personalized revision plan included',
