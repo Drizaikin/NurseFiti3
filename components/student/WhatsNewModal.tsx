@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/Button";
 // ❶  RELEASES REGISTRY — edit here to announce new features
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CURRENT_VERSION = 12;
+const CURRENT_VERSION = 11;
 
 interface WhatsNewItem {
   icon: string;
@@ -336,7 +336,7 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
     ],
   },
 
-  // ── Version 11 ─────────────────────────────────────────────────────────────
+  // ── Version 11 — Question Bank Expansion ───────────────────────────────────
   {
     version: 11,
     date: "July 2026",
@@ -345,45 +345,10 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
         icon: "📦",
         tag: "New Questions",
         tagColor: "bg-primary/20 text-primary",
-        title: "Over 1,500 New NCK MCQs",
+        title: "1,932 New NCK MCQs Added",
         description:
-          "We've just seeded 1,548 brand new past-paper questions from the Set 3 NCK Compilation. Fully deduplicated and verified, bringing the total bank to over 5,100 questions.",
+          "We've just seeded 1,932 brand new past-paper questions to the platform. The question bank has been fully updated!",
         cta: { label: "Start Practising", href: "/practice" },
-      },
-      {
-        icon: "✅",
-        tag: "Quality",
-        tagColor: "bg-emerald-500/20 text-emerald-400",
-        title: "Heuristically Audited",
-        description:
-          "Every new question has been run through an advanced heuristic audit against MOH Kenya guidelines and NCK standards to give you the most accurate practice possible.",
-        cta: { label: "Take a Mock Exam", href: "/mock-exam" },
-      }
-    ],
-  },
-
-  // ── Version 12 — Set 3 Full Completion ─────────────────────────────────────
-  {
-    version: 12,
-    date: "July 2026",
-    items: [
-      {
-        icon: "🎯",
-        tag: "New Questions",
-        tagColor: "bg-primary/20 text-primary",
-        title: "646 More Questions Added",
-        description:
-          "We've completed the full Set 3 NCK Compilation, adding 646 additional questions that were missing from the first batch. All fully audited with accurate answers and rationales.",
-        cta: { label: "Start Practising", href: "/practice" },
-      },
-      {
-        icon: "🔬",
-        tag: "Deep Audit",
-        tagColor: "bg-emerald-500/20 text-emerald-400",
-        title: "Set 3 Fully Audited & Fixed",
-        description:
-          "Every single question in Set 3 has been individually audited — wrong unit assignments corrected, all topics updated from 'General' to specific clinical sub-topics, and incorrect answers fixed.",
-        cta: { label: "Take a Mock Exam", href: "/mock-exam" },
       }
     ],
   },

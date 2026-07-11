@@ -390,7 +390,7 @@ WHERE stem LIKE 'A child growing within normal developmental milestones will be 
 
 -- School nurse function contamination
 UPDATE questions
-SET rationale = 'The school nurse''s health care provider function includes direct care activities such as first aid, assessment and treatment of illness. Health education, counselling and referral are other overlapping roles (Kenya School Health Policy; community health nursing).';
+SET rationale = 'The school nurse''s health care provider function includes direct care activities such as first aid, assessment and treatment of illness. Health education, counselling and referral are other overlapping roles (Kenya School Health Policy; community health nursing).'
 
 -- (continued WHERE clause for school nurse)
 WHERE stem LIKE 'Which is an example of the school nurse%s health care provider function%'

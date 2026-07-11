@@ -1,4 +1,4 @@
-﻿-- ==============================================================
+-- ==============================================================
 -- Set 3 Supplement: deduplicated unique questions from docx
 -- 20260711000003_seed_mcq_set3_supplement.sql
 -- Dedup method: stem(80)+cadre key — per nck-exam-system.md §14.5
