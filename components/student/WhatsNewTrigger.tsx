@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // ⚠️  Keep this in sync with CURRENT_VERSION in WhatsNewModal.tsx
-const CURRENT_VERSION = 10;
+const CURRENT_VERSION = 12;
 const STORAGE_KEY = `whats_new_seen_v${CURRENT_VERSION}`;
 
 interface Props {

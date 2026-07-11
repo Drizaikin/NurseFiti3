@@ -611,7 +611,7 @@ export default function MockExamPage() {
             <h2 className="text-lg font-heading font-bold mb-1">Upload Exam Questions</h2>
             <p className="text-sm text-neutral-mid mb-4">
               Upload at least <strong>3 files</strong> containing past exam questions (PDF, TXT, DOC, or DOCX, max 10 MB each).
-              We will verify they are not already in our database and upgrade your account to Success Plan within 24 hours.
+              We will verify they are not already in our database and upgrade your account to Exam Boost Daily within 24 hours.
             </p>
             <div className="space-y-3">
               <label className="block">
@@ -653,7 +653,7 @@ export default function MockExamPage() {
           <div className="mb-4 rounded-xl px-4 py-4 border bg-success/10 border-success/30">
             <p className="text-sm font-semibold text-success mb-1">✅ Files submitted successfully</p>
             <p className="text-xs text-neutral-mid">
-              Your files are under review. We will upgrade your account to Success Plan within 24 hours.
+              Your files are under review. We will upgrade your account to Exam Boost Daily within 24 hours.
               Check back soon or contact support if you have not heard back.
             </p>
           </div>

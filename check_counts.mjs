@@ -11,13 +11,18 @@ async function check() {
   for (const cadre of cadres) {
     console.log(`--- ${cadre} ---`);
     for (const paper of papers) {
-      const { count } = await supabase
+      const { count: approvedCount } = await supabase
         .from('questions')
         .select('*', { count: 'exact', head: true })
         .eq('cadre', cadre)
         .eq('paper', paper)
         .eq('status', 'approved');
-      console.log(`${paper}: ${count} approved questions`);
+      const { count: totalCount } = await supabase
+        .from('questions')
+        .select('*', { count: 'exact', head: true })
+        .eq('cadre', cadre)
+        .eq('paper', paper);
+      console.log(`${paper}: ${totalCount} total (${approvedCount} approved)`);
     }
   }
 }

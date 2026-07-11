@@ -273,7 +273,7 @@ async function sendAdminNotificationEmail(params: {
             </a>
           </p>
           <hr/>
-          <p style="font-size:12px;color:#666;">Approving this upload will automatically upgrade the student to Success Plan for 30 days.</p>
+          <p style="font-size:12px;color:#666;">Approving this upload will automatically upgrade the student to Exam Boost Daily for 1 day.</p>
         `,
       }),
     });

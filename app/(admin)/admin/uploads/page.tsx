@@ -60,15 +60,15 @@ export default function AdminUploadsPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           studentId: upload.student_id,
-          tier: 'standard',
-          durationDays: 30,
+          tier: 'daily',
+          durationDays: 1,
           uploadId: upload.id,
           note: 'Approved via question upload',
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'Failed');
-      toast.success(`${upload.student_name} upgraded to Success Plan (30 days)`);
+      toast.success(`${upload.student_name} upgraded to Exam Boost Daily (1 day)`);
       await loadUploads();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Action failed');
@@ -104,7 +104,7 @@ export default function AdminUploadsPage() {
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h1 className="text-2xl font-heading font-bold text-primary">Question Uploads</h1>
-          <p className="text-neutral-mid text-sm mt-1">Review student-submitted exam question files. Approving upgrades the student to Success Plan for 30 days.</p>
+          <p className="text-neutral-mid text-sm mt-1">Review student-submitted exam question files. Approving upgrades the student to Exam Boost Daily for 1 day.</p>
         </div>
         <button onClick={loadUploads} className="text-xs text-primary hover:underline">↻ Refresh</button>
       </div>

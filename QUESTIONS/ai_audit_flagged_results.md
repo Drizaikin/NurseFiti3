@@ -1,0 +1,29 @@
+# AI Audit Report - Flagged Questions
+
+### 🔄 RESOLVED/UPDATED: The following parts of central nervous system control vegetative function:...
+**Reason**: The question is scientifically sound and appropriate for the BScN level. While both the brain stem and the medulla oblongata are involved in controlling vegetative (autonomic) functions, the medulla oblongata is the most specific and accurate answer because it directly houses the vital cardiac, vasomotor, and respiratory centers. The keyed option D is correct and the rationale is accurate.
+**Old Key**: D -> **New Key**: None
+### 🔄 RESOLVED/UPDATED: When developing a plan of care for a client newly diagnosed with gestational diabetes, which of the ...
+**Reason**: While glucose monitoring is important for tracking, dietary modification (Medical Nutrition Therapy) is the cornerstone and first-line treatment for gestational diabetes mellitus (GDM) according to Kenya MOH and international guidelines. Over 80% of GDM cases are managed successfully with diet and lifestyle modifications alone. Therefore, instruction on dietary intake is the priority intervention when developing the plan of care.
+**Old Key**: D -> **New Key**: A
+### 🔄 RESOLVED/UPDATED: The drugs used for chemoprophylaxis against malaria include;...
+**Reason**: The question is accurate and aligns perfectly with the Kenya National Guidelines for the Diagnosis, Treatment, and Prevention of Malaria. Mefloquine, doxycycline, and proguanil are standard chemoprophylactic agents, whereas artemether-lumefantrine and quinine are reserved for treatment.
+**Old Key**: A -> **New Key**: None
+### 🔄 RESOLVED/UPDATED: According to the World Health Organization (WHO), clinical staging of HIV infection stage III in adu...
+**Reason**: According to the WHO clinical staging of HIV for adults and adolescents, Stage III is characterized by unexplained severe weight loss (>10% of body weight), persistent oral candidiasis, and pulmonary tuberculosis (all of which are listed in Option D). Option C is incorrect because recurrent respiratory tract infections and herpes zoster are classified under WHO Stage II. Options A and B contain Stage IV conditions (such as cryptococcosis, extrapulmonary tuberculosis, HIV encephalopathy, and esophageal candidiasis). Therefore, Option D is the most accurate and correct key.
+**Old Key**: C -> **New Key**: D
+### 🔄 RESOLVED/UPDATED: Medical eligibility criteria category 4 for contraceptive implants include:...
+**Reason**: While a 'history of breast cancer' is technically Category 3, 'current breast cancer' is Category 4. Among the options provided, breast cancer is the only condition that carries a Category 4 classification (when active) for contraceptive implants. The other conditions listed (severe decompensated cirrhosis, unexplained vaginal bleeding, and acute DVT) are Category 3. Updating the rationale to clarify this distinction ensures the question remains highly accurate and defensible for BScN level.
+**Old Key**: A -> **New Key**: A
+### 🔄 RESOLVED/UPDATED: The following observations are noted on the patient on underwater seal drainage:...
+**Reason**: The question is clinically sound and aligns with standard nursing care guidelines for chest tube (underwater seal) drainage management. Monitoring vital signs, ensuring patent connections (to prevent air leaks and tension pneumothorax), and observing the color of the drainage are critical nursing observations. Option A is the most comprehensive and safety-focused choice.
+**Old Key**: A -> **New Key**: None
+### 🔄 RESOLVED/UPDATED: Fetal axis pressure is a physical change that is more significant durin...
+**Reason**: The original keyed option (A) is incorrect because fetal axis pressure is not significant in the early stages of labor when membranes are typically intact and general fluid pressure dominates. According to midwifery standards (e.g., Myles Textbook for Midwives), fetal axis pressure occurs when the fundus contracts directly onto the upper pole of the fetus, transmitting force down the fetal long axis. This is only possible and significant after the membranes have ruptured, which occurs during the active and second stages of labor. Therefore, option C is the most accurate answer.
+**Old Key**: A -> **New Key**: C
+### 🔄 RESOLVED/UPDATED: The exogenous causative organisms to puerperal infection include:-...
+**Reason**: While Staphylococcus aureus is a classic exogenous organism, Escherichia coli is primarily endogenous but can be transmitted exogenously via poor hygiene. Option C is the most defensible answer among the choices. The rationale is updated to clarify this distinction according to NCK and Myles Textbook for Midwives guidelines.
+**Old Key**: C -> **New Key**: C
+### 🔄 RESOLVED/UPDATED: Benefits of breastfeeding to the infant include:...
+**Reason**: The keyed option B is correct and represents the most standard, evidence-based cluster of infant benefits taught in NCK and Kenya MOH guidelines. However, the original rationale incorrectly states that breastfeeding does not reduce the risk of type 2 diabetes (it actually does). The rationale has been updated to accurately reflect the clinical superiority of Option B without containing factual inaccuracies about the other options.
+**Old Key**: B -> **New Key**: B

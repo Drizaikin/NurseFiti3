@@ -283,17 +283,17 @@ Follow this checklist every time a new batch of questions is seeded:
 
 ---
 
-## 7. Current Question Counts (as of June 2026)
+## 7. Current Question Counts (as of July 2026)
 
 | Cadre | Paper | Questions | Units Covered |
 |---|---|---|---|
-| KRCHN | Paper I | ~181 | A&P, MCH, Midwifery, Med-Surg, Paediatrics, Pharmacology, Surgical |
-| KRCHN | Paper II | ~232 | Nutrition, Mental Health, Health Systems, Community Health, Environmental Health, Research & Stats, IPC |
-| BScN | Paper I | ~233 | Med-Surg, Surgical, Midwifery, A&P, MCH, Paediatrics, Pharmacology, Critical Care, Mental Health |
-| BScN | Paper II | ~172 | Nursing Management, Mental Health, Research & EBP, Ethics & Law, Community Health, IPC, Nutrition |
-| **Total** | | **~818** | |
+| KRCHN | Paper I | ~1916 | A&P, MCH, Midwifery, Med-Surg, Paediatrics, Pharmacology, Surgical |
+| KRCHN | Paper II | ~1078 | Nutrition, Mental Health, Health Systems, Community Health, Environmental Health, Research & Stats, IPC |
+| BScN | Paper I | ~1446 | Med-Surg, Surgical, Midwifery, A&P, MCH, Paediatrics, Pharmacology, Critical Care, Mental Health |
+| BScN | Paper II | ~733 | Nursing Management, Mental Health, Research & EBP, Ethics & Law, Community Health, IPC, Nutrition |
+| **Total** | | **~5173** | |
 
-> **Last batch added:** `20260616000001_seed_answered_mcqs_doc1.sql` — 458 inserts (229 unique questions × both cadres where criteria met). Source: NCK-Answered-MCQs-with-Rationales 1.docx.
+> **Last batch added:** `20260711000001_seed_mcq_compilation_set3.sql` — 1,548 new unique questions. Source: NCK_MCQ_Compilation_Set3_Answers_Rationales.docx.
 
 > Update this table after each batch is added.
 

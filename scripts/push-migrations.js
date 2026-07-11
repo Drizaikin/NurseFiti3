@@ -5,20 +5,27 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const envFile = fs.readFileSync(path.join(__dirname, '..', '.env.local'), 'utf8');
+const envVars = {};
+envFile.split(/[\r\n]+/).forEach(line => {
+  if (!line || line.startsWith('#')) return;
+  const idx = line.indexOf('=');
+  if (idx > 0) {
+    const key = line.substring(0, idx).trim();
+    const val = line.substring(idx + 1).trim().replace(/^["']|["']$/g, '');
+    envVars[key] = val;
+  }
+});
 
-// Project ref extracted from Supabase URL
-const PROJECT_REF = 'wnfbjyfenvdofvfcxnzk';
-const SERVICE_ROLE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InduZmJqeWZlbnZkb2Z2ZmN4bnprIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTE5NTgxNiwiZXhwIjoyMDk0NzcxODE2fQ.5TQOHD5G889WdbrsNzN1pIoV87Ldji2uIpF_bgFVS0M';
+const url = envVars.NEXT_PUBLIC_SUPABASE_URL || '';
+const PROJECT_REF = url.split('.')[0].split('//')[1];
+const SERVICE_ROLE_KEY = envVars.SUPABASE_SERVICE_ROLE_KEY;
 
 const MIGRATIONS_DIR = path.join(__dirname, '..', 'supabase', 'migrations');
 
 // Pending migrations to apply in order
 const PENDING = [
-  '20260626000001_seed_nck_compilation_bscn_paper1.sql',
-  '20260627000001_seed_flashcard_batch3.sql',
-  '20260627000001_seed_nck_2024_bscn_paper1.sql',
-  '20260627000002_seed_nck_2024_krchn_paper1.sql',
-  '20260627000003_seed_nck_2024_paper2.sql',
+  '20260711000001_seed_mcq_compilation_set3.sql'
 ];
 
 function makeRequest(endpoint, method, body) {

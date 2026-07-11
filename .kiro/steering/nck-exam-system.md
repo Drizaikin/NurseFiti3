@@ -354,6 +354,12 @@ The correct answer must be independently verified against the rationale provided
 
 > **Rule:** If the marked answer and the rationale contradict each other, resolve the contradiction by consulting the reference materials (Section 14.3), correct the answer, and note the correction in the SQL comment above the INSERT.
 
+### 7.6 Multiple Defensible Answers in NCK MCQs
+It is typical for NCK questions to have several defensible answers. This is **not** a reason to discard or refuse to seed a question. 
+- The goal is to **find the most accurate answer** among the options.
+- Ensure the rationale **accurately explains why the chosen choice is the most appropriate** as per NCK/MoH/Kenya Medical Protocols.
+- Absolute accuracy and strict adherence to the standards is required; no shortcuts.
+
 ### 14.2 Rationale Accuracy
 
 The rationale must be audited for clinical and scientific accuracy against the primary reference materials listed in Section 14.3. A rationale that is vague, outdated, or inconsistent with current Kenyan or WHO guidelines must be corrected before insertion.
