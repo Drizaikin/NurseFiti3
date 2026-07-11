@@ -34,6 +34,7 @@ async function run() {
     const normKey = `${q.cadre}:::${normStem}`;
     if (normalizedMap[normKey]) {
         normDupes++;
+        console.log(`NORM DUPE: [${q.cadre}] ID:${q.id} -> ${q.stem.substring(0, 80)}`);
     }
     normalizedMap[normKey] = true;
   });
