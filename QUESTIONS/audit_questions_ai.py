@@ -1,11 +1,11 @@
 import os
 import sys
 import json
-import requests
-from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dotenv import load_dotenv
 from supabase import create_client
+import google.generativeai as genai
 
 # Load env
 load_dotenv('../.env.local')
@@ -15,8 +15,8 @@ SUPABASE_KEY = os.environ.get('SUPABASE_SERVICE_ROLE_KEY')
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-# Prepare prompt
-SYSTEM_PROMPT = """
+genai.configure(api_key=GEMINI_API_KEY)
+model = genai.GenerativeModel('gemini-2.0-flash', system_instruction="""
 You are an expert Kenyan Nursing Council (NCK) Examiner and Auditor.
 Your job is to strictly evaluate multiple-choice questions for the NCK licensure examination.
 Guidelines:
@@ -32,47 +32,39 @@ Respond strictly in JSON:
   "corrected_option": "A" | "B" | "C" | "D" | null,
   "corrected_rationale": "New rationale if UPDATE, else null."
 }
-"""
+""")
 
 def call_gemini(question_data):
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={GEMINI_API_KEY}"
-    payload = {
-        "contents": [
-            {
-                "role": "user",
-                "parts": [
-                    {"text": SYSTEM_PROMPT},
-                    {"text": json.dumps(question_data, indent=2)}
-                ]
-            }
-        ],
-        "generationConfig": {
-            "responseMimeType": "application/json",
-            "temperature": 0.1
-        }
-    }
     for attempt in range(5):
         try:
-            resp = requests.post(url, json=payload)
-            if resp.status_code == 429:
-                time.sleep(2 ** attempt)
-                continue
-            if resp.status_code != 200:
-                print(f"API Error {resp.status_code}: {resp.text}")
-                return None
-            data = resp.json()
-            text_res = data['candidates'][0]['content']['parts'][0]['text']
-            # Clean markdown code blocks
-            text_res = text_res.strip()
+            response = model.generate_content(
+                json.dumps(question_data, indent=2),
+                generation_config=genai.types.GenerationConfig(
+                    temperature=0.1,
+                    response_mime_type="application/json"
+                )
+            )
+            text_res = response.text.strip()
             if text_res.startswith('```json'): text_res = text_res[7:]
             elif text_res.startswith('```'): text_res = text_res[3:]
             if text_res.endswith('```'): text_res = text_res[:-3]
             return json.loads(text_res.strip())
         except Exception as e:
             time.sleep(2 ** attempt)
+            print(f"Retry {attempt+1} due to error: {e}")
     return None
 
 def main():
+    BATCH_SIZE = 50
+    PROGRESS_FILE = 'audit_progress.json'
+    
+    audited_ids = []
+    if os.path.exists(PROGRESS_FILE):
+        with open(PROGRESS_FILE, 'r') as f:
+            audited_ids = json.load(f)
+            
+    print(f"Already audited {len(audited_ids)} questions.")
+
     print("Fetching seeded questions from Supabase...")
     offset = 0
     limit = 1000
@@ -85,39 +77,52 @@ def main():
         offset += limit
     print(f"Found {len(seeded)} seeded questions.")
 
-    sample = seeded
+    unaudited = [q for q in seeded if q['id'] not in audited_ids]
+    
+    if not unaudited:
+        print("All questions have been audited!")
+        return
+        
+    sample = unaudited[:BATCH_SIZE]
+    print(f"Taking a batch of {len(sample)} questions...")
     
     ai_responses = [None] * len(sample)
-    with ThreadPoolExecutor(max_workers=5) as executor:
-        future_to_idx = {}
-        for idx, q in enumerate(sample):
-            q_data = {
-                "stem": q['stem'],
-                "options": [q['option_a'], q['option_b'], q['option_c'], q['option_d']],
-                "correct_option": q['correct_option'],
-                "rationale": q['rationale'],
-                "cadre": q['cadre']
-            }
-            future_to_idx[executor.submit(call_gemini, q_data)] = idx
-            
-        print(f"Processing {len(sample)} questions through AI...")
-        for future in as_completed(future_to_idx):
-            idx = future_to_idx[future]
-            ai_responses[idx] = future.result()
+    
+    # Process sequentially to avoid rate limiting issues since we failed earlier with threads
+    print(f"Processing {len(sample)} questions through AI sequentially...")
+    for idx, q in enumerate(sample):
+        print(f"Processing {idx+1}/{len(sample)}: {q['id']}")
+        q_data = {
+            "stem": q['stem'],
+            "options": [q['option_a'], q['option_b'], q['option_c'], q['option_d']],
+            "correct_option": q['correct_option'],
+            "rationale": q['rationale'],
+            "cadre": q['cadre']
+        }
+        ai_responses[idx] = call_gemini(q_data)
+        time.sleep(1) # Add a small delay between requests to help with rate limits
         
     # Process results
     updates = 0
     deletes = 0
     keeps = 0
     
-    report_lines = ["# AI Audit Report\n"]
+    batch_num = (len(audited_ids) // BATCH_SIZE) + 1
+    report_file = f'ai_audit_results_batch_{batch_num}.md'
+    
+    report_lines = [f"# AI Audit Report - Batch {batch_num}\n"]
     report_lines.append(f"Evaluated {len(sample)} questions.\n")
     
+    new_audited_ids = []
+    
     for i, ai_res in enumerate(ai_responses):
+        q = sample[i]
+        
         if not ai_res:
+            print(f"Failed to get AI response for question {q['id']}")
             continue
             
-        q = sample[i]
+        new_audited_ids.append(q['id'])
         action = ai_res.get('action')
         
         if action == 'KEEP':
@@ -143,12 +148,18 @@ def main():
             deletes += 1
             report_lines.append(f"### ❌ TO BE DELETED: {q['stem'][:100]}...")
             report_lines.append(f"**Reason**: {ai_res.get('reason')}\n")
-            # NOT actually deleting as per user request to highlight first.
             
     print(f"Done! Kept: {keeps}, Updated: {updates}, Flagged for Delete: {deletes}")
     
-    with open('ai_audit_results_final.md', 'w', encoding='utf-8') as f:
+    # Save progress
+    audited_ids.extend(new_audited_ids)
+    with open(PROGRESS_FILE, 'w') as f:
+        json.dump(audited_ids, f)
+        
+    with open(report_file, 'w', encoding='utf-8') as f:
         f.write("\n".join(report_lines))
+        
+    print(f"Report saved to {report_file}")
 
 if __name__ == '__main__':
     main()
