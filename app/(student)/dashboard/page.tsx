@@ -13,6 +13,7 @@ import { FeedbackWidget } from '@/components/shared/FeedbackWidget';
 import { FeedbackWall } from '@/components/shared/FeedbackWall';
 import { effectiveTier } from '@/lib/planLimits';
 import { fetchPlatformSettings, buildDynamicPlanPricingMeta } from '@/lib/platformSettings';
+import { IS_UNDER_AUDIT } from '@/components/student/MaintenanceCurtain';
 
 import { AppRatingModal } from './AppRatingModal';
 
@@ -588,6 +589,27 @@ export default function DashboardPage() {
 
         {/* Left col */}
         <div className="lg:col-span-2 space-y-5">
+
+          {/* Audit Alert */}
+          {IS_UNDER_AUDIT && (
+            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/30 rounded-2xl p-4 sm:p-5 shadow-sm">
+              <div className="flex gap-4">
+                <div className="w-10 h-10 bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 rounded-full flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-heading font-bold text-amber-900 dark:text-amber-100 mb-1">
+                    Question Bank Under Audit
+                  </h3>
+                  <p className="text-sm text-amber-800 dark:text-amber-200/80 leading-relaxed">
+                    We are currently performing a comprehensive clinical audit of our entire question bank to ensure the highest standard of accuracy. Practice tests and Mock Exams are temporarily unavailable and will be back in approximately 1 week. We sincerely apologize for the inconvenience!
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Quick actions */}
           <Card>
