@@ -316,6 +316,10 @@ The following year/cadre/paper combinations have already been seeded into the da
 | 2018 | BScN | Paper II | NCK Paper 2 — BScN April 2018 |
 | NULL | BScN | Paper I / Paper II | Multiple uncategorised sets (Papers 1, 2, 3 — no year on source PDF) |
 | NULL | KRCHN | Paper I / Paper II | Multiple uncategorised sets (Papers 1, 2, 3 — no year on source PDF) |
+| NULL | BScN | Paper I | NCK_MCQ_Compilation_Set3_Answers_Rationales.docx — BScN Paper I questions |
+| NULL | BScN | Paper II | NCK_MCQ_Compilation_Set3_Answers_Rationales.docx — BScN Paper II questions |
+| NULL | KRCHN | Paper I | NCK_MCQ_Compilation_Set3_Answers_Rationales.docx — KRCHN Paper I questions |
+| NULL | KRCHN | Paper II | NCK_MCQ_Compilation_Set3_Answers_Rationales.docx — KRCHN Paper II questions |
 
 > **Deduplication rule:** If a question stem already exists in the database (exact or near-identical wording), **do not re-insert it** — even if the source year differs. Use the existing row and update `exam_year` if it was previously `NULL`.
 
@@ -494,6 +498,8 @@ Every new feature, UI change, or batch of new questions **must be announced to s
 | 3 | 26 June 2026 | 186 new NCK past-paper questions (compilation 2006–2025) |
 | 4 | 26 June 2026 | Report/flag question errors feature |
 | 5 | 27 June 2026 | Midwifery + Anatomy & Physiology flashcards batch |
+| 6–11 | July 2026 | Multiple question bank expansions, badges, AI flashcards, mnemonics, revision plan |
+| 12 | 13 July 2026 | 1,000+ Set 3 MCQs added — character-by-character audit; wrong answers corrected; garbled options cleaned; units/topics/papers fixed per NCK CBT blueprint |
 
 ---
 

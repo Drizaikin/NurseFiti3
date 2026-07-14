@@ -1866,8 +1866,8 @@ INSERT INTO questions (cadre, unit, topic, stem, option_a, option_b, option_c, o
  '25 drops per minute',
  '28 drops per minute',
  '27 drops per minute',
- 'D',
- 'Drops/min = (Volume in mL x drop factor) divided by (Time in minutes). = (500 x 20) divided by (6 x 60) = 10,000 divided by 360 = 27.77, which is approximately 27 drops/min. The expected Kenya nursing mathematics answer is 27 drops/min (truncate, do not round up to avoid fluid overload).',
+ 'C',
+ 'Drops/min = (Volume in mL x drop factor) divided by (Time in minutes). = (500 x 20) divided by (6 x 60) = 10,000 divided by 360 = 27.77. Standard rounding rules require rounding to the nearest whole number, which is 28 drops/min.',
  'medium', 'approved', NULL, 'Paper I');
 
 -- Q3 T/F split → two standalone MCQs

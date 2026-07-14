@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/Button";
 // ❶  RELEASES REGISTRY — edit here to announce new features
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CURRENT_VERSION = 11;
+const CURRENT_VERSION = 12;
 
 interface WhatsNewItem {
   icon: string;
@@ -350,6 +350,41 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
           "We've just seeded 1,932 brand new past-paper questions to the platform. The question bank has been fully updated!",
         cta: { label: "Start Practising", href: "/practice" },
       }
+    ],
+  },
+
+  // ── Version 12 — Set 3 Question Bank + Deep Audit ─────────────────────────
+  {
+    version: 12,
+    date: "13 July 2026",
+    items: [
+      {
+        icon: "📝",
+        tag: "New Questions",
+        tagColor: "bg-primary/20 text-primary",
+        title: "1,000+ New NCK MCQs — Deeply Audited",
+        description:
+          "A brand-new batch of over 1,000 questions has been added, covering Medical-Surgical, Midwifery, Paediatrics, Pharmacology, Community Health, Mental Health, Research and more — for both BScN and KRCHN.",
+        cta: { label: "Start Practising", href: "/practice" },
+      },
+      {
+        icon: "🔬",
+        tag: "Quality",
+        tagColor: "bg-emerald-500/20 text-emerald-400",
+        title: "Character-by-Character Audit",
+        description:
+          "Every question in this batch was audited question-by-question: wrong answers corrected, garbled option text cleaned, rationales verified against Brunner & Suddarth, Myles, Kenya MOH and WHO guidelines.",
+        cta: { label: "Take a Mock Exam", href: "/mock-exam" },
+      },
+      {
+        icon: "🏗️",
+        tag: "Fixed",
+        tagColor: "bg-amber-500/20 text-amber-400",
+        title: "Units, Topics & Papers Corrected",
+        description:
+          "All questions now have correct unit assignments, specific clinical topics (no more 'General'), and accurate Paper I / Paper II placement per the NCK CBT blueprint. Your mock exams are more accurate than ever.",
+        cta: { label: "Practice Now", href: "/practice" },
+      },
     ],
   },
 ];
