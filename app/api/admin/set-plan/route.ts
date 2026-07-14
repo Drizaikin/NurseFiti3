@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Role check — must be admin
-    const { data: profileData } = await supabase
+    const { data: profileData } = await adminSupabase
       .from('profiles')
       .select('role')
       .eq('id', user.id)

@@ -9,6 +9,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
+import { effectiveTier } from '@/lib/planLimits';
 
 // Force dynamic rendering — this route reads cookies (auth session)
 // and must never be statically generated at build time.
@@ -93,18 +94,18 @@ export async function GET(req: NextRequest) {
       // For plan breakdown, join student_profiles only for actual students
       const { data: studentPlans } = await admin
         .from('student_profiles')
-        .select('id, plan_tier')
+        .select('id, plan_tier, plan_expires_at')
         .in('id',
           (await admin.from('profiles').select('id').eq('role', 'student')).data?.map((p: { id: string }) => p.id) ?? []
         );
 
-      const plans = (studentPlans ?? []) as Array<{ plan_tier: string }>;
+      const plans = (studentPlans ?? []) as Array<{ plan_tier: string; plan_expires_at: string | null }>;
       const tutors = (tutorsRes.data ?? []) as Array<{ verification_status: string }>;
 
       return NextResponse.json({
         totalStudents:    studentsRes.count ?? 0,
-        freeStudents:     plans.filter(s => s.plan_tier === 'free').length,
-        paidStudents:     plans.filter(s => s.plan_tier !== 'free').length,
+        freeStudents:     plans.filter(s => effectiveTier(s.plan_tier, s.plan_expires_at) === 'free').length,
+        paidStudents:     plans.filter(s => effectiveTier(s.plan_tier, s.plan_expires_at) !== 'free').length,
         totalTutors:      tutors.length,
         verifiedTutors:   tutors.filter(t => t.verification_status === 'verified').length,
         pendingTutors:    tutors.filter(t => t.verification_status === 'pending').length,
@@ -154,7 +155,7 @@ export async function GET(req: NextRequest) {
           full_name:      p.full_name,
           email:          p.email,
           cadre:          sp?.cadre ?? '—',
-          plan_tier:      sp?.plan_tier ?? 'free',
+          plan_tier:      sp ? effectiveTier(sp.plan_tier, sp.plan_expires_at) : 'free',
           plan_expires_at: sp?.plan_expires_at ?? null,
           created_at:     p.created_at,
           is_locked:      p.is_locked ?? false,
