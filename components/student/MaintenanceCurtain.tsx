@@ -4,7 +4,7 @@ import React from 'react';
 
 // --- MAINTENANCE TOGGLE ---
 // Set to false to remove the curtain when auditing is complete
-export const IS_UNDER_AUDIT = true;
+export const IS_UNDER_AUDIT = false;
 
 export function MaintenanceCurtain({ children }: { children: React.ReactNode }) {
   if (!IS_UNDER_AUDIT) {
