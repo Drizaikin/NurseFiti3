@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { Spinner } from '@/components/ui/Spinner';
 
 // --- MAINTENANCE TOGGLE ---
 // Set to false to remove the curtain when auditing is complete
@@ -38,7 +39,7 @@ export function MaintenanceCurtain({ children }: { children: React.ReactNode }) 
   if (loading) {
     return (
       <div className="flex-1 flex items-center justify-center p-8">
-        <div className="w-8 h-8 border-4 border-teal-500 border-t-transparent rounded-full animate-spin" />
+        <Spinner size="md" />
       </div>
     );
   }
