@@ -388,6 +388,10 @@ export default function PracticePage() {
           <h1 className="text-3xl font-heading font-bold text-primary mb-2">Practice Questions</h1>
           <p className="text-neutral-mid">You have an unfinished session</p>
         </div>
+        
+        {/* Download wrong questions feature is always accessible here */}
+        <DownloadWrongQuestionsCard planTier={planTier} />
+
         <Card className="border-primary/30 bg-primary/5 dark:bg-primary/10">
           <div className="flex items-start gap-4">
             <div className="text-3xl">📖</div>
@@ -423,6 +427,9 @@ export default function PracticePage() {
           <h1 className="text-3xl font-heading font-bold text-primary mb-2">Practice Questions</h1>
           <p className="text-neutral-mid">Select your preferences and start practicing</p>
         </div>
+
+        {/* Download wrong questions feature */}
+        <DownloadWrongQuestionsCard planTier={planTier} />
 
         {/* Daily limit banner for free users */}
         {isFree && (

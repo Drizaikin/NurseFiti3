@@ -13,6 +13,7 @@ import { getLimits, effectiveTier } from '@/lib/planLimits';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { DownloadWrongQuestionsCard } from '@/components/student/DownloadWrongQuestionsCard';
 
 // ─── Download button for a single past mock exam result ───────────────────────
 
@@ -345,6 +346,8 @@ export default function AnalyticsPage() {
           </div>
         </div>
       </Card>
+
+      <DownloadWrongQuestionsCard planTier={planTier} />
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

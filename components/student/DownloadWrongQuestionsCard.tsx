@@ -38,16 +38,24 @@ export function DownloadWrongQuestionsCard({ planTier }: Props) {
         return;
       }
 
-      // The response is an HTML blob that we want to open in a new tab
+      // The response is an HTML blob that we want to download
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
-      const w = window.open(url, '_blank');
-      if (w) {
-         w.focus();
-      } else {
-         toast.error("Pop-up blocked! Please allow pop-ups for this site to view your review.");
-      }
-      toast.success('Practice review generated successfully!');
+      const a = document.createElement('a');
+      a.href = url;
+      
+      const dateStr = new Date().toISOString().split('T')[0];
+      const filename = mode === 'new' 
+        ? `nursefiti-new-mistakes-${dateStr}.html` 
+        : `nursefiti-all-mistakes-${dateStr}.html`;
+        
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      
+      toast.success('Practice review generated successfully! Open the file in any browser to view and print.');
     } catch (err) {
       console.error(err);
       toast.error('An error occurred. Please try again.');
