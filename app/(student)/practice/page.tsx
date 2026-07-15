@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Spinner } from '@/components/ui/Spinner';
 import { MCQCard } from '@/components/student/MCQCard';
+import { DownloadWrongQuestionsCard } from '@/components/student/DownloadWrongQuestionsCard';
 import { getLimits, effectiveTier } from '@/lib/planLimits';
 
 interface Question {
@@ -451,6 +452,9 @@ export default function PracticePage() {
             )}
           </div>
         )}
+
+        {/* Download wrong questions feature */}
+        <DownloadWrongQuestionsCard planTier={planTier} />
 
         {/* Session Summary (if just completed) */}
         {session.questionsAnswered > 0 && (

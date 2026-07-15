@@ -24,7 +24,7 @@ export function MaintenanceCurtain({ children }: { children: React.ReactNode }) 
             .select('cadre')
             .eq('id', user.id)
             .single();
-          if (isMounted) setCadre(data?.cadre ?? null);
+          if (isMounted) setCadre((data as any)?.cadre ?? null);
         }
       } catch (err) {
         console.error(err);

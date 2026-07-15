@@ -34,6 +34,7 @@ export const PLAN_LIMITS = {
     leaderboard: false,
     whatsappSupport: false,
     examReminders: false,
+    wrongQuestionsDownload: false,
   },
   daily: {
     practiceQuestionsPerDay: 120,
@@ -47,6 +48,7 @@ export const PLAN_LIMITS = {
     leaderboard: false,
     whatsappSupport: false,
     examReminders: false,
+    wrongQuestionsDownload: false,
   },
   weekly: {
     practiceQuestionsPerDay: 200,
@@ -60,6 +62,7 @@ export const PLAN_LIMITS = {
     leaderboard: false,
     whatsappSupport: false,
     examReminders: false,
+    wrongQuestionsDownload: true,
   },
   standard: {
     practiceQuestionsPerDay: Infinity,
@@ -73,6 +76,7 @@ export const PLAN_LIMITS = {
     leaderboard: false,
     whatsappSupport: false,
     examReminders: false,
+    wrongQuestionsDownload: true,
   },
   premium: {
     practiceQuestionsPerDay: Infinity,
@@ -86,6 +90,7 @@ export const PLAN_LIMITS = {
     leaderboard: true,
     whatsappSupport: true,
     examReminders: true,
+    wrongQuestionsDownload: true,
   },
 } as const satisfies Record<PlanTier, {
   practiceQuestionsPerDay: number;
@@ -99,6 +104,7 @@ export const PLAN_LIMITS = {
   leaderboard: boolean;
   whatsappSupport: boolean;
   examReminders: boolean;
+  wrongQuestionsDownload: boolean;
 }>;
 
 export function getLimits(tier: string) {

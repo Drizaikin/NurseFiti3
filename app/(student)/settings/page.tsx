@@ -136,6 +136,7 @@ function buildDynamicPlans(settings: PlatformSettings | null) {
         '7-day access',
         '3 mock exams (2 downloads)',
         'Personalized revision plan included',
+        'Download incorrect questions',
       ],
       note: 'Best value for short-term exam prep',
       highlight: true,
@@ -154,6 +155,7 @@ function buildDynamicPlans(settings: PlatformSettings | null) {
         'Smarter analytics',
         'Spaced repetition flashcards',
         'Adaptive revision roadmap',
+        'Download incorrect questions',
         'Tutor priority',
       ],
       note: '30-day access',
@@ -169,6 +171,7 @@ function buildDynamicPlans(settings: PlatformSettings | null) {
       features: [
         'Everything in Success Plan',
         'Unlimited mock exams & downloads',
+        'Download incorrect questions',
         'Tutor priority',
         'Exam registration reminders',
       ],

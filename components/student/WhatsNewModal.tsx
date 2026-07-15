@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/Button";
 // ❶  RELEASES REGISTRY — edit here to announce new features
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CURRENT_VERSION = 12;
+const CURRENT_VERSION = 13;
 
 interface WhatsNewItem {
   icon: string;
@@ -385,6 +385,32 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
           "All questions now have correct unit assignments, specific clinical topics (no more 'General'), and accurate Paper I / Paper II placement per the NCK CBT blueprint. Your mock exams are more accurate than ever.",
         cta: { label: "Practice Now", href: "/practice" },
       },
+    ],
+  },
+
+  // ── Version 13 — Download Wrong Questions Feature ─────────────────────────
+  {
+    version: 13,
+    date: "15 July 2026",
+    items: [
+      {
+        icon: "📥",
+        tag: "New Feature",
+        tagColor: "bg-primary/20 text-primary",
+        title: "Download Questions You Got Wrong",
+        description:
+          "You can now download and print a beautifully formatted PDF of all the practice questions you answered incorrectly. Use this to actively revise the exact concepts you struggle with offline.",
+        cta: { label: "Try it Now", href: "/practice" },
+      },
+      {
+        icon: "⚡",
+        tag: "Pro",
+        tagColor: "bg-amber-500/20 text-amber-400",
+        title: "Download Only New Mistakes",
+        description:
+          "The system tracks what you've already printed! Click 'Download New Only' to get a fresh PDF of just your recent mistakes, ensuring you don't waste time reviewing the same things.",
+        cta: { label: "Review Mistakes", href: "/practice" },
+      }
     ],
   },
 ];
