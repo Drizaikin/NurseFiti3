@@ -12,6 +12,7 @@ import { CountdownTimer } from '@/components/shared/CountdownTimer';
 import { getLimits, effectiveTier, getWeekStart } from '@/lib/planLimits';
 import { AskAI } from '@/components/student/AskAI';
 import toast from 'react-hot-toast';
+import { MockResult, MockExamHistoryTable } from '@/components/student/MockExamHistoryTable';
 
 interface Question {
   id: string;
@@ -78,6 +79,7 @@ export default function MockExamPage() {
   const [showRationale, setShowRationale] = useState<string | null>(null);
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadedMocks, setDownloadedMocks] = useState<string[]>([]);
+  const [mockExams, setMockExams] = useState<MockResult[]>([]);
   const [examProgress, setExamProgress] = useState<Record<string, { totalSets: number; completedSets: number; uniqueSeen: number; totalQuestions: number; isFetching: boolean }>>({});
 
   const handleDownloadResult = async () => {
@@ -140,14 +142,19 @@ export default function MockExamPage() {
         setPlanTier(tier);
         setSelectedExam(`${sp.cadre}-Paper1`);
 
-        // Count mock exams taken this calendar week (Mon–Sun)
+        // Fetch all mock exams to show history and count this week
         const weekStart = getWeekStart();
-        const { count } = await supabase
+        const { data: mocksData } = await supabase
           .from('mock_exam_results')
-          .select('id', { count: 'exact', head: true })
+          .select('*')
           .eq('student_id', user.id)
-          .gte('completed_at', weekStart);
-        setExamsThisWeek(count ?? 0);
+          .order('completed_at', { ascending: false });
+          
+        const mocks = (mocksData ?? []) as MockResult[];
+        setMockExams(mocks);
+        
+        const thisWeekCount = mocks.filter(m => new Date(m.completed_at) >= weekStart).length;
+        setExamsThisWeek(thisWeekCount);
       }
       try {
         setDownloadedMocks(JSON.parse(localStorage.getItem('downloaded_mocks') || '[]'));
@@ -727,6 +734,13 @@ export default function MockExamPage() {
             </Button>
           )}
         </Card>
+
+        {mockExams.length > 0 && (
+          <Card className="mt-6">
+            <h2 className="text-xl font-heading font-bold mb-4">Past Mock Exams</h2>
+            <MockExamHistoryTable mockExams={mockExams} planTier={planTier} />
+          </Card>
+        )}
       </div>
     );
   }
