@@ -153,7 +153,7 @@ export default function MockExamPage() {
         const mocks = (mocksData ?? []) as MockResult[];
         setMockExams(mocks);
         
-        const thisWeekCount = mocks.filter(m => new Date(m.completed_at) >= weekStart).length;
+        const thisWeekCount = mocks.filter(m => new Date(m.completed_at) >= new Date(weekStart)).length;
         setExamsThisWeek(thisWeekCount);
       }
       try {
