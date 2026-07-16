@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { z } from 'zod';
-import { getLimits, PlanTier } from '@/lib/planLimits';
+import { getLimits, PlanTier, effectiveTier } from '@/lib/planLimits';
 
 export const dynamic = 'force-dynamic';
 
@@ -49,13 +49,16 @@ export async function POST(req: NextRequest) {
       
     const { data: studentProfile } = await (admin as any)
       .from('student_profiles')
-      .select('effective_tier')
+      .select('plan_tier, plan_expires_at')
       .eq('id', user.id)
       .single();
 
     const studentName = profile?.full_name ?? 'Student';
     const studentEmail = profile?.email ?? user.email ?? '';
-    const tier = (studentProfile?.effective_tier ?? 'free') as PlanTier;
+    
+    const rawTier = studentProfile?.plan_tier ?? 'free';
+    const expiresAt = studentProfile?.plan_expires_at ?? null;
+    const tier = effectiveTier(rawTier, expiresAt) as PlanTier;
     
     // Check plan limits
     const limits = getLimits(tier);

@@ -460,9 +460,6 @@ export default function PracticePage() {
           </div>
         )}
 
-        {/* Download wrong questions feature */}
-        <DownloadWrongQuestionsCard planTier={planTier} />
-
         {/* Session Summary (if just completed) */}
         {session.questionsAnswered > 0 && (
           <Card className="mb-6 bg-primary/5 dark:bg-primary/10 border-primary/20">
