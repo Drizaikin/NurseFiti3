@@ -49,6 +49,18 @@ const SAMPLE_QUESTIONS: Record<string, SampleQuestion> = {
     topic: 'Parenteral Medication Administration',
     difficulty: 'easy',
   },
+  'nck-exam-centres-kenya-sample': {
+    stem: 'During an NCK clinical examination simulation, a candidate is asked to demonstrate the proper sequence for removing personal protective equipment (PPE) after caring for a patient in isolation. According to WHO and Kenya Ministry of Health guidelines, which of the following represents the CORRECT order of doffing?',
+    option_a: 'Gloves, Goggles/Shield, Gown, Mask, Hand hygiene',
+    option_b: 'Gown, Gloves, Mask, Goggles/Shield, Hand hygiene',
+    option_c: 'Mask, Gloves, Gown, Goggles/Shield, Hand hygiene',
+    option_d: 'Gloves, Gown, Goggles/Shield, Mask, Hand hygiene',
+    correct_option: 'D',
+    rationale: 'According to WHO and Kenya Ministry of Health infection prevention and control (IPC) standards, the correct order of doffing (removing) PPE is: 1. Gloves (most contaminated), 2. Gown, 3. Goggles or Face Shield, 4. Mask/Respirator, 5. Perform Hand Hygiene. Gloves are removed first because they have the highest risk of heavy pathogen contamination. The gown is removed next, followed by goggles/shield which protect the eyes from splash during gown removal. The mask is removed last (outside the patient room if it is a respirator) to protect the airway until all other contaminated items are discarded. Hand hygiene must be performed immediately after doffing to clean any contamination that occurred during the removal process.',
+    unit: 'Infection Prevention & Control',
+    topic: 'Personal Protective Equipment',
+    difficulty: 'medium',
+  },
 };
 
 export function BlogSampleMCQ({ questionSlug }: { questionSlug: string }) {

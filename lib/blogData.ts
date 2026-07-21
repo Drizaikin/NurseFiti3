@@ -1,5 +1,14 @@
 export const POSTS = [
   {
+    slug: 'nck-exam-centres-kenya-guide',
+    title: 'NCK Exam Centres in Kenya: Full List & Guide (2026)',
+    excerpt: 'Find the full list of NCK exam centres in Kenya for 2026. Discover what to expect on exam day, how to register, and how to pass on your first attempt.',
+    category: 'Study Guide',
+    readTime: '11 min read',
+    date: '2026-07-21',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
     slug: 'moh-nursing-internship-deployment-kenya-2026',
     title: 'Ministry of Health 2026 Internship Deployment: What You Must Do By June 29',
     excerpt: 'The Ministry of Health has confirmed the July 1st, 2026 deployment of 6,360 healthcare interns, including 2,000 BSc Nursing Officers. Here is how to collect your offer letter.',
@@ -183,6 +192,7 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
+  'nck-exam-centres-kenya-guide': 'https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80&auto=format&fit=crop',
   'moh-nursing-internship-deployment-kenya-2026': 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80&auto=format&fit=crop',
   'nck-may-2026-exam-results-released': 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80&auto=format&fit=crop',
   'nck-exam-warning-unaccredited-colleges-kenya-2026': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200&q=80&auto=format&fit=crop',

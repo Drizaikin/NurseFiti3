@@ -1474,6 +1474,171 @@ Passing the NCK licensure exam while working as an intern is a test of strategy,
 
 const POSTS_LATEST_RESEARCH: Post[] = [
   {
+    slug: 'nck-exam-centres-kenya-guide',
+    title: 'NCK Exam Centres in Kenya: Full List & Guide (2026)',
+    excerpt: 'Find the full list of NCK exam centres in Kenya for 2026. Discover what to expect on exam day, how to register, and how to pass on your first attempt.',
+    category: 'Study Guide',
+    readTime: '11 min read',
+    date: '2026-07-21',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+Entering the examination room for the NCK licensure exam is one of the most high-stakes moments in a Kenyan nursing graduate’s life. The difference between passing on your first attempt and waiting another six months often comes down to your level of preparation and familiarity with the exam day environment. Knowing exactly where your assigned testing centre is and what rules you must follow will protect you from unnecessary stress and potential disqualification.
+
+While most candidates spend months studying their notes, there is a specific biometric check at the entrance that catches dozens of unprepared graduates every cycle — we will explain how to ensure you pass it smoothly in the sections below.
+
+## What is the NCK Exam Centre System?
+
+The Nursing Council of Kenya (NCK) administers all licensure examinations via computer-based testing (CBT). Rather than sitting for exams in traditional classrooms using pen and paper, candidates report to designated IT and computer labs across the country. These labs are accredited NCK exam centres in Kenya, chosen for their secure network infrastructure, reliable power backup systems, and seating capacity.
+
+These centres run the **DigiProctor** examination client, a secure lockdown browser that prevents candidates from accessing external websites, documents, or help during the test. Understanding this interface is vital to your success. If you are unfamiliar with CBT, you should review our [guide to the DigiProctor interface](/blog/digiproctor-nck-exam-guide) before your exam day.
+
+**[Practise questions on this topic free on NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+## Full List of Approved NCK Exam Centres in Kenya (2026)
+
+To accommodate candidates from all 47 counties, the NCK has distributed exam centres across major regional hubs. Most of these centres are hosted within Kenya Medical Training College (KMTC) campuses and partner public or private universities.
+
+Below is the verified list of active NCK exam centres in Kenya for the 2026 academic cycles:
+
+### Nairobi Region
+- **KMTC Nairobi Campus:** Located opposite Kenyatta National Hospital (KNH) along Ngong Road. This is the largest centre in the country and handles the highest volume of candidates.
+- **Kenyatta University (KU) CBT Centre:** Located along the Thika Superhighway. This centre boasts modern computer labs with high-speed connections and backup generators.
+- **Jomo Kenyatta University of Agriculture and Technology (JKUAT) Main Campus:** Located in Juja, Kiambu County.
+- **Mount Kenya University (MKU) Main Campus:** Located in Thika Town.
+
+### Rift Valley Region
+- **KMTC Nakuru Campus:** Located next to the Nakuru County Referral Hospital. A central hub for Nakuru and neighboring counties.
+- **KMTC Eldoret Campus:** Located adjacent to the Moi Teaching and Referral Hospital (MTRH) in Eldoret.
+- **Kabarak University CBT Centre:** Located along the Nakuru-Eldama Ravine highway.
+
+### Nyanza Region
+- **KMTC Kisumu Campus:** Located near Kisumu County Referral Hospital. Serves Kisumu, Siaya, Homa Bay, and Vihiga counties.
+- **Maseno University CBT Lab:** Located at the Maseno Main Campus along the Kisumu-Busia Road.
+
+### Coast Region
+- **KMTC Mombasa Campus:** Located near the Coast General Teaching and Referral Hospital.
+- **Pwani University CBT Labs:** Located in Kilifi Town, serving Kilifi, Kwale, and Lamu counties.
+
+### Central Region
+- **KMTC Nyeri Campus:** Located next to the Nyeri County Referral Hospital.
+- **Dedan Kimathi University of Technology (DeKUT):** Located in Nyeri Town along the Nyeri-Nyahururu Road.
+
+### Western Region
+- **KMTC Kakamega Campus:** Located near the Kakamega County Referral Hospital.
+- **Masinde Muliro University of Science and Technology (MMUST):** Located in Kakamega Town.
+
+### Eastern Region
+- **KMTC Meru Campus:** Located next to Meru Level 5 Hospital.
+- **Chuka University CBT Centre:** Located in Chuka Town, Tharaka Nithi County.
+- **KMTC Machakos Campus:** Located next to Machakos Level 5 Hospital.
+
+### North Eastern Region
+- **KMTC Garissa Campus:** Located in Garissa Town, serving the entire northern region.
+
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+  <strong>Note on Centre Availability:</strong> NCK occasionally adds temporary centres or relocates existing ones depending on candidate numbers for a specific cycle. Always double-check your official admission letter for your exact allocated venue.
+</div>
+
+## Booking Your NCK Exam Centre: The First-Come, First-Served Rule
+
+You select your preferred NCK exam centre during the online registration process on the NCK Online Services Portal [osp.nckenya.go.ke](https://osp.nckenya.go.ke). 
+
+However, you must be aware of the **capacity limit rule**. Each centre has a fixed number of computer workstations. Once the capacity for a particular centre (such as KMTC Nairobi or KMTC Nakuru) is filled, the portal will automatically disable that option for the cycle. 
+
+If you delay registering, you may be forced to book a centre in another county or region, incurring unexpected travel and accommodation costs. To avoid this, gather your registration documents early and submit your application the day the portal opens. See our comprehensive [NCK Exam Preparation Guide](/blog/nck-exam-preparation-guide-kenya) for a complete list of required registration documents.
+
+## Strict NCK Exam Centre Rules and Regulations
+
+The Nursing Council of Kenya maintains a zero-tolerance policy toward examination irregularities. The exam centres are highly secure, and violations of guidelines will lead to immediate cancellation of your results and potential suspension from future sittings.
+
+### 1. Mandatory Documentation
+You must present the following documents at the security gate to be admitted:
+- **Original National ID Card** or valid Passport. Scans, photocopies, or police abstracts are **not** accepted under any circumstances.
+- **Printed NCK Exam Admission Letter** downloaded from [osp.nckenya.go.ke](https://osp.nckenya.go.ke).
+
+### 2. Prohibited Items
+The following items are strictly banned from the examination rooms:
+- Mobile phones, smartwatches, tablets, and e-readers.
+- Personal calculator devices (an on-screen calculator is provided within the exam interface if needed).
+- Notebooks, textbooks, or personal scratch papers.
+- Large bags, heavy jackets, or hats.
+
+### 3. Biometric Verification
+Before entering the computer lab, you will undergo a biometric fingerprint check and facial verification to match your identity against your portal details. This is the entry check that catches many candidates: if your registration details are incorrect or if your biometrics fail to sync, you will be delayed. Ensure your details on the OSP portal match your National ID exactly.
+
+### 4. Surveillance and Monitoring
+All NCK exam centres are monitored through a combination of:
+- Physical invigilators walking the aisles.
+- CCTV cameras installed throughout the labs.
+- Proctored webcam and microphone monitoring built into the DigiProctor client to record screen activity and candidate behavior.
+
+## Test Yourself: Infection Prevention & Control Practice
+
+Here is a high-yield question from the NurseFiti question bank related to standard protocols you must master for your NCK exam. Try it out to see how our interactive rationales help you learn:
+
+<div class="sample-mcq-embed" data-question-slug="nck-exam-centres-kenya-sample"></div>
+
+Want access to thousands of verified questions and detailed rationales? **[Create your free NurseFiti account →](https://www.nursefiti.co.ke/signup)**
+
+## What to Expect on Exam Day: Step-by-Step Procedure
+
+Knowing what happens on the day of the exam will help calm your nerves and keep you focused. Here is the typical workflow once you arrive at the centre:
+
+### 1. Arrival and Security Screening
+You should arrive at the exam centre at least **45 to 60 minutes** before your scheduled start time. Security guards and NCK officials will check your ID and admission letter at the gate. You will be asked to store all personal bags and phones in a designated holding area outside the exam room.
+
+### 2. Biometric Registration
+You will join the biometric queue. An NCK officer will scan your fingerprint and verify your face. Once cleared, you will be assigned a specific computer terminal number.
+
+### 3. Entering the Lab and Logging In
+Once seated at your assigned terminal, you will find the DigiProctor client running. You will log in using the credentials provided on your admission letter. Ensure the screen displays your correct name and registration number.
+
+### 4. Reading Instructions and System Check
+Before the timer starts, you will have 10 minutes to read the exam instructions and run a webcam system check. An invigilator will provide a general briefing and distribute blank scratch paper and pencils for your calculations.
+
+### 5. Writing the Exam
+The exam consists of 100 multiple-choice questions with a 120-minute countdown timer. You can navigate freely back and forth between questions using the navigator grid. If you are unsure of a question, select a temporary option, click "Flag for Review", and return to it later. The system will auto-submit when the timer reaches zero.
+
+**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+
+## Pro-Tips for Managing Exam Day Logistics
+
+### Visit the Centre a Day Early
+If you are assigned to a centre you have never visited before, travel there the day before the exam. Locate the exact gate, assess the traffic conditions, and identify public transport routes. This eliminates travel panic on the morning of the exam.
+
+### Plan Your Accommodations
+If you must travel to another county for your exam, book clean, quiet accommodations close to the centre. Avoid long commutes on the morning of the test.
+
+### Manage Your Time Strategically
+With 100 questions in 120 minutes, you have exactly **72 seconds per question**. Do not spend more than 2 minutes on any single question. If a dosage calculation or scenario is taking too long, flag it, move forward, and return to it once you have secured the easier marks.
+
+### Join the Community for Live Updates
+For real-time discussions, exam cycle updates, and peer advice on centre selections, join the official community.
+
+**[Stay updated with the latest in the Kenyan nursing community. Join the NurseFiti WhatsApp channel →](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)**
+
+## Conclusion
+
+Your choice of NCK exam centre and your preparation for the exam environment are just as important as the hours you spend studying. By booking your centre early, understanding the strict rules, and practising on a CBT simulator, you remove logistical anxiety and allow your clinical knowledge to shine.
+
+**[Start your free NurseFiti account — no credit card required](https://www.nursefiti.co.ke/signup)**
+
+> *Share this: "Preparing for the upcoming NCK exam? Here is the full list of NCK exam centres in Kenya for 2026, registration guidelines, and the strict rules to avoid exam-day disqualification: nursefiti.co.ke/blog/nck-exam-centres-kenya-guide"*
+
+---
+
+## Sources & References
+
+- **Nursing Council of Kenya (NCK)** — Official list of approved examination centres and CBT guidelines. [nckenya.com](https://www.nckenya.com)
+- **NCK Online Services Portal (OSP)** — Candidate registration guidelines and portal manuals. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
+- **Ministry of Health Kenya** — National Infection Prevention and Control (IPC) Guidelines for Health Care Services. [health.go.ke](https://www.health.go.ke)
+- **World Health Organization (WHO)** — *Guidelines on hand hygiene in health care and proper PPE doffing sequence*. [who.int](https://www.who.int)
+- **The Kenya Times** — *"NCK Transition to DigiProctor Computer-Based Testing System"*, news archives. [thekenyatimes.com](https://thekenyatimes.com)
+
+*Always verify current exam information and approved centres directly at [nckenya.com](https://www.nckenya.com).*
+`
+  },
+  {
     slug: 'nursing-politics-leadership-kenya',
     title: 'Nursing and Politics in Kenya: Leadership Opportunities for Practitioners (2026)',
     excerpt: 'As Kenya approaches the 2027 elections, the intersection of nursing and politics has never been more critical. Discover political and leadership seats available for nursing practitioners to advocate for better healthcare policies.',
@@ -1741,6 +1906,11 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
   'nursefiti-for-nursing-students-undergrads': {
     url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80&auto=format&fit=crop',
     alt: 'Nursing students collaborating and studying together at university with laptop',
+    credit: 'Unsplash',
+  },
+  'nck-exam-centres-kenya-guide': {
+    url: 'https://images.unsplash.com/photo-1562774053-701939374585?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Computer-based examination lab for NCK licensure exams in Kenya',
     credit: 'Unsplash',
   },
   'nursing-politics-leadership-kenya': {
