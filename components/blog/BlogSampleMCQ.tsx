@@ -61,6 +61,18 @@ const SAMPLE_QUESTIONS: Record<string, SampleQuestion> = {
     topic: 'Personal Protective Equipment',
     difficulty: 'medium',
   },
+  'nck-exam-foreign-trained-nurses-kenya-sample': {
+    stem: 'A foreign-trained nurse who has completed their clinical adaptation placement in Kenya is preparing to administer medications to a patient in the medical ward. Which of the following references is the PRIMARY source for determining approved medications and clinical guidelines in the Kenyan public healthcare system?',
+    option_a: 'British National Formulary (BNF)',
+    option_b: 'Kenya Essential Medicines List (KEML)',
+    option_c: 'United States Pharmacopeia (USP)',
+    option_d: 'WHO Model List of Essential Medicines',
+    correct_option: 'B',
+    rationale: 'The Kenya Essential Medicines List (KEML), published by the Ministry of Health, is the primary national reference directing the selection, procurement, distribution, and clinical administration of medicines in Kenyan public and private healthcare facilities. While foreign-trained nurses may be accustomed to international databases like the BNF (A) or USP (C), they must adhere to local KEML and MOH clinical guidelines when practicing and testing in Kenya. The WHO Model List (D) serves as a global template but is not the country-specific legal document.',
+    unit: 'Pharmacology & Drug Administration',
+    topic: 'Clinical Reference Guidelines',
+    difficulty: 'medium',
+  },
 };
 
 export function BlogSampleMCQ({ questionSlug }: { questionSlug: string }) {

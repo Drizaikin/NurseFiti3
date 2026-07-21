@@ -1,5 +1,14 @@
 export const POSTS = [
   {
+    slug: 'nck-exam-foreign-trained-nurses-kenya',
+    title: 'NCK Exam for Foreign-Trained Nurses in Kenya: Complete Guide (2026)',
+    excerpt: 'Complete guide for foreign-trained nurses seeking licensing in Kenya (2026). Learn about transcript verification, clinical adaptation, and the NCK exam.',
+    category: 'Study Guide',
+    readTime: '10 min read',
+    date: '2026-07-21',
+    cadres: ['KRCHN', 'BScN'],
+  },
+  {
     slug: 'nck-exam-centres-kenya-guide',
     title: 'NCK Exam Centres in Kenya: Full List & Guide (2026)',
     excerpt: 'Find the full list of NCK exam centres in Kenya for 2026. Discover what to expect on exam day, how to register, and how to pass on your first attempt.',
@@ -192,6 +201,7 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
+  'nck-exam-foreign-trained-nurses-kenya': 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80&auto=format&fit=crop',
   'nck-exam-centres-kenya-guide': 'https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80&auto=format&fit=crop',
   'moh-nursing-internship-deployment-kenya-2026': 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80&auto=format&fit=crop',
   'nck-may-2026-exam-results-released': 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80&auto=format&fit=crop',

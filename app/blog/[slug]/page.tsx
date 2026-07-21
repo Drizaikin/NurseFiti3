@@ -1474,6 +1474,141 @@ Passing the NCK licensure exam while working as an intern is a test of strategy,
 
 const POSTS_LATEST_RESEARCH: Post[] = [
   {
+    slug: 'nck-exam-foreign-trained-nurses-kenya',
+    title: 'NCK Exam for Foreign-Trained Nurses in Kenya: Complete Guide (2026)',
+    excerpt: 'Complete guide for foreign-trained nurses seeking licensing in Kenya (2026). Learn about transcript verification, clinical adaptation, and the NCK exam.',
+    category: 'Study Guide',
+    readTime: '10 min read',
+    date: '2026-07-21',
+    cadres: ['KRCHN', 'BScN'],
+    content: `
+Entering a new healthcare system is an exciting but complex journey, especially for nurses who trained outside of East Africa. In Kenya, the Nursing Council of Kenya (NCK) is the sole regulatory body responsible for verifying credentials and issuing practising licences. For foreign-trained nurses (FTNs) seeking to practice in the country, the process culminates in a mandatory licensure examination.
+
+While many expect a simple conversion process, there is a strict 24-week clinical adaptation requirement that catches dozens of unprepared applicants off guard every year — we will break down exactly how to navigate it and prepare for the final licensure exam in the sections below.
+
+## Understanding the Foreign-Trained Nurse Pathway in Kenya
+
+The Nursing Council of Kenya (NCK) ensures that all practicing nurses meet the national clinical standards. According to the Nurses Act (Cap 257 of the Laws of Kenya), anyone who obtained their nursing education outside Kenya must undergo verification, clinical adaptation, and licensing examinations before they can legally practice.
+
+This regulation applies to:
+- Bosnian, Indian, Ugandan, or any foreign nationals relocating to Kenya for employment, research, or humanitarian missions.
+- Syrian, UK, US, or any foreign-educated Kenyan citizens who studied nursing abroad and wish to return home to practice.
+
+The pathway is structured into distinct phases to evaluate your academic background and clinical competencies.
+
+**[Practise questions on this topic free on NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+## Phase 1: Application and Document Verification
+
+The first step in your licensing journey is submitting your credentials to the Nursing Council of Kenya for verification. This process is fully managed through the NCK Online Services Portal [osp.nckenya.go.ke](https://osp.nckenya.go.ke).
+
+### Required Verification Documents
+You must upload clear, scanned copies of the following documents:
+- **Academic transcripts** from your nursing school.
+- **Nursing diploma or degree certificate**.
+- **Active registration certificate or licence** from the nursing board/council of the country where you trained.
+- **Official syllabus or curriculum** of the nursing program completed (to assess course content and clinical hours).
+- **National ID Card** (for Kenyan citizens) or a valid **Passport** (for foreign nationals).
+- **Certificate of Good Standing** sent directly from your registering authority/nursing board to the NCK.
+
+Once you submit your application on the portal, the NCK will contact your training institution and foreign nursing board directly to verify the authenticity of your documents. This process can take anywhere from **2 to 6 months** depending on the responsiveness of your previous school and board. You can monitor the verification status by logging into the NCK OSP portal.
+
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+  <strong>Pro-Tip for Verification:</strong> Contact your former nursing school registrar and licensing board as soon as you submit your application to NCK. Urging them to respond quickly to NCK's verification request will save you weeks of waiting.
+</div>
+
+## Phase 2: Indexing and Temporary Registration
+
+Once the NCK successfully verifies your credentials, they will determine if your training is equivalent to the Kenyan standards (either KRCHN/Diploma or BScN/Degree). 
+
+If approved, you will be required to pay the indexing fee on the [osp.nckenya.go.ke](https://osp.nckenya.go.ke) portal. NCK will then issue you an **indexing number**. This number acts as your unique identifier and tracks your progress through clinical training and examinations in Kenya. 
+
+For foreign nationals, NCK may issue a temporary indexing clearance and temporary registration letter, allowing them to remain in the country legally during their training period.
+
+## Phase 3: The Mandatory Clinical Adaptation Placement
+
+Unlike local graduates who proceed directly from school to the exam, foreign-trained nurses must undergo a **clinical adaptation placement**. This is a mandatory clinical internship that helps you adjust to the Kenyan healthcare system.
+
+### Structure of the Adaptation Placement
+- **Duration:** Typically **24 weeks (6 months)** of full-time clinical rotation.
+- **Approved Facilities:** The placement must be conducted at an NCK-approved teaching and referral hospital (such as Kenyatta National Hospital in Nairobi, Moi Teaching and Referral Hospital in Eldoret, or designated Level 5 County Referral Hospitals).
+- **Core Rotations:** You will rotate through the major departments: Medical-Surgical Nursing, Pediatric Nursing, Obstetrics/Gynecology, and Community Health Nursing.
+
+### Why Adaptation is Crucial
+The clinical landscape in Kenya differs significantly from Western or Asian countries:
+1. **Disease Profiles:** You will manage high volumes of infectious diseases like Malaria, Tuberculosis, and HIV/AIDS, which are guided by specific Kenya Ministry of Health [health.go.ke](https://www.health.go.ke) clinical protocols.
+2. **Resource Allocation:** You will learn to deliver quality nursing care in resource-limited settings, mastering manual calculations and local equipment.
+3. **Pharmacology:** You must familiarize yourself with local drug names and protocols, primarily guided by the Kenya Essential Medicines List (KEML).
+
+## Test Your Pharmacology & Drug Calculation Knowledge
+
+To give you an idea of the clinical guidelines and pharmacology questions you will encounter on the NCK exam, try this sample question:
+
+<div class="sample-mcq-embed" data-question-slug="nck-exam-foreign-trained-nurses-kenya-sample"></div>
+
+Want access to thousands of custom drug calculation questions and rationales? **[Create your free NurseFiti account →](https://www.nursefiti.co.ke/signup)**
+
+## Phase 4: Sitting the NCK Licensure Examination
+
+After completing your 24-week clinical adaptation, your supervising hospital will submit a logbook and completion letter to the Nursing Council of Kenya. Once approved, you are cleared to book the **NCK Licensure Examination**.
+
+### Exam Format and Client
+The exam is a Computer-Based Test (CBT) delivered via the secure **DigiProctor** client. It tests your competency across two main papers:
+- **Paper I:** Tests basic sciences, pharmacology, fundamentals of nursing, and medical-surgical clinical scenarios.
+- **Paper II:** Focuses on specialized areas including maternal-neonatal health (midwifery), pediatrics, community health, and nursing management/ethics.
+
+To help you get familiar with the test interface, we highly recommend reading our detailed [guide to the DigiProctor NCK exam interface](/blog/digiproctor-nck-exam-guide) before exam day.
+
+### High-Yield Study Areas for Foreign-Trained Nurses
+- **Kenya MOH Guidelines:** Focus on reproductive health, malaria management, and immunization schedules (KEPI guidelines).
+- **Nursing Law and Ethics:** Study the Nurses Act (Cap 257) and the NCK Code of Conduct.
+- **Drug Calculations:** Master intravenous drip rates, pediatric dosing, and local drug formulations. Refer to our [NCK pharmacology and drug calculations guide](/blog/nck-pharmacology-calculations-guide) for worked formulas.
+
+**[NurseFiti's mock exam replicates the NCK CBT format exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+
+## Phase 5: Registration and Licensure
+
+Once you pass the NCK licensure exam, your results will be updated on the portal. You can then apply for:
+1. **NCK Registration Certificate:** The official document confirming your entry into the register of nurses in Kenya.
+2. **Practising Licence:** The annual licence allowing you to work in clinical environments.
+
+For a detailed walkthrough of the final steps, including fees and portal clicks, read our guide on [how to apply for your NCK licence after passing](/blog/how-to-apply-nck-licence-kenya).
+
+## Pro-Tips for Foreign-Trained Candidates
+
+### 1. Document Everything
+Keep physical and digital copies of all course syllabi, clinical logbooks, and licensing histories. NCK requires highly detailed records to verify clinical hours.
+
+### 2. Focus on Local Guidelines
+Do not rely solely on textbook guidelines from the UK or US. NCK questions are strictly aligned with Kenya Ministry of Health standards and WHO guidelines tailored for East Africa.
+
+### 3. Join the Community
+Stay connected with other foreign-trained and local candidates to share updates on portal openings, exam results, and study resources.
+
+**[Get real-time updates and support. Join the official NurseFiti WhatsApp channel →](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)**
+
+## Conclusion
+
+Transitioning your nursing career to Kenya requires patience and structured preparation. By submitting your verification documents early, engaging fully in your clinical adaptation, and studying with local guidelines in mind, you will navigate the pathway smoothly and pass your NCK exam on your first attempt.
+
+**[Start your free NurseFiti account — no credit card required](https://www.nursefiti.co.ke/signup)**
+
+> *Share this: "Are you a foreign-trained nurse looking to practice in Kenya? Here is the complete guide to credential verification, clinical adaptation placements, and passing the NCK CBT licensing exam in 2026: nursefiti.co.ke/blog/nck-exam-foreign-trained-nurses-kenya"*
+
+---
+
+## Sources & References
+
+- **Nursing Council of Kenya (NCK)** — Guidelines for registration of foreign-trained nurses. [nckenya.com](https://www.nckenya.com)
+- **NCK Online Services Portal (OSP)** — Verification and licensing registration manuals. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
+- **Ministry of Health Kenya** — *Kenya Essential Medicines List (KEML)* and Clinical Management Guidelines. [health.go.ke](https://www.health.go.ke)
+- **World Health Organization (WHO) Kenya** — Country cooperation strategy and regional clinical guidelines. [who.int](https://www.who.int)
+- **Laws of Kenya** — *The Nurses Act (Chapter 257)*. [klr.go.ke](http://www.klr.go.ke)
+
+*Always verify current registration requirements and guidelines directly at [nckenya.com](https://www.nckenya.com).*
+`,
+  },
+  {
     slug: 'nck-exam-centres-kenya-guide',
     title: 'NCK Exam Centres in Kenya: Full List & Guide (2026)',
     excerpt: 'Find the full list of NCK exam centres in Kenya for 2026. Discover what to expect on exam day, how to register, and how to pass on your first attempt.',
@@ -1906,6 +2041,11 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
   'nursefiti-for-nursing-students-undergrads': {
     url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80&auto=format&fit=crop',
     alt: 'Nursing students collaborating and studying together at university with laptop',
+    credit: 'Unsplash',
+  },
+  'nck-exam-foreign-trained-nurses-kenya': {
+    url: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Foreign trained nurse studying online for licensing registration in Kenya',
     credit: 'Unsplash',
   },
   'nck-exam-centres-kenya-guide': {
