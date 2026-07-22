@@ -20,6 +20,80 @@ interface Post {
 
 const POSTS: Post[] = [
   {
+    slug: 'surviving-first-clinical-placement-kenyan-public-hospital',
+    title: 'Surviving Your First Clinical Placement in a Kenyan Public Hospital (2026)',
+    excerpt: 'The gap between ideal theory and the reality of under-resourced wards. Learn how to survive your BScN clinical rotations and learn effectively without burning out.',
+    category: 'Study Guide',
+    readTime: '8 min read',
+    date: '2026-07-22',
+    cadres: ['BScN', 'KRCHN'],
+    content: `
+You have practised taking vital signs on a pristine mannequin. But tomorrow morning, you walk into a Kenyan public hospital ward with 40 patients, two nurses, and zero functioning blood pressure machines. The gap between what you learn in nursing school and what happens on the ward is massive, and it causes severe anxiety for most students. There is one specific mistake first-year undergrads make on the ward that makes the nurses ignore them—here is how to avoid it.
+
+Clinical rotations are the most critical part of your BScN training. They are where you transition from a student reading books to a clinician saving lives. But in Kenya, clinical placements come with unique challenges: overcrowding, lack of resources, and immense pressure. 
+
+Here is exactly how to survive your first clinical placement and learn effectively without burning out.
+
+## 1. The Theory-Practice Gap
+
+Your university lecturers teach you the absolute gold standard of care. This is necessary because the Nursing Council of Kenya (NCK) examines you on evidence-based practice. 
+
+However, when you enter a busy county hospital, you will quickly notice that the "gold standard" is often impossible. You might be taught to use a new pair of sterile gloves for every minor interaction, but the ward might only have one box to last the entire shift. 
+
+You must learn to adapt without compromising patient safety. Understand *why* a procedure is done a certain way (the principle) so you can improvise safely when resources are lacking.
+
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+  <strong>Key Takeaway:</strong> Never compromise on infection prevention control (IPC), but learn to be resourceful. Observe how senior nurses adapt to shortages without harming patients.
+</div>
+
+**[Practise NCK-style questions on clinical procedures free on NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+## 2. The Mistake That Makes Nurses Ignore You
+
+So, what is the mistake that makes senior nurses write you off? **Hiding in the nurses' station doing paperwork.**
+
+Many undergrads, overwhelmed by the chaos of the ward, retreat to the desk to update care plans or read files. The busy nurses on the floor see this and assume you are lazy or think you are "too educated" for bedside care. 
+
+If you want the nurses to teach you the real skills—how to set up an IV line in a collapsed vein, how to identify fetal distress on a manual fetoscope—you must volunteer for the messy jobs. Help with bed baths. Assist in moving patients. When the nurses see you working hard, they will pull you aside to show you the complex, high-yield clinical skills.
+
+## 3. Treating the Ward Like an Exam
+
+The things you see on the ward are exactly what the NCK licensure exam will test you on. The NCK exam is heavily clinical. It tests application, not just theory. 
+
+When you see a patient with pre-eclampsia, do not just take their vitals. Go home and read about the pathophysiology, the exact dosage of Magnesium Sulphate used in Kenyan protocols, and the nursing interventions. Connect the patient in front of you to the syllabus.
+
+**[NurseFiti's mock exam replicates the NCK DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+
+## 4. Protecting Your Mental Health
+
+The emotional toll of a clinical placement is heavy. You will see pain, suffering, and sometimes death, often for the first time. You will be working long 12-hour shifts, sometimes on your feet the entire time.
+
+Burnout is real among nursing students in Kenya. You cannot pour from an empty cup. You must aggressively protect your mental health:
+- **Debrief:** Talk about difficult cases with your clinical instructor or peers.
+- **Rest:** Do not sacrifice sleep to study. A rested brain retains more information.
+- **Hydrate:** Carry a water bottle. Wards are hot, and you will forget to drink water.
+
+Your clinical placement is a marathon, not a sprint. Pace yourself. 
+
+## Start Your Preparation Early
+
+If you wait until your final year to start preparing for your licensure, you are already behind. The best students use their clinical rotations to study for the NCK exam passively. By the time the exam approaches, they are just reviewing. 
+
+**[Start your free NurseFiti account — no credit card required](https://www.nursefiti.co.ke/signup)**
+
+> *Found this — really accurate breakdown of what to expect on your first clinical placement in Kenya. It also explains why hiding at the nurses' station is the worst thing you can do. Share with anyone starting their rotations: nursefiti.co.ke/blog/surviving-first-clinical-placement-kenyan-public-hospital*
+
+---
+
+### Sources & References
+
+*Always verify current clinical guidelines directly at [health.go.ke](https://www.health.go.ke) or official MOH channels.*
+
+- **Ministry of Health, Kenya** — Clinical guidelines and protocols for nursing practice in public hospitals. [health.go.ke](https://www.health.go.ke)
+- **Nursing Council of Kenya** — Official standards for clinical placements and indexing. [nckenya.com](https://www.nckenya.com)
+    `,
+  },
+  {
     slug: 'moh-nursing-internship-deployment-kenya-2026',
     title: 'Ministry of Health 2026 Internship Deployment: What You Must Do By June 29',
     excerpt: 'The Ministry of Health has confirmed the July 1st, 2026 deployment of 6,360 healthcare interns, including 2,000 BSc Nursing Officers. Here is how to collect your offer letter.',

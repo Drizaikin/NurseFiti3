@@ -1,5 +1,14 @@
 export const POSTS = [
   {
+    slug: 'nursing-clinical-placement-kenya-guide',
+    title: 'Nursing Clinical Placement in Kenya: Survival Guide (2026)',
+    excerpt: 'Learn how to survive your BScN nursing clinical placement in Kenya. Discover how to bridge the theory-practice gap and avoid burnout on the wards.',
+    category: 'Study Guide',
+    readTime: '8 min read',
+    date: '2026-07-22',
+    cadres: ['BScN', 'KRCHN'],
+  },
+  {
     slug: 'nck-exam-foreign-trained-nurses-kenya',
     title: 'NCK Exam for Foreign-Trained Nurses in Kenya: Complete Guide (2026)',
     excerpt: 'Complete guide for foreign-trained nurses seeking licensing in Kenya (2026). Learn about transcript verification, clinical adaptation, and the NCK exam.',
@@ -201,6 +210,7 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
+  'nursing-clinical-placement-kenya-guide': 'https://images.unsplash.com/photo-1584820927508-eaaf97223e74?w=1200&q=80&auto=format&fit=crop',
   'nck-exam-foreign-trained-nurses-kenya': 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80&auto=format&fit=crop',
   'nck-exam-centres-kenya-guide': 'https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80&auto=format&fit=crop',
   'moh-nursing-internship-deployment-kenya-2026': 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80&auto=format&fit=crop',
