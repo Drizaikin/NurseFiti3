@@ -62,7 +62,7 @@ The things you see on the ward are exactly what the NCK licensure exam will test
 
 When you see a patient with pre-eclampsia, do not just take their vitals. Go home and read about the pathophysiology, the exact dosage of Magnesium Sulphate used in Kenyan [Ministry of Health protocols](https://www.health.go.ke), and the nursing interventions. Connect the patient in front of you to the syllabus.
 
-**[NurseFiti's mock exam replicates the NCK DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+**[NurseFiti's mock exam replicates the NCK DigiProctor interface exactly. Try a mock exam →](https://www.nursefiti.co.ke/signup)**
 
 ## 4. Protecting Your Mental Health
 
@@ -134,7 +134,7 @@ The deployment of 2,000 BSc Nursing Officers is a significant move, but it also 
 
 If you are still a student or preparing for your upcoming NCK exams, you need to treat your preparation with the same urgency as this internship deployment. 
 
-**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a mock exam →](https://www.nursefiti.co.ke/signup)**
 
 ## Start Your Preparation Today
 
@@ -202,7 +202,7 @@ The recent warning about unaccredited colleges is a reminder of how strict the N
 
 When it comes to the exam, you need to treat it with the same level of seriousness. The NCK exam format (DigiProctor) is unique, and the questions are designed to test clinical application, not just rote memorisation.
 
-**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a mock exam →](https://www.nursefiti.co.ke/signup)**
 
 ## Start Your Preparation Today
 
@@ -709,7 +709,7 @@ However, this brings us to the mistake you must avoid: **Do not simply re-read y
 
 If your current study strategy resulted in a fail, using it again for the August 2026 sitting will yield the same outcome. The NCK exam tests application and clinical judgment, not rote memorisation. You need a structured revision plan that focuses on your weakest units.
 
-**[NurseFiti's diagnostic mock exams replicate the DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+**[NurseFiti's diagnostic mock exams replicate the DigiProctor interface exactly. Try a mock exam →](https://www.nursefiti.co.ke/signup)**
 
 Join the thousands of Kenyan nurses already preparing systematically on NurseFiti. Focus on retrieval practice, spaced repetition, and timed mock exams.
 
@@ -857,7 +857,7 @@ If you did not pass: You are eligible to resit at the next available sitting. Be
   <strong>Key Takeaway:</strong> Whether you passed or not, the next step requires action now. Passed? Apply for your licence today. Did not pass? Start a structured diagnostic practice session to identify your weakest units before the August sitting.
 </div>
 
-**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a mock exam →](https://www.nursefiti.co.ke/signup)**
 
 ## May 2026 Exams Concluded — August Is Next
 
@@ -1640,7 +1640,7 @@ To help you get familiar with the test interface, we highly recommend reading ou
 - **Nursing Law and Ethics:** Study the Nurses Act (Cap 257) and the NCK Code of Conduct.
 - **Drug Calculations:** Master intravenous drip rates, pediatric dosing, and local drug formulations. Refer to our [NCK pharmacology and drug calculations guide](/blog/nck-pharmacology-calculations-guide) for worked formulas.
 
-**[NurseFiti's mock exam replicates the NCK CBT format exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+**[NurseFiti's mock exam replicates the NCK CBT format exactly. Try a mock exam →](https://www.nursefiti.co.ke/signup)**
 
 ## Phase 5: Registration and Licensure
 
@@ -1810,7 +1810,7 @@ Before the timer starts, you will have 10 minutes to read the exam instructions 
 ### 5. Writing the Exam
 The exam consists of 100 multiple-choice questions with a 120-minute countdown timer. You can navigate freely back and forth between questions using the navigator grid. If you are unsure of a question, select a temporary option, click "Flag for Review", and return to it later. The system will auto-submit when the timer reaches zero.
 
-**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a mock exam →](https://www.nursefiti.co.ke/signup)**
 
 ## Pro-Tips for Managing Exam Day Logistics
 
@@ -2274,7 +2274,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     url: `https://www.nursefiti.co.ke/blog/${post.slug}`,
     datePublished: post.date,
     dateModified: post.date,
-    ...(heroImg ? { image: heroImg.url } : {}),
+    ...(heroImg ? { image: heroImg } : {}),
     author: {
       '@type': 'Organization',
       name: 'NurseFiti',
@@ -2345,8 +2345,8 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         {heroImg && (
           <div className="relative w-full h-56 sm:h-72 rounded-2xl overflow-hidden mb-10 shadow-card">
             <Image
-              src={heroImg.url}
-              alt={heroImg.alt}
+              src={heroImg}
+              alt={post.title}
               fill
               className="object-cover"
               priority

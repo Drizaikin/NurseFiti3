@@ -203,6 +203,7 @@ Every post must link to at least **2 other NurseFiti blog posts** or app pages. 
 - Every image must have a descriptive `alt` text containing a keyword
 - Use `loading="lazy"` for below-fold images, `loading="eager"` for the hero
 - Images from Unsplash: use `?w=1200&q=80&auto=format&fit=crop` for optimised delivery
+- **Hero Image Uniqueness & Relevance**: Ensure the hero image is not repeated across multiple blog posts and is highly relevant/relates directly to the specific topic of the post.
 - Add a caption crediting the source where required by the licence
 
 ### 6.8 Schema Markup
