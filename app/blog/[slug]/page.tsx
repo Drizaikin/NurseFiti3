@@ -21,8 +21,8 @@ interface Post {
 const POSTS: Post[] = [
   {
     slug: 'surviving-first-clinical-placement-kenyan-public-hospital',
-    title: 'Surviving Your First Clinical Placement in a Kenyan Public Hospital (2026)',
-    excerpt: 'The gap between ideal theory and the reality of under-resourced wards. Learn how to survive your BScN clinical rotations and learn effectively without burning out.',
+    title: 'Surviving Your First Clinical Placement in a Kenyan Public Hospital',
+    excerpt: 'Learn how to survive your BScN nursing clinical placement in Kenya. Discover how to bridge the theory-practice gap and avoid burnout on the wards.',
     category: 'Study Guide',
     readTime: '8 min read',
     date: '2026-07-22',
@@ -36,7 +36,7 @@ Here is exactly how to survive your first clinical placement and learn effective
 
 ## 1. The Theory-Practice Gap
 
-Your university lecturers teach you the absolute gold standard of care. This is necessary because the Nursing Council of Kenya (NCK) examines you on evidence-based practice. 
+Your university lecturers teach you the absolute gold standard of care. This is necessary because the [Nursing Council of Kenya (NCK)](https://www.nckenya.com) examines you on evidence-based practice. 
 
 However, when you enter a busy county hospital, you will quickly notice that the "gold standard" is often impossible. You might be taught to use a new pair of sterile gloves for every minor interaction, but the ward might only have one box to last the entire shift. 
 
@@ -58,9 +58,9 @@ If you want the nurses to teach you the real skills—how to set up an IV line i
 
 ## 3. Treating the Ward Like an Exam
 
-The things you see on the ward are exactly what the NCK licensure exam will test you on. The NCK exam is heavily clinical. It tests application, not just theory. 
+The things you see on the ward are exactly what the NCK licensure exam will test you on. The NCK exam is heavily clinical. It tests application, not just theory. If you are anxious about the format, [read our guide on the DigiProctor NCK Exam Interface](/blog/digiproctor-nck-exam-guide).
 
-When you see a patient with pre-eclampsia, do not just take their vitals. Go home and read about the pathophysiology, the exact dosage of Magnesium Sulphate used in Kenyan protocols, and the nursing interventions. Connect the patient in front of you to the syllabus.
+When you see a patient with pre-eclampsia, do not just take their vitals. Go home and read about the pathophysiology, the exact dosage of Magnesium Sulphate used in Kenyan [Ministry of Health protocols](https://www.health.go.ke), and the nursing interventions. Connect the patient in front of you to the syllabus.
 
 **[NurseFiti's mock exam replicates the NCK DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
 
@@ -68,7 +68,7 @@ When you see a patient with pre-eclampsia, do not just take their vitals. Go hom
 
 The emotional toll of a clinical placement is heavy. You will see pain, suffering, and sometimes death, often for the first time. You will be working long 12-hour shifts, sometimes on your feet the entire time.
 
-Burnout is real among nursing students in Kenya. You cannot pour from an empty cup. You must aggressively protect your mental health:
+Burnout is real among nursing students in Kenya. You cannot pour from an empty cup. If the pressure of balancing clinicals and exam preparation is causing you severe stress, read our guide on [how to manage NCK exam anxiety](/blog/nck-exam-anxiety-how-to-manage-it). You must aggressively protect your mental health:
 - **Debrief:** Talk about difficult cases with your clinical instructor or peers.
 - **Rest:** Do not sacrifice sleep to study. A rested brain retains more information.
 - **Hydrate:** Carry a water bottle. Wards are hot, and you will forget to drink water.
@@ -78,6 +78,8 @@ Your clinical placement is a marathon, not a sprint. Pace yourself.
 ## Start Your Preparation Early
 
 If you wait until your final year to start preparing for your licensure, you are already behind. The best students use their clinical rotations to study for the NCK exam passively. By the time the exam approaches, they are just reviewing. 
+
+For more tips and to connect with other students preparing for the exam, **[Join the NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)**.
 
 **[Start your free NurseFiti account — no credit card required](https://www.nursefiti.co.ke/signup)**
 
