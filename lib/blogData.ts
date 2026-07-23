@@ -1,5 +1,14 @@
 export const POSTS = [
   {
+    slug: 'nck-indexing-60-day-deadline-kenya',
+    title: 'NCK Indexing Kenya 2026: The Complete 60-Day Deadline Guide',
+    excerpt: 'Discover the crucial 60-day NCK indexing deadline on the OSP portal. Learn the step-by-step process to ensure your BScN training is fully recognized in Kenya.',
+    category: 'Study Guide',
+    readTime: '6 min read',
+    date: '2026-07-23',
+    cadres: ['BScN', 'KRCHN'],
+  },
+  {
     slug: 'surviving-first-clinical-placement-kenyan-public-hospital',
     title: 'Surviving Your First Clinical Placement in a Kenyan Public Hospital',
     excerpt: 'Learn how to survive your BScN nursing clinical placement in Kenya. Discover how to bridge the theory-practice gap and avoid burnout on the wards.',
@@ -210,6 +219,7 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
+  'nck-indexing-60-day-deadline-kenya': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80&auto=format&fit=crop',
   'surviving-first-clinical-placement-kenyan-public-hospital': 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200&q=80&auto=format&fit=crop',
   'nck-exam-foreign-trained-nurses-kenya': 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80&auto=format&fit=crop',
   'nck-exam-centres-kenya-guide': 'https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80&auto=format&fit=crop',

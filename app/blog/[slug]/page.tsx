@@ -20,6 +20,114 @@ interface Post {
 
 const POSTS: Post[] = [
   {
+    slug: 'nck-indexing-60-day-deadline-kenya',
+    title: 'NCK Indexing Kenya 2026: The Complete 60-Day Deadline Guide',
+    excerpt: 'Discover the crucial 60-day NCK indexing deadline on the OSP portal. Learn the step-by-step process to ensure your BScN training is fully recognized in Kenya.',
+    category: 'Study Guide',
+    readTime: '6 min read',
+    date: '2026-07-23',
+    cadres: ['BScN', 'KRCHN'],
+    content: `
+Most first-year nursing students in Kenya focus entirely on passing their first-semester exams and surviving clinical placements. But there is a silent administrative deadline that, if missed, means your entire BScN degree won't be recognized by the Nursing Council of Kenya (NCK). You have exactly 60 days from the date of admission to complete your NCK indexing on the OSP portal.
+
+If you fail to index within this strict window, you will be ineligible for the final NCK licensure exams, rendering years of hard work useless.
+
+In this guide, we break down exactly what NCK indexing is, the step-by-step application process on the NCK Online Services Portal, and how to avoid the common mistakes that get applications rejected. 
+
+> [!NOTE]
+> *Last verified: July 2026. Always confirm current details at nckenya.com.*
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Want to start your NCK exam prep early?</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Practise questions on this topic free on NurseFiti →</a>
+</div>
+
+## What is NCK Indexing and Why Does it Matter?
+
+NCK indexing is the official registration process where the Nursing Council of Kenya acknowledges you as a bona fide student undergoing nursing or midwifery training in an accredited institution. 
+
+Once indexed, you receive an indexing number. This number tracks your entire academic and clinical journey, culminating in your eligibility to sit for the final NCK licensure exam.
+
+Without this number, the NCK simply does not know you exist. Many students only realize they missed this step in their final year, leading to panic and delayed graduation. Don't be that student.
+
+## The Critical 60-Day Deadline
+
+The NCK mandates that every nursing student must be indexed within **60 days of admission**. 
+
+This is not a flexible deadline. The NCK does not accommodate late registrations easily, and missing it requires complex appeals, letters from your university dean, and potentially paying penalty fees—with no guarantee of approval. 
+
+Join over 10,000 Kenyan nurses already preparing smartly on NurseFiti to avoid administrative and academic pitfalls.
+
+## Step-by-Step Guide: How to Apply on the NCK OSP Portal
+
+The NCK has digitized the indexing process through the Online Services Portal (OSP). Here is the exact process to follow:
+
+### 1. Create an Account on the OSP Portal
+Visit the official NCK portal at [osp.nckenya.go.ke](https://osp.nckenya.go.ke) and select "Create Account". Ensure you use an active email address and a phone number you will have access to for the next four years.
+
+### 2. Prepare Your Documents
+You will need clear, scanned copies of:
+- Your National ID or Passport
+- KCSE Certificate or Result Slip (ensure it meets the minimum entry requirements for BScN or KRCHN)
+- Your University Admission Letter
+- A recent passport-sized photograph
+
+### 3. Fill the Application
+Log in to the OSP portal, navigate to the "Indexing" section, and fill in your personal, educational, and institutional details. Double-check your names; they must perfectly match your KCSE certificate and National ID. 
+
+### 4. Pay the Indexing Fee
+The portal will generate an invoice. Pay the required indexing fee (usually via M-Pesa or bank transfer as directed on the invoice). Always keep the payment confirmation message.
+
+### 5. Institutional Verification
+Once you submit, your application is routed to your university's Dean or Principal. They must verify and approve it on their end before the NCK processes it.
+
+<div class="my-8 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Start Your NCK Prep Journey Today</h3>
+  <p class="mb-6 opacity-90 max-w-lg mx-auto">NurseFiti's mock exam replicates the DigiProctor interface exactly. Get familiar with the exam format from day one.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Try a free mock exam →</a>
+</div>
+
+## Common Mistakes That Delay NCK Indexing
+
+Even when students apply within the 60-day window, simple errors can cause applications to be rejected:
+
+- **Name Mismatches:** If your admission letter says "John Doe Kariuki" and your KCSE slip says "John Kariuki Doe," your application will flag an error.
+- **Blurry Uploads:** Ensure your scanned documents are legible. A blurry KCSE slip will be rejected immediately.
+- **Ignoring the Dean's Approval:** Submitting on the portal is not the final step. You must follow up with your school's administration to ensure they have verified your application on the portal.
+
+If you are already looking ahead to the licensure exam, check out our [complete NCK exam preparation guide](/blog/nck-exam-preparation-guide-kenya) and learn [how to use NCK past papers effectively](/blog/nck-past-papers-practice).
+
+## Stay Updated with NurseFiti
+
+The 60-day NCK indexing deadline is your first major test as a nursing undergrad. Get it done early so you can focus on what really matters: your clinical placements and academic coursework.
+
+For more real-time updates, study tips, and exclusive NCK exam strategies, join our official WhatsApp channel:
+[Join the NurseFiti WhatsApp Channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Pass the NCK Exam on Your First Attempt</h3>
+  <p class="mb-6 opacity-90">Start your free NurseFiti account — no credit card required.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+> *Found this — really useful guide on the NCK indexing process and the 60-day deadline everyone misses. Make sure you apply early so your degree is recognized: nursefiti.co.ke/blog/nck-indexing-60-day-deadline-kenya*
+
+---
+
+<div class="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
+  <h4 class="font-bold mb-3 uppercase tracking-wider text-xs">Sources & References</h4>
+  <ul class="space-y-2 list-disc pl-4">
+    <li>Nursing Council of Kenya (NCK). (2026). <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">Official NCK Website</a>.</li>
+    <li>Nursing Council of Kenya (NCK). (2026). <a href="https://osp.nckenya.go.ke" class="text-primary hover:text-primary-mid">Online Services Portal (OSP)</a>.</li>
+  </ul>
+  <p class="mt-4 italic text-xs">Always verify current exam and indexing information directly at <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">nckenya.com</a>.</p>
+</div>
+    `,
+  },
+  {
     slug: 'surviving-first-clinical-placement-kenyan-public-hospital',
     title: 'Surviving Your First Clinical Placement in a Kenyan Public Hospital',
     excerpt: 'Learn how to survive your BScN nursing clinical placement in Kenya. Discover how to bridge the theory-practice gap and avoid burnout on the wards.',
