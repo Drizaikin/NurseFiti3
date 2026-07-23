@@ -2276,12 +2276,39 @@ function renderContent(content: string) {
   const elements: React.ReactNode[] = [];
   let key = 0;
   let inSourcesSection = false;
+  let inHtmlBlock = false;
+  let htmlBlock = '';
 
   for (const line of lines) {
     const trimmed = line.trim();
     if (!trimmed) {
-      elements.push(<div key={key++} className="h-2" />);
-    } else if (trimmed.includes('sample-mcq-embed')) {
+      if (inHtmlBlock) {
+        htmlBlock += '\n';
+      } else {
+        elements.push(<div key={key++} className="h-2" />);
+      }
+      continue;
+    }
+
+    if (inHtmlBlock) {
+      htmlBlock += '\n' + trimmed;
+      if (trimmed.includes('</div>')) {
+        elements.push(
+          <div key={key++} dangerouslySetInnerHTML={{ __html: formatInline(htmlBlock) }} />
+        );
+        inHtmlBlock = false;
+        htmlBlock = '';
+      }
+      continue;
+    }
+
+    if (trimmed.startsWith('<div') && !trimmed.endsWith('</div>')) {
+      inHtmlBlock = true;
+      htmlBlock = trimmed;
+      continue;
+    }
+
+    if (trimmed.includes('sample-mcq-embed')) {
       // Extract the data-question-slug from the HTML
       const slugMatch = trimmed.match(/data-question-slug="([^"]+)"/);
       if (slugMatch) {
