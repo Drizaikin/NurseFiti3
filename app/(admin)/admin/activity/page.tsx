@@ -37,15 +37,10 @@ export default function AdminActivityPage() {
   useEffect(() => {
     fetchActivity();
 
-    // Refresh on window focus (fallback for when user switches tabs)
-    const onFocus = () => fetchActivity();
-    window.addEventListener('focus', onFocus);
-
     // Poll every 30s for near-real-time updates
     const interval = setInterval(fetchActivity, 30_000);
 
     return () => {
-      window.removeEventListener('focus', onFocus);
       clearInterval(interval);
     };
   }, [fetchActivity]);

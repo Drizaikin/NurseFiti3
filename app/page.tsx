@@ -369,10 +369,18 @@ export default async function Home() {
   
   const [
     { count: questionsCount },
-    { count: flashcardsCount }
+    { count: flashcardsCount },
+    { data: initialFeedbacks }
   ] = await Promise.all([
     supabase.from('questions').select('*', { count: 'exact', head: true }),
-    supabase.from('flashcards').select('*', { count: 'exact', head: true })
+    supabase.from('flashcards').select('*', { count: 'exact', head: true }),
+    (supabase as any)
+      .from('app_feedback')
+      .select('id, display_name, cadre, user_role, category, rating, message, helpful_count, is_pinned, created_at')
+      .eq('is_approved', true)
+      .order('is_pinned', { ascending: false })
+      .order('created_at', { ascending: false })
+      .limit(8)
   ]);
 
   const stats = [
@@ -899,7 +907,7 @@ export default async function Home() {
               </Link>
             </div>
           </div>
-          <FeedbackWall limit={8} showSummary={true} showFilters={true} />
+          <FeedbackWall limit={8} showSummary={true} showFilters={true} initialItems={(initialFeedbacks || []) as any} />
         </div>
       </section>
 

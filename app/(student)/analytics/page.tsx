@@ -214,29 +214,6 @@ export default function AnalyticsPage() {
     };
     load();
 
-    // 1. Supabase Realtime subscription
-    const channel = supabase
-      .channel('student_analytics_changes')
-      .on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'student_answers' },
-        () => load()
-      )
-      .on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'mock_exam_results' },
-        () => load()
-      )
-      .subscribe();
-
-    // 2. Window focus listener
-    const onFocus = () => load();
-    window.addEventListener('focus', onFocus);
-
-    return () => {
-      supabase.removeChannel(channel);
-      window.removeEventListener('focus', onFocus);
-    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

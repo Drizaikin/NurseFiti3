@@ -215,16 +215,19 @@ export function FeedbackWall({
   showSummary = true,
   showFilters = true,
   compact = false,
-}: FeedbackWallProps) {
+  initialItems = [],
+}: FeedbackWallProps & { initialItems?: FeedbackItem[] }) {
   const supabase = createClient();
 
-  const [items, setItems] = useState<FeedbackItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [items, setItems] = useState<FeedbackItem[]>(initialItems);
+  const [isLoading, setIsLoading] = useState(initialItems.length === 0);
   const [activeFilter, setActiveFilter] = useState<Category | 'all'>('all');
   const [showAll, setShowAll] = useState(false);
   const [helpfulSet, setHelpfulSet] = useState<Set<string>>(new Set());
 
   const fetchFeedback = useCallback(async () => {
+    // If we already have items from server, skip fetching
+    if (initialItems.length > 0) return;
     setIsLoading(true);
     try {
       const { data } = await supabase
@@ -241,7 +244,7 @@ export function FeedbackWall({
     } finally {
       setIsLoading(false);
     }
-  }, [supabase]);
+  }, [supabase, initialItems]);
 
   useEffect(() => { fetchFeedback(); }, [fetchFeedback]);
 

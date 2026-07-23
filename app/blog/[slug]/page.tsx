@@ -3,7 +3,11 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Script from 'next/script';
 import Image from 'next/image';
+import { createClient } from '@/lib/supabase/server';
 import { BlogSampleMCQ } from '@/components/blog/BlogSampleMCQ';
+import BlogComments from '@/components/blog/BlogComments';
+import BlogShareButtons from '@/components/blog/BlogShareButtons';
+import CommunityLinks from '@/components/blog/CommunityLinks';
 
 // ─── Post data ───────────────────────────────────────────────────────────────
 
@@ -2363,9 +2367,17 @@ function formatInline(text: string): string {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = ALL_POSTS.find((p) => p.slug === params.slug);
   if (!post) notFound();
+
+  const supabase = createClient();
+  const { data: initialComments } = await (supabase as any)
+    .from('blog_comments')
+    .select('id, user_id, content, created_at, profiles:user_id(full_name, avatar_url)')
+    .eq('slug', post.slug)
+    .eq('is_deleted', false)
+    .order('created_at', { ascending: true });
 
   const relatedPosts = ALL_POSTS.filter(
     (p) => p.slug !== post.slug && p.cadres.some((c) => post.cadres.includes(c))
@@ -2513,6 +2525,15 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             </Link>
           </div>
         </div>
+
+        {/* Share Buttons */}
+        <BlogShareButtons title={post.title} slug={post.slug} />
+
+        {/* Community Links */}
+        <CommunityLinks />
+
+        {/* Comments */}
+        <BlogComments slug={post.slug} initialComments={initialComments || []} />
 
         {/* Related posts */}
         {relatedPosts.length > 0 && (
