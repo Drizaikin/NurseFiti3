@@ -41,9 +41,9 @@ In this guide, we break down exactly what NCK indexing is, the step-by-step appl
 > [!NOTE]
 > *Last verified: July 2026. Always confirm current details at nckenya.com.*
 
-<div className="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
-  <p className="text-primary-dark font-semibold mb-2">Want to start your NCK exam prep early?</p>
-  <a href="/signup" className="text-primary font-bold hover:text-primary-mid underline">Practise questions on this topic free on NurseFiti →</a>
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Want to start your NCK exam prep early?</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Practise questions on this topic free on NurseFiti →</a>
 </div>
 
 ## What is NCK Indexing and Why Does it Matter?
@@ -85,10 +85,10 @@ The portal will generate an invoice. Pay the required indexing fee (usually via 
 ### 5. Institutional Verification
 Once you submit, your application is routed to your university's Dean or Principal. They must verify and approve it on their end before the NCK processes it.
 
-<div className="my-8 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
-  <h3 className="text-2xl font-bold mb-3 text-white">Start Your NCK Prep Journey Today</h3>
-  <p className="mb-6 opacity-90 max-w-lg mx-auto">NurseFiti's mock exam replicates the DigiProctor interface exactly. Get familiar with the exam format from day one.</p>
-  <a href="/signup" className="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Try a free mock exam →</a>
+<div class="my-8 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Start Your NCK Prep Journey Today</h3>
+  <p class="mb-6 opacity-90 max-w-lg mx-auto">NurseFiti's mock exam replicates the DigiProctor interface exactly. Get familiar with the exam format from day one.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Try a free mock exam →</a>
 </div>
 
 ## Common Mistakes That Delay NCK Indexing
@@ -108,10 +108,10 @@ The 60-day NCK indexing deadline is your first major test as a nursing undergrad
 For more real-time updates, study tips, and exclusive NCK exam strategies, join our official WhatsApp channel:
 [Join the NurseFiti WhatsApp Channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)
 
-<div className="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
-  <h3 className="text-2xl font-bold mb-3 text-white">Pass the NCK Exam on Your First Attempt</h3>
-  <p className="mb-6 opacity-90">Start your free NurseFiti account — no credit card required.</p>
-  <a href="/signup" className="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Pass the NCK Exam on Your First Attempt</h3>
+  <p class="mb-6 opacity-90">Start your free NurseFiti account — no credit card required.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
 </div>
 
 ---
@@ -121,13 +121,13 @@ For more real-time updates, study tips, and exclusive NCK exam strategies, join 
 
 ---
 
-<div className="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
-  <h4 className="font-bold mb-3 uppercase tracking-wider text-xs">Sources & References</h4>
-  <ul className="space-y-2 list-disc pl-4">
-    <li>Nursing Council of Kenya (NCK). (2026). <a href="https://www.nckenya.com" className="text-primary hover:text-primary-mid">Official NCK Website</a>.</li>
-    <li>Nursing Council of Kenya (NCK). (2026). <a href="https://osp.nckenya.go.ke" className="text-primary hover:text-primary-mid">Online Services Portal (OSP)</a>.</li>
+<div class="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
+  <h4 class="font-bold mb-3 uppercase tracking-wider text-xs">Sources & References</h4>
+  <ul class="space-y-2 list-disc pl-4">
+    <li>Nursing Council of Kenya (NCK). (2026). <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">Official NCK Website</a>.</li>
+    <li>Nursing Council of Kenya (NCK). (2026). <a href="https://osp.nckenya.go.ke" class="text-primary hover:text-primary-mid">Online Services Portal (OSP)</a>.</li>
   </ul>
-  <p className="mt-4 italic text-xs">Always verify current exam and indexing information directly at <a href="https://www.nckenya.com" className="text-primary hover:text-primary-mid">nckenya.com</a>.</p>
+  <p class="mt-4 italic text-xs">Always verify current exam and indexing information directly at <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">nckenya.com</a>.</p>
 </div>
     `,
   },
@@ -154,7 +154,7 @@ However, when you enter a busy county hospital, you will quickly notice that the
 
 You must learn to adapt without compromising patient safety. Understand *why* a procedure is done a certain way (the principle) so you can improvise safely when resources are lacking.
 
-<div className="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
   <strong>Key Takeaway:</strong> Never compromise on infection prevention control (IPC), but learn to be resourceful. Observe how senior nurses adapt to shortages without harming patients.
 </div>
 
@@ -228,7 +228,7 @@ The Ministry has mandated a strict process for collecting your official offer le
 
 You will not be allowed to collect your letter without a valid **National ID**. Ensure you have your original identification document ready before travelling.
 
-<div className="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
   <strong>Key Takeaway:</strong> The collection window is firm. If you miss the June 29 deadline at Afya House, you risk delaying your internship start date or losing your slot entirely in this cohort.
 </div>
 
@@ -288,7 +288,7 @@ Why does this matter? Because the NCK is the sole regulatory body for nursing ed
 
 Before enrolling in any nursing program, or if you are currently enrolled and unsure, you must verify your institution's status. The NCK maintains an updated list of approved training institutions.
 
-<div className="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
   <strong>Key Takeaway:</strong> Always verify institutional accreditation directly on the official NCK website before paying tuition fees. Do not rely on verbal assurances from college administrators.
 </div>
 
@@ -809,8 +809,8 @@ Congratulations! Passing the NCK licensure exam is the culmination of years of h
 
 Your next immediate step is to **[apply for your practising licence](https://www.nursefiti.co.ke/blog/how-to-apply-nck-licence-kenya)**. According to [NCK regulations](https://www.nckenya.com), successful candidates must initiate the licensure process on the OSP portal within 30 days of the results release. Delays in applying can complicate your licensing process and delay your internship or employment postings, which require proof of active licensure. 
 
-<div className="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
-  <strong>Key Takeaway:</strong> Passing the exam does not automatically generate your licence. You must actively initiate the application process on the <a href="https://osp.nckenya.go.ke" target="_blank" className="text-primary hover:underline">OSP portal</a>.
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+  <strong>Key Takeaway:</strong> Passing the exam does not automatically generate your licence. You must actively initiate the application process on the <a href="https://osp.nckenya.go.ke" target="_blank" class="text-primary hover:underline">OSP portal</a>.
 </div>
 
 ## What to Do If You Did Not Pass
@@ -965,7 +965,7 @@ If you passed: Apply for your practising licence within **30 days** at [osp.ncke
 
 If you did not pass: You are eligible to resit at the next available sitting. Before you register again, take an honest diagnostic of your weak areas. NCK reports that a significant proportion of first-attempt candidates do not pass — the distinguishing factor is structured preparation, not extra hours of casual reading.
 
-<div className="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
   <strong>Key Takeaway:</strong> Whether you passed or not, the next step requires action now. Passed? Apply for your licence today. Did not pass? Start a structured diagnostic practice session to identify your weakest units before the August sitting.
 </div>
 
@@ -991,7 +991,7 @@ See our [8-week NCK prep plan](https://www.nursefiti.co.ke/blog/nck-august-2026-
 
 Here is the type of question you will face on the NCK exam. Try it — select your answer and submit to see the correct answer with a full rationale, exactly as NurseFiti users experience it:
 
-<div className="sample-mcq-embed" data-question-slug="nck-june-2026-update-sample"></div>
+<div class="sample-mcq-embed" data-question-slug="nck-june-2026-update-sample"></div>
 
 Want access to thousands more questions like this, with AI-powered explanations? **[Create your free NurseFiti account →](https://www.nursefiti.co.ke/signup)**
 
@@ -1076,7 +1076,7 @@ This is not a generic AI chatbot. NurseFiti AI understands the Kenyan healthcare
 
 Here is a sample question from the NurseFiti question bank. Select your answer and submit to see the rationale — exactly as you would in the full app:
 
-<div className="sample-mcq-embed" data-question-slug="nursefiti-undergrad-sample"></div>
+<div class="sample-mcq-embed" data-question-slug="nursefiti-undergrad-sample"></div>
 
 Want thousands more? **[Create your free NurseFiti account →](https://www.nursefiti.co.ke/signup)**
 
@@ -1701,7 +1701,7 @@ You must upload clear, scanned copies of the following documents:
 
 Once you submit your application on the portal, the NCK will contact your training institution and foreign nursing board directly to verify the authenticity of your documents. This process can take anywhere from **2 to 6 months** depending on the responsiveness of your previous school and board. You can monitor the verification status by logging into the NCK OSP portal.
 
-<div className="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
   <strong>Pro-Tip for Verification:</strong> Contact your former nursing school registrar and licensing board as soon as you submit your application to NCK. Urging them to respond quickly to NCK's verification request will save you weeks of waiting.
 </div>
 
@@ -1732,7 +1732,7 @@ The clinical landscape in Kenya differs significantly from Western or Asian coun
 
 To give you an idea of the clinical guidelines and pharmacology questions you will encounter on the NCK exam, try this sample question:
 
-<div className="sample-mcq-embed" data-question-slug="nck-exam-foreign-trained-nurses-kenya-sample"></div>
+<div class="sample-mcq-embed" data-question-slug="nck-exam-foreign-trained-nurses-kenya-sample"></div>
 
 Want access to thousands of custom drug calculation questions and rationales? **[Create your free NurseFiti account →](https://www.nursefiti.co.ke/signup)**
 
@@ -1858,7 +1858,7 @@ Below is the verified list of active NCK exam centres in Kenya for the 2026 acad
 ### North Eastern Region
 - **KMTC Garissa Campus:** Located in Garissa Town, serving the entire northern region.
 
-<div className="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
   <strong>Note on Centre Availability:</strong> NCK occasionally adds temporary centres or relocates existing ones depending on candidate numbers for a specific cycle. Always double-check your official admission letter for your exact allocated venue.
 </div>
 
@@ -1899,7 +1899,7 @@ All NCK exam centres are monitored through a combination of:
 
 Here is a high-yield question from the NurseFiti question bank related to standard protocols you must master for your NCK exam. Try it out to see how our interactive rationales help you learn:
 
-<div className="sample-mcq-embed" data-question-slug="nck-exam-centres-kenya-sample"></div>
+<div class="sample-mcq-embed" data-question-slug="nck-exam-centres-kenya-sample"></div>
 
 Want access to thousands of verified questions and detailed rationales? **[Create your free NurseFiti account →](https://www.nursefiti.co.ke/signup)**
 
@@ -1983,7 +1983,7 @@ By running for office or seeking high-level appointments, nurses can advocate fo
 - **Better Working Conditions:** Pushing for the implementation of the Collective Bargaining Agreements (CBAs).
 - **Policy Reform:** Shaping the Universal Health Coverage (UHC) agenda to ensure it serves both patients and practitioners.
 
-<div className="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
   <strong>Key Takeaway:</strong> Without nurses in parliament and county assemblies, healthcare policies will continue to be drafted by people who have never worked a 12-hour night shift on a busy ward.
 </div>
 
@@ -2059,7 +2059,7 @@ To practice safely and advocate for your rights, you must be aligned with the of
 - **Kenya National Union of Nurses (KNUN):** If you are working in the public sector, KNUN is your primary advocate for labor rights, better working conditions, and the implementation of Collective Bargaining Agreements (CBAs).
 - **Midwives Association of Kenya (MAK):** For nurses specializing in midwifery, MAK offers specialized resources, international networking opportunities (through the International Confederation of Midwives), and specific advocacy for maternal health.
 
-<div className="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
   <strong>Key Takeaway:</strong> Joining a recognized union or association is not just about networking; it provides legal and professional protection during your clinical practice.
 </div>
 
@@ -2359,10 +2359,10 @@ function renderContent(content: string) {
 
 function formatInline(text: string): string {
   return text
-    .replace(/\*\*(.+?)\*\*/g, '<strong className="font-bold text-[var(--color-text)]">$1</strong>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong class="font-bold text-[var(--color-text)]">$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" className="text-primary font-semibold underline underline-offset-2 hover:text-primary-mid transition-colors">$1</a>')
-    .replace(/`(.+?)`/g, '<code className="px-1.5 py-0.5 rounded-md bg-primary-light text-primary text-sm font-mono border border-primary/20">$1</code>');
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-primary font-semibold underline underline-offset-2 hover:text-primary-mid transition-colors">$1</a>')
+    .replace(/`(.+?)`/g, '<code class="px-1.5 py-0.5 rounded-md bg-primary-light text-primary text-sm font-mono border border-primary/20">$1</code>');
 }
 
 // ─── Page ────────────────────────────────────────────────────────────────────
