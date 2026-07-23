@@ -235,8 +235,7 @@ export function FeedbackWall({
         .select('id, display_name, cadre, user_role, category, rating, message, helpful_count, is_pinned, created_at')
         .eq('is_approved', true)
         .order('is_pinned', { ascending: false })
-        .order('created_at', { ascending: false })
-        .limit(100);
+        .order('created_at', { ascending: false });
 
       setItems((data ?? []) as FeedbackItem[]);
     } catch (err) {

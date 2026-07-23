@@ -380,7 +380,6 @@ export default async function Home() {
       .eq('is_approved', true)
       .order('is_pinned', { ascending: false })
       .order('created_at', { ascending: false })
-      .limit(8)
   ]);
 
   const stats = [
