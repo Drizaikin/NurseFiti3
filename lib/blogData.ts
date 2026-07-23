@@ -210,7 +210,7 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
-  'surviving-first-clinical-placement-kenyan-public-hospital': 'https://images.unsplash.com/photo-1584820927508-eaaf97223e74?w=1200&q=80&auto=format&fit=crop',
+  'surviving-first-clinical-placement-kenyan-public-hospital': 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200&q=80&auto=format&fit=crop',
   'nck-exam-foreign-trained-nurses-kenya': 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80&auto=format&fit=crop',
   'nck-exam-centres-kenya-guide': 'https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80&auto=format&fit=crop',
   'moh-nursing-internship-deployment-kenya-2026': 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80&auto=format&fit=crop',
