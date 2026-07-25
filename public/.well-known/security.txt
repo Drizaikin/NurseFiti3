@@ -1,0 +1,5 @@
+Contact: https://www.nursefiti.co.ke/help
+Expires: 2027-07-18T23:59:59Z
+Preferred-Languages: en, sw
+Canonical: https://www.nursefiti.co.ke/.well-known/security.txt
+Policy: https://www.nursefiti.co.ke/privacy

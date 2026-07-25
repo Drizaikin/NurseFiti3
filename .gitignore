@@ -43,3 +43,11 @@ next-env.d.ts
 .env*
 dev.log 
 check_grace.mjs
+
+# local Google credentials
+token5.json
+gdg14thmarch-910628cfae6f.json
+env.download
+
+# Local Claude Code settings and worktrees
+.claude/

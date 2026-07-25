@@ -5,16 +5,17 @@ import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 export const metadata: Metadata = {
   title: 'Tutor Agreement',
   description: 'Read the NurseFiti Tutor Agreement. Requirements and rules for tutors on Kenya\'s NCK exam preparation platform.',
+  alternates: { canonical: '/tutor-agreement' },
   openGraph: {
     title: 'Tutor Agreement | NurseFiti',
     description: 'NurseFiti Tutor Agreement.',
-    url: 'https://www.nursefiti.co.ke/tutor-agreement',
+    url: '/tutor-agreement',
   },
 };
 
 export default function TutorAgreementPage() {
   return (
-    <div className="min-h-screen bg-neutral-cream dark:bg-dark py-12 px-4">
+    <main id="main-content" className="min-h-screen bg-neutral-cream dark:bg-dark py-12 px-4">
       <div className="max-w-3xl mx-auto">
         <div className="mb-8"><Link href="/"><NurseFitiLogo variant="full" size={48} /></Link></div>
         <h1 className="text-4xl font-heading font-bold text-primary mb-2">Tutor Agreement</h1>
@@ -58,6 +59,6 @@ export default function TutorAgreementPage() {
         </div>
         <div className="mt-6 text-center"><Link href="/" className="text-primary hover:underline text-sm">← Back to NurseFiti</Link></div>
       </div>
-    </div>
+    </main>
   );
 }

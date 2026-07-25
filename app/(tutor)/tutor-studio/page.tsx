@@ -7,7 +7,7 @@ import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Spinner } from '@/components/ui/Spinner';
-import { TabsControlled } from '@/components/ui/Tabs';
+import { getTabId, getTabPanelId, TabsControlled } from '@/components/ui/Tabs';
 import toast from 'react-hot-toast';
 
 export const dynamic = 'force-dynamic';
@@ -15,6 +15,7 @@ export const dynamic = 'force-dynamic';
 const CADRES = ['KRCHN', 'BScN', 'Higher Diploma'];
 const KRCHN_UNITS = ['Anatomy & Physiology', 'Medical-Surgical Nursing', 'Pharmacology', 'Community Health', 'Midwifery', 'Paediatric Nursing', 'Mental Health Nursing', 'Nutrition', 'Research & Statistics'];
 const BSCN_UNITS = [...KRCHN_UNITS, 'Leadership & Management', 'Critical Care', 'Oncology Nursing', 'Renal Nursing', 'Orthopaedic Nursing', 'Dermatology', 'ENT Nursing', 'Ophthalmology'];
+const TAB_SET_ID = 'tutor-studio-tabs';
 
 interface Contribution {
   id: string;
@@ -136,9 +137,15 @@ export default function TutorStudioPage() {
         </div>
       </Card>
 
-      <TabsControlled tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
+      <TabsControlled id={TAB_SET_ID} tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
 
       {/* Add MCQ */}
+      <div
+        id={getTabPanelId(TAB_SET_ID, 'mcq')}
+        role="tabpanel"
+        aria-labelledby={getTabId(TAB_SET_ID, 'mcq')}
+        hidden={activeTab !== 'mcq'}
+      >
       {activeTab === 'mcq' && (
         <Card>
           <h2 className="text-lg font-heading font-bold mb-4">Add a New MCQ</h2>
@@ -212,8 +219,15 @@ export default function TutorStudioPage() {
           </div>
         </Card>
       )}
+      </div>
 
       {/* Add Study Note */}
+      <div
+        id={getTabPanelId(TAB_SET_ID, 'note')}
+        role="tabpanel"
+        aria-labelledby={getTabId(TAB_SET_ID, 'note')}
+        hidden={activeTab !== 'note'}
+      >
       {activeTab === 'note' && (
         <Card>
           <h2 className="text-lg font-heading font-bold mb-4">Add a Study Note</h2>
@@ -248,8 +262,15 @@ export default function TutorStudioPage() {
           </div>
         </Card>
       )}
+      </div>
 
       {/* Contributions */}
+      <div
+        id={getTabPanelId(TAB_SET_ID, 'contributions')}
+        role="tabpanel"
+        aria-labelledby={getTabId(TAB_SET_ID, 'contributions')}
+        hidden={activeTab !== 'contributions'}
+      >
       {activeTab === 'contributions' && (
         <Card>
           <h2 className="text-lg font-heading font-bold mb-4">My Contributions</h2>
@@ -292,6 +313,7 @@ export default function TutorStudioPage() {
           )}
         </Card>
       )}
+      </div>
     </div>
   );
 }

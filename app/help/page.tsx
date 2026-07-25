@@ -5,16 +5,17 @@ import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 export const metadata: Metadata = {
   title: 'Help Centre',
   description: 'Get help with NurseFiti — Kenya\'s NCK exam preparation platform. Find answers about practice questions, mock exams, tutoring, payments, and more.',
+  alternates: { canonical: '/help' },
   openGraph: {
     title: 'Help Centre | NurseFiti',
     description: 'Get help with NurseFiti — NCK exam prep platform Kenya.',
-    url: 'https://www.nursefiti.co.ke/help',
+    url: '/help',
   },
 };
 
 export default function HelpPage() {
   return (
-    <div className="min-h-screen bg-neutral-cream dark:bg-dark py-12 px-4">
+    <main id="main-content" className="min-h-screen bg-neutral-cream dark:bg-dark py-12 px-4">
       <div className="max-w-3xl mx-auto">
         <div className="mb-8"><Link href="/"><NurseFitiLogo variant="full" size={48} /></Link></div>
         <h1 className="text-4xl font-heading font-bold text-primary mb-2">Help Centre</h1>
@@ -41,6 +42,6 @@ export default function HelpPage() {
         </div>
         <div className="mt-6 text-center"><Link href="/" className="text-primary hover:underline text-sm">← Back to NurseFiti</Link></div>
       </div>
-    </div>
+    </main>
   );
 }

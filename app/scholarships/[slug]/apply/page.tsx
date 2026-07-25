@@ -6,6 +6,7 @@ import ApplyForm from './ApplyForm';
 
 export const metadata = {
   title: 'Apply for Scholarship | NurseFiti',
+  robots: { index: false, follow: false, nocache: true },
 };
 
 export default async function ScholarshipApplyPage({ params }: { params: { slug: string } }) {

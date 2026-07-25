@@ -1,27 +1,27 @@
-export const revalidate = 0;
+export const revalidate = 300;
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { fetchPlatformSettings, PlatformSettings } from '@/lib/platformSettings';
 import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
-import { DarkModeToggle } from '@/components/shared/DarkModeToggle';
 import { FeedbackWall } from '@/components/shared/FeedbackWall';
 import { LandingFeedbackButton } from '@/components/shared/LandingFeedbackButton';
+import { MarketingHeader } from '@/components/marketing/MarketingHeader';
 
 export const metadata: Metadata = {
-  title: 'NurseFiti — Kenya\'s NCK Exam Preparation Platform',
+  title: { absolute: 'NurseFiti — NCK Exam Preparation Kenya' },
   description:
-    'Pass your NCK licensure exam with AI-adaptive MCQ practice, DigiProctor mock exams, spaced-repetition flashcards, personalised revision plans, and live expert tutors. Built for KRCHN, BScN & Higher Diploma nurses in Kenya.',
+    'Prepare for Kenya\'s NCK licensure exam with adaptive MCQs, mock exams, flashcards, revision plans, and nursing tutoring.',
   openGraph: {
     title: 'NurseFiti — NCK Exam Preparation Kenya',
-    description: 'Kenya\'s most intelligent NCK exam prep platform. Practice MCQs, mock exams, flashcards, revision plans & expert tutors.',
+    description: 'Focused NCK exam preparation for Kenyan nursing candidates, with practice questions, mock exams, flashcards, revision plans, and tutoring.',
     url: 'https://www.nursefiti.co.ke',
     siteName: 'NurseFiti',
     type: 'website',
     images: [
       {
-        url: 'https://www.nursefiti.co.ke/og-image.png',
+        url: 'https://www.nursefiti.co.ke/opengraph-image',
         width: 1200,
         height: 630,
         alt: 'NurseFiti — NCK Exam Preparation Platform Kenya',
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'NurseFiti — NCK Exam Preparation Kenya',
-    description: 'Kenya\'s most intelligent NCK exam prep platform.',
-    images: ['https://www.nursefiti.co.ke/og-image.png'],
+    description: 'Focused NCK exam preparation for Kenyan nursing candidates.',
+    images: ['https://www.nursefiti.co.ke/opengraph-image'],
   },
   alternates: {
     canonical: 'https://www.nursefiti.co.ke',
@@ -42,73 +42,52 @@ export const metadata: Metadata = {
 // ─── JSON-LD Structured Data ─────────────────────────────────────────────────
 
 const organizationJsonLd = {
-  '@context': 'https://schema.org',
   '@type': 'EducationalOrganization',
+  '@id': 'https://www.nursefiti.co.ke/#organization',
   name: 'NurseFiti',
   url: 'https://www.nursefiti.co.ke',
-  logo: 'https://www.nursefiti.co.ke/icon.svg',
+  logo: 'https://www.nursefiti.co.ke/logo.png',
   description: 'Kenya\'s NCK exam preparation platform for KRCHN, BScN, and Higher Diploma nursing graduates.',
   address: {
     '@type': 'PostalAddress',
     addressCountry: 'KE',
   },
-  sameAs: [],
+  areaServed: { '@type': 'Country', name: 'Kenya' },
+  knowsAbout: ['NCK exam preparation', 'KRCHN revision', 'BScN exam preparation', 'nursing education in Kenya'],
+  sameAs: ['https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m'],
 };
 
 const websiteJsonLd = {
-  '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': 'https://www.nursefiti.co.ke/#website',
   name: 'NurseFiti',
   url: 'https://www.nursefiti.co.ke',
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: 'https://www.nursefiti.co.ke/tutors?q={search_term_string}',
-    },
-    'query-input': 'required name=search_term_string',
-  },
+  publisher: { '@id': 'https://www.nursefiti.co.ke/#organization' },
+  inLanguage: 'en-KE',
 };
 
-const courseJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Course',
-  name: 'NCK Exam Preparation — KRCHN, BScN & Higher Diploma',
-  description: 'Comprehensive NCK licensure exam preparation with MCQ practice, mock exams, flashcards, and expert tutors.',
+const serviceJsonLd = {
+  '@type': 'Service',
+  '@id': 'https://www.nursefiti.co.ke/#exam-preparation-service',
+  name: 'NurseFiti NCK Exam Preparation',
+  description: 'Digital NCK exam preparation support with practice questions, timed mock exams, flashcards, revision planning, analytics, and tutoring.',
   provider: {
-    '@type': 'Organization',
-    name: 'NurseFiti',
-    url: 'https://www.nursefiti.co.ke',
+    '@id': 'https://www.nursefiti.co.ke/#organization',
   },
-  educationalLevel: 'Professional Certification',
-  about: {
-    '@type': 'Thing',
-    name: 'Nursing Council of Kenya (NCK) Licensure Examination',
-  },
-  inLanguage: 'en',
-  offers: [
-    {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'KES',
-      name: 'Test Yourself Plan',
-      url: 'https://www.nursefiti.co.ke/signup',
-    },
-    {
-      '@type': 'Offer',
-      price: '1199',
-      priceCurrency: 'KES',
-      name: 'Success Plan - KSh 1,199/month',
-      url: 'https://www.nursefiti.co.ke/signup',
-    },
-    {
-      '@type': 'Offer',
-      price: '3500',
-      priceCurrency: 'KES',
-      name: 'Elite Prep - KSh 3,500/exam cycle',
-      url: 'https://www.nursefiti.co.ke/signup',
-    },
-  ],
+  serviceType: 'Nursing exam preparation support',
+  areaServed: { '@type': 'Country', name: 'Kenya' },
+  audience: { '@type': 'EducationalAudience', educationalRole: 'student' },
+};
+
+const webApplicationJsonLd = {
+  '@type': 'WebApplication',
+  '@id': 'https://www.nursefiti.co.ke/#web-application',
+  name: 'NurseFiti',
+  url: 'https://www.nursefiti.co.ke',
+  applicationCategory: 'EducationalApplication',
+  operatingSystem: 'Any device with a modern web browser',
+  browserRequirements: 'Requires JavaScript and a modern web browser',
+  provider: { '@id': 'https://www.nursefiti.co.ke/#organization' },
 };
 
 // ─── Static data ────────────────────────────────────────────────────────────
@@ -117,32 +96,38 @@ const FEATURES = [
   {
     icon: '📝',
     title: 'Adaptive MCQ Bank',
-    desc: 'Over 5,000 exam-style questions across all NCK units. AI surfaces your weak areas automatically.',
+    desc: 'Exam-style practice questions across nursing study areas, with feedback that helps identify topics to revisit.',
+    href: '/practice-questions',
   },
   {
     icon: '⏱️',
-    title: 'DigiProctor Mock Exams',
-    desc: 'Pixel-perfect replica of the real NCK exam interface — same layout, same timer, same pressure.',
+    title: 'DigiProctor-Style Mock Exams',
+    desc: 'Timed practice designed to help you become familiar with the digital NCK exam workflow.',
+    href: '/mock-exams',
   },
   {
     icon: '🎴',
     title: 'Spaced Repetition Flashcards',
-    desc: 'Science-backed SRS algorithm schedules cards at the exact moment before you forget them.',
+    desc: 'Recall-focused card reviews that keep difficult nursing concepts in your study rotation.',
+    href: '/nck-flashcards',
   },
   {
     icon: '📊',
     title: 'Deep Analytics',
-    desc: 'Unit-by-unit mastery scores, peer percentile ranking, and AI-projected exam readiness.',
+    desc: 'Topic-level performance views that help you understand your practice history and choose what to revise next.',
+    href: '/practice-questions',
   },
   {
     icon: '🗓️',
     title: 'Revision Plan Generator',
     desc: 'Personalised week-by-week study schedule built around your exam date and weak units.',
+    href: '/revision-plans',
   },
   {
     icon: '👨‍🏫',
     title: 'Expert Tutors',
-    desc: 'Book 1-on-1 sessions with verified registered nurses and NCK examiners via Zoom or WhatsApp.',
+    desc: 'Book one-to-one study sessions with nursing tutors whose submitted credentials are reviewed before approval.',
+    href: '/tutoring',
   },
 ];
 
@@ -216,7 +201,7 @@ const STEPS = [
   { n: '01', title: 'Create your account', desc: 'Sign up free in 2 minutes. Select your cadre and target exam date.' },
   { n: '02', title: 'Take the diagnostic quiz', desc: '10 questions to map your baseline. We identify your weak units immediately.' },
   { n: '03', title: 'Study your personalised plan', desc: 'Practice MCQs, flashcards, and mock exams — all adapted to your gaps.' },
-  { n: '04', title: 'Pass your NCK exam', desc: 'Walk in confident. You\'ve already sat the exam dozens of times on NurseFiti.' },
+  { n: '04', title: 'Review your preparation', desc: 'Use your practice history to decide what needs attention before your examination.' },
 ];
 
 const getPricing = (settings: PlatformSettings) => [
@@ -313,7 +298,7 @@ const FAQS = [
   },
   {
     q: 'How many mock exams can I take?',
-    a: 'Test Yourself users can unlock mock exams by uploading at least 3 past exam question files for review. Exam Boost and Success Plan users get 2 mock exams per week (resets every Monday). Elite Prep users get unlimited mock exams for intensive exam-cycle preparation.',
+    a: 'Mock exam limits depend on your active plan. The pricing table above shows the current allowance for each plan, while Elite Prep includes unlimited mock exams for intensive exam-cycle preparation.',
   },
   {
     q: 'Are the tutors verified?',
@@ -366,6 +351,48 @@ export default async function Home() {
   const supabase = createClient();
   const settings = await fetchPlatformSettings(supabase as any);
   const PRICING = getPricing(settings);
+  const offers = [
+      { '@type': 'Offer', price: '0', priceCurrency: 'KES', name: 'Test Yourself', url: 'https://www.nursefiti.co.ke/signup' },
+      { '@type': 'Offer', price: String(settings.plan_daily_price), priceCurrency: 'KES', name: 'Exam Boost Daily', url: 'https://www.nursefiti.co.ke/signup' },
+      { '@type': 'Offer', price: String(settings.plan_weekly_price), priceCurrency: 'KES', name: 'Exam Boost Weekly', url: 'https://www.nursefiti.co.ke/signup' },
+      { '@type': 'Offer', price: String(settings.plan_standard_price), priceCurrency: 'KES', name: 'Success Plan', url: 'https://www.nursefiti.co.ke/signup' },
+      { '@type': 'Offer', price: String(settings.plan_premium_price), priceCurrency: 'KES', name: 'Elite Prep', url: 'https://www.nursefiti.co.ke/signup' },
+  ];
+  const siteJsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      organizationJsonLd,
+      websiteJsonLd,
+      {
+        '@type': 'WebPage',
+        '@id': 'https://www.nursefiti.co.ke/#webpage',
+        url: 'https://www.nursefiti.co.ke',
+        name: 'NurseFiti - NCK Exam Preparation Kenya',
+        isPartOf: { '@id': 'https://www.nursefiti.co.ke/#website' },
+        about: { '@id': 'https://www.nursefiti.co.ke/#exam-preparation-service' },
+      },
+      {
+        ...serviceJsonLd,
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          '@id': 'https://www.nursefiti.co.ke/pricing#catalog',
+          name: 'NurseFiti preparation plans',
+          itemListElement: offers,
+        },
+      },
+      { ...webApplicationJsonLd, offers },
+    ],
+  };
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': 'https://www.nursefiti.co.ke/#faq',
+    mainEntity: FAQS.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: { '@type': 'Answer', text: faq.a },
+    })),
+  };
   
   const [
     { count: questionsCount },
@@ -385,54 +412,19 @@ export default async function Home() {
     <div className="min-h-screen bg-neutral-cream dark:bg-dark text-[var(--color-text)]">
       {/* ── JSON-LD Structured Data ── */}
       <Script
-        id="json-ld-organization"
+        id="json-ld-site"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
       />
       <Script
-        id="json-ld-website"
+        id="json-ld-faq"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-      />
-      <Script
-        id="json-ld-course"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
-      {/* ── NAVBAR ── */}
-      <header className="sticky top-0 z-50 bg-neutral-cream/90 dark:bg-dark/90 backdrop-blur-md border-b border-[var(--color-border)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href="/" aria-label="NurseFiti home">
-            <NurseFitiLogo variant="full" size={40} />
-          </Link>
-          <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-neutral-mid">
-            <Link href="#features" className="hover:text-primary transition-colors">Features</Link>
-            <Link href="#cadres" className="hover:text-primary transition-colors">Cadres</Link>
-            <Link href="#tutors" className="hover:text-primary transition-colors">Tutors</Link>
-            <Link href="#pricing" className="hover:text-primary transition-colors">Pricing</Link>
-            <Link href="#reviews" className="hover:text-primary transition-colors">Reviews</Link>
-            <Link href="#faq" className="hover:text-primary transition-colors">FAQ</Link>
-            <Link href="#partnerships" className="hover:text-primary transition-colors">Partnerships</Link>
-          </nav>
-          <div className="flex items-center gap-3">
-            <DarkModeToggle />
-            <LandingFeedbackButton />
-            <Link
-              href="/login"
-              className="hidden sm:inline-flex items-center px-4 py-2 text-sm font-semibold text-primary border-2 border-primary rounded-lg hover:bg-primary-light transition-colors"
-            >
-              Log In
-            </Link>
-            <Link
-              href="/signup"
-              className="inline-flex items-center px-4 py-2 text-sm font-semibold bg-accent text-dark rounded-lg hover:bg-accent-dark transition-colors"
-            >
-              Start Free
-            </Link>
-          </div>
-        </div>
-      </header>
+      <MarketingHeader />
+
+      <main id="main-content">
 
       {/* ── HERO ── */}
       <section className="relative overflow-hidden pt-20 pb-10 px-4 sm:px-6 lg:px-8">
@@ -444,11 +436,11 @@ export default async function Home() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-light text-primary text-sm font-semibold mb-6">
             <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-            Kenya&apos;s #1 NCK Exam Prep Platform
+            Built for NCK exam preparation in Kenya
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-[var(--color-text)] leading-tight mb-6">
-            Pass Your NCK Exam
-            <span className="block text-primary">First Attempt.</span>
+            Prepare for Your NCK Exam
+            <span className="block text-primary">With Confidence.</span>
           </h1>
           <p className="text-lg sm:text-xl text-neutral-mid max-w-2xl mx-auto mb-10 leading-relaxed">
             AI-adaptive MCQ practice, DigiProctor mock exams, spaced-repetition flashcards,
@@ -555,8 +547,9 @@ export default async function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {FEATURES.map((f) => (
-              <div
+              <Link
                 key={f.title}
+                href={f.href}
                 className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl p-6 hover:border-primary/40 hover:shadow-md transition-all"
               >
                 <div className="w-12 h-12 rounded-xl bg-primary-light flex items-center justify-center text-2xl mb-4">
@@ -564,11 +557,10 @@ export default async function Home() {
                 </div>
                 <h3 className="text-lg font-heading font-bold text-[var(--color-text)] mb-2">{f.title}</h3>
                 <p className="text-sm text-neutral-mid leading-relaxed">
-                  {f.title === 'Adaptive MCQ Bank' && questionsCount 
-                    ? f.desc.replace('5,000', questionsCount.toLocaleString()) 
-                    : f.desc}
+                  {f.desc}
                 </p>
-              </div>
+                <span className="mt-4 inline-flex text-sm font-bold text-primary">Learn more →</span>
+              </Link>
             ))}
           </div>
         </div>
@@ -613,10 +605,10 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-[var(--color-text)] mb-4">
-              Learn from verified NCK experts
+              Learn from verified nursing professionals
             </h2>
             <p className="text-neutral-mid max-w-xl mx-auto">
-              Every tutor is a registered nurse with verified NCK credentials. Many are active NCK examiners.
+              Every tutor submits nursing credentials for review before they can teach on NurseFiti.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
@@ -840,7 +832,7 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-[var(--color-text)] mb-4">
-              Stop guessing what to study. See how these students guaranteed their NCK success.
+              See how students are preparing with NurseFiti.
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -988,6 +980,8 @@ export default async function Home() {
         </div>
       </section>
 
+      </main>
+
       {/* ── FOOTER ── */}
       <footer className="bg-dark-mid text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -1003,8 +997,12 @@ export default async function Home() {
               <ul className="space-y-2 text-sm text-neutral-light">
                 <li><Link href="/signup" className="hover:text-white transition-colors">Get Started</Link></li>
                 <li><Link href="#features" className="hover:text-white transition-colors">Features</Link></li>
-                <li><Link href="#pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-                <li><Link href="/tutors" className="hover:text-white transition-colors">Find Tutors</Link></li>
+                 <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+                 <li><Link href="/practice-questions" className="hover:text-white transition-colors">Practice Questions</Link></li>
+                 <li><Link href="/mock-exams" className="hover:text-white transition-colors">Mock Exams</Link></li>
+                 <li><Link href="/nck-flashcards" className="hover:text-white transition-colors">Flashcards</Link></li>
+                 <li><Link href="/revision-plans" className="hover:text-white transition-colors">Revision Plans</Link></li>
+                 <li><Link href="/tutoring" className="hover:text-white transition-colors">Find Tutors</Link></li>
               </ul>
             </div>
             <div>

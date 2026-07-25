@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Script from 'next/script';
 import Image from 'next/image';
+import { listPublishedCmsPosts } from '@/lib/blog/cms';
+import type { BlogPostSummary } from '@/lib/blog/types';
+import { serializeJsonLd } from '@/lib/jsonLd';
 
 export const metadata: Metadata = {
   title: 'Blog — NCK Exam Tips & Guides',
@@ -9,15 +12,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Blog — NCK Exam Tips & Guides | NurseFiti',
     description: 'Expert guides and study strategies for Kenyan nursing graduates preparing for the NCK exam.',
-    url: 'https://www.nursefiti.co.ke/blog',
+    url: '/blog',
     type: 'website',
   },
   alternates: {
-    canonical: 'https://www.nursefiti.co.ke/blog',
+    canonical: '/blog',
   },
 };
 
 import { POSTS, CATEGORY_STYLES, POST_IMAGES } from '@/lib/blogData';
+
+export const revalidate = 300;
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('en-KE', {
@@ -27,38 +32,47 @@ function formatDate(dateStr: string) {
   });
 }
 
-const blogListJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Blog',
-  name: 'NurseFiti Blog',
-  url: 'https://www.nursefiti.co.ke/blog',
-  description: 'Expert guides and study strategies for Kenyan nursing graduates preparing for the NCK exam.',
-  publisher: {
-    '@type': 'Organization',
-    name: 'NurseFiti',
-    url: 'https://www.nursefiti.co.ke',
-  },
-  blogPost: POSTS.map((p) => ({
-    '@type': 'BlogPosting',
-    headline: p.title,
-    url: `https://www.nursefiti.co.ke/blog/${p.slug}`,
-    datePublished: p.date,
-    description: p.excerpt,
-    author: { '@type': 'Organization', name: 'NurseFiti', url: 'https://www.nursefiti.co.ke' },
-    keywords: p.cadres.join(', '),
-  })),
-};
-
-export default function BlogIndexPage() {
+export default async function BlogIndexPage() {
+  const legacyPosts: BlogPostSummary[] = POSTS.map(post => ({
+    ...post,
+    updatedAt: post.date,
+    imageUrl: POST_IMAGES[post.slug],
+    imageAlt: post.title,
+    source: 'legacy',
+  }));
+  const merged = new Map(legacyPosts.map(post => [post.slug, post]));
+  for (const post of await listPublishedCmsPosts()) merged.set(post.slug, post);
+  const sortedPosts = Array.from(merged.values()).sort((a, b) => {
+    if (a.featured !== b.featured) return a.featured ? -1 : 1;
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+  const blogListJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    '@id': 'https://www.nursefiti.co.ke/blog#blog',
+    name: 'NurseFiti Blog',
+    url: 'https://www.nursefiti.co.ke/blog',
+    description: 'Expert guides and study strategies for Kenyan nursing graduates preparing for the NCK exam.',
+    publisher: { '@type': 'Organization', '@id': 'https://www.nursefiti.co.ke/#organization', name: 'NurseFiti', url: 'https://www.nursefiti.co.ke' },
+    blogPost: sortedPosts.map(post => ({
+      '@type': 'BlogPosting', headline: post.title,
+      url: `https://www.nursefiti.co.ke/blog/${post.slug}`,
+      datePublished: post.date, dateModified: post.updatedAt,
+      description: post.excerpt,
+      ...(post.imageUrl ? { image: post.imageUrl } : {}),
+      author: { '@type': 'Organization', '@id': 'https://www.nursefiti.co.ke/#organization', name: 'NurseFiti' },
+      keywords: post.cadres.join(', '),
+    })),
+  };
   return (
     <>
       <Script
         id="json-ld-blog"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogListJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(blogListJsonLd) }}
       />
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main id="main-content" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 
         {/* Header */}
         <div className="text-center mb-14">
@@ -67,7 +81,7 @@ export default function BlogIndexPage() {
           </span>
           <h1 className="text-4xl sm:text-5xl font-heading font-bold text-[var(--color-text)] mb-4">
             Study Smarter,{' '}
-            <span className="text-gradient-teal">Pass Faster</span>
+            <span className="text-gradient-teal">Prepare Better</span>
           </h1>
           <p className="text-lg text-neutral-mid max-w-2xl mx-auto">
             Expert guides, revision strategies, and exam insights for Kenyan nursing graduates
@@ -83,9 +97,9 @@ export default function BlogIndexPage() {
 
         {/* Featured post */}
         {(() => {
-          const featured = POSTS[0];
+          const featured = sortedPosts[0];
           const featuredCat = CATEGORY_STYLES[featured.category] ?? CATEGORY_STYLES['Study Guide'];
-          const featuredImg = POST_IMAGES[featured.slug];
+          const featuredImg = featured.imageUrl;
           return (
             <Link
               href={`/blog/${featured.slug}`}
@@ -97,10 +111,11 @@ export default function BlogIndexPage() {
                 <div className="relative h-56 sm:h-72 overflow-hidden">
                   <Image
                     src={featuredImg}
-                    alt={featured.title}
+                      alt={featured.imageAlt ?? featured.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     priority
+                    sizes="(max-width: 768px) 100vw, 1024px"
                   />
                   <div
                     className="absolute inset-0"
@@ -145,9 +160,9 @@ export default function BlogIndexPage() {
 
         {/* Post grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {POSTS.slice(1).map((post) => {
+          {sortedPosts.slice(1).map((post) => {
             const catStyle = CATEGORY_STYLES[post.category] ?? CATEGORY_STYLES['Study Guide'];
-            const imgUrl = POST_IMAGES[post.slug];
+            const imgUrl = post.imageUrl;
             return (
               <Link
                 key={post.slug}
@@ -158,8 +173,9 @@ export default function BlogIndexPage() {
                   <div className="relative h-36 overflow-hidden">
                     <Image
                       src={imgUrl}
-                      alt={post.title}
+                      alt={post.imageAlt ?? post.title}
                       fill
+                      sizes="(max-width: 640px) 100vw, 50vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div

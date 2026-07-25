@@ -4,6 +4,9 @@ import Link from 'next/link';
 import Script from 'next/script';
 import Image from 'next/image';
 import { BlogSampleMCQ } from '@/components/blog/BlogSampleMCQ';
+import { BlogMarkdown } from '@/components/blog/BlogMarkdown';
+import { getPublishedCmsPost, listPublishedCmsPosts } from '@/lib/blog/cms';
+import { serializeJsonLd } from '@/lib/jsonLd';
 
 // ─── Post data ───────────────────────────────────────────────────────────────
 
@@ -62,7 +65,7 @@ If you are still a student or preparing for your upcoming NCK exams, you need to
 
 ## Start Your Preparation Today
 
-Don't wait until your final year to start worrying about licensure and internships. The best time to start preparing is now. Structured, spaced repetition and continuous mock exams are the proven ways to guarantee a first-attempt pass.
+Don't wait until your final year to start thinking about licensure and internships. Starting early gives you more time to use structured revision, spaced repetition, and mock exams to build exam readiness.
 
 **[Start your free NurseFiti account — no credit card required](https://www.nursefiti.co.ke/signup)**
 
@@ -132,7 +135,7 @@ When it comes to the exam, you need to treat it with the same level of seriousne
 
 Whether you are waiting for your May results, preparing to re-sit after February, or gearing up for the August/November cycles, your preparation strategy dictates your outcome.
 
-Do not wait until the last minute. Structured, spaced repetition and continuous mock exams are the only proven ways to guarantee a first-attempt pass.
+Do not wait until the last minute. Structured revision, spaced repetition, and continuous mock exams can help you identify gaps and prepare more consistently.
 
 **[Start your free NurseFiti account — no credit card required](https://www.nursefiti.co.ke/signup)**
 
@@ -880,7 +883,7 @@ For undergrads, this means you can create flashcard decks for each semester and 
 
 ### AI-Powered Explanations
 
-Every question comes with a detailed rationale explaining why the correct answer is correct and why each distractor is wrong. When you need more depth, NurseFiti AI provides clinical explanations grounded in Kenyan nursing curricula, approved by the Nursing Council of Kenya standards.
+Every question comes with a detailed rationale explaining why the correct answer is correct and why each distractor is wrong. When you need more depth, NurseFiti AI provides educational explanations designed around Kenyan nursing curricula. Always verify clinical and regulatory guidance against current NCK, Ministry of Health, and institutional sources.
 
 This is not a generic AI chatbot. NurseFiti AI understands the Kenyan healthcare context — the Kenya Essential Medicines List (KEML), the county health system structure, the immunisation schedule, and the NCK competency framework.
 
@@ -1638,12 +1641,17 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const post = ALL_POSTS.find((p) => p.slug === params.slug);
-  if (!post) return { title: 'Post Not Found' };
+  const cmsPost = await getPublishedCmsPost(params.slug);
+  const post = cmsPost ?? ALL_POSTS.find((p) => p.slug === params.slug);
+  if (!post) return { title: 'Post Not Found', robots: { index: false, follow: false } };
+  const legacyImage = POST_IMAGES[post.slug];
+  const heroImg = cmsPost?.imageUrl
+    ? { url: cmsPost.imageUrl, alt: cmsPost.imageAlt ?? cmsPost.title }
+    : legacyImage;
 
   return {
-    title: post.title,
-    description: post.excerpt,
+    title: cmsPost?.seoTitle ?? post.title,
+    description: cmsPost?.seoDescription ?? post.excerpt,
     openGraph: {
       title: post.title,
       description: post.excerpt,
@@ -1652,11 +1660,13 @@ export async function generateMetadata({
       publishedTime: post.date,
       authors: ['NurseFiti'],
       tags: post.cadres,
+      ...(heroImg ? { images: [{ url: heroImg.url, alt: heroImg.alt }] } : {}),
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
+      ...(heroImg ? { images: [heroImg.url] } : {}),
     },
     alternates: {
       canonical: `https://www.nursefiti.co.ke/blog/${post.slug}`,
@@ -1779,8 +1789,8 @@ function renderContent(content: string) {
   let key = 0;
   let inSourcesSection = false;
 
-  for (const line of lines) {
-    const trimmed = line.trim();
+  for (let index = 0; index < lines.length; index++) {
+    const trimmed = lines[index].trim();
     if (!trimmed) {
       elements.push(<div key={key++} className="h-2" />);
     } else if (trimmed.includes('sample-mcq-embed')) {
@@ -1790,9 +1800,11 @@ function renderContent(content: string) {
         elements.push(<BlogSampleMCQ key={key++} questionSlug={slugMatch[1]} />);
       }
     } else if (trimmed.startsWith('### ')) {
+      const heading = trimmed.slice(4);
+      inSourcesSection = heading.toLowerCase().includes('source') || heading.toLowerCase().includes('reference');
       elements.push(
         <h3 key={key++} className="text-xl font-heading font-bold text-[var(--color-text)] mt-8 mb-3">
-          {trimmed.slice(4)}
+          {heading}
         </h3>
       );
     } else if (trimmed.startsWith('## ')) {
@@ -1815,30 +1827,44 @@ function renderContent(content: string) {
         );
       }
     } else if (trimmed.startsWith('- ')) {
-      if (inSourcesSection) {
-        elements.push(
-          <li key={key++} className="flex items-start gap-2 text-sm text-neutral-mid leading-relaxed mb-2">
-            <span className="mt-1.5 w-1 h-1 rounded-full bg-neutral-light flex-shrink-0" />
-            <span dangerouslySetInnerHTML={{ __html: formatInline(trimmed.slice(2)) }} />
-          </li>
-        );
-      } else {
-        elements.push(
-          <li key={key++} className="flex items-start gap-2 text-[var(--color-text)] leading-relaxed mb-1.5">
-            <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
-            <span dangerouslySetInnerHTML={{ __html: formatInline(trimmed.slice(2)) }} />
-          </li>
-        );
+      const items: string[] = [];
+      while (index < lines.length && lines[index].trim().startsWith('- ')) {
+        items.push(lines[index].trim().slice(2));
+        index++;
       }
-    } else if (/^\d+\./.test(trimmed)) {
-      const num = trimmed.match(/^(\d+)\./)?.[1];
+      index--;
       elements.push(
-        <li key={key++} className="flex items-start gap-3 text-[var(--color-text)] leading-relaxed mb-2">
-          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center mt-0.5">
-            {num}
-          </span>
-          <span dangerouslySetInnerHTML={{ __html: formatInline(trimmed.replace(/^\d+\.\s*/, '')) }} />
-        </li>
+        <ul key={key++} className="list-none p-0 my-4 space-y-2">
+          {items.map((item, itemIndex) => (
+            <li key={itemIndex} className={`flex items-start gap-2 leading-relaxed ${inSourcesSection ? 'text-sm text-neutral-mid' : 'text-[var(--color-text)]'}`}>
+              <span className={`mt-2 rounded-full flex-shrink-0 ${inSourcesSection ? 'w-1 h-1 bg-neutral-light' : 'w-1.5 h-1.5 bg-accent'}`} />
+              <span dangerouslySetInnerHTML={{ __html: formatInline(item) }} />
+            </li>
+          ))}
+        </ul>
+      );
+    } else if (/^\d+\./.test(trimmed)) {
+      const items: Array<{ number: string; text: string }> = [];
+      while (index < lines.length && /^\d+\./.test(lines[index].trim())) {
+        const item = lines[index].trim();
+        items.push({
+          number: item.match(/^(\d+)\./)?.[1] ?? String(items.length + 1),
+          text: item.replace(/^\d+\.\s*/, ''),
+        });
+        index++;
+      }
+      index--;
+      elements.push(
+        <ol key={key++} className="list-none p-0 my-4 space-y-2">
+          {items.map((item) => (
+            <li key={item.number} className="flex items-start gap-3 text-[var(--color-text)] leading-relaxed">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center mt-0.5">
+                {item.number}
+              </span>
+              <span dangerouslySetInnerHTML={{ __html: formatInline(item.text) }} />
+            </li>
+          ))}
+        </ol>
       );
     } else {
       if (inSourcesSection) {
@@ -1869,54 +1895,93 @@ function formatInline(text: string): string {
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = ALL_POSTS.find((p) => p.slug === params.slug);
+export const revalidate = 300;
+
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const cmsPost = await getPublishedCmsPost(params.slug);
+  const post = cmsPost ?? ALL_POSTS.find((p) => p.slug === params.slug);
   if (!post) notFound();
 
-  const relatedPosts = ALL_POSTS.filter(
+  const cmsPosts = await listPublishedCmsPosts();
+  const relatedPool = [...cmsPosts, ...ALL_POSTS.filter(legacy => !cmsPosts.some(cms => cms.slug === legacy.slug))];
+  const relatedPosts = relatedPool.filter(
     (p) => p.slug !== post.slug && p.cadres.some((c) => post.cadres.includes(c))
   ).slice(0, 2);
 
   const catStyle = CATEGORY_STYLES[post.category] ?? CATEGORY_STYLES['Study Guide'];
-  const heroImg = POST_IMAGES[post.slug];
+  const heroImg = cmsPost?.imageUrl
+    ? { url: cmsPost.imageUrl, alt: cmsPost.imageAlt ?? cmsPost.title, credit: '' }
+    : POST_IMAGES[post.slug];
 
   const articleJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
+    '@id': `https://www.nursefiti.co.ke/blog/${post.slug}#article`,
     headline: post.title,
     description: post.excerpt,
     url: `https://www.nursefiti.co.ke/blog/${post.slug}`,
+    mainEntityOfPage: { '@id': `https://www.nursefiti.co.ke/blog/${post.slug}#webpage` },
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: cmsPost?.updatedAt ?? post.date,
     ...(heroImg ? { image: heroImg.url } : {}),
     author: {
       '@type': 'Organization',
+      '@id': 'https://www.nursefiti.co.ke/#organization',
       name: 'NurseFiti',
       url: 'https://www.nursefiti.co.ke',
     },
     publisher: {
       '@type': 'Organization',
+      '@id': 'https://www.nursefiti.co.ke/#organization',
       name: 'NurseFiti',
       url: 'https://www.nursefiti.co.ke',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.nursefiti.co.ke/icon.svg',
+        url: 'https://www.nursefiti.co.ke/logo.png',
       },
     },
     about: {
       '@type': 'Thing',
       name: 'NCK Licensure Examination Kenya',
     },
-    keywords: post.cadres.join(', ') + ', NCK exam Kenya, nursing exam preparation',
+    keywords: [cmsPost?.primaryKeyword, ...post.cadres, 'NCK exam Kenya', 'nursing exam preparation'].filter(Boolean).join(', '),
+    articleSection: post.category,
+    isPartOf: { '@id': 'https://www.nursefiti.co.ke/#website' },
   };
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': `https://www.nursefiti.co.ke/blog/${post.slug}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.nursefiti.co.ke/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.nursefiti.co.ke/blog' },
+      { '@type': 'ListItem', position: 3, name: post.title, item: `https://www.nursefiti.co.ke/blog/${post.slug}` },
+    ],
+  };
+  const faqJsonLd = cmsPost && cmsPost.faqs.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `https://www.nursefiti.co.ke/blog/${post.slug}#faq`,
+    mainEntity: cmsPost.faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  } : null;
 
   return (
     <>
       <Script
         id="json-ld-article"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleJsonLd) }}
       />
+      <Script
+        id="json-ld-breadcrumb"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbJsonLd) }}
+      />
+      {faqJsonLd && <Script id="json-ld-faq" type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqJsonLd) }} />}
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
@@ -1945,6 +2010,10 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             {post.title}
           </h1>
           <p className="text-lg text-neutral-mid leading-relaxed mb-5">{post.excerpt}</p>
+          <p className="text-sm text-neutral-mid mb-5">
+            By <Link href="/about" className="font-semibold text-primary hover:underline">{cmsPost?.authorName ?? 'NurseFiti Editorial Team'}</Link>
+            {cmsPost?.reviewerName && <> · Reviewed by {cmsPost.reviewerName}</>}
+          </p>
           {/* Cadre tags */}
           <div className="flex flex-wrap gap-2">
             {post.cadres.map((c) => (
@@ -1964,6 +2033,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               fill
               className="object-cover"
               priority
+              sizes="(max-width: 768px) 100vw, 768px"
             />
             {/* Brand teal gradient overlay */}
             <div
@@ -1987,10 +2057,24 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
         {/* Article content */}
         <article className="prose-nursefiti">
-          <ul className="list-none p-0 m-0 space-y-1">
-            {renderContent(post.content)}
-          </ul>
+          {cmsPost ? <BlogMarkdown content={cmsPost.content} /> : renderContent(post.content)}
         </article>
+
+        {cmsPost && cmsPost.sources.length > 0 && (
+          <section className="mt-12 pt-6 border-t-2 border-primary/20" aria-labelledby="article-sources">
+            <h2 id="article-sources" className="text-xl font-heading font-bold mb-4">Sources and references</h2>
+            <ul className="space-y-2 text-sm text-neutral-mid">
+              {cmsPost.sources.map(source => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">{source.label}</a></li>)}
+            </ul>
+          </section>
+        )}
+
+        {cmsPost && cmsPost.faqs.length > 0 && (
+          <section className="mt-12" aria-labelledby="article-faqs">
+            <h2 id="article-faqs" className="text-2xl font-heading font-bold mb-5">Frequently asked questions</h2>
+            <div className="space-y-4">{cmsPost.faqs.map(faq => <div key={faq.question} className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-5"><h3 className="font-heading font-bold mb-2">{faq.question}</h3><p className="text-neutral-mid leading-relaxed">{faq.answer}</p></div>)}</div>
+          </section>
+        )}
 
         {/* CTA banner */}
         <div
@@ -2030,7 +2114,10 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {relatedPosts.map((rp) => {
                 const rpCat = CATEGORY_STYLES[rp.category] ?? CATEGORY_STYLES['Study Guide'];
-                const rpImg = POST_IMAGES[rp.slug];
+                const cmsRelated = cmsPosts.find(candidate => candidate.slug === rp.slug);
+                const rpImg = cmsRelated?.imageUrl
+                  ? { url: cmsRelated.imageUrl, alt: cmsRelated.imageAlt ?? cmsRelated.title }
+                  : POST_IMAGES[rp.slug];
                 return (
                   <Link
                     key={rp.slug}

@@ -12,7 +12,11 @@ export const dynamic = 'force-dynamic';
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const supabase = createClient() as any;
   const { data } = await supabase.from('scholarship_campaigns').select('name').eq('slug', params.slug).single();
-  return { title: data ? `${data.name} | Impact Dashboard` : 'Sponsor Dashboard' };
+  return {
+    title: data ? `${data.name} | Impact Dashboard` : 'Sponsor Dashboard',
+    description: 'Private or campaign-specific NurseFiti scholarship impact information.',
+    robots: { index: false, follow: false, nocache: true },
+  };
 }
 
 export default async function SponsorDashboardPage({ params }: { params: { slug: string } }) {

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     default: 'NurseFiti — NCK Exam Preparation Platform Kenya',
     template: '%s | NurseFiti',
   },
-  description: 'Kenya\'s most intelligent NCK exam preparation platform. Practice MCQs, take DigiProctor-style mock exams, study with flashcards, and book expert tutors. Pass your KRCHN, BScN, or Higher Diploma exam.',
+  description: 'Focused NCK exam preparation for Kenyan nursing candidates. Practise MCQs, take timed mock exams, study with flashcards, build revision plans, and find tutoring support.',
   keywords: [
     'NCK exam preparation Kenya',
     'KRCHN exam revision',
@@ -47,10 +47,12 @@ export const metadata: Metadata = {
     siteName: 'NurseFiti',
     type: 'website',
     locale: 'en_KE',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'NurseFiti NCK exam preparation' }],
   },
   twitter: {
     card: 'summary_large_image',
     site: '@nursefiti',
+    images: ['/opengraph-image'],
   },
   robots: {
     index: true,
@@ -75,8 +77,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en-KE" suppressHydrationWarning>
       <body className={`${syne.variable} ${nunito.variable} font-body antialiased overflow-x-hidden w-full`}>
+        <a href="#main-content" className="skip-link">Skip to content</a>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

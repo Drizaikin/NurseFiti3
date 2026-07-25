@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/client';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Spinner } from '@/components/ui/Spinner';
-import { TabsControlled } from '@/components/ui/Tabs';
+import { getTabId, getTabPanelId, TabsControlled } from '@/components/ui/Tabs';
 import toast from 'react-hot-toast';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -38,6 +38,7 @@ const TABS = [
   { id: 'broadcast', label: 'Broadcast Notification'  },
   { id: 'analytics', label: 'Analytics'               },
 ];
+const TAB_SET_ID = 'admin-community-tabs';
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -65,6 +66,7 @@ export default function AdminCommunityPage() {
         {/* Tabs */}
         <div className="px-6 pt-4">
           <TabsControlled
+            id={TAB_SET_ID}
             tabs={TABS}
             activeTab={activeTab}
             onChange={setActiveTab}
@@ -73,9 +75,30 @@ export default function AdminCommunityPage() {
 
         {/* Tab panels */}
         <div className="p-6">
-          {activeTab === 'post'      && <PostTab      adminUserId={adminUserId} />}
-          {activeTab === 'broadcast' && <BroadcastTab adminUserId={adminUserId} />}
-          {activeTab === 'analytics' && <AnalyticsTab />}
+          <div
+            id={getTabPanelId(TAB_SET_ID, 'post')}
+            role="tabpanel"
+            aria-labelledby={getTabId(TAB_SET_ID, 'post')}
+            hidden={activeTab !== 'post'}
+          >
+            {activeTab === 'post' && <PostTab adminUserId={adminUserId} />}
+          </div>
+          <div
+            id={getTabPanelId(TAB_SET_ID, 'broadcast')}
+            role="tabpanel"
+            aria-labelledby={getTabId(TAB_SET_ID, 'broadcast')}
+            hidden={activeTab !== 'broadcast'}
+          >
+            {activeTab === 'broadcast' && <BroadcastTab adminUserId={adminUserId} />}
+          </div>
+          <div
+            id={getTabPanelId(TAB_SET_ID, 'analytics')}
+            role="tabpanel"
+            aria-labelledby={getTabId(TAB_SET_ID, 'analytics')}
+            hidden={activeTab !== 'analytics'}
+          >
+            {activeTab === 'analytics' && <AnalyticsTab />}
+          </div>
         </div>
       </Card>
     </div>
