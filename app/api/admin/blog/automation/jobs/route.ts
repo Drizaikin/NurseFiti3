@@ -87,7 +87,13 @@ export async function POST(req: NextRequest) {
     await (auth.admin as any)
       .from('blog_automation_jobs')
       .update(dispatch.dispatched
-        ? { locked_by: 'hyperagent', locked_at: new Date().toISOString(), state: 'running', started_at: new Date().toISOString() }
+        ? {
+          locked_by: 'hyperagent',
+          locked_at: new Date().toISOString(),
+          state: 'running',
+          started_at: new Date().toISOString(),
+          error_message: dispatch.reason ?? null,
+        }
         : { error_message: `Webhook dispatch failed: ${dispatch.reason}. Left queued for the local worker.` })
       .eq('id', data.id);
   }

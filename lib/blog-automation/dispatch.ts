@@ -45,6 +45,13 @@ export async function dispatchToExternalExecutor(payload: DispatchPayload) {
     }
     return { dispatched: true as const };
   } catch (error) {
+    // A timeout means the request was very likely delivered and the executor is
+    // simply slow to acknowledge. Handing the job to the local worker as well
+    // would produce two articles for one click, so treat it as dispatched and
+    // let a human retry if nothing arrives.
+    if (error instanceof Error && (error.name === 'TimeoutError' || error.name === 'AbortError')) {
+      return { dispatched: true as const, reason: 'no acknowledgement within the timeout; assuming delivered' };
+    }
     return { dispatched: false as const, reason: error instanceof Error ? error.message : 'webhook call failed' };
   }
 }
