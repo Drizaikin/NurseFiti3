@@ -49,6 +49,30 @@ const SAMPLE_QUESTIONS: Record<string, SampleQuestion> = {
     topic: 'Parenteral Medication Administration',
     difficulty: 'easy',
   },
+  'nck-exam-centres-kenya-sample': {
+    stem: 'During an NCK clinical examination simulation, a candidate is asked to demonstrate the proper sequence for removing personal protective equipment (PPE) after caring for a patient in isolation. According to WHO and Kenya Ministry of Health guidelines, which of the following represents the CORRECT order of doffing?',
+    option_a: 'Gloves, Goggles/Shield, Gown, Mask, Hand hygiene',
+    option_b: 'Gown, Gloves, Mask, Goggles/Shield, Hand hygiene',
+    option_c: 'Mask, Gloves, Gown, Goggles/Shield, Hand hygiene',
+    option_d: 'Gloves, Gown, Goggles/Shield, Mask, Hand hygiene',
+    correct_option: 'D',
+    rationale: 'According to WHO and Kenya Ministry of Health infection prevention and control (IPC) standards, the correct order of doffing (removing) PPE is: 1. Gloves (most contaminated), 2. Gown, 3. Goggles or Face Shield, 4. Mask/Respirator, 5. Perform Hand Hygiene. Gloves are removed first because they have the highest risk of heavy pathogen contamination. The gown is removed next, followed by goggles/shield which protect the eyes from splash during gown removal. The mask is removed last (outside the patient room if it is a respirator) to protect the airway until all other contaminated items are discarded. Hand hygiene must be performed immediately after doffing to clean any contamination that occurred during the removal process.',
+    unit: 'Infection Prevention & Control',
+    topic: 'Personal Protective Equipment',
+    difficulty: 'medium',
+  },
+  'nck-exam-foreign-trained-nurses-kenya-sample': {
+    stem: 'A foreign-trained nurse who has completed their clinical adaptation placement in Kenya is preparing to administer medications to a patient in the medical ward. Which of the following references is the PRIMARY source for determining approved medications and clinical guidelines in the Kenyan public healthcare system?',
+    option_a: 'British National Formulary (BNF)',
+    option_b: 'Kenya Essential Medicines List (KEML)',
+    option_c: 'United States Pharmacopeia (USP)',
+    option_d: 'WHO Model List of Essential Medicines',
+    correct_option: 'B',
+    rationale: 'The Kenya Essential Medicines List (KEML), published by the Ministry of Health, is the primary national reference directing the selection, procurement, distribution, and clinical administration of medicines in Kenyan public and private healthcare facilities. While foreign-trained nurses may be accustomed to international databases like the BNF (A) or USP (C), they must adhere to local KEML and MOH clinical guidelines when practicing and testing in Kenya. The WHO Model List (D) serves as a global template but is not the country-specific legal document.',
+    unit: 'Pharmacology & Drug Administration',
+    topic: 'Clinical Reference Guidelines',
+    difficulty: 'medium',
+  },
 };
 
 export function BlogSampleMCQ({ questionSlug }: { questionSlug: string }) {

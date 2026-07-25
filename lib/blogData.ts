@@ -1,5 +1,41 @@
 export const POSTS = [
   {
+    slug: 'nck-indexing-60-day-deadline-kenya',
+    title: 'NCK Indexing Kenya 2026: The Complete 60-Day Deadline Guide',
+    excerpt: 'Discover the crucial 60-day NCK indexing deadline on the OSP portal. Learn the step-by-step process to ensure your BScN training is fully recognized in Kenya.',
+    category: 'Study Guide',
+    readTime: '6 min read',
+    date: '2026-07-23',
+    cadres: ['BScN', 'KRCHN'],
+  },
+  {
+    slug: 'surviving-first-clinical-placement-kenyan-public-hospital',
+    title: 'Surviving Your First Clinical Placement in a Kenyan Public Hospital',
+    excerpt: 'Learn how to survive your BScN nursing clinical placement in Kenya. Discover how to bridge the theory-practice gap and avoid burnout on the wards.',
+    category: 'Study Guide',
+    readTime: '8 min read',
+    date: '2026-07-22',
+    cadres: ['BScN', 'KRCHN'],
+  },
+  {
+    slug: 'nck-exam-foreign-trained-nurses-kenya',
+    title: 'NCK Exam for Foreign-Trained Nurses in Kenya: Complete Guide (2026)',
+    excerpt: 'Complete guide for foreign-trained nurses seeking licensing in Kenya (2026). Learn about transcript verification, clinical adaptation, and the NCK exam.',
+    category: 'Study Guide',
+    readTime: '10 min read',
+    date: '2026-07-21',
+    cadres: ['KRCHN', 'BScN'],
+  },
+  {
+    slug: 'nck-exam-centres-kenya-guide',
+    title: 'NCK Exam Centres in Kenya: Full List & Guide (2026)',
+    excerpt: 'Find the full list of NCK exam centres in Kenya for 2026. Discover what to expect on exam day, how to register, and how to pass on your first attempt.',
+    category: 'Study Guide',
+    readTime: '11 min read',
+    date: '2026-07-21',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
     slug: 'moh-nursing-internship-deployment-kenya-2026',
     title: 'Ministry of Health 2026 Internship Deployment: What You Must Do By June 29',
     excerpt: 'The Ministry of Health has confirmed the July 1st, 2026 deployment of 6,360 healthcare interns, including 2,000 BSc Nursing Officers. Here is how to collect your offer letter.',
@@ -183,6 +219,10 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
+  'nck-indexing-60-day-deadline-kenya': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80&auto=format&fit=crop',
+  'surviving-first-clinical-placement-kenyan-public-hospital': 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200&q=80&auto=format&fit=crop',
+  'nck-exam-foreign-trained-nurses-kenya': 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80&auto=format&fit=crop',
+  'nck-exam-centres-kenya-guide': 'https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80&auto=format&fit=crop',
   'moh-nursing-internship-deployment-kenya-2026': 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80&auto=format&fit=crop',
   'nck-may-2026-exam-results-released': 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80&auto=format&fit=crop',
   'nck-exam-warning-unaccredited-colleges-kenya-2026': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200&q=80&auto=format&fit=crop',

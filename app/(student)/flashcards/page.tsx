@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Spinner } from '@/components/ui/Spinner';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { getLimits, effectiveTier } from '@/lib/planLimits';
+import { fetchPlatformSettings } from '@/lib/platformSettings';
 import Image from 'next/image';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -597,6 +598,7 @@ export default function FlashcardsPage() {
   const [planTier, setPlanTier] = useState<string>('free');
   const [selectedTheme, setSelectedTheme] = useState<FlashcardTheme>(THEMES[0]);
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
+  const [dailyPrice, setDailyPrice] = useState(99);
 
   // ── Init ────────────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -605,9 +607,10 @@ export default function FlashcardsPage() {
       if (!user) { router.push('/login'); return; }
       setUserId(user.id);
 
-      const [{ data: sp }, { data: profile }] = await Promise.all([
+      const [{ data: sp }, { data: profile }, settings] = await Promise.all([
         (supabase as any).from('student_profiles').select('plan_tier, plan_expires_at').eq('id', user.id).single(),
         (supabase as any).from('profiles').select('full_name').eq('id', user.id).single(),
+        fetchPlatformSettings(supabase as any)
       ]);
 
       if (sp) {
@@ -616,6 +619,7 @@ export default function FlashcardsPage() {
         if (getLimits(tier).flashcardsAccess) await loadDecks(user.id);
       }
       if (profile?.full_name) setStudentName(profile.full_name);
+      if (settings?.plan_daily_price) setDailyPrice(settings.plan_daily_price);
       setIsLoading(false);
     };
     init();
@@ -784,7 +788,7 @@ export default function FlashcardsPage() {
           <p className="text-neutral-mid mb-2 max-w-sm mx-auto">
             Flashcards with spaced repetition are available on Exam Boost, Success Plan, and Elite Prep.
           </p>
-          <p className="text-xs text-neutral-mid mb-6">Upgrade from KSh 69/day</p>
+          <p className="text-xs text-neutral-mid mb-6">Upgrade from KSh {dailyPrice}/day</p>
           <Link href="/settings?tab=account">
             <Button variant="primary" size="lg">Upgrade to Unlock Flashcards →</Button>
           </Link>

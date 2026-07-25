@@ -39,6 +39,7 @@ Every post must do all three. A post that educates but does not market is incomp
 
 ### 3.1 Accuracy & Sources
 - **Absolute Accuracy is required.** Never invent or assume facts. Ensure absolute accuracy in every post.
+- **Specific & Precise Content:** Confirm that the blog generated is not generic, and is very specific and precise with contents well cited both in-text and reference sources provided.
 - **In-text Citations:** Every single factual claim must be backed by an in-text citation using markdown inline links pointing to the original source. No exceptions.
 - Sources must be one of:
   - Official NCK website: [nckenya.com](https://www.nckenya.com)
@@ -202,6 +203,7 @@ Every post must link to at least **2 other NurseFiti blog posts** or app pages. 
 - Every image must have a descriptive `alt` text containing a keyword
 - Use `loading="lazy"` for below-fold images, `loading="eager"` for the hero
 - Images from Unsplash: use `?w=1200&q=80&auto=format&fit=crop` for optimised delivery
+- **Hero Image Uniqueness & Relevance**: Ensure the hero image is not repeated across multiple blog posts and is highly relevant/relates directly to the specific topic of the post.
 - Add a caption crediting the source where required by the licence
 
 ### 6.8 Schema Markup

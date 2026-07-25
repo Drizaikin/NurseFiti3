@@ -331,6 +331,7 @@ interface DashboardData {
     exam_date: string; exam_cycle: string;
     xp: number; level: number; streak_count: number;
     plan_tier: string; plan_expires_at: string | null;
+    has_unread_community?: boolean;
     scholarship?: {
       campaign_name: string;
       sponsor_name: string;
@@ -401,29 +402,6 @@ export default function DashboardPage() {
   useEffect(() => {
     fetchDashboardData();
 
-    // 1. Supabase Realtime subscription
-    const channel = supabase
-      .channel('student_dashboard_changes')
-      .on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'student_answers' },
-        () => fetchDashboardData()
-      )
-      .on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'mock_exam_results' },
-        () => fetchDashboardData()
-      )
-      .subscribe();
-
-    // 2. Window focus listener
-    const onFocus = () => fetchDashboardData();
-    window.addEventListener('focus', onFocus);
-
-    return () => {
-      supabase.removeChannel(channel);
-      window.removeEventListener('focus', onFocus);
-    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -432,7 +410,7 @@ export default function DashboardPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push('/login'); return; }
 
-      const [profileRes, studentRes, answersRes, mockRes, flashRes, sessionsRes, scholarshipRes, settingsRes] = await Promise.all([
+      const [profileRes, studentRes, answersRes, mockRes, flashRes, sessionsRes, scholarshipRes, settingsRes, unreadRes] = await Promise.all([
         supabase.from('profiles').select('full_name').eq('id', user.id).single(),
         supabase.from('student_profiles').select('*').eq('id', user.id).single(),
         supabase.from('student_answers').select('is_correct, time_taken_seconds, answered_at').eq('student_id', user.id).order('answered_at', { ascending: true }),
@@ -444,7 +422,8 @@ export default function DashboardPage() {
           .gte('session_date', new Date().toISOString().split('T')[0])
           .order('session_date', { ascending: true }).limit(3),
         supabase.from('scholarship_beneficiaries').select('beneficiary_type, scholarship_campaigns(name, sponsor_name)').eq('student_id', user.id).single(),
-        supabase.from('platform_settings').select('*').eq('id', 1).maybeSingle()
+        supabase.from('platform_settings').select('*').eq('id', 1).maybeSingle(),
+        supabase.rpc('has_unread_community_messages', { user_uuid: user.id })
       ]);
 
       const settings = settingsRes.data || {
@@ -489,6 +468,7 @@ export default function DashboardPage() {
           streak_count: studentData.streak_count ?? 0,
           plan_tier: studentData.plan_tier ?? 'free',
           plan_expires_at: studentData.plan_expires_at ?? null,
+          has_unread_community: unreadRes.data === true,
           scholarship: scholarshipRes.data ? {
             campaign_name: (scholarshipRes.data.scholarship_campaigns as any)?.name,
             sponsor_name: (scholarshipRes.data.scholarship_campaigns as any)?.sponsor_name,
@@ -554,6 +534,29 @@ export default function DashboardPage() {
         examDate={data.student.exam_date}
         examCycle={data.student.exam_cycle}
       />
+
+      {data.student.has_unread_community && (
+        <div className="bg-[#229ED9]/10 border border-[#229ED9]/30 rounded-2xl p-4 sm:p-5 shadow-sm">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 bg-[#229ED9] text-white rounded-full flex items-center justify-center flex-shrink-0 animate-pulse">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.223-.548.223l.188-2.85 5.18-4.686c.223-.195-.054-.304-.346-.109L7.26 14.56l-2.76-.89c-.6-.195-.615-.6.125-.89l10.8-4.16c.5-.18.96.105.815.82z"/></svg>
+            </div>
+            <div className="flex-1">
+              <h3 className="font-heading font-bold text-[#229ED9] mb-1">
+                New Community Messages!
+              </h3>
+              <p className="text-sm text-neutral-dark leading-relaxed">
+                Someone posted a new message in one of your study groups. Join the conversation!
+              </p>
+            </div>
+            <Link href="/groups">
+              <Button variant="primary" size="sm" className="bg-[#229ED9] hover:bg-[#1c84b5] border-none text-white font-bold">
+                View Groups
+              </Button>
+            </Link>
+          </div>
+        </div>
+      )}
 
       {data.student.scholarship && (
         <Card className="bg-gradient-to-r from-teal-50 to-primary-50 border-teal-200">

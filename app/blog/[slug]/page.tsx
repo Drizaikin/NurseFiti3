@@ -3,10 +3,14 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Script from 'next/script';
 import Image from 'next/image';
+import { createClient } from '@/lib/supabase/server';
 import { BlogSampleMCQ } from '@/components/blog/BlogSampleMCQ';
 import { BlogMarkdown } from '@/components/blog/BlogMarkdown';
 import { getPublishedCmsPost, listPublishedCmsPosts } from '@/lib/blog/cms';
 import { serializeJsonLd } from '@/lib/jsonLd';
+import BlogComments from '@/components/blog/BlogComments';
+import BlogShareButtons from '@/components/blog/BlogShareButtons';
+import CommunityLinks from '@/components/blog/CommunityLinks';
 
 // ─── Post data ───────────────────────────────────────────────────────────────
 
@@ -22,6 +26,190 @@ interface Post {
 }
 
 const POSTS: Post[] = [
+  {
+    slug: 'nck-indexing-60-day-deadline-kenya',
+    title: 'NCK Indexing Kenya 2026: The Complete 60-Day Deadline Guide',
+    excerpt: 'Discover the crucial 60-day NCK indexing deadline on the OSP portal. Learn the step-by-step process to ensure your BScN training is fully recognized in Kenya.',
+    category: 'Study Guide',
+    readTime: '6 min read',
+    date: '2026-07-23',
+    cadres: ['BScN', 'KRCHN'],
+    content: `
+Most first-year nursing students in Kenya focus entirely on passing their first-semester exams and surviving clinical placements. But there is a silent administrative deadline that, if missed, means your entire BScN degree won't be recognized by the Nursing Council of Kenya (NCK). You have exactly 60 days from the date of admission to complete your NCK indexing on the OSP portal.
+
+If you fail to index within this strict window, you will be ineligible for the final NCK licensure exams, rendering years of hard work useless.
+
+In this guide, we break down exactly what NCK indexing is, the step-by-step application process on the NCK Online Services Portal, and how to avoid the common mistakes that get applications rejected. 
+
+> [!NOTE]
+> *Last verified: July 2026. Always confirm current details at nckenya.com.*
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Want to start your NCK exam prep early?</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Practise questions on this topic free on NurseFiti →</a>
+</div>
+
+## What is NCK Indexing and Why Does it Matter?
+
+NCK indexing is the official registration process where the Nursing Council of Kenya acknowledges you as a bona fide student undergoing nursing or midwifery training in an accredited institution. 
+
+Once indexed, you receive an indexing number. This number tracks your entire academic and clinical journey, culminating in your eligibility to sit for the final NCK licensure exam.
+
+Without this number, the NCK simply does not know you exist. Many students only realize they missed this step in their final year, leading to panic and delayed graduation. Don't be that student.
+
+## The Critical 60-Day Deadline
+
+The NCK mandates that every nursing student must be indexed within **60 days of admission**. 
+
+This is not a flexible deadline. The NCK does not accommodate late registrations easily, and missing it requires complex appeals, letters from your university dean, and potentially paying penalty fees—with no guarantee of approval. 
+
+Join over 10,000 Kenyan nurses already preparing smartly on NurseFiti to avoid administrative and academic pitfalls.
+
+## Step-by-Step Guide: How to Apply on the NCK OSP Portal
+
+The NCK has digitized the indexing process through the Online Services Portal (OSP). Here is the exact process to follow:
+
+### 1. Create an Account on the OSP Portal
+Visit the official NCK portal at [osp.nckenya.go.ke](https://osp.nckenya.go.ke) and select "Create Account". Ensure you use an active email address and a phone number you will have access to for the next four years.
+
+### 2. Prepare Your Documents
+You will need clear, scanned copies of:
+- Your National ID or Passport
+- KCSE Certificate or Result Slip (ensure it meets the minimum entry requirements for BScN or KRCHN)
+- Your University Admission Letter
+- A recent passport-sized photograph
+
+### 3. Fill the Application
+Log in to the OSP portal, navigate to the "Indexing" section, and fill in your personal, educational, and institutional details. Double-check your names; they must perfectly match your KCSE certificate and National ID. 
+
+### 4. Pay the Indexing Fee
+The portal will generate an invoice. Pay the required indexing fee (usually via M-Pesa or bank transfer as directed on the invoice). Always keep the payment confirmation message.
+
+### 5. Institutional Verification
+Once you submit, your application is routed to your university's Dean or Principal. They must verify and approve it on their end before the NCK processes it.
+
+<div class="my-8 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Start Your NCK Prep Journey Today</h3>
+  <p class="mb-6 opacity-90 max-w-lg mx-auto">NurseFiti's mock exam replicates the DigiProctor interface exactly. Get familiar with the exam format from day one.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Try a free mock exam →</a>
+</div>
+
+## Common Mistakes That Delay NCK Indexing
+
+Even when students apply within the 60-day window, simple errors can cause applications to be rejected:
+
+- **Name Mismatches:** If your admission letter says "John Doe Kariuki" and your KCSE slip says "John Kariuki Doe," your application will flag an error.
+- **Blurry Uploads:** Ensure your scanned documents are legible. A blurry KCSE slip will be rejected immediately.
+- **Ignoring the Dean's Approval:** Submitting on the portal is not the final step. You must follow up with your school's administration to ensure they have verified your application on the portal.
+
+If you are already looking ahead to the licensure exam, check out our [complete NCK exam preparation guide](/blog/nck-exam-preparation-guide-kenya) and learn [how to use NCK past papers effectively](/blog/nck-past-papers-practice).
+
+## Stay Updated with NurseFiti
+
+The 60-day NCK indexing deadline is your first major test as a nursing undergrad. Get it done early so you can focus on what really matters: your clinical placements and academic coursework.
+
+For more real-time updates, study tips, and exclusive NCK exam strategies, join our official WhatsApp channel:
+[Join the NurseFiti WhatsApp Channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Pass the NCK Exam on Your First Attempt</h3>
+  <p class="mb-6 opacity-90">Start your free NurseFiti account — no credit card required.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+> *Found this — really useful guide on the NCK indexing process and the 60-day deadline everyone misses. Make sure you apply early so your degree is recognized: nursefiti.co.ke/blog/nck-indexing-60-day-deadline-kenya*
+
+---
+
+<div class="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
+  <h4 class="font-bold mb-3 uppercase tracking-wider text-xs">Sources & References</h4>
+  <ul class="space-y-2 list-disc pl-4">
+    <li>Nursing Council of Kenya (NCK). (2026). <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">Official NCK Website</a>.</li>
+    <li>Nursing Council of Kenya (NCK). (2026). <a href="https://osp.nckenya.go.ke" class="text-primary hover:text-primary-mid">Online Services Portal (OSP)</a>.</li>
+  </ul>
+  <p class="mt-4 italic text-xs">Always verify current exam and indexing information directly at <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">nckenya.com</a>.</p>
+</div>
+    `,
+  },
+  {
+    slug: 'surviving-first-clinical-placement-kenyan-public-hospital',
+    title: 'Surviving Your First Clinical Placement in a Kenyan Public Hospital',
+    excerpt: 'Learn how to survive your BScN nursing clinical placement in Kenya. Discover how to bridge the theory-practice gap and avoid burnout on the wards.',
+    category: 'Study Guide',
+    readTime: '8 min read',
+    date: '2026-07-22',
+    cadres: ['BScN', 'KRCHN'],
+    content: `
+You have practised taking vital signs on a pristine mannequin. But tomorrow morning, you walk into a Kenyan public hospital ward with 40 patients, two nurses, and zero functioning blood pressure machines. The gap between what you learn in nursing school and what happens on the ward is massive, and it causes severe anxiety for most students. There is one specific mistake first-year undergrads make on the ward that makes the nurses ignore them—here is how to avoid it.
+
+Clinical rotations are the most critical part of your BScN training. They are where you transition from a student reading books to a clinician saving lives. But in Kenya, clinical placements come with unique challenges: overcrowding, lack of resources, and immense pressure. 
+
+Here is exactly how to survive your first clinical placement and learn effectively without burning out.
+
+## 1. The Theory-Practice Gap
+
+Your university lecturers teach you the absolute gold standard of care. This is necessary because the [Nursing Council of Kenya (NCK)](https://www.nckenya.com) examines you on evidence-based practice. 
+
+However, when you enter a busy county hospital, you will quickly notice that the "gold standard" is often impossible. You might be taught to use a new pair of sterile gloves for every minor interaction, but the ward might only have one box to last the entire shift. 
+
+You must learn to adapt without compromising patient safety. Understand *why* a procedure is done a certain way (the principle) so you can improvise safely when resources are lacking.
+
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+  <strong>Key Takeaway:</strong> Never compromise on infection prevention control (IPC), but learn to be resourceful. Observe how senior nurses adapt to shortages without harming patients.
+</div>
+
+**[Practise NCK-style questions on clinical procedures free on NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+## 2. The Mistake That Makes Nurses Ignore You
+
+So, what is the mistake that makes senior nurses write you off? **Hiding in the nurses' station doing paperwork.**
+
+Many undergrads, overwhelmed by the chaos of the ward, retreat to the desk to update care plans or read files. The busy nurses on the floor see this and assume you are lazy or think you are "too educated" for bedside care. 
+
+If you want the nurses to teach you the real skills—how to set up an IV line in a collapsed vein, how to identify fetal distress on a manual fetoscope—you must volunteer for the messy jobs. Help with bed baths. Assist in moving patients. When the nurses see you working hard, they will pull you aside to show you the complex, high-yield clinical skills.
+
+## 3. Treating the Ward Like an Exam
+
+The things you see on the ward are exactly what the NCK licensure exam will test you on. The NCK exam is heavily clinical. It tests application, not just theory. If you are anxious about the format, [read our guide on the DigiProctor NCK Exam Interface](/blog/digiproctor-nck-exam-guide).
+
+When you see a patient with pre-eclampsia, do not just take their vitals. Go home and read about the pathophysiology, the exact dosage of Magnesium Sulphate used in Kenyan [Ministry of Health protocols](https://www.health.go.ke), and the nursing interventions. Connect the patient in front of you to the syllabus.
+
+**[NurseFiti's mock exam replicates the NCK DigiProctor interface exactly. Try a mock exam →](https://www.nursefiti.co.ke/signup)**
+
+## 4. Protecting Your Mental Health
+
+The emotional toll of a clinical placement is heavy. You will see pain, suffering, and sometimes death, often for the first time. You will be working long 12-hour shifts, sometimes on your feet the entire time.
+
+Burnout is real among nursing students in Kenya. You cannot pour from an empty cup. If the pressure of balancing clinicals and exam preparation is causing you severe stress, read our guide on [how to manage NCK exam anxiety](/blog/nck-exam-anxiety-how-to-manage-it). You must aggressively protect your mental health:
+- **Debrief:** Talk about difficult cases with your clinical instructor or peers.
+- **Rest:** Do not sacrifice sleep to study. A rested brain retains more information.
+- **Hydrate:** Carry a water bottle. Wards are hot, and you will forget to drink water.
+
+Your clinical placement is a marathon, not a sprint. Pace yourself. 
+
+## Start Your Preparation Early
+
+If you wait until your final year to start preparing for your licensure, you are already behind. The best students use their clinical rotations to study for the NCK exam passively. By the time the exam approaches, they are just reviewing. 
+
+For more tips and to connect with other students preparing for the exam, **[Join the NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)**.
+
+**[Start your free NurseFiti account — no credit card required](https://www.nursefiti.co.ke/signup)**
+
+> *Found this — really accurate breakdown of what to expect on your first clinical placement in Kenya. It also explains why hiding at the nurses' station is the worst thing you can do. Share with anyone starting their rotations: nursefiti.co.ke/blog/surviving-first-clinical-placement-kenyan-public-hospital*
+
+---
+
+### Sources & References
+
+*Always verify current clinical guidelines directly at [health.go.ke](https://www.health.go.ke) or official MOH channels.*
+
+- **Ministry of Health, Kenya** — Clinical guidelines and protocols for nursing practice in public hospitals. [health.go.ke](https://www.health.go.ke)
+- **Nursing Council of Kenya** — Official standards for clinical placements and indexing. [nckenya.com](https://www.nckenya.com)
+    `,
+  },
   {
     slug: 'moh-nursing-internship-deployment-kenya-2026',
     title: 'Ministry of Health 2026 Internship Deployment: What You Must Do By June 29',
@@ -61,7 +249,7 @@ The deployment of 2,000 BSc Nursing Officers is a significant move, but it also 
 
 If you are still a student or preparing for your upcoming NCK exams, you need to treat your preparation with the same urgency as this internship deployment. 
 
-**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a mock exam →](https://www.nursefiti.co.ke/signup)**
 
 ## Start Your Preparation Today
 
@@ -129,7 +317,7 @@ The recent warning about unaccredited colleges is a reminder of how strict the N
 
 When it comes to the exam, you need to treat it with the same level of seriousness. The NCK exam format (DigiProctor) is unique, and the questions are designed to test clinical application, not just rote memorisation.
 
-**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a mock exam →](https://www.nursefiti.co.ke/signup)**
 
 ## Start Your Preparation Today
 
@@ -636,7 +824,7 @@ However, this brings us to the mistake you must avoid: **Do not simply re-read y
 
 If your current study strategy resulted in a fail, using it again for the August 2026 sitting will yield the same outcome. The NCK exam tests application and clinical judgment, not rote memorisation. You need a structured revision plan that focuses on your weakest units.
 
-**[NurseFiti's diagnostic mock exams replicate the DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+**[NurseFiti's diagnostic mock exams replicate the DigiProctor interface exactly. Try a mock exam →](https://www.nursefiti.co.ke/signup)**
 
 Join the thousands of Kenyan nurses already preparing systematically on NurseFiti. Focus on retrieval practice, spaced repetition, and timed mock exams.
 
@@ -784,7 +972,7 @@ If you did not pass: You are eligible to resit at the next available sitting. Be
   <strong>Key Takeaway:</strong> Whether you passed or not, the next step requires action now. Passed? Apply for your licence today. Did not pass? Start a structured diagnostic practice session to identify your weakest units before the August sitting.
 </div>
 
-**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a free mock exam →](https://www.nursefiti.co.ke/signup)**
+**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a mock exam →](https://www.nursefiti.co.ke/signup)**
 
 ## May 2026 Exams Concluded — August Is Next
 
@@ -1477,6 +1665,306 @@ Passing the NCK licensure exam while working as an intern is a test of strategy,
 
 const POSTS_LATEST_RESEARCH: Post[] = [
   {
+    slug: 'nck-exam-foreign-trained-nurses-kenya',
+    title: 'NCK Exam for Foreign-Trained Nurses in Kenya: Complete Guide (2026)',
+    excerpt: 'Complete guide for foreign-trained nurses seeking licensing in Kenya (2026). Learn about transcript verification, clinical adaptation, and the NCK exam.',
+    category: 'Study Guide',
+    readTime: '10 min read',
+    date: '2026-07-21',
+    cadres: ['KRCHN', 'BScN'],
+    content: `
+Entering a new healthcare system is an exciting but complex journey, especially for nurses who trained outside of East Africa. In Kenya, the Nursing Council of Kenya (NCK) is the sole regulatory body responsible for verifying credentials and issuing practising licences. For foreign-trained nurses (FTNs) seeking to practice in the country, the process culminates in a mandatory licensure examination.
+
+While many expect a simple conversion process, there is a strict 24-week clinical adaptation requirement that catches dozens of unprepared applicants off guard every year — we will break down exactly how to navigate it and prepare for the final licensure exam in the sections below.
+
+## Understanding the Foreign-Trained Nurse Pathway in Kenya
+
+The Nursing Council of Kenya (NCK) ensures that all practicing nurses meet the national clinical standards. According to the Nurses Act (Cap 257 of the Laws of Kenya), anyone who obtained their nursing education outside Kenya must undergo verification, clinical adaptation, and licensing examinations before they can legally practice.
+
+This regulation applies to:
+- Bosnian, Indian, Ugandan, or any foreign nationals relocating to Kenya for employment, research, or humanitarian missions.
+- Syrian, UK, US, or any foreign-educated Kenyan citizens who studied nursing abroad and wish to return home to practice.
+
+The pathway is structured into distinct phases to evaluate your academic background and clinical competencies.
+
+**[Practise questions on this topic free on NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+## Phase 1: Application and Document Verification
+
+The first step in your licensing journey is submitting your credentials to the Nursing Council of Kenya for verification. This process is fully managed through the NCK Online Services Portal [osp.nckenya.go.ke](https://osp.nckenya.go.ke).
+
+### Required Verification Documents
+You must upload clear, scanned copies of the following documents:
+- **Academic transcripts** from your nursing school.
+- **Nursing diploma or degree certificate**.
+- **Active registration certificate or licence** from the nursing board/council of the country where you trained.
+- **Official syllabus or curriculum** of the nursing program completed (to assess course content and clinical hours).
+- **National ID Card** (for Kenyan citizens) or a valid **Passport** (for foreign nationals).
+- **Certificate of Good Standing** sent directly from your registering authority/nursing board to the NCK.
+
+Once you submit your application on the portal, the NCK will contact your training institution and foreign nursing board directly to verify the authenticity of your documents. This process can take anywhere from **2 to 6 months** depending on the responsiveness of your previous school and board. You can monitor the verification status by logging into the NCK OSP portal.
+
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+  <strong>Pro-Tip for Verification:</strong> Contact your former nursing school registrar and licensing board as soon as you submit your application to NCK. Urging them to respond quickly to NCK's verification request will save you weeks of waiting.
+</div>
+
+## Phase 2: Indexing and Temporary Registration
+
+Once the NCK successfully verifies your credentials, they will determine if your training is equivalent to the Kenyan standards (either KRCHN/Diploma or BScN/Degree). 
+
+If approved, you will be required to pay the indexing fee on the [osp.nckenya.go.ke](https://osp.nckenya.go.ke) portal. NCK will then issue you an **indexing number**. This number acts as your unique identifier and tracks your progress through clinical training and examinations in Kenya. 
+
+For foreign nationals, NCK may issue a temporary indexing clearance and temporary registration letter, allowing them to remain in the country legally during their training period.
+
+## Phase 3: The Mandatory Clinical Adaptation Placement
+
+Unlike local graduates who proceed directly from school to the exam, foreign-trained nurses must undergo a **clinical adaptation placement**. This is a mandatory clinical internship that helps you adjust to the Kenyan healthcare system.
+
+### Structure of the Adaptation Placement
+- **Duration:** Typically **24 weeks (6 months)** of full-time clinical rotation.
+- **Approved Facilities:** The placement must be conducted at an NCK-approved teaching and referral hospital (such as Kenyatta National Hospital in Nairobi, Moi Teaching and Referral Hospital in Eldoret, or designated Level 5 County Referral Hospitals).
+- **Core Rotations:** You will rotate through the major departments: Medical-Surgical Nursing, Pediatric Nursing, Obstetrics/Gynecology, and Community Health Nursing.
+
+### Why Adaptation is Crucial
+The clinical landscape in Kenya differs significantly from Western or Asian countries:
+1. **Disease Profiles:** You will manage high volumes of infectious diseases like Malaria, Tuberculosis, and HIV/AIDS, which are guided by specific Kenya Ministry of Health [health.go.ke](https://www.health.go.ke) clinical protocols.
+2. **Resource Allocation:** You will learn to deliver quality nursing care in resource-limited settings, mastering manual calculations and local equipment.
+3. **Pharmacology:** You must familiarize yourself with local drug names and protocols, primarily guided by the Kenya Essential Medicines List (KEML).
+
+## Test Your Pharmacology & Drug Calculation Knowledge
+
+To give you an idea of the clinical guidelines and pharmacology questions you will encounter on the NCK exam, try this sample question:
+
+<div class="sample-mcq-embed" data-question-slug="nck-exam-foreign-trained-nurses-kenya-sample"></div>
+
+Want access to thousands of custom drug calculation questions and rationales? **[Create your free NurseFiti account →](https://www.nursefiti.co.ke/signup)**
+
+## Phase 4: Sitting the NCK Licensure Examination
+
+After completing your 24-week clinical adaptation, your supervising hospital will submit a logbook and completion letter to the Nursing Council of Kenya. Once approved, you are cleared to book the **NCK Licensure Examination**.
+
+### Exam Format and Client
+The exam is a Computer-Based Test (CBT) delivered via the secure **DigiProctor** client. It tests your competency across two main papers:
+- **Paper I:** Tests basic sciences, pharmacology, fundamentals of nursing, and medical-surgical clinical scenarios.
+- **Paper II:** Focuses on specialized areas including maternal-neonatal health (midwifery), pediatrics, community health, and nursing management/ethics.
+
+To help you get familiar with the test interface, we highly recommend reading our detailed [guide to the DigiProctor NCK exam interface](/blog/digiproctor-nck-exam-guide) before exam day.
+
+### High-Yield Study Areas for Foreign-Trained Nurses
+- **Kenya MOH Guidelines:** Focus on reproductive health, malaria management, and immunization schedules (KEPI guidelines).
+- **Nursing Law and Ethics:** Study the Nurses Act (Cap 257) and the NCK Code of Conduct.
+- **Drug Calculations:** Master intravenous drip rates, pediatric dosing, and local drug formulations. Refer to our [NCK pharmacology and drug calculations guide](/blog/nck-pharmacology-calculations-guide) for worked formulas.
+
+**[NurseFiti's mock exam replicates the NCK CBT format exactly. Try a mock exam →](https://www.nursefiti.co.ke/signup)**
+
+## Phase 5: Registration and Licensure
+
+Once you pass the NCK licensure exam, your results will be updated on the portal. You can then apply for:
+1. **NCK Registration Certificate:** The official document confirming your entry into the register of nurses in Kenya.
+2. **Practising Licence:** The annual licence allowing you to work in clinical environments.
+
+For a detailed walkthrough of the final steps, including fees and portal clicks, read our guide on [how to apply for your NCK licence after passing](/blog/how-to-apply-nck-licence-kenya).
+
+## Pro-Tips for Foreign-Trained Candidates
+
+### 1. Document Everything
+Keep physical and digital copies of all course syllabi, clinical logbooks, and licensing histories. NCK requires highly detailed records to verify clinical hours.
+
+### 2. Focus on Local Guidelines
+Do not rely solely on textbook guidelines from the UK or US. NCK questions are strictly aligned with Kenya Ministry of Health standards and WHO guidelines tailored for East Africa.
+
+### 3. Join the Community
+Stay connected with other foreign-trained and local candidates to share updates on portal openings, exam results, and study resources.
+
+**[Get real-time updates and support. Join the official NurseFiti WhatsApp channel →](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)**
+
+## Conclusion
+
+Transitioning your nursing career to Kenya requires patience and structured preparation. By submitting your verification documents early, engaging fully in your clinical adaptation, and studying with local guidelines in mind, you will navigate the pathway smoothly and pass your NCK exam on your first attempt.
+
+**[Start your free NurseFiti account — no credit card required](https://www.nursefiti.co.ke/signup)**
+
+> *Share this: "Are you a foreign-trained nurse looking to practice in Kenya? Here is the complete guide to credential verification, clinical adaptation placements, and passing the NCK CBT licensing exam in 2026: nursefiti.co.ke/blog/nck-exam-foreign-trained-nurses-kenya"*
+
+---
+
+## Sources & References
+
+- **Nursing Council of Kenya (NCK)** — Guidelines for registration of foreign-trained nurses. [nckenya.com](https://www.nckenya.com)
+- **NCK Online Services Portal (OSP)** — Verification and licensing registration manuals. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
+- **Ministry of Health Kenya** — *Kenya Essential Medicines List (KEML)* and Clinical Management Guidelines. [health.go.ke](https://www.health.go.ke)
+- **World Health Organization (WHO) Kenya** — Country cooperation strategy and regional clinical guidelines. [who.int](https://www.who.int)
+- **Laws of Kenya** — *The Nurses Act (Chapter 257)*. [klr.go.ke](http://www.klr.go.ke)
+
+*Always verify current registration requirements and guidelines directly at [nckenya.com](https://www.nckenya.com).*
+`,
+  },
+  {
+    slug: 'nck-exam-centres-kenya-guide',
+    title: 'NCK Exam Centres in Kenya: Full List & Guide (2026)',
+    excerpt: 'Find the full list of NCK exam centres in Kenya for 2026. Discover what to expect on exam day, how to register, and how to pass on your first attempt.',
+    category: 'Study Guide',
+    readTime: '11 min read',
+    date: '2026-07-21',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+Entering the examination room for the NCK licensure exam is one of the most high-stakes moments in a Kenyan nursing graduate’s life. The difference between passing on your first attempt and waiting another six months often comes down to your level of preparation and familiarity with the exam day environment. Knowing exactly where your assigned testing centre is and what rules you must follow will protect you from unnecessary stress and potential disqualification.
+
+While most candidates spend months studying their notes, there is a specific biometric check at the entrance that catches dozens of unprepared graduates every cycle — we will explain how to ensure you pass it smoothly in the sections below.
+
+## What is the NCK Exam Centre System?
+
+The Nursing Council of Kenya (NCK) administers all licensure examinations via computer-based testing (CBT). Rather than sitting for exams in traditional classrooms using pen and paper, candidates report to designated IT and computer labs across the country. These labs are accredited NCK exam centres in Kenya, chosen for their secure network infrastructure, reliable power backup systems, and seating capacity.
+
+These centres run the **DigiProctor** examination client, a secure lockdown browser that prevents candidates from accessing external websites, documents, or help during the test. Understanding this interface is vital to your success. If you are unfamiliar with CBT, you should review our [guide to the DigiProctor interface](/blog/digiproctor-nck-exam-guide) before your exam day.
+
+**[Practise questions on this topic free on NurseFiti →](https://www.nursefiti.co.ke/signup)**
+
+## Full List of Approved NCK Exam Centres in Kenya (2026)
+
+To accommodate candidates from all 47 counties, the NCK has distributed exam centres across major regional hubs. Most of these centres are hosted within Kenya Medical Training College (KMTC) campuses and partner public or private universities.
+
+Below is the verified list of active NCK exam centres in Kenya for the 2026 academic cycles:
+
+### Nairobi Region
+- **KMTC Nairobi Campus:** Located opposite Kenyatta National Hospital (KNH) along Ngong Road. This is the largest centre in the country and handles the highest volume of candidates.
+- **Kenyatta University (KU) CBT Centre:** Located along the Thika Superhighway. This centre boasts modern computer labs with high-speed connections and backup generators.
+- **Jomo Kenyatta University of Agriculture and Technology (JKUAT) Main Campus:** Located in Juja, Kiambu County.
+- **Mount Kenya University (MKU) Main Campus:** Located in Thika Town.
+
+### Rift Valley Region
+- **KMTC Nakuru Campus:** Located next to the Nakuru County Referral Hospital. A central hub for Nakuru and neighboring counties.
+- **KMTC Eldoret Campus:** Located adjacent to the Moi Teaching and Referral Hospital (MTRH) in Eldoret.
+- **Kabarak University CBT Centre:** Located along the Nakuru-Eldama Ravine highway.
+
+### Nyanza Region
+- **KMTC Kisumu Campus:** Located near Kisumu County Referral Hospital. Serves Kisumu, Siaya, Homa Bay, and Vihiga counties.
+- **Maseno University CBT Lab:** Located at the Maseno Main Campus along the Kisumu-Busia Road.
+
+### Coast Region
+- **KMTC Mombasa Campus:** Located near the Coast General Teaching and Referral Hospital.
+- **Pwani University CBT Labs:** Located in Kilifi Town, serving Kilifi, Kwale, and Lamu counties.
+
+### Central Region
+- **KMTC Nyeri Campus:** Located next to the Nyeri County Referral Hospital.
+- **Dedan Kimathi University of Technology (DeKUT):** Located in Nyeri Town along the Nyeri-Nyahururu Road.
+
+### Western Region
+- **KMTC Kakamega Campus:** Located near the Kakamega County Referral Hospital.
+- **Masinde Muliro University of Science and Technology (MMUST):** Located in Kakamega Town.
+
+### Eastern Region
+- **KMTC Meru Campus:** Located next to Meru Level 5 Hospital.
+- **Chuka University CBT Centre:** Located in Chuka Town, Tharaka Nithi County.
+- **KMTC Machakos Campus:** Located next to Machakos Level 5 Hospital.
+
+### North Eastern Region
+- **KMTC Garissa Campus:** Located in Garissa Town, serving the entire northern region.
+
+<div class="bg-primary-xlight border border-primary/20 p-4 rounded-xl my-6">
+  <strong>Note on Centre Availability:</strong> NCK occasionally adds temporary centres or relocates existing ones depending on candidate numbers for a specific cycle. Always double-check your official admission letter for your exact allocated venue.
+</div>
+
+## Booking Your NCK Exam Centre: The First-Come, First-Served Rule
+
+You select your preferred NCK exam centre during the online registration process on the NCK Online Services Portal [osp.nckenya.go.ke](https://osp.nckenya.go.ke). 
+
+However, you must be aware of the **capacity limit rule**. Each centre has a fixed number of computer workstations. Once the capacity for a particular centre (such as KMTC Nairobi or KMTC Nakuru) is filled, the portal will automatically disable that option for the cycle. 
+
+If you delay registering, you may be forced to book a centre in another county or region, incurring unexpected travel and accommodation costs. To avoid this, gather your registration documents early and submit your application the day the portal opens. See our comprehensive [NCK Exam Preparation Guide](/blog/nck-exam-preparation-guide-kenya) for a complete list of required registration documents.
+
+## Strict NCK Exam Centre Rules and Regulations
+
+The Nursing Council of Kenya maintains a zero-tolerance policy toward examination irregularities. The exam centres are highly secure, and violations of guidelines will lead to immediate cancellation of your results and potential suspension from future sittings.
+
+### 1. Mandatory Documentation
+You must present the following documents at the security gate to be admitted:
+- **Original National ID Card** or valid Passport. Scans, photocopies, or police abstracts are **not** accepted under any circumstances.
+- **Printed NCK Exam Admission Letter** downloaded from [osp.nckenya.go.ke](https://osp.nckenya.go.ke).
+
+### 2. Prohibited Items
+The following items are strictly banned from the examination rooms:
+- Mobile phones, smartwatches, tablets, and e-readers.
+- Personal calculator devices (an on-screen calculator is provided within the exam interface if needed).
+- Notebooks, textbooks, or personal scratch papers.
+- Large bags, heavy jackets, or hats.
+
+### 3. Biometric Verification
+Before entering the computer lab, you will undergo a biometric fingerprint check and facial verification to match your identity against your portal details. This is the entry check that catches many candidates: if your registration details are incorrect or if your biometrics fail to sync, you will be delayed. Ensure your details on the OSP portal match your National ID exactly.
+
+### 4. Surveillance and Monitoring
+All NCK exam centres are monitored through a combination of:
+- Physical invigilators walking the aisles.
+- CCTV cameras installed throughout the labs.
+- Proctored webcam and microphone monitoring built into the DigiProctor client to record screen activity and candidate behavior.
+
+## Test Yourself: Infection Prevention & Control Practice
+
+Here is a high-yield question from the NurseFiti question bank related to standard protocols you must master for your NCK exam. Try it out to see how our interactive rationales help you learn:
+
+<div class="sample-mcq-embed" data-question-slug="nck-exam-centres-kenya-sample"></div>
+
+Want access to thousands of verified questions and detailed rationales? **[Create your free NurseFiti account →](https://www.nursefiti.co.ke/signup)**
+
+## What to Expect on Exam Day: Step-by-Step Procedure
+
+Knowing what happens on the day of the exam will help calm your nerves and keep you focused. Here is the typical workflow once you arrive at the centre:
+
+### 1. Arrival and Security Screening
+You should arrive at the exam centre at least **45 to 60 minutes** before your scheduled start time. Security guards and NCK officials will check your ID and admission letter at the gate. You will be asked to store all personal bags and phones in a designated holding area outside the exam room.
+
+### 2. Biometric Registration
+You will join the biometric queue. An NCK officer will scan your fingerprint and verify your face. Once cleared, you will be assigned a specific computer terminal number.
+
+### 3. Entering the Lab and Logging In
+Once seated at your assigned terminal, you will find the DigiProctor client running. You will log in using the credentials provided on your admission letter. Ensure the screen displays your correct name and registration number.
+
+### 4. Reading Instructions and System Check
+Before the timer starts, you will have 10 minutes to read the exam instructions and run a webcam system check. An invigilator will provide a general briefing and distribute blank scratch paper and pencils for your calculations.
+
+### 5. Writing the Exam
+The exam consists of 100 multiple-choice questions with a 120-minute countdown timer. You can navigate freely back and forth between questions using the navigator grid. If you are unsure of a question, select a temporary option, click "Flag for Review", and return to it later. The system will auto-submit when the timer reaches zero.
+
+**[NurseFiti's mock exam replicates the DigiProctor interface exactly. Try a mock exam →](https://www.nursefiti.co.ke/signup)**
+
+## Pro-Tips for Managing Exam Day Logistics
+
+### Visit the Centre a Day Early
+If you are assigned to a centre you have never visited before, travel there the day before the exam. Locate the exact gate, assess the traffic conditions, and identify public transport routes. This eliminates travel panic on the morning of the exam.
+
+### Plan Your Accommodations
+If you must travel to another county for your exam, book clean, quiet accommodations close to the centre. Avoid long commutes on the morning of the test.
+
+### Manage Your Time Strategically
+With 100 questions in 120 minutes, you have exactly **72 seconds per question**. Do not spend more than 2 minutes on any single question. If a dosage calculation or scenario is taking too long, flag it, move forward, and return to it once you have secured the easier marks.
+
+### Join the Community for Live Updates
+For real-time discussions, exam cycle updates, and peer advice on centre selections, join the official community.
+
+**[Stay updated with the latest in the Kenyan nursing community. Join the NurseFiti WhatsApp channel →](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)**
+
+## Conclusion
+
+Your choice of NCK exam centre and your preparation for the exam environment are just as important as the hours you spend studying. By booking your centre early, understanding the strict rules, and practising on a CBT simulator, you remove logistical anxiety and allow your clinical knowledge to shine.
+
+**[Start your free NurseFiti account — no credit card required](https://www.nursefiti.co.ke/signup)**
+
+> *Share this: "Preparing for the upcoming NCK exam? Here is the full list of NCK exam centres in Kenya for 2026, registration guidelines, and the strict rules to avoid exam-day disqualification: nursefiti.co.ke/blog/nck-exam-centres-kenya-guide"*
+
+---
+
+## Sources & References
+
+- **Nursing Council of Kenya (NCK)** — Official list of approved examination centres and CBT guidelines. [nckenya.com](https://www.nckenya.com)
+- **NCK Online Services Portal (OSP)** — Candidate registration guidelines and portal manuals. [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
+- **Ministry of Health Kenya** — National Infection Prevention and Control (IPC) Guidelines for Health Care Services. [health.go.ke](https://www.health.go.ke)
+- **World Health Organization (WHO)** — *Guidelines on hand hygiene in health care and proper PPE doffing sequence*. [who.int](https://www.who.int)
+- **The Kenya Times** — *"NCK Transition to DigiProctor Computer-Based Testing System"*, news archives. [thekenyatimes.com](https://thekenyatimes.com)
+
+*Always verify current exam information and approved centres directly at [nckenya.com](https://www.nckenya.com).*
+`
+  },
+  {
     slug: 'nursing-politics-leadership-kenya',
     title: 'Nursing and Politics in Kenya: Leadership Opportunities for Practitioners (2026)',
     excerpt: 'As Kenya approaches the 2027 elections, the intersection of nursing and politics has never been more critical. Discover political and leadership seats available for nursing practitioners to advocate for better healthcare policies.',
@@ -1753,6 +2241,16 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
     alt: 'Nursing students collaborating and studying together at university with laptop',
     credit: 'Unsplash',
   },
+  'nck-exam-foreign-trained-nurses-kenya': {
+    url: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Foreign trained nurse studying online for licensing registration in Kenya',
+    credit: 'Unsplash',
+  },
+  'nck-exam-centres-kenya-guide': {
+    url: 'https://images.unsplash.com/photo-1562774053-701939374585?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Computer-based examination lab for NCK licensure exams in Kenya',
+    credit: 'Unsplash',
+  },
   'nursing-politics-leadership-kenya': {
     url: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200&q=80&auto=format&fit=crop',
     alt: 'Kenyan leaders in a parliament or conference session discussing policy',
@@ -1788,12 +2286,39 @@ function renderContent(content: string) {
   const elements: React.ReactNode[] = [];
   let key = 0;
   let inSourcesSection = false;
+  let inHtmlBlock = false;
+  let htmlBlock = '';
 
   for (let index = 0; index < lines.length; index++) {
     const trimmed = lines[index].trim();
     if (!trimmed) {
-      elements.push(<div key={key++} className="h-2" />);
-    } else if (trimmed.includes('sample-mcq-embed')) {
+      if (inHtmlBlock) {
+        htmlBlock += '\n';
+      } else {
+        elements.push(<div key={key++} className="h-2" />);
+      }
+      continue;
+    }
+
+    if (inHtmlBlock) {
+      htmlBlock += '\n' + trimmed;
+      if (trimmed.includes('</div>')) {
+        elements.push(
+          <div key={key++} dangerouslySetInnerHTML={{ __html: formatInline(htmlBlock) }} />
+        );
+        inHtmlBlock = false;
+        htmlBlock = '';
+      }
+      continue;
+    }
+
+    if (trimmed.startsWith('<div') && !trimmed.endsWith('</div>')) {
+      inHtmlBlock = true;
+      htmlBlock = trimmed;
+      continue;
+    }
+
+    if (trimmed.includes('sample-mcq-embed')) {
       // Extract the data-question-slug from the HTML
       const slugMatch = trimmed.match(/data-question-slug="([^"]+)"/);
       if (slugMatch) {
@@ -1901,6 +2426,14 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   const cmsPost = await getPublishedCmsPost(params.slug);
   const post = cmsPost ?? ALL_POSTS.find((p) => p.slug === params.slug);
   if (!post) notFound();
+
+  const supabase = createClient();
+  const { data: initialComments } = await (supabase as any)
+    .from('blog_comments')
+    .select('id, user_id, content, created_at, profiles:user_id(full_name, avatar_url)')
+    .eq('slug', post.slug)
+    .eq('is_deleted', false)
+    .order('created_at', { ascending: true });
 
   const cmsPosts = await listPublishedCmsPosts();
   const relatedPool = [...cmsPosts, ...ALL_POSTS.filter(legacy => !cmsPosts.some(cms => cms.slug === legacy.slug))];
@@ -2029,7 +2562,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           <div className="relative w-full h-56 sm:h-72 rounded-2xl overflow-hidden mb-10 shadow-card">
             <Image
               src={heroImg.url}
-              alt={heroImg.alt}
+              alt={heroImg.alt || post.title}
               fill
               className="object-cover"
               priority
@@ -2103,6 +2636,15 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             </Link>
           </div>
         </div>
+
+        {/* Share Buttons */}
+        <BlogShareButtons title={post.title} slug={post.slug} />
+
+        {/* Community Links */}
+        <CommunityLinks />
+
+        {/* Comments */}
+        <BlogComments slug={post.slug} initialComments={initialComments || []} />
 
         {/* Related posts */}
         {relatedPosts.length > 0 && (

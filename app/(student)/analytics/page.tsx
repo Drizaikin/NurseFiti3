@@ -10,6 +10,7 @@ import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Spinner } from '@/components/ui/Spinner';
 import { StatCard } from '@/components/shared/StatCard';
 import { getLimits, effectiveTier } from '@/lib/planLimits';
+import { fetchPlatformSettings } from '@/lib/platformSettings';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
@@ -99,6 +100,7 @@ export default function AnalyticsPage() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [planTier, setPlanTier] = useState<string>('free');
+  const [dailyPrice, setDailyPrice] = useState(99);
 
   useEffect(() => {
     const load = async () => {
@@ -106,7 +108,7 @@ export default function AnalyticsPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push('/login'); return; }
 
-      const [profileRes, answersRes, mockRes, flashRes] = await Promise.all([
+      const [profileRes, answersRes, mockRes, flashRes, settingsRes] = await Promise.all([
         supabase.from('student_profiles').select('plan_tier, plan_expires_at').eq('id', user.id).maybeSingle(),
         // Limit to last 2000 answers to avoid timeout on large accounts
         supabase.from('student_answers')
@@ -116,6 +118,7 @@ export default function AnalyticsPage() {
           .limit(2000),
         supabase.from('mock_exam_results').select('*').eq('student_id', user.id).order('completed_at', { ascending: false }),
         supabase.from('flashcard_progress').select('id').eq('student_id', user.id),
+        fetchPlatformSettings(supabase)
       ]);
 
       const profileData = profileRes.data as { plan_tier: string; plan_expires_at: string | null } | null;
@@ -126,6 +129,11 @@ export default function AnalyticsPage() {
       const answers = (answersRes.data ?? []) as Array<{ is_correct: boolean; time_taken_seconds: number | null; answered_at: string; question_id: string; questions?: { unit: string; topic: string | null } }>;
       const mocks = (mockRes.data ?? []) as MockResult[];
       const flashCount = flashRes.data?.length ?? 0;
+      const settings = settingsRes as any;
+      
+      if (settings?.plan_daily_price) {
+        setDailyPrice(settings.plan_daily_price);
+      }
 
       const totalAnswered = answers.length;
       const correctAnswers = answers.filter(a => a.is_correct).length;
@@ -206,29 +214,6 @@ export default function AnalyticsPage() {
     };
     load();
 
-    // 1. Supabase Realtime subscription
-    const channel = supabase
-      .channel('student_analytics_changes')
-      .on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'student_answers' },
-        () => load()
-      )
-      .on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'mock_exam_results' },
-        () => load()
-      )
-      .subscribe();
-
-    // 2. Window focus listener
-    const onFocus = () => load();
-    window.addEventListener('focus', onFocus);
-
-    return () => {
-      supabase.removeChannel(channel);
-      window.removeEventListener('focus', onFocus);
-    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -331,7 +316,7 @@ export default function AnalyticsPage() {
               <p className="text-sm text-neutral-mid mb-1">
                 Exam Boost, Success Plan, and Elite Prep include your 7-day score trend, per-unit mastery breakdown, and full mock exam history.
               </p>
-              <p className="text-xs text-neutral-mid">Test Yourself plan · Upgrade from KSh 69/day</p>
+              <p className="text-xs text-neutral-mid">Test Yourself plan · Upgrade from KSh {dailyPrice}/day</p>
             </div>
             <Link href="/settings?tab=account" className="flex-shrink-0">
               <Button variant="primary">Upgrade →</Button>

@@ -215,16 +215,19 @@ export function FeedbackWall({
   showSummary = true,
   showFilters = true,
   compact = false,
-}: FeedbackWallProps) {
+  initialItems = [],
+}: FeedbackWallProps & { initialItems?: FeedbackItem[] }) {
   const supabase = createClient();
 
-  const [items, setItems] = useState<FeedbackItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [items, setItems] = useState<FeedbackItem[]>(initialItems);
+  const [isLoading, setIsLoading] = useState(initialItems.length === 0);
   const [activeFilter, setActiveFilter] = useState<Category | 'all'>('all');
   const [showAll, setShowAll] = useState(false);
   const [helpfulSet, setHelpfulSet] = useState<Set<string>>(new Set());
 
   const fetchFeedback = useCallback(async () => {
+    // If we already have items from server, skip fetching
+    if (initialItems.length > 0) return;
     setIsLoading(true);
     try {
       const { data } = await supabase
@@ -232,8 +235,7 @@ export function FeedbackWall({
         .select('id, display_name, cadre, user_role, category, rating, message, helpful_count, is_pinned, created_at')
         .eq('is_approved', true)
         .order('is_pinned', { ascending: false })
-        .order('created_at', { ascending: false })
-        .limit(100);
+        .order('created_at', { ascending: false });
 
       setItems((data ?? []) as FeedbackItem[]);
     } catch (err) {
@@ -241,7 +243,7 @@ export function FeedbackWall({
     } finally {
       setIsLoading(false);
     }
-  }, [supabase]);
+  }, [supabase, initialItems]);
 
   useEffect(() => { fetchFeedback(); }, [fetchFeedback]);
 

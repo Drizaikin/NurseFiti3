@@ -31,6 +31,7 @@ export async function POST() {
 
     const admin = createAdminClient();
 
+    const settings = await fetchPlatformSettings(admin as any);
     const { data: payments, error: paymentError } = await (admin as any)
       .from('payments')
       .select('*')
@@ -42,7 +43,7 @@ export async function POST() {
 
     if (paymentError) throw paymentError;
 
-    const payment = payments?.find((p: any) => Number(p.amount) >= 69);
+    const payment = payments?.find((p: any) => Number(p.amount) >= settings.plan_daily_price);
     if (!payment) {
       return NextResponse.json({ error: 'No recent plan payment found.' }, { status: 404 });
     }
@@ -78,7 +79,7 @@ export async function POST() {
       transactionId = txn.invoice_id ?? transactionId;
     }
 
-    const settings = await fetchPlatformSettings(admin as any);
+
     const { tier, durationDays } = getDynamicPlanFromAmount(Number(payment.amount), settings);
     // Use the original payment completion time so double-clicking sync doesn't shorten the subscription
     const baseDate = payment.completed_at ? new Date(payment.completed_at) : new Date();

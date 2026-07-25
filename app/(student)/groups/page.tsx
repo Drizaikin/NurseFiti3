@@ -259,6 +259,11 @@ function GroupsInner() {
     setLoadingFeed(false);
     
     setTimeout(() => trackViews(withLikes.filter(p => !p.reply_to_id)), 500);
+
+    // Mark as read in the background
+    if (group.isMember) {
+      sbRef.current.rpc('mark_group_as_read', { target_group_id: group.id, user_uuid: userId }).then();
+    }
   }, [enrich, userId, trackViews]);
 
   /* load groups list */
