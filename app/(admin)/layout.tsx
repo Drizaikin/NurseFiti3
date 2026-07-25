@@ -64,6 +64,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               { href: '/admin/flagged', label: 'Flags' },
               { href: '/admin/scholarships', label: 'Scholarships' },
               { href: '/admin/mnemonics', label: 'Mnemonics' },
+              { href: '/admin/blog', label: 'Blog' },
               { href: '/admin/settings', label: 'Settings' },
             ].map(({ href, label }) => (
               <Link
@@ -96,7 +97,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 py-8">
+      <main id="main-content" className="max-w-6xl mx-auto px-4 py-8">
         {children}
       </main>
     </div>

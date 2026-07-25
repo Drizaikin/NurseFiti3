@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 interface ModalProps {
@@ -22,14 +22,59 @@ export function Modal({
   disableBackdropClose = false,
 }: ModalProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
+  const onCloseRef = useRef(onClose);
+  const titleId = useId();
+  onCloseRef.current = onClose;
 
-  // Close on Escape
+  // Manage focus for the lifetime of the dialog.
   useEffect(() => {
     if (!isOpen) return;
-    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const dialog = dialogRef.current;
+    const getFocusableElements = () => Array.from(
+      dialog?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [contenteditable="true"], [tabindex]:not([tabindex="-1"])'
+      ) ?? []
+    ).filter((element) => element.getAttribute('aria-hidden') !== 'true');
+
+    (getFocusableElements()[0] ?? dialog)?.focus();
+
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && !e.defaultPrevented && !e.isComposing) {
+        e.preventDefault();
+        onCloseRef.current();
+        return;
+      }
+
+      if (e.key !== 'Tab') return;
+      const focusableElements = getFocusableElements();
+      if (focusableElements.length === 0) {
+        e.preventDefault();
+        dialog?.focus();
+        return;
+      }
+
+      const first = focusableElements[0];
+      const last = focusableElements[focusableElements.length - 1];
+      if (!dialog?.contains(document.activeElement)) {
+        e.preventDefault();
+        (e.shiftKey ? last : first).focus();
+      } else if (e.shiftKey && (document.activeElement === first || document.activeElement === dialog)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
     document.addEventListener('keydown', handler);
-    return () => document.removeEventListener('keydown', handler);
-  }, [isOpen, onClose]);
+    return () => {
+      document.removeEventListener('keydown', handler);
+      previouslyFocused?.focus();
+    };
+  }, [isOpen]);
 
   // Lock body scroll
   useEffect(() => {
@@ -53,9 +98,6 @@ export function Modal({
   const modal = (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={title ? 'modal-title' : undefined}
     >
       {/* Backdrop */}
       <div
@@ -67,13 +109,18 @@ export function Modal({
       {/* Panel */}
       <div
         ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={title ? titleId : undefined}
+        aria-label={title ? undefined : 'Dialog'}
+        tabIndex={-1}
         className={`relative w-full ${sizeClasses[size]} bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl shadow-2xl flex flex-col`}
         style={{ maxHeight: 'min(90vh, 700px)' }}
       >
         {/* Header */}
         {title && (
           <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)] flex-shrink-0">
-            <h2 id="modal-title" className="text-lg font-heading font-bold text-[var(--color-text)]">
+            <h2 id={titleId} className="text-lg font-heading font-bold text-[var(--color-text)]">
               {title}
             </h2>
             <button

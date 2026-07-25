@@ -5,16 +5,17 @@ import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 export const metadata: Metadata = {
   title: 'Terms of Service',
   description: 'Read the NurseFiti Terms of Service. Understand your rights and responsibilities when using Kenya\'s NCK exam preparation platform.',
+  alternates: { canonical: '/terms' },
   openGraph: {
     title: 'Terms of Service | NurseFiti',
     description: 'NurseFiti Terms of Service — Kenya\'s NCK exam preparation platform.',
-    url: 'https://www.nursefiti.co.ke/terms',
+    url: '/terms',
   },
 };
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-neutral-cream dark:bg-dark py-12 px-4">
+    <main id="main-content" className="min-h-screen bg-neutral-cream dark:bg-dark py-12 px-4">
       <div className="max-w-3xl mx-auto">
         <div className="mb-8"><Link href="/"><NurseFitiLogo variant="full" size={48} /></Link></div>
         <h1 className="text-4xl font-heading font-bold text-primary mb-2">Terms of Service</h1>
@@ -87,6 +88,6 @@ export default function TermsPage() {
         </div>
         <div className="mt-6 text-center"><Link href="/" className="text-primary hover:underline text-sm">← Back to NurseFiti</Link></div>
       </div>
-    </div>
+    </main>
   );
 }

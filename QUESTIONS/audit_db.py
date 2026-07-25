@@ -1,10 +1,11 @@
+import os
 import urllib.request
 import urllib.error
 import json
 import re
 
 SUPABASE_URL = "https://wnfbjyfenvdofvfcxnzk.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InduZmJqeWZlbnZkb2Z2ZmN4bnprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxOTU4MTYsImV4cCI6MjA5NDc3MTgxNn0.5D2bdWYi2KJ_nb1b44r28WaGZtCrbfT2yYL4bScZbr8"
+SUPABASE_KEY = os.environ["SUPABASE_SERVICE_ROLE_KEY"]
 
 all_questions = []
 limit = 1000

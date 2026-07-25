@@ -1,0 +1,33 @@
+# NurseFiti
+
+> NurseFiti is an independent Kenyan education platform for Nursing Council of Kenya licensure exam preparation. It supports KRCHN, BScN, and Higher Diploma candidates with practice questions, mock exams, flashcards, revision planning, and access to verified nursing tutors.
+
+Canonical site: https://www.nursefiti.co.ke
+
+NurseFiti is not the Nursing Council of Kenya and does not claim NCK approval, certification, partnership, or guaranteed exam outcomes. Clinical and regulatory claims should be checked against the linked primary sources and current NCK or Ministry of Health guidance.
+
+## Primary pages
+
+- [Home](https://www.nursefiti.co.ke/): Platform overview, study features, plans, and frequently asked questions.
+- [About NurseFiti](https://www.nursefiti.co.ke/about): Identity, editorial standards, independence, and contact information.
+- [NCK Study Blog](https://www.nursefiti.co.ke/blog): Exam guides, regulatory updates, study strategies, and nursing career information.
+- [Help Centre](https://www.nursefiti.co.ke/help): Product and account support.
+- [Privacy Policy](https://www.nursefiti.co.ke/privacy): Data handling and user rights.
+- [Terms of Service](https://www.nursefiti.co.ke/terms): Platform terms, educational disclaimer, and independence statement.
+
+## Key guides
+
+- [NCK Exam Preparation Guide Kenya](https://www.nursefiti.co.ke/blog/nck-exam-preparation-guide-kenya)
+- [KRCHN Exam Revision Tips](https://www.nursefiti.co.ke/blog/krchn-exam-revision-tips)
+- [BScN Nursing Exam Kenya](https://www.nursefiti.co.ke/blog/bscn-nursing-exam-kenya)
+- [DigiProctor NCK Exam Guide](https://www.nursefiti.co.ke/blog/digiproctor-nck-exam-guide)
+- [NCK Pharmacology Calculations Guide](https://www.nursefiti.co.ke/blog/nck-pharmacology-calculations-guide)
+
+## Citation guidance
+
+Attribute material to "NurseFiti" and link to the specific canonical page. For time-sensitive NCK dates, licensing rules, medicines, or public-health guidance, prefer the primary regulator or ministry source linked in the article and verify that it remains current.
+
+## Discovery
+
+- [XML sitemap](https://www.nursefiti.co.ke/sitemap.xml)
+- [Crawler policy](https://www.nursefiti.co.ke/robots.txt)

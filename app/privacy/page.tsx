@@ -5,16 +5,17 @@ import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: 'Read the NurseFiti Privacy Policy. Learn how we collect, use, and protect your data on Kenya\'s NCK exam preparation platform.',
+  alternates: { canonical: '/privacy' },
   openGraph: {
     title: 'Privacy Policy | NurseFiti',
     description: 'NurseFiti Privacy Policy — how we protect your data.',
-    url: 'https://www.nursefiti.co.ke/privacy',
+    url: '/privacy',
   },
 };
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-neutral-cream dark:bg-dark py-12 px-4">
+    <main id="main-content" className="min-h-screen bg-neutral-cream dark:bg-dark py-12 px-4">
       <div className="max-w-3xl mx-auto">
         <div className="mb-8"><Link href="/"><NurseFitiLogo variant="full" size={48} /></Link></div>
         <h1 className="text-4xl font-heading font-bold text-primary mb-2">Privacy Policy</h1>
@@ -60,6 +61,6 @@ export default function PrivacyPage() {
         </div>
         <div className="mt-6 text-center"><Link href="/" className="text-primary hover:underline text-sm">← Back to NurseFiti</Link></div>
       </div>
-    </div>
+    </main>
   );
 }
