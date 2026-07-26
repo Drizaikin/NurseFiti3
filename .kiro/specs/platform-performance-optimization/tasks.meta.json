@@ -1,0 +1,402 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1. Write bug condition exploration test": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059169073
+      },
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059210277
+      }
+    ],
+    "2. Write preservation property tests (BEFORE implementing fixes)": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059179363
+      }
+    ],
+    "3.1 Create migration file `supabase/migrations/20260728000001_add_performance_indexes.sql`": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059179974
+      }
+    ],
+    "3.2 Apply the migration to the local Supabase instance and verify": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059180513
+      }
+    ],
+    "4.1 Create migration file `supabase/migrations/20260728000002_fix_practice_antijoin.sql`": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059180925
+      }
+    ],
+    "4.2 Verify the rewritten RPC": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059181583
+      }
+    ],
+    "5.1 Create migration file `supabase/migrations/20260728000003_dashboard_stats_rpc.sql`": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059181818
+      }
+    ],
+    "5.2 Verify the RPC": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059182389
+      }
+    ],
+    "6.1 Read the current `app/(student)/dashboard/page.tsx` before making changes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059183013
+      }
+    ],
+    "6.2 Replace unbounded answer fetch with the aggregation RPC": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059183248
+      }
+    ],
+    "6.3 Replace count fetches with HEAD queries": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059183476
+      }
+    ],
+    "6.4 Remove `computeBadges()` from dashboard": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059183782
+      }
+    ],
+    "6.5 Add `export const dynamic = 'force-dynamic'` to dashboard page": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059184148
+      }
+    ],
+    "6.6 Verify dashboard page changes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059184479
+      }
+    ],
+    "7.1 Create migration file `supabase/migrations/20260728000004_badge_aggregation_rpcs.sql`": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059185627
+      }
+    ],
+    "7.2 Apply migration and verify RPCs": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059186273
+      }
+    ],
+    "8.1 Read `lib/badges.ts` before making changes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059186612
+      }
+    ],
+    "8.2 Replace raw answer fetch with parallel RPCs in `lib/badges.ts`": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059187610
+      }
+    ],
+    "8.3 Read `components/student/BadgeProvider.tsx` before making changes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059188513
+      }
+    ],
+    "8.4 Defer badge evaluation in `BadgeProvider.tsx`": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059189391
+      }
+    ],
+    "8.5 Verify badge refactor": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059189786
+      }
+    ],
+    "9.1 Read `components/student/ActivityTracker.tsx` before making changes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059190167
+      }
+    ],
+    "9.2 Implement identity cache using `useRef`": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059190501
+      }
+    ],
+    "9.3 Verify ActivityTracker changes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059190808
+      }
+    ],
+    "10.1 Create migration file `supabase/migrations/20260728000005_auth_role_claim_hook.sql`": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059191553
+      }
+    ],
+    "10.2 Register the hook in Supabase": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059192042
+      }
+    ],
+    "11.1 Read `middleware.ts` before making changes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059193139
+      }
+    ],
+    "11.2 Replace DB role fetch with JWT claim read": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059193756
+      }
+    ],
+    "11.3 Verify middleware changes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059194141
+      }
+    ],
+    "12.1 Create migration file `supabase/migrations/20260728000006_mock_exam_rpc.sql`": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059194525
+      }
+    ],
+    "12.2 Verify the RPC": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059194932
+      }
+    ],
+    "13.1 Read `app/(student)/mock-exam/page.tsx` before making changes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059195372
+      }
+    ],
+    "13.2 Refactor `startExam` to use the new RPC": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059195741
+      }
+    ],
+    "13.3 Parallelise `fetchProgress` loop": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059195935
+      }
+    ],
+    "13.4 Add `export const dynamic = 'force-dynamic'` to mock-exam page": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059196105
+      }
+    ],
+    "13.5 Verify mock-exam page changes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059196290
+      }
+    ],
+    "14.1 Read `components/shared/NotificationsPanel.tsx` before making changes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059196510
+      }
+    ],
+    "14.2 Add `userId` guard to `useUnreadCount` subscription": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059196671
+      }
+    ],
+    "14.3 Add `isOpen` guard to panel-level Realtime channel": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059196829
+      }
+    ],
+    "14.4 Verify Realtime channel fixes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059196970
+      }
+    ],
+    "15.1 Read `lib/supabase/admin.ts` before making changes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059197160
+      }
+    ],
+    "15.2 Convert to lazily-initialized module-level singleton": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059197408
+      }
+    ],
+    "15.3 Verify admin client singleton": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059197586
+      }
+    ],
+    "16.1 Read `components/student/WhatsNewModal.tsx` and `components/student/WhatsNewTrigger.tsx` before making changes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059197743
+      }
+    ],
+    "16.2 Add early null return in `WhatsNewModal` for already-dismissed users": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059197882
+      }
+    ],
+    "16.3 Replace `repeat: Infinity` with finite repeat counts": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059198034
+      }
+    ],
+    "16.4 Verify WhatsNew animation changes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059198172
+      }
+    ],
+    "17.1 Identify API route files that serve infrequently-changing data": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059198553
+      }
+    ],
+    "17.2 Add `Cache-Control` headers to `platform_settings` and public endpoints": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059198731
+      }
+    ],
+    "17.3 Verify cache headers": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059198910
+      }
+    ],
+    "18.1 Confirm individual pages have `export const dynamic = 'force-dynamic'` (dependency check)": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059199092
+      }
+    ],
+    "18.2 Remove `force-dynamic` from the student layout": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059199275
+      }
+    ],
+    "18.3 Verify force-dynamic removal": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059199432
+      }
+    ],
+    "19.1 Verify bug condition exploration test now passes": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059199567
+      }
+    ],
+    "19.2 Verify preservation tests still pass": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059199725
+      }
+    ],
+    "20. Checkpoint — Ensure all tests pass": [
+      {
+        "executionId": "0a68eab3-910b-42ba-b881-7dbf535aef1b",
+        "chatSessionId": "sess_265b6de1-4ad2-4081-bcf7-9ed87c863a1d",
+        "timestamp": 1785059199870
+      }
+    ]
+  }
+}
