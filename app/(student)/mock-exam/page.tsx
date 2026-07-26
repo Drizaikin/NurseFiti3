@@ -168,7 +168,7 @@ export default function MockExamPage() {
   useEffect(() => {
     const fetchProgress = async () => {
       if (!userId || !studentCadre) return;
-      const examsToFetch = Object.entries(EXAM_CONFIGS).filter(([_, config]) => config.cadre === studentCadre);
+      const examsToFetch = Object.entries(EXAM_CONFIGS).filter(([, config]) => config.cadre === studentCadre);
       if (examsToFetch.length === 0) return;
 
       const newProgress: Record<string, any> = {};
@@ -308,7 +308,6 @@ export default function MockExamPage() {
     // Sort units by question count desc so larger units fill more slots proportionally
     const sortedUnitNames = [...unitNames].sort((a, b) => byUnit[b].length - byUnit[a].length);
 
-    let round = 0;
     while (interleaved.length < totalNeeded) {
       let addedThisRound = 0;
       for (const u of sortedUnitNames) {
@@ -322,7 +321,6 @@ export default function MockExamPage() {
       }
       // If no unit had any questions left, break to avoid infinite loop
       if (addedThisRound === 0) break;
-      round++;
     }
 
     const finalQuestionsMeta = interleaved.slice(0, config.totalQuestions);
@@ -366,7 +364,7 @@ export default function MockExamPage() {
     setIsLoading(false);
   };
 
-  const submitExam = useCallback(async (autoSubmit = false) => {
+  const submitExam = useCallback(async () => {
     if (isSubmitting) return;
     setIsSubmitting(true);
     setShowConfirm(false);

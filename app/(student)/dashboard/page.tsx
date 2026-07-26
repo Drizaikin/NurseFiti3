@@ -349,27 +349,18 @@ interface DashboardData {
   }>;
 }
 
-const computeBadges = (answers: any[], streakCount: number, level: number) => {
+const computeBadges = (stats: any, streakCount: number, level: number) => {
   const badges: Array<{ name: string; description: string; icon: string; rarity: 'easy' | 'moderate' | 'hard' }> = [];
 
-  let weekendAnswers = 0;
-  let earlyBirdAnswers = 0;
-  let nightOwlAnswers = 0;
-
-  answers.forEach(a => {
-    if (!a.created_at) return;
-    const date = new Date(a.created_at);
-    
-    const day = date.getDay();
-    if (day === 0 || day === 6) weekendAnswers++;
-
-    const hour = date.getHours();
-    if (hour >= 4 && hour < 8) earlyBirdAnswers++;
-    if (hour >= 22 || hour < 3) nightOwlAnswers++;
-  });
+  const totalAnswers = stats.total_answers || 0;
+  const weekendAnswers = stats.weekend_answers || 0;
+  const earlyBirdAnswers = stats.early_bird_answers || 0;
+  const nightOwlAnswers = stats.night_owl_answers || 0;
+  const last50Correct = stats.last_50_correct || 0;
+  const last50Total = stats.last_50_total || 0;
 
   // Easy
-  if (answers.length >= 1) badges.push({ name: 'First Step', description: 'Answered your first question', icon: '🐣', rarity: 'easy' });
+  if (totalAnswers >= 1) badges.push({ name: 'First Step', description: 'Answered your first question', icon: '🐣', rarity: 'easy' });
   if (weekendAnswers >= 10) badges.push({ name: 'Weekend Warrior', description: 'Answered 10+ questions on weekends', icon: '⚔️', rarity: 'easy' });
 
   // Moderate
@@ -378,13 +369,11 @@ const computeBadges = (answers: any[], streakCount: number, level: number) => {
   if (streakCount >= 3) badges.push({ name: 'Consistency', description: 'Maintained a 3+ day streak', icon: '🔥', rarity: 'moderate' });
 
   // Hard
-  if (answers.length >= 100) badges.push({ name: 'Marathoner', description: 'Answered 100+ questions in total', icon: '🏃‍♂️', rarity: 'hard' });
+  if (totalAnswers >= 100) badges.push({ name: 'Marathoner', description: 'Answered 100+ questions in total', icon: '🏃‍♂️', rarity: 'hard' });
   if (level >= 5) badges.push({ name: 'Master', description: 'Reached Level 5', icon: '👑', rarity: 'hard' });
 
-  if (answers.length >= 50) {
-    const last50 = answers.slice(-50);
-    const correctLast50 = last50.filter(a => a.is_correct).length;
-    if (correctLast50 / 50 >= 0.9) {
+  if (last50Total >= 50) {
+    if (last50Correct / last50Total >= 0.9) {
       badges.push({ name: 'Sharpshooter', description: '90%+ accuracy over the last 50 questions', icon: '🎯', rarity: 'hard' });
     }
   }
@@ -410,10 +399,10 @@ export default function DashboardPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { router.push('/login'); return; }
 
-      const [profileRes, studentRes, answersRes, mockRes, flashRes, sessionsRes, scholarshipRes, settingsRes, unreadRes] = await Promise.all([
+      const [profileRes, studentRes, statsRes, mockRes, flashRes, sessionsRes, scholarshipRes, settingsRes, unreadRes] = await Promise.all([
         supabase.from('profiles').select('full_name').eq('id', user.id).single(),
         supabase.from('student_profiles').select('*').eq('id', user.id).single(),
-        supabase.from('student_answers').select('is_correct, time_taken_seconds, answered_at').eq('student_id', user.id).order('answered_at', { ascending: true }),
+        supabase.rpc('get_student_dashboard_stats', { user_uuid: user.id }),
         supabase.from('mock_exam_results').select('id').eq('student_id', user.id),
         supabase.from('flashcard_progress').select('id').eq('student_id', user.id),
         supabase.from('sessions')
@@ -443,13 +432,13 @@ export default function DashboardPage() {
 
       if (!studentData) { router.push('/onboarding'); return; }
 
-      const answers = (answersRes.data ?? []) as Array<{ is_correct: boolean; time_taken_seconds: number | null; answered_at: string }>;
-      const totalAnswers = answers.length;
-      const correctAnswers = answers.filter(a => a.is_correct).length;
+      const stats = statsRes.data && statsRes.data.length > 0 ? statsRes.data[0] : {};
+      const totalAnswers = Number(stats.total_answers || 0);
+      const correctAnswers = Number(stats.correct_answers || 0);
       const accuracy = totalAnswers > 0 ? (correctAnswers / totalAnswers) * 100 : 0;
-      const studyTime = Math.floor(answers.reduce((s, a) => s + (a.time_taken_seconds ?? 0), 0) / 60);
+      const studyTime = Math.floor(Number(stats.study_time_seconds || 0) / 60);
       
-      const earnedBadges = computeBadges(answers, studentData.streak_count ?? 0, studentData.level ?? 1);
+      const earnedBadges = computeBadges(stats, studentData.streak_count ?? 0, studentData.level ?? 1);
 
       const sessions = (sessionsRes.data ?? []) as Array<{
         id: string; session_date: string; start_time: string; topic: string | null;

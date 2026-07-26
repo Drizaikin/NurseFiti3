@@ -107,7 +107,7 @@ function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntr
     }
     
     // Unify level calculation to strictly match backend (100 XP per level)
-    let level = Math.floor(xp / 100) + 1;
+    const level = Math.floor(xp / 100) + 1;
     
     bots.push({
       id: `bot-${i}`,

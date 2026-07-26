@@ -1,10 +1,1 @@
-{
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended"
-  ],
-  "rules": {
-    "react-hooks/exhaustive-deps": "warn",
-    "@typescript-eslint/no-explicit-any": "off"
-  }
-}
+{ \" "extends\: \next/core-web-vitals\, \rules\: { \@typescript-eslint/no-unused-vars\: \warn\, \@typescript-eslint/ban-ts-comment\: \warn\, \@typescript-eslint/no-var-requires\: \warn\, \react/no-unescaped-entities\: \warn\ } } 

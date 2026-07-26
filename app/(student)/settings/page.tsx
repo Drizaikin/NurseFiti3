@@ -43,7 +43,7 @@ type Section = 'profile' | 'password' | 'notifications' | 'account';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-function SectionTab({ id, label, icon, active, onClick }: {
+function SectionTab({ label, icon, active, onClick }: {
   id: Section; label: string; icon: string; active: boolean; onClick: () => void;
 }) {
   return (
@@ -357,7 +357,6 @@ function PaymentRedirectHandler({ onSuccess, onFailed }: {
   const router = useRouter();
 
   useEffect(() => {
-    const tab = searchParams.get('tab');
     const payment = searchParams.get('payment');
     const reason = searchParams.get('reason');
 

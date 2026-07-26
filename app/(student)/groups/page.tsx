@@ -219,9 +219,9 @@ function GroupsInner() {
   const trackViews = useCallback(async (posts: FeedPost[]) => {
     if (!userId || posts.length === 0) return;
     const topLevel = posts.filter(p => !p.reply_to_id && !p.is_deleted);
-    await Promise.allSettled(
-      topLevel.map(p => (sbRef.current as any).rpc('increment_post_views', { post_id: p.id }))
-    );
+    if (topLevel.length > 0) {
+      await (sbRef.current as any).rpc('increment_multiple_post_views', { post_ids: topLevel.map(p => p.id) });
+    }
     setFeed(prev => prev.map(p =>
       topLevel.some(t => t.id === p.id) ? { ...p, views_count: p.views_count + 1 } : p
     ));
@@ -262,7 +262,7 @@ function GroupsInner() {
 
     // Mark as read in the background
     if (group.isMember) {
-      sbRef.current.rpc('mark_group_as_read', { target_group_id: group.id, user_uuid: userId }).then();
+      (sbRef.current.rpc as any)('mark_group_as_read', { target_group_id: group.id, user_uuid: userId }).then();
     }
   }, [enrich, userId, trackViews]);
 

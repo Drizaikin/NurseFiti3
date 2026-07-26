@@ -118,7 +118,7 @@ export default function AnalyticsPage() {
           .limit(2000),
         supabase.from('mock_exam_results').select('*').eq('student_id', user.id).order('completed_at', { ascending: false }),
         supabase.from('flashcard_progress').select('id').eq('student_id', user.id),
-        fetchPlatformSettings(supabase)
+        fetchPlatformSettings(supabase as any)
       ]);
 
       const profileData = profileRes.data as { plan_tier: string; plan_expires_at: string | null } | null;

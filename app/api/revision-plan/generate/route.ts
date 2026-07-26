@@ -91,7 +91,6 @@ function generatePlan(
 
   // Reserve last 14 days for mock exams + final review
   const studyDays = Math.max(1, totalDays - 14);
-  const mockExamDays = Math.min(14, totalDays);
 
   // Sort units: weak areas first (accuracy < 70%), then by NCK weight desc, then tier
   const sortedUnits = [...units].sort((a, b) => {
@@ -544,7 +543,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid request', details: body.error.flatten() }, { status: 400 });
     }
 
-    const { examDate, studyHoursWeekday, studyHoursWeekend, workSchoolStatus, recoveryDayInterval, paymentRef } = body.data;
+    const { examDate, studyHoursWeekday, studyHoursWeekend, workSchoolStatus, paymentRef } = body.data;
 
     // Paid prep plans include revision plans. Free users still need a verified one-off
     // legacy payment reference if they arrive from an old checkout link.
@@ -610,7 +609,7 @@ export async function POST(req: NextRequest) {
 
     // Get question → unit mapping
     const questionIds = Array.from(new Set((answersData ?? []).map((a: any) => a.question_id)));
-    let unitAccuracyMap: Record<string, { correct: number; total: number }> = {};
+    const unitAccuracyMap: Record<string, { correct: number; total: number }> = {};
 
     if (questionIds.length > 0) {
       // Fetch in batches of 1000 to avoid URL length limits while covering all answered questions
