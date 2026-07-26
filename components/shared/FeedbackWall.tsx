@@ -243,7 +243,7 @@ export function FeedbackWall({
     } finally {
       setIsLoading(false);
     }
-  }, [supabase, initialItems]);
+  }, [supabase]);
 
   useEffect(() => { fetchFeedback(); }, [fetchFeedback]);
 

@@ -12,11 +12,11 @@
  */
 
 import { useEffect, useState } from "react";
-// @ts-expect-error
+
 import { motion, AnimatePresence } from "framer-motion";
 
 // ⚠️  Keep this in sync with CURRENT_VERSION in WhatsNewModal.tsx
-const CURRENT_VERSION = 16;
+const CURRENT_VERSION = 17;
 const STORAGE_KEY = `whats_new_seen_v${CURRENT_VERSION}`;
 
 interface Props {

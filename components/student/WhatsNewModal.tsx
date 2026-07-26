@@ -25,7 +25,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-// @ts-expect-error
+
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 
@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/Button";
 // ❶  RELEASES REGISTRY — edit here to announce new features
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CURRENT_VERSION = 16;
+const CURRENT_VERSION = 17;
 
 interface WhatsNewItem {
   icon: string;
@@ -477,6 +477,31 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
         description:
           "We've just seeded 2,102 new questions. BScN students get 1,500 new questions; KRCHN students get 602 new questions.",
         cta: { label: "Start Practising", href: "/practice" },
+      },
+    ],
+  },
+
+  // ── Version 17 — Massive Database Audit & Recategorisation ────────────────
+  {
+    version: 17,
+    date: "26 July 2026",
+    items: [
+      {
+        icon: "🔍",
+        tag: "System Audit",
+        tagColor: "bg-violet-500/20 text-violet-400",
+        title: "Word-by-Word Quality Audit",
+        description:
+          "We just ran a deep, character-by-character audit of all 7,403 questions in the platform to ensure every single unit and paper assignment exactly matches the official NCK CBT Blueprint.",
+      },
+      {
+        icon: "🏗️",
+        tag: "Fixed",
+        tagColor: "bg-emerald-500/20 text-emerald-400",
+        title: "Hundreds of Reclassifications",
+        description:
+          "Found and corrected over 870 misclassified questions. Family planning questions moved from Midwifery to MCH, Gynaecology moved to Med-Surg, and Paper I / Paper II boundaries are now perfectly strict.",
+        cta: { label: "Keep Practising", href: "/practice" },
       },
     ],
   },
