@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/Button";
 // ❶  RELEASES REGISTRY — edit here to announce new features
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CURRENT_VERSION = 15;
+const CURRENT_VERSION = 16;
 
 interface WhatsNewItem {
   icon: string;
@@ -460,6 +460,23 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
         title: "Rationales Now Explain Every Option",
         description:
           "We rewrote rationales for Maslow's Hierarchy, Bloom's Taxonomy domains, Bishop Score, Fetal Circulation, Macular Degeneration, Immunoglobulins (IgG), Bell's Palsy, and more — each now explains WHY each wrong option is wrong, not just why the correct one is right.",
+      },
+    ],
+  },
+
+  // ── Version 16 — Set 4 Question Bank Expansion ────────────────────────────
+  {
+    version: 16,
+    date: "24 July 2026",
+    items: [
+      {
+        icon: "📝",
+        tag: "New Questions",
+        tagColor: "bg-primary/20 text-primary",
+        title: "2,102 New NCK Questions Added",
+        description:
+          "We've just seeded 2,102 new questions. BScN students get 1,500 new questions; KRCHN students get 602 new questions.",
+        cta: { label: "Start Practising", href: "/practice" },
       },
     ],
   },
