@@ -80,10 +80,14 @@ export async function ingestAutomationDraft(draft: AutomationDraft, idempotencyK
  * An externally executed run has no worker to close its job row, so the arriving
  * draft does it. A local worker will have closed the row already, which is why
  * this only touches jobs still queued or running.
+ *
+ * A run triggered outside the dashboard — Telegram, a schedule, a manual agent
+ * message — has no job row at all. One is created retroactively so every article
+ * appears in the Runs tab regardless of how it was started.
  */
 async function closeMatchingJob(admin: any, draft: AutomationDraft, postId: string) {
   try {
-    const { data: job } = await admin
+    const { data: existing } = await admin
       .from('blog_automation_jobs')
       .select('id')
       .eq('keyword_id', draft.keywordId)
@@ -91,7 +95,33 @@ async function closeMatchingJob(admin: any, draft: AutomationDraft, postId: stri
       .order('created_at', { ascending: false })
       .limit(1)
       .maybeSingle();
-    if (!job) return;
+
+    let job = existing;
+    if (!job) {
+      const { data: rules } = await admin
+        .from('blog_automation_rules')
+        .select('version')
+        .order('version', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      const { data: keyword } = await admin
+        .from('blog_keywords')
+        .select('keyword_id')
+        .eq('keyword_id', draft.keywordId)
+        .maybeSingle();
+      // Only for a keyword we actually track; a one-off brief stays out of the queue.
+      if (!keyword || !rules) return;
+
+      const { data: created } = await admin.from('blog_automation_jobs').insert({
+        keyword_id: draft.keywordId,
+        rules_version: rules.version,
+        state: 'running',
+        locked_by: 'external',
+        started_at: new Date().toISOString(),
+      }).select('id').single();
+      if (!created) return;
+      job = created;
+    }
 
     await admin.from('blog_automation_jobs').update({
       state: 'succeeded',
