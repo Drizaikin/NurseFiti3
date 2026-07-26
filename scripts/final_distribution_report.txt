@@ -1,18 +1,17 @@
 NURSEFITI QUESTION BANK — FINAL UNIT/TOPIC DISTRIBUTION REPORT
-Generated: 2026-07-26T14:16:56.345Z
+Generated: 2026-07-26T15:31:16.009Z
 Total questions: 7403
 ================================================================================
 
 
 ▶ Midwifery
-  Total: 2184 | BScN: 1060 | KRCHN: 1124
+  Total: 2126 | BScN: 1033 | KRCHN: 1093
   ──────────────────────────────────────────────────────────────────────
   1492  Obstetric Nursing  (BScN:747 KRCHN:745)
     91  Labour and Delivery  (BScN:44 KRCHN:47)
     74  Midwifery and Obstetric Nursing  (BScN:0 KRCHN:74)
     67  Midwifery Care  (BScN:33 KRCHN:34)
     64  Postnatal Care  (BScN:34 KRCHN:30)
-    58  Antenatal Care  (BScN:27 KRCHN:31)
     42  Obstetric Emergencies  (BScN:19 KRCHN:23)
     12  Obstetric Anatomy  (BScN:6 KRCHN:6)
      9  Diagnosis of Pregnancy  (BScN:4 KRCHN:5)
@@ -135,10 +134,11 @@ Total questions: 7403
      1  Hyperemesis Gravidarum  (BScN:1 KRCHN:0)
 
 ▶ Medical-Surgical Nursing
-  Total: 1611 | BScN: 659 | KRCHN: 952
+  Total: 1749 | BScN: 709 | KRCHN: 1040
   ──────────────────────────────────────────────────────────────────────
    472  Clinical Nursing  (BScN:247 KRCHN:225)
    193  Medical-Surgical Nursing Care  (BScN:0 KRCHN:193)
+    58  Communicable Diseases  (BScN:19 KRCHN:39)
     54  Thyroid Disorders  (BScN:27 KRCHN:27)
     54  Cardiovascular Nursing  (BScN:26 KRCHN:28)
     51  Neurological Nursing  (BScN:23 KRCHN:28)
@@ -151,6 +151,7 @@ Total questions: 7403
     33  Endocrine Disorders  (BScN:14 KRCHN:19)
     30  Cardiovascular Disorders  (BScN:14 KRCHN:16)
     28  Musculoskeletal Nursing  (BScN:10 KRCHN:18)
+    27  Parasitic Diseases  (BScN:11 KRCHN:16)
     26  Haematological Disorders  (BScN:11 KRCHN:15)
     26  Dermatology  (BScN:13 KRCHN:13)
     25  Dermatological Nursing  (BScN:12 KRCHN:13)
@@ -161,6 +162,7 @@ Total questions: 7403
     19  Oncology Nursing  (BScN:9 KRCHN:10)
     19  Musculoskeletal Disorders  (BScN:7 KRCHN:12)
     18  Ophthalmic Nursing  (BScN:9 KRCHN:9)
+    15  Malaria  (BScN:6 KRCHN:9)
     14  Fluid and Electrolytes  (BScN:7 KRCHN:7)
     14  Fluid and Electrolyte Balance  (BScN:5 KRCHN:9)
     13  Eye Disorders  (BScN:3 KRCHN:10)
@@ -172,6 +174,7 @@ Total questions: 7403
      8  Pituitary Disorders  (BScN:4 KRCHN:4)
      8  Upper GI Disorders  (BScN:4 KRCHN:4)
      8  Spinal Cord Disorders  (BScN:4 KRCHN:4)
+     8  HIV/AIDS  (BScN:4 KRCHN:4)
      7  Gastrointestinal Nursing  (BScN:0 KRCHN:7)
      6  Respiratory Assessment  (BScN:2 KRCHN:4)
      6  Neurological Assessment  (BScN:3 KRCHN:3)
@@ -180,14 +183,19 @@ Total questions: 7403
      5  Neurological Diagnostics  (BScN:2 KRCHN:3)
      5  Urinary Disorders  (BScN:0 KRCHN:5)
      5  Dental and Oral Health  (BScN:2 KRCHN:3)
+     5  Trachoma  (BScN:2 KRCHN:3)
      4  Gastrointestinal Procedures  (BScN:1 KRCHN:3)
      4  Gynaecological Conditions  (BScN:4 KRCHN:0)
      4  Vascular Disorders  (BScN:2 KRCHN:2)
+     4  Communicable Disease Control  (BScN:2 KRCHN:2)
      4  ENT Nursing  (BScN:1 KRCHN:3)
+     4  STI and HIV  (BScN:2 KRCHN:2)
+     4  STI Management  (BScN:1 KRCHN:3)
      3  Blood Transfusion  (BScN:1 KRCHN:2)
      3  Ear, Nose and Throat Disorders  (BScN:1 KRCHN:2)
      3  Cardiovascular Diagnostics  (BScN:1 KRCHN:2)
      3  Diagnostic Procedures  (BScN:1 KRCHN:2)
+     3  Sexually Transmitted Infections  (BScN:1 KRCHN:2)
      3  Rehabilitation Nursing  (BScN:1 KRCHN:2)
      2  Urinary Nursing Procedures  (BScN:0 KRCHN:2)
      2  Renal Diagnostics  (BScN:0 KRCHN:2)
@@ -201,8 +209,12 @@ Total questions: 7403
      2  Gastrointestinal Assessment  (BScN:1 KRCHN:1)
      2  Neurological Procedures  (BScN:1 KRCHN:1)
      2  Palliative Care  (BScN:1 KRCHN:1)
+     2  Tuberculosis  (BScN:1 KRCHN:1)
      2  GI Assessment  (BScN:1 KRCHN:1)
+     2  HIV/AIDS Management  (BScN:1 KRCHN:1)
      2  Peripheral Vascular Disorders  (BScN:1 KRCHN:1)
+     2  Tuberculosis Control  (BScN:0 KRCHN:2)
+     2  HIV/AIDS Care  (BScN:0 KRCHN:2)
      1  Neurological Nursing Care  (BScN:0 KRCHN:1)
      1  Oncology  (BScN:0 KRCHN:1)
      1  Electrolyte Imbalances  (BScN:0 KRCHN:1)
@@ -221,13 +233,14 @@ Total questions: 7403
      1  Head and Neck Cancer  (BScN:0 KRCHN:1)
      1  Orthopaedic Oncology  (BScN:0 KRCHN:1)
      1  Vascular Surgery  (BScN:0 KRCHN:1)
+     1  HIV/AIDS Prevention  (BScN:0 KRCHN:1)
+     1  TB Control  (BScN:0 KRCHN:1)
      1  IV Therapy and Calculations  (BScN:0 KRCHN:1)
 
 ▶ Nursing Management & Leadership
-  Total: 750 | BScN: 404 | KRCHN: 346
+  Total: 631 | BScN: 328 | KRCHN: 303
   ──────────────────────────────────────────────────────────────────────
    382  Health Systems  (BScN:191 KRCHN:191)
-    87  Nursing Education  (BScN:48 KRCHN:39)
     56  Nursing Management  (BScN:34 KRCHN:22)
     23  Nursing Process  (BScN:12 KRCHN:11)
     16  Leadership Styles  (BScN:13 KRCHN:3)
@@ -237,24 +250,18 @@ Total questions: 7403
      9  Professional Practice  (BScN:4 KRCHN:5)
      9  Management Principles  (BScN:4 KRCHN:5)
      7  Professional Ethics  (BScN:3 KRCHN:4)
-     7  Technology-Enhanced Learning  (BScN:7 KRCHN:0)
      6  Professional Nursing Practice  (BScN:1 KRCHN:5)
      6  Professional Regulation  (BScN:3 KRCHN:3)
-     6  Teaching Methods  (BScN:5 KRCHN:1)
      6  Leadership Roles  (BScN:6 KRCHN:0)
      6  Nursing Procedures  (BScN:0 KRCHN:6)
      5  Leadership  (BScN:2 KRCHN:3)
      4  End-of-Life Care  (BScN:2 KRCHN:2)
      4  Leadership Theories  (BScN:2 KRCHN:2)
-     4  Learning Theories  (BScN:4 KRCHN:0)
-     4  Curriculum Development  (BScN:4 KRCHN:0)
-     3  Bloom's Taxonomy  (BScN:3 KRCHN:0)
      3  Human Resource Management  (BScN:2 KRCHN:1)
      2  Informed Consent  (BScN:2 KRCHN:0)
      2  Nursing Regulation and Professional Bodies  (BScN:1 KRCHN:1)
      2  Nursing Legislation  (BScN:1 KRCHN:1)
      2  Critical Thinking  (BScN:1 KRCHN:1)
-     2  Evaluation in Teaching  (BScN:1 KRCHN:1)
      2  Financial Management  (BScN:1 KRCHN:1)
      2  Staff Development  (BScN:1 KRCHN:1)
      2  Delegation  (BScN:1 KRCHN:1)
@@ -263,11 +270,9 @@ Total questions: 7403
      2  Strategic Change Management  (BScN:1 KRCHN:1)
      2  Health Facility Management  (BScN:1 KRCHN:1)
      2  Nursing Theory  (BScN:1 KRCHN:1)
-     2  Teaching and Learning Methods  (BScN:0 KRCHN:2)
      2  Patient Safety  (BScN:1 KRCHN:1)
      2  Professional Ethics and Law  (BScN:0 KRCHN:2)
      2  Ethical Principles  (BScN:1 KRCHN:1)
-     2  Teaching Principles  (BScN:2 KRCHN:0)
      2  Conflict Management  (BScN:1 KRCHN:1)
      2  Organisational Theory  (BScN:2 KRCHN:0)
      2  Management Theories  (BScN:1 KRCHN:1)
@@ -276,13 +281,11 @@ Total questions: 7403
      1  Nursing Ethics  (BScN:1 KRCHN:0)
      1  Documentation Standards  (BScN:0 KRCHN:1)
      1  Nursing Roles  (BScN:0 KRCHN:1)
-     1  Educational Objectives  (BScN:1 KRCHN:0)
      1  Teaching Aids  (BScN:1 KRCHN:0)
      1  Nursing Care Models  (BScN:1 KRCHN:0)
      1  Disciplinary Process  (BScN:1 KRCHN:0)
      1  Staffing  (BScN:1 KRCHN:0)
      1  Scope of Practice  (BScN:1 KRCHN:0)
-     1  Teaching Objectives  (BScN:1 KRCHN:0)
      1  Assessment Methods  (BScN:1 KRCHN:0)
      1  Motivation  (BScN:1 KRCHN:0)
      1  Management Levels  (BScN:1 KRCHN:0)
@@ -291,7 +294,7 @@ Total questions: 7403
      1  Communication in Nursing  (BScN:0 KRCHN:1)
 
 ▶ Paediatric Nursing
-  Total: 518 | BScN: 215 | KRCHN: 303
+  Total: 516 | BScN: 214 | KRCHN: 302
   ──────────────────────────────────────────────────────────────────────
     88  Paediatric Nursing  (BScN:43 KRCHN:45)
     80  Paediatrics  (BScN:40 KRCHN:40)
@@ -321,7 +324,6 @@ Total questions: 7403
      4  Paediatric Nutrition  (BScN:2 KRCHN:2)
      3  Nephrotic Syndrome  (BScN:0 KRCHN:3)
      3  Congenital Abnormalities  (BScN:2 KRCHN:1)
-     2  Nutrition  (BScN:1 KRCHN:1)
      2  Pharmacology in Paediatrics  (BScN:1 KRCHN:1)
      2  Poisoning & Toxicology  (BScN:1 KRCHN:1)
      2  Oncology in Children  (BScN:1 KRCHN:1)
@@ -454,6 +456,65 @@ Total questions: 7403
      1  Oncology Pharmacology  (BScN:0 KRCHN:1)
      1  HIV/AIDS Pharmacology  (BScN:0 KRCHN:1)
 
+▶ Community Health Nursing
+  Total: 426 | BScN: 158 | KRCHN: 268
+  ──────────────────────────────────────────────────────────────────────
+   127  Community Health  (BScN:64 KRCHN:63)
+    43  Community Health Practice  (BScN:0 KRCHN:43)
+    40  Epidemiological Methods  (BScN:14 KRCHN:26)
+    16  Home-Based Care  (BScN:5 KRCHN:11)
+    15  School Health  (BScN:6 KRCHN:9)
+    15  Primary Health Care  (BScN:5 KRCHN:10)
+    14  Disaster Management  (BScN:5 KRCHN:9)
+    14  Community Diagnosis  (BScN:5 KRCHN:9)
+    12  Health Systems in Kenya  (BScN:6 KRCHN:6)
+    11  Medical Sociology  (BScN:6 KRCHN:5)
+     9  Home Visiting  (BScN:3 KRCHN:6)
+     9  Health Promotion  (BScN:5 KRCHN:4)
+     8  Levels of Prevention  (BScN:4 KRCHN:4)
+     7  Health Education  (BScN:3 KRCHN:4)
+     6  Community Development  (BScN:3 KRCHN:3)
+     6  Community Health Nursing Roles  (BScN:3 KRCHN:3)
+     4  Community Health Process  (BScN:2 KRCHN:2)
+     4  Oral Health  (BScN:2 KRCHN:2)
+     4  Disability and Rehabilitation  (BScN:2 KRCHN:2)
+     4  Community Health Principles  (BScN:2 KRCHN:2)
+     4  Social Determinants of Health  (BScN:1 KRCHN:3)
+     3  Health Systems  (BScN:0 KRCHN:3)
+     3  Community Assessment  (BScN:2 KRCHN:1)
+     2  Ageing  (BScN:0 KRCHN:2)
+     2  Community Mobilisation  (BScN:0 KRCHN:2)
+     2  Dental Health  (BScN:0 KRCHN:2)
+     2  Vulnerable Groups  (BScN:1 KRCHN:1)
+     2  The Home Visit  (BScN:0 KRCHN:2)
+     2  Gerontological Nursing  (BScN:0 KRCHN:2)
+     2  Roles of the CHN  (BScN:0 KRCHN:2)
+     2  Community as a System  (BScN:0 KRCHN:2)
+     2  Health Policy  (BScN:1 KRCHN:1)
+     2  Concepts of Health  (BScN:1 KRCHN:1)
+     2  Ageing and Elderly Care  (BScN:1 KRCHN:1)
+     2  Disaster Preparedness  (BScN:1 KRCHN:1)
+     2  Transcultural Nursing  (BScN:1 KRCHN:1)
+     2  Cultural Competence  (BScN:0 KRCHN:2)
+     2  Demography  (BScN:0 KRCHN:2)
+     2  Child Health Epidemiology  (BScN:1 KRCHN:1)
+     1  Cancer Prevention  (BScN:0 KRCHN:1)
+     1  Community Participation  (BScN:0 KRCHN:1)
+     1  Health Services  (BScN:0 KRCHN:1)
+     1  Screening  (BScN:0 KRCHN:1)
+     1  Community Health Nursing Principles  (BScN:0 KRCHN:1)
+     1  Community  (BScN:0 KRCHN:1)
+     1  Health Systems & Management  (BScN:1 KRCHN:0)
+     1  Older Adult Health  (BScN:0 KRCHN:1)
+     1  General Community  (BScN:0 KRCHN:1)
+     1  Global Health Goals  (BScN:0 KRCHN:1)
+     1  Culture and Health  (BScN:0 KRCHN:1)
+     1  Social Change  (BScN:0 KRCHN:1)
+     1  Health Behaviour Models  (BScN:0 KRCHN:1)
+     1  Epidemiology & Demography  (BScN:1 KRCHN:0)
+     1  Health Systems & Integration  (BScN:1 KRCHN:0)
+     1  Vital Registration  (BScN:0 KRCHN:1)
+
 ▶ Mental Health Nursing
   Total: 400 | BScN: 141 | KRCHN: 259
   ──────────────────────────────────────────────────────────────────────
@@ -534,51 +595,6 @@ Total questions: 7403
      1  Neurotransmitters  (BScN:1 KRCHN:0)
      1  Developmental Psychology  (BScN:1 KRCHN:0)
 
-▶ Community Health Nursing
-  Total: 342 | BScN: 126 | KRCHN: 216
-  ──────────────────────────────────────────────────────────────────────
-   127  Community Health  (BScN:64 KRCHN:63)
-    43  Community Health Practice  (BScN:0 KRCHN:43)
-    16  Home-Based Care  (BScN:5 KRCHN:11)
-    15  School Health  (BScN:6 KRCHN:9)
-    15  Primary Health Care  (BScN:5 KRCHN:10)
-    14  Disaster Management  (BScN:5 KRCHN:9)
-    14  Community Diagnosis  (BScN:5 KRCHN:9)
-    12  Health Systems in Kenya  (BScN:6 KRCHN:6)
-     9  Home Visiting  (BScN:3 KRCHN:6)
-     8  Levels of Prevention  (BScN:4 KRCHN:4)
-     6  Community Development  (BScN:3 KRCHN:3)
-     6  Community Health Nursing Roles  (BScN:3 KRCHN:3)
-     4  Community Health Process  (BScN:2 KRCHN:2)
-     4  Oral Health  (BScN:2 KRCHN:2)
-     4  Disability and Rehabilitation  (BScN:2 KRCHN:2)
-     4  Community Health Principles  (BScN:2 KRCHN:2)
-     3  Health Systems  (BScN:0 KRCHN:3)
-     3  Community Assessment  (BScN:2 KRCHN:1)
-     2  Ageing  (BScN:0 KRCHN:2)
-     2  Community Mobilisation  (BScN:0 KRCHN:2)
-     2  Dental Health  (BScN:0 KRCHN:2)
-     2  Vulnerable Groups  (BScN:1 KRCHN:1)
-     2  The Home Visit  (BScN:0 KRCHN:2)
-     2  Gerontological Nursing  (BScN:0 KRCHN:2)
-     2  Roles of the CHN  (BScN:0 KRCHN:2)
-     2  Community as a System  (BScN:0 KRCHN:2)
-     2  Health Policy  (BScN:1 KRCHN:1)
-     2  Concepts of Health  (BScN:1 KRCHN:1)
-     2  Ageing and Elderly Care  (BScN:1 KRCHN:1)
-     2  Disaster Preparedness  (BScN:1 KRCHN:1)
-     1  Cancer Prevention  (BScN:0 KRCHN:1)
-     1  Community Participation  (BScN:0 KRCHN:1)
-     1  Health Services  (BScN:0 KRCHN:1)
-     1  Screening  (BScN:0 KRCHN:1)
-     1  Community Health Nursing Principles  (BScN:0 KRCHN:1)
-     1  Community  (BScN:0 KRCHN:1)
-     1  Health Systems & Management  (BScN:1 KRCHN:0)
-     1  Older Adult Health  (BScN:0 KRCHN:1)
-     1  General Community  (BScN:0 KRCHN:1)
-     1  Global Health Goals  (BScN:0 KRCHN:1)
-     1  Health Systems & Integration  (BScN:1 KRCHN:0)
-
 ▶ Anatomy & Physiology
   Total: 200 | BScN: 106 | KRCHN: 94
   ──────────────────────────────────────────────────────────────────────
@@ -590,6 +606,37 @@ Total questions: 7403
      2  Neuroanatomy  (BScN:1 KRCHN:1)
      2  Cardiovascular Anatomy  (BScN:1 KRCHN:1)
      1  Renal Physiology  (BScN:0 KRCHN:1)
+
+▶ Maternal & Child Health
+  Total: 198 | BScN: 86 | KRCHN: 112
+  ──────────────────────────────────────────────────────────────────────
+    58  Antenatal Care  (BScN:27 KRCHN:31)
+    52  Family Planning  (BScN:20 KRCHN:32)
+    20  Immunization  (BScN:11 KRCHN:9)
+    14  Immunisation  (BScN:2 KRCHN:12)
+     5  Neonatal Prophylaxis  (BScN:4 KRCHN:1)
+     4  Child Development  (BScN:0 KRCHN:4)
+     4  PMTCT  (BScN:2 KRCHN:2)
+     4  Vital Statistics  (BScN:3 KRCHN:1)
+     4  Immunisation Programme  (BScN:2 KRCHN:2)
+     4  Cold Chain  (BScN:1 KRCHN:3)
+     3  Growth and Development  (BScN:1 KRCHN:2)
+     3  Growth Monitoring  (BScN:1 KRCHN:2)
+     3  Neural Tube Defect Prevention  (BScN:3 KRCHN:0)
+     3  Family Health  (BScN:0 KRCHN:3)
+     2  IMNCI Guidelines  (BScN:1 KRCHN:1)
+     2  Maternal and Child Health  (BScN:0 KRCHN:2)
+     2  Reproductive Health  (BScN:1 KRCHN:1)
+     2  Vitamin A Supplementation  (BScN:1 KRCHN:1)
+     1  Child Health  (BScN:0 KRCHN:1)
+     1  Immunisation and Pharmacology in Pregnancy  (BScN:0 KRCHN:1)
+     1  Adolescent Pregnancy  (BScN:1 KRCHN:0)
+     1  Essential Newborn Care  (BScN:1 KRCHN:0)
+     1  Anaemia in Pregnancy  (BScN:1 KRCHN:0)
+     1  Child Health (IMNCI)  (BScN:0 KRCHN:1)
+     1  Cardiac Disease in Pregnancy  (BScN:1 KRCHN:0)
+     1  Cervical Cancer Screening  (BScN:1 KRCHN:0)
+     1  Cervical Cancer and Reproductive Health  (BScN:1 KRCHN:0)
 
 ▶ Research & Statistics
   Total: 187 | BScN: 114 | KRCHN: 73
@@ -621,36 +668,6 @@ Total questions: 7403
      1  Research Proposal  (BScN:1 KRCHN:0)
      1  Research Report  (BScN:1 KRCHN:0)
      1  Evidence Levels  (BScN:1 KRCHN:0)
-
-▶ Maternal & Child Health
-  Total: 140 | BScN: 59 | KRCHN: 81
-  ──────────────────────────────────────────────────────────────────────
-    52  Family Planning  (BScN:20 KRCHN:32)
-    20  Immunization  (BScN:11 KRCHN:9)
-    14  Immunisation  (BScN:2 KRCHN:12)
-     5  Neonatal Prophylaxis  (BScN:4 KRCHN:1)
-     4  Child Development  (BScN:0 KRCHN:4)
-     4  PMTCT  (BScN:2 KRCHN:2)
-     4  Vital Statistics  (BScN:3 KRCHN:1)
-     4  Immunisation Programme  (BScN:2 KRCHN:2)
-     4  Cold Chain  (BScN:1 KRCHN:3)
-     3  Growth and Development  (BScN:1 KRCHN:2)
-     3  Growth Monitoring  (BScN:1 KRCHN:2)
-     3  Neural Tube Defect Prevention  (BScN:3 KRCHN:0)
-     3  Family Health  (BScN:0 KRCHN:3)
-     2  IMNCI Guidelines  (BScN:1 KRCHN:1)
-     2  Maternal and Child Health  (BScN:0 KRCHN:2)
-     2  Reproductive Health  (BScN:1 KRCHN:1)
-     2  Vitamin A Supplementation  (BScN:1 KRCHN:1)
-     1  Child Health  (BScN:0 KRCHN:1)
-     1  Immunisation and Pharmacology in Pregnancy  (BScN:0 KRCHN:1)
-     1  Adolescent Pregnancy  (BScN:1 KRCHN:0)
-     1  Essential Newborn Care  (BScN:1 KRCHN:0)
-     1  Anaemia in Pregnancy  (BScN:1 KRCHN:0)
-     1  Child Health (IMNCI)  (BScN:0 KRCHN:1)
-     1  Cardiac Disease in Pregnancy  (BScN:1 KRCHN:0)
-     1  Cervical Cancer Screening  (BScN:1 KRCHN:0)
-     1  Cervical Cancer and Reproductive Health  (BScN:1 KRCHN:0)
 
 ▶ Surgical Nursing
   Total: 128 | BScN: 49 | KRCHN: 79
@@ -690,28 +707,48 @@ Total questions: 7403
      1  Post-Operative Complications  (BScN:0 KRCHN:1)
      1  Thoracic Surgery  (BScN:0 KRCHN:1)
 
-▶ Communicable Diseases
-  Total: 111 | BScN: 39 | KRCHN: 72
+▶ Teaching and Learning Methodologies
+  Total: 119 | BScN: 76 | KRCHN: 43
   ──────────────────────────────────────────────────────────────────────
-    58  Communicable Diseases  (BScN:19 KRCHN:39)
-    15  Malaria  (BScN:6 KRCHN:9)
-     8  HIV/AIDS  (BScN:4 KRCHN:4)
-     5  Trachoma  (BScN:2 KRCHN:3)
-     4  STI Management  (BScN:1 KRCHN:3)
-     4  STI and HIV  (BScN:2 KRCHN:2)
-     4  Communicable Disease Control  (BScN:2 KRCHN:2)
-     3  Sexually Transmitted Infections  (BScN:1 KRCHN:2)
-     2  HIV/AIDS Management  (BScN:1 KRCHN:1)
-     2  Tuberculosis  (BScN:1 KRCHN:1)
-     2  Tuberculosis Control  (BScN:0 KRCHN:2)
-     2  HIV/AIDS Care  (BScN:0 KRCHN:2)
-     1  HIV/AIDS Prevention  (BScN:0 KRCHN:1)
-     1  TB Control  (BScN:0 KRCHN:1)
+    87  Nursing Education  (BScN:48 KRCHN:39)
+     7  Technology-Enhanced Learning  (BScN:7 KRCHN:0)
+     6  Teaching Methods  (BScN:5 KRCHN:1)
+     4  Learning Theories  (BScN:4 KRCHN:0)
+     4  Curriculum Development  (BScN:4 KRCHN:0)
+     3  Bloom's Taxonomy  (BScN:3 KRCHN:0)
+     2  Evaluation in Teaching  (BScN:1 KRCHN:1)
+     2  Teaching Principles  (BScN:2 KRCHN:0)
+     2  Teaching and Learning Methods  (BScN:0 KRCHN:2)
+     1  Educational Objectives  (BScN:1 KRCHN:0)
+     1  Teaching Objectives  (BScN:1 KRCHN:0)
+
+▶ Infection Prevention & Control
+  Total: 94 | BScN: 52 | KRCHN: 42
+  ──────────────────────────────────────────────────────────────────────
+    33  Immunology  (BScN:28 KRCHN:5)
+    30  Infection Prevention  (BScN:14 KRCHN:16)
+     4  Sterilisation and Disinfection  (BScN:2 KRCHN:2)
+     4  Infection Prevention and Control  (BScN:1 KRCHN:3)
+     3  Isolation Nursing  (BScN:1 KRCHN:2)
+     2  Hand Hygiene  (BScN:1 KRCHN:1)
+     2  Post-Exposure Prophylaxis  (BScN:1 KRCHN:1)
+     2  Infection and Diagnostics  (BScN:0 KRCHN:2)
+     2  Infection Prevention & Control  (BScN:1 KRCHN:1)
+     2  Hospital-Acquired Infections  (BScN:1 KRCHN:1)
+     2  Pharmacology of Allergy  (BScN:1 KRCHN:1)
+     1  Disinfection  (BScN:0 KRCHN:1)
+     1  Needlestick Injury  (BScN:0 KRCHN:1)
+     1  Sterilisation  (BScN:0 KRCHN:1)
+     1  Needle Stick Injury  (BScN:0 KRCHN:1)
+     1  Transmission-Based Precautions  (BScN:1 KRCHN:0)
+     1  Infection and Microbiology  (BScN:0 KRCHN:1)
+     1  Immunisation Schedule  (BScN:0 KRCHN:1)
+     1  Antibiotic Resistance  (BScN:0 KRCHN:1)
 
 ▶ Nutrition
-  Total: 58 | BScN: 24 | KRCHN: 34
+  Total: 60 | BScN: 25 | KRCHN: 35
   ──────────────────────────────────────────────────────────────────────
-    28  Clinical Nutrition  (BScN:11 KRCHN:17)
+    30  Clinical Nutrition  (BScN:12 KRCHN:18)
      6  Vitamins and Minerals  (BScN:4 KRCHN:2)
      4  Vitamin Deficiencies  (BScN:2 KRCHN:2)
      3  Micronutrient Deficiencies  (BScN:0 KRCHN:3)
@@ -728,24 +765,6 @@ Total questions: 7403
      1  Paediatric Nutrition  (BScN:1 KRCHN:0)
      1  Oral Health  (BScN:1 KRCHN:0)
      1  Dietary Fibre and Gut Health  (BScN:1 KRCHN:0)
-
-▶ Infection Prevention & Control
-  Total: 55 | BScN: 22 | KRCHN: 33
-  ──────────────────────────────────────────────────────────────────────
-    30  Infection Prevention  (BScN:14 KRCHN:16)
-     4  Sterilisation and Disinfection  (BScN:2 KRCHN:2)
-     4  Infection Prevention and Control  (BScN:1 KRCHN:3)
-     3  Isolation Nursing  (BScN:1 KRCHN:2)
-     2  Hand Hygiene  (BScN:1 KRCHN:1)
-     2  Post-Exposure Prophylaxis  (BScN:1 KRCHN:1)
-     2  Infection and Diagnostics  (BScN:0 KRCHN:2)
-     2  Infection Prevention & Control  (BScN:1 KRCHN:1)
-     1  Disinfection  (BScN:0 KRCHN:1)
-     1  Needlestick Injury  (BScN:0 KRCHN:1)
-     1  Sterilisation  (BScN:0 KRCHN:1)
-     1  Needle Stick Injury  (BScN:0 KRCHN:1)
-     1  Transmission-Based Precautions  (BScN:1 KRCHN:0)
-     1  Infection and Microbiology  (BScN:0 KRCHN:1)
 
 ▶ Critical Care Nursing
   Total: 54 | BScN: 26 | KRCHN: 28
@@ -781,43 +800,6 @@ Total questions: 7403
      1  Water and Disease  (BScN:0 KRCHN:1)
      1  Zoonotic Diseases  (BScN:0 KRCHN:1)
 
-▶ Epidemiology
-  Total: 46 | BScN: 16 | KRCHN: 30
-  ──────────────────────────────────────────────────────────────────────
-    38  Epidemiological Methods  (BScN:13 KRCHN:25)
-     2  Demography  (BScN:0 KRCHN:2)
-     2  Epidemiology and Demography  (BScN:1 KRCHN:1)
-     2  Child Health Epidemiology  (BScN:1 KRCHN:1)
-     1  Epidemiology & Demography  (BScN:1 KRCHN:0)
-     1  Vital Registration  (BScN:0 KRCHN:1)
-
-▶ Microbiology
-  Total: 39 | BScN: 30 | KRCHN: 9
-  ──────────────────────────────────────────────────────────────────────
-    33  Immunology  (BScN:28 KRCHN:5)
-     2  Hospital-Acquired Infections  (BScN:1 KRCHN:1)
-     2  Pharmacology of Allergy  (BScN:1 KRCHN:1)
-     1  Immunisation Schedule  (BScN:0 KRCHN:1)
-     1  Antibiotic Resistance  (BScN:0 KRCHN:1)
-
-▶ Health Education & Sociology
-  Total: 38 | BScN: 16 | KRCHN: 22
-  ──────────────────────────────────────────────────────────────────────
-    11  Medical Sociology  (BScN:6 KRCHN:5)
-     9  Health Promotion  (BScN:5 KRCHN:4)
-     7  Health Education  (BScN:3 KRCHN:4)
-     4  Social Determinants of Health  (BScN:1 KRCHN:3)
-     2  Transcultural Nursing  (BScN:1 KRCHN:1)
-     2  Cultural Competence  (BScN:0 KRCHN:2)
-     1  Culture and Health  (BScN:0 KRCHN:1)
-     1  Social Change  (BScN:0 KRCHN:1)
-     1  Health Behaviour Models  (BScN:0 KRCHN:1)
-
-▶ Parasitology
-  Total: 27 | BScN: 11 | KRCHN: 16
-  ──────────────────────────────────────────────────────────────────────
-    27  Parasitic Diseases  (BScN:11 KRCHN:16)
-
 ▶ Health Systems & Management
   Total: 9 | BScN: 1 | KRCHN: 8
   ──────────────────────────────────────────────────────────────────────
@@ -829,4 +811,4 @@ Total questions: 7403
      1  Levels of Prevention  (BScN:0 KRCHN:1)
 
 ================================================================================
-GRAND TOTAL: 7403 questions across 21 units
+GRAND TOTAL: 7403 questions across 17 units

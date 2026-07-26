@@ -56,6 +56,7 @@ const CANONICAL_UNITS = new Set([
   'Infection Prevention & Control',
   'Critical Care Nursing',
   'Nursing Management & Leadership',
+  'Teaching and Learning Methodologies',
 ]);
 
 // Non-canonical names that must be renamed
@@ -87,6 +88,7 @@ const PAPER_MAP = {
   'Health Systems & Management': { KRCHN: 'Paper II', BScN: 'Paper II' },
   'Infection Prevention & Control': { KRCHN: 'Paper II', BScN: 'Paper II' },
   'Nursing Management & Leadership': { KRCHN: 'Paper II', BScN: 'Paper II' },
+  'Teaching and Learning Methodologies': { KRCHN: 'Paper II', BScN: 'Paper II' },
 };
 
 // ── NCK UNIT SCOPE DEFINITIONS ───────────────────────────────────────────────
@@ -445,7 +447,6 @@ const UNIT_SCOPE = {
 const DEFINITIVE_TOPIC_TO_UNIT = {
   // Midwifery topics
   'Labour and Delivery':           'Midwifery',
-  'Antenatal Care':                'Midwifery',
   'Postnatal Care':                'Midwifery',
   'Obstetric Emergencies':         'Midwifery',
   'Normal Labour':                 'Midwifery',
@@ -461,6 +462,7 @@ const DEFINITIVE_TOPIC_TO_UNIT = {
   'Eclampsia':                     'Midwifery',
 
   // Maternal & Child Health topics (user corrected: cervical cancer = MCH)
+  'Antenatal Care':                'Maternal & Child Health',
   'Family Planning':               'Maternal & Child Health',
   'Immunisation':                  'Maternal & Child Health',
   'Immunization':                  'Maternal & Child Health',
@@ -497,7 +499,6 @@ const DEFINITIVE_TOPIC_TO_UNIT = {
 
   // Nursing Management & Leadership
   'Nursing Process':               'Nursing Management & Leadership',
-  'Nursing Education':             'Nursing Management & Leadership',
   'Nursing Theories':              'Nursing Management & Leadership',
   'Nursing Theory':                'Nursing Management & Leadership',
   'Management Theory':             'Nursing Management & Leadership',
@@ -512,8 +513,6 @@ const DEFINITIVE_TOPIC_TO_UNIT = {
   'Organisational Structure':      'Nursing Management & Leadership',
   'Change Management':             'Nursing Management & Leadership',
   'Critical Thinking':             'Nursing Management & Leadership',
-  'Teaching Methods':              'Nursing Management & Leadership',
-  'Evaluation in Teaching':        'Nursing Management & Leadership',
   'Conflict Management':           'Nursing Management & Leadership',
   'Communication in Nursing':      'Nursing Management & Leadership',
   'Nursing Regulation':            'Nursing Management & Leadership',
@@ -536,7 +535,19 @@ const DEFINITIVE_TOPIC_TO_UNIT = {
   'Evidence Levels':               'Research & Statistics',
   'Data Collection':               'Research & Statistics',
   'Sampling':                      'Research & Statistics',
-  'Learning Theories':             'Nursing Management & Leadership',  // belongs in management/education
+
+  // Teaching and Learning Methodologies
+  'Nursing Education':             'Teaching and Learning Methodologies',
+  'Technology-Enhanced Learning':  'Teaching and Learning Methodologies',
+  'Curriculum Development':        'Teaching and Learning Methodologies',
+  'Learning Theories':             'Teaching and Learning Methodologies',
+  "Bloom's Taxonomy":              'Teaching and Learning Methodologies',
+  'Teaching Methods':              'Teaching and Learning Methodologies',
+  'Teaching and Learning Methods': 'Teaching and Learning Methodologies',
+  'Educational Objectives':        'Teaching and Learning Methodologies',
+  'Teaching Objectives':           'Teaching and Learning Methodologies',
+  'Teaching Principles':           'Teaching and Learning Methodologies',
+  'Evaluation in Teaching':        'Teaching and Learning Methodologies',
 
   // Infection Prevention & Control
   'Sterilisation and Disinfection': 'Infection Prevention & Control',
@@ -554,11 +565,11 @@ const DEFINITIVE_TOPIC_TO_UNIT = {
   'Non-Communicable Diseases':     'Nutrition',  // NCDs tied to diet/obesity = Nutrition
 
   // Epidemiology
-  'Child Health Epidemiology':     'Epidemiology',
-  'Vital Registration':            'Epidemiology',
+  'Child Health Epidemiology': 'Community Health Nursing',
+  'Vital Registration': 'Community Health Nursing',
   'Epidemiology and Demography':   'Epidemiology',
-  'Epidemiology & Demography':     'Epidemiology',
-  'Demography':                    'Epidemiology',
+  'Epidemiology & Demography': 'Community Health Nursing',
+  'Demography': 'Community Health Nursing',
 
   // Environmental Health
   'Water Treatment':               'Environmental Health',
@@ -573,12 +584,12 @@ const DEFINITIVE_TOPIC_TO_UNIT = {
   'Sanitation':                    'Environmental Health',
 
   // Communicable Diseases
-  'Communicable Diseases':         'Communicable Diseases',  // NOT in canonical list but keep existing
-  'Malaria':                       'Communicable Diseases',
-  'Tuberculosis':                  'Communicable Diseases',
-  'HIV/AIDS':                      'Communicable Diseases',
-  'STI Management':                'Communicable Diseases',
-  'Trachoma':                      'Communicable Diseases',
+  'Communicable Diseases': 'Medical-Surgical Nursing',
+  'Malaria': 'Medical-Surgical Nursing',
+  'Tuberculosis': 'Medical-Surgical Nursing',
+  'HIV/AIDS': 'Medical-Surgical Nursing',
+  'STI Management': 'Medical-Surgical Nursing',
+  'Trachoma': 'Medical-Surgical Nursing',
   'Infection and Microbiology':    'Infection Prevention & Control',
   'Infection and Diagnostics':     'Infection Prevention & Control',
 };
@@ -632,8 +643,7 @@ function classifyQuestion(q) {
     // Special handling for units that exist but aren't in canonical set
     // e.g. Communicable Diseases, Epidemiology, Parasitology, Microbiology
     // These are real NCK topics but may need to be assigned to a canonical unit
-    if (['Communicable Diseases', 'Epidemiology', 'Parasitology', 'Microbiology',
-         'Health Education & Sociology', 'Communicable Diseases'].includes(effectiveUnit)) {
+    if (false) {
       // These exist but aren't in §12 canonical list
       // They should map to Community Health Nursing (KRCHN Paper II) or appropriate unit
       // But we won't force-reclassify them - just note it

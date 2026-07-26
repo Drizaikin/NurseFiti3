@@ -1,10 +1,10 @@
 [
   {
     "unit": "Midwifery",
-    "total": 2184,
-    "bscn": 1060,
-    "krchn": 1124,
-    "topicCount": 126,
+    "total": 2126,
+    "bscn": 1033,
+    "krchn": 1093,
+    "topicCount": 125,
     "topics": [
       {
         "topic": "Obstetric Nursing",
@@ -35,12 +35,6 @@
         "total": 64,
         "bscn": 34,
         "krchn": 30
-      },
-      {
-        "topic": "Antenatal Care",
-        "total": 58,
-        "bscn": 27,
-        "krchn": 31
       },
       {
         "topic": "Obstetric Emergencies",
@@ -766,10 +760,10 @@
   },
   {
     "unit": "Medical-Surgical Nursing",
-    "total": 1611,
-    "bscn": 659,
-    "krchn": 952,
-    "topicCount": 85,
+    "total": 1749,
+    "bscn": 709,
+    "krchn": 1040,
+    "topicCount": 100,
     "topics": [
       {
         "topic": "Clinical Nursing",
@@ -782,6 +776,12 @@
         "total": 193,
         "bscn": 0,
         "krchn": 193
+      },
+      {
+        "topic": "Communicable Diseases",
+        "total": 58,
+        "bscn": 19,
+        "krchn": 39
       },
       {
         "topic": "Thyroid Disorders",
@@ -856,6 +856,12 @@
         "krchn": 18
       },
       {
+        "topic": "Parasitic Diseases",
+        "total": 27,
+        "bscn": 11,
+        "krchn": 16
+      },
+      {
         "topic": "Haematological Disorders",
         "total": 26,
         "bscn": 11,
@@ -913,6 +919,12 @@
         "topic": "Ophthalmic Nursing",
         "total": 18,
         "bscn": 9,
+        "krchn": 9
+      },
+      {
+        "topic": "Malaria",
+        "total": 15,
+        "bscn": 6,
         "krchn": 9
       },
       {
@@ -982,6 +994,12 @@
         "krchn": 4
       },
       {
+        "topic": "HIV/AIDS",
+        "total": 8,
+        "bscn": 4,
+        "krchn": 4
+      },
+      {
         "topic": "Gastrointestinal Nursing",
         "total": 7,
         "bscn": 0,
@@ -1030,6 +1048,12 @@
         "krchn": 3
       },
       {
+        "topic": "Trachoma",
+        "total": 5,
+        "bscn": 2,
+        "krchn": 3
+      },
+      {
         "topic": "Gastrointestinal Procedures",
         "total": 4,
         "bscn": 1,
@@ -1048,7 +1072,25 @@
         "krchn": 2
       },
       {
+        "topic": "Communicable Disease Control",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
         "topic": "ENT Nursing",
+        "total": 4,
+        "bscn": 1,
+        "krchn": 3
+      },
+      {
+        "topic": "STI and HIV",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "STI Management",
         "total": 4,
         "bscn": 1,
         "krchn": 3
@@ -1073,6 +1115,12 @@
       },
       {
         "topic": "Diagnostic Procedures",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Sexually Transmitted Infections",
         "total": 3,
         "bscn": 1,
         "krchn": 2
@@ -1156,7 +1204,19 @@
         "krchn": 1
       },
       {
+        "topic": "Tuberculosis",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
         "topic": "GI Assessment",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "HIV/AIDS Management",
         "total": 2,
         "bscn": 1,
         "krchn": 1
@@ -1166,6 +1226,18 @@
         "total": 2,
         "bscn": 1,
         "krchn": 1
+      },
+      {
+        "topic": "Tuberculosis Control",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "HIV/AIDS Care",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
       },
       {
         "topic": "Neurological Nursing Care",
@@ -1276,6 +1348,18 @@
         "krchn": 1
       },
       {
+        "topic": "HIV/AIDS Prevention",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "TB Control",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
         "topic": "IV Therapy and Calculations",
         "total": 1,
         "bscn": 0,
@@ -1285,22 +1369,16 @@
   },
   {
     "unit": "Nursing Management & Leadership",
-    "total": 750,
-    "bscn": 404,
-    "krchn": 346,
-    "topicCount": 63,
+    "total": 631,
+    "bscn": 328,
+    "krchn": 303,
+    "topicCount": 52,
     "topics": [
       {
         "topic": "Health Systems",
         "total": 382,
         "bscn": 191,
         "krchn": 191
-      },
-      {
-        "topic": "Nursing Education",
-        "total": 87,
-        "bscn": 48,
-        "krchn": 39
       },
       {
         "topic": "Nursing Management",
@@ -1357,12 +1435,6 @@
         "krchn": 4
       },
       {
-        "topic": "Technology-Enhanced Learning",
-        "total": 7,
-        "bscn": 7,
-        "krchn": 0
-      },
-      {
         "topic": "Professional Nursing Practice",
         "total": 6,
         "bscn": 1,
@@ -1373,12 +1445,6 @@
         "total": 6,
         "bscn": 3,
         "krchn": 3
-      },
-      {
-        "topic": "Teaching Methods",
-        "total": 6,
-        "bscn": 5,
-        "krchn": 1
       },
       {
         "topic": "Leadership Roles",
@@ -1411,24 +1477,6 @@
         "krchn": 2
       },
       {
-        "topic": "Learning Theories",
-        "total": 4,
-        "bscn": 4,
-        "krchn": 0
-      },
-      {
-        "topic": "Curriculum Development",
-        "total": 4,
-        "bscn": 4,
-        "krchn": 0
-      },
-      {
-        "topic": "Bloom's Taxonomy",
-        "total": 3,
-        "bscn": 3,
-        "krchn": 0
-      },
-      {
         "topic": "Human Resource Management",
         "total": 3,
         "bscn": 2,
@@ -1454,12 +1502,6 @@
       },
       {
         "topic": "Critical Thinking",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Evaluation in Teaching",
         "total": 2,
         "bscn": 1,
         "krchn": 1
@@ -1513,12 +1555,6 @@
         "krchn": 1
       },
       {
-        "topic": "Teaching and Learning Methods",
-        "total": 2,
-        "bscn": 0,
-        "krchn": 2
-      },
-      {
         "topic": "Patient Safety",
         "total": 2,
         "bscn": 1,
@@ -1535,12 +1571,6 @@
         "total": 2,
         "bscn": 1,
         "krchn": 1
-      },
-      {
-        "topic": "Teaching Principles",
-        "total": 2,
-        "bscn": 2,
-        "krchn": 0
       },
       {
         "topic": "Conflict Management",
@@ -1591,12 +1621,6 @@
         "krchn": 1
       },
       {
-        "topic": "Educational Objectives",
-        "total": 1,
-        "bscn": 1,
-        "krchn": 0
-      },
-      {
         "topic": "Teaching Aids",
         "total": 1,
         "bscn": 1,
@@ -1622,12 +1646,6 @@
       },
       {
         "topic": "Scope of Practice",
-        "total": 1,
-        "bscn": 1,
-        "krchn": 0
-      },
-      {
-        "topic": "Teaching Objectives",
         "total": 1,
         "bscn": 1,
         "krchn": 0
@@ -1672,10 +1690,10 @@
   },
   {
     "unit": "Paediatric Nursing",
-    "total": 518,
-    "bscn": 215,
-    "krchn": 303,
-    "topicCount": 84,
+    "total": 516,
+    "bscn": 214,
+    "krchn": 302,
+    "topicCount": 83,
     "topics": [
       {
         "topic": "Paediatric Nursing",
@@ -1843,12 +1861,6 @@
         "topic": "Congenital Abnormalities",
         "total": 3,
         "bscn": 2,
-        "krchn": 1
-      },
-      {
-        "topic": "Nutrition",
-        "total": 2,
-        "bscn": 1,
         "krchn": 1
       },
       {
@@ -2625,6 +2637,345 @@
     ]
   },
   {
+    "unit": "Community Health Nursing",
+    "total": 426,
+    "bscn": 158,
+    "krchn": 268,
+    "topicCount": 55,
+    "topics": [
+      {
+        "topic": "Community Health",
+        "total": 127,
+        "bscn": 64,
+        "krchn": 63
+      },
+      {
+        "topic": "Community Health Practice",
+        "total": 43,
+        "bscn": 0,
+        "krchn": 43
+      },
+      {
+        "topic": "Epidemiological Methods",
+        "total": 40,
+        "bscn": 14,
+        "krchn": 26
+      },
+      {
+        "topic": "Home-Based Care",
+        "total": 16,
+        "bscn": 5,
+        "krchn": 11
+      },
+      {
+        "topic": "School Health",
+        "total": 15,
+        "bscn": 6,
+        "krchn": 9
+      },
+      {
+        "topic": "Primary Health Care",
+        "total": 15,
+        "bscn": 5,
+        "krchn": 10
+      },
+      {
+        "topic": "Disaster Management",
+        "total": 14,
+        "bscn": 5,
+        "krchn": 9
+      },
+      {
+        "topic": "Community Diagnosis",
+        "total": 14,
+        "bscn": 5,
+        "krchn": 9
+      },
+      {
+        "topic": "Health Systems in Kenya",
+        "total": 12,
+        "bscn": 6,
+        "krchn": 6
+      },
+      {
+        "topic": "Medical Sociology",
+        "total": 11,
+        "bscn": 6,
+        "krchn": 5
+      },
+      {
+        "topic": "Home Visiting",
+        "total": 9,
+        "bscn": 3,
+        "krchn": 6
+      },
+      {
+        "topic": "Health Promotion",
+        "total": 9,
+        "bscn": 5,
+        "krchn": 4
+      },
+      {
+        "topic": "Levels of Prevention",
+        "total": 8,
+        "bscn": 4,
+        "krchn": 4
+      },
+      {
+        "topic": "Health Education",
+        "total": 7,
+        "bscn": 3,
+        "krchn": 4
+      },
+      {
+        "topic": "Community Development",
+        "total": 6,
+        "bscn": 3,
+        "krchn": 3
+      },
+      {
+        "topic": "Community Health Nursing Roles",
+        "total": 6,
+        "bscn": 3,
+        "krchn": 3
+      },
+      {
+        "topic": "Community Health Process",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Oral Health",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Disability and Rehabilitation",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Community Health Principles",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Social Determinants of Health",
+        "total": 4,
+        "bscn": 1,
+        "krchn": 3
+      },
+      {
+        "topic": "Health Systems",
+        "total": 3,
+        "bscn": 0,
+        "krchn": 3
+      },
+      {
+        "topic": "Community Assessment",
+        "total": 3,
+        "bscn": 2,
+        "krchn": 1
+      },
+      {
+        "topic": "Ageing",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Community Mobilisation",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Dental Health",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Vulnerable Groups",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "The Home Visit",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Gerontological Nursing",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Roles of the CHN",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Community as a System",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Health Policy",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Concepts of Health",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Ageing and Elderly Care",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Disaster Preparedness",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Transcultural Nursing",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Cultural Competence",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Demography",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Child Health Epidemiology",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Cancer Prevention",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Community Participation",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Health Services",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Screening",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Community Health Nursing Principles",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Community",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Health Systems & Management",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Older Adult Health",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "General Community",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Global Health Goals",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Culture and Health",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Social Change",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Health Behaviour Models",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Epidemiology & Demography",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Health Systems & Integration",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Vital Registration",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      }
+    ]
+  },
+  {
     "unit": "Mental Health Nursing",
     "total": 400,
     "bscn": 141,
@@ -3090,261 +3441,6 @@
     ]
   },
   {
-    "unit": "Community Health Nursing",
-    "total": 342,
-    "bscn": 126,
-    "krchn": 216,
-    "topicCount": 41,
-    "topics": [
-      {
-        "topic": "Community Health",
-        "total": 127,
-        "bscn": 64,
-        "krchn": 63
-      },
-      {
-        "topic": "Community Health Practice",
-        "total": 43,
-        "bscn": 0,
-        "krchn": 43
-      },
-      {
-        "topic": "Home-Based Care",
-        "total": 16,
-        "bscn": 5,
-        "krchn": 11
-      },
-      {
-        "topic": "School Health",
-        "total": 15,
-        "bscn": 6,
-        "krchn": 9
-      },
-      {
-        "topic": "Primary Health Care",
-        "total": 15,
-        "bscn": 5,
-        "krchn": 10
-      },
-      {
-        "topic": "Disaster Management",
-        "total": 14,
-        "bscn": 5,
-        "krchn": 9
-      },
-      {
-        "topic": "Community Diagnosis",
-        "total": 14,
-        "bscn": 5,
-        "krchn": 9
-      },
-      {
-        "topic": "Health Systems in Kenya",
-        "total": 12,
-        "bscn": 6,
-        "krchn": 6
-      },
-      {
-        "topic": "Home Visiting",
-        "total": 9,
-        "bscn": 3,
-        "krchn": 6
-      },
-      {
-        "topic": "Levels of Prevention",
-        "total": 8,
-        "bscn": 4,
-        "krchn": 4
-      },
-      {
-        "topic": "Community Development",
-        "total": 6,
-        "bscn": 3,
-        "krchn": 3
-      },
-      {
-        "topic": "Community Health Nursing Roles",
-        "total": 6,
-        "bscn": 3,
-        "krchn": 3
-      },
-      {
-        "topic": "Community Health Process",
-        "total": 4,
-        "bscn": 2,
-        "krchn": 2
-      },
-      {
-        "topic": "Oral Health",
-        "total": 4,
-        "bscn": 2,
-        "krchn": 2
-      },
-      {
-        "topic": "Disability and Rehabilitation",
-        "total": 4,
-        "bscn": 2,
-        "krchn": 2
-      },
-      {
-        "topic": "Community Health Principles",
-        "total": 4,
-        "bscn": 2,
-        "krchn": 2
-      },
-      {
-        "topic": "Health Systems",
-        "total": 3,
-        "bscn": 0,
-        "krchn": 3
-      },
-      {
-        "topic": "Community Assessment",
-        "total": 3,
-        "bscn": 2,
-        "krchn": 1
-      },
-      {
-        "topic": "Ageing",
-        "total": 2,
-        "bscn": 0,
-        "krchn": 2
-      },
-      {
-        "topic": "Community Mobilisation",
-        "total": 2,
-        "bscn": 0,
-        "krchn": 2
-      },
-      {
-        "topic": "Dental Health",
-        "total": 2,
-        "bscn": 0,
-        "krchn": 2
-      },
-      {
-        "topic": "Vulnerable Groups",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "The Home Visit",
-        "total": 2,
-        "bscn": 0,
-        "krchn": 2
-      },
-      {
-        "topic": "Gerontological Nursing",
-        "total": 2,
-        "bscn": 0,
-        "krchn": 2
-      },
-      {
-        "topic": "Roles of the CHN",
-        "total": 2,
-        "bscn": 0,
-        "krchn": 2
-      },
-      {
-        "topic": "Community as a System",
-        "total": 2,
-        "bscn": 0,
-        "krchn": 2
-      },
-      {
-        "topic": "Health Policy",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Concepts of Health",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Ageing and Elderly Care",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Disaster Preparedness",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Cancer Prevention",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Community Participation",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Health Services",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Screening",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Community Health Nursing Principles",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Community",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Health Systems & Management",
-        "total": 1,
-        "bscn": 1,
-        "krchn": 0
-      },
-      {
-        "topic": "Older Adult Health",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "General Community",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Global Health Goals",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Health Systems & Integration",
-        "total": 1,
-        "bscn": 1,
-        "krchn": 0
-      }
-    ]
-  },
-  {
     "unit": "Anatomy & Physiology",
     "total": 200,
     "bscn": 106,
@@ -3398,6 +3494,177 @@
         "total": 1,
         "bscn": 0,
         "krchn": 1
+      }
+    ]
+  },
+  {
+    "unit": "Maternal & Child Health",
+    "total": 198,
+    "bscn": 86,
+    "krchn": 112,
+    "topicCount": 27,
+    "topics": [
+      {
+        "topic": "Antenatal Care",
+        "total": 58,
+        "bscn": 27,
+        "krchn": 31
+      },
+      {
+        "topic": "Family Planning",
+        "total": 52,
+        "bscn": 20,
+        "krchn": 32
+      },
+      {
+        "topic": "Immunization",
+        "total": 20,
+        "bscn": 11,
+        "krchn": 9
+      },
+      {
+        "topic": "Immunisation",
+        "total": 14,
+        "bscn": 2,
+        "krchn": 12
+      },
+      {
+        "topic": "Neonatal Prophylaxis",
+        "total": 5,
+        "bscn": 4,
+        "krchn": 1
+      },
+      {
+        "topic": "Child Development",
+        "total": 4,
+        "bscn": 0,
+        "krchn": 4
+      },
+      {
+        "topic": "PMTCT",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Vital Statistics",
+        "total": 4,
+        "bscn": 3,
+        "krchn": 1
+      },
+      {
+        "topic": "Immunisation Programme",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Cold Chain",
+        "total": 4,
+        "bscn": 1,
+        "krchn": 3
+      },
+      {
+        "topic": "Growth and Development",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Growth Monitoring",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Neural Tube Defect Prevention",
+        "total": 3,
+        "bscn": 3,
+        "krchn": 0
+      },
+      {
+        "topic": "Family Health",
+        "total": 3,
+        "bscn": 0,
+        "krchn": 3
+      },
+      {
+        "topic": "IMNCI Guidelines",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Maternal and Child Health",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Reproductive Health",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Vitamin A Supplementation",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Child Health",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Immunisation and Pharmacology in Pregnancy",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Adolescent Pregnancy",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Essential Newborn Care",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Anaemia in Pregnancy",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Child Health (IMNCI)",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Cardiac Disease in Pregnancy",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Cervical Cancer Screening",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Cervical Cancer and Reproductive Health",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
       }
     ]
   },
@@ -3566,171 +3833,6 @@
       },
       {
         "topic": "Evidence Levels",
-        "total": 1,
-        "bscn": 1,
-        "krchn": 0
-      }
-    ]
-  },
-  {
-    "unit": "Maternal & Child Health",
-    "total": 140,
-    "bscn": 59,
-    "krchn": 81,
-    "topicCount": 26,
-    "topics": [
-      {
-        "topic": "Family Planning",
-        "total": 52,
-        "bscn": 20,
-        "krchn": 32
-      },
-      {
-        "topic": "Immunization",
-        "total": 20,
-        "bscn": 11,
-        "krchn": 9
-      },
-      {
-        "topic": "Immunisation",
-        "total": 14,
-        "bscn": 2,
-        "krchn": 12
-      },
-      {
-        "topic": "Neonatal Prophylaxis",
-        "total": 5,
-        "bscn": 4,
-        "krchn": 1
-      },
-      {
-        "topic": "Child Development",
-        "total": 4,
-        "bscn": 0,
-        "krchn": 4
-      },
-      {
-        "topic": "PMTCT",
-        "total": 4,
-        "bscn": 2,
-        "krchn": 2
-      },
-      {
-        "topic": "Vital Statistics",
-        "total": 4,
-        "bscn": 3,
-        "krchn": 1
-      },
-      {
-        "topic": "Immunisation Programme",
-        "total": 4,
-        "bscn": 2,
-        "krchn": 2
-      },
-      {
-        "topic": "Cold Chain",
-        "total": 4,
-        "bscn": 1,
-        "krchn": 3
-      },
-      {
-        "topic": "Growth and Development",
-        "total": 3,
-        "bscn": 1,
-        "krchn": 2
-      },
-      {
-        "topic": "Growth Monitoring",
-        "total": 3,
-        "bscn": 1,
-        "krchn": 2
-      },
-      {
-        "topic": "Neural Tube Defect Prevention",
-        "total": 3,
-        "bscn": 3,
-        "krchn": 0
-      },
-      {
-        "topic": "Family Health",
-        "total": 3,
-        "bscn": 0,
-        "krchn": 3
-      },
-      {
-        "topic": "IMNCI Guidelines",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Maternal and Child Health",
-        "total": 2,
-        "bscn": 0,
-        "krchn": 2
-      },
-      {
-        "topic": "Reproductive Health",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Vitamin A Supplementation",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Child Health",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Immunisation and Pharmacology in Pregnancy",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Adolescent Pregnancy",
-        "total": 1,
-        "bscn": 1,
-        "krchn": 0
-      },
-      {
-        "topic": "Essential Newborn Care",
-        "total": 1,
-        "bscn": 1,
-        "krchn": 0
-      },
-      {
-        "topic": "Anaemia in Pregnancy",
-        "total": 1,
-        "bscn": 1,
-        "krchn": 0
-      },
-      {
-        "topic": "Child Health (IMNCI)",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Cardiac Disease in Pregnancy",
-        "total": 1,
-        "bscn": 1,
-        "krchn": 0
-      },
-      {
-        "topic": "Cervical Cancer Screening",
-        "total": 1,
-        "bscn": 1,
-        "krchn": 0
-      },
-      {
-        "topic": "Cervical Cancer and Reproductive Health",
         "total": 1,
         "bscn": 1,
         "krchn": 0
@@ -3951,92 +4053,197 @@
     ]
   },
   {
-    "unit": "Communicable Diseases",
-    "total": 111,
-    "bscn": 39,
-    "krchn": 72,
-    "topicCount": 14,
+    "unit": "Teaching and Learning Methodologies",
+    "total": 119,
+    "bscn": 76,
+    "krchn": 43,
+    "topicCount": 11,
     "topics": [
       {
-        "topic": "Communicable Diseases",
-        "total": 58,
-        "bscn": 19,
+        "topic": "Nursing Education",
+        "total": 87,
+        "bscn": 48,
         "krchn": 39
       },
       {
-        "topic": "Malaria",
-        "total": 15,
-        "bscn": 6,
-        "krchn": 9
+        "topic": "Technology-Enhanced Learning",
+        "total": 7,
+        "bscn": 7,
+        "krchn": 0
       },
       {
-        "topic": "HIV/AIDS",
-        "total": 8,
+        "topic": "Teaching Methods",
+        "total": 6,
+        "bscn": 5,
+        "krchn": 1
+      },
+      {
+        "topic": "Learning Theories",
+        "total": 4,
         "bscn": 4,
-        "krchn": 4
+        "krchn": 0
       },
       {
-        "topic": "Trachoma",
-        "total": 5,
+        "topic": "Curriculum Development",
+        "total": 4,
+        "bscn": 4,
+        "krchn": 0
+      },
+      {
+        "topic": "Bloom's Taxonomy",
+        "total": 3,
+        "bscn": 3,
+        "krchn": 0
+      },
+      {
+        "topic": "Evaluation in Teaching",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Teaching Principles",
+        "total": 2,
         "bscn": 2,
-        "krchn": 3
+        "krchn": 0
       },
       {
-        "topic": "STI Management",
+        "topic": "Teaching and Learning Methods",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Educational Objectives",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Teaching Objectives",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      }
+    ]
+  },
+  {
+    "unit": "Infection Prevention & Control",
+    "total": 94,
+    "bscn": 52,
+    "krchn": 42,
+    "topicCount": 19,
+    "topics": [
+      {
+        "topic": "Immunology",
+        "total": 33,
+        "bscn": 28,
+        "krchn": 5
+      },
+      {
+        "topic": "Infection Prevention",
+        "total": 30,
+        "bscn": 14,
+        "krchn": 16
+      },
+      {
+        "topic": "Sterilisation and Disinfection",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Infection Prevention and Control",
         "total": 4,
         "bscn": 1,
         "krchn": 3
       },
       {
-        "topic": "STI and HIV",
-        "total": 4,
-        "bscn": 2,
-        "krchn": 2
-      },
-      {
-        "topic": "Communicable Disease Control",
-        "total": 4,
-        "bscn": 2,
-        "krchn": 2
-      },
-      {
-        "topic": "Sexually Transmitted Infections",
+        "topic": "Isolation Nursing",
         "total": 3,
         "bscn": 1,
         "krchn": 2
       },
       {
-        "topic": "HIV/AIDS Management",
+        "topic": "Hand Hygiene",
         "total": 2,
         "bscn": 1,
         "krchn": 1
       },
       {
-        "topic": "Tuberculosis",
+        "topic": "Post-Exposure Prophylaxis",
         "total": 2,
         "bscn": 1,
         "krchn": 1
       },
       {
-        "topic": "Tuberculosis Control",
+        "topic": "Infection and Diagnostics",
         "total": 2,
         "bscn": 0,
         "krchn": 2
       },
       {
-        "topic": "HIV/AIDS Care",
+        "topic": "Infection Prevention & Control",
         "total": 2,
-        "bscn": 0,
-        "krchn": 2
+        "bscn": 1,
+        "krchn": 1
       },
       {
-        "topic": "HIV/AIDS Prevention",
+        "topic": "Hospital-Acquired Infections",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Pharmacology of Allergy",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Disinfection",
         "total": 1,
         "bscn": 0,
         "krchn": 1
       },
       {
-        "topic": "TB Control",
+        "topic": "Needlestick Injury",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Sterilisation",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Needle Stick Injury",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Transmission-Based Precautions",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Infection and Microbiology",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Immunisation Schedule",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Antibiotic Resistance",
         "total": 1,
         "bscn": 0,
         "krchn": 1
@@ -4045,16 +4252,16 @@
   },
   {
     "unit": "Nutrition",
-    "total": 58,
-    "bscn": 24,
-    "krchn": 34,
+    "total": 60,
+    "bscn": 25,
+    "krchn": 35,
     "topicCount": 17,
     "topics": [
       {
         "topic": "Clinical Nutrition",
-        "total": 28,
-        "bscn": 11,
-        "krchn": 17
+        "total": 30,
+        "bscn": 12,
+        "krchn": 18
       },
       {
         "topic": "Vitamins and Minerals",
@@ -4151,99 +4358,6 @@
         "total": 1,
         "bscn": 1,
         "krchn": 0
-      }
-    ]
-  },
-  {
-    "unit": "Infection Prevention & Control",
-    "total": 55,
-    "bscn": 22,
-    "krchn": 33,
-    "topicCount": 14,
-    "topics": [
-      {
-        "topic": "Infection Prevention",
-        "total": 30,
-        "bscn": 14,
-        "krchn": 16
-      },
-      {
-        "topic": "Sterilisation and Disinfection",
-        "total": 4,
-        "bscn": 2,
-        "krchn": 2
-      },
-      {
-        "topic": "Infection Prevention and Control",
-        "total": 4,
-        "bscn": 1,
-        "krchn": 3
-      },
-      {
-        "topic": "Isolation Nursing",
-        "total": 3,
-        "bscn": 1,
-        "krchn": 2
-      },
-      {
-        "topic": "Hand Hygiene",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Post-Exposure Prophylaxis",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Infection and Diagnostics",
-        "total": 2,
-        "bscn": 0,
-        "krchn": 2
-      },
-      {
-        "topic": "Infection Prevention & Control",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Disinfection",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Needlestick Injury",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Sterilisation",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Needle Stick Injury",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Transmission-Based Precautions",
-        "total": 1,
-        "bscn": 1,
-        "krchn": 0
-      },
-      {
-        "topic": "Infection and Microbiology",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
       }
     ]
   },
@@ -4418,168 +4532,6 @@
         "total": 1,
         "bscn": 0,
         "krchn": 1
-      }
-    ]
-  },
-  {
-    "unit": "Epidemiology",
-    "total": 46,
-    "bscn": 16,
-    "krchn": 30,
-    "topicCount": 6,
-    "topics": [
-      {
-        "topic": "Epidemiological Methods",
-        "total": 38,
-        "bscn": 13,
-        "krchn": 25
-      },
-      {
-        "topic": "Demography",
-        "total": 2,
-        "bscn": 0,
-        "krchn": 2
-      },
-      {
-        "topic": "Epidemiology and Demography",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Child Health Epidemiology",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Epidemiology & Demography",
-        "total": 1,
-        "bscn": 1,
-        "krchn": 0
-      },
-      {
-        "topic": "Vital Registration",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      }
-    ]
-  },
-  {
-    "unit": "Microbiology",
-    "total": 39,
-    "bscn": 30,
-    "krchn": 9,
-    "topicCount": 5,
-    "topics": [
-      {
-        "topic": "Immunology",
-        "total": 33,
-        "bscn": 28,
-        "krchn": 5
-      },
-      {
-        "topic": "Hospital-Acquired Infections",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Pharmacology of Allergy",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Immunisation Schedule",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Antibiotic Resistance",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      }
-    ]
-  },
-  {
-    "unit": "Health Education & Sociology",
-    "total": 38,
-    "bscn": 16,
-    "krchn": 22,
-    "topicCount": 9,
-    "topics": [
-      {
-        "topic": "Medical Sociology",
-        "total": 11,
-        "bscn": 6,
-        "krchn": 5
-      },
-      {
-        "topic": "Health Promotion",
-        "total": 9,
-        "bscn": 5,
-        "krchn": 4
-      },
-      {
-        "topic": "Health Education",
-        "total": 7,
-        "bscn": 3,
-        "krchn": 4
-      },
-      {
-        "topic": "Social Determinants of Health",
-        "total": 4,
-        "bscn": 1,
-        "krchn": 3
-      },
-      {
-        "topic": "Transcultural Nursing",
-        "total": 2,
-        "bscn": 1,
-        "krchn": 1
-      },
-      {
-        "topic": "Cultural Competence",
-        "total": 2,
-        "bscn": 0,
-        "krchn": 2
-      },
-      {
-        "topic": "Culture and Health",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Social Change",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      },
-      {
-        "topic": "Health Behaviour Models",
-        "total": 1,
-        "bscn": 0,
-        "krchn": 1
-      }
-    ]
-  },
-  {
-    "unit": "Parasitology",
-    "total": 27,
-    "bscn": 11,
-    "krchn": 16,
-    "topicCount": 1,
-    "topics": [
-      {
-        "topic": "Parasitic Diseases",
-        "total": 27,
-        "bscn": 11,
-        "krchn": 16
       }
     ]
   },
