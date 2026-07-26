@@ -1,0 +1,52 @@
+﻿Reading: C:\Users\User\Desktop\NurseFiti\NurseFiti3\QUESTIONS\NCK_MCQ_Compilation_Set4_Answers_Rationales.docx
+
+Paragraphs extracted: 15090
+
+Questions parsed: 2122
+
+--- Q1 ---
+  Stem:      Which of the following is true about the development of the male gonads:
+  Options:   ['Requires 36░C temperature', 'Testosterone production causes maturation of the wolffian ducts', 'Descends into the scrotum during the eighth infancy week', 'Testicular production of mullerian inhibits sabstances (MIS) Causes degeneration of the wolffian duct']
+  Answer:    B
+  Rationale: Per embryology (Langman/Myles), fetal Leydig-cell testosterone drives maturation
+  Cadre/Paper: BScN / Paper I
+
+--- Q2 ---
+  Stem:      Maximum normal time for second stage off labour in primigravida without anaesthe
+  Options:   ['20 minutes', '60 minutes', '120 minutes', '240 minutes']
+  Answer:    C
+  Rationale: Per Myles Textbook for Midwives, the maximum normal duration of the second stage
+  Cadre/Paper: BScN / Paper I
+
+--- Q3 ---
+  Stem:      In graffian follicle the inner most cells of the corona that are very clear are 
+  Options:   ['Perinetrine space', 'Corona radiate', 'Zona pellucinda', 'External limiting membrane']
+  Answer:    C
+  Rationale: Per reproductive anatomy (Myles), the innermost clear layer immediately surround
+  Cadre/Paper: BScN / Paper I
+
+--- Q4 ---
+  Stem:      The area enclosed by labia minora is called.
+  Options:   ['Fourchette', 'Vestibular', 'Perineum', 'Vaginal os']
+  Answer:    B
+  Rationale: Per anatomy of the external female genitalia (Myles), the area enclosed by the l
+  Cadre/Paper: BScN / Paper I
+
+--- Q5 ---
+  Stem:      Crowning is best defined as:
+  Options:   ['When the greatest diameter of the fetal head comes through vulva', 'When presenting part reaches the pelvis floor', 'When the perineum bulges in front of fetal head', 'Ehen the head is visible at vulva']
+  Answer:    A
+  Rationale: Per Myles Textbook for Midwives, crowning is when the widest transverse (biparie
+  Cadre/Paper: BScN / Paper I
+
+Total parsed:         2122
+Valid (complete):     2102
+Skipped (incomplete): 20
+  Written: 20260724000001_seed_mcq_compilation_set4_batch1.sql  (500 inserts)
+  Written: 20260724000002_seed_mcq_compilation_set4_batch2.sql  (500 inserts)
+  Written: 20260724000003_seed_mcq_compilation_set4_batch3.sql  (500 inserts)
+  Written: 20260724000004_seed_mcq_compilation_set4_batch4.sql  (500 inserts)
+  Written: 20260724000005_seed_mcq_compilation_set4_batch5.sql  (102 inserts)
+
+Done. 5 migration file(s) written to:
+  C:\Users\User\Desktop\NurseFiti\NurseFiti3\supabase\migrations

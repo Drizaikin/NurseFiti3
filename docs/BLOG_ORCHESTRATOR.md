@@ -88,7 +88,7 @@ Changing the model changes `BLOG_PROMPT_VERSION` semantics: the ingest idempoten
 
 ## Setup
 
-1. Apply `supabase/migrations/APPLY_ME_blog_orchestrator.sql`, then `supabase/migrations/20260726000004_create_blog_automation.sql`, in the Supabase SQL editor. The first creates `blog_draft_ingestions` and `draft_doc_url`; the second creates the rules, keyword queue, and job queue. `blog_posts` is already live.
+1. Apply `supabase/migrations/20260726120000_blog_orchestrator_backfill.sql`, then `supabase/migrations/20260726000004_create_blog_automation.sql` via `npx supabase db push` (or in the Supabase SQL editor if needed). The first creates `blog_draft_ingestions` and the `draft_doc_url` column; the second creates the rules, keyword queue, and job queue. `blog_posts` is already live.
 1b. Import the Keyword Universe once: `npm run orchestrator:import-keywords`. Safe to re-run; it refreshes keyword text but never overwrites a status or reviewer set in the dashboard.
 2. Authenticate gogcli: `gog auth add <GOG_ACCOUNT>`. An expired token surfaces as `invalid_grant`.
 3. Create a `Blog Images` folder inside the workspace folder and set `BLOG_DRIVE_IMAGES_FOLDER_ID`.

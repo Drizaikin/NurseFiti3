@@ -217,7 +217,7 @@ export function FeedbackWall({
   compact = false,
   initialItems = [],
 }: FeedbackWallProps & { initialItems?: FeedbackItem[] }) {
-  const supabase = createClient();
+  const [supabase] = useState(() => createClient());
 
   const [items, setItems] = useState<FeedbackItem[]>(initialItems);
   const [isLoading, setIsLoading] = useState(initialItems.length === 0);

@@ -18,7 +18,7 @@ export async function POST(req: Request) {
 
     const { error: insertError } = await supabase
       .from('flagged_questions')
-      .upsert(
+      .insert(
         {
           student_id: user.id,
           question_id: questionId,
@@ -26,10 +26,7 @@ export async function POST(req: Request) {
           details,
           status: 'pending',
           flagged_at: new Date().toISOString()
-        } as any,
-        // We removed the unique constraint, so upsert will just insert a new row 
-        // unless there's still a primary key matching (but id is randomly generated).
-        // Since we dropped UNIQUE(student_id, question_id), this acts as a simple insert.
+        } as any
       );
 
     if (insertError) {

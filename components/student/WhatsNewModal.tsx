@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/Button";
 // ❶  RELEASES REGISTRY — edit here to announce new features
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CURRENT_VERSION = 13;
+const CURRENT_VERSION = 15;
 
 interface WhatsNewItem {
   icon: string;
@@ -411,6 +411,56 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
           "The system tracks what you've already printed! Click 'Download New Only' to get a fresh PDF of just your recent mistakes, ensuring you don't waste time reviewing the same things.",
         cta: { label: "Review Mistakes", href: "/practice" },
       }
+    ],
+  },
+
+  // ── Version 14 — Bug Fixes & Updates ──────────────────────────────────────────
+  {
+    version: 14,
+    date: "26 July 2026",
+    items: [
+      {
+        icon: "🐛",
+        tag: "Fixed",
+        tagColor: "bg-amber-500/20 text-amber-400",
+        title: "Flawed Questions & Flagging Fixed",
+        description:
+          "We resolved a known issue with the Yellow Fever vector question and fixed the Question Flagging feature so you can easily report errors again. We also resolved a UI glitch on the dashboard. Thanks for helping us improve!",
+      }
+    ],
+  },
+
+  // ── Version 15 — Comprehensive Question Audit & Corrections ───────────────
+  {
+    version: 15,
+    date: "26 July 2026",
+    items: [
+      {
+        icon: "🔬",
+        tag: "Quality Audit",
+        tagColor: "bg-emerald-500/20 text-emerald-400",
+        title: "42-Flag Audit Complete — Questions Corrected",
+        description:
+          "We audited every single flagged question against NCK clinical guidelines. 2 questions had wrong answers (including 'Advantage of Integration of Services'), 9 were misclassified by unit/topic, stem typos were fixed, and 20+ rationales were fully rewritten to explain every option clearly.",
+        cta: { label: "Continue Practising", href: "/practice" },
+      },
+      {
+        icon: "✏️",
+        tag: "Updated",
+        tagColor: "bg-blue-500/20 text-blue-400",
+        title: "APGAR Scoring Question Redesigned",
+        description:
+          "The APGAR question was redesigned to include all 5 scoring criteria clearly in the stem (including reflex irritability), giving an unambiguous score of 7. The rationale now explains exactly how to score each parameter.",
+        cta: { label: "Practice MCQs", href: "/practice" },
+      },
+      {
+        icon: "📋",
+        tag: "Rationales",
+        tagColor: "bg-violet-500/20 text-violet-400",
+        title: "Rationales Now Explain Every Option",
+        description:
+          "We rewrote rationales for Maslow's Hierarchy, Bloom's Taxonomy domains, Bishop Score, Fetal Circulation, Macular Degeneration, Immunoglobulins (IgG), Bell's Palsy, and more — each now explains WHY each wrong option is wrong, not just why the correct one is right.",
+      },
     ],
   },
 ];
