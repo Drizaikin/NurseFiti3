@@ -200,7 +200,7 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
 
     case 'hd_material_purchase': {
       // Grant access by inserting purchase record
-      await supabase
+      await (supabase as any)
         .from('hd_material_purchases')
         .upsert({
           student_id:  payment.user_id,
@@ -210,16 +210,12 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
           purchased_at: new Date().toISOString(),
         }, { onConflict: 'student_id,material_id' });
 
-      // Increment download_count on the material
-      await supabase.rpc('increment_hd_material_downloads', {
-        p_material_id: payment.reference_id,
-      }).catch(() => {
-        // Non-fatal — RPC may not exist in edge case, update directly
-        supabase
-          .from('hd_materials')
-          .update({ download_count: supabase.sql`download_count + 1` })
-          .eq('id', payment.reference_id);
-      });
+      // Increment download_count via SECURITY DEFINER RPC
+      await (supabase as any)
+        .rpc('increment_hd_material_downloads', { p_material_id: payment.reference_id })
+        .then(({ error }: any) => {
+          if (error) console.error('[hd_material_purchase] RPC increment failed:', error);
+        });
       break;
     }
 

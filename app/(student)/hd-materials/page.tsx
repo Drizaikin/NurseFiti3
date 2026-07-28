@@ -164,20 +164,14 @@ export default function HdMaterialsPage() {
   const handleDownload = async (material: Material) => {
     setDownloading(material.id);
     try {
-      const res = await fetch(`/api/hd-materials/download/${material.id}`, { redirect: 'follow' });
-      if (!res.ok) {
-        const d = await res.json().catch(() => ({}));
-        throw new Error(d.error ?? 'Download failed');
-      }
-      // The API redirects to a signed URL — the browser follows it automatically
-      // For an anchor-style download, open the final URL
-      const finalUrl = res.url;
-      const a = document.createElement('a');
-      a.href = finalUrl;
-      a.download = material.file_name;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      const res = await fetch(`/api/hd-materials/download/${material.id}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Download failed');
+
+      // Open the signed URL in a new tab — Supabase sets Content-Disposition:attachment
+      // via the ?download=filename query param, so the file downloads automatically.
+      // This works cross-origin unlike <a download>, and doesn't buffer the file in RAM.
+      window.open(data.signed_url, '_blank', 'noopener,noreferrer');
     } catch (err: any) {
       toast.error(err.message ?? 'Download failed. Please try again.');
     } finally {

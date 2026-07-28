@@ -4,7 +4,7 @@
  * Generates a short-lived signed URL for a purchased HD material.
  * Only works for authenticated Higher Diploma students who have a purchase record.
  *
- * Returns: redirect to signed URL (or 403/404 on failure)
+ * Returns: { signed_url: string } — client opens this URL directly
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -80,8 +80,10 @@ export async function GET(
       return NextResponse.json({ error: 'Could not generate download link.' }, { status: 500 });
     }
 
-    // Redirect to the signed URL — browser will start the download
-    return NextResponse.redirect(signedData.signedUrl);
+    // Return the signed URL as JSON — client opens it directly.
+    // Using window.open(signedUrl) on the client avoids the cross-origin
+    // <a download> restriction and prevents buffering large files in memory.
+    return NextResponse.json({ signed_url: signedData.signedUrl });
   } catch (err) {
     console.error('[hd-materials/download]', err);
     return NextResponse.json(
