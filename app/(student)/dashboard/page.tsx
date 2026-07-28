@@ -303,11 +303,11 @@ function ActionCard({ href, icon, label, sublabel, variant }: {
       sub: 'text-[var(--color-text-secondary)]',
     },
     hd: {
-      bg: 'linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%)',
-      border: 'rgba(124,58,237,0.45)',
-      shadow: '0 0 20px rgba(79,70,229,0.35), 0 4px 12px rgba(79,70,229,0.25)',
-      text: 'text-white',
-      sub: 'text-white/65',
+      bg: 'linear-gradient(135deg, #F5A623 0%, #C47F0A 100%)',
+      border: 'rgba(245,166,35,0.45)',
+      shadow: '0 0 20px rgba(245,166,35,0.35), 0 4px 12px rgba(245,166,35,0.25)',
+      text: 'text-[#0F1C1C]',
+      sub: 'text-[#0F1C1C]/65',
     },
   };
   const s = styles[variant];
