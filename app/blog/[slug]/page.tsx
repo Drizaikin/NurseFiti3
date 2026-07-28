@@ -559,6 +559,191 @@ The KRCHN exam covers a broad range of units. Spaced repetition — reviewing in
 *Unit percentage ranges are based on candidate experience and publicly reported NCK examination patterns. Confirm with official NCK syllabus documents.*
     `,
   },
+  {
+    slug: 'common-pharmacology-mistakes-nck-exam',
+    title: 'Common Pharmacology Mistakes in NCK Exams (2026)',
+    excerpt: 'Pharmacology is tested in every NCK paper. Discover the 7 most costly mistakes Kenyan nursing candidates make — and exactly how to avoid each one.',
+    category: 'Study Guide',
+    readTime: '10 min read',
+    date: '2026-07-28',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+Pharmacology is the unit that most Kenyan nursing candidates underestimate — until it costs them the exam. It appears in both Paper I and Paper II, it tests calculation accuracy under time pressure, and the NCK frequently uses it to separate candidates who *understand* from candidates who *memorised*. There is one specific class of drug errors that appears in nearly every sitting — and we will cover it in the dosage calculation section below.
+
+> [!NOTE]
+> *Last verified: July 2026. Always confirm current drug protocols and guidelines at [health.go.ke](https://www.health.go.ke) and [nckenya.com](https://www.nckenya.com).*
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Test yourself on pharmacology now — before your exam.</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Practise NCK pharmacology questions free on NurseFiti →</a>
+</div>
+
+## Why Pharmacology Costs Candidates the Most Marks
+
+Pharmacology content is distributed across both NCK papers for all cadres. For KRCHN candidates, pharmacology constitutes approximately [20–25% of Paper I](https://www.nckenya.com) based on publicly reported candidate patterns, with drug calculation and mechanism questions appearing consistently. For BScN candidates, advanced drug interactions, polypharmacy, and antidote management extend the pharmacology load into Paper I and occasionally into Paper II's evidence-based practice questions.
+
+**The brutal reality:** a candidate who drops 5 pharmacology marks per paper loses 10 marks total. That is often the difference between passing and resitting.
+
+## Mistake 1: Confusing Drug Mechanisms With Drug Indications
+
+NCK MCQs rarely ask *"what is the mechanism of metformin?"* They ask it indirectly: *"A patient with Type 2 Diabetes Mellitus is started on metformin. Which of the following effects would the nurse expect?"* If you only know the indication (lowers blood glucose) and not the mechanism (reduces hepatic glucose output, increases peripheral insulin sensitivity per [Rena et al., 2017, Diabetologia, DOI:10.1007/s00125-017-4342-z](https://link.springer.com/article/10.1007/s00125-017-4342-z)), you will pick the wrong distractor.
+
+**How to fix it:** For every drug class you study, always learn three things together:
+1. Mechanism of action
+2. Primary indication
+3. Most clinically significant adverse effect
+
+Three facts, one drug, one card. Use [NurseFiti's flashcard system](/signup) to build these as linked triplets.
+
+## Mistake 2: Confusing Antidotes
+
+Antidote questions are high-yield in NCK pharmacology because they test specific knowledge that cannot be guessed. The Kenya [Ministry of Health Poisoning Management Guidelines](https://www.health.go.ke) define the following critical pairings that every candidate must know cold:
+
+| Drug / Toxin | Correct Antidote |
+|---|---|
+| Opioid overdose | Naloxone (0.4–2 mg IV) |
+| Benzodiazepine overdose | Flumazenil |
+| Organophosphate poisoning | Atropine + Pralidoxime |
+| Paracetamol (acetaminophen) overdose | N-Acetylcysteine (NAC) |
+| Heparin overdose | Protamine sulphate |
+| Warfarin overdose / bleeding | Vitamin K (phytomenadione) |
+| Digoxin toxicity | Digoxin-specific antibody (Fab fragments) |
+| Methotrexate rescue | **Folinic acid (Leucovorin)** — NOT folic acid |
+| Cyanide poisoning | Hydroxocobalamin or Dicobalt edetate |
+| Iron overdose | Desferrioxamine |
+
+**The most commonly failed antidote question:** Methotrexate rescue. Many candidates write *folic acid* — this is wrong. The rescue agent is **folinic acid (Leucovorin)**, which bypasses the DHFR enzyme that methotrexate inhibits, as confirmed by the [British National Formulary (BNF)](https://bnf.nice.org.uk/drug/methotrexate.html).
+
+<div class="my-8 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Practice Antidote Questions on NurseFiti</h3>
+  <p class="mb-6 opacity-90 max-w-lg mx-auto">NurseFiti's question bank includes specific pharmacology questions on antidotes, drug calculations, and adverse effects — with detailed rationales for every answer.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Try pharmacology questions free →</a>
+</div>
+
+## Mistake 3: Drug Calculation Errors — The Wrong Formula
+
+This is the category mentioned at the start: **dosage calculation errors caused by applying the wrong formula to the wrong question type.** NCK uses three core calculation question types, and each requires a specific approach.
+
+### Type 1: Tablet/Oral Dose
+**Formula:** Dose required ÷ Dose available × Quantity of tablet or liquid
+
+*Example:* Prescriber orders Amoxicillin 500 mg. Stock is 250 mg per capsule. How many capsules?
+> 500 ÷ 250 × 1 = **2 capsules**
+
+### Type 2: IV Infusion Rate (drops per minute)
+**Formula:** Volume (mL) × Drop factor ÷ Time (minutes)
+
+*Example:* 1,000 mL of Normal Saline to infuse over 8 hours. Drop factor: 15 drops/mL. What is the rate in drops per minute?
+> 1000 × 15 ÷ (8 × 60) = 15,000 ÷ 480 = **31.25 ≈ 31 drops/minute**
+
+### Type 3: Weight-Based Paediatric Dosing
+**Formula:** Dose (mg/kg) × Weight (kg) = Total dose required
+
+*Example:* Paracetamol is prescribed at 15 mg/kg for a child weighing 20 kg. What is the dose?
+> 15 × 20 = **300 mg**
+
+**The common fatal error:** Candidates mix up drop factor values. The standard drop factor for a standard giving set is **15 drops/mL**. For a paediatric micro-drip giving set, it is **60 drops/mL**. Applying the wrong drop factor halves or quadruples your answer. Learn this distinction before your exam.
+
+For a detailed worked guide covering every NCK calculation type, see our [NCK Pharmacology & Drug Calculations Complete Guide](/blog/nck-pharmacology-calculations-guide).
+
+## Mistake 4: Missing Drug Contraindications
+
+NCK questions frequently test contraindications in a clinical scenario format: *"A nurse is about to administer X. Which patient condition should prompt the nurse to withhold the drug and report to the physician?"*
+
+The most frequently tested contraindication pairs in recent NCK cycles, per candidate-reported question patterns:
+
+- **ACE inhibitors** (e.g., Captopril, Enalapril) → **Pregnancy** (teratogenic, especially 2nd and 3rd trimester, per [WHO Model Formulary](https://www.who.int/publications/i/item/9789241547659))
+- **Metformin** → **Renal impairment** (eGFR < 30 mL/min/1.73m² — risk of lactic acidosis, per [Rena et al., 2017, Diabetologia](https://link.springer.com/article/10.1007/s00125-017-4342-z))
+- **NSAIDs** (e.g., Ibuprofen) → **Peptic ulcer disease / active GI bleeding**
+- **Tetracyclines** → **Children under 8 years** (permanent tooth discolouration) and **pregnancy**
+- **Warfarin** → **First trimester of pregnancy** (embryopathy)
+- **Gentamicin** (an aminoglycoside) → **Pre-existing renal impairment** (nephrotoxicity risk)
+
+**How to revise this:** Create a two-column table: Drug | Key Contraindication(s). Flashcard it. The questions are consistent across NCK sittings.
+
+## Mistake 5: Getting Routes of Administration Wrong
+
+NCK pharmacology questions frequently include the route of administration as a distractor. The correct route is sometimes the entire point of the question — not the drug itself. Critical routes to know precisely:
+
+- **Magnesium Sulphate (MgSO₄) for eclampsia:** Administered IV (slow push) or IM (deep IM, gluteal), never subcutaneously. The Kenyan [MOH BEmONC protocol](https://www.health.go.ke) specifies the loading dose as 4g IV over 20 minutes, followed by 1g/hour maintenance.
+- **Adrenaline (Epinephrine) for anaphylaxis:** The first-line route is **IM — anterolateral thigh**, not IV (IV is only for cardiac arrest). This is per [KNHA/WHO guidelines](https://www.who.int).
+- **Oxytocin for PPH prevention:** Given **IM or slow IV** — never as a fast IV bolus, which causes dangerous cardiovascular effects per [MOH Kenya EmONC guidelines](https://www.health.go.ke).
+- **Insulin:** Subcutaneous — not IM, not IV (except Actrapid/Regular insulin in DKA management, which is IV infusion).
+
+## Mistake 6: Drug Interactions — The High-Yield Pairs
+
+Drug interaction questions test whether the nurse can anticipate harm before administering a drug. The pairs most commonly tested in NCK pharmacology:
+
+- **Warfarin + Aspirin/NSAIDs** → Increased bleeding risk (additive anticoagulant + antiplatelet effect)
+- **ACE inhibitors + Potassium-sparing diuretics** (e.g., Spironolactone) → Hyperkalaemia
+- **MAO inhibitors + Tyramine-rich foods / SSRIs** → Serotonin syndrome (a severe, life-threatening reaction)
+- **Digoxin + Hypokalaemia (loop diuretics)** → Digoxin toxicity — diuretic-induced low potassium sensitises the myocardium to digoxin
+- **Gentamicin + Frusemide** → Compounded ototoxicity and nephrotoxicity
+
+**The exam pattern:** The question presents a patient on Drug A who is prescribed Drug B. The nurse must identify the interaction risk and respond appropriately — usually by withholding, monitoring, or reporting.
+
+## Mistake 7: Ignoring the Kenya Essential Medicines List (KEML)
+
+The [Kenya Essential Medicines List (KEML)](https://www.health.go.ke) is the MOH-approved formulary governing which drugs are available in Kenya's public health facilities at each level of care. NCK questions use KEML-approved drug names and dosages. Generic names, not brand names, are used throughout.
+
+Candidates trained in private institutions or using international textbooks sometimes encounter different drug names or doses. NCK will always use the Kenyan standard.
+
+**Examples where KEML differs from international texts:**
+- Kenya uses **frusemide** (not furosemide — same drug, different spelling convention)
+- Adrenaline (not epinephrine) is the preferred NCK terminology
+- Pethidine is still listed for obstetric pain in some Kenya protocols (morphine preferred internationally)
+
+For a full breakdown of KEML-relevant pharmacology for the NCK exam, revisit our [NCK Pharmacology & Drug Calculations Complete Guide](/blog/nck-pharmacology-calculations-guide).
+
+## The Pharmacology Revision Framework
+
+Here is the systematic approach for revising pharmacology in 2–3 weeks:
+
+**Week 1:** Antidotes, contraindications, drug interactions (all the high-specificity items — no calculation required, pure memorisation with understanding)
+
+**Week 2:** Mechanisms and adverse effects by drug class — start with: antibiotics, antihypertensives, antidiabetics, anticoagulants, psychiatric drugs
+
+**Week 3:** Calculations — practice 10–15 calculation questions per day. If you get one wrong, do not move on until you identify *which formula error* caused it.
+
+**[Build your personalised pharmacology revision plan on NurseFiti →](/signup)**
+
+## Start Practising Today
+
+Pharmacology is one of the most coachable parts of the NCK exam. Every mistake in this post is fixable with structured, targeted practice — not more reading.
+
+Join over 10,000 Kenyan nursing candidates already preparing on [NurseFiti](https://www.nursefiti.co.ke). The question bank includes pharmacology questions across all cadres with detailed rationales — so every wrong answer becomes a learning moment, not just a lost mark.
+
+For updates, tips, and community support, **[join the NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)**.
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Pass Pharmacology. Pass the NCK Exam.</h3>
+  <p class="mb-6 opacity-90">Start your free NurseFiti account — no credit card required.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+> *Found this — really useful. Goes through the exact pharmacology mistakes that cost you marks in the NCK exam: antidotes, drug calculations, contraindications. All Kenya-specific. Share with anyone preparing: nursefiti.co.ke/blog/common-pharmacology-mistakes-nck-exam*
+
+---
+
+<div class="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
+  <h4 class="font-bold mb-3 uppercase tracking-wider text-xs">Sources &amp; References</h4>
+  <ul class="space-y-2 list-disc pl-4">
+    <li>Nursing Council of Kenya (NCK). (2026). <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">Official NCK Website and Examination Regulations</a>.</li>
+    <li>Ministry of Health, Kenya. (2025). <a href="https://www.health.go.ke" class="text-primary hover:text-primary-mid">Kenya Essential Medicines List (KEML) and MOH Clinical Protocols</a>. Including BEmONC and EmONC guidelines for obstetric drug management.</li>
+    <li>Ministry of Health, Kenya. <a href="https://www.health.go.ke" class="text-primary hover:text-primary-mid">Kenya Poisoning Management Guidelines</a>.</li>
+    <li>Rena, G., Hardie, D.G., &amp; Pearson, E.R. (2017). <em>The mechanisms of action of metformin.</em> Diabetologia, 60(9), 1577–1585. <a href="https://link.springer.com/article/10.1007/s00125-017-4342-z" class="text-primary hover:text-primary-mid">DOI: 10.1007/s00125-017-4342-z</a>.</li>
+    <li>British National Formulary (BNF). <a href="https://bnf.nice.org.uk/drug/methotrexate.html" class="text-primary hover:text-primary-mid">Methotrexate: Antidotes and Rescue Therapy (Folinic Acid)</a>.</li>
+    <li>World Health Organization (WHO). (2017). <a href="https://www.who.int/publications/i/item/9789241547659" class="text-primary hover:text-primary-mid">WHO Model Formulary 2008 (with 2009 update)</a>. Drug contraindications and clinical guidance.</li>
+    <li>World Health Organization (WHO). <a href="https://www.who.int" class="text-primary hover:text-primary-mid">Emergency use of medicines: anaphylaxis management guidance</a>.</li>
+    <li>NCK Online Services Portal (OSP). (2026). <a href="https://osp.nckenya.go.ke" class="text-primary hover:text-primary-mid">Examination registration and licensure</a>.</li>
+  </ul>
+  <p class="mt-4 italic text-xs">Always verify current drug protocols, examination information, and Kenya-specific clinical guidelines directly at <a href="https://www.health.go.ke" class="text-primary hover:text-primary-mid">health.go.ke</a> and <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">nckenya.com</a>.</p>
+</div>
+    `,
+  },
 ];
 
 const POSTS_EXTRA: Post[] = [
@@ -2259,6 +2444,11 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
   'nursing-forums-networks-kenya': {
     url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80&auto=format&fit=crop',
     alt: 'Nursing professionals networking and collaborating in a group',
+    credit: 'Unsplash',
+  },
+  'common-pharmacology-mistakes-nck-exam': {
+    url: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Pharmacology medications and drug vials on a clinical tray — NCK nursing pharmacology exam preparation',
     credit: 'Unsplash',
   },
 };

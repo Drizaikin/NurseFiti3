@@ -1,5 +1,14 @@
 export const POSTS = [
   {
+    slug: 'common-pharmacology-mistakes-nck-exam',
+    title: 'Common Pharmacology Mistakes in NCK Exams (2026)',
+    excerpt: 'Pharmacology is tested in every NCK paper. Discover the 7 most costly mistakes Kenyan nursing candidates make — and exactly how to avoid each one.',
+    category: 'Study Guide',
+    readTime: '10 min read',
+    date: '2026-07-28',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
     slug: 'nck-indexing-60-day-deadline-kenya',
     title: 'NCK Indexing Kenya 2026: The Complete 60-Day Deadline Guide',
     excerpt: 'Discover the crucial 60-day NCK indexing deadline on the OSP portal. Learn the step-by-step process to ensure your BScN training is fully recognized in Kenya.',
@@ -242,4 +251,5 @@ export const POST_IMAGES: Record<string, string> = {
   'how-to-apply-nck-licence-kenya': 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80&auto=format&fit=crop',
   'nursing-politics-leadership-kenya': 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80&auto=format&fit=crop',
   'nursing-forums-networks-kenya': 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80&auto=format&fit=crop',
+  'common-pharmacology-mistakes-nck-exam': 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=1200&q=80&auto=format&fit=crop',
 };
