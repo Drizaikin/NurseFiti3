@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Card } from '@/components/ui/Card';
@@ -70,8 +70,6 @@ export default function HdMaterialsPage() {
   const [paying, setPaying]       = useState<string | null>(null);
   const [downloading, setDownloading] = useState<string | null>(null);
 
-  // After payment success, check if we should auto-download
-  const autoDownloadRef = useRef(false);
 
   useEffect(() => {
     const init = async () => {
@@ -98,13 +96,18 @@ export default function HdMaterialsPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Handle ?payment=success query param
+  // Handle payment return query params
   useEffect(() => {
-    if (searchParams.get('payment') === 'success' && !autoDownloadRef.current) {
-      autoDownloadRef.current = true;
-      toast.success('Payment successful! Your material is now unlocked.');
+    const status = searchParams.get('payment');
+    if (status === 'success') {
+      toast.success('Payment successful! Your material is now unlocked. Click Download to get it.');
+    } else if (status === 'pending') {
+      toast('Payment is being processed. Please check back shortly.', { icon: '⏳' });
+    } else if (status === 'failed') {
+      toast.error('Payment was not completed. Please try again.');
     }
-  }, [searchParams]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const loadMaterials = async (uid: string) => {
     const { data: allMaterials } = await supabase

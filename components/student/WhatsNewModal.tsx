@@ -537,18 +537,13 @@ export function WhatsNewModal({ forceOpen = false, onForceClose }: WhatsNewModal
 
   useEffect(() => {
     if (forceOpen) {
-      // Controlled externally — always show
+      // Controlled externally (user clicked the floating trigger pill) — always show
       setShow(true);
       return;
     }
-    // Auto-show: only if user hasn't seen this version
-    try {
-      const seen = localStorage.getItem(STORAGE_KEY);
-      if (!seen) setShow(true);
-      else setShow(false); // forceOpen just turned false — ensure modal stays hidden
-    } catch {
-      // localStorage blocked (private mode, etc.) — don't show
-    }
+    // Auto-show is intentionally DISABLED.
+    // Announcements are triggered manually only (via the floating ✨ trigger pill).
+    setShow(false);
   }, [forceOpen]);
 
   const dismiss = useCallback(() => {
