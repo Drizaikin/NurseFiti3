@@ -237,6 +237,38 @@ async function provisionAccess(supabase: any, payment: any, txnData: any) {
       break;
     }
 
+    case 'hd_material_purchase': {
+      // Grant access by inserting purchase record
+      const { error: upsertError } = await (supabase as any)
+        .from('hd_material_purchases')
+        .upsert({
+          student_id:  payment.user_id,
+          material_id: payment.reference_id,
+          payment_id:  payment.id,
+          amount_paid: payment.amount,
+          purchased_at: new Date().toISOString(),
+        }, { onConflict: 'student_id,material_id' });
+
+      if (upsertError) {
+        console.error('[hd_material_purchase] CRITICAL: Purchase record creation FAILED:', {
+          error: upsertError,
+          student_id: payment.user_id,
+          material_id: payment.reference_id,
+          payment_id: payment.id,
+        });
+      } else {
+        console.log('[hd_material_purchase] Purchase record created for student:', payment.user_id, 'material:', payment.reference_id);
+      }
+
+      // Increment download_count via SECURITY DEFINER RPC
+      await (supabase as any)
+        .rpc('increment_hd_material_downloads', { p_material_id: payment.reference_id })
+        .then(({ error }: any) => {
+          if (error) console.error('[hd_material_purchase] RPC increment failed:', error);
+        });
+      break;
+    }
+
     case 'session_booking': {
       if (!payment.reference_id) break;
 
