@@ -187,7 +187,7 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
 
     case 'hd_material_purchase': {
       // Grant access by inserting purchase record
-      await (supabase as any)
+      const { error: upsertError } = await (supabase as any)
         .from('hd_material_purchases')
         .upsert({
           student_id:  payment.user_id,
@@ -196,6 +196,19 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
           amount_paid: payment.amount,
           purchased_at: new Date().toISOString(),
         }, { onConflict: 'student_id,material_id' });
+
+      if (upsertError) {
+        // Log the full error so we can diagnose — but don't throw because
+        // the payment has already been taken. A manual fix can be applied.
+        console.error('[hd_material_purchase] CRITICAL: Purchase record creation FAILED:', {
+          error: upsertError,
+          student_id: payment.user_id,
+          material_id: payment.reference_id,
+          payment_id: payment.id,
+        });
+      } else {
+        console.log('[hd_material_purchase] Purchase record created for student:', payment.user_id, 'material:', payment.reference_id);
+      }
 
       // Increment download_count via SECURITY DEFINER RPC
       await (supabase as any)

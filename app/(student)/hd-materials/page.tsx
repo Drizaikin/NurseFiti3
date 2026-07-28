@@ -96,18 +96,23 @@ export default function HdMaterialsPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Handle payment return query params
+  // Handle payment return query params + auto-refresh purchases
   useEffect(() => {
     const status = searchParams.get('payment');
     if (status === 'success') {
       toast.success('Payment successful! Your material is now unlocked. Click Download to get it.');
+      // Re-fetch purchases after a short delay to ensure the purchase record
+      // is visible (handles any server-side propagation lag).
+      if (userId) {
+        setTimeout(() => loadMaterials(userId), 1500);
+      }
     } else if (status === 'pending') {
       toast('Payment is being processed. Please check back shortly.', { icon: '⏳' });
     } else if (status === 'failed') {
       toast.error('Payment was not completed. Please try again.');
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [userId]);
 
   const loadMaterials = async (uid: string) => {
     const { data: allMaterials } = await supabase
@@ -118,13 +123,21 @@ export default function HdMaterialsPage() {
 
     if (!allMaterials) { setMaterials([]); return; }
 
-    // Fetch student's purchases
-    const { data: purchases } = await supabase
-      .from('hd_material_purchases')
-      .select('material_id')
-      .eq('student_id', uid) as any;
-
-    const purchasedIds = new Set((purchases ?? []).map((p: any) => p.material_id));
+    // Fetch purchases via server API route (uses admin client — RLS-bypassed)
+    // This is the authoritative source: the student sees Download only for
+    // materials they have a confirmed purchase record for.
+    let purchasedIds = new Set<string>();
+    try {
+      const res = await fetch('/api/hd-materials/purchases');
+      if (res.ok) {
+        const d = await res.json();
+        purchasedIds = new Set<string>(d.purchased_ids ?? []);
+      } else {
+        console.error('[hd-materials] Purchases fetch failed:', res.status);
+      }
+    } catch (err) {
+      console.error('[hd-materials] Purchases fetch error:', err);
+    }
 
     setMaterials(allMaterials.map((m: any) => ({
       ...m,
