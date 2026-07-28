@@ -599,18 +599,59 @@ Three facts, one drug, one card. Use [NurseFiti's flashcard system](/signup) to 
 
 Antidote questions are high-yield in NCK pharmacology because they test specific knowledge that cannot be guessed. The Kenya [Ministry of Health Poisoning Management Guidelines](https://www.health.go.ke) define the following critical pairings that every candidate must know cold:
 
-| Drug / Toxin | Correct Antidote |
-|---|---|
-| Opioid overdose | Naloxone (0.4–2 mg IV) |
-| Benzodiazepine overdose | Flumazenil |
-| Organophosphate poisoning | Atropine + Pralidoxime |
-| Paracetamol (acetaminophen) overdose | N-Acetylcysteine (NAC) |
-| Heparin overdose | Protamine sulphate |
-| Warfarin overdose / bleeding | Vitamin K (phytomenadione) |
-| Digoxin toxicity | Digoxin-specific antibody (Fab fragments) |
-| Methotrexate rescue | **Folinic acid (Leucovorin)** — NOT folic acid |
-| Cyanide poisoning | Hydroxocobalamin or Dicobalt edetate |
-| Iron overdose | Desferrioxamine |
+<div class="overflow-x-auto my-6 rounded-xl border border-primary/20 shadow-sm">
+  <table class="w-full text-sm text-left border-collapse">
+    <thead>
+      <tr class="bg-primary text-white">
+        <th class="px-5 py-3 font-bold text-sm tracking-wide w-1/2">Drug / Toxin</th>
+        <th class="px-5 py-3 font-bold text-sm tracking-wide w-1/2">Correct Antidote</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Opioid overdose</td>
+        <td class="px-5 py-3 text-neutral-mid">Naloxone (0.4–2 mg IV)</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Benzodiazepine overdose</td>
+        <td class="px-5 py-3 text-neutral-mid">Flumazenil</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Organophosphate poisoning</td>
+        <td class="px-5 py-3 text-neutral-mid">Atropine + Pralidoxime</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Paracetamol (acetaminophen) overdose</td>
+        <td class="px-5 py-3 text-neutral-mid">N-Acetylcysteine (NAC)</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Heparin overdose</td>
+        <td class="px-5 py-3 text-neutral-mid">Protamine sulphate</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Warfarin overdose / bleeding</td>
+        <td class="px-5 py-3 text-neutral-mid">Vitamin K (phytomenadione)</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Digoxin toxicity</td>
+        <td class="px-5 py-3 text-neutral-mid">Digoxin-specific antibody (Fab fragments)</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Methotrexate rescue</td>
+        <td class="px-5 py-3 font-semibold text-error">⚠️ Folinic acid (Leucovorin) — NOT folic acid</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Cyanide poisoning</td>
+        <td class="px-5 py-3 text-neutral-mid">Hydroxocobalamin or Dicobalt edetate</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Iron overdose</td>
+        <td class="px-5 py-3 text-neutral-mid">Desferrioxamine</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 
 **The most commonly failed antidote question:** Methotrexate rescue. Many candidates write *folic acid* — this is wrong. The rescue agent is **folinic acid (Leucovorin)**, which bypasses the DHFR enzyme that methotrexate inhibits, as confirmed by the [British National Formulary (BNF)](https://bnf.nice.org.uk/drug/methotrexate.html).
 
