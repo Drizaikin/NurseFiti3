@@ -278,7 +278,7 @@ function StatTile({ label, value, sub, icon, color }: {
 // ── Action card ────────────────────────────────────────────────────────────
 function ActionCard({ href, icon, label, sublabel, variant }: {
   href: string; icon: string; label: string; sublabel: string;
-  variant: 'teal' | 'amber' | 'outline';
+  variant: 'teal' | 'amber' | 'outline' | 'hd';
 }) {
   const styles = {
     teal: {
@@ -301,6 +301,13 @@ function ActionCard({ href, icon, label, sublabel, variant }: {
       shadow: 'var(--shadow-card)',
       text: 'text-[var(--color-text)]',
       sub: 'text-[var(--color-text-secondary)]',
+    },
+    hd: {
+      bg: 'linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%)',
+      border: 'rgba(124,58,237,0.45)',
+      shadow: '0 0 20px rgba(79,70,229,0.35), 0 4px 12px rgba(79,70,229,0.25)',
+      text: 'text-white',
+      sub: 'text-white/65',
     },
   };
   const s = styles[variant];
@@ -607,6 +614,16 @@ export default function DashboardPage() {
           <Card>
             <h2 className="text-base font-heading font-bold text-[var(--color-text)] mb-4">Quick Actions</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* Higher Diploma Materials — only for HD accounts */}
+              {data.student.cadre === 'Higher Diploma' && (
+                <ActionCard
+                  href="/hd-materials"
+                  icon="🎓"
+                  label="Higher Diploma Materials"
+                  sublabel="Specialty study resources"
+                  variant="hd"
+                />
+              )}
               <ActionCard href="/practice"   icon="📝" label="Practice Questions"  sublabel="Adaptive MCQ drill"     variant="teal" />
               <ActionCard href="/mock-exam"  icon="⏱️" label="Mock Exam"           sublabel="DigiProctor simulation"  variant="amber" />
               <ActionCard href="/flashcards" icon="🎴" label="Flashcards"          sublabel="Spaced repetition SRS"   variant="outline" />
