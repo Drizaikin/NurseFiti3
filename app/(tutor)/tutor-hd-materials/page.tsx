@@ -35,6 +35,7 @@ interface HdMaterial {
   description: string | null;
   specialty: string;
   file_name: string;
+  file_path: string;
   file_size_bytes: number;
   file_type: string;
   status: string;
@@ -67,6 +68,7 @@ export default function TutorHdMaterialsPage() {
   const [purchases, setPurchases] = useState<Purchase[]>([]);
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting]   = useState<string | null>(null);
+  const [downloading, setDownloading] = useState<string | null>(null);
 
   // Upload form
   const [form, setForm] = useState({
@@ -97,7 +99,7 @@ export default function TutorHdMaterialsPage() {
   const loadMaterials = async (uid: string) => {
     const { data } = await supabase
       .from('hd_materials')
-      .select('id, title, description, specialty, file_name, file_size_bytes, file_type, status, download_count, created_at')
+      .select('id, title, description, specialty, file_name, file_path, file_size_bytes, file_type, status, download_count, created_at')
       .eq('tutor_id', uid)
       .order('created_at', { ascending: false }) as any;
     setMaterials(data ?? []);
@@ -155,6 +157,11 @@ export default function TutorHdMaterialsPage() {
     }
     setDeleting(material.id);
     try {
+      const { error: storageError } = await supabase.storage.from('hd-materials').remove([material.file_path]);
+      if (storageError) {
+        console.error('Failed to delete file from storage:', storageError);
+      }
+
       const { error } = await supabase
         .from('hd_materials')
         .delete()
@@ -166,6 +173,31 @@ export default function TutorHdMaterialsPage() {
       toast.error(err.message ?? 'Delete failed.');
     } finally {
       setDeleting(null);
+    }
+  };
+
+  const handleDownload = async (material: HdMaterial) => {
+    setDownloading(material.id);
+    const newTab = window.open('', '_blank');
+
+    try {
+      const res = await fetch(`/api/hd-materials/download/${material.id}`);
+      const data = await res.json();
+      if (!res.ok) {
+        newTab?.close();
+        throw new Error(data.error ?? 'Download failed');
+      }
+
+      if (newTab) {
+        newTab.location.href = data.signed_url;
+      } else {
+        document.location.href = data.signed_url;
+      }
+    } catch (err: any) {
+      newTab?.close();
+      toast.error(err.message ?? 'Download failed. Please try again.');
+    } finally {
+      setDownloading(null);
     }
   };
 
@@ -287,17 +319,28 @@ export default function TutorHdMaterialsPage() {
                         {m.file_name} · {formatBytes(m.file_size_bytes)} · ⬇️ {m.download_count} downloads
                       </p>
                     </div>
-                    {['pending', 'rejected'].includes(m.status) && (
+                    <div className="flex flex-col gap-2 shrink-0">
                       <Button
-                        id={`delete-hd-${m.id}`}
+                        id={`download-hd-${m.id}`}
                         variant="ghost"
-                        className="text-error text-sm shrink-0"
-                        onClick={() => handleDelete(m)}
-                        disabled={deleting === m.id}
+                        className="text-primary text-sm"
+                        onClick={() => handleDownload(m)}
+                        disabled={downloading === m.id}
                       >
-                        {deleting === m.id ? <Spinner size="sm" color="primary" /> : '🗑 Delete'}
+                        {downloading === m.id ? <Spinner size="sm" color="primary" /> : '⬇️ Download'}
                       </Button>
-                    )}
+                      {['pending', 'rejected'].includes(m.status) && (
+                        <Button
+                          id={`delete-hd-${m.id}`}
+                          variant="ghost"
+                          className="text-error text-sm"
+                          onClick={() => handleDelete(m)}
+                          disabled={deleting === m.id}
+                        >
+                          {deleting === m.id ? <Spinner size="sm" color="primary" /> : '🗑 Delete'}
+                        </Button>
+                      )}
+                    </div>
                   </Card>
                 );
               })}

@@ -30,30 +30,10 @@ export async function GET(
 
     const admin = createAdminClient();
 
-    // Verify the student has a purchase record for this material
-    const { data: purchase, error: purchaseError } = await admin
-      .from('hd_material_purchases')
-      .select('id, material_id')
-      .eq('student_id', user.id)
-      .eq('material_id', materialId)
-      .maybeSingle() as any;
-
-    if (purchaseError) {
-      console.error('[hd-materials/download] Purchase lookup error:', purchaseError);
-      return NextResponse.json({ error: 'Could not verify purchase.' }, { status: 500 });
-    }
-
-    if (!purchase) {
-      return NextResponse.json(
-        { error: 'You have not purchased this material. Please complete payment first.' },
-        { status: 403 }
-      );
-    }
-
-    // Fetch the material's storage path
+    // Fetch the material's storage path and metadata
     const { data: material, error: materialError } = await admin
       .from('hd_materials')
-      .select('file_path, file_name, status')
+      .select('file_path, file_name, status, tutor_id')
       .eq('id', materialId)
       .maybeSingle() as any;
 
@@ -61,11 +41,43 @@ export async function GET(
       return NextResponse.json({ error: 'Material not found.' }, { status: 404 });
     }
 
-    if (material.status !== 'approved') {
-      return NextResponse.json(
-        { error: 'This material is not currently available for download.' },
-        { status: 403 }
-      );
+    // Check user role
+    const { data: profile } = await admin
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single() as any;
+
+    const isAdmin = profile?.role === 'admin';
+    const isOwner = material.tutor_id === user.id;
+
+    if (!isAdmin && !isOwner) {
+      // Verify the student has a purchase record for this material
+      const { data: purchase, error: purchaseError } = await admin
+        .from('hd_material_purchases')
+        .select('id, material_id')
+        .eq('student_id', user.id)
+        .eq('material_id', materialId)
+        .maybeSingle() as any;
+
+      if (purchaseError) {
+        console.error('[hd-materials/download] Purchase lookup error:', purchaseError);
+        return NextResponse.json({ error: 'Could not verify purchase.' }, { status: 500 });
+      }
+
+      if (!purchase) {
+        return NextResponse.json(
+          { error: 'You have not purchased this material. Please complete payment first.' },
+          { status: 403 }
+        );
+      }
+
+      if (material.status !== 'approved') {
+        return NextResponse.json(
+          { error: 'This material is not currently available for download.' },
+          { status: 403 }
+        );
+      }
     }
 
     // Generate a 1-hour signed URL via admin client (bypasses RLS)

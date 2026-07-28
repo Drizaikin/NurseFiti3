@@ -30,7 +30,7 @@ interface AdminMaterial {
   specialty: string;
   file_name: string;
   file_size_bytes: number;
-  file_type: string;
+  file_path: string;
   status: string;
   download_count: number;
   created_at: string;
@@ -47,6 +47,7 @@ export default function AdminHdMaterialsPage() {
   const [materials, setMaterials] = useState<AdminMaterial[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [updating, setUpdating]   = useState<string | null>(null);
+  const [downloading, setDownloading] = useState<string | null>(null);
   const [filter, setFilter]       = useState<string>('all');
 
   useEffect(() => { loadMaterials(); }, []);
@@ -81,6 +82,31 @@ export default function AdminHdMaterialsPage() {
       toast.error(err.message ?? 'Update failed');
     } finally {
       setUpdating(null);
+    }
+  };
+
+  const handleDownload = async (material: AdminMaterial) => {
+    setDownloading(material.id);
+    const newTab = window.open('', '_blank');
+
+    try {
+      const res = await fetch(`/api/hd-materials/download/${material.id}`);
+      const data = await res.json();
+      if (!res.ok) {
+        newTab?.close();
+        throw new Error(data.error ?? 'Download failed');
+      }
+
+      if (newTab) {
+        newTab.location.href = data.signed_url;
+      } else {
+        document.location.href = data.signed_url;
+      }
+    } catch (err: any) {
+      newTab?.close();
+      toast.error(err.message ?? 'Download failed. Please try again.');
+    } finally {
+      setDownloading(null);
     }
   };
 
@@ -172,6 +198,15 @@ export default function AdminHdMaterialsPage() {
 
               {/* Action buttons */}
               <div className="flex flex-wrap gap-2 pt-1 border-t border-[var(--color-border)]/50">
+                <Button
+                  id={`hd-download-${material.id}`}
+                  variant="ghost"
+                  className="text-sm text-primary"
+                  onClick={() => handleDownload(material)}
+                  disabled={downloading === material.id}
+                >
+                  {downloading === material.id ? <Spinner size="sm" color="primary" /> : '⬇️ Download'}
+                </Button>
                 {STATUS_OPTIONS.filter(opt => opt.value !== material.status).map(opt => (
                   <Button
                     key={opt.value}

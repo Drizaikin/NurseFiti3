@@ -10,7 +10,7 @@ SELECT
     reference_id,
     id,
     amount,
-    COALESCE(completed_at, updated_at, NOW())
+    COALESCE(completed_at, initiated_at, NOW())
 FROM payments
 WHERE type = 'hd_material_purchase'
   AND status = 'completed'

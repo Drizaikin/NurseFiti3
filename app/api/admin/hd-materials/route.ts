@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
   const { data: materials, error } = await admin
     .from('hd_materials')
     .select(`
-      id, title, description, specialty, file_name, file_size_bytes,
+      id, title, description, specialty, file_name, file_path, file_size_bytes,
       file_type, status, download_count, created_at,
       tutor:tutor_id ( id, full_name, email )
     `)
