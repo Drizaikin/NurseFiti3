@@ -198,6 +198,31 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
       break;
     }
 
+    case 'hd_material_purchase': {
+      // Grant access by inserting purchase record
+      await supabase
+        .from('hd_material_purchases')
+        .upsert({
+          student_id:  payment.user_id,
+          material_id: payment.reference_id,
+          payment_id:  payment.id,
+          amount_paid: payment.amount,
+          purchased_at: new Date().toISOString(),
+        }, { onConflict: 'student_id,material_id' });
+
+      // Increment download_count on the material
+      await supabase.rpc('increment_hd_material_downloads', {
+        p_material_id: payment.reference_id,
+      }).catch(() => {
+        // Non-fatal — RPC may not exist in edge case, update directly
+        supabase
+          .from('hd_materials')
+          .update({ download_count: supabase.sql`download_count + 1` })
+          .eq('id', payment.reference_id);
+      });
+      break;
+    }
+
     case 'session_booking': {
       await supabase
         .from('sessions')
@@ -287,15 +312,13 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
 
 function getSuccessRedirect(type: string): string {
   switch (type) {
-    case 'revision_plan':     return '/revision-plan?payment=success';
-    case 'session_booking':   return '/bookings?payment=success';
-    case 'plan_subscription': return '/settings?payment=success';
+    case 'revision_plan':          return '/revision-plan?payment=success';
+    case 'session_booking':        return '/bookings?payment=success';
+    case 'plan_subscription':      return '/settings?payment=success';
+    case 'hd_material_purchase':   return '/hd-materials?payment=success';
     case 'sponsor_deposit': {
-      // payment.reference_id has the campaign.id, we'd need slug for redirect, 
-      // but without doing a DB query here, redirecting to /dashboard is safer,
-      // or we can redirect to a generic /sponsor-success page.
       return '/dashboard?payment=success&type=sponsor';
     }
-    default:                  return '/dashboard?payment=success';
+    default:                       return '/dashboard?payment=success';
   }
 }

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
 import { NurseFitiLogo } from '../shared/NurseFitiLogo';
 
 interface NavItem {
@@ -19,7 +20,7 @@ function Icon({ d }: { d: string }) {
   );
 }
 
-const navItems: NavItem[] = [
+const baseNavItems: NavItem[] = [
   { name: 'Dashboard',     href: '/dashboard',      icon: <Icon d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /> },
   { name: 'Mnemonics',     href: '/mnemonics/today',icon: <Icon d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /> },
   { name: 'Practice',      href: '/practice',       icon: <Icon d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /> },
@@ -34,8 +35,17 @@ const navItems: NavItem[] = [
   { name: 'Settings',      href: '/settings',       icon: <Icon d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z" /> },
 ];
 
-function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
+const hdNavItem: NavItem = {
+  name: 'HD Materials',
+  href: '/hd-materials',
+  icon: <Icon d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />,
+};
+
+function SidebarContent({ onNavClick, isHd }: { onNavClick?: () => void; isHd?: boolean }) {
   const pathname = usePathname();
+  const navItems = isHd
+    ? [...baseNavItems.slice(0, -1), hdNavItem, baseNavItems[baseNavItems.length - 1]]
+    : baseNavItems;
 
   return (
     <>
@@ -89,7 +99,25 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
 
 export function Sidebar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isHd, setIsHd]             = useState(false);
   const pathname = usePathname();
+  const supabase = createClient();
+
+  // Fetch cadre once on mount to conditionally show HD Materials link
+  useEffect(() => {
+    const loadCadre = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase
+        .from('student_profiles')
+        .select('cadre')
+        .eq('id', user.id)
+        .single() as any;
+      setIsHd(data?.cadre === 'Higher Diploma');
+    };
+    loadCadre();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Close drawer on route change
   useEffect(() => {
@@ -110,7 +138,7 @@ export function Sidebar() {
     <>
       {/* ── DESKTOP sidebar ─────────────────────────────────────────────── */}
       <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 sidebar-bg border-r border-white/8 z-30">
-        <SidebarContent />
+        <SidebarContent isHd={isHd} />
       </aside>
 
       {/* ── MOBILE hamburger button (rendered inside Topbar via export) ─── */}
@@ -146,7 +174,7 @@ export function Sidebar() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-        <SidebarContent onNavClick={() => setMobileOpen(false)} />
+        <SidebarContent isHd={isHd} onNavClick={() => setMobileOpen(false)} />
       </aside>
 
       {/* ── MOBILE hamburger trigger (fixed bottom-right for easy thumb reach) */}
