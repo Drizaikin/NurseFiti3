@@ -166,16 +166,32 @@ export default function HdMaterialsPage() {
 
   const handleDownload = async (material: Material) => {
     setDownloading(material.id);
+
+    // IMPORTANT: Open a blank tab synchronously — this preserves the user gesture
+    // context required by browser popup policies. A window.open() called AFTER an
+    // await is treated as an unsolicited popup and silently blocked.
+    const newTab = window.open('', '_blank');
+
     try {
       const res = await fetch(`/api/hd-materials/download/${material.id}`);
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? 'Download failed');
+      if (!res.ok) {
+        newTab?.close();
+        throw new Error(data.error ?? 'Download failed');
+      }
 
-      // Open the signed URL in a new tab — Supabase sets Content-Disposition:attachment
-      // via the ?download=filename query param, so the file downloads automatically.
-      // This works cross-origin unlike <a download>, and doesn't buffer the file in RAM.
-      window.open(data.signed_url, '_blank', 'noopener,noreferrer');
+      if (newTab) {
+        // Navigate the already-open tab to the signed URL.
+        // Supabase sets Content-Disposition: attachment via ?download=filename
+        // so the file downloads automatically without leaving the page.
+        newTab.location.href = data.signed_url;
+      } else {
+        // Popup was blocked — fall back to same-tab: Content-Disposition:attachment
+        // means the browser downloads the file and stays on the current page.
+        document.location.href = data.signed_url;
+      }
     } catch (err: any) {
+      newTab?.close();
       toast.error(err.message ?? 'Download failed. Please try again.');
     } finally {
       setDownloading(null);
