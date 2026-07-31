@@ -79,7 +79,7 @@ function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntr
       const dayStr = pastDate.getFullYear() + String(pastDate.getMonth() + 1).padStart(2, '0') + String(pastDate.getDate()).padStart(2, '0');
       const daySeed = parseInt(dayStr) + i * 13;
       const dayRng = (daySeed * 9301 + 49297) % 233280;
-      const dayGain = Math.floor((dayRng / 233280) * 131) + 20; // 20-150 XP
+      const dayGain = Math.floor((dayRng / 233280) * 901) + 100; // 100-1000 XP
       weeklyXp += dayGain;
     }
     
@@ -87,7 +87,7 @@ function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntr
     const todayStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
     const todaySeed = parseInt(todayStr) + i * 13;
     const todayRng = (todaySeed * 9301 + 49297) % 233280;
-    const todayMaxGain = Math.floor((todayRng / 233280) * 131) + 20;
+    const todayMaxGain = Math.floor((todayRng / 233280) * 901) + 100;
     
     // Smooth increment by the minute instead of chunking rigidly by the hour
     const hoursPassed = today.getHours() + (today.getMinutes() / 60);
@@ -101,8 +101,8 @@ function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntr
       // All time
       // Realistic base scale frozen to Week 25, plus smooth growth for time passed since then
       const weeksSinceFix = Math.max(0, exactWeeks - 25);
-      const smoothProgression = weeksSinceFix * 150; 
-      const historicalXp = (rng % 1200) + smoothProgression;
+      const smoothProgression = weeksSinceFix * 2500; 
+      const historicalXp = (rng % 4000) + smoothProgression;
       xp = Math.floor(historicalXp + weeklyXp);
     }
     
