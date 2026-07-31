@@ -50,33 +50,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Admin topbar */}
       <header className="sticky top-0 z-30 bg-[var(--color-card)] border-b border-[var(--color-border)] px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <span className="text-lg font-heading font-bold text-primary">NurseFiti Admin</span>
-          <nav className="hidden sm:flex items-center gap-1">
-            {[
-              { href: '/admin', label: 'Overview' },
-              { href: '/admin/uploads', label: 'Question Uploads' },
-              { href: '/admin/questions', label: 'MCQ Review' },
-              { href: '/admin/students', label: 'Students' },
-              { href: '/admin/tutors', label: 'Tutors' },
-              { href: '/admin/community', label: 'Community' },
-              { href: '/admin/email', label: 'Email' },
-              { href: '/admin/activity', label: 'Activity' },
-              { href: '/admin/flagged', label: 'Flags' },
-              { href: '/admin/scholarships', label: 'Scholarships' },
-              { href: '/admin/mnemonics', label: 'Mnemonics' },
-              { href: '/admin/blog', label: 'Blog' },
-              { href: '/admin/hd-materials', label: 'HD Materials' },
-              { href: '/admin/settings', label: 'Settings' },
-            ].map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                className="px-3 py-1.5 rounded-lg text-sm font-medium text-[var(--color-text-secondary)] hover:bg-primary-light hover:text-primary transition-colors"
-              >
-                {label}
-              </Link>
-            ))}
-          </nav>
+          <Link href="/admin" className="text-lg font-heading font-bold text-primary hover:text-primary-dark transition-colors">
+            NurseFiti Admin
+          </Link>
         </div>
 
         <div className="flex items-center gap-3">

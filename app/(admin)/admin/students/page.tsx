@@ -45,6 +45,7 @@ export default function AdminStudentsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
+  const [planFilter, setPlanFilter] = useState('all');
   const [actionLoading, setActionLoading] = useState<string | null>(null);
 
   // Plan modal
@@ -71,10 +72,15 @@ export default function AdminStudentsPage() {
 
   useEffect(() => { loadStudents(); }, [loadStudents]);
 
-  const filtered = students.filter(s =>
-    s.full_name.toLowerCase().includes(search.toLowerCase()) ||
-    s.email.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = students.filter(s => {
+    const matchesSearch = s.full_name.toLowerCase().includes(search.toLowerCase()) ||
+                          s.email.toLowerCase().includes(search.toLowerCase());
+    if (!matchesSearch) return false;
+    if (planFilter === 'all') return true;
+    
+    const currentTier = effectiveTier(s.plan_tier, s.plan_expires_at);
+    return currentTier === planFilter;
+  });
 
   const openPlanModal = (student: Student) => {
     setPlanModal(student);
@@ -144,13 +150,27 @@ export default function AdminStudentsPage() {
         <button onClick={loadStudents} className="text-xs text-primary hover:underline">↻ Refresh</button>
       </div>
 
-      <input
-        type="text"
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-        placeholder="Search by name or email…"
-        className="w-full max-w-md px-4 py-2.5 rounded-xl border border-[var(--color-border)] text-sm bg-[var(--color-card)] focus:outline-none focus:ring-2 focus:ring-primary/40"
-      />
+      <div className="flex gap-3 max-w-2xl">
+        <input
+          type="text"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="Search by name or email…"
+          className="flex-1 px-4 py-2.5 rounded-xl border border-[var(--color-border)] text-sm bg-[var(--color-card)] focus:outline-none focus:ring-2 focus:ring-primary/40"
+        />
+        <select
+          value={planFilter}
+          onChange={e => setPlanFilter(e.target.value)}
+          className="w-40 px-4 py-2.5 rounded-xl border border-[var(--color-border)] text-sm bg-[var(--color-card)] focus:outline-none focus:ring-2 focus:ring-primary/40"
+        >
+          <option value="all">All Plans</option>
+          <option value="premium">Premium</option>
+          <option value="standard">Standard</option>
+          <option value="weekly">Weekly</option>
+          <option value="daily">Daily</option>
+          <option value="free">Free</option>
+        </select>
+      </div>
 
       {isLoading ? (
         <div className="flex items-center justify-center py-16"><Spinner size="lg" color="primary" /></div>

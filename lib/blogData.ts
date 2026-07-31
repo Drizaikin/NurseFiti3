@@ -2,7 +2,7 @@ export const POSTS = [
   {
     slug: 'nursing-school-transition-real-practice-kenya',
     title: 'What Nursing School Does Not Prepare You For: The Transition to Real Practice (2026)',
-    excerpt: 'The theory-practice gap is real. Discover the 4 phases of nursing reality shock, Kenyan nurses\\' experiences, and how to survive the transition from student to professional.',
+    excerpt: "The theory-practice gap is real. Discover the 4 phases of nursing reality shock, Kenyan nurses' experiences, and how to survive the transition from student to professional.",
     category: 'Community',
     readTime: '9 min read',
     date: '2026-07-31',

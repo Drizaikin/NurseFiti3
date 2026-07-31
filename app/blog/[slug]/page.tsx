@@ -29,12 +29,12 @@ const POSTS: Post[] = [
   {
     slug: 'nursing-school-transition-real-practice-kenya',
     title: 'What Nursing School Does Not Prepare You For: The Transition to Real Practice (2026)',
-    excerpt: 'The theory-practice gap is real. Discover the 4 phases of nursing reality shock, Kenyan nurses\\' experiences, and how to survive the transition from student to professional.',
+    excerpt: "The theory-practice gap is real. Discover the 4 phases of nursing reality shock, Kenyan nurses' experiences, and how to survive the transition from student to professional.",
     category: 'Community',
     readTime: '9 min read',
     date: '2026-07-31',
     cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
-    content: \`
+    content: `
 You spent three to four years memorizing the gold standard of care. You practiced sterile techniques on mannequins in quiet simulation labs. But tomorrow morning, you walk into a Kenyan public hospital ward with 40 patients, massive understaffing, and a severe shortage of supplies. The gap between what nursing school taught you and the chaotic reality of the clinical environment is massive. 
 
 This phenomenon isn't just you feeling overwhelmed—it is a documented psychological and professional crisis known as **Reality Shock**.
@@ -118,7 +118,7 @@ Give yourself grace during this transition. You are not an imposter; you are sim
   </ul>
   <p class="mt-4 italic text-xs">Always verify clinical protocols and IPC guidelines directly with your employing institution and the Ministry of Health at <a href="https://www.health.go.ke" class="text-primary hover:text-primary-mid">health.go.ke</a>.</p>
 </div>
-    \`,
+    `,
   },
   {
     slug: 'nursing-jobs-in-kenya-legitimate-vacancies',
@@ -128,7 +128,7 @@ Give yourself grace during this transition. You are not an imposter; you are sim
     readTime: '9 min read',
     date: '2026-07-31',
     cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
-    content: \`
+    content: `
 You passed the rigorous NCK licensure exam, received your practicing licence, and updated your CV. But months later, you are still scrolling through generic job boards, unsure if the "urgent nursing vacancy" you found is real or just another scam asking for a "processing fee." This is the frustrating reality for many newly licensed Kenyan nurses.
 
 Finding legitimate nursing jobs in Kenya—whether in the public or private sector—requires strategy, the right documents, and knowing exactly where to look.
@@ -237,7 +237,7 @@ Don't wait until the last minute to prepare. Structured revision and timed mock 
   </ul>
   <p class="mt-4 italic text-xs">Always verify job requirements and application deadlines directly on the official employer's website.</p>
 </div>
-    \`,
+    `,
   },
   {
     slug: 'nck-indexing-60-day-deadline-kenya',
