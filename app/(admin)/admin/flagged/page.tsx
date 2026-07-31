@@ -143,7 +143,7 @@ export default async function AdminFlaggedQuestionsPage() {
                     {flag.questions.rationale}
                   </div>
                   
-                  {flag.status === 'pending' && <ResolveFlagForm flagId={flag.id} />}
+                  <ResolveFlagForm flagId={flag.id} status={flag.status} />
                 </div>
               ) : (
                 <p className="text-sm text-neutral-mid italic">Question has been deleted.</p>

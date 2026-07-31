@@ -6,9 +6,10 @@ import { useRouter } from 'next/navigation';
 
 interface ResolveFlagFormProps {
   flagId: string;
+  status: string;
 }
 
-export function ResolveFlagForm({ flagId }: ResolveFlagFormProps) {
+export function ResolveFlagForm({ flagId, status }: ResolveFlagFormProps) {
   const router = useRouter();
   const [isResolving, setIsResolving] = useState(false);
   const [explanation, setExplanation] = useState('');
@@ -39,6 +40,7 @@ export function ResolveFlagForm({ flagId }: ResolveFlagFormProps) {
         throw new Error(data.error || 'Failed to resolve flag');
       }
 
+      setExplanation('');
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -47,12 +49,14 @@ export function ResolveFlagForm({ flagId }: ResolveFlagFormProps) {
   };
 
   if (isResolving) {
-    return <p className="text-sm text-neutral-mid italic">Resolving...</p>;
+    return <p className="text-sm text-neutral-mid italic">{status === 'resolved' ? 'Sending email...' : 'Resolving...'}</p>;
   }
 
   return (
     <div className="mt-4 pt-4 border-t border-[var(--color-border)]">
-      <h4 className="text-sm font-semibold text-neutral-dark mb-2">Resolve Flag</h4>
+      <h4 className="text-sm font-semibold text-neutral-dark mb-2">
+        {status === 'resolved' ? 'Send Explanation Email' : 'Resolve Flag'}
+      </h4>
       <textarea
         value={explanation}
         onChange={(e) => setExplanation(e.target.value)}
@@ -66,15 +70,17 @@ export function ResolveFlagForm({ flagId }: ResolveFlagFormProps) {
           size="sm" 
           onClick={() => handleResolve(true)}
         >
-          Resolve &amp; Email Student
+          {status === 'resolved' ? 'Send Email to Student' : 'Resolve & Email Student'}
         </Button>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          onClick={() => handleResolve(false)}
-        >
-          Mark Resolved (No Email)
-        </Button>
+        {status !== 'resolved' && (
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => handleResolve(false)}
+          >
+            Mark Resolved (No Email)
+          </Button>
+        )}
       </div>
     </div>
   );
