@@ -50,8 +50,20 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Admin topbar */}
       <header className="sticky top-0 z-30 bg-[var(--color-card)] border-b border-[var(--color-border)] px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Link href="/admin" className="text-lg font-heading font-bold text-primary hover:text-primary-dark transition-colors">
+          <Link href="/admin" className="text-lg font-heading font-bold text-primary hover:text-primary-dark transition-colors mr-2">
             NurseFiti Admin
+          </Link>
+          <button 
+            onClick={() => router.back()} 
+            className="text-xs px-3 py-1.5 bg-neutral-light/50 hover:bg-neutral-light text-neutral-dark rounded transition-colors border border-transparent hover:border-neutral-mid/20"
+          >
+            ← Back
+          </button>
+          <Link 
+            href="/admin" 
+            className="text-xs px-3 py-1.5 bg-neutral-light/50 hover:bg-neutral-light text-neutral-dark rounded transition-colors border border-transparent hover:border-neutral-mid/20"
+          >
+            Overview
           </Link>
         </div>
 

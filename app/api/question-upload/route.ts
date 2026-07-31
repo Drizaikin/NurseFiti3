@@ -7,7 +7,7 @@
  *   - Each file must be PDF, TXT, DOC, or DOCX
  *   - Max 10 MB per file
  *   - Files are stored in Supabase Storage (question-uploads bucket, auto-created if missing)
- *   - A notification email is sent to the admin (docotyanga@gmail.com)
+ *   - A notification email is sent to the admin (rizikidan2@gmail.com)
  *   - A question_uploads record is created with status 'pending'
  *   - Duplicate detection: rejects if the same student already has a pending/approved upload
  */
@@ -18,7 +18,7 @@ import { createAdminClient } from '@/lib/supabase/admin';
 
 export const dynamic = 'force-dynamic';
 
-const ADMIN_EMAIL = 'docotyanga@gmail.com';
+const ADMIN_EMAIL = 'rizikidan2@gmail.com';
 const BUCKET_NAME = 'question-uploads';
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
 const MIN_FILES = 3;
@@ -161,7 +161,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           error: 'Could not store your files. This usually means the storage bucket is not set up yet. ' +
-                 'Please contact support at docotyanga@gmail.com and attach your files directly.',
+                 'Please contact support at rizikidan2@gmail.com and attach your files directly.',
         },
         { status: 500 }
       );

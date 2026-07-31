@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
+import { ResolveFlagForm } from './ResolveFlagForm';
 
 // Make this page dynamic
 export const dynamic = 'force-dynamic';
@@ -37,6 +38,11 @@ export default async function AdminFlaggedQuestionsPage() {
       details,
       status,
       flagged_at,
+      student_id,
+      profiles!flagged_questions_student_id_fkey (
+        full_name,
+        email
+      ),
       questions (
         id,
         stem,
@@ -62,6 +68,11 @@ export default async function AdminFlaggedQuestionsPage() {
     details: string | null;
     status: string;
     flagged_at: string;
+    student_id: string;
+    profiles: {
+      full_name: string | null;
+      email: string | null;
+    } | null;
     questions: {
       id: string;
       stem: string;
@@ -88,7 +99,7 @@ export default async function AdminFlaggedQuestionsPage() {
           </Card>
         ) : (
           typedFlags.map((flag) => (
-            <Card key={flag.id} className="border-error/20 bg-error/5 dark:bg-error/10">
+            <Card key={flag.id} className={flag.status === 'pending' ? 'border-error/20 bg-error/5 dark:bg-error/10' : 'border-success/20 bg-success/5 dark:bg-success/10'}>
               <div className="flex flex-col md:flex-row gap-4 justify-between items-start mb-4">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
@@ -98,6 +109,11 @@ export default async function AdminFlaggedQuestionsPage() {
                     <span className="text-xs font-semibold text-neutral-dark">{flag.reason}</span>
                     <span className="text-xs text-neutral-mid">{new Date(flag.flagged_at).toLocaleString()}</span>
                   </div>
+                  {flag.profiles && (
+                    <p className="text-xs text-neutral-mid mb-1">
+                      Flagged by: <strong>{flag.profiles.full_name || 'Student'}</strong> ({flag.profiles.email || 'No email'})
+                    </p>
+                  )}
                   {flag.details && (
                     <p className="text-sm text-neutral-dark dark:text-neutral-light italic mt-2">
                       &quot;{flag.details}&quot;
@@ -109,8 +125,6 @@ export default async function AdminFlaggedQuestionsPage() {
                     <Link href={`/admin/questions/${flag.questions.id}/edit`}>
                       <Button variant="outline" size="sm">Edit Question</Button>
                     </Link>
-                    {/* Note: A proper implementation would include a client component wrapper 
-                        for a "Mark Resolved" button that updates the status in the DB */}
                   </div>
                 )}
               </div>
@@ -128,6 +142,8 @@ export default async function AdminFlaggedQuestionsPage() {
                     <span className="font-bold text-teal-800 dark:text-teal-200">Rationale: </span>
                     {flag.questions.rationale}
                   </div>
+                  
+                  {flag.status === 'pending' && <ResolveFlagForm flagId={flag.id} />}
                 </div>
               ) : (
                 <p className="text-sm text-neutral-mid italic">Question has been deleted.</p>

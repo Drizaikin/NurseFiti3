@@ -68,6 +68,7 @@ function getTransporter() {
     throw new Error('SMTP email is not configured. Set SMTP_HOST, SMTP_PORT, SMTP_USER, and SMTP_PASS.');
   }
   transporter = nodemailer.createTransport({
+    pool: true, maxConnections: 3, maxMessages: 100,
     host, port, secure: port === 465, auth: { user, pass },
   });
   return transporter;
@@ -788,4 +789,79 @@ NurseFiti Tutor Management`;
     undefined,
     isApproved ? approvedHtml : rejectedHtml,
   );
+}
+
+// ─── Flagged Question Resolution ──────────────────────────────────────────────
+
+export type FlaggedResolutionEmailParams = {
+  to: string | null | undefined;
+  studentName: string;
+  questionStem: string;
+  options: { a: string; b: string; c: string; d: string };
+  correctOption: string;
+  rationale: string;
+  explanation: string;
+};
+
+export async function sendFlaggedQuestionResolutionEmail(params: FlaggedResolutionEmailParams): Promise<MailResult> {
+  const n = escapeHtml(getFirstName(params.studentName));
+  const dashboardUrl = `${getSiteUrl()}/practice`;
+  
+  const isCorrect = (opt: string) => params.correctOption === opt;
+  const highlightOpt = (opt: string) => isCorrect(opt) ? 'background:#d1fae5; font-weight:bold; border-left:4px solid #059669;' : 'background:#f3f4f6;';
+
+  const html = emailWrapper(`
+<tr><td style="padding:36px 36px 24px;">
+  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:8px;">Question Feedback</div>
+  <h2 style="font-family:Arial,Helvetica,sans-serif;font-size:24px;font-weight:800;color:#08514F;margin:0 0 12px;">Your flagged question has been reviewed, ${n}.</h2>
+  <p style="font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#1E3535;line-height:1.75;margin:0 0 22px;">Thank you for helping us improve our question bank! Our nursing educators have reviewed the question you flagged. Here is the feedback:</p>
+  
+  <div style="background:#FFF8EA;border:1.5px solid rgba(245,166,35,0.2);border-left:4px solid #F5A623;border-radius:10px;padding:16px 20px;margin-bottom:24px;">
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;color:#C7841A;margin-bottom:8px;">Admin Explanation</div>
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#1E3535;line-height:1.65;white-space:pre-wrap;">${escapeHtml(params.explanation)}</div>
+  </div>
+
+  <div style="background:#ffffff;border:1.5px solid #e5e7eb;border-radius:10px;padding:20px;margin-bottom:24px;">
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#6b7280;margin-bottom:12px;">Original Question Context</div>
+    <p style="font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:600;color:#111827;line-height:1.6;margin:0 0 16px;">${escapeHtml(params.questionStem)}</p>
+    
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#374151;margin-bottom:16px;">
+      <div style="padding:10px 12px; margin-bottom:6px; border-radius:6px; ${highlightOpt('A')}">A: ${escapeHtml(params.options.a)}</div>
+      <div style="padding:10px 12px; margin-bottom:6px; border-radius:6px; ${highlightOpt('B')}">B: ${escapeHtml(params.options.b)}</div>
+      <div style="padding:10px 12px; margin-bottom:6px; border-radius:6px; ${highlightOpt('C')}">C: ${escapeHtml(params.options.c)}</div>
+      <div style="padding:10px 12px; margin-bottom:6px; border-radius:6px; ${highlightOpt('D')}">D: ${escapeHtml(params.options.d)}</div>
+    </div>
+    
+    <div style="background:#f0fdf4; border:1px solid #bbf7d0; padding:12px 14px; border-radius:8px;">
+      <strong style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#166534;display:block;margin-bottom:4px;">Rationale:</strong>
+      <span style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#166534;line-height:1.5;">${escapeHtml(params.rationale)}</span>
+    </div>
+  </div>
+  
+  ${ctaButton(dashboardUrl, 'Continue Practising')}
+  ${nfSignature('Keep up the great work in your studies!')}
+</td></tr>`
+  );
+
+  const text = `Dear ${n},
+
+Thank you for flagging a question! Our nursing educators have reviewed it.
+
+Admin Feedback:
+${params.explanation}
+
+Question:
+${params.questionStem}
+A: ${params.options.a}
+B: ${params.options.b}
+C: ${params.options.c}
+D: ${params.options.d}
+
+Correct Answer: ${params.correctOption}
+Rationale: ${params.rationale}
+
+Warm Regards,
+The NurseFiti Team`;
+
+  return sendEmail(params.to, 'Feedback on your flagged question', text, undefined, html);
 }

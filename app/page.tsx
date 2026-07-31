@@ -951,10 +951,10 @@ export default async function Home() {
           <div className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl p-6 inline-block text-left">
             <p className="text-sm font-semibold text-[var(--color-text-secondary)] mb-1">Get in touch</p>
             <a
-              href="mailto:docotyanga@gmail.com"
-              className="text-lg font-bold text-primary hover:underline"
+              href="mailto:rizikidan2@gmail.com"
+              className="text-primary hover:underline font-medium"
             >
-              docotyanga@gmail.com
+              rizikidan2@gmail.com
             </a>
             <p className="text-xs text-neutral-mid mt-2">We typically respond within 1–2 business days.</p>
           </div>
@@ -1049,7 +1049,7 @@ export default async function Home() {
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:docotyanga@gmail.com" className="hover:text-white transition-colors">
+                  <a href="mailto:rizikidan2@gmail.com" className="hover:text-white transition-colors">
                     Partnerships
                   </a>
                 </li>
