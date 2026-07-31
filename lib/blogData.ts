@@ -1,5 +1,23 @@
 export const POSTS = [
   {
+    slug: 'nursing-school-transition-real-practice-kenya',
+    title: 'What Nursing School Does Not Prepare You For: The Transition to Real Practice (2026)',
+    excerpt: 'The theory-practice gap is real. Discover the 4 phases of nursing reality shock, Kenyan nurses\\' experiences, and how to survive the transition from student to professional.',
+    category: 'Community',
+    readTime: '9 min read',
+    date: '2026-07-31',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
+    slug: 'nursing-jobs-in-kenya-legitimate-vacancies',
+    title: 'Nursing Jobs in Kenya: Where to Find Legitimate Vacancies (2026)',
+    excerpt: 'Passed the NCK exam but struggling to find employment? Discover where to find legitimate nursing jobs in Kenya, the required clearance certificates, and how to avoid scams.',
+    category: 'Community',
+    readTime: '9 min read',
+    date: '2026-07-31',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
     slug: 'common-pharmacology-mistakes-nck-exam',
     title: 'Common Pharmacology Mistakes in NCK Exams (2026)',
     excerpt: 'Pharmacology is tested in every NCK paper. Discover the 7 most costly mistakes Kenyan nursing candidates make — and exactly how to avoid each one.',
@@ -228,6 +246,8 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
+  'nursing-school-transition-real-practice-kenya': 'https://images.unsplash.com/photo-1579684453423-f84349ef60b0?w=1200&q=80&auto=format&fit=crop',
+  'nursing-jobs-in-kenya-legitimate-vacancies': 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200&q=80&auto=format&fit=crop',
   'nck-indexing-60-day-deadline-kenya': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80&auto=format&fit=crop',
   'surviving-first-clinical-placement-kenyan-public-hospital': 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200&q=80&auto=format&fit=crop',
   'nck-exam-foreign-trained-nurses-kenya': 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80&auto=format&fit=crop',

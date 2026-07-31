@@ -27,6 +27,219 @@ interface Post {
 
 const POSTS: Post[] = [
   {
+    slug: 'nursing-school-transition-real-practice-kenya',
+    title: 'What Nursing School Does Not Prepare You For: The Transition to Real Practice (2026)',
+    excerpt: 'The theory-practice gap is real. Discover the 4 phases of nursing reality shock, Kenyan nurses\\' experiences, and how to survive the transition from student to professional.',
+    category: 'Community',
+    readTime: '9 min read',
+    date: '2026-07-31',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: \`
+You spent three to four years memorizing the gold standard of care. You practiced sterile techniques on mannequins in quiet simulation labs. But tomorrow morning, you walk into a Kenyan public hospital ward with 40 patients, massive understaffing, and a severe shortage of supplies. The gap between what nursing school taught you and the chaotic reality of the clinical environment is massive. 
+
+This phenomenon isn't just you feeling overwhelmed—it is a documented psychological and professional crisis known as **Reality Shock**.
+
+In this post, we contrast the subjective experiences shared by Kenyan nurses with the objective frameworks of clinical transition, and provide a survival guide for bridging the theory-practice gap.
+
+> [!NOTE]
+> *This guide is intended for newly licensed nurses and nursing students preparing for clinical rotations or internship deployment in Kenya.*
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Are you preparing for the NCK licensure exam?</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Practise NCK-style clinical application questions free on NurseFiti →</a>
+</div>
+
+## Subjective Speculation vs. Objective Reality
+
+If you browse Kenyan nursing groups on WhatsApp, Facebook, or Reddit, you will quickly notice recurring themes of frustration from new graduates. 
+
+### "I'm Just an Extra Pair of Hands"
+**The Subjective Experience:** Many newly deployed nurses in Kenya report feeling undervalued. One recent BScN graduate shared, *"They treat us as an extra pair of hands to manage the overwhelming patient load rather than professionals who need mentorship. The senior nurses are too busy to teach."*
+
+**The Objective Reality:** Research on nursing transitions confirms this. It is a symptom of systemic understaffing. When patient-to-nurse ratios are dangerously high, the environment shifts from a *learning culture* to a *survival culture*. Senior staff are forced to prioritize immediate patient safety over preceptorship, leaving new graduates to fend for themselves.
+
+### "I Feel Like an Imposter"
+**The Subjective Experience:** *"I was taught to use a new pair of sterile gloves for every minor interaction, but the ward only has one box for the entire shift. When I improvise, I feel like I'm failing my patients and my training."*
+
+**The Objective Reality:** This is the **Theory-Practice Gap**. Academic institutions must teach the evidence-based "gold standard" to ensure you can pass the rigorous NCK licensure exam. However, clinical environments often require workarounds. The shock comes from realizing that "textbook nursing" rarely exists in resource-constrained settings.
+
+## Marlene Kramer's 4 Phases of Reality Shock
+
+In 1974, nursing researcher Marlene Kramer formally identified "Reality Shock." According to her established framework (further expanded by Judy Duchscher in the 2000s), every new nurse goes through four predictable phases during their transition:
+
+1. **The Honeymoon Phase:** You just passed the NCK exam and got your license. You are excited, idealistic, and eager to finally practice independently and earn an income.
+2. **The Shock and Rejection Phase:** This is the most dangerous period. The realization hits that the clinical environment is flawed. You experience emotional exhaustion, anxiety, and a profound fear of making a clinical error. Many nurses in Kenya contemplate leaving the profession entirely during this phase.
+3. **The Recovery Phase:** You begin to understand the unwritten rules of the ward. Your sense of humor returns, and you develop coping mechanisms. You learn to balance the ideal standards of care with the practical constraints of the hospital.
+4. **The Resolution Phase:** You successfully merge the "textbook nurse" you were taught to be with the "real-world nurse" you have become. You achieve clinical confidence and a realistic professional identity.
+
+**[The NCK exam tests application, not just theory. Practice with NurseFiti's mock exams to master clinical reasoning →](https://www.nursefiti.co.ke/signup)**
+
+## How to Survive the Transition in Kenya
+
+Recognizing that reality shock is a normal, expected part of your professional development is the first step. Here is how to navigate it:
+
+### 1. Protect Your Mental Health
+The emotional toll of witnessing pain and death, combined with the stress of understaffing, is heavy. Burnout is a genuine threat. Do not internalize systemic failures. If a patient’s care is compromised because the hospital ran out of IV fluids, that is a system failure, not your failure as a nurse.
+
+### 2. Find a "Quiet" Mentor
+Not every senior nurse will be welcoming. Look for the nurse who stays calm during emergencies. They may not offer formal mentorship, but observe them. Ask them specific, brief questions: *"I noticed how you managed that pre-eclampsia case despite the missing supplies. What is your priority in that situation?"*
+
+### 3. Do Not Compromise on IPC
+You must adapt to resource shortages, but never compromise on Infection Prevention and Control (IPC). If you do not have sterile gloves, you must vigorously advocate for them or escalate to the nurse-in-charge. Adapting does not mean accepting dangerous practices.
+
+### 4. Use Standardized Tools
+When the ward is chaotic, rely on established frameworks to guide your clinical decision-making. When handing over a complex patient, always use the **ISBAR** framework (Identify, Situation, Background, Assessment, Recommendation). It prevents critical information from being lost in the noise.
+
+## The Bottom Line
+
+Nursing school prepares you to pass the NCK exam. It gives you the foundational knowledge required to keep patients safe. But real practice teaches you how to be a nurse in the real world. 
+
+Give yourself grace during this transition. You are not an imposter; you are simply in the "Shock Phase." It will pass.
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Bridge the Theory-Practice Gap</h3>
+  <p class="mb-6 opacity-90">Start your free NurseFiti account to access clinical scenarios, NCK mock exams, and community support.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+> *Found this — a really accurate breakdown of why starting on the ward is so overwhelming for new nurses. It explains the "reality shock" phases and why the theory-practice gap exists in Kenyan hospitals. Highly recommended if you are struggling with the transition: nursefiti.co.ke/blog/nursing-school-transition-real-practice-kenya*
+
+---
+
+<div class="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
+  <h4 class="font-bold mb-3 uppercase tracking-wider text-xs">Sources & References</h4>
+  <ul class="space-y-2 list-disc pl-4">
+    <li>Kramer, M. (1974). <em>Reality Shock: Why Nurses Leave Nursing</em>. C.V. Mosby.</li>
+    <li>Duchscher, J. E. (2009). Transition shock: the initial stage of role adaptation for newly graduated registered nurses. <em>Journal of Advanced Nursing</em>, 65(5), 1103-1113.</li>
+    <li>Nursing Council of Kenya (NCK). (2026). <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">Clinical Practice Guidelines</a>.</li>
+  </ul>
+  <p class="mt-4 italic text-xs">Always verify clinical protocols and IPC guidelines directly with your employing institution and the Ministry of Health at <a href="https://www.health.go.ke" class="text-primary hover:text-primary-mid">health.go.ke</a>.</p>
+</div>
+    \`,
+  },
+  {
+    slug: 'nursing-jobs-in-kenya-legitimate-vacancies',
+    title: 'Nursing Jobs in Kenya: Where to Find Legitimate Vacancies (2026)',
+    excerpt: 'Passed the NCK exam but struggling to find employment? Discover where to find legitimate nursing jobs in Kenya, the required clearance certificates, and how to avoid scams.',
+    category: 'Community',
+    readTime: '9 min read',
+    date: '2026-07-31',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: \`
+You passed the rigorous NCK licensure exam, received your practicing licence, and updated your CV. But months later, you are still scrolling through generic job boards, unsure if the "urgent nursing vacancy" you found is real or just another scam asking for a "processing fee." This is the frustrating reality for many newly licensed Kenyan nurses.
+
+Finding legitimate nursing jobs in Kenya—whether in the public or private sector—requires strategy, the right documents, and knowing exactly where to look.
+
+In this guide, we break down where to find authentic nursing vacancies in Kenya, the clearance certificates you must have before applying, and the red flags of recruitment scams.
+
+> [!NOTE]
+> *Last verified: July 2026. Always confirm job requirements directly on the official employer's website.*
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Still preparing for your licensure exam?</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Practise NCK-style questions free on NurseFiti to secure your license first →</a>
+</div>
+
+## The Non-Negotiable Requirements
+
+Before you send out a single application, your paperwork must be in order. The Kenyan job market is highly competitive, and missing one document will get your application instantly disqualified, especially in the public sector.
+
+1. **NCK Practising Licence:** You must hold a valid, current licence from the [Nursing Council of Kenya (NCK)](https://www.nckenya.com). A graduation certificate is not enough.
+2. **Registration Certificate:** Your official NCK registration certificate.
+3. **Academic Transcripts:** Certified copies of your BScN, KRCHN, or Higher Diploma certificates.
+4. **BLS/ACLS Certification:** Basic Life Support and Advanced Cardiovascular Life Support certifications are increasingly mandatory in top private hospitals (e.g., Aga Khan, Nairobi Hospital).
+
+### The Chapter Six Clearance Certificates
+If you are applying for any government or county job, you **must** possess valid clearance certificates under Chapter Six of the Kenyan Constitution:
+- **KRA PIN & Tax Compliance Certificate** (via iTax)
+- **Certificate of Good Conduct** (via DCI / eCitizen)
+- **HELB Clearance Certificate** (even if you did not take a loan, you need a compliance certificate)
+- **CRB Clearance** (Credit Reference Bureau)
+- **EACC Clearance** (Ethics and Anti-Corruption Commission)
+
+## 1. Public Sector: Government & County Jobs
+
+Working for the government offers job security, clear progression, and standardized pay scales. However, recruitment happens in waves and is heavily regulated.
+
+### Public Service Commission (PSC)
+The PSC recruits for the national Ministry of Health, national referral hospitals (like KNH and MTRH), and other state departments. 
+- **Where to look:** All legitimate national government jobs are posted on the [PSC Job Portal](https://www.publicservice.go.ke). 
+- **How to apply:** Create a profile on the PSC portal, upload your documents once, and apply to specific advertisements as they arise.
+
+### County Public Service Boards (CPSB)
+With health being a devolved function, the 47 county governments are the largest employers of nurses (usually hiring at the Registered Nurse III or II levels).
+- **Where to look:** Do not rely on third-party blogs for county jobs. Always check the official website of the specific county (e.g., *kwale.go.ke/careers* or *nairobi.go.ke*) and the *MyGov* pullout published weekly in national newspapers.
+- **Tip:** When a county advertises, the application window is typically short (14 to 21 days). Having your Chapter Six documents ready is crucial.
+
+**[NurseFiti's mock exam replicates the NCK DigiProctor interface exactly. Try a mock exam to ensure you pass and get licensed →](https://www.nursefiti.co.ke/signup)**
+
+## 2. Private Sector: Top Hospitals & Clinics
+
+Kenya's private healthcare sector is robust, with numerous opportunities ranging from high-end corporate hospitals to extensive clinical networks.
+
+### Major Private Hospitals
+Institutions like the **Aga Khan University Hospital**, **The Nairobi Hospital**, **MP Shah Hospital**, and **Tenwek Hospital** handle their own recruitment.
+- **Where to look:** Go directly to the "Careers" or "Vacancies" section of their official websites. Most top-tier hospitals have transitioned to electronic applicant tracking systems (ATS).
+- **The expectation:** Private hospitals often prefer candidates with specialized skills (which is where a Higher Diploma becomes highly valuable) and prioritize customer service and communication skills alongside clinical competence.
+
+### Clinical Networks and Franchises
+Networks like Equity Afia, Bliss Healthcare, and Penda Health are frequently expanding across the country. They often hire nurses for outpatient care, triaging, and clinic management.
+
+## 3. NGOs and International Organizations
+
+For nurses interested in public health, humanitarian work, or community interventions, NGOs offer excellent (and often lucrative) career paths.
+
+- **Key Organizations:** Look into Amref Health Africa, Médecins Sans Frontières (MSF - Doctors Without Borders), Kenya Red Cross Society, and various USAID-funded implementing partners.
+- **Where to look:** Organizations like Amref post vacancies directly on their global careers page. You can also monitor specialized NGO job boards.
+
+## 4. Legitimate Online Job Boards
+
+While going directly to the employer is best, job boards are useful for discovering smaller private clinics and corporate nursing roles.
+
+Stick to reputable platforms:
+- **[Fuzu](https://www.fuzu.com):** Excellent for tracking applications and receiving tailored healthcare job alerts.
+- **[MyJobMag Kenya](https://www.myjobmag.co.ke):** Frequently updated with specific nursing and clinical officer vacancies.
+- **[BrighterMonday](https://www.brightermonday.co.ke):** A reliable aggregator for healthcare roles in the private sector.
+
+<div class="bg-[#FFF0F0] border border-error/20 p-4 rounded-xl my-6 dark:bg-error/10">
+  <h4 class="text-error font-bold mb-2">⚠️ The Golden Rule: How to Spot a Job Scam</h4>
+  <p class="text-[var(--color-text)]"><strong>NEVER pay for a job application.</strong> If a recruiter, "HR manager," or agency asks you for a "processing fee," "interview booking fee," or money for "mandatory medical tests" before an interview, it is a scam. Legitimate employers—including the PSC, counties, and private hospitals—do not charge candidates for employment.</p>
+</div>
+
+## Start with the Licence
+
+Every legitimate nursing job in Kenya hinges on one document: your NCK practising licence. You cannot secure a legitimate job without passing the licensure exam first. 
+
+Don't wait until the last minute to prepare. Structured revision and timed mock exams are your best defence against failing the NCK exam.
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Pass the NCK Exam on Your First Attempt</h3>
+  <p class="mb-6 opacity-90">Start your free NurseFiti account — no credit card required.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+> *Found this — a really practical guide on where to find legitimate nursing jobs in Kenya, the specific clearance certificates you need for county jobs, and how to spot recruitment scams. Very useful if you are job hunting: nursefiti.co.ke/blog/nursing-jobs-in-kenya-legitimate-vacancies*
+
+---
+
+<div class="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
+  <h4 class="font-bold mb-3 uppercase tracking-wider text-xs">Sources & References</h4>
+  <ul class="space-y-2 list-disc pl-4">
+    <li>Public Service Commission (PSC) Kenya. (2026). <a href="https://www.publicservice.go.ke" class="text-primary hover:text-primary-mid">Official Job Portal</a>.</li>
+    <li>Nursing Council of Kenya (NCK). (2026). <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">Licensure Requirements</a>.</li>
+    <li>Ministry of Health Kenya. (2026). <a href="https://www.health.go.ke" class="text-primary hover:text-primary-mid">Official Portal</a>.</li>
+  </ul>
+  <p class="mt-4 italic text-xs">Always verify job requirements and application deadlines directly on the official employer's website.</p>
+</div>
+    \`,
+  },
+  {
     slug: 'nck-indexing-60-day-deadline-kenya',
     title: 'NCK Indexing Kenya 2026: The Complete 60-Day Deadline Guide',
     excerpt: 'Discover the crucial 60-day NCK indexing deadline on the OSP portal. Learn the step-by-step process to ensure your BScN training is fully recognized in Kenya.',
