@@ -59,6 +59,9 @@ function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntr
   const diff = today.getTime() - startOfYear.getTime();
   const exactWeeks = diff / (1000 * 60 * 60 * 24 * 7);
   
+  // Cutoff date for when the new accelerated XP rules began
+  const xpBoostDate = new Date('2026-08-01T00:00:00+03:00');
+  
   for (let i = 0; i < 15; i++) {
     // Deterministic identity seed based on the frozen week
     const seed = fixedWeekNumber * 100 + i;
@@ -79,7 +82,12 @@ function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntr
       const dayStr = pastDate.getFullYear() + String(pastDate.getMonth() + 1).padStart(2, '0') + String(pastDate.getDate()).padStart(2, '0');
       const daySeed = parseInt(dayStr) + i * 13;
       const dayRng = (daySeed * 9301 + 49297) % 233280;
-      const dayGain = Math.floor((dayRng / 233280) * 901) + 100; // 100-1000 XP
+      
+      const isBoosted = pastDate.getTime() >= xpBoostDate.getTime();
+      const dayGain = isBoosted 
+        ? Math.floor((dayRng / 233280) * 901) + 100  // 100-1000 XP (Accelerated)
+        : Math.floor((dayRng / 233280) * 131) + 20;  // 20-150 XP (Original)
+        
       weeklyXp += dayGain;
     }
     
@@ -87,7 +95,11 @@ function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntr
     const todayStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
     const todaySeed = parseInt(todayStr) + i * 13;
     const todayRng = (todaySeed * 9301 + 49297) % 233280;
-    const todayMaxGain = Math.floor((todayRng / 233280) * 901) + 100;
+    
+    const isTodayBoosted = today.getTime() >= xpBoostDate.getTime();
+    const todayMaxGain = isTodayBoosted
+      ? Math.floor((todayRng / 233280) * 901) + 100
+      : Math.floor((todayRng / 233280) * 131) + 20;
     
     // Smooth increment by the minute instead of chunking rigidly by the hour
     const hoursPassed = today.getHours() + (today.getMinutes() / 60);
@@ -100,9 +112,13 @@ function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntr
     } else {
       // All time
       // Realistic base scale frozen to Week 25, plus smooth growth for time passed since then
-      const weeksSinceFix = Math.max(0, exactWeeks - 25);
-      const smoothProgression = weeksSinceFix * 2500; 
-      const historicalXp = (rng % 4000) + smoothProgression;
+      const cutoffWeeks = (xpBoostDate.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24 * 7);
+      
+      const weeksBeforeCutoff = Math.max(0, Math.min(exactWeeks, cutoffWeeks) - 25);
+      const weeksAfterCutoff = Math.max(0, exactWeeks - Math.max(25, cutoffWeeks));
+      
+      const smoothProgression = (weeksBeforeCutoff * 150) + (weeksAfterCutoff * 2500); 
+      const historicalXp = (rng % 1200) + smoothProgression;
       xp = Math.floor(historicalXp + weeklyXp);
     }
     
