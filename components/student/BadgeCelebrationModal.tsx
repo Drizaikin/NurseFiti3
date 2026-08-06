@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-// @ts-expect-error
+
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import type { BadgeDef } from '@/lib/badges';

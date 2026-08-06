@@ -844,7 +844,7 @@ export default function MockExamPage() {
         </div>
         <div className="text-center">
           {examEndTime && (
-            <CountdownTimer targetDate={examEndTime} variant="exam" onExpire={() => submitExam(true)}
+            <CountdownTimer targetDate={examEndTime} variant="exam" onExpire={() => submitExam()}
               className="text-2xl font-heading font-bold" />
           )}
           <p className="text-xs text-neutral-light mt-0.5">Time Remaining</p>
@@ -921,7 +921,7 @@ export default function MockExamPage() {
             </p>
             <div className="flex gap-3">
               <Button variant="ghost" className="flex-1 border border-[#1E3535] text-white" onClick={() => setShowConfirm(false)}>Cancel</Button>
-              <Button variant="danger" className="flex-1" onClick={() => submitExam(false)} disabled={isSubmitting}>
+              <Button variant="danger" className="flex-1" onClick={() => submitExam()} disabled={isSubmitting}>
                 {isSubmitting ? <Spinner size="sm" color="white" /> : 'Submit'}
               </Button>
             </div>

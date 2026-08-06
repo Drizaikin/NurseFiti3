@@ -1,0 +1,206 @@
+{
+  "total": 7403,
+  "perfect": 7403,
+  "needsFix": 0,
+  "fixDetails": {},
+  "unitStats": {
+    "Paediatric Nursing": {
+      "total": 516,
+      "issues": 0,
+      "perfect": 516
+    },
+    "Midwifery": {
+      "total": 2126,
+      "issues": 0,
+      "perfect": 2126
+    },
+    "Maternal & Child Health": {
+      "total": 198,
+      "issues": 0,
+      "perfect": 198
+    },
+    "Pharmacology": {
+      "total": 452,
+      "issues": 0,
+      "perfect": 452
+    },
+    "Medical-Surgical Nursing": {
+      "total": 1749,
+      "issues": 0,
+      "perfect": 1749
+    },
+    "Critical Care Nursing": {
+      "total": 54,
+      "issues": 0,
+      "perfect": 54
+    },
+    "Surgical Nursing": {
+      "total": 128,
+      "issues": 0,
+      "perfect": 128
+    },
+    "Community Health Nursing": {
+      "total": 426,
+      "issues": 0,
+      "perfect": 426
+    },
+    "Infection Prevention & Control": {
+      "total": 94,
+      "issues": 0,
+      "perfect": 94
+    },
+    "Nursing Management & Leadership": {
+      "total": 631,
+      "issues": 0,
+      "perfect": 631
+    },
+    "Anatomy & Physiology": {
+      "total": 200,
+      "issues": 0,
+      "perfect": 200
+    },
+    "Nutrition": {
+      "total": 60,
+      "issues": 0,
+      "perfect": 60
+    },
+    "Research & Statistics": {
+      "total": 187,
+      "issues": 0,
+      "perfect": 187
+    },
+    "Mental Health Nursing": {
+      "total": 400,
+      "issues": 0,
+      "perfect": 400
+    },
+    "Health Systems & Management": {
+      "total": 9,
+      "issues": 0,
+      "perfect": 9
+    },
+    "Environmental Health": {
+      "total": 54,
+      "issues": 0,
+      "perfect": 54
+    },
+    "Teaching and Learning Methodologies": {
+      "total": 119,
+      "issues": 0,
+      "perfect": 119
+    }
+  },
+  "paperStats": {
+    "wrong": 0,
+    "correct": 0,
+    "missing": 0
+  },
+  "batchResults": [
+    {
+      "batch": 1,
+      "from": 1,
+      "to": 500,
+      "perfect": 500,
+      "issues": 0
+    },
+    {
+      "batch": 2,
+      "from": 501,
+      "to": 1000,
+      "perfect": 500,
+      "issues": 0
+    },
+    {
+      "batch": 3,
+      "from": 1001,
+      "to": 1500,
+      "perfect": 500,
+      "issues": 0
+    },
+    {
+      "batch": 4,
+      "from": 1501,
+      "to": 2000,
+      "perfect": 500,
+      "issues": 0
+    },
+    {
+      "batch": 5,
+      "from": 2001,
+      "to": 2500,
+      "perfect": 500,
+      "issues": 0
+    },
+    {
+      "batch": 6,
+      "from": 2501,
+      "to": 3000,
+      "perfect": 500,
+      "issues": 0
+    },
+    {
+      "batch": 7,
+      "from": 3001,
+      "to": 3500,
+      "perfect": 500,
+      "issues": 0
+    },
+    {
+      "batch": 8,
+      "from": 3501,
+      "to": 4000,
+      "perfect": 500,
+      "issues": 0
+    },
+    {
+      "batch": 9,
+      "from": 4001,
+      "to": 4500,
+      "perfect": 500,
+      "issues": 0
+    },
+    {
+      "batch": 10,
+      "from": 4501,
+      "to": 5000,
+      "perfect": 500,
+      "issues": 0
+    },
+    {
+      "batch": 11,
+      "from": 5001,
+      "to": 5500,
+      "perfect": 500,
+      "issues": 0
+    },
+    {
+      "batch": 12,
+      "from": 5501,
+      "to": 6000,
+      "perfect": 500,
+      "issues": 0
+    },
+    {
+      "batch": 13,
+      "from": 6001,
+      "to": 6500,
+      "perfect": 500,
+      "issues": 0
+    },
+    {
+      "batch": 14,
+      "from": 6501,
+      "to": 7000,
+      "perfect": 500,
+      "issues": 0
+    },
+    {
+      "batch": 15,
+      "from": 7001,
+      "to": 7403,
+      "perfect": 403,
+      "issues": 0
+    }
+  ],
+  "allFixes": []
+}

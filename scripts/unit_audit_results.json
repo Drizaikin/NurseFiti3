@@ -1,0 +1,829 @@
+{
+  "total": 1000,
+  "correct": 915,
+  "misclassified": 85,
+  "unitStats": {
+    "Anatomy & Physiology": {
+      "total": 200,
+      "correct": 200,
+      "wrong": 0
+    },
+    "Communicable Diseases": {
+      "total": 111,
+      "correct": 111,
+      "wrong": 0
+    },
+    "Community Health Nursing": {
+      "total": 342,
+      "correct": 325,
+      "wrong": 17
+    },
+    "Critical Care Nursing": {
+      "total": 54,
+      "correct": 48,
+      "wrong": 6
+    },
+    "Environmental Health": {
+      "total": 54,
+      "correct": 51,
+      "wrong": 3
+    },
+    "Epidemiology": {
+      "total": 46,
+      "correct": 46,
+      "wrong": 0
+    },
+    "Health Education & Sociology": {
+      "total": 38,
+      "correct": 37,
+      "wrong": 1
+    },
+    "Health Systems & Management": {
+      "total": 9,
+      "correct": 9,
+      "wrong": 0
+    },
+    "Infection Prevention & Control": {
+      "total": 55,
+      "correct": 47,
+      "wrong": 8
+    },
+    "Maternal & Child Health": {
+      "total": 88,
+      "correct": 38,
+      "wrong": 50
+    },
+    "Medical-Surgical Nursing": {
+      "total": 3,
+      "correct": 3,
+      "wrong": 0
+    }
+  },
+  "misclassifiedQuestions": [
+    {
+      "id": "2d9a83a7-7615-41b9-8c35-df89cbb7a369",
+      "unit": "Community Health Nursing",
+      "topic": "Cancer Prevention",
+      "cadre": "KRCHN",
+      "stem": "Tertiary phase of cancer prevention involves:",
+      "reason": "Topic \"Cancer Prevention\" does not match Community Health Nursing curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "1a782099-ea95-4e43-b469-9b60a327f62d",
+      "unit": "Community Health Nursing",
+      "topic": "Health Systems",
+      "cadre": "KRCHN",
+      "stem": "The international health agencies that were instrumental in starting the Bamako Initiative are:",
+      "reason": "Topic \"Health Systems\" does not match Community Health Nursing curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "5ccf051a-52a7-43a6-a798-fcf24bd4f41d",
+      "unit": "Community Health Nursing",
+      "topic": "Global Health Goals",
+      "cadre": "KRCHN",
+      "stem": "Sustainable development 1 is about poverty. What is the aim of this goal?",
+      "reason": "Topic \"Global Health Goals\" does not match Community Health Nursing curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "5c1e20a2-7a18-4e4a-be93-50f6cdcbd6af",
+      "unit": "Community Health Nursing",
+      "topic": "General Community",
+      "cadre": "KRCHN",
+      "stem": "The following statement is included in Orem’s theory of nursing:-",
+      "reason": "Topic \"General Community\" does not match Community Health Nursing curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "91a418bf-6074-48b1-bf86-8536de1f6c80",
+      "unit": "Community Health Nursing",
+      "topic": "Community as a System",
+      "cadre": "KRCHN",
+      "stem": "Q33. The major service system of the community that is usually the focus of the citizen and the lead",
+      "reason": "Topic \"Community as a System\" does not match Community Health Nursing curriculum. Possible correct unit: Nursing Management & Leadership",
+      "suggestedUnit": "Nursing Management & Leadership"
+    },
+    {
+      "id": "b3829157-6dd2-4e5f-88d3-e64fbc65e89d",
+      "unit": "Community Health Nursing",
+      "topic": "Health Systems & Integration",
+      "cadre": "BScN",
+      "stem": "which of the following is the advantage of integration of services",
+      "reason": "Topic \"Health Systems & Integration\" does not match Community Health Nursing curriculum. Possible correct unit: Health Systems & Management",
+      "suggestedUnit": "Health Systems & Management"
+    },
+    {
+      "id": "166e74fe-1c20-4396-b82e-35921a0dc127",
+      "unit": "Community Health Nursing",
+      "topic": "Disaster Preparedness",
+      "cadre": "BScN",
+      "stem": "Increasing the ability of the population to cope with a disaster is known as:",
+      "reason": "Topic \"Disaster Preparedness\" does not match Community Health Nursing curriculum. Possible correct unit: unclear",
+      "suggestedUnit": null
+    },
+    {
+      "id": "b92b1cad-d703-44a2-aa7f-6c7324535557",
+      "unit": "Community Health Nursing",
+      "topic": "Health Systems & Management",
+      "cadre": "BScN",
+      "stem": "A manager who is involved in structuring activities into operational groups engages in a role of:",
+      "reason": "Topic \"Health Systems & Management\" does not match Community Health Nursing curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "242b044f-6067-4645-920a-ea4d99258d6e",
+      "unit": "Community Health Nursing",
+      "topic": "Community as a System",
+      "cadre": "KRCHN",
+      "stem": "The major service system of the community that is usually the focus of the citizen and the leadershi",
+      "reason": "Topic \"Community as a System\" does not match Community Health Nursing curriculum. Possible correct unit: Nursing Management & Leadership",
+      "suggestedUnit": "Nursing Management & Leadership"
+    },
+    {
+      "id": "3299e47c-fe53-48b4-9b40-d79c08ab7200",
+      "unit": "Community Health Nursing",
+      "topic": "Health Systems",
+      "cadre": "KRCHN",
+      "stem": "Q23. The international health agencies that were instrumental in starting the Bamako Initiative are:",
+      "reason": "Topic \"Health Systems\" does not match Community Health Nursing curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "e55af55b-df73-4726-97b7-ac9bed94722e",
+      "unit": "Community Health Nursing",
+      "topic": "Disaster Preparedness",
+      "cadre": "KRCHN",
+      "stem": "Increasing the ability of the population to cope with a disaster is known as:",
+      "reason": "Topic \"Disaster Preparedness\" does not match Community Health Nursing curriculum. Possible correct unit: unclear",
+      "suggestedUnit": null
+    },
+    {
+      "id": "a25608b7-657c-4aa1-b949-7c9b1ddbff11",
+      "unit": "Community Health Nursing",
+      "topic": "Concepts of Health",
+      "cadre": "KRCHN",
+      "stem": "Social health is best defined as:",
+      "reason": "Topic \"Concepts of Health\" does not match Community Health Nursing curriculum. Possible correct unit: unclear",
+      "suggestedUnit": null
+    },
+    {
+      "id": "5613cfe0-25d6-45ee-a539-4998269ff85e",
+      "unit": "Community Health Nursing",
+      "topic": "Community",
+      "cadre": "KRCHN",
+      "stem": "A community may be defined as:",
+      "reason": "Topic \"Community\" does not match Community Health Nursing curriculum. Possible correct unit: unclear",
+      "suggestedUnit": null
+    },
+    {
+      "id": "7d1b7ed7-cc4a-45c2-ba34-f693b2a608c2",
+      "unit": "Community Health Nursing",
+      "topic": "Concepts of Health",
+      "cadre": "BScN",
+      "stem": "Social health is best defined as:",
+      "reason": "Topic \"Concepts of Health\" does not match Community Health Nursing curriculum. Possible correct unit: unclear",
+      "suggestedUnit": null
+    },
+    {
+      "id": "9f082904-b636-4cb6-8385-419ce575d38e",
+      "unit": "Community Health Nursing",
+      "topic": "Screening",
+      "cadre": "KRCHN",
+      "stem": "The purpose of a screening test is to:",
+      "reason": "Topic \"Screening\" does not match Community Health Nursing curriculum. Possible correct unit: unclear",
+      "suggestedUnit": null
+    },
+    {
+      "id": "209a4892-a139-491b-9c9f-e27c65b45464",
+      "unit": "Community Health Nursing",
+      "topic": "Health Services",
+      "cadre": "KRCHN",
+      "stem": "When health care is geographically, financially and culturally within easy reach to the entire commu",
+      "reason": "Topic \"Health Services\" does not match Community Health Nursing curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "d57fa0d1-148a-465f-8593-2426eb16c453",
+      "unit": "Community Health Nursing",
+      "topic": "Health Systems",
+      "cadre": "KRCHN",
+      "stem": "Which of the following is the advantage of integration of services?",
+      "reason": "Topic \"Health Systems\" does not match Community Health Nursing curriculum. Possible correct unit: Health Systems & Management",
+      "suggestedUnit": "Health Systems & Management"
+    },
+    {
+      "id": "cb7b6656-69f6-4110-a565-dad70902a063",
+      "unit": "Critical Care Nursing",
+      "topic": "Emergency and First Aid",
+      "cadre": "BScN",
+      "stem": "Which term refers to loss of consciousness due to a temporary decrease in blood flow to the brain?",
+      "reason": "Topic \"Emergency and First Aid\" does not match Critical Care Nursing curriculum. Possible correct unit: unclear",
+      "suggestedUnit": null
+    },
+    {
+      "id": "54289a16-be36-4a39-bce2-e3de8494ceda",
+      "unit": "Critical Care Nursing",
+      "topic": "Emergency and First Aid",
+      "cadre": "BScN",
+      "stem": "What is the term for cessation of the heartbeat and circulation, often requiring immediate CPR?",
+      "reason": "Topic \"Emergency and First Aid\" does not match Critical Care Nursing curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "0861b4a5-2875-45cf-852a-21760c569648",
+      "unit": "Critical Care Nursing",
+      "topic": "Emergency and First Aid",
+      "cadre": "BScN",
+      "stem": "In the context of first aid, what is the primary goal when treating a bleeding wound?",
+      "reason": "Topic \"Emergency and First Aid\" does not match Critical Care Nursing curriculum. Possible correct unit: unclear",
+      "suggestedUnit": null
+    },
+    {
+      "id": "c5b709c0-8a1e-40af-8e97-8c0e994a9a17",
+      "unit": "Critical Care Nursing",
+      "topic": "Emergency and First Aid",
+      "cadre": "KRCHN",
+      "stem": "Which term refers to loss of consciousness due to a temporary decrease in blood flow to the brain?",
+      "reason": "Topic \"Emergency and First Aid\" does not match Critical Care Nursing curriculum. Possible correct unit: unclear",
+      "suggestedUnit": null
+    },
+    {
+      "id": "bb6e7cf2-254c-4425-a893-a6210d1b005e",
+      "unit": "Critical Care Nursing",
+      "topic": "Emergency and First Aid",
+      "cadre": "KRCHN",
+      "stem": "What is the term for cessation of the heartbeat and circulation, often requiring immediate CPR?",
+      "reason": "Topic \"Emergency and First Aid\" does not match Critical Care Nursing curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "cc2a70b7-0ca7-46a7-8b96-d26a7e78cef4",
+      "unit": "Critical Care Nursing",
+      "topic": "Emergency and First Aid",
+      "cadre": "KRCHN",
+      "stem": "In the context of first aid, what is the primary goal when treating a bleeding wound?",
+      "reason": "Topic \"Emergency and First Aid\" does not match Critical Care Nursing curriculum. Possible correct unit: unclear",
+      "suggestedUnit": null
+    },
+    {
+      "id": "6d140c37-7135-418c-ab34-5e136fd64510",
+      "unit": "Environmental Health",
+      "topic": "Water Treatment",
+      "cadre": "KRCHN",
+      "stem": "Which of the following methods is used to remove permanent water hardness?",
+      "reason": "Topic \"Water Treatment\" does not match Environmental Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "70270b9c-8415-4960-ad6e-b525899b2fe7",
+      "unit": "Environmental Health",
+      "topic": "Vector Control",
+      "cadre": "KRCHN",
+      "stem": "The most effective method of malaria prevention at community level in Kenya is:",
+      "reason": "Topic \"Vector Control\" does not match Environmental Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "0e691634-39d0-4477-b9d4-634ea113269b",
+      "unit": "Environmental Health",
+      "topic": "Food Preservation",
+      "cadre": "KRCHN",
+      "stem": "Methods of food preservation which inhibit multiplication of bacteria include:",
+      "reason": "Topic \"Food Preservation\" does not match Environmental Health curriculum. Possible correct unit: Microbiology",
+      "suggestedUnit": "Microbiology"
+    },
+    {
+      "id": "a517331c-4547-4579-a073-aeaa61d2b4b2",
+      "unit": "Health Education & Sociology",
+      "topic": "Culture and Health",
+      "cadre": "KRCHN",
+      "stem": "Elements of culture include:",
+      "reason": "Topic \"Culture and Health\" does not match Health Education & Sociology curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "6c081688-dd17-444b-b1e2-148e916e69fc",
+      "unit": "Infection Prevention & Control",
+      "topic": "Infection and Diagnostics",
+      "cadre": "KRCHN",
+      "stem": "The sensitivity part of a culture and sensitivity test is for the purpose of:",
+      "reason": "Topic \"Infection and Diagnostics\" does not match Infection Prevention & Control curriculum. Possible correct unit: Communicable Diseases",
+      "suggestedUnit": "Communicable Diseases"
+    },
+    {
+      "id": "3fdd5360-8c62-4a34-92bc-8e706257a885",
+      "unit": "Infection Prevention & Control",
+      "topic": "Transmission-Based Precautions",
+      "cadre": "BScN",
+      "stem": "A patient with active pulmonary tuberculosis requires which type of isolation precautions?",
+      "reason": "Topic \"Transmission-Based Precautions\" does not match Infection Prevention & Control curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "9e7551f4-5e02-4a3c-809d-c2885f83331d",
+      "unit": "Infection Prevention & Control",
+      "topic": "Infection and Diagnostics",
+      "cadre": "KRCHN",
+      "stem": "One of the following laboratory tests involves antigen-antibody reaction:",
+      "reason": "Topic \"Infection and Diagnostics\" does not match Infection Prevention & Control curriculum. Possible correct unit: Communicable Diseases",
+      "suggestedUnit": "Communicable Diseases"
+    },
+    {
+      "id": "a84c5ffd-f1dc-4fd3-b167-79f2b927af05",
+      "unit": "Infection Prevention & Control",
+      "topic": "Infection and Microbiology",
+      "cadre": "KRCHN",
+      "stem": "Microorganisms that have both bacterial and viral characteristics include:",
+      "reason": "Topic \"Infection and Microbiology\" does not match Infection Prevention & Control curriculum. Possible correct unit: Communicable Diseases",
+      "suggestedUnit": "Communicable Diseases"
+    },
+    {
+      "id": "c4c5ca34-9026-4297-9ed0-4689cf0ce1d2",
+      "unit": "Infection Prevention & Control",
+      "topic": "Needle Stick Injury",
+      "cadre": "KRCHN",
+      "stem": "A nurse sustains a needle stick injury from a patient known to be HIV positive. The first action sho",
+      "reason": "Topic \"Needle Stick Injury\" does not match Infection Prevention & Control curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "8cf2e1c1-9876-4bd6-bcce-95fbb88b4c51",
+      "unit": "Infection Prevention & Control",
+      "topic": "Post-Exposure Prophylaxis",
+      "cadre": "BScN",
+      "stem": "In cases of an accidental sharp injury, one should:",
+      "reason": "Topic \"Post-Exposure Prophylaxis\" does not match Infection Prevention & Control curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "64df76b6-02f4-44fe-88d4-a48a6ec7a728",
+      "unit": "Infection Prevention & Control",
+      "topic": "Post-Exposure Prophylaxis",
+      "cadre": "KRCHN",
+      "stem": "In cases of an accidental sharp injury, one should:",
+      "reason": "Topic \"Post-Exposure Prophylaxis\" does not match Infection Prevention & Control curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "3869047d-ea39-4478-8a24-c4cdba3bacf1",
+      "unit": "Infection Prevention & Control",
+      "topic": "Needlestick Injury",
+      "cadre": "KRCHN",
+      "stem": "When managing accidental exposure to body fluids and possible HIV infection after a needle prick, th",
+      "reason": "Topic \"Needlestick Injury\" does not match Infection Prevention & Control curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "8a091cb2-e3b4-4afb-ac99-8855c542edf6",
+      "unit": "Maternal & Child Health",
+      "topic": "Hyperemesis Gravidarum",
+      "cadre": "BScN",
+      "stem": "Hyperemesis gravidarum is best managed by:",
+      "reason": "Topic \"Hyperemesis Gravidarum\" does not match Maternal & Child Health curriculum. Possible correct unit: Midwifery",
+      "suggestedUnit": "Midwifery"
+    },
+    {
+      "id": "d34c2fd1-26ac-46ed-b815-93d1803c85a0",
+      "unit": "Maternal & Child Health",
+      "topic": "Labour and Delivery",
+      "cadre": "BScN",
+      "stem": "Mrs. Peters is experiencing contractions every 2 minutes. She is in which stage of birth?",
+      "reason": "Topic \"Labour and Delivery\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "74b21cf0-bf0b-467b-b740-14910a482d91",
+      "unit": "Maternal & Child Health",
+      "topic": "Cervical Cancer Screening",
+      "cadre": "BScN",
+      "stem": "If a papanicolaou smear report is abnormal, the next step in evaluating the client for cervical canc",
+      "reason": "Topic \"Cervical Cancer Screening\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "f4606af8-e89b-4781-b674-a587c9d817d9",
+      "unit": "Maternal & Child Health",
+      "topic": "Gynaecological Conditions",
+      "cadre": "BScN",
+      "stem": "The following statement is correct about endometriosis:",
+      "reason": "Topic \"Gynaecological Conditions\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "729bf66e-567d-4122-89a8-2b68c7a84a95",
+      "unit": "Maternal & Child Health",
+      "topic": "Gynaecological Conditions",
+      "cadre": "BScN",
+      "stem": "Management of Bartholin's abscess includes:",
+      "reason": "Topic \"Gynaecological Conditions\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "606d1561-2db2-413f-821b-63a98b670f2a",
+      "unit": "Maternal & Child Health",
+      "topic": "Cardiac Disease in Pregnancy",
+      "cadre": "BScN",
+      "stem": "The following is a priority nursing diagnosis in a client with class 3 cardiac disease:",
+      "reason": "Topic \"Cardiac Disease in Pregnancy\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "4c9f8baf-25c3-4781-991c-d946c2ec5715",
+      "unit": "Maternal & Child Health",
+      "topic": "Gynaecological Conditions",
+      "cadre": "BScN",
+      "stem": "The following is a correct statement about primary dysmenorrhoea:",
+      "reason": "Topic \"Gynaecological Conditions\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "c5895612-fcac-4dcc-befa-a998448725df",
+      "unit": "Maternal & Child Health",
+      "topic": "Labour and Delivery",
+      "cadre": "BScN",
+      "stem": "Early complication of fractures include;",
+      "reason": "Topic \"Labour and Delivery\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "3320209c-eed9-4122-b23c-4344d844d82e",
+      "unit": "Maternal & Child Health",
+      "topic": "Labour and Delivery",
+      "cadre": "KRCHN",
+      "stem": "Mrs. Peters is experiencing contractions every 2 minutes. She is in which stage of birth?",
+      "reason": "Topic \"Labour and Delivery\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "923491a5-fec4-4941-af83-9dbc70674a26",
+      "unit": "Maternal & Child Health",
+      "topic": "Labour and Delivery",
+      "cadre": "KRCHN",
+      "stem": "Early complication of fractures include;",
+      "reason": "Topic \"Labour and Delivery\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "77026df0-7ce5-49b7-b5d2-117a3f7c5973",
+      "unit": "Maternal & Child Health",
+      "topic": "Maternal Mortality",
+      "cadre": "KRCHN",
+      "stem": "The causes of indirect maternal deaths include:",
+      "reason": "Topic \"Maternal Mortality\" does not match Maternal & Child Health curriculum. Possible correct unit: Midwifery",
+      "suggestedUnit": "Midwifery"
+    },
+    {
+      "id": "f691416e-3060-4349-9ac3-d50a02bb1265",
+      "unit": "Maternal & Child Health",
+      "topic": "Neonatal Prophylaxis",
+      "cadre": "KRCHN",
+      "stem": "The prophylactic drugs given to a term new born at birth are:",
+      "reason": "Topic \"Neonatal Prophylaxis\" does not match Maternal & Child Health curriculum. Possible correct unit: Paediatric Nursing",
+      "suggestedUnit": "Paediatric Nursing"
+    },
+    {
+      "id": "77dbfa62-71e4-477d-8bbc-18fbb1bb502a",
+      "unit": "Maternal & Child Health",
+      "topic": "Immunisation and Pharmacology in Pregnancy",
+      "cadre": "KRCHN",
+      "stem": "Which of the following statements about birth polio and streptomycin is CORRECT?",
+      "reason": "Topic \"Immunisation and Pharmacology in Pregnancy\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "1d23ee18-10a8-444f-968a-651d7e19f33b",
+      "unit": "Maternal & Child Health",
+      "topic": "Maternal Mortality",
+      "cadre": "KRCHN",
+      "stem": "The direct causes of maternal mortality include:",
+      "reason": "Topic \"Maternal Mortality\" does not match Maternal & Child Health curriculum. Possible correct unit: Midwifery",
+      "suggestedUnit": "Midwifery"
+    },
+    {
+      "id": "71a379e3-f5e1-4dc3-8453-a147a19fcc13",
+      "unit": "Maternal & Child Health",
+      "topic": "Breastfeeding",
+      "cadre": "KRCHN",
+      "stem": "The World Health Organization recommends exclusive breastfeeding for:",
+      "reason": "Topic \"Breastfeeding\" does not match Maternal & Child Health curriculum. Possible correct unit: Midwifery",
+      "suggestedUnit": "Midwifery"
+    },
+    {
+      "id": "21fcecad-c638-4870-8ac7-37b208afa961",
+      "unit": "Maternal & Child Health",
+      "topic": "Immunisation",
+      "cadre": "KRCHN",
+      "stem": "The vaccine given to a pregnant woman to protect her newborn against neonatal tetanus is:",
+      "reason": "Topic \"Immunisation\" does not match Maternal & Child Health curriculum. Possible correct unit: Paediatric Nursing",
+      "suggestedUnit": "Paediatric Nursing"
+    },
+    {
+      "id": "348e2745-a6ba-4dea-9e67-d704d9649960",
+      "unit": "Maternal & Child Health",
+      "topic": "Antenatal Care",
+      "cadre": "KRCHN",
+      "stem": "The recommended minimum number of antenatal visits for a low-risk pregnancy according to WHO 2016 gu",
+      "reason": "Topic \"Antenatal Care\" does not match Maternal & Child Health curriculum. Possible correct unit: Midwifery",
+      "suggestedUnit": "Midwifery"
+    },
+    {
+      "id": "b4982620-c7ce-4997-a533-859fd7c204ce",
+      "unit": "Maternal & Child Health",
+      "topic": "Immunisation",
+      "cadre": "KRCHN",
+      "stem": "Immunisation schedule for Rotavirus vaccine is:",
+      "reason": "Topic \"Immunisation\" does not match Maternal & Child Health curriculum. Possible correct unit: Microbiology",
+      "suggestedUnit": "Microbiology"
+    },
+    {
+      "id": "3839b1ae-7ea3-48df-9eb7-b6bda3c52ec7",
+      "unit": "Maternal & Child Health",
+      "topic": "PMTCT",
+      "cadre": "KRCHN",
+      "stem": "The dosage of drugs in primary level ARV prophylaxis for prevention of mother-to-child transmission ",
+      "reason": "Topic \"PMTCT\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "85ac7381-40a3-43ca-b645-3aeede622d56",
+      "unit": "Maternal & Child Health",
+      "topic": "Child Health",
+      "cadre": "KRCHN",
+      "stem": "Non-organic growth failure (failure to thrive) in a child may be attributed to:",
+      "reason": "Topic \"Child Health\" does not match Maternal & Child Health curriculum. Possible correct unit: Paediatric Nursing",
+      "suggestedUnit": "Paediatric Nursing"
+    },
+    {
+      "id": "c5103d2e-31b9-4337-944e-11ac133cb89c",
+      "unit": "Maternal & Child Health",
+      "topic": "Immunisation",
+      "cadre": "KRCHN",
+      "stem": "The common side effect a nurse should counsel a mother for after giving her child pneumococcal vacci",
+      "reason": "Topic \"Immunisation\" does not match Maternal & Child Health curriculum. Possible correct unit: Pharmacology",
+      "suggestedUnit": "Pharmacology"
+    },
+    {
+      "id": "ae834982-b26e-4e5e-a09a-cd057cfaefdf",
+      "unit": "Maternal & Child Health",
+      "topic": "PMTCT",
+      "cadre": "BScN",
+      "stem": "Which of the following statements about HIV testing and breastfeeding in HIV-positive women is CORRE",
+      "reason": "Topic \"PMTCT\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "62e69e68-4ef4-428f-8201-6640869aa8a8",
+      "unit": "Maternal & Child Health",
+      "topic": "Growth and Development",
+      "cadre": "KRCHN",
+      "stem": "Growth and development increases in a rapid spurt at ages of:",
+      "reason": "Topic \"Growth and Development\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "7cf4df75-1cf6-4967-b49a-acebe30ad897",
+      "unit": "Maternal & Child Health",
+      "topic": "Anaemia in Pregnancy",
+      "cadre": "BScN",
+      "stem": "Iron requirements during pregnancy increase to:",
+      "reason": "Topic \"Anaemia in Pregnancy\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "e6657c0b-696f-4bfc-b96e-2ea3afbb6dee",
+      "unit": "Maternal & Child Health",
+      "topic": "Neural Tube Defect Prevention",
+      "cadre": "BScN",
+      "stem": "The recommended dose of folic acid for a woman with previous neural tube defect pregnancy is:",
+      "reason": "Topic \"Neural Tube Defect Prevention\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "21f97c67-5fc0-48e0-92e6-0b75ac8a47df",
+      "unit": "Maternal & Child Health",
+      "topic": "Family Health",
+      "cadre": "KRCHN",
+      "stem": "The 'nuclear family' means:",
+      "reason": "Topic \"Family Health\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "bb0147b8-840c-4ece-912d-fdd8578dbc88",
+      "unit": "Maternal & Child Health",
+      "topic": "Family Health",
+      "cadre": "KRCHN",
+      "stem": "Q30. Some of the developmental tasks of a beginning family are:",
+      "reason": "Topic \"Family Health\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "f8897068-c3af-4527-976a-a5de7699211e",
+      "unit": "Maternal & Child Health",
+      "topic": "Neonatal Prophylaxis",
+      "cadre": "BScN",
+      "stem": "The recommended prophylactic dosage of Vitamin K for newborns is:",
+      "reason": "Topic \"Neonatal Prophylaxis\" does not match Maternal & Child Health curriculum. Possible correct unit: Paediatric Nursing",
+      "suggestedUnit": "Paediatric Nursing"
+    },
+    {
+      "id": "b190ea35-9a77-4121-b5a3-331dcda11bcc",
+      "unit": "Maternal & Child Health",
+      "topic": "Growth and Development",
+      "cadre": "BScN",
+      "stem": "According to Erikson's Psychosocial Stages of Development, the stage in which a child needs to learn",
+      "reason": "Topic \"Growth and Development\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "f442146c-46e0-4afe-b333-e342260dec7b",
+      "unit": "Maternal & Child Health",
+      "topic": "Child Health (IMNCI)",
+      "cadre": "KRCHN",
+      "stem": "The immediate treatment for an infant with severe diarrhoea and sunken eyes and fontanelles includes",
+      "reason": "Topic \"Child Health (IMNCI)\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "80b8bb93-a93e-4dc6-9236-68c9dbefb09d",
+      "unit": "Maternal & Child Health",
+      "topic": "Neural Tube Defect Prevention",
+      "cadre": "BScN",
+      "stem": "Folic acid prevents which of the following in the fetus?",
+      "reason": "Topic \"Neural Tube Defect Prevention\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "7f46aff8-c75b-4cea-9e69-eb8c5bff823e",
+      "unit": "Maternal & Child Health",
+      "topic": "Immunisation",
+      "cadre": "KRCHN",
+      "stem": "Haemophilus influenzae type B (Hib) vaccine is given to protect against:",
+      "reason": "Topic \"Immunisation\" does not match Maternal & Child Health curriculum. Possible correct unit: unclear",
+      "suggestedUnit": null
+    },
+    {
+      "id": "f27c96fe-0a9f-4a45-8207-c133986bc29b",
+      "unit": "Maternal & Child Health",
+      "topic": "Vital Statistics",
+      "cadre": "BScN",
+      "stem": "Perinatal mortality rate is defined as:",
+      "reason": "Topic \"Vital Statistics\" does not match Maternal & Child Health curriculum. Possible correct unit: Research & Statistics",
+      "suggestedUnit": "Research & Statistics"
+    },
+    {
+      "id": "9f8c248b-858c-4ed9-9ead-7eb84794a13b",
+      "unit": "Maternal & Child Health",
+      "topic": "PMTCT",
+      "cadre": "BScN",
+      "stem": "The maternal factors that influence mother to child transmission (MTCT) of HIV infection during labo",
+      "reason": "Topic \"PMTCT\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "15844b8f-1a1f-4761-a851-537c96878c1f",
+      "unit": "Maternal & Child Health",
+      "topic": "Breastfeeding",
+      "cadre": "BScN",
+      "stem": "Which statement is FALSE concerning good breast attachment when breastfeeding?",
+      "reason": "Topic \"Breastfeeding\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "f2ad36c7-c95d-476a-a173-11eb5e5e89d1",
+      "unit": "Maternal & Child Health",
+      "topic": "Vital Statistics",
+      "cadre": "BScN",
+      "stem": "Neonatal period is defined as the period from birth up to:",
+      "reason": "Topic \"Vital Statistics\" does not match Maternal & Child Health curriculum. Possible correct unit: Paediatric Nursing",
+      "suggestedUnit": "Paediatric Nursing"
+    },
+    {
+      "id": "9304a903-ed04-4579-b579-35ee01042bcd",
+      "unit": "Maternal & Child Health",
+      "topic": "Breastfeeding",
+      "cadre": "BScN",
+      "stem": "Signs of good attachment include:",
+      "reason": "Topic \"Breastfeeding\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "41f0373e-a14d-427d-90ab-5c403e83307b",
+      "unit": "Maternal & Child Health",
+      "topic": "Family Health",
+      "cadre": "KRCHN",
+      "stem": "Some of the developmental tasks of a beginning family are:",
+      "reason": "Topic \"Family Health\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "6069b20f-06ef-4136-a480-81eca12cc8df",
+      "unit": "Maternal & Child Health",
+      "topic": "Neonatal Prophylaxis",
+      "cadre": "BScN",
+      "stem": "Prophylactic interventions for the newborn include:",
+      "reason": "Topic \"Neonatal Prophylaxis\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "a70beb18-cdad-4713-89b4-3f78862ee5bd",
+      "unit": "Maternal & Child Health",
+      "topic": "Postnatal Care",
+      "cadre": "BScN",
+      "stem": "The scheduling for targeted postnatal visits is:",
+      "reason": "Topic \"Postnatal Care\" does not match Maternal & Child Health curriculum. Possible correct unit: Midwifery",
+      "suggestedUnit": "Midwifery"
+    },
+    {
+      "id": "983fd269-66c2-4b55-aa35-39512c4a6032",
+      "unit": "Maternal & Child Health",
+      "topic": "Essential Newborn Care",
+      "cadre": "BScN",
+      "stem": "The benefit of delayed cord clamping is that:",
+      "reason": "Topic \"Essential Newborn Care\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "7505618b-9f0c-4167-a6a8-bbdc8edd08fe",
+      "unit": "Maternal & Child Health",
+      "topic": "Vital Statistics",
+      "cadre": "KRCHN",
+      "stem": "Still births and deaths that occur in the first week of life are classified as:",
+      "reason": "Topic \"Vital Statistics\" does not match Maternal & Child Health curriculum. Possible correct unit: Research & Statistics",
+      "suggestedUnit": "Research & Statistics"
+    },
+    {
+      "id": "ef8db0d5-0c32-4905-8c64-a5dfac5e19cb",
+      "unit": "Maternal & Child Health",
+      "topic": "Growth and Development",
+      "cadre": "KRCHN",
+      "stem": "According to Erikson's Psychosocial Stages of Development, the stage in which a child needs to learn",
+      "reason": "Topic \"Growth and Development\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "2357d767-fe48-4062-bd68-c3b589b33951",
+      "unit": "Maternal & Child Health",
+      "topic": "PMTCT",
+      "cadre": "KRCHN",
+      "stem": "The appropriate interventions to minimize mother to child transmission of HIV during vaginal deliver",
+      "reason": "Topic \"PMTCT\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "9acdd5e2-42b6-4c86-9346-2ec002e6e299",
+      "unit": "Maternal & Child Health",
+      "topic": "Antenatal Care",
+      "cadre": "KRCHN",
+      "stem": "In focused antenatal care (FANC), the recommended schedule for the four (4) comprehensive personalis",
+      "reason": "Topic \"Antenatal Care\" does not match Maternal & Child Health curriculum. Possible correct unit: Midwifery",
+      "suggestedUnit": "Midwifery"
+    },
+    {
+      "id": "589f7038-6edf-4a64-af10-c4f8fbef4c28",
+      "unit": "Maternal & Child Health",
+      "topic": "Vital Statistics",
+      "cadre": "BScN",
+      "stem": "Late neonatal deaths are deaths occurring:",
+      "reason": "Topic \"Vital Statistics\" does not match Maternal & Child Health curriculum. Possible correct unit: Paediatric Nursing",
+      "suggestedUnit": "Paediatric Nursing"
+    },
+    {
+      "id": "7bd4fa6e-7708-4af8-9540-2991e11358ce",
+      "unit": "Maternal & Child Health",
+      "topic": "Gynaecological Conditions",
+      "cadre": "BScN",
+      "stem": "Menometrorrhagia is defined as:",
+      "reason": "Topic \"Gynaecological Conditions\" does not match Maternal & Child Health curriculum. Possible correct unit: unclear",
+      "suggestedUnit": null
+    },
+    {
+      "id": "6d2f7448-b123-48df-b395-276b3833ad20",
+      "unit": "Maternal & Child Health",
+      "topic": "Neural Tube Defect Prevention",
+      "cadre": "BScN",
+      "stem": "To reduce chances of mothers having complications of pregnancy on neural tube defects, the mother is",
+      "reason": "Topic \"Neural Tube Defect Prevention\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "7d6eb9dc-2726-407e-ab98-e1ca2a743714",
+      "unit": "Maternal & Child Health",
+      "topic": "Adolescent Pregnancy",
+      "cadre": "BScN",
+      "stem": "When planning care of a 15 year old female who is pregnant, a midwife should recognise that the adol",
+      "reason": "Topic \"Adolescent Pregnancy\" does not match Maternal & Child Health curriculum. Possible correct unit: Medical-Surgical Nursing",
+      "suggestedUnit": "Medical-Surgical Nursing"
+    },
+    {
+      "id": "c55c102a-9493-4ecf-98f8-0e419dbb2cb0",
+      "unit": "Maternal & Child Health",
+      "topic": "Maternal Mortality",
+      "cadre": "BScN",
+      "stem": "The most common cause of maternal death in Kenya today is:",
+      "reason": "Topic \"Maternal Mortality\" does not match Maternal & Child Health curriculum. Possible correct unit: Midwifery",
+      "suggestedUnit": "Midwifery"
+    }
+  ]
+}

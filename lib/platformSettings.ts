@@ -8,6 +8,7 @@ export interface PlatformSettings {
   plan_weekly_price: number;
   plan_standard_price: number;
   plan_premium_price: number;
+  hd_material_price: number;
 }
 
 const DEFAULT_SETTINGS: PlatformSettings = {
@@ -18,6 +19,7 @@ const DEFAULT_SETTINGS: PlatformSettings = {
   plan_weekly_price: 499,
   plan_standard_price: 1199,
   plan_premium_price: 3500,
+  hd_material_price: 500,
 };
 
 // In-memory cache to avoid excessive DB calls during identical renders
@@ -56,6 +58,7 @@ export async function fetchPlatformSettings(supabase: SupabaseClient, forceRefre
       plan_weekly_price: Number(data.plan_weekly_price),
       plan_standard_price: Number(data.plan_standard_price),
       plan_premium_price: Number(data.plan_premium_price),
+      hd_material_price: Number(data.hd_material_price ?? 500),
     };
     lastFetchTime = now;
     return cachedSettings;

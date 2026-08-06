@@ -41,6 +41,7 @@ export default function AdminSettingsPage() {
           plan_weekly_price: Number(settings.plan_weekly_price),
           plan_standard_price: Number(settings.plan_standard_price),
           plan_premium_price: Number(settings.plan_premium_price),
+          hd_material_price: Number(settings.hd_material_price),
         }),
       });
       if (!res.ok) throw new Error('Failed to save settings');
@@ -148,6 +149,23 @@ export default function AdminSettingsPage() {
                 onChange={e => setSettings({ ...settings, plan_premium_price: e.target.value })}
               />
             </div>
+          </div>
+        </Card>
+
+        {/* Higher Diploma Materials Price */}
+        <Card>
+          <h2 className="text-lg font-heading font-bold mb-2">Higher Diploma Materials (KSh)</h2>
+          <p className="text-xs text-[var(--color-text-secondary)] mb-4">
+            The price a Higher Diploma student pays to download each individual material uploaded by tutors.
+          </p>
+          <div>
+            <label className="block text-sm font-semibold mb-1">Price Per Material Download</label>
+            <input
+              type="number"
+              className="input text-sm w-full"
+              value={settings.hd_material_price ?? 500}
+              onChange={e => setSettings({ ...settings, hd_material_price: e.target.value })}
+            />
           </div>
         </Card>
       </div>

@@ -27,6 +27,219 @@ interface Post {
 
 const POSTS: Post[] = [
   {
+    slug: 'nursing-school-transition-real-practice-kenya',
+    title: 'What Nursing School Does Not Prepare You For: The Transition to Real Practice (2026)',
+    excerpt: "The theory-practice gap is real. Discover the 4 phases of nursing reality shock, Kenyan nurses' experiences, and how to survive the transition from student to professional.",
+    category: 'Community',
+    readTime: '9 min read',
+    date: '2026-07-31',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+You spent three to four years memorizing the gold standard of care. You practiced sterile techniques on mannequins in quiet simulation labs. But tomorrow morning, you walk into a Kenyan public hospital ward with 40 patients, massive understaffing, and a severe shortage of supplies. The gap between what nursing school taught you and the chaotic reality of the clinical environment is massive. 
+
+This phenomenon isn't just you feeling overwhelmed—it is a documented psychological and professional crisis known as **Reality Shock**.
+
+In this post, we contrast the subjective experiences shared by Kenyan nurses with the objective frameworks of clinical transition, and provide a survival guide for bridging the theory-practice gap.
+
+> [!NOTE]
+> *This guide is intended for newly licensed nurses and nursing students preparing for clinical rotations or internship deployment in Kenya.*
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Are you preparing for the NCK licensure exam?</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Practise NCK-style clinical application questions free on NurseFiti →</a>
+</div>
+
+## Subjective Speculation vs. Objective Reality
+
+If you browse Kenyan nursing groups on WhatsApp, Facebook, or Reddit, you will quickly notice recurring themes of frustration from new graduates. 
+
+### "I'm Just an Extra Pair of Hands"
+**The Subjective Experience:** Many newly deployed nurses in Kenya report feeling undervalued. One recent BScN graduate shared, *"They treat us as an extra pair of hands to manage the overwhelming patient load rather than professionals who need mentorship. The senior nurses are too busy to teach."*
+
+**The Objective Reality:** Research on nursing transitions confirms this. It is a symptom of systemic understaffing. When patient-to-nurse ratios are dangerously high, the environment shifts from a *learning culture* to a *survival culture*. Senior staff are forced to prioritize immediate patient safety over preceptorship, leaving new graduates to fend for themselves.
+
+### "I Feel Like an Imposter"
+**The Subjective Experience:** *"I was taught to use a new pair of sterile gloves for every minor interaction, but the ward only has one box for the entire shift. When I improvise, I feel like I'm failing my patients and my training."*
+
+**The Objective Reality:** This is the **Theory-Practice Gap**. Academic institutions must teach the evidence-based "gold standard" to ensure you can pass the rigorous NCK licensure exam. However, clinical environments often require workarounds. The shock comes from realizing that "textbook nursing" rarely exists in resource-constrained settings.
+
+## Marlene Kramer's 4 Phases of Reality Shock
+
+In 1974, nursing researcher Marlene Kramer formally identified "Reality Shock." According to her established framework (further expanded by Judy Duchscher in the 2000s), every new nurse goes through four predictable phases during their transition:
+
+1. **The Honeymoon Phase:** You just passed the NCK exam and got your license. You are excited, idealistic, and eager to finally practice independently and earn an income.
+2. **The Shock and Rejection Phase:** This is the most dangerous period. The realization hits that the clinical environment is flawed. You experience emotional exhaustion, anxiety, and a profound fear of making a clinical error. Many nurses in Kenya contemplate leaving the profession entirely during this phase.
+3. **The Recovery Phase:** You begin to understand the unwritten rules of the ward. Your sense of humor returns, and you develop coping mechanisms. You learn to balance the ideal standards of care with the practical constraints of the hospital.
+4. **The Resolution Phase:** You successfully merge the "textbook nurse" you were taught to be with the "real-world nurse" you have become. You achieve clinical confidence and a realistic professional identity.
+
+**[The NCK exam tests application, not just theory. Practice with NurseFiti's mock exams to master clinical reasoning →](https://www.nursefiti.co.ke/signup)**
+
+## How to Survive the Transition in Kenya
+
+Recognizing that reality shock is a normal, expected part of your professional development is the first step. Here is how to navigate it:
+
+### 1. Protect Your Mental Health
+The emotional toll of witnessing pain and death, combined with the stress of understaffing, is heavy. Burnout is a genuine threat. Do not internalize systemic failures. If a patient’s care is compromised because the hospital ran out of IV fluids, that is a system failure, not your failure as a nurse.
+
+### 2. Find a "Quiet" Mentor
+Not every senior nurse will be welcoming. Look for the nurse who stays calm during emergencies. They may not offer formal mentorship, but observe them. Ask them specific, brief questions: *"I noticed how you managed that pre-eclampsia case despite the missing supplies. What is your priority in that situation?"*
+
+### 3. Do Not Compromise on IPC
+You must adapt to resource shortages, but never compromise on Infection Prevention and Control (IPC). If you do not have sterile gloves, you must vigorously advocate for them or escalate to the nurse-in-charge. Adapting does not mean accepting dangerous practices.
+
+### 4. Use Standardized Tools
+When the ward is chaotic, rely on established frameworks to guide your clinical decision-making. When handing over a complex patient, always use the **ISBAR** framework (Identify, Situation, Background, Assessment, Recommendation). It prevents critical information from being lost in the noise.
+
+## The Bottom Line
+
+Nursing school prepares you to pass the NCK exam. It gives you the foundational knowledge required to keep patients safe. But real practice teaches you how to be a nurse in the real world. 
+
+Give yourself grace during this transition. You are not an imposter; you are simply in the "Shock Phase." It will pass.
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Bridge the Theory-Practice Gap</h3>
+  <p class="mb-6 opacity-90">Start your free NurseFiti account to access clinical scenarios, NCK mock exams, and community support.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+> *Found this — a really accurate breakdown of why starting on the ward is so overwhelming for new nurses. It explains the "reality shock" phases and why the theory-practice gap exists in Kenyan hospitals. Highly recommended if you are struggling with the transition: nursefiti.co.ke/blog/nursing-school-transition-real-practice-kenya*
+
+---
+
+<div class="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
+  <h4 class="font-bold mb-3 uppercase tracking-wider text-xs">Sources & References</h4>
+  <ul class="space-y-2 list-disc pl-4">
+    <li>Kramer, M. (1974). <em>Reality Shock: Why Nurses Leave Nursing</em>. C.V. Mosby.</li>
+    <li>Duchscher, J. E. (2009). Transition shock: the initial stage of role adaptation for newly graduated registered nurses. <em>Journal of Advanced Nursing</em>, 65(5), 1103-1113.</li>
+    <li>Nursing Council of Kenya (NCK). (2026). <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">Clinical Practice Guidelines</a>.</li>
+  </ul>
+  <p class="mt-4 italic text-xs">Always verify clinical protocols and IPC guidelines directly with your employing institution and the Ministry of Health at <a href="https://www.health.go.ke" class="text-primary hover:text-primary-mid">health.go.ke</a>.</p>
+</div>
+    `,
+  },
+  {
+    slug: 'nursing-jobs-in-kenya-legitimate-vacancies',
+    title: 'Nursing Jobs in Kenya: Where to Find Legitimate Vacancies (2026)',
+    excerpt: 'Passed the NCK exam but struggling to find employment? Discover where to find legitimate nursing jobs in Kenya, the required clearance certificates, and how to avoid scams.',
+    category: 'Community',
+    readTime: '9 min read',
+    date: '2026-07-31',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+You passed the rigorous NCK licensure exam, received your practicing licence, and updated your CV. But months later, you are still scrolling through generic job boards, unsure if the "urgent nursing vacancy" you found is real or just another scam asking for a "processing fee." This is the frustrating reality for many newly licensed Kenyan nurses.
+
+Finding legitimate nursing jobs in Kenya—whether in the public or private sector—requires strategy, the right documents, and knowing exactly where to look.
+
+In this guide, we break down where to find authentic nursing vacancies in Kenya, the clearance certificates you must have before applying, and the red flags of recruitment scams.
+
+> [!NOTE]
+> *Last verified: July 2026. Always confirm job requirements directly on the official employer's website.*
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Still preparing for your licensure exam?</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Practise NCK-style questions free on NurseFiti to secure your license first →</a>
+</div>
+
+## The Non-Negotiable Requirements
+
+Before you send out a single application, your paperwork must be in order. The Kenyan job market is highly competitive, and missing one document will get your application instantly disqualified, especially in the public sector.
+
+1. **NCK Practising Licence:** You must hold a valid, current licence from the [Nursing Council of Kenya (NCK)](https://www.nckenya.com). A graduation certificate is not enough.
+2. **Registration Certificate:** Your official NCK registration certificate.
+3. **Academic Transcripts:** Certified copies of your BScN, KRCHN, or Higher Diploma certificates.
+4. **BLS/ACLS Certification:** Basic Life Support and Advanced Cardiovascular Life Support certifications are increasingly mandatory in top private hospitals (e.g., Aga Khan, Nairobi Hospital).
+
+### The Chapter Six Clearance Certificates
+If you are applying for any government or county job, you **must** possess valid clearance certificates under Chapter Six of the Kenyan Constitution:
+- **KRA PIN & Tax Compliance Certificate** (via iTax)
+- **Certificate of Good Conduct** (via DCI / eCitizen)
+- **HELB Clearance Certificate** (even if you did not take a loan, you need a compliance certificate)
+- **CRB Clearance** (Credit Reference Bureau)
+- **EACC Clearance** (Ethics and Anti-Corruption Commission)
+
+## 1. Public Sector: Government & County Jobs
+
+Working for the government offers job security, clear progression, and standardized pay scales. However, recruitment happens in waves and is heavily regulated.
+
+### Public Service Commission (PSC)
+The PSC recruits for the national Ministry of Health, national referral hospitals (like KNH and MTRH), and other state departments. 
+- **Where to look:** All legitimate national government jobs are posted on the [PSC Job Portal](https://www.publicservice.go.ke). 
+- **How to apply:** Create a profile on the PSC portal, upload your documents once, and apply to specific advertisements as they arise.
+
+### County Public Service Boards (CPSB)
+With health being a devolved function, the 47 county governments are the largest employers of nurses (usually hiring at the Registered Nurse III or II levels).
+- **Where to look:** Do not rely on third-party blogs for county jobs. Always check the official website of the specific county (e.g., *kwale.go.ke/careers* or *nairobi.go.ke*) and the *MyGov* pullout published weekly in national newspapers.
+- **Tip:** When a county advertises, the application window is typically short (14 to 21 days). Having your Chapter Six documents ready is crucial.
+
+**[NurseFiti's mock exam replicates the NCK DigiProctor interface exactly. Try a mock exam to ensure you pass and get licensed →](https://www.nursefiti.co.ke/signup)**
+
+## 2. Private Sector: Top Hospitals & Clinics
+
+Kenya's private healthcare sector is robust, with numerous opportunities ranging from high-end corporate hospitals to extensive clinical networks.
+
+### Major Private Hospitals
+Institutions like the **Aga Khan University Hospital**, **The Nairobi Hospital**, **MP Shah Hospital**, and **Tenwek Hospital** handle their own recruitment.
+- **Where to look:** Go directly to the "Careers" or "Vacancies" section of their official websites. Most top-tier hospitals have transitioned to electronic applicant tracking systems (ATS).
+- **The expectation:** Private hospitals often prefer candidates with specialized skills (which is where a Higher Diploma becomes highly valuable) and prioritize customer service and communication skills alongside clinical competence.
+
+### Clinical Networks and Franchises
+Networks like Equity Afia, Bliss Healthcare, and Penda Health are frequently expanding across the country. They often hire nurses for outpatient care, triaging, and clinic management.
+
+## 3. NGOs and International Organizations
+
+For nurses interested in public health, humanitarian work, or community interventions, NGOs offer excellent (and often lucrative) career paths.
+
+- **Key Organizations:** Look into Amref Health Africa, Médecins Sans Frontières (MSF - Doctors Without Borders), Kenya Red Cross Society, and various USAID-funded implementing partners.
+- **Where to look:** Organizations like Amref post vacancies directly on their global careers page. You can also monitor specialized NGO job boards.
+
+## 4. Legitimate Online Job Boards
+
+While going directly to the employer is best, job boards are useful for discovering smaller private clinics and corporate nursing roles.
+
+Stick to reputable platforms:
+- **[Fuzu](https://www.fuzu.com):** Excellent for tracking applications and receiving tailored healthcare job alerts.
+- **[MyJobMag Kenya](https://www.myjobmag.co.ke):** Frequently updated with specific nursing and clinical officer vacancies.
+- **[BrighterMonday](https://www.brightermonday.co.ke):** A reliable aggregator for healthcare roles in the private sector.
+
+<div class="bg-[#FFF0F0] border border-error/20 p-4 rounded-xl my-6 dark:bg-error/10">
+  <h4 class="text-error font-bold mb-2">⚠️ The Golden Rule: How to Spot a Job Scam</h4>
+  <p class="text-[var(--color-text)]"><strong>NEVER pay for a job application.</strong> If a recruiter, "HR manager," or agency asks you for a "processing fee," "interview booking fee," or money for "mandatory medical tests" before an interview, it is a scam. Legitimate employers—including the PSC, counties, and private hospitals—do not charge candidates for employment.</p>
+</div>
+
+## Start with the Licence
+
+Every legitimate nursing job in Kenya hinges on one document: your NCK practising licence. You cannot secure a legitimate job without passing the licensure exam first. 
+
+Don't wait until the last minute to prepare. Structured revision and timed mock exams are your best defence against failing the NCK exam.
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Pass the NCK Exam on Your First Attempt</h3>
+  <p class="mb-6 opacity-90">Start your free NurseFiti account — no credit card required.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+> *Found this — a really practical guide on where to find legitimate nursing jobs in Kenya, the specific clearance certificates you need for county jobs, and how to spot recruitment scams. Very useful if you are job hunting: nursefiti.co.ke/blog/nursing-jobs-in-kenya-legitimate-vacancies*
+
+---
+
+<div class="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
+  <h4 class="font-bold mb-3 uppercase tracking-wider text-xs">Sources & References</h4>
+  <ul class="space-y-2 list-disc pl-4">
+    <li>Public Service Commission (PSC) Kenya. (2026). <a href="https://www.publicservice.go.ke" class="text-primary hover:text-primary-mid">Official Job Portal</a>.</li>
+    <li>Nursing Council of Kenya (NCK). (2026). <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">Licensure Requirements</a>.</li>
+    <li>Ministry of Health Kenya. (2026). <a href="https://www.health.go.ke" class="text-primary hover:text-primary-mid">Official Portal</a>.</li>
+  </ul>
+  <p class="mt-4 italic text-xs">Always verify job requirements and application deadlines directly on the official employer's website.</p>
+</div>
+    `,
+  },
+  {
     slug: 'nck-indexing-60-day-deadline-kenya',
     title: 'NCK Indexing Kenya 2026: The Complete 60-Day Deadline Guide',
     excerpt: 'Discover the crucial 60-day NCK indexing deadline on the OSP portal. Learn the step-by-step process to ensure your BScN training is fully recognized in Kenya.',
@@ -557,6 +770,232 @@ The KRCHN exam covers a broad range of units. Spaced repetition — reviewing in
 - **Wozniak, P. & Gorzelanczyk, E.J. (1994)** — *"Optimization of repetition spacing in the practice of learning"*, Acta Neurobiologiae Experimentalis, 54(1), 59–62. Basis of the SM-2 spaced-repetition algorithm.
 
 *Unit percentage ranges are based on candidate experience and publicly reported NCK examination patterns. Confirm with official NCK syllabus documents.*
+    `,
+  },
+  {
+    slug: 'common-pharmacology-mistakes-nck-exam',
+    title: 'Common Pharmacology Mistakes in NCK Exams (2026)',
+    excerpt: 'Pharmacology is tested in every NCK paper. Discover the 7 most costly mistakes Kenyan nursing candidates make — and exactly how to avoid each one.',
+    category: 'Study Guide',
+    readTime: '10 min read',
+    date: '2026-07-28',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+Pharmacology is the unit that most Kenyan nursing candidates underestimate — until it costs them the exam. It appears in both Paper I and Paper II, it tests calculation accuracy under time pressure, and the NCK frequently uses it to separate candidates who *understand* from candidates who *memorised*. There is one specific class of drug errors that appears in nearly every sitting — and we will cover it in the dosage calculation section below.
+
+> [!NOTE]
+> *Last verified: July 2026. Always confirm current drug protocols and guidelines at [health.go.ke](https://www.health.go.ke) and [nckenya.com](https://www.nckenya.com).*
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Test yourself on pharmacology now — before your exam.</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Practise NCK pharmacology questions free on NurseFiti →</a>
+</div>
+
+## Why Pharmacology Costs Candidates the Most Marks
+
+Pharmacology content is distributed across both NCK papers for all cadres. For KRCHN candidates, pharmacology constitutes approximately [20–25% of Paper I](https://www.nckenya.com) based on publicly reported candidate patterns, with drug calculation and mechanism questions appearing consistently. For BScN candidates, advanced drug interactions, polypharmacy, and antidote management extend the pharmacology load into Paper I and occasionally into Paper II's evidence-based practice questions.
+
+**The brutal reality:** a candidate who drops 5 pharmacology marks per paper loses 10 marks total. That is often the difference between passing and resitting.
+
+## Mistake 1: Confusing Drug Mechanisms With Drug Indications
+
+NCK MCQs rarely ask *"what is the mechanism of metformin?"* They ask it indirectly: *"A patient with Type 2 Diabetes Mellitus is started on metformin. Which of the following effects would the nurse expect?"* If you only know the indication (lowers blood glucose) and not the mechanism (reduces hepatic glucose output, increases peripheral insulin sensitivity per [Rena et al., 2017, Diabetologia, DOI:10.1007/s00125-017-4342-z](https://link.springer.com/article/10.1007/s00125-017-4342-z)), you will pick the wrong distractor.
+
+**How to fix it:** For every drug class you study, always learn three things together:
+1. Mechanism of action
+2. Primary indication
+3. Most clinically significant adverse effect
+
+Three facts, one drug, one card. Use [NurseFiti's flashcard system](/signup) to build these as linked triplets.
+
+## Mistake 2: Confusing Antidotes
+
+Antidote questions are high-yield in NCK pharmacology because they test specific knowledge that cannot be guessed. The Kenya [Ministry of Health Poisoning Management Guidelines](https://www.health.go.ke) define the following critical pairings that every candidate must know cold:
+
+<div class="overflow-x-auto my-6 rounded-xl border border-primary/20 shadow-sm">
+  <table class="w-full text-sm text-left border-collapse">
+    <thead>
+      <tr class="bg-primary text-white">
+        <th class="px-5 py-3 font-bold text-sm tracking-wide w-1/2">Drug / Toxin</th>
+        <th class="px-5 py-3 font-bold text-sm tracking-wide w-1/2">Correct Antidote</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Opioid overdose</td>
+        <td class="px-5 py-3 text-neutral-mid">Naloxone (0.4–2 mg IV)</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Benzodiazepine overdose</td>
+        <td class="px-5 py-3 text-neutral-mid">Flumazenil</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Organophosphate poisoning</td>
+        <td class="px-5 py-3 text-neutral-mid">Atropine + Pralidoxime</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Paracetamol (acetaminophen) overdose</td>
+        <td class="px-5 py-3 text-neutral-mid">N-Acetylcysteine (NAC)</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Heparin overdose</td>
+        <td class="px-5 py-3 text-neutral-mid">Protamine sulphate</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Warfarin overdose / bleeding</td>
+        <td class="px-5 py-3 text-neutral-mid">Vitamin K (phytomenadione)</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Digoxin toxicity</td>
+        <td class="px-5 py-3 text-neutral-mid">Digoxin-specific antibody (Fab fragments)</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Methotrexate rescue</td>
+        <td class="px-5 py-3 font-semibold text-error">⚠️ Folinic acid (Leucovorin) — NOT folic acid</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Cyanide poisoning</td>
+        <td class="px-5 py-3 text-neutral-mid">Hydroxocobalamin or Dicobalt edetate</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight">
+        <td class="px-5 py-3 font-medium text-[var(--color-text)]">Iron overdose</td>
+        <td class="px-5 py-3 text-neutral-mid">Desferrioxamine</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+**The most commonly failed antidote question:** Methotrexate rescue. Many candidates write *folic acid* — this is wrong. The rescue agent is **folinic acid (Leucovorin)**, which bypasses the DHFR enzyme that methotrexate inhibits, as confirmed by the [British National Formulary (BNF)](https://bnf.nice.org.uk/drug/methotrexate.html).
+
+<div class="my-8 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Practice Antidote Questions on NurseFiti</h3>
+  <p class="mb-6 opacity-90 max-w-lg mx-auto">NurseFiti's question bank includes specific pharmacology questions on antidotes, drug calculations, and adverse effects — with detailed rationales for every answer.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Try pharmacology questions free →</a>
+</div>
+
+## Mistake 3: Drug Calculation Errors — The Wrong Formula
+
+This is the category mentioned at the start: **dosage calculation errors caused by applying the wrong formula to the wrong question type.** NCK uses three core calculation question types, and each requires a specific approach.
+
+### Type 1: Tablet/Oral Dose
+**Formula:** Dose required ÷ Dose available × Quantity of tablet or liquid
+
+*Example:* Prescriber orders Amoxicillin 500 mg. Stock is 250 mg per capsule. How many capsules?
+> 500 ÷ 250 × 1 = **2 capsules**
+
+### Type 2: IV Infusion Rate (drops per minute)
+**Formula:** Volume (mL) × Drop factor ÷ Time (minutes)
+
+*Example:* 1,000 mL of Normal Saline to infuse over 8 hours. Drop factor: 15 drops/mL. What is the rate in drops per minute?
+> 1000 × 15 ÷ (8 × 60) = 15,000 ÷ 480 = **31.25 ≈ 31 drops/minute**
+
+### Type 3: Weight-Based Paediatric Dosing
+**Formula:** Dose (mg/kg) × Weight (kg) = Total dose required
+
+*Example:* Paracetamol is prescribed at 15 mg/kg for a child weighing 20 kg. What is the dose?
+> 15 × 20 = **300 mg**
+
+**The common fatal error:** Candidates mix up drop factor values. The standard drop factor for a standard giving set is **15 drops/mL**. For a paediatric micro-drip giving set, it is **60 drops/mL**. Applying the wrong drop factor halves or quadruples your answer. Learn this distinction before your exam.
+
+For a detailed worked guide covering every NCK calculation type, see our [NCK Pharmacology & Drug Calculations Complete Guide](/blog/nck-pharmacology-calculations-guide).
+
+## Mistake 4: Missing Drug Contraindications
+
+NCK questions frequently test contraindications in a clinical scenario format: *"A nurse is about to administer X. Which patient condition should prompt the nurse to withhold the drug and report to the physician?"*
+
+The most frequently tested contraindication pairs in recent NCK cycles, per candidate-reported question patterns:
+
+- **ACE inhibitors** (e.g., Captopril, Enalapril) → **Pregnancy** (teratogenic, especially 2nd and 3rd trimester, per [WHO Model Formulary](https://www.who.int/publications/i/item/9789241547659))
+- **Metformin** → **Renal impairment** (eGFR < 30 mL/min/1.73m² — risk of lactic acidosis, per [Rena et al., 2017, Diabetologia](https://link.springer.com/article/10.1007/s00125-017-4342-z))
+- **NSAIDs** (e.g., Ibuprofen) → **Peptic ulcer disease / active GI bleeding**
+- **Tetracyclines** → **Children under 8 years** (permanent tooth discolouration) and **pregnancy**
+- **Warfarin** → **First trimester of pregnancy** (embryopathy)
+- **Gentamicin** (an aminoglycoside) → **Pre-existing renal impairment** (nephrotoxicity risk)
+
+**How to revise this:** Create a two-column table: Drug | Key Contraindication(s). Flashcard it. The questions are consistent across NCK sittings.
+
+## Mistake 5: Getting Routes of Administration Wrong
+
+NCK pharmacology questions frequently include the route of administration as a distractor. The correct route is sometimes the entire point of the question — not the drug itself. Critical routes to know precisely:
+
+- **Magnesium Sulphate (MgSO₄) for eclampsia:** Administered IV (slow push) or IM (deep IM, gluteal), never subcutaneously. The Kenyan [MOH BEmONC protocol](https://www.health.go.ke) specifies the loading dose as 4g IV over 20 minutes, followed by 1g/hour maintenance.
+- **Adrenaline (Epinephrine) for anaphylaxis:** The first-line route is **IM — anterolateral thigh**, not IV (IV is only for cardiac arrest). This is per [KNHA/WHO guidelines](https://www.who.int).
+- **Oxytocin for PPH prevention:** Given **IM or slow IV** — never as a fast IV bolus, which causes dangerous cardiovascular effects per [MOH Kenya EmONC guidelines](https://www.health.go.ke).
+- **Insulin:** Subcutaneous — not IM, not IV (except Actrapid/Regular insulin in DKA management, which is IV infusion).
+
+## Mistake 6: Drug Interactions — The High-Yield Pairs
+
+Drug interaction questions test whether the nurse can anticipate harm before administering a drug. The pairs most commonly tested in NCK pharmacology:
+
+- **Warfarin + Aspirin/NSAIDs** → Increased bleeding risk (additive anticoagulant + antiplatelet effect)
+- **ACE inhibitors + Potassium-sparing diuretics** (e.g., Spironolactone) → Hyperkalaemia
+- **MAO inhibitors + Tyramine-rich foods / SSRIs** → Serotonin syndrome (a severe, life-threatening reaction)
+- **Digoxin + Hypokalaemia (loop diuretics)** → Digoxin toxicity — diuretic-induced low potassium sensitises the myocardium to digoxin
+- **Gentamicin + Frusemide** → Compounded ototoxicity and nephrotoxicity
+
+**The exam pattern:** The question presents a patient on Drug A who is prescribed Drug B. The nurse must identify the interaction risk and respond appropriately — usually by withholding, monitoring, or reporting.
+
+## Mistake 7: Ignoring the Kenya Essential Medicines List (KEML)
+
+The [Kenya Essential Medicines List (KEML)](https://www.health.go.ke) is the MOH-approved formulary governing which drugs are available in Kenya's public health facilities at each level of care. NCK questions use KEML-approved drug names and dosages. Generic names, not brand names, are used throughout.
+
+Candidates trained in private institutions or using international textbooks sometimes encounter different drug names or doses. NCK will always use the Kenyan standard.
+
+**Examples where KEML differs from international texts:**
+- Kenya uses **frusemide** (not furosemide — same drug, different spelling convention)
+- Adrenaline (not epinephrine) is the preferred NCK terminology
+- Pethidine is still listed for obstetric pain in some Kenya protocols (morphine preferred internationally)
+
+For a full breakdown of KEML-relevant pharmacology for the NCK exam, revisit our [NCK Pharmacology & Drug Calculations Complete Guide](/blog/nck-pharmacology-calculations-guide).
+
+## The Pharmacology Revision Framework
+
+Here is the systematic approach for revising pharmacology in 2–3 weeks:
+
+**Week 1:** Antidotes, contraindications, drug interactions (all the high-specificity items — no calculation required, pure memorisation with understanding)
+
+**Week 2:** Mechanisms and adverse effects by drug class — start with: antibiotics, antihypertensives, antidiabetics, anticoagulants, psychiatric drugs
+
+**Week 3:** Calculations — practice 10–15 calculation questions per day. If you get one wrong, do not move on until you identify *which formula error* caused it.
+
+**[Build your personalised pharmacology revision plan on NurseFiti →](/signup)**
+
+## Start Practising Today
+
+Pharmacology is one of the most coachable parts of the NCK exam. Every mistake in this post is fixable with structured, targeted practice — not more reading.
+
+Join over 10,000 Kenyan nursing candidates already preparing on [NurseFiti](https://www.nursefiti.co.ke). The question bank includes pharmacology questions across all cadres with detailed rationales — so every wrong answer becomes a learning moment, not just a lost mark.
+
+For updates, tips, and community support, **[join the NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)**.
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Pass Pharmacology. Pass the NCK Exam.</h3>
+  <p class="mb-6 opacity-90">Start your free NurseFiti account — no credit card required.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+> *Found this — really useful. Goes through the exact pharmacology mistakes that cost you marks in the NCK exam: antidotes, drug calculations, contraindications. All Kenya-specific. Share with anyone preparing: nursefiti.co.ke/blog/common-pharmacology-mistakes-nck-exam*
+
+---
+
+<div class="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
+  <h4 class="font-bold mb-3 uppercase tracking-wider text-xs">Sources &amp; References</h4>
+  <ul class="space-y-2 list-disc pl-4">
+    <li>Nursing Council of Kenya (NCK). (2026). <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">Official NCK Website and Examination Regulations</a>.</li>
+    <li>Ministry of Health, Kenya. (2025). <a href="https://www.health.go.ke" class="text-primary hover:text-primary-mid">Kenya Essential Medicines List (KEML) and MOH Clinical Protocols</a>. Including BEmONC and EmONC guidelines for obstetric drug management.</li>
+    <li>Ministry of Health, Kenya. <a href="https://www.health.go.ke" class="text-primary hover:text-primary-mid">Kenya Poisoning Management Guidelines</a>.</li>
+    <li>Rena, G., Hardie, D.G., &amp; Pearson, E.R. (2017). <em>The mechanisms of action of metformin.</em> Diabetologia, 60(9), 1577–1585. <a href="https://link.springer.com/article/10.1007/s00125-017-4342-z" class="text-primary hover:text-primary-mid">DOI: 10.1007/s00125-017-4342-z</a>.</li>
+    <li>British National Formulary (BNF). <a href="https://bnf.nice.org.uk/drug/methotrexate.html" class="text-primary hover:text-primary-mid">Methotrexate: Antidotes and Rescue Therapy (Folinic Acid)</a>.</li>
+    <li>World Health Organization (WHO). (2017). <a href="https://www.who.int/publications/i/item/9789241547659" class="text-primary hover:text-primary-mid">WHO Model Formulary 2008 (with 2009 update)</a>. Drug contraindications and clinical guidance.</li>
+    <li>World Health Organization (WHO). <a href="https://www.who.int" class="text-primary hover:text-primary-mid">Emergency use of medicines: anaphylaxis management guidance</a>.</li>
+    <li>NCK Online Services Portal (OSP). (2026). <a href="https://osp.nckenya.go.ke" class="text-primary hover:text-primary-mid">Examination registration and licensure</a>.</li>
+  </ul>
+  <p class="mt-4 italic text-xs">Always verify current drug protocols, examination information, and Kenya-specific clinical guidelines directly at <a href="https://www.health.go.ke" class="text-primary hover:text-primary-mid">health.go.ke</a> and <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">nckenya.com</a>.</p>
+</div>
     `,
   },
 ];
@@ -2588,6 +3027,11 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
   'nursing-forums-networks-kenya': {
     url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80&auto=format&fit=crop',
     alt: 'Nursing professionals networking and collaborating in a group',
+    credit: 'Unsplash',
+  },
+  'common-pharmacology-mistakes-nck-exam': {
+    url: 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Pharmacology medications and drug vials on a clinical tray — NCK nursing pharmacology exam preparation',
     credit: 'Unsplash',
   },
 };

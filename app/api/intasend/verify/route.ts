@@ -75,10 +75,7 @@ export async function GET(req: NextRequest) {
 
     // If we couldn't verify or the state is still in-flight, leave pending
     if (!txn || txn.state === 'PENDING' || txn.state === 'PROCESSING') {
-      const pendingRedirect = (payment as any).type === 'session_booking'
-        ? '/bookings?payment=pending'
-        : '/settings?payment=pending';
-      return NextResponse.redirect(`${siteUrl}${pendingRedirect}`);
+      return NextResponse.redirect(`${siteUrl}${getPendingRedirect((payment as any).type)}`);
     }
 
     if (txn.state === 'FAILED' || txn.state === 'CANCELLED' || txn.state === 'REJECTED') {
@@ -87,18 +84,12 @@ export async function GET(req: NextRequest) {
         .update({ status: 'failed' })
         .eq('intasend_reference', reference);
 
-      const failedRedirect = (payment as any).type === 'session_booking'
-        ? '/bookings?payment=failed'
-        : '/dashboard?payment=failed&reason=failed';
-      return NextResponse.redirect(`${siteUrl}${failedRedirect}`);
+      return NextResponse.redirect(`${siteUrl}${getFailedRedirect((payment as any).type)}`);
     }
 
     if (txn.state !== 'COMPLETE' && txn.state !== 'COMPLETED') {
-      // Any other unrecognized state should not provision access!
-      const pendingRedirect = (payment as any).type === 'session_booking'
-        ? '/bookings?payment=pending'
-        : '/settings?payment=pending';
-      return NextResponse.redirect(`${siteUrl}${pendingRedirect}`);
+      // Any other unrecognized state — do not provision access
+      return NextResponse.redirect(`${siteUrl}${getPendingRedirect((payment as any).type)}`);
     }
 
     // Mark payment as completed
@@ -157,16 +148,12 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
       const activatedAt = new Date();
       const expiresAt = addDays(activatedAt, durationDays).toISOString();
 
-      // Upgrade the plan and reset tour_version to 1 so the student sees
-      // the "What's new on paid plans" feature tour on their next login.
-      // CURRENT_TOUR_VERSION in OnboardingTourGate is 2, so setting to 1
-      // ensures the tour fires exactly once after upgrading.
+      // Upgrade the student's plan tier and expiry
       await supabase
         .from('student_profiles')
         .update({
           plan_tier: tier,
           plan_expires_at: expiresAt,
-          tour_version: 1,     // triggers feature announcement tour on next login
         })
         .eq('id', payment.user_id);
 
@@ -195,6 +182,40 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
         .from('revision_plans')
         .update({ payment_ref: txn.invoice_id })
         .eq('id', payment.reference_id);
+      break;
+    }
+
+    case 'hd_material_purchase': {
+      // Grant access by inserting purchase record
+      const { error: upsertError } = await (supabase as any)
+        .from('hd_material_purchases')
+        .upsert({
+          student_id:  payment.user_id,
+          material_id: payment.reference_id,
+          payment_id:  payment.id,
+          amount_paid: payment.amount,
+          purchased_at: new Date().toISOString(),
+        }, { onConflict: 'student_id,material_id' });
+
+      if (upsertError) {
+        // Log the full error so we can diagnose — but don't throw because
+        // the payment has already been taken. A manual fix can be applied.
+        console.error('[hd_material_purchase] CRITICAL: Purchase record creation FAILED:', {
+          error: upsertError,
+          student_id: payment.user_id,
+          material_id: payment.reference_id,
+          payment_id: payment.id,
+        });
+      } else {
+        console.log('[hd_material_purchase] Purchase record created for student:', payment.user_id, 'material:', payment.reference_id);
+      }
+
+      // Increment download_count via SECURITY DEFINER RPC
+      await (supabase as any)
+        .rpc('increment_hd_material_downloads', { p_material_id: payment.reference_id })
+        .then(({ error }: any) => {
+          if (error) console.error('[hd_material_purchase] RPC increment failed:', error);
+        });
       break;
     }
 
@@ -287,15 +308,31 @@ async function provisionAccess(supabase: any, payment: any, txn: any) {
 
 function getSuccessRedirect(type: string): string {
   switch (type) {
-    case 'revision_plan':     return '/revision-plan?payment=success';
-    case 'session_booking':   return '/bookings?payment=success';
-    case 'plan_subscription': return '/settings?payment=success';
-    case 'sponsor_deposit': {
-      // payment.reference_id has the campaign.id, we'd need slug for redirect, 
-      // but without doing a DB query here, redirecting to /dashboard is safer,
-      // or we can redirect to a generic /sponsor-success page.
-      return '/dashboard?payment=success&type=sponsor';
-    }
-    default:                  return '/dashboard?payment=success';
+    case 'revision_plan':          return '/revision-plan?payment=success';
+    case 'session_booking':        return '/bookings?payment=success';
+    case 'plan_subscription':      return '/settings?payment=success';
+    case 'hd_material_purchase':   return '/hd-materials?payment=success';
+    case 'sponsor_deposit':        return '/dashboard?payment=success&type=sponsor';
+    default:                       return '/dashboard?payment=success';
+  }
+}
+
+function getPendingRedirect(type: string): string {
+  switch (type) {
+    case 'session_booking':        return '/bookings?payment=pending';
+    case 'hd_material_purchase':   return '/hd-materials?payment=pending';
+    case 'revision_plan':          return '/revision-plan?payment=pending';
+    case 'plan_subscription':      return '/settings?payment=pending';
+    default:                       return '/dashboard?payment=pending';
+  }
+}
+
+function getFailedRedirect(type: string): string {
+  switch (type) {
+    case 'session_booking':        return '/bookings?payment=failed';
+    case 'hd_material_purchase':   return '/hd-materials?payment=failed';
+    case 'revision_plan':          return '/revision-plan?payment=failed';
+    case 'plan_subscription':      return '/dashboard?payment=failed&reason=failed';
+    default:                       return '/dashboard?payment=failed&reason=failed';
   }
 }

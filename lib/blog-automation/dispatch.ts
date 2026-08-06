@@ -24,7 +24,9 @@ export async function dispatchToExternalExecutor(payload: DispatchPayload) {
 
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };
   if (process.env.HYPERAGENT_WEBHOOK_TOKEN) {
-    headers.Authorization = `Bearer ${process.env.HYPERAGENT_WEBHOOK_TOKEN}`;
+    // Hyperagent expects its own header, not Authorization: Bearer. Overridable
+    // so a different executor can be pointed at the same dispatch path.
+    headers[process.env.HYPERAGENT_WEBHOOK_HEADER || 'X-Hyperagent-Webhook-Secret'] = process.env.HYPERAGENT_WEBHOOK_TOKEN;
   }
 
   try {

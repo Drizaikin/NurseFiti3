@@ -1,0 +1,4583 @@
+[
+  {
+    "unit": "Midwifery",
+    "total": 2126,
+    "bscn": 1033,
+    "krchn": 1093,
+    "topicCount": 125,
+    "topics": [
+      {
+        "topic": "Obstetric Nursing",
+        "total": 1492,
+        "bscn": 747,
+        "krchn": 745
+      },
+      {
+        "topic": "Labour and Delivery",
+        "total": 91,
+        "bscn": 44,
+        "krchn": 47
+      },
+      {
+        "topic": "Midwifery and Obstetric Nursing",
+        "total": 74,
+        "bscn": 0,
+        "krchn": 74
+      },
+      {
+        "topic": "Midwifery Care",
+        "total": 67,
+        "bscn": 33,
+        "krchn": 34
+      },
+      {
+        "topic": "Postnatal Care",
+        "total": 64,
+        "bscn": 34,
+        "krchn": 30
+      },
+      {
+        "topic": "Obstetric Emergencies",
+        "total": 42,
+        "bscn": 19,
+        "krchn": 23
+      },
+      {
+        "topic": "Obstetric Anatomy",
+        "total": 12,
+        "bscn": 6,
+        "krchn": 6
+      },
+      {
+        "topic": "Diagnosis of Pregnancy",
+        "total": 9,
+        "bscn": 4,
+        "krchn": 5
+      },
+      {
+        "topic": "Diabetes in Pregnancy",
+        "total": 8,
+        "bscn": 6,
+        "krchn": 2
+      },
+      {
+        "topic": "Physiological Changes in Pregnancy",
+        "total": 8,
+        "bscn": 6,
+        "krchn": 2
+      },
+      {
+        "topic": "Labour Management",
+        "total": 8,
+        "bscn": 3,
+        "krchn": 5
+      },
+      {
+        "topic": "Postpartum Haemorrhage",
+        "total": 7,
+        "bscn": 3,
+        "krchn": 4
+      },
+      {
+        "topic": "Antepartum Haemorrhage",
+        "total": 7,
+        "bscn": 4,
+        "krchn": 3
+      },
+      {
+        "topic": "Obstetric Complications",
+        "total": 7,
+        "bscn": 4,
+        "krchn": 3
+      },
+      {
+        "topic": "Third Stage of Labour",
+        "total": 6,
+        "bscn": 4,
+        "krchn": 2
+      },
+      {
+        "topic": "Minor Disorders of Pregnancy",
+        "total": 6,
+        "bscn": 0,
+        "krchn": 6
+      },
+      {
+        "topic": "Anatomy for Midwifery",
+        "total": 6,
+        "bscn": 0,
+        "krchn": 6
+      },
+      {
+        "topic": "Reproductive Physiology",
+        "total": 6,
+        "bscn": 3,
+        "krchn": 3
+      },
+      {
+        "topic": "Malpresentations",
+        "total": 6,
+        "bscn": 3,
+        "krchn": 3
+      },
+      {
+        "topic": "Placental Physiology",
+        "total": 5,
+        "bscn": 2,
+        "krchn": 3
+      },
+      {
+        "topic": "Pelvic Anatomy",
+        "total": 5,
+        "bscn": 3,
+        "krchn": 2
+      },
+      {
+        "topic": "Antenatal Assessment",
+        "total": 5,
+        "bscn": 3,
+        "krchn": 2
+      },
+      {
+        "topic": "Complications of Pregnancy",
+        "total": 5,
+        "bscn": 0,
+        "krchn": 5
+      },
+      {
+        "topic": "Stages of Labour",
+        "total": 4,
+        "bscn": 1,
+        "krchn": 3
+      },
+      {
+        "topic": "Abnormal Labour",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Puerperal Sepsis",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Gestational Trophoblastic Disease",
+        "total": 4,
+        "bscn": 3,
+        "krchn": 1
+      },
+      {
+        "topic": "Rhesus Incompatibility",
+        "total": 4,
+        "bscn": 4,
+        "krchn": 0
+      },
+      {
+        "topic": "Newborn Care",
+        "total": 4,
+        "bscn": 1,
+        "krchn": 3
+      },
+      {
+        "topic": "Pelvimetry and Pelvis",
+        "total": 4,
+        "bscn": 0,
+        "krchn": 4
+      },
+      {
+        "topic": "Labour Assessment",
+        "total": 4,
+        "bscn": 1,
+        "krchn": 3
+      },
+      {
+        "topic": "Neonatal Assessment",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Embryology",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Pharmacology in Midwifery",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "PMTCT",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Breastfeeding",
+        "total": 3,
+        "bscn": 2,
+        "krchn": 1
+      },
+      {
+        "topic": "Maternal Mortality",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Placental Abnormalities",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Uterine Physiology in Labour",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Breech Delivery",
+        "total": 3,
+        "bscn": 2,
+        "krchn": 1
+      },
+      {
+        "topic": "Hypertensive Disorders of Pregnancy",
+        "total": 3,
+        "bscn": 3,
+        "krchn": 0
+      },
+      {
+        "topic": "Multiple Pregnancy",
+        "total": 3,
+        "bscn": 2,
+        "krchn": 1
+      },
+      {
+        "topic": "Fetal Skull Diameters",
+        "total": 3,
+        "bscn": 3,
+        "krchn": 0
+      },
+      {
+        "topic": "Postnatal Complications",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Amniotic Fluid",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Uterine Rupture",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Shoulder Dystocia",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Mechanism of Labour",
+        "total": 2,
+        "bscn": 2,
+        "krchn": 0
+      },
+      {
+        "topic": "Obstetric History",
+        "total": 2,
+        "bscn": 2,
+        "krchn": 0
+      },
+      {
+        "topic": "Placental Hormones",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Hormones in Pregnancy",
+        "total": 2,
+        "bscn": 2,
+        "krchn": 0
+      },
+      {
+        "topic": "Placenta Praevia",
+        "total": 2,
+        "bscn": 2,
+        "krchn": 0
+      },
+      {
+        "topic": "Labour Complications",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Antenatal History Taking",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Nutrition in Pregnancy",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Obstetric Assessment",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Physiology of Labour",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Fetal Skull",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Antenatal Nutrition",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Anaemia in Pregnancy",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Immunisation in Pregnancy",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Puerperal Infections",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Fetal Wellbeing",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Pillar of Safe Motherhood",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Gynaecology",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Obstetric Infections",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Reproductive Health",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Fetal Circulation",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Pre-eclampsia",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Normal Labour",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Caesarean Section",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Weight Gain in Pregnancy",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Vaginal Discharge in Pregnancy",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Partograph Use",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Fetal Distress Management",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Epidural Anaesthesia",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Twin Delivery",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Expected Date of Delivery",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Episiotomy",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Fetal Descent",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Fetal Position",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Danger Signs in Labour",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Preterm Labour Management",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Deep Vein Thrombosis",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Lactation and PMTCT",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Lactation",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Sexually Transmitted Infections in Pregnancy",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Postnatal Mental Health",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Cardiac Disease in Pregnancy",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Deep Vein Thrombosis Prevention",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Shoulder Dystocia Management",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Brachial Plexus Injury",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Instrumental Delivery",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Cervical Changes in Labour",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Gestational Diabetes",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Breast Changes in Pregnancy",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Partograph",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Secondary Postpartum Haemorrhage",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Disseminated Intravascular Coagulation",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Face Presentation",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Fetal Membranes",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Lightening",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Intrauterine Growth Restriction",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Hormones in Labour",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Fetal Distress",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Mastitis Prevention",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Obstetric Terminology",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Perineal Tears",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Puerperium",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Induction of Labour",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Cord Prolapse",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Placental Examination",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Polyhydramnios",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Unstable Lie",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Fundal Height",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Vesicovaginal Fistula",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Umbilical Cord Abnormalities",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "True vs False Labour",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Obstetric Procedures",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Malpresentation",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Essential Newborn Care",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Reproductive Anatomy",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Antenatal Complications",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Breech Presentation",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Hyperemesis Gravidarum",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      }
+    ]
+  },
+  {
+    "unit": "Medical-Surgical Nursing",
+    "total": 1749,
+    "bscn": 709,
+    "krchn": 1040,
+    "topicCount": 100,
+    "topics": [
+      {
+        "topic": "Clinical Nursing",
+        "total": 472,
+        "bscn": 247,
+        "krchn": 225
+      },
+      {
+        "topic": "Medical-Surgical Nursing Care",
+        "total": 193,
+        "bscn": 0,
+        "krchn": 193
+      },
+      {
+        "topic": "Communicable Diseases",
+        "total": 58,
+        "bscn": 19,
+        "krchn": 39
+      },
+      {
+        "topic": "Thyroid Disorders",
+        "total": 54,
+        "bscn": 27,
+        "krchn": 27
+      },
+      {
+        "topic": "Cardiovascular Nursing",
+        "total": 54,
+        "bscn": 26,
+        "krchn": 28
+      },
+      {
+        "topic": "Neurological Nursing",
+        "total": 51,
+        "bscn": 23,
+        "krchn": 28
+      },
+      {
+        "topic": "Respiratory Nursing",
+        "total": 45,
+        "bscn": 23,
+        "krchn": 22
+      },
+      {
+        "topic": "Renal Disorders",
+        "total": 44,
+        "bscn": 22,
+        "krchn": 22
+      },
+      {
+        "topic": "Neurological Disorders",
+        "total": 42,
+        "bscn": 20,
+        "krchn": 22
+      },
+      {
+        "topic": "Respiratory Disorders",
+        "total": 41,
+        "bscn": 16,
+        "krchn": 25
+      },
+      {
+        "topic": "Gastrointestinal Disorders",
+        "total": 36,
+        "bscn": 13,
+        "krchn": 23
+      },
+      {
+        "topic": "Oncology and Haematology",
+        "total": 36,
+        "bscn": 18,
+        "krchn": 18
+      },
+      {
+        "topic": "Endocrine Disorders",
+        "total": 33,
+        "bscn": 14,
+        "krchn": 19
+      },
+      {
+        "topic": "Cardiovascular Disorders",
+        "total": 30,
+        "bscn": 14,
+        "krchn": 16
+      },
+      {
+        "topic": "Musculoskeletal Nursing",
+        "total": 28,
+        "bscn": 10,
+        "krchn": 18
+      },
+      {
+        "topic": "Parasitic Diseases",
+        "total": 27,
+        "bscn": 11,
+        "krchn": 16
+      },
+      {
+        "topic": "Haematological Disorders",
+        "total": 26,
+        "bscn": 11,
+        "krchn": 15
+      },
+      {
+        "topic": "Dermatology",
+        "total": 26,
+        "bscn": 13,
+        "krchn": 13
+      },
+      {
+        "topic": "Dermatological Nursing",
+        "total": 25,
+        "bscn": 12,
+        "krchn": 13
+      },
+      {
+        "topic": "Gerontological Nursing",
+        "total": 22,
+        "bscn": 11,
+        "krchn": 11
+      },
+      {
+        "topic": "Adrenal Disorders",
+        "total": 22,
+        "bscn": 11,
+        "krchn": 11
+      },
+      {
+        "topic": "ENT Disorders",
+        "total": 21,
+        "bscn": 11,
+        "krchn": 10
+      },
+      {
+        "topic": "Ophthalmology",
+        "total": 20,
+        "bscn": 10,
+        "krchn": 10
+      },
+      {
+        "topic": "Oncology Nursing",
+        "total": 19,
+        "bscn": 9,
+        "krchn": 10
+      },
+      {
+        "topic": "Musculoskeletal Disorders",
+        "total": 19,
+        "bscn": 7,
+        "krchn": 12
+      },
+      {
+        "topic": "Ophthalmic Nursing",
+        "total": 18,
+        "bscn": 9,
+        "krchn": 9
+      },
+      {
+        "topic": "Malaria",
+        "total": 15,
+        "bscn": 6,
+        "krchn": 9
+      },
+      {
+        "topic": "Fluid and Electrolytes",
+        "total": 14,
+        "bscn": 7,
+        "krchn": 7
+      },
+      {
+        "topic": "Fluid and Electrolyte Balance",
+        "total": 14,
+        "bscn": 5,
+        "krchn": 9
+      },
+      {
+        "topic": "Eye Disorders",
+        "total": 13,
+        "bscn": 3,
+        "krchn": 10
+      },
+      {
+        "topic": "Dermatological Disorders",
+        "total": 11,
+        "bscn": 2,
+        "krchn": 9
+      },
+      {
+        "topic": "Cerebrovascular Disorders",
+        "total": 11,
+        "bscn": 5,
+        "krchn": 6
+      },
+      {
+        "topic": "Diabetes Mellitus",
+        "total": 9,
+        "bscn": 4,
+        "krchn": 5
+      },
+      {
+        "topic": "Ear Disorders",
+        "total": 8,
+        "bscn": 3,
+        "krchn": 5
+      },
+      {
+        "topic": "GI Disorders",
+        "total": 8,
+        "bscn": 4,
+        "krchn": 4
+      },
+      {
+        "topic": "Pituitary Disorders",
+        "total": 8,
+        "bscn": 4,
+        "krchn": 4
+      },
+      {
+        "topic": "Upper GI Disorders",
+        "total": 8,
+        "bscn": 4,
+        "krchn": 4
+      },
+      {
+        "topic": "Spinal Cord Disorders",
+        "total": 8,
+        "bscn": 4,
+        "krchn": 4
+      },
+      {
+        "topic": "HIV/AIDS",
+        "total": 8,
+        "bscn": 4,
+        "krchn": 4
+      },
+      {
+        "topic": "Gastrointestinal Nursing",
+        "total": 7,
+        "bscn": 0,
+        "krchn": 7
+      },
+      {
+        "topic": "Respiratory Assessment",
+        "total": 6,
+        "bscn": 2,
+        "krchn": 4
+      },
+      {
+        "topic": "Neurological Assessment",
+        "total": 6,
+        "bscn": 3,
+        "krchn": 3
+      },
+      {
+        "topic": "Cardiovascular Assessment",
+        "total": 5,
+        "bscn": 2,
+        "krchn": 3
+      },
+      {
+        "topic": "Respiratory Procedures",
+        "total": 5,
+        "bscn": 2,
+        "krchn": 3
+      },
+      {
+        "topic": "Neurological Diagnostics",
+        "total": 5,
+        "bscn": 2,
+        "krchn": 3
+      },
+      {
+        "topic": "Urinary Disorders",
+        "total": 5,
+        "bscn": 0,
+        "krchn": 5
+      },
+      {
+        "topic": "Dental and Oral Health",
+        "total": 5,
+        "bscn": 2,
+        "krchn": 3
+      },
+      {
+        "topic": "Trachoma",
+        "total": 5,
+        "bscn": 2,
+        "krchn": 3
+      },
+      {
+        "topic": "Gastrointestinal Procedures",
+        "total": 4,
+        "bscn": 1,
+        "krchn": 3
+      },
+      {
+        "topic": "Gynaecological Conditions",
+        "total": 4,
+        "bscn": 4,
+        "krchn": 0
+      },
+      {
+        "topic": "Vascular Disorders",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Communicable Disease Control",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "ENT Nursing",
+        "total": 4,
+        "bscn": 1,
+        "krchn": 3
+      },
+      {
+        "topic": "STI and HIV",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "STI Management",
+        "total": 4,
+        "bscn": 1,
+        "krchn": 3
+      },
+      {
+        "topic": "Blood Transfusion",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Ear, Nose and Throat Disorders",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Cardiovascular Diagnostics",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Diagnostic Procedures",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Sexually Transmitted Infections",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Rehabilitation Nursing",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Urinary Nursing Procedures",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Renal Diagnostics",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Respiratory Nursing Care",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Pain Management",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Medication Administration",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "General Medical-Surgical",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Liver Disorders",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Cardiac Rehabilitation",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Dermatological Assessment",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Gastrointestinal Assessment",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Neurological Procedures",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Palliative Care",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Tuberculosis",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "GI Assessment",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "HIV/AIDS Management",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Peripheral Vascular Disorders",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Tuberculosis Control",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "HIV/AIDS Care",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Neurological Nursing Care",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Oncology",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Electrolyte Imbalances",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Abdominal Assessment",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Urinary Diagnostics",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Cardiac Disease",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Respiratory Diagnostics",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Fluid & Electrolyte Disorders",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Endocrine Nursing",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Renal Nursing",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Neuromuscular Disorders",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Breast Assessment",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Spinal Cord Injury",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Musculoskeletal Trauma",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Cardiac Devices",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Head and Neck Cancer",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Orthopaedic Oncology",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Vascular Surgery",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "HIV/AIDS Prevention",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "TB Control",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "IV Therapy and Calculations",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      }
+    ]
+  },
+  {
+    "unit": "Nursing Management & Leadership",
+    "total": 631,
+    "bscn": 328,
+    "krchn": 303,
+    "topicCount": 52,
+    "topics": [
+      {
+        "topic": "Health Systems",
+        "total": 382,
+        "bscn": 191,
+        "krchn": 191
+      },
+      {
+        "topic": "Nursing Management",
+        "total": 56,
+        "bscn": 34,
+        "krchn": 22
+      },
+      {
+        "topic": "Nursing Process",
+        "total": 23,
+        "bscn": 12,
+        "krchn": 11
+      },
+      {
+        "topic": "Leadership Styles",
+        "total": 16,
+        "bscn": 13,
+        "krchn": 3
+      },
+      {
+        "topic": "Management Functions",
+        "total": 14,
+        "bscn": 7,
+        "krchn": 7
+      },
+      {
+        "topic": "Management Theory",
+        "total": 13,
+        "bscn": 6,
+        "krchn": 7
+      },
+      {
+        "topic": "Nursing Theories",
+        "total": 9,
+        "bscn": 5,
+        "krchn": 4
+      },
+      {
+        "topic": "Professional Practice",
+        "total": 9,
+        "bscn": 4,
+        "krchn": 5
+      },
+      {
+        "topic": "Management Principles",
+        "total": 9,
+        "bscn": 4,
+        "krchn": 5
+      },
+      {
+        "topic": "Professional Ethics",
+        "total": 7,
+        "bscn": 3,
+        "krchn": 4
+      },
+      {
+        "topic": "Professional Nursing Practice",
+        "total": 6,
+        "bscn": 1,
+        "krchn": 5
+      },
+      {
+        "topic": "Professional Regulation",
+        "total": 6,
+        "bscn": 3,
+        "krchn": 3
+      },
+      {
+        "topic": "Leadership Roles",
+        "total": 6,
+        "bscn": 6,
+        "krchn": 0
+      },
+      {
+        "topic": "Nursing Procedures",
+        "total": 6,
+        "bscn": 0,
+        "krchn": 6
+      },
+      {
+        "topic": "Leadership",
+        "total": 5,
+        "bscn": 2,
+        "krchn": 3
+      },
+      {
+        "topic": "End-of-Life Care",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Leadership Theories",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Human Resource Management",
+        "total": 3,
+        "bscn": 2,
+        "krchn": 1
+      },
+      {
+        "topic": "Informed Consent",
+        "total": 2,
+        "bscn": 2,
+        "krchn": 0
+      },
+      {
+        "topic": "Nursing Regulation and Professional Bodies",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Nursing Legislation",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Critical Thinking",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Financial Management",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Staff Development",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Delegation",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Organisational Structure",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Delegation and Assignment",
+        "total": 2,
+        "bscn": 2,
+        "krchn": 0
+      },
+      {
+        "topic": "Strategic Change Management",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Health Facility Management",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Nursing Theory",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Patient Safety",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Professional Ethics and Law",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Ethical Principles",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Conflict Management",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Organisational Theory",
+        "total": 2,
+        "bscn": 2,
+        "krchn": 0
+      },
+      {
+        "topic": "Management Theories",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Planning",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Nursing Regulation",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Nursing Ethics",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Documentation Standards",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Nursing Roles",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Teaching Aids",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Nursing Care Models",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Disciplinary Process",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Staffing",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Scope of Practice",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Assessment Methods",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Motivation",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Management Levels",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "DVT Nursing Diagnosis",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Management Roles",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Communication in Nursing",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      }
+    ]
+  },
+  {
+    "unit": "Paediatric Nursing",
+    "total": 516,
+    "bscn": 214,
+    "krchn": 302,
+    "topicCount": 83,
+    "topics": [
+      {
+        "topic": "Paediatric Nursing",
+        "total": 88,
+        "bscn": 43,
+        "krchn": 45
+      },
+      {
+        "topic": "Paediatrics",
+        "total": 80,
+        "bscn": 40,
+        "krchn": 40
+      },
+      {
+        "topic": "Neonatal Care",
+        "total": 52,
+        "bscn": 26,
+        "krchn": 26
+      },
+      {
+        "topic": "Child Growth and Development",
+        "total": 36,
+        "bscn": 18,
+        "krchn": 18
+      },
+      {
+        "topic": "Paediatric Nursing Care",
+        "total": 34,
+        "bscn": 0,
+        "krchn": 34
+      },
+      {
+        "topic": "Growth and Development",
+        "total": 20,
+        "bscn": 8,
+        "krchn": 12
+      },
+      {
+        "topic": "Neonatal Assessment",
+        "total": 15,
+        "bscn": 7,
+        "krchn": 8
+      },
+      {
+        "topic": "Paediatric Infections",
+        "total": 12,
+        "bscn": 6,
+        "krchn": 6
+      },
+      {
+        "topic": "IMNCI",
+        "total": 11,
+        "bscn": 5,
+        "krchn": 6
+      },
+      {
+        "topic": "Neonatal Jaundice",
+        "total": 10,
+        "bscn": 4,
+        "krchn": 6
+      },
+      {
+        "topic": "Childhood Communicable Diseases",
+        "total": 10,
+        "bscn": 5,
+        "krchn": 5
+      },
+      {
+        "topic": "Neonatal Infections",
+        "total": 7,
+        "bscn": 3,
+        "krchn": 4
+      },
+      {
+        "topic": "Respiratory Disorders",
+        "total": 6,
+        "bscn": 3,
+        "krchn": 3
+      },
+      {
+        "topic": "Neurological Disorders",
+        "total": 6,
+        "bscn": 3,
+        "krchn": 3
+      },
+      {
+        "topic": "Neonatal Respiratory Disorders",
+        "total": 6,
+        "bscn": 2,
+        "krchn": 4
+      },
+      {
+        "topic": "Diarrhoea Management",
+        "total": 5,
+        "bscn": 2,
+        "krchn": 3
+      },
+      {
+        "topic": "Neonatal Resuscitation",
+        "total": 5,
+        "bscn": 4,
+        "krchn": 1
+      },
+      {
+        "topic": "Fluid & Electrolyte Balance",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Anatomy & Physiology",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Gastrointestinal Disorders in Children",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "IMCI Guidelines",
+        "total": 4,
+        "bscn": 0,
+        "krchn": 4
+      },
+      {
+        "topic": "Neonatal Thermoregulation",
+        "total": 4,
+        "bscn": 3,
+        "krchn": 1
+      },
+      {
+        "topic": "Gastrointestinal Disorders",
+        "total": 4,
+        "bscn": 1,
+        "krchn": 3
+      },
+      {
+        "topic": "Cardiovascular Disorders",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Neonatal Eye Care",
+        "total": 4,
+        "bscn": 0,
+        "krchn": 4
+      },
+      {
+        "topic": "Paediatric Nutrition",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Nephrotic Syndrome",
+        "total": 3,
+        "bscn": 0,
+        "krchn": 3
+      },
+      {
+        "topic": "Congenital Abnormalities",
+        "total": 3,
+        "bscn": 2,
+        "krchn": 1
+      },
+      {
+        "topic": "Pharmacology in Paediatrics",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Poisoning & Toxicology",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Oncology in Children",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Neonatal Feeding",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Small for Gestational Age",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Medication Administration",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Endocrine Disorders",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Dermatological Disorders",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Newborn and Neonatal Care",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Parasitology",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Respiratory Infections",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Skin Disorders",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Neonatal Disorders",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Child Development",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Neonatal Neurology",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Paediatric GI Disorders",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Paediatric Oncology",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Respiratory Disorders in Children",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Communicable Diseases in Children",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Nutrition and Malnutrition",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Haematological Disorders in Children",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Fluid and Electrolyte Balance in Children",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Neonatal Seizures",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Dehydration in Malnutrition",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Paediatric CPR",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Bone Marrow Aspiration",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Leukaemia",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Fluid Overload",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Asthma",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "IM Injection Sites",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Acid-Base Balance",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Paediatric Emergencies",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Refractive Errors",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Burns",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Oesophageal Atresia",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Otitis Media",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Immunosuppression",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "IMCI",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Child Nutrition",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Neonatal Head Injuries",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Neonatal Home Visit",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "APGAR Score",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Haematological Conditions",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Phototherapy",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Nutrition in Paediatrics",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Cardiovascular Disorders in Children",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Necrotising Enterocolitis",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Neonatal Respiratory Physiology",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Neonatal Reflexes",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Neonatal Respiratory Distress",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Post-term Infant",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Newborn Assessment",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Newborn Care",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Eye Care",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "HIV in Children",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      }
+    ]
+  },
+  {
+    "unit": "Pharmacology",
+    "total": 452,
+    "bscn": 191,
+    "krchn": 261,
+    "topicCount": 72,
+    "topics": [
+      {
+        "topic": "Drug Therapy",
+        "total": 91,
+        "bscn": 44,
+        "krchn": 47
+      },
+      {
+        "topic": "Antimicrobials",
+        "total": 37,
+        "bscn": 17,
+        "krchn": 20
+      },
+      {
+        "topic": "Pharmacological Nursing Management",
+        "total": 33,
+        "bscn": 0,
+        "krchn": 33
+      },
+      {
+        "topic": "Pharmacokinetics",
+        "total": 26,
+        "bscn": 10,
+        "krchn": 16
+      },
+      {
+        "topic": "Cardiovascular Pharmacology",
+        "total": 23,
+        "bscn": 11,
+        "krchn": 12
+      },
+      {
+        "topic": "Cardiovascular Drugs",
+        "total": 22,
+        "bscn": 11,
+        "krchn": 11
+      },
+      {
+        "topic": "Gastrointestinal Pharmacology",
+        "total": 16,
+        "bscn": 7,
+        "krchn": 9
+      },
+      {
+        "topic": "Gastrointestinal Drugs",
+        "total": 14,
+        "bscn": 7,
+        "krchn": 7
+      },
+      {
+        "topic": "Anticoagulant Therapy",
+        "total": 13,
+        "bscn": 7,
+        "krchn": 6
+      },
+      {
+        "topic": "Analgesics",
+        "total": 13,
+        "bscn": 6,
+        "krchn": 7
+      },
+      {
+        "topic": "Respiratory Pharmacology",
+        "total": 12,
+        "bscn": 4,
+        "krchn": 8
+      },
+      {
+        "topic": "Antiparasitic Drugs",
+        "total": 9,
+        "bscn": 4,
+        "krchn": 5
+      },
+      {
+        "topic": "Respiratory Drugs",
+        "total": 8,
+        "bscn": 4,
+        "krchn": 4
+      },
+      {
+        "topic": "Endocrine Pharmacology",
+        "total": 8,
+        "bscn": 4,
+        "krchn": 4
+      },
+      {
+        "topic": "CNS Pharmacology",
+        "total": 6,
+        "bscn": 1,
+        "krchn": 5
+      },
+      {
+        "topic": "Diuretics",
+        "total": 6,
+        "bscn": 3,
+        "krchn": 3
+      },
+      {
+        "topic": "Antidotes",
+        "total": 5,
+        "bscn": 1,
+        "krchn": 4
+      },
+      {
+        "topic": "Anti-infective Drugs",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "CNS Depressants",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Routes of Drug Administration",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Drugs in Pregnancy",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Anthelmintics",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "NSAIDs",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "General Pharmacology",
+        "total": 4,
+        "bscn": 0,
+        "krchn": 4
+      },
+      {
+        "topic": "Drug Interactions",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Pharmacognosy",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Anticoagulants",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Toxicology and Antidotes",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Corticosteroid Therapy",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Oxygen Therapy",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Eye Medications",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Anticonvulsant Therapy",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Eclampsia Management",
+        "total": 2,
+        "bscn": 2,
+        "krchn": 0
+      },
+      {
+        "topic": "Magnesium Sulphate Toxicity",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Basic Pharmacology Principles",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Sources of Drugs",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Opioid Pharmacology",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Local Anaesthetics",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Antivirals",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Anti-Allergic Drugs",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Antidiabetic Drugs",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Psychotropic Drugs",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Antimalarials",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Antineoplastics and Antidotes",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Toxicology",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Anxiolytics",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Pharmacodynamics",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Antiretrovirals",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Anti-Asthmatic Drugs",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Pharmacology of Allergy",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Antimicrobial Therapy",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "COVID-19 Management",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Antiparasitic Therapy",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Tuberculosis Treatment",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "CNS Drugs & Drug Interactions",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Drug Calculations",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Antimalarial Drugs",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Oral Rehydration Therapy",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Oxytocin Administration",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Antibiotic Therapy",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Digoxin Toxicity",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Insulin Administration",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Opioid Analgesics",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Antihypertensive Drugs",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Safe Drugs in Breastfeeding",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Malaria in Pregnancy",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Anaesthesia Pharmacology",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Antidotes and Toxicology",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Anticonvulsants",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Musculoskeletal Drugs",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Oncology Pharmacology",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "HIV/AIDS Pharmacology",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      }
+    ]
+  },
+  {
+    "unit": "Community Health Nursing",
+    "total": 426,
+    "bscn": 158,
+    "krchn": 268,
+    "topicCount": 55,
+    "topics": [
+      {
+        "topic": "Community Health",
+        "total": 127,
+        "bscn": 64,
+        "krchn": 63
+      },
+      {
+        "topic": "Community Health Practice",
+        "total": 43,
+        "bscn": 0,
+        "krchn": 43
+      },
+      {
+        "topic": "Epidemiological Methods",
+        "total": 40,
+        "bscn": 14,
+        "krchn": 26
+      },
+      {
+        "topic": "Home-Based Care",
+        "total": 16,
+        "bscn": 5,
+        "krchn": 11
+      },
+      {
+        "topic": "School Health",
+        "total": 15,
+        "bscn": 6,
+        "krchn": 9
+      },
+      {
+        "topic": "Primary Health Care",
+        "total": 15,
+        "bscn": 5,
+        "krchn": 10
+      },
+      {
+        "topic": "Disaster Management",
+        "total": 14,
+        "bscn": 5,
+        "krchn": 9
+      },
+      {
+        "topic": "Community Diagnosis",
+        "total": 14,
+        "bscn": 5,
+        "krchn": 9
+      },
+      {
+        "topic": "Health Systems in Kenya",
+        "total": 12,
+        "bscn": 6,
+        "krchn": 6
+      },
+      {
+        "topic": "Medical Sociology",
+        "total": 11,
+        "bscn": 6,
+        "krchn": 5
+      },
+      {
+        "topic": "Home Visiting",
+        "total": 9,
+        "bscn": 3,
+        "krchn": 6
+      },
+      {
+        "topic": "Health Promotion",
+        "total": 9,
+        "bscn": 5,
+        "krchn": 4
+      },
+      {
+        "topic": "Levels of Prevention",
+        "total": 8,
+        "bscn": 4,
+        "krchn": 4
+      },
+      {
+        "topic": "Health Education",
+        "total": 7,
+        "bscn": 3,
+        "krchn": 4
+      },
+      {
+        "topic": "Community Development",
+        "total": 6,
+        "bscn": 3,
+        "krchn": 3
+      },
+      {
+        "topic": "Community Health Nursing Roles",
+        "total": 6,
+        "bscn": 3,
+        "krchn": 3
+      },
+      {
+        "topic": "Community Health Process",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Oral Health",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Disability and Rehabilitation",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Community Health Principles",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Social Determinants of Health",
+        "total": 4,
+        "bscn": 1,
+        "krchn": 3
+      },
+      {
+        "topic": "Health Systems",
+        "total": 3,
+        "bscn": 0,
+        "krchn": 3
+      },
+      {
+        "topic": "Community Assessment",
+        "total": 3,
+        "bscn": 2,
+        "krchn": 1
+      },
+      {
+        "topic": "Ageing",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Community Mobilisation",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Dental Health",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Vulnerable Groups",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "The Home Visit",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Gerontological Nursing",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Roles of the CHN",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Community as a System",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Health Policy",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Concepts of Health",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Ageing and Elderly Care",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Disaster Preparedness",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Transcultural Nursing",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Cultural Competence",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Demography",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Child Health Epidemiology",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Cancer Prevention",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Community Participation",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Health Services",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Screening",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Community Health Nursing Principles",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Community",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Health Systems & Management",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Older Adult Health",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "General Community",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Global Health Goals",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Culture and Health",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Social Change",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Health Behaviour Models",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Epidemiology & Demography",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Health Systems & Integration",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Vital Registration",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      }
+    ]
+  },
+  {
+    "unit": "Mental Health Nursing",
+    "total": 400,
+    "bscn": 141,
+    "krchn": 259,
+    "topicCount": 76,
+    "topics": [
+      {
+        "topic": "Psychiatric Nursing Care",
+        "total": 83,
+        "bscn": 0,
+        "krchn": 83
+      },
+      {
+        "topic": "Mental Health Nursing",
+        "total": 73,
+        "bscn": 38,
+        "krchn": 35
+      },
+      {
+        "topic": "Psychopharmacology",
+        "total": 20,
+        "bscn": 9,
+        "krchn": 11
+      },
+      {
+        "topic": "Substance Use Disorders",
+        "total": 17,
+        "bscn": 6,
+        "krchn": 11
+      },
+      {
+        "topic": "Psychotic Disorders",
+        "total": 11,
+        "bscn": 4,
+        "krchn": 7
+      },
+      {
+        "topic": "Anxiety Disorders",
+        "total": 9,
+        "bscn": 5,
+        "krchn": 4
+      },
+      {
+        "topic": "Mood Disorders",
+        "total": 8,
+        "bscn": 4,
+        "krchn": 4
+      },
+      {
+        "topic": "Growth and Development",
+        "total": 8,
+        "bscn": 3,
+        "krchn": 5
+      },
+      {
+        "topic": "Sexual Disorders",
+        "total": 8,
+        "bscn": 2,
+        "krchn": 6
+      },
+      {
+        "topic": "Therapeutic Modalities",
+        "total": 7,
+        "bscn": 4,
+        "krchn": 3
+      },
+      {
+        "topic": "Personality Disorders",
+        "total": 7,
+        "bscn": 3,
+        "krchn": 4
+      },
+      {
+        "topic": "Therapeutic Communication",
+        "total": 7,
+        "bscn": 3,
+        "krchn": 4
+      },
+      {
+        "topic": "Eating Disorders",
+        "total": 7,
+        "bscn": 3,
+        "krchn": 4
+      },
+      {
+        "topic": "Mental Status Examination",
+        "total": 6,
+        "bscn": 3,
+        "krchn": 3
+      },
+      {
+        "topic": "Neurocognitive Disorders",
+        "total": 6,
+        "bscn": 3,
+        "krchn": 3
+      },
+      {
+        "topic": "General Mental",
+        "total": 5,
+        "bscn": 0,
+        "krchn": 5
+      },
+      {
+        "topic": "Cognitive Disorders",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Mental State Examination",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Psychosis",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Somatic Therapies",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Depressive Disorders",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Thought Disorders",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Psychotropic Medications",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Mental Health",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Intellectual Disability",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Behaviour Therapy",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Bipolar Disorder",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Psychotropic Drug Effects",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Developmental Theories",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Schizophrenia",
+        "total": 2,
+        "bscn": 2,
+        "krchn": 0
+      },
+      {
+        "topic": "Substance Use",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Grief and Loss",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Trauma & Stress-Related Disorders",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Somatoform & Related Disorders",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Neurochemistry",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Loss and Grief",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Child and Adolescent Mental Health",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Family Psychiatry",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Gender-Based Violence",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Perinatal Mental Health",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Neurological Conditions in Psychiatry",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Autism Spectrum Disorders",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Suicide and Depression",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Psychiatric Admissions",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Antipsychotic Drugs",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Antipsychotic Side Effects",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "OCD Treatment",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Forensic Nursing",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Mental Health Legislation",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Somatoform and Anxiety Disorders",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Conflict and Communication",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "History of Psychiatry",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Motor Disorders",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Group Therapy",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Lithium Toxicity",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Mania",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Self-Concept",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Psychiatric Models",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Milieu Therapy",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Antipsychotics",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Depression",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Postnatal Mental Health",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Cognitive Therapy",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "DSM Classification",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Suicide Risk Assessment",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Antipsychotic Medications",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Suicidal Ideation",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "PTSD",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Grief and Bereavement",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Nursing Process in Psychiatry",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Defense Mechanisms",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Somatoform Disorders",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Adolescent Mental Health",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Defence Mechanisms",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Neurotransmitters",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Developmental Psychology",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      }
+    ]
+  },
+  {
+    "unit": "Anatomy & Physiology",
+    "total": 200,
+    "bscn": 106,
+    "krchn": 94,
+    "topicCount": 8,
+    "topics": [
+      {
+        "topic": "Anatomy and Physiology",
+        "total": 162,
+        "bscn": 74,
+        "krchn": 88
+      },
+      {
+        "topic": "Anatomy & Physiology",
+        "total": 27,
+        "bscn": 27,
+        "krchn": 0
+      },
+      {
+        "topic": "Respiratory Anatomy",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Gastrointestinal Physiology",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Cardiovascular Pathophysiology",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Neuroanatomy",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Cardiovascular Anatomy",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Renal Physiology",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      }
+    ]
+  },
+  {
+    "unit": "Maternal & Child Health",
+    "total": 198,
+    "bscn": 86,
+    "krchn": 112,
+    "topicCount": 27,
+    "topics": [
+      {
+        "topic": "Antenatal Care",
+        "total": 58,
+        "bscn": 27,
+        "krchn": 31
+      },
+      {
+        "topic": "Family Planning",
+        "total": 52,
+        "bscn": 20,
+        "krchn": 32
+      },
+      {
+        "topic": "Immunization",
+        "total": 20,
+        "bscn": 11,
+        "krchn": 9
+      },
+      {
+        "topic": "Immunisation",
+        "total": 14,
+        "bscn": 2,
+        "krchn": 12
+      },
+      {
+        "topic": "Neonatal Prophylaxis",
+        "total": 5,
+        "bscn": 4,
+        "krchn": 1
+      },
+      {
+        "topic": "Child Development",
+        "total": 4,
+        "bscn": 0,
+        "krchn": 4
+      },
+      {
+        "topic": "PMTCT",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Vital Statistics",
+        "total": 4,
+        "bscn": 3,
+        "krchn": 1
+      },
+      {
+        "topic": "Immunisation Programme",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Cold Chain",
+        "total": 4,
+        "bscn": 1,
+        "krchn": 3
+      },
+      {
+        "topic": "Growth and Development",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Growth Monitoring",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Neural Tube Defect Prevention",
+        "total": 3,
+        "bscn": 3,
+        "krchn": 0
+      },
+      {
+        "topic": "Family Health",
+        "total": 3,
+        "bscn": 0,
+        "krchn": 3
+      },
+      {
+        "topic": "IMNCI Guidelines",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Maternal and Child Health",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Reproductive Health",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Vitamin A Supplementation",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Child Health",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Immunisation and Pharmacology in Pregnancy",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Adolescent Pregnancy",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Essential Newborn Care",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Anaemia in Pregnancy",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Child Health (IMNCI)",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Cardiac Disease in Pregnancy",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Cervical Cancer Screening",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Cervical Cancer and Reproductive Health",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      }
+    ]
+  },
+  {
+    "unit": "Research & Statistics",
+    "total": 187,
+    "bscn": 114,
+    "krchn": 73,
+    "topicCount": 27,
+    "topics": [
+      {
+        "topic": "Research Methods",
+        "total": 68,
+        "bscn": 40,
+        "krchn": 28
+      },
+      {
+        "topic": "Research Methodology",
+        "total": 46,
+        "bscn": 36,
+        "krchn": 10
+      },
+      {
+        "topic": "Biostatistics",
+        "total": 13,
+        "bscn": 7,
+        "krchn": 6
+      },
+      {
+        "topic": "Research Ethics",
+        "total": 10,
+        "bscn": 5,
+        "krchn": 5
+      },
+      {
+        "topic": "Research Design",
+        "total": 7,
+        "bscn": 3,
+        "krchn": 4
+      },
+      {
+        "topic": "Sampling",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Research Designs",
+        "total": 4,
+        "bscn": 4,
+        "krchn": 0
+      },
+      {
+        "topic": "Statistics",
+        "total": 3,
+        "bscn": 2,
+        "krchn": 1
+      },
+      {
+        "topic": "Data Collection",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Sampling Methods",
+        "total": 3,
+        "bscn": 2,
+        "krchn": 1
+      },
+      {
+        "topic": "Variables",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Publication and Peer Review",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Research Concepts",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Evidence-Based Practice",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Measurement and Evaluation",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "History of Nursing Research",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Research Roles",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Research Dissemination",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Sociology and Health",
+        "total": 2,
+        "bscn": 2,
+        "krchn": 0
+      },
+      {
+        "topic": "Questionnaire Design",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Informed Consent",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Epidemiology",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Data Analysis",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Measurement & Biostatistics",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Research Proposal",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Research Report",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Evidence Levels",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      }
+    ]
+  },
+  {
+    "unit": "Surgical Nursing",
+    "total": 128,
+    "bscn": 49,
+    "krchn": 79,
+    "topicCount": 34,
+    "topics": [
+      {
+        "topic": "Surgical Nursing",
+        "total": 17,
+        "bscn": 9,
+        "krchn": 8
+      },
+      {
+        "topic": "Perioperative Care",
+        "total": 15,
+        "bscn": 8,
+        "krchn": 7
+      },
+      {
+        "topic": "Wound Care",
+        "total": 14,
+        "bscn": 6,
+        "krchn": 8
+      },
+      {
+        "topic": "Post-operative Care",
+        "total": 11,
+        "bscn": 5,
+        "krchn": 6
+      },
+      {
+        "topic": "Surgical Nursing Care",
+        "total": 9,
+        "bscn": 0,
+        "krchn": 9
+      },
+      {
+        "topic": "Post-operative Nursing Care",
+        "total": 6,
+        "bscn": 2,
+        "krchn": 4
+      },
+      {
+        "topic": "Pre-operative Care",
+        "total": 6,
+        "bscn": 3,
+        "krchn": 3
+      },
+      {
+        "topic": "Gastrointestinal Surgery",
+        "total": 5,
+        "bscn": 2,
+        "krchn": 3
+      },
+      {
+        "topic": "Thyroid Surgery",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Pre-operative Nursing Care",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Operating Theatre Practice",
+        "total": 3,
+        "bscn": 0,
+        "krchn": 3
+      },
+      {
+        "topic": "Eye Surgery",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Urological Surgery",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Post-Operative Nursing Care",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Head and Neck Surgery",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Burns and Plastic Surgery",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Peri-Operative Nursing",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Gastrointestinal Procedures",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Anaesthesia",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Amputation Nursing Care",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Ear Surgery",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Abdominal Surgery",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Post-operative Complications",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Appendicitis",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Wound Complications",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Gynaecological Surgery",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Orthopaedic Procedures",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Ear, Nose and Throat Surgery",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Orthopaedic Nursing",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Colorectal Surgery",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Post-Operative Wound Care",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Informed Consent",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Post-Operative Complications",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Thoracic Surgery",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      }
+    ]
+  },
+  {
+    "unit": "Teaching and Learning Methodologies",
+    "total": 119,
+    "bscn": 76,
+    "krchn": 43,
+    "topicCount": 11,
+    "topics": [
+      {
+        "topic": "Nursing Education",
+        "total": 87,
+        "bscn": 48,
+        "krchn": 39
+      },
+      {
+        "topic": "Technology-Enhanced Learning",
+        "total": 7,
+        "bscn": 7,
+        "krchn": 0
+      },
+      {
+        "topic": "Teaching Methods",
+        "total": 6,
+        "bscn": 5,
+        "krchn": 1
+      },
+      {
+        "topic": "Learning Theories",
+        "total": 4,
+        "bscn": 4,
+        "krchn": 0
+      },
+      {
+        "topic": "Curriculum Development",
+        "total": 4,
+        "bscn": 4,
+        "krchn": 0
+      },
+      {
+        "topic": "Bloom's Taxonomy",
+        "total": 3,
+        "bscn": 3,
+        "krchn": 0
+      },
+      {
+        "topic": "Evaluation in Teaching",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Teaching Principles",
+        "total": 2,
+        "bscn": 2,
+        "krchn": 0
+      },
+      {
+        "topic": "Teaching and Learning Methods",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Educational Objectives",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Teaching Objectives",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      }
+    ]
+  },
+  {
+    "unit": "Infection Prevention & Control",
+    "total": 94,
+    "bscn": 52,
+    "krchn": 42,
+    "topicCount": 19,
+    "topics": [
+      {
+        "topic": "Immunology",
+        "total": 33,
+        "bscn": 28,
+        "krchn": 5
+      },
+      {
+        "topic": "Infection Prevention",
+        "total": 30,
+        "bscn": 14,
+        "krchn": 16
+      },
+      {
+        "topic": "Sterilisation and Disinfection",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Infection Prevention and Control",
+        "total": 4,
+        "bscn": 1,
+        "krchn": 3
+      },
+      {
+        "topic": "Isolation Nursing",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Hand Hygiene",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Post-Exposure Prophylaxis",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Infection and Diagnostics",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Infection Prevention & Control",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Hospital-Acquired Infections",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Pharmacology of Allergy",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Disinfection",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Needlestick Injury",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Sterilisation",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Needle Stick Injury",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Transmission-Based Precautions",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Infection and Microbiology",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Immunisation Schedule",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Antibiotic Resistance",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      }
+    ]
+  },
+  {
+    "unit": "Nutrition",
+    "total": 60,
+    "bscn": 25,
+    "krchn": 35,
+    "topicCount": 17,
+    "topics": [
+      {
+        "topic": "Clinical Nutrition",
+        "total": 30,
+        "bscn": 12,
+        "krchn": 18
+      },
+      {
+        "topic": "Vitamins and Minerals",
+        "total": 6,
+        "bscn": 4,
+        "krchn": 2
+      },
+      {
+        "topic": "Vitamin Deficiencies",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Micronutrient Deficiencies",
+        "total": 3,
+        "bscn": 0,
+        "krchn": 3
+      },
+      {
+        "topic": "Nutritional Assessment",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Dietary Sources",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Non-Communicable Diseases",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Nutritional Support",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Micronutrients",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Vitamins",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Proteins",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Therapeutic Feeding",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Diabetes and Breastfeeding",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Nutrition Assessment",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Paediatric Nutrition",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Oral Health",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Dietary Fibre and Gut Health",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      }
+    ]
+  },
+  {
+    "unit": "Critical Care Nursing",
+    "total": 54,
+    "bscn": 26,
+    "krchn": 28,
+    "topicCount": 12,
+    "topics": [
+      {
+        "topic": "Emergency Nursing",
+        "total": 16,
+        "bscn": 7,
+        "krchn": 9
+      },
+      {
+        "topic": "Burns Management",
+        "total": 11,
+        "bscn": 5,
+        "krchn": 6
+      },
+      {
+        "topic": "Emergency and First Aid",
+        "total": 10,
+        "bscn": 5,
+        "krchn": 5
+      },
+      {
+        "topic": "Cardiovascular Monitoring",
+        "total": 4,
+        "bscn": 2,
+        "krchn": 2
+      },
+      {
+        "topic": "Emergency and Trauma Nursing",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Critical Care Nursing",
+        "total": 3,
+        "bscn": 2,
+        "krchn": 1
+      },
+      {
+        "topic": "Airway Management",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Haemodynamic Monitoring",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Emergency and Shock Management",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Respiratory and Airway Management",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Shock",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      },
+      {
+        "topic": "Mechanical Ventilation",
+        "total": 1,
+        "bscn": 1,
+        "krchn": 0
+      }
+    ]
+  },
+  {
+    "unit": "Environmental Health",
+    "total": 54,
+    "bscn": 14,
+    "krchn": 40,
+    "topicCount": 14,
+    "topics": [
+      {
+        "topic": "Environmental Health",
+        "total": 21,
+        "bscn": 9,
+        "krchn": 12
+      },
+      {
+        "topic": "Occupational Health",
+        "total": 11,
+        "bscn": 3,
+        "krchn": 8
+      },
+      {
+        "topic": "Water and Sanitation",
+        "total": 4,
+        "bscn": 1,
+        "krchn": 3
+      },
+      {
+        "topic": "Occupational and Environmental Health",
+        "total": 4,
+        "bscn": 0,
+        "krchn": 4
+      },
+      {
+        "topic": "Sanitation",
+        "total": 3,
+        "bscn": 0,
+        "krchn": 3
+      },
+      {
+        "topic": "Water & Sanitation",
+        "total": 2,
+        "bscn": 1,
+        "krchn": 1
+      },
+      {
+        "topic": "Occupational Health Nursing",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Food Preservation",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Vector Control",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Housing",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Water Treatment",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Water Purification",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Water and Disease",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Zoonotic Diseases",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      }
+    ]
+  },
+  {
+    "unit": "Health Systems & Management",
+    "total": 9,
+    "bscn": 1,
+    "krchn": 8,
+    "topicCount": 6,
+    "topics": [
+      {
+        "topic": "Kenya Health System",
+        "total": 3,
+        "bscn": 1,
+        "krchn": 2
+      },
+      {
+        "topic": "Health System Structure",
+        "total": 2,
+        "bscn": 0,
+        "krchn": 2
+      },
+      {
+        "topic": "Disaster Management",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Primary Health Care",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Health Information Systems",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      },
+      {
+        "topic": "Levels of Prevention",
+        "total": 1,
+        "bscn": 0,
+        "krchn": 1
+      }
+    ]
+  }
+]

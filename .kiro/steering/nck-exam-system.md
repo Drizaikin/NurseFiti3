@@ -280,7 +280,7 @@ Both KRCHN and BScN have **2 papers each**, matching the NCK integrated CBT stru
 | Paper value in DB | Integrated Areas | Units covered |
 | :---- | :---- | :---- |
 | `'Paper I'` | Advanced Adult Health + Specialised Nursing + Maternal/Newborn | Medical-Surgical Nursing, Pharmacology, Anatomy & Physiology, Critical Care Nursing, Surgical Nursing, Midwifery, Maternal & Child Health, Paediatric Nursing |
-| `'Paper II'` | Community/Public Health + Research + Leadership + Mental Health | Community Health Nursing, Mental Health Nursing, Research & Evidence-Based Practice, Nursing Management & Leadership, Professional Ethics & Law, Health Systems in Kenya, Infection Prevention & Control, Nutrition |
+| `'Paper II'` | Community/Public Health + Research + Leadership + Mental Health | Community Health Nursing, Mental Health Nursing, Research & Evidence-Based Practice, Nursing Management & Leadership, Professional Ethics & Law, Health Systems in Kenya, Infection Prevention & Control, Nutrition, Teaching and Learning Methodologies |
 
 > **Critical rule:** Every seeded question must have its `paper` value set according to this table. The mock exam engine filters questions by `cadre` AND `paper` — a wrong or missing paper value means the question will never appear in the correct exam.
 
@@ -436,6 +436,19 @@ After every seeding migration is written but **before it is pushed to Supabase**
 
 ---
 
+## 15. Special Unit Classifications
+
+### Teaching and Learning Methodologies
+As per the Nursing Council of Kenya (NCK) classification, questions on curriculum development, teaching, and education are classified under **Teaching and Learning Methodologies** (sometimes classified as Teaching Methodology or Curriculum and Instruction in Nursing).
+- **Core Focus**: Principles of education, teaching/learning processes, and instructional strategies.
+- **Educational Trends**: Historical background and trends in education in Kenya.
+- **Teaching Processes**: Principles of teaching and adult learning.
+- **Curriculum Content**: Curriculum design and development.
+- **Instructional Tools**: Instructional media and teaching aids.
+- **Assessment**: Evaluation of student performance.
+
+---
+
 ## References
 
 - https://nckenya.com/examination/
@@ -445,18 +458,18 @@ After every seeding migration is written but **before it is pushed to Supabase**
 
 ---
 
-## 15. What's New — Mandatory Release Announcement Protocol
+## 16. What's New — Mandatory Release Announcement Protocol
 
 Every new feature, UI change, or batch of new questions **must be announced to students** via the What's New modal. This is not optional. The modal appears automatically to every user on their first visit after the version is bumped.
 
-### 15.1 Files Involved
+### 16.1 Files Involved
 
 | File | Purpose |
 | :---- | :---- |
 | `components/student/WhatsNewModal.tsx` | Owns `CURRENT_VERSION`, `STORAGE_KEY`, and `WHATS_NEW_RELEASES` |
 | `components/student/WhatsNewTrigger.tsx` | Floating re-open pill — must mirror `CURRENT_VERSION` from the modal |
 
-### 15.2 Steps to Announce a New Feature or Question Batch
+### 16.2 Steps to Announce a New Feature or Question Batch
 
 1. **Open `WhatsNewModal.tsx`**
 2. **Increment `CURRENT_VERSION`** (e.g. `5 → 6`). This single number controls which localStorage key is used — bumping it makes the modal re-appear for every user on every device.
@@ -480,7 +493,7 @@ Every new feature, UI change, or batch of new questions **must be announced to s
 4. **Open `WhatsNewTrigger.tsx`** and update its `CURRENT_VERSION` constant to the same new value.
 5. Commit both files together. The modal will auto-show to all users on next page load.
 
-### 15.3 Rules
+### 16.3 Rules
 
 - **Never skip this step** when shipping a feature or a question batch — students must know what's new.
 - `CURRENT_VERSION` in `WhatsNewModal.tsx` and `WhatsNewTrigger.tsx` must **always match**. A mismatch causes the trigger pill to behave incorrectly (see bug history).
@@ -489,7 +502,7 @@ Every new feature, UI change, or batch of new questions **must be announced to s
 - One version can have **multiple items** (carousel slides). Use multiple items when announcing several things at once.
 - Keep descriptions brief and user-facing — not technical. Write for a nursing student, not a developer.
 
-### 15.4 Version History
+### 16.4 Version History
 
 | Version | Date | Summary |
 | :---- | :---- | :---- |

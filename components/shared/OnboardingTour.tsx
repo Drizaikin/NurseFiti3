@@ -142,7 +142,7 @@ const TUTOR_STEPS: TourStep[] = [
     emoji: '🚀',
     title: "You're ready!",
     description: 'Complete your profile, get verified, and set your availability — students are waiting. We\'re glad to have you on the NurseFiti team.',
-    tip: 'Questions? Contact us at docotyanga@gmail.com',
+    tip: 'Questions? Contact us at rizikidan2@gmail.com',
   },
 ];
 

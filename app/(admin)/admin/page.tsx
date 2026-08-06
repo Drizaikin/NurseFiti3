@@ -111,6 +111,48 @@ export default function AdminOverviewPage() {
             <p className="text-sm text-neutral-mid">Manage active scholarship campaigns, track sponsor deposits, and review pending student applications.</p>
           </Card>
         </Link>
+        <Link href="/admin/community">
+          <Card className="hover:border-primary/40 transition-all cursor-pointer h-full">
+            <h2 className="font-heading font-bold text-[var(--color-text)] mb-1">💬 Community</h2>
+            <p className="text-sm text-neutral-mid">Moderate community discussions, review reported posts, and engage with students.</p>
+          </Card>
+        </Link>
+        <Link href="/admin/activity">
+          <Card className="hover:border-primary/40 transition-all cursor-pointer h-full">
+            <h2 className="font-heading font-bold text-[var(--color-text)] mb-1">⚡ Activity Logs</h2>
+            <p className="text-sm text-neutral-mid">Monitor real-time platform events, user logins, and system activities.</p>
+          </Card>
+        </Link>
+        <Link href="/admin/flagged">
+          <Card className="hover:border-primary/40 transition-all cursor-pointer h-full border-red-200 bg-red-50/50">
+            <h2 className="font-heading font-bold text-red-700 mb-1">🚩 Flagged Content</h2>
+            <p className="text-sm text-neutral-mid">Review content flagged by users for inappropriate behavior or inaccuracies.</p>
+          </Card>
+        </Link>
+        <Link href="/admin/mnemonics">
+          <Card className="hover:border-primary/40 transition-all cursor-pointer h-full">
+            <h2 className="font-heading font-bold text-[var(--color-text)] mb-1">🧠 Mnemonics</h2>
+            <p className="text-sm text-neutral-mid">Manage the mnemonics library and user submissions.</p>
+          </Card>
+        </Link>
+        <Link href="/admin/blog">
+          <Card className="hover:border-primary/40 transition-all cursor-pointer h-full">
+            <h2 className="font-heading font-bold text-[var(--color-text)] mb-1">📰 Blog Management</h2>
+            <p className="text-sm text-neutral-mid">Create, edit, and publish articles and study guides for the NurseFiti Blog.</p>
+          </Card>
+        </Link>
+        <Link href="/admin/hd-materials">
+          <Card className="hover:border-primary/40 transition-all cursor-pointer h-full">
+            <h2 className="font-heading font-bold text-[var(--color-text)] mb-1">📚 HD Materials</h2>
+            <p className="text-sm text-neutral-mid">Manage Higher Diploma course materials, uploads, and pricing.</p>
+          </Card>
+        </Link>
+        <Link href="/admin/settings">
+          <Card className="hover:border-primary/40 transition-all cursor-pointer h-full">
+            <h2 className="font-heading font-bold text-[var(--color-text)] mb-1">⚙️ Settings</h2>
+            <p className="text-sm text-neutral-mid">Configure global platform settings, integrations, and administrative preferences.</p>
+          </Card>
+        </Link>
       </div>
     </div>
   );

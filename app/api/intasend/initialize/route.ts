@@ -24,7 +24,7 @@ import { z } from 'zod';
 export const dynamic = 'force-dynamic';
 
 const bodySchema = z.object({
-  type: z.enum(['plan_subscription', 'revision_plan', 'session_booking', 'sponsor_deposit']),
+  type: z.enum(['plan_subscription', 'revision_plan', 'session_booking', 'sponsor_deposit', 'hd_material_purchase']),
   amountKsh: z.number().int().positive(),
   referenceId: z.string().uuid().optional(),
   metadata: z.record(z.unknown()).optional(),
@@ -81,6 +81,14 @@ export async function POST(req: NextRequest) {
     if (type === 'plan_subscription' && !VALID_PLAN_PRICES.includes(amountKsh)) {
       return NextResponse.json(
         { error: `Invalid plan price. Must be one of: ${VALID_PLAN_PRICES.join(', ')}` },
+        { status: 400 }
+      );
+    }
+
+    // Enforce exact HD material price
+    if (type === 'hd_material_purchase' && amountKsh !== Number(settings.hd_material_price)) {
+      return NextResponse.json(
+        { error: `Invalid HD material price. Must be KSh ${settings.hd_material_price}` },
         { status: 400 }
       );
     }

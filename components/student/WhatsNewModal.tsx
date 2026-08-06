@@ -25,7 +25,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-// @ts-expect-error
+
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 
@@ -480,6 +480,31 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
       },
     ],
   },
+
+  // ── Version 17 — Massive Database Audit & Recategorisation ────────────────
+  {
+    version: 17,
+    date: "26 July 2026",
+    items: [
+      {
+        icon: "🔍",
+        tag: "System Audit",
+        tagColor: "bg-violet-500/20 text-violet-400",
+        title: "Word-by-Word Quality Audit",
+        description:
+          "We just ran a deep, character-by-character audit of all 7,403 questions in the platform to ensure every single unit and paper assignment exactly matches the official NCK CBT Blueprint.",
+      },
+      {
+        icon: "🏗️",
+        tag: "Fixed",
+        tagColor: "bg-emerald-500/20 text-emerald-400",
+        title: "Hundreds of Reclassifications",
+        description:
+          "Found and corrected over 870 misclassified questions. Family planning questions moved from Midwifery to MCH, Gynaecology moved to Med-Surg, and Paper I / Paper II boundaries are now perfectly strict.",
+        cta: { label: "Keep Practising", href: "/practice" },
+      },
+    ],
+  },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -512,18 +537,13 @@ export function WhatsNewModal({ forceOpen = false, onForceClose }: WhatsNewModal
 
   useEffect(() => {
     if (forceOpen) {
-      // Controlled externally — always show
+      // Controlled externally (user clicked the floating trigger pill) — always show
       setShow(true);
       return;
     }
-    // Auto-show: only if user hasn't seen this version
-    try {
-      const seen = localStorage.getItem(STORAGE_KEY);
-      if (!seen) setShow(true);
-      else setShow(false); // forceOpen just turned false — ensure modal stays hidden
-    } catch {
-      // localStorage blocked (private mode, etc.) — don't show
-    }
+    // Auto-show is intentionally DISABLED.
+    // Announcements are triggered manually only (via the floating ✨ trigger pill).
+    setShow(false);
   }, [forceOpen]);
 
   const dismiss = useCallback(() => {
