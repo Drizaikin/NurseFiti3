@@ -2553,7 +2553,326 @@ Your nursing career in Kenya will be defined not just by what you know, but by w
   }
 ];
 
-const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH];
+const POSTS_AUG2026: Post[] = [
+  {
+    slug: 'community-health-nursing-kenya',
+    title: 'Community Health Nursing in Kenya: Roles & Skills (2026)',
+    excerpt: 'Discover community health nursing in Kenya: the roles, skills, and practice settings — from CHPs and KRCHN training to the 2023 Primary Health Care Act.',
+    category: 'Study Guide',
+    readTime: '11 min read',
+    date: '2026-08-06',
+    cadres: ['KRCHN', 'BScN'],
+    content: `
+In September 2023, Kenya did something few African countries have attempted at that scale: it flagged off 100,000 kitted community health workers — each with a branded kit, a smartphone and a monthly stipend — and sent them into villages to become the front door of the entire health system ([Ministry of Health](https://www.health.go.ke/kenyas-bold-step-towards-universal-health-coverage-unveiling-community-health-promoter-kits)). If you are a KRCHN or BScN graduate, that single policy quietly rewired where your career can go.
+
+Community health nursing is no longer the "soft" posting people once assumed it was. It now sits at the centre of Kenya's Universal Health Coverage (UHC) push, backed by new law and real money.
+
+There is one part of the community health structure that decides whether a nurse leads a team or is left doing paperwork — and we will get to it in the practice-settings section below. First, let us define the field precisely.
+
+> [!NOTE]
+> *Last verified: August 2026. Community health policy and financing in Kenya are changing fast under UHC — always confirm current details at [health.go.ke](https://www.health.go.ke) and [nckenya.com](https://www.nckenya.com).*
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Preparing for the NCK community health nursing exam?</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Practise community health questions free on NurseFiti →</a>
+</div>
+
+## What Is Community Health Nursing?
+
+Community health nursing is the blend of nursing and public health, applied to protect and promote the health of whole populations rather than one patient at a time ([University of Nairobi, School of Nursing Sciences](https://nursing.uonbi.ac.ke/thematic-units/community-health-nursing)). Instead of waiting for the sick to arrive at a ward, the community health nurse goes out to households, schools and villages to prevent illness before it starts.
+
+In Kenya this is not a vague ideal — it is written into the structure of the health system. The Kenya Essential Package for Health (KEPH) organises care into six levels, and **Level 1 is the community** — the household, the village and the individual. It is where promotive and preventive care begins, before Level 2 dispensaries, Level 3 health centres and the county and national hospitals above them ([Ministry of Health, Clinical Guidelines for Level 1 Community Health Services](https://health.go.ke/sites/default/files/2025-04/Clinical%20Guidelines%20for%20Level%201%20Community%20Health%20Services.pdf)).
+
+Kenya even names its most common nursing qualification after this idea. The **Kenya Registered Community Health Nurse (KRCHN)** is a three-year diploma that combines general nursing, midwifery and community health into one licence ([Kenya Medical Training College](https://kmtcguides.co.ke/diploma-in-community-health-nursing/)). If you are training as a KRCHN, community health is not an add-on — it is one of the three pillars you will be examined on.
+
+## The New Face of Community Health: Community Health Promoters
+
+For years the community level relied on unpaid Community Health Volunteers (CHVs). In April 2023, the national government and the Council of Governors agreed to rebrand and professionalise them as **Community Health Promoters (CHPs)** ([Ministry of Health FAQ](https://www.health.go.ke/sites/default/files/2023-10/Community%20health%20services%20frequently%20asked%20questions.pdf)).
+
+The scale is what makes this historic. Kenya deployed roughly 100,000 CHPs — about **10 CHPs per Community Health Unit**, with each unit covering approximately **5,000 people (about 1,000 households)** and each promoter responsible for around **100 households** ([Ministry of Health FAQ](https://www.health.go.ke/sites/default/files/2023-10/Community%20health%20services%20frequently%20asked%20questions.pdf)).
+
+Three things changed for CHPs in this reform:
+
+- **A stipend.** CHPs now receive a monthly stipend of **KES 5,000, split 50:50 — KES 2,500 from the national government and KES 2,500 from the county** ([The Standard](https://www.standardmedia.co.ke/health/health-science/article/2001510856/state-boosts-chps-work-with-stipends-gadgets-and-training)). In February 2024, the government launched a **KES 3 billion** stipend programme to fund it ([Ministry of Health](https://www.health.go.ke/government-launches-kshs-3-billion-stipend-payment-program-community-health-promoters)).
+- **A smartphone and eCHIS.** Each CHP was issued a smartphone loaded with the **electronic Community Health Information System (eCHIS)**, so household visits, referrals and commodities are recorded digitally instead of on paper ([Exemplars in Global Health](https://www.exemplars.health/stories/kenyas-echis)).
+- **A defined scope.** CHPs handle promotion, screening and referral — but the law explicitly bars them from tasks beyond their training, such as conducting deliveries ([The Primary Health Care Act, 2023](https://kenyalaw.org/kl/fileadmin/pdfdownloads/Acts/2023/ThePrimaryHealthCareAct_2023.pdf)).
+
+Here is the crucial nuance most students miss: **CHPs are not registered nurses, and they are not on the government payroll as employees** — they are facilitated through the stipend ([Ministry of Health FAQ](https://www.health.go.ke/sites/default/files/2023-10/Community%20health%20services%20frequently%20asked%20questions.pdf)). They are the eyes and hands in the community. The clinical brain that receives their referrals, runs the health facility and holds the licence is the nurse. That distinction is your career opportunity.
+
+## Where the Registered Nurse Fits In
+
+If CHPs cover Level 1, the registered community health nurse works mainly at the facility levels that receive their referrals — the **Level 2 dispensary and Level 3 health centre** — and inside community programmes. The KEPH system is built on referral and counter-referral: a CHP identifies a sick child or a pregnant mother and refers upward; the nurse assesses, treats or refers further to the county hospital ([Ministry of Health, Level 1 Guidelines](https://health.go.ke/sites/default/files/2025-04/Clinical%20Guidelines%20for%20Level%201%20Community%20Health%20Services.pdf)).
+
+In practice, a community health nurse in Kenya typically:
+
+- Runs the **maternal and child health (MCH) clinic** — antenatal care, immunisation, growth monitoring and family planning.
+- Delivers **immunisation** under the Kenya Expanded Programme on Immunization (KEPI) and follows up defaulters in the community.
+- Provides **health education** on nutrition, sanitation, malaria, HIV and non-communicable diseases.
+- Manages **community-based data and disease surveillance**, increasingly through the digital health system.
+- Coordinates **referrals** between the community, the dispensary and the hospital.
+
+<div class="my-8 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Master the Community Health & Midwifery Papers</h3>
+  <p class="mb-6 opacity-90 max-w-lg mx-auto">NurseFiti's question bank covers community health, MCH and public health with full rationales — the exact areas KRCHN and BScN candidates lose marks on. The mock exam replicates the DigiProctor interface used in the real NCK exam.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Try a free mock exam →</a>
+</div>
+
+## Core Skills Every Community Health Nurse Needs
+
+Community health nursing rewards a different skill set from ward nursing. The best community health nurses in Kenya are strong in:
+
+1. **Community assessment** — reading a household or village for risk: water, sanitation, nutrition and immunisation gaps.
+2. **Health communication** — explaining prevention in Kiswahili and local languages, and winning trust so families act.
+3. **Immunisation and MCH competence** — knowing the KEPI schedule cold (BCG at birth, pentavalent at 6, 10 and 14 weeks, and Measles-Rubella at 9 and 18 months).
+4. **Data and digital literacy** — recording accurately on eCHIS and the Kenya Health Information System so decisions are based on real numbers.
+5. **Cultural competence and ethics** — respecting beliefs while protecting patients, within the NCK Code of Conduct.
+6. **Supervision and coordination** — supporting CHPs and linking them to the facility.
+
+Notice how many of these are tested indirectly on the NCK exam through community health, MCH and public health questions. If you want a structured way to drill them, see our [KRCHN Paper I and Paper II revision guide](/blog/krchn-exam-revision-tips).
+
+## Kenyan Practice Settings: Where You Will Actually Work
+
+This is the section that answers the loop we opened at the top. Community health nurses in Kenya work across several settings, and the one you choose shapes whether you lead or simply assist:
+
+- **Dispensaries (Level 2)** — often the most junior facility, sometimes run single-handedly by one nurse serving thousands. Here the nurse is effectively the clinician-in-charge.
+- **Health centres (Level 3)** — larger teams offering MCH, minor procedures and maternity; a common place to grow into a nurse-in-charge role.
+- **Community Health Units (Level 1)** — where you supervise and mentor CHPs and drive outreaches.
+- **Primary Care Networks (PCNs)** — the new "hub-and-spoke" structure created by the 2023 law, linking several facilities so patients move smoothly between community and hospital ([The Primary Health Care Act, 2023](https://kenyalaw.org/kl/fileadmin/pdfdownloads/Acts/2023/ThePrimaryHealthCareAct_2023.pdf)).
+- **Mobile clinics and outreaches** — such as the Beyond Zero mobile clinics that reach remote wards.
+- **NGOs, faith-based hospitals and county public health offices** — where community health nurses run programmes on HIV, TB, reproductive health and nutrition.
+
+The nurse who understands the PCN structure and the digital system is the one counties promote into coordination roles. The nurse who ignores it stays at the bench.
+
+## Key Programmes You Will Work In
+
+Community health nursing in Kenya is delivered largely through national flagship programmes. Knowing them is both good practice and good exam preparation:
+
+- **Linda Mama** — free maternity care launched in 2013 and later expanded under NHIF in 2016 to cover antenatal, delivery and postnatal care for mothers ([PMC / peer-reviewed evaluation](https://pmc.ncbi.nlm.nih.gov/articles/PMC9290784/)). Its administration is now transitioning under the new Social Health Authority.
+- **Beyond Zero** — the maternal and child health initiative founded by former First Lady Margaret Kenyatta and launched in January 2014, which rolled out mobile clinics across all 47 counties ([UNAIDS](https://www.unaids.org/en/resources/presscentre/featurestories/2014/january/20140130beyondzerocampaign)).
+- **Malezi Bora** — the twice-yearly child and maternal health weeks delivering Vitamin A supplementation, deworming, immunisation and growth monitoring ([Daily Nation](https://nation.africa/kenya/health/-malezi-bora-week-our-children-our-investment-4267332)).
+- **KEPI** — the Kenya Expanded Programme on Immunization, established in 1980, which anchors all childhood vaccination.
+
+### Test Yourself: A Community Health Question
+
+The NCK exam loves community health scenarios. Try this one from the NurseFiti question bank:
+
+<div class="sample-mcq-embed" data-question-slug="community-health-nursing-kenya-sample"></div>
+
+Want thousands more community health, MCH and public health questions with rationales? **[Create your free NurseFiti account →](https://www.nursefiti.co.ke/signup)**
+
+## How the 2023 Laws Reshaped Community Health
+
+You cannot understand community health nursing in Kenya today without the four health laws assented on 19 October 2023 ([EY tax alert](https://www.ey.com/en_gl/technical/tax-alerts/kenya-s-enactment-of-new-laws-moves-towards-universal-health-cov)). Two matter most for community nurses:
+
+- **The Primary Health Care Act, 2023** legally established Community Health Units and Primary Care Networks, and formalised CHPs as part of the system rather than informal volunteers ([Kenya Law](https://kenyalaw.org/kl/fileadmin/pdfdownloads/Acts/2023/ThePrimaryHealthCareAct_2023.pdf)).
+- **The Social Health Insurance Act, 2023** replaced NHIF with the **Social Health Authority (SHA)**, whose services began on 1 October 2024 ([Ministry of Health](https://www.health.go.ke/kenya-officially-launch-social-health-authority-october-1-2024)). It created a dedicated **Primary Healthcare Fund** to pay for Level 1–3 services — meaning community health work is now directly financed, not an afterthought.
+
+For nurses, the takeaway is simple: community health has moved from the margins to the centre of how Kenya funds and delivers care. The demand for competent, licensed community health nurses is structural, not seasonal.
+
+## How to Become a Community Health Nurse in Kenya
+
+The main route is the **Diploma in Kenya Registered Community Health Nursing (KRCHN)**, a three-year programme offered at KMTC and accredited institutions. Direct entry requires a KCSE mean grade of C plain, with C plain in Biology, C plain in English or Kiswahili, and at least C− in Chemistry, Mathematics or Physics ([KMTC](https://kmtcguides.co.ke/diploma-in-community-health-nursing/)). Degree candidates take the four-year BScN, which also covers community health.
+
+From there the pathway is regulated by the **Nursing Council of Kenya (NCK)**, the sole statutory body under the Nurses Act (Cap 257) ([nckenya.com](https://www.nckenya.com)):
+
+1. **Index with the NCK** early in training — miss the window and your training may not be recognised. See our [NCK indexing 60-day deadline guide](/blog/nck-indexing-60-day-deadline-kenya).
+2. **Sit the NCK licensure examination** on the DigiProctor computer-based platform. Our [complete NCK exam preparation guide](/blog/nck-exam-preparation-guide-kenya) walks through the structure.
+3. **Apply for your practising licence** after passing — the exact portal steps are in our guide on [how to apply for the NCK licence](/blog/how-to-apply-nck-licence-kenya).
+
+## Your Next Step
+
+Community health nursing is where Kenya's health system is investing hardest right now — new law, new financing and 100,000 promoters who need licensed nurses to lead them. If that is the career you want, the licensure exam is the gate you have to pass first.
+
+For real-time updates on NCK exams, community health policy and study tips, join our official WhatsApp channel:
+[Join the NurseFiti WhatsApp Channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Pass the NCK Exam on Your First Attempt</h3>
+  <p class="mb-6 opacity-90">Practise community health, MCH and public health questions with full rationales. Start your free NurseFiti account — no credit card required.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+> *Share this: "Really clear breakdown of community health nursing in Kenya — the CHP reforms, where registered nurses actually fit, the KRCHN pathway, and how the 2023 Primary Health Care Act changed everything. Good for anyone doing the NCK exam: nursefiti.co.ke/blog/community-health-nursing-kenya"*
+
+---
+
+## Sources & References
+
+- **Ministry of Health Kenya** — *Unveiling Community Health Promoter Kits* (25 September 2023). [health.go.ke](https://www.health.go.ke/kenyas-bold-step-towards-universal-health-coverage-unveiling-community-health-promoter-kits)
+- **Ministry of Health Kenya** — *Community Health Services: Frequently Asked Questions* (2023). [health.go.ke](https://www.health.go.ke/sites/default/files/2023-10/Community%20health%20services%20frequently%20asked%20questions.pdf)
+- **Ministry of Health Kenya** — *Clinical Guidelines for Level 1 Community Health Services* (2025). [health.go.ke](https://health.go.ke/sites/default/files/2025-04/Clinical%20Guidelines%20for%20Level%201%20Community%20Health%20Services.pdf)
+- **Ministry of Health Kenya** — *Launch of the KES 3 Billion CHP Stipend Payment Programme* (February 2024). [health.go.ke](https://www.health.go.ke/government-launches-kshs-3-billion-stipend-payment-program-community-health-promoters)
+- **Ministry of Health Kenya** — *Social Health Authority Launch, 1 October 2024*. [health.go.ke](https://www.health.go.ke/kenya-officially-launch-social-health-authority-october-1-2024)
+- **The Standard** — *State boosts CHPs' work with stipends, gadgets and training*. [standardmedia.co.ke](https://www.standardmedia.co.ke/health/health-science/article/2001510856/state-boosts-chps-work-with-stipends-gadgets-and-training)
+- **Laws of Kenya** — *The Primary Health Care Act, 2023*. [kenyalaw.org](https://kenyalaw.org/kl/fileadmin/pdfdownloads/Acts/2023/ThePrimaryHealthCareAct_2023.pdf)
+- **EY** — *Kenya's enactment of new health laws (four Acts, 19 October 2023)*. [ey.com](https://www.ey.com/en_gl/technical/tax-alerts/kenya-s-enactment-of-new-laws-moves-towards-universal-health-cov)
+- **Exemplars in Global Health** — *Kenya's eCHIS: revolutionizing community health with digital innovation*. [exemplars.health](https://www.exemplars.health/stories/kenyas-echis)
+- **University of Nairobi, School of Nursing Sciences** — *Community Health Nursing thematic unit*. [nursing.uonbi.ac.ke](https://nursing.uonbi.ac.ke/thematic-units/community-health-nursing)
+- **Kenya Medical Training College** — *Diploma in Kenya Registered Community Health Nursing (KRCHN)*. [kmtc.ac.ke](https://kmtcguides.co.ke/diploma-in-community-health-nursing/)
+- **Nursing Council of Kenya** — official regulator under the Nurses Act (Cap 257). [nckenya.com](https://www.nckenya.com)
+- **Otieno et al., PMC** — *Free maternity / Linda Mama policy evaluation in Kenya*. [pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC9290784/)
+- **UNAIDS** — *Beyond Zero campaign, launched January 2014*. [unaids.org](https://www.unaids.org/en/resources/presscentre/featurestories/2014/january/20140130beyondzerocampaign)
+- **Daily Nation** — *Malezi Bora week: our children, our investment*. [nation.africa](https://nation.africa/kenya/health/-malezi-bora-week-our-children-our-investment-4267332)
+- **Njuguna et al., PMC** — *Childhood vaccination timeliness in Nairobi (Measles-Rubella at 9 and 18 months)*. [pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC8274788/)
+
+*Always verify current exam and registration information directly at [nckenya.com](https://www.nckenya.com) and current community health policy at [health.go.ke](https://www.health.go.ke).*
+`,
+  },
+];
+
+const POSTS_SALARY: Post[] = [
+  {
+    slug: 'nurse-salary-kenya',
+    title: 'Nurse Salary in Kenya: What Changes Your Pay (2026)',
+    excerpt: 'How much do nurses earn in Kenya? See what changes pay across roles and employers — job grades, intern stipends, allowances, county, private and abroad.',
+    category: 'Community',
+    readTime: '12 min read',
+    date: '2026-08-06',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+Two nurses graduate from the same college, pass the same NCK exam, and start work the same month. Three years later, one earns barely KES 40,000 a month at a rural dispensary while the other clears six figures in a Nairobi private hospital or a Gulf contract. Same qualification, wildly different pay.
+
+Nurse salary in Kenya is not one number — it is a moving target shaped by who employs you, where you work, your job grade, your specialisation, and a stack of allowances most students never think to ask about.
+
+Here is the uncomfortable truth we will unpack below: the single decision that changes your pay the most is not how hard you study, but which employer and cadre you enter — and there is one recent legal ruling that quietly reset what interns and new nurses can earn. Let us break it all down.
+
+> [!NOTE]
+> *Last verified: August 2026. Nurse pay in Kenya is disputed and changing — a nationwide strike and a UHC absorption deal are both live in mid-2026. Figures below are indicative; salary tables from private employers and aggregators are market estimates, not official rates. Always confirm current terms with your employer, the [Salaries and Remuneration Commission](https://src.go.ke), and [nckenya.com](https://www.nckenya.com).*
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Before the salary, there is the licence.</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Prepare for the NCK exam free on NurseFiti →</a>
+</div>
+
+## How Nurses Are Paid in Kenya
+
+A Kenyan nurse's monthly pay is built from two parts: a **basic salary** tied to a job grade, and a set of **allowances** on top. The allowances often make the difference between an unlivable and a comfortable salary — which is exactly why they dominate every nurses' strike.
+
+In the public service, nurses are graded on a scheme of service. Registered Nurses historically ran from **Job Group H at entry up to Job Group P**, while the degree-holding Nursing Officer cadre starts higher and rises to director level ([Kenyans.co.ke](https://www.kenyans.co.ke/news/81388-qualifications-salaries-diploma-degree-nurses)). Since a 2017 job evaluation, the Salaries and Remuneration Commission (SRC) has been migrating these old job groups into new Common Salary Grades ([The Standard](https://www.standardmedia.co.ke/counties/article/2001441183/breakdown-job-groups-salaries-and-allowances-in-kenya)).
+
+**One warning before any number:** there is no single public SRC table mapping each nurse cadre to an exact basic salary. The widely shared "Registered Nurse III earns KES X" tables come from secondary sites and disagree with each other, so treat every job-group figure in circulation — including the ones below — as *indicative*, not gospel.
+
+## What a New Nurse Actually Earns
+
+The most reliable evidence of entry pay is not a blog table — it is an actual county recruitment advert. A **Uasin Gishu County advert for Registered Nurse III (KRCHN diploma holders)** set the basic salary scale at **KES 26,900 – 35,380 per month**, plus a house allowance of KES 4,500 and commuter allowance of KES 4,000 ([Uasin Gishu County Public Service Board](https://jobs.uasingishu.go.ke/advertdetails.aspx?mAdvertNo=UGC/CPSB/RNIII/04/23)). A **Narok County** advert for Enrolled Nurse III started around **KES 25,420** ([Narok County Government](https://narok.go.ke/wp-content/uploads/2026/03/NAROK-COUNTY-GOVERNMENT-HEALTH-EXTERNAL-ADVERTISEMENT.pdf)).
+
+So a realistic public-sector entry basic for a new KRCHN is roughly **KES 27,000–35,000**, before allowances. Once house, commuter and other allowances are added, gross take-home rises — which is why market aggregators quote higher "KES 50,000+" figures. The lesson: always separate *basic* from *gross*, because unions negotiate over basic while your bank sees gross.
+
+If you are still working toward that first salary, our guides on [how to apply for the NCK licence after passing](/blog/how-to-apply-nck-licence-kenya) and [community health nursing roles and settings](/blog/community-health-nursing-kenya) show where these entry jobs actually are.
+
+## The Intern Stipend: Where Pay Got Complicated
+
+Before you reach a permanent salary, most graduates go through internship — and this is where Kenyan nurse pay became a national controversy.
+
+In a directive dated **13 March 2024**, the SRC advised the Ministry of Health to cut the stipend for a degree-holding nursing intern from around **KES 105,000 (the old Job Group K rate) to between KES 35,000 and KES 50,000** ([Employment and Labour Relations Court judgment, Kenya Law](https://new.kenyalaw.org/akn/ke/judgment/keelrc/2024/2506/eng@2024-10-17)). Under the same directive, medical officer interns were set at **KES 47,000–70,000**, and diploma clinical officer interns at **KES 27,000–35,000** ([Capital FM](https://www.capitalfm.co.ke/news/2024/10/high-court-rules-in-favour-of-src-on-medical-interns-stipend/)).
+
+Unions were furious. The doctors' union called it a roughly 91% cut from the previous KES 206,000 intern package, while the **Kenya National Union of Nurses (KNUN) rejected the proposal outright** ([The Standard](https://www.standardmedia.co.ke/health/health-science/article/2001512093/kmpdu-warns-of-strike-if-government-slashes-intern-pay)). The "KES 20,000" figure many nurses quoted was net take-home after deductions, not the SRC's gross band.
+
+The dispute went to court — and on **17 October 2024 the Employment and Labour Relations Court upheld the SRC directive**, ruling it was justified on budgetary grounds and dismissing the petitions ([Kenya Law](https://new.kenyalaw.org/akn/ke/judgment/keelrc/2024/2506/eng@2024-10-17)). For a new nurse, the takeaway is blunt: your internship stipend is now materially lower than it was for the cohort just ahead of you, and it is legally settled.
+
+<div class="my-8 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Pass First, Earn Sooner</h3>
+  <p class="mb-6 opacity-90 max-w-lg mx-auto">Every exam cycle you fail is 4–6 months of lost salary and internship time. NurseFiti's mock exam replicates the DigiProctor interface so you pass on the first attempt and start earning.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Try a free mock exam →</a>
+</div>
+
+## Allowances: The Part That Changes Your Take-Home
+
+This is the "wait, that's in my payslip?" section. In the landmark **2017 CBA** between KNUN and the Council of Governors, nurses were promised a stack of enhanced allowances, including a uniform allowance of **KES 50,000 a year**, a health-risk allowance raised to **KES 5,000/month**, an extraneous allowance, a non-practising allowance of **KES 6,000–20,000**, and a commuter allowance of **KES 15,000–25,000** ([The Standard](https://www.standardmedia.co.ke/health/article/2000140276/new-pay-and-allowances-for-kenya-nurses)).
+
+**But here is the catch every nurse should know:** that 2017 package was largely never implemented across the counties — only a handful, such as Mombasa, Machakos and Migori, actually paid the enhanced allowances, and the uniform figure many nurses continued to receive was closer to **KES 10,000 a year** ([Business Today](https://businesstoday.co.ke/curse-devolution-kenyas-health-system/)). This gap between what was signed and what was paid is the single biggest reason nurses keep striking — including in 2026.
+
+The allowances that reliably move your take-home are:
+
+- **House allowance** — set by SRC housing "clusters": Cluster 1 is Nairobi (highest), Cluster 2 covers Mombasa, Kisumu, Nakuru and major municipalities, and Cluster 3 is everywhere else (lowest) ([Tuko](https://www.tuko.co.ke/319051-latest-allowances-diem-rates-civil-servants-kenya.html)).
+- **Commuter allowance** — commonly **KES 3,000–25,000/month** depending on grade ([Tuko](https://www.tuko.co.ke/319051-latest-allowances-diem-rates-civil-servants-kenya.html)).
+- **Health-risk, extraneous, uniform and emergency-call allowances** — which vary by county and are frequently the subject of disputes.
+
+Because house and commuter allowances scale with your grade and town, two nurses on the same basic salary can take home noticeably different amounts.
+
+## Employer Changes Everything
+
+If one factor dominates your pay, it is your employer. The same nurse can earn very differently across these settings:
+
+- **County government (public):** most nurses work here. Pay follows the public scale plus allowances, but salaries can be delayed (see the next section). Entry basic around **KES 27,000–35,000** ([Uasin Gishu CPSB](https://jobs.uasingishu.go.ke/advertdetails.aspx?mAdvertNo=UGC/CPSB/RNIII/04/23)).
+- **National referral hospitals (e.g. Kenyatta National Hospital):** market data puts an average registered nurse there around **KES 32,000/month** basic, rising with seniority and allowances ([Payscale — market estimate](https://www.payscale.com/research/KE/Job=Registered_Nurse_(RN)/Salary/30335f13/Kenyatta-National-Hospital)).
+- **Large private hospitals (Aga Khan, Nairobi Hospital):** salary aggregators indicate registered nurses commonly earn **KES 55,000–100,000/month**, the higher end of the local market ([Glassdoor — market estimate](https://www.glassdoor.com/Salary/The-Aga-Khan-Hospitals-Nairobi-Salaries-EI_IE2077857.0,22_IL.23,30_IC2896002.htm)).
+- **Faith-based and NGO facilities (e.g. CHAK/mission hospitals):** pay tends to track near or slightly below the public scale and is donor-dependent, though no single published rate exists ([CHAK](https://www.chak.or.ke/)).
+- **Abroad:** this is where the numbers jump. Kenyan nurses recruited to Saudi Arabia have been offered a **minimum of around KES 150,000/month for fresh graduates**, with accommodation and other benefits on top ([Daily Nation](https://nation.africa/kenya/news/500-men-apply-for-women-s-saudi-nursing-jobs-4515738)). In the UK, a newly qualified staff nurse sits on **NHS Band 5, roughly £29,969–£36,483 a year for 2025/26** ([NHS pay band data](https://nhspayband.co.uk/nhs-band-5-salary/)).
+
+That gap is why Kenya faces a real health-worker exodus ([Think Global Health](https://www.thinkglobalhealth.org/article/kenyas-health-worker-exodus-brain-drain-or-economic-opportunity)). To weigh it up, it helps to be plugged into the profession — our guide to [nursing forums and networks in Kenya](/blog/nursing-forums-networks-kenya) lists where nurses share real offers and contracts.
+
+## Role and Specialisation: How Pay Grows
+
+Within any employer, your pay climbs with seniority and specialisation. In the public service the ladder runs from Registered Nurse III at entry up through Senior, Chief and Principal grades, with the degree-holding Nursing Officer cadre topping out at Director of Nursing Services — a jump of several multiples in basic pay from bottom to top ([Kenyans.co.ke](https://www.kenyans.co.ke/news/81388-qualifications-salaries-diploma-degree-nurses)).
+
+Specialisation pays. Market data (indicative, not official) suggests:
+
+- **Critical care / ICU nurses** command around **KES 100,000–130,000/month**, well above general ward pay ([market estimate](https://campuscybercafe.com/blog/post/kenya-icu-nurse-salary-per-month-benefits-job-challenges/)).
+- **Theatre, renal, oncology and anaesthetic nurses** similarly earn premiums for their Higher Diploma qualifications.
+
+This is the practical case for a Higher Diploma: it moves you into a higher-paying niche and out of the crowded general cadre. If specialisation is your plan, keeping your NCK licence and CPD current matters — see [how to apply for and maintain your NCK licence](/blog/how-to-apply-nck-licence-kenya).
+
+## Why Kenyan Nurses Aren't Always Paid on Time
+
+A salary you are promised is not the same as a salary you receive on the 28th. When Kenya devolved health to the **47 county governments at the end of 2013**, pay and industrial relations fractured — the country has seen more than 20 health-sector strikes since, including a nurses' strike that ran **150 days in 2017** ([BMJ Global Health / PMC](https://ncbi.nlm.nih.gov/pmc/articles/PMC6278918)).
+
+Delayed salaries remain a live problem: counties have been reported holding around **KES 44 billion** in unpaid worker dues built up over three years, with Nairobi alone accounting for the bulk ([Daily Nation](https://nation.africa/kenya/business/counties-hold-sh44bn-unpaid-workers-dues-more-than-3-years--5516548)).
+
+In mid-2026, two big pay stories are running at once:
+
+- **A nationwide strike.** KNUN issued a strike notice dated 22 July 2026 and downed tools on **29 July 2026**, citing grievances dating back to the 2017 CBA and demanding conclusion of the 2025–2029 CBA ([People Daily](https://peopledaily.digital/news/nurses-issue-7-day-strike-notice-over-unresolved-pay-cba-and-career-grievances)). The Employment and Labour Relations Court in Mombasa later suspended the strike and ordered nurses back to work pending determination ([Daily Nation](https://nation.africa/kenya/health/court-halts-nationwide-nurses-strike-orders-immediate-return-to-work-5547464)).
+- **UHC absorption.** The government confirmed that Universal Health Coverage staff — including thousands of nurses on insecure short-term contracts — would move to **permanent and pensionable terms from 1 July 2026**, backed by about **KES 8.6 billion** approved by the National Assembly, with 7,414 workers verified for transition ([The Star](https://www.the-star.co.ke/news/2026-08-03-thousands-of-uhc-workers-set-for-permanent-jobs-in-sh86bn-plan)).
+
+For anyone planning a nursing career in Kenya, the message is clear: your headline salary matters, but so does the security and timeliness of the employer paying it.
+
+## Your Next Step
+
+You cannot control county budgets or SRC directives. You *can* control whether you pass the NCK licensure exam on the first attempt — because every failed cycle is another four to six months without a salary at all.
+
+For real-time updates on nurse pay, CBAs, strikes and NCK exams, join our official WhatsApp channel:
+[Join the NurseFiti WhatsApp Channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Start Earning Sooner — Pass the NCK Exam First</h3>
+  <p class="mb-6 opacity-90">Practise thousands of NCK questions with rationales and full mock exams. Start your free NurseFiti account — no credit card required.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+> *Share this: "Solid breakdown of nurse salaries in Kenya — what new nurses actually earn, the intern stipend court ruling, the allowances nobody explains, and how county vs private vs abroad changes everything. Worth a read: nursefiti.co.ke/blog/nurse-salary-kenya"*
+
+---
+
+## Sources & References
+
+- **Kenyans.co.ke** — *Qualifications and salaries of diploma and degree nurses in Kenya*. [kenyans.co.ke](https://www.kenyans.co.ke/news/81388-qualifications-salaries-diploma-degree-nurses)
+- **The Standard** — *Breakdown: job groups, salaries and allowances in Kenya*. [standardmedia.co.ke](https://www.standardmedia.co.ke/counties/article/2001441183/breakdown-job-groups-salaries-and-allowances-in-kenya)
+- **Uasin Gishu County Public Service Board** — Registered Nurse III recruitment advert (basic scale and allowances). [jobs.uasingishu.go.ke](https://jobs.uasingishu.go.ke/advertdetails.aspx?mAdvertNo=UGC/CPSB/RNIII/04/23)
+- **Narok County Government** — Health department external recruitment advert. [narok.go.ke](https://narok.go.ke/wp-content/uploads/2026/03/NAROK-COUNTY-GOVERNMENT-HEALTH-EXTERNAL-ADVERTISEMENT.pdf)
+- **Employment and Labour Relations Court (Kenya Law)** — *Mike & 7 others v SRC & others* [2024] KEELRC 2506, 17 October 2024 (medical/nurse intern stipend judgment). [new.kenyalaw.org](https://new.kenyalaw.org/akn/ke/judgment/keelrc/2024/2506/eng@2024-10-17)
+- **Capital FM** — *High Court rules in favour of SRC on medical interns' stipend*. [capitalfm.co.ke](https://www.capitalfm.co.ke/news/2024/10/high-court-rules-in-favour-of-src-on-medical-interns-stipend/)
+- **The Standard** — *KMPDU warns of strike if government slashes intern pay*. [standardmedia.co.ke](https://www.standardmedia.co.ke/health/health-science/article/2001512093/kmpdu-warns-of-strike-if-government-slashes-intern-pay)
+- **The Standard** — *New pay and allowances for Kenya nurses (2017 CBA)*. [standardmedia.co.ke](https://www.standardmedia.co.ke/health/article/2000140276/new-pay-and-allowances-for-kenya-nurses)
+- **Business Today** — *The curse of devolution in Kenya's health system (unimplemented CBA allowances)*. [businesstoday.co.ke](https://businesstoday.co.ke/curse-devolution-kenyas-health-system/)
+- **Tuko** — *Latest allowances and per diem rates for civil servants in Kenya (SRC housing clusters, commuter)*. [tuko.co.ke](https://www.tuko.co.ke/319051-latest-allowances-diem-rates-civil-servants-kenya.html)
+- **Payscale** — Registered Nurse salary, Kenyatta National Hospital (market estimate). [payscale.com](https://www.payscale.com/research/KE/Job=Registered_Nurse_(RN)/Salary/30335f13/Kenyatta-National-Hospital)
+- **Glassdoor** — Aga Khan University Hospital Nairobi nurse salaries (market estimate). [glassdoor.com](https://www.glassdoor.com/Salary/The-Aga-Khan-Hospitals-Nairobi-Salaries-EI_IE2077857.0,22_IL.23,30_IC2896002.htm)
+- **Christian Health Association of Kenya (CHAK)** — member facilities and careers. [chak.or.ke](https://www.chak.or.ke/)
+- **Daily Nation** — *Kenyan nurses recruited for Saudi Arabia nursing jobs (offer terms)*. [nation.africa](https://nation.africa/kenya/news/500-men-apply-for-women-s-saudi-nursing-jobs-4515738)
+- **NHS pay band data** — NHS Band 5 salary scale 2025/26. [nhspayband.co.uk](https://nhspayband.co.uk/nhs-band-5-salary/)
+- **Think Global Health** — *Kenya's health worker exodus: brain drain or economic opportunity?* [thinkglobalhealth.org](https://www.thinkglobalhealth.org/article/kenyas-health-worker-exodus-brain-drain-or-economic-opportunity)
+- **BMJ Global Health (PMC)** — *Health-sector strikes and devolution in Kenya*. [ncbi.nlm.nih.gov](https://ncbi.nlm.nih.gov/pmc/articles/PMC6278918)
+- **Daily Nation** — *Counties hold Sh44bn in unpaid workers' dues*. [nation.africa](https://nation.africa/kenya/business/counties-hold-sh44bn-unpaid-workers-dues-more-than-3-years--5516548)
+- **People Daily** — *Nurses issue 7-day strike notice over unresolved pay, CBA and career grievances (July 2026)*. [peopledaily.digital](https://peopledaily.digital/news/nurses-issue-7-day-strike-notice-over-unresolved-pay-cba-and-career-grievances)
+- **Daily Nation** — *Court halts nationwide nurses' strike, orders immediate return to work*. [nation.africa](https://nation.africa/kenya/health/court-halts-nationwide-nurses-strike-orders-immediate-return-to-work-5547464)
+- **The Star** — *Thousands of UHC workers set for permanent jobs in Sh8.6bn plan*. [the-star.co.ke](https://www.the-star.co.ke/news/2026-08-03-thousands-of-uhc-workers-set-for-permanent-jobs-in-sh86bn-plan)
+
+*Salary figures in this article are indicative and, where drawn from private employers or salary aggregators, are market estimates rather than official rates. Always verify current pay, allowances and terms with your employer and the [Salaries and Remuneration Commission](https://src.go.ke), and confirm exam and licensing details at [nckenya.com](https://www.nckenya.com).*
+`,
+  },
+];
+
+const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY];
 
 // ─── generateStaticParams ────────────────────────────────────────────────────
 
@@ -2605,6 +2924,16 @@ export async function generateMetadata({
 
 // Per-post hero images (Unsplash free CDN)
 const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> = {
+  'nurse-salary-kenya': {
+    url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Calculator and financial documents representing nurse salary, allowances and pay calculations in Kenya',
+    credit: 'Unsplash',
+  },
+  'community-health-nursing-kenya': {
+    url: 'https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Community health nurse in scrubs checking a patient\'s blood pressure during a health screening',
+    credit: 'Unsplash',
+  },
   'moh-nursing-internship-deployment-kenya-2026': {
     url: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200&q=80&auto=format&fit=crop',
     alt: 'Medical professional reviewing documents - MOH Internship Deployment',
