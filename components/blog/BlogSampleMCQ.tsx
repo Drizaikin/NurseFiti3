@@ -73,6 +73,18 @@ const SAMPLE_QUESTIONS: Record<string, SampleQuestion> = {
     topic: 'Clinical Reference Guidelines',
     difficulty: 'medium',
   },
+  'community-health-nursing-kenya-sample': {
+    stem: 'During a Malezi Bora outreach, a community health nurse reviews the immunization card of a healthy 9-month-old infant who has received all vaccines on schedule so far. According to the Kenya national immunization (KEPI) schedule, which vaccine is due at this 9-month visit?',
+    option_a: 'Third dose of pentavalent (DPT-HepB-Hib)',
+    option_b: 'First dose of Measles-Rubella (MR) vaccine',
+    option_c: 'BCG vaccine',
+    option_d: 'Second dose of Measles-Rubella (MR) vaccine',
+    correct_option: 'B',
+    rationale: 'Under Kenya’s routine childhood immunization schedule, the FIRST dose of the Measles-Rubella (MR) vaccine is given at 9 months of age, and the SECOND dose at 18 months. BCG (C) is given at birth, and the three pentavalent doses (A) are completed by 14 weeks, so none of those are due at 9 months. Option D (MR second dose) comes later, at 18 months. A community health nurse running growth-monitoring and immunization outreaches such as Malezi Bora must know this schedule precisely to catch defaulters and prevent measles outbreaks. This aligns with the Kenya Expanded Programme on Immunization (KEPI) and WHO guidance.',
+    unit: 'Community Health Nursing',
+    topic: 'Immunization & KEPI Schedule',
+    difficulty: 'easy',
+  },
 };
 
 export function BlogSampleMCQ({ questionSlug }: { questionSlug: string }) {

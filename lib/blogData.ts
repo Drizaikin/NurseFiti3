@@ -1,5 +1,23 @@
 export const POSTS = [
   {
+    slug: 'nurse-salary-kenya',
+    title: 'Nurse Salary in Kenya: What Changes Your Pay (2026)',
+    excerpt: 'How much do nurses earn in Kenya? See what changes pay across roles and employers — job grades, intern stipends, allowances, county, private and abroad.',
+    category: 'Community',
+    readTime: '12 min read',
+    date: '2026-08-06',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
+    slug: 'community-health-nursing-kenya',
+    title: 'Community Health Nursing in Kenya: Roles & Skills (2026)',
+    excerpt: 'Discover community health nursing in Kenya: the roles, skills, and practice settings — from CHPs and KRCHN training to the 2023 Primary Health Care Act.',
+    category: 'Study Guide',
+    readTime: '11 min read',
+    date: '2026-08-06',
+    cadres: ['KRCHN', 'BScN'],
+  },
+  {
     slug: 'nck-indexing-60-day-deadline-kenya',
     title: 'NCK Indexing Kenya 2026: The Complete 60-Day Deadline Guide',
     excerpt: 'Discover the crucial 60-day NCK indexing deadline on the OSP portal. Learn the step-by-step process to ensure your BScN training is fully recognized in Kenya.',
@@ -219,6 +237,8 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
+  'nurse-salary-kenya': 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80&auto=format&fit=crop',
+  'community-health-nursing-kenya': 'https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=1200&q=80&auto=format&fit=crop',
   'nck-indexing-60-day-deadline-kenya': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80&auto=format&fit=crop',
   'surviving-first-clinical-placement-kenyan-public-hospital': 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200&q=80&auto=format&fit=crop',
   'nck-exam-foreign-trained-nurses-kenya': 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80&auto=format&fit=crop',
