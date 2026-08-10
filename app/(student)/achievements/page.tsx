@@ -34,8 +34,8 @@ interface LeaderboardEntry {
 }
 
 const KENYAN_NAMES = [
-  "Brian Kamau", "Faith Wanjiru", "Kevin Ochieng", "Mercy Akinyi", 
-  "Dennis Mutua", "Grace Muthoni", "Collins Kipkorir", "Cynthia Nekesa", 
+  "Brian Kamau", "Faith Wanjiru", "Kevin Ochieng", "Mercy Akinyi",
+  "Dennis Mutua", "Grace Muthoni", "Collins Kipkorir", "Cynthia Nekesa",
   "Victor Omondi", "Diana Wanjiku", "Evans Njoroge", "Irene Nyambura",
   "Felix Odhiambo", "Sharon Njeri", "Ian Mwangi", "Joy Achieng",
   "Kelvin Otieno", "Christine Atieno", "Martin Maina", "Purity Awino",
@@ -44,97 +44,190 @@ const KENYAN_NAMES = [
   "Moses Omondi", "Susan Nduta", "Samuel Karanja", "Esther Wambui"
 ];
 
-function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntry[] {
-  const bots: LeaderboardEntry[] = [];
-  const today = new Date();
-  
-  // Rolling 7-day window simulation
-  
-  // Freeze the identity baseline to Week 25 to prevent bot names/xp from randomly scrambling 
-  // every time a new calendar week rolls over.
-  const fixedWeekNumber = 25; 
-  
-  // Use exact fractional weeks since the start of the year for smooth all-time progression
-  const startOfYear = new Date(today.getFullYear(), 0, 1);
-  const diff = today.getTime() - startOfYear.getTime();
-  const exactWeeks = diff / (1000 * 60 * 60 * 24 * 7);
-  
-  // Cutoff date for when the new accelerated XP rules began
-  const xpBoostDate = new Date('2026-08-01T00:00:00+03:00');
-  
-  for (let i = 0; i < 15; i++) {
-    // Deterministic identity seed based on the frozen week
-    const seed = fixedWeekNumber * 100 + i;
-    const rng = (seed * 9301 + 49297) % 233280; // Simple LCG PRNG
-    const randomFloat = rng / 233280;
-    
-    const nameIndex = Math.floor(randomFloat * KENYAN_NAMES.length);
-    const fullName = KENYAN_NAMES[nameIndex];
-    
-    // --- ROLLING 7-DAY WEEKLY XP CALCULATION ---
-    let weeklyXp = rng % 30; // Start with a small baseline
-    
-    // Calculate daily XP for the past 6 full days
-    for (let d = 6; d > 0; d--) {
-      const pastDate = new Date(today);
-      pastDate.setDate(today.getDate() - d);
-      // Use YYYYMMDD to guarantee stability across timezone bounds
-      const dayStr = pastDate.getFullYear() + String(pastDate.getMonth() + 1).padStart(2, '0') + String(pastDate.getDate()).padStart(2, '0');
-      const daySeed = parseInt(dayStr) + i * 13;
-      const dayRng = (daySeed * 9301 + 49297) % 233280;
-      
-      const isBoosted = pastDate.getTime() >= xpBoostDate.getTime();
-      const dayGain = isBoosted 
-        ? Math.floor((dayRng / 233280) * 901) + 100  // 100-1000 XP (Accelerated)
-        : Math.floor((dayRng / 233280) * 131) + 20;  // 20-150 XP (Original)
-        
-      weeklyXp += dayGain;
+type BotPersona = 'steady' | 'bursty' | 'late_climber' | 'early_starter' | 'consistent';
+
+const BOT_XP_MODEL_START = new Date('2026-08-10T00:00:00+03:00');
+const MAX_DAILY_BOT_XP = 500;
+const MAX_WEEKLY_BOT_XP = 3000;
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+const BOT_PERSONAS: BotPersona[] = [
+  'steady', 'bursty', 'late_climber', 'early_starter', 'consistent'
+];
+
+function seededRandom(seed: number) {
+  const value = Math.sin(seed) * 10000;
+  return value - Math.floor(value);
+}
+
+function dayKey(date: Date) {
+  return date.getFullYear() * 10000 + (date.getMonth() + 1) * 100 + date.getDate();
+}
+
+function atStartOfDay(date: Date) {
+  const result = new Date(date);
+  result.setHours(0, 0, 0, 0);
+  return result;
+}
+
+function getModelWeek(date: Date) {
+  const elapsedDays = Math.max(0, Math.floor((atStartOfDay(date).getTime() - atStartOfDay(BOT_XP_MODEL_START).getTime()) / DAY_MS));
+  return Math.floor(elapsedDays / 7);
+}
+
+function getWeekStart(date: Date) {
+  const elapsedDays = Math.max(0, Math.floor((atStartOfDay(date).getTime() - atStartOfDay(BOT_XP_MODEL_START).getTime()) / DAY_MS));
+  const result = atStartOfDay(BOT_XP_MODEL_START);
+  result.setDate(result.getDate() + Math.floor(elapsedDays / 7) * 7);
+  return result;
+}
+
+function getPersonaWeight(persona: BotPersona, dayIndex: number, random: number) {
+  const base = 0.35 + random;
+  if (persona === 'steady') return base;
+  if (persona === 'bursty') return base * (random > 0.68 ? 2.5 : 0.42);
+  if (persona === 'late_climber') return base * (dayIndex >= 4 ? 1.9 : 0.58);
+  if (persona === 'early_starter') return base * (dayIndex <= 2 ? 1.9 : 0.58);
+  return 0.8 + random * 0.45;
+}
+
+function getWeeklyTarget(botIndex: number, week: number, persona: BotPersona) {
+  const ranges: Record<BotPersona, [number, number]> = {
+    steady: [700, 1900], bursty: [250, 2700], late_climber: [500, 3000],
+    early_starter: [350, 2500], consistent: [900, 2100],
+  };
+  const [minimum, maximum] = ranges[persona];
+  const random = seededRandom((botIndex + 1) * 100003 + (week + 1) * 7919);
+  return Math.min(MAX_WEEKLY_BOT_XP, minimum + Math.floor(random * (maximum - minimum + 1)));
+}
+
+// Allocate each week's target across seven changing daily scores. The capped redistribution
+// prevents a single day exceeding 500 XP while preserving the planned weekly total.
+function getWeeklyDailyGains(botIndex: number, week: number, persona: BotPersona) {
+  const target = getWeeklyTarget(botIndex, week, persona);
+  const weights = Array.from({ length: 7 }, (_, dayIndex) =>
+    getPersonaWeight(persona, dayIndex, seededRandom((botIndex + 1) * 31337 + (week + 1) * 1009 + (dayIndex + 1) * 97))
+  );
+  const gains = Array<number>(7).fill(0);
+  let remaining = target;
+  let remainingIndices = Array.from({ length: 7 }, (_, index) => index);
+
+  while (remainingIndices.length > 0 && remaining > 0) {
+    const weightTotal = remainingIndices.reduce((sum, index) => sum + weights[index], 0);
+    const capped: number[] = [];
+    for (const index of remainingIndices) {
+      const proposed = Math.floor(remaining * (weights[index] / weightTotal));
+      const capacity = MAX_DAILY_BOT_XP - gains[index];
+      const assigned = Math.min(capacity, proposed);
+      gains[index] += assigned;
+      if (assigned === capacity) capped.push(index);
     }
-    
-    // Today's smooth fractional gain
-    const todayStr = today.getFullYear() + String(today.getMonth() + 1).padStart(2, '0') + String(today.getDate()).padStart(2, '0');
-    const todaySeed = parseInt(todayStr) + i * 13;
-    const todayRng = (todaySeed * 9301 + 49297) % 233280;
-    
-    const isTodayBoosted = today.getTime() >= xpBoostDate.getTime();
-    const todayMaxGain = isTodayBoosted
-      ? Math.floor((todayRng / 233280) * 901) + 100
-      : Math.floor((todayRng / 233280) * 131) + 20;
-    
-    // Smooth increment by the minute instead of chunking rigidly by the hour
-    const hoursPassed = today.getHours() + (today.getMinutes() / 60);
-    weeklyXp += Math.floor(hoursPassed * (todayMaxGain / 24));
-    
-    let xp = 0;
-    
-    if (leaderTab === 'weekly') {
-      xp = weeklyXp;
-    } else {
-      // All time
-      // Realistic base scale frozen to Week 25, plus smooth growth for time passed since then
-      const cutoffWeeks = (xpBoostDate.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24 * 7);
-      
-      const weeksBeforeCutoff = Math.max(0, Math.min(exactWeeks, cutoffWeeks) - 25);
-      const weeksAfterCutoff = Math.max(0, exactWeeks - Math.max(25, cutoffWeeks));
-      
-      const smoothProgression = (weeksBeforeCutoff * 150) + (weeksAfterCutoff * 2500); 
-      const historicalXp = (rng % 1200) + smoothProgression;
-      xp = Math.floor(historicalXp + weeklyXp);
+    const assignedTotal = gains.reduce((sum, gain) => sum + gain, 0);
+    remaining = target - assignedTotal;
+    if (capped.length === 0) {
+      for (const index of remainingIndices) {
+        if (remaining === 0) break;
+        if (gains[index] < MAX_DAILY_BOT_XP) {
+          gains[index] += 1;
+          remaining -= 1;
+        }
+      }
+      break;
     }
-    
-    // Unify level calculation to strictly match backend (100 XP per level)
-    const level = Math.floor(xp / 100) + 1;
-    
-    bots.push({
-      id: `bot-${i}`,
-      full_name: fullName,
-      xp,
-      level: Math.max(1, level),
-      cadre: (rng % 2 === 0) ? 'KRCHN' : 'BScN',
-      isMe: false
-    });
+    remainingIndices = remainingIndices.filter(index => !capped.includes(index));
   }
-  return bots;
+  return gains;
+}
+
+function getNewModelDailyGain(botIndex: number, date: Date, now: Date, persona: BotPersona) {
+  const weekStart = getWeekStart(date);
+  const dayIndex = Math.max(0, Math.min(6, Math.floor((atStartOfDay(date).getTime() - weekStart.getTime()) / DAY_MS)));
+  const gain = getWeeklyDailyGains(botIndex, getModelWeek(date), persona)[dayIndex];
+  const isToday = dayKey(date) === dayKey(now);
+  if (!isToday) return gain;
+  const elapsedDay = Math.min(1, Math.max(0, (now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600) / 24));
+  return Math.floor(gain * elapsedDay);
+}
+
+function getLegacyDailyGain(botIndex: number, date: Date, now: Date) {
+  // Match the previous accelerated bot model exactly before the new model starts.
+  const daySeed = dayKey(date) + botIndex * 13;
+  const dayRng = (daySeed * 9301 + 49297) % 233280;
+  const gain = Math.floor((dayRng / 233280) * 901) + 100;
+  return dayKey(date) === dayKey(now)
+    ? Math.floor(gain * Math.min(1, Math.max(0, (now.getHours() + now.getMinutes() / 60) / 24)))
+    : gain;
+}
+
+function getDailyBotGain(botIndex: number, date: Date, now: Date, persona: BotPersona) {
+  return atStartOfDay(date) >= atStartOfDay(BOT_XP_MODEL_START)
+    ? getNewModelDailyGain(botIndex, date, now, persona)
+    : getLegacyDailyGain(botIndex, date, now);
+}
+
+function getRollingWeeklyXp(botIndex: number, now: Date, persona: BotPersona) {
+  let xp = 0;
+  const firstDay = atStartOfDay(now);
+  firstDay.setDate(firstDay.getDate() - 6);
+  for (let index = 0; index < 7; index++) {
+    const date = new Date(firstDay);
+    date.setDate(firstDay.getDate() + index);
+    xp += getDailyBotGain(botIndex, date, now, persona);
+  }
+  return Math.min(MAX_WEEKLY_BOT_XP, xp);
+}
+
+function getLegacyAllTimeXpAtModelStart(botIndex: number) {
+  // Preserve exactly the existing all-time model through 9 August 2026.
+  const snapshot = new Date(BOT_XP_MODEL_START);
+  snapshot.setDate(snapshot.getDate() - 1);
+  snapshot.setHours(23, 59, 59, 999);
+  const seed = 25 * 100 + botIndex;
+  const rng = (seed * 9301 + 49297) % 233280;
+  const startOfYear = new Date(snapshot.getFullYear(), 0, 1);
+  const exactWeeks = (snapshot.getTime() - startOfYear.getTime()) / (7 * DAY_MS);
+  const boostDate = new Date('2026-08-01T00:00:00+03:00');
+  const cutoffWeeks = (boostDate.getTime() - startOfYear.getTime()) / (7 * DAY_MS);
+  const weeksBeforeCutoff = Math.max(0, Math.min(exactWeeks, cutoffWeeks) - 25);
+  const weeksAfterCutoff = Math.max(0, exactWeeks - Math.max(25, cutoffWeeks));
+  const smoothProgression = weeksBeforeCutoff * 150 + weeksAfterCutoff * 2500;
+  let weeklyXp = rng % 30;
+  for (let offset = 6; offset > 0; offset--) {
+    const date = new Date(snapshot);
+    date.setDate(snapshot.getDate() - offset);
+    weeklyXp += getLegacyDailyGain(botIndex, date, snapshot);
+  }
+  weeklyXp += getLegacyDailyGain(botIndex, snapshot, snapshot);
+  return Math.floor((rng % 1200) + smoothProgression + weeklyXp);
+}
+
+function getAllTimeBotXp(botIndex: number, now: Date, persona: BotPersona) {
+  const baseline = getLegacyAllTimeXpAtModelStart(botIndex);
+  let newModelXp = 0;
+  for (let date = atStartOfDay(BOT_XP_MODEL_START); date <= atStartOfDay(now); date.setDate(date.getDate() + 1)) {
+    newModelXp += getNewModelDailyGain(botIndex, date, now, persona);
+  }
+  return baseline + newModelXp;
+}
+
+function generateSimulatedBots(leaderTab: 'alltime' | 'weekly'): LeaderboardEntry[] {
+  const now = new Date();
+  const fixedWeekNumber = 25;
+  return Array.from({ length: 15 }, (_, index) => {
+    const seed = fixedWeekNumber * 100 + index;
+    const rng = (seed * 9301 + 49297) % 233280;
+    const persona = BOT_PERSONAS[index % BOT_PERSONAS.length];
+    const weeklyXp = getRollingWeeklyXp(index, now, persona);
+    const xp = leaderTab === 'weekly' ? weeklyXp : getAllTimeBotXp(index, now, persona);
+    return {
+      id: `bot-${index}`,
+      full_name: KENYAN_NAMES[Math.floor((rng / 233280) * KENYAN_NAMES.length)],
+      xp,
+      level: Math.max(1, Math.floor(xp / 100) + 1),
+      cadre: rng % 2 === 0 ? 'KRCHN' : 'BScN',
+      isMe: false,
+    };
+  });
 }
 
 
