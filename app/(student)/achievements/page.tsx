@@ -238,6 +238,7 @@ export default function AchievementsPage() {
   const [earnedBadges, setEarnedBadges] = useState<Set<string>>(new Set());
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [leaderTab, setLeaderTab] = useState<'weekly' | 'alltime'>('alltime');
+  const [achievementTab, setAchievementTab] = useState<'badges' | 'leaderboard'>('badges');
   const [isLoading, setIsLoading] = useState(true);
   const [streakDays, setStreakDays] = useState<Record<string, 'done' | 'missed' | 'today'>>({});
 
@@ -391,54 +392,72 @@ export default function AchievementsPage() {
         </div>
       </Card>
 
-      {/* Badges */}
       <Card>
-        <h2 className="text-xl font-heading font-bold mb-4">Badges</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {BADGE_DEFS.map(b => {
-            const earned = earnedBadges.has(b.id);
-            return (
-              <div key={b.id} className={`flex flex-col items-center text-center p-4 rounded-xl border-2 transition-all ${earned ? 'border-accent bg-accent/5' : 'border-[var(--color-border)] opacity-50 grayscale'}`}>
-                <span className="text-4xl mb-2">{b.icon}</span>
-                <p className="font-semibold text-sm text-[var(--color-text)]">{b.name}</p>
-                <p className="text-xs text-neutral-mid mt-1">{b.description}</p>
-                {earned && <Badge variant="amber" size="sm" className="mt-2">Earned</Badge>}
-              </div>
-            );
-          })}
-        </div>
-      </Card>
-
-      {/* Leaderboard */}
-      <Card>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-heading font-bold">Leaderboard</h2>
-          <div className="flex gap-1 bg-neutral-border rounded-lg p-1">
-            {(['alltime', 'weekly'] as const).map(t => (
-              <button key={t} onClick={() => handleLeaderTabChange(t)}
-                className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${leaderTab === t ? 'bg-[var(--color-card)] text-primary shadow-sm' : 'text-neutral-mid'}`}>
-                {t === 'alltime' ? 'All Time' : 'Weekly'}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+          <div className="flex gap-1 bg-neutral-border rounded-lg p-1 w-fit" role="group" aria-label="Achievements content">
+            {(['badges', 'leaderboard'] as const).map(tab => (
+              <button
+                key={tab}
+                type="button"
+                aria-pressed={achievementTab === tab}
+                onClick={() => setAchievementTab(tab)}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${achievementTab === tab ? 'bg-[var(--color-card)] text-primary shadow-sm' : 'text-neutral-mid'}`}
+              >
+                {tab === 'badges' ? 'Badges' : 'Leaderboard'}
               </button>
             ))}
           </div>
-        </div>
-        <div className="space-y-2">
-          {leaderboard.map((entry, i) => (
-            <div key={entry.id} className={`flex items-center gap-3 p-3 rounded-xl ${entry.isMe ? 'bg-accent/10 border-2 border-accent/30' : 'bg-[var(--color-bg)]'}`}>
-              <span className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 ${i === 0 ? 'bg-accent text-dark' : i === 1 ? 'bg-neutral-mid text-white' : i === 2 ? 'bg-amber-700 text-white' : 'bg-neutral-border text-neutral-mid'}`}>
-                {i + 1}
-              </span>
-              <div className="flex-1 min-w-0">
-                <p className="font-semibold text-sm text-[var(--color-text)] truncate">{entry.full_name}{entry.isMe && ' (You)'}</p>
-                <p className="text-xs text-neutral-mid">Level {entry.level} · {entry.cadre}</p>
-              </div>
-              <div className="text-right">
-                <p className="font-bold text-sm text-accent">{entry.xp.toLocaleString()} XP</p>
-              </div>
+          {achievementTab === 'leaderboard' && (
+            <div className="flex gap-1 bg-neutral-border rounded-lg p-1 w-fit" role="group" aria-label="Leaderboard period">
+              {(['alltime', 'weekly'] as const).map(t => (
+                <button key={t} type="button" aria-pressed={leaderTab === t} onClick={() => handleLeaderTabChange(t)}
+                  className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${leaderTab === t ? 'bg-[var(--color-card)] text-primary shadow-sm' : 'text-neutral-mid'}`}>
+                  {t === 'alltime' ? 'All Time' : 'Weekly'}
+                </button>
+              ))}
             </div>
-          ))}
-          {leaderboard.length === 0 && <p className="text-neutral-mid text-sm text-center py-6">No leaderboard data yet.</p>}
+          )}
         </div>
+
+        {achievementTab === 'badges' ? (
+          <div>
+            <h2 className="text-xl font-heading font-bold mb-4">Badges</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {BADGE_DEFS.map(b => {
+                const earned = earnedBadges.has(b.id);
+                return (
+                  <div key={b.id} className={`flex flex-col items-center text-center p-4 rounded-xl border-2 transition-all ${earned ? 'border-accent bg-accent/5' : 'border-[var(--color-border)] opacity-50 grayscale'}`}>
+                    <span className="text-4xl mb-2">{b.icon}</span>
+                    <p className="font-semibold text-sm text-[var(--color-text)]">{b.name}</p>
+                    <p className="text-xs text-neutral-mid mt-1">{b.description}</p>
+                    {earned && <Badge variant="amber" size="sm" className="mt-2">Earned</Badge>}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          <div>
+            <h2 className="text-xl font-heading font-bold mb-4">Leaderboard</h2>
+            <div className="space-y-2">
+              {leaderboard.map((entry, i) => (
+                <div key={entry.id} className={`flex items-center gap-3 p-3 rounded-xl ${entry.isMe ? 'bg-accent/10 border-2 border-accent/30' : 'bg-[var(--color-bg)]'}`}>
+                  <span className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 ${i === 0 ? 'bg-accent text-dark' : i === 1 ? 'bg-neutral-mid text-white' : i === 2 ? 'bg-amber-700 text-white' : 'bg-neutral-border text-neutral-mid'}`}>
+                    {i + 1}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-sm text-[var(--color-text)] truncate">{entry.full_name}{entry.isMe && ' (You)'}</p>
+                    <p className="text-xs text-neutral-mid">Level {entry.level} · {entry.cadre}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-bold text-sm text-accent">{entry.xp.toLocaleString()} XP</p>
+                  </div>
+                </div>
+              ))}
+              {leaderboard.length === 0 && <p className="text-neutral-mid text-sm text-center py-6">No leaderboard data yet.</p>}
+            </div>
+          </div>
+        )}
       </Card>
     </div>
   );
