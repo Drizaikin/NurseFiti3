@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/Button";
 // ❶  RELEASES REGISTRY — edit here to announce new features
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CURRENT_VERSION = 16;
+const CURRENT_VERSION = 17;
 
 interface WhatsNewItem {
   icon: string;
@@ -481,9 +481,44 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
     ],
   },
 
-  // ── Version 17 — Massive Database Audit & Recategorisation ────────────────
+  // ── Version 17 — Question Bank Expansion ─────────────────────────────────
   {
     version: 17,
+    date: 'August 2026',
+    title: 'Question Bank Expansion',
+    description: '900+ new practice questions added across BScN and KRCHN papers — covering Medical-Surgical Nursing, Community Health, Mental Health, Pharmacology, Anatomy & Physiology, Midwifery, Research, Nutrition, and more. All questions are clinically audited against Kenya MOH guidelines and NCK standards.',
+    highlights: [
+      '900+ new MCQ questions added',
+      'BScN Paper I & II fully seeded',
+      'KRCHN Paper I & II fully seeded',
+      'All questions clinically audited per Kenya MOH guidelines',
+      'Topics: Med-Surg, Community Health, Mental Health, Pharmacology, A&P, Midwifery, Research, Nutrition, IPC, Ethics & Law',
+    ],
+    items: [
+      {
+        icon: "📝",
+        tag: "New Questions",
+        tagColor: "bg-primary/20 text-primary",
+        title: "900+ New MCQ Questions Added",
+        description:
+          "Practice questions added across BScN and KRCHN papers — covering Medical-Surgical Nursing, Community Health, Mental Health, Pharmacology, A&P, Midwifery, Research, Nutrition, IPC, Ethics & Law. All clinically audited against Kenya MOH guidelines and NCK standards.",
+        cta: { label: "Start Practising", href: "/practice" },
+      },
+      {
+        icon: "✅",
+        tag: "Quality",
+        tagColor: "bg-emerald-500/20 text-emerald-400",
+        title: "BScN & KRCHN Paper I and II Fully Seeded",
+        description:
+          "Every paper and cadre combination now has comprehensive question coverage. Questions are mapped to the correct NCK CBT Blueprint units and topics.",
+        cta: { label: "Take a Mock Exam", href: "/mock-exam" },
+      },
+    ],
+  },
+
+  // ── Version 18 — Massive Database Audit & Recategorisation ────────────────
+  {
+    version: 18,
     date: "26 July 2026",
     items: [
       {
