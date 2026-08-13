@@ -1,5 +1,14 @@
 export const POSTS = [
   {
+    slug: 'nursing-cv-kenyan-jobs',
+    title: 'Nursing CV for Kenyan Jobs: Sections and Evidence (2026)',
+    excerpt: 'Learn how newly qualified nurses in Kenya can build a clear CV with NCK evidence, clinical-placement achievements and job-specific proof for first roles.',
+    category: 'Study Strategy',
+    readTime: '10 min read',
+    date: '2026-08-13',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
     slug: 'higher-diploma-renal-nursing-kenya',
     title: 'Higher Diploma Renal Nursing Kenya: How to Prepare (2026)',
     excerpt: 'Discover NurseFiti’s Higher Diploma renal resources, entry evidence and renal-nursing preparation priorities for Kenyan specialist-nursing candidates.',
@@ -273,6 +282,7 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
+  'nursing-cv-kenyan-jobs': 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=1200&q=80&auto=format&fit=crop',
   'higher-diploma-renal-nursing-kenya': 'https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=1200&q=80&auto=format&fit=crop',
   'nurse-salary-kenya': 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80&auto=format&fit=crop',
   'community-health-nursing-kenya': 'https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=1200&q=80&auto=format&fit=crop',
