@@ -2879,6 +2879,168 @@ For nursing-study updates and practical preparation notes, join the [NurseFiti W
   },
 ];
 
+const POSTS_CV: Post[] = [
+  {
+    slug: 'nursing-cv-kenyan-jobs',
+    title: 'Nursing CV for Kenyan Jobs: Sections and Evidence (2026)',
+    excerpt: 'Learn how newly qualified nurses in Kenya can build a clear CV with NCK evidence, clinical-placement achievements and job-specific proof for first roles.',
+    category: 'Study Strategy',
+    readTime: '10 min read',
+    date: '2026-08-13',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+A first nursing CV is not weak because you have not held a permanent nursing job yet. It becomes weak when a recruiter has to search for the proof that you are qualified, licensed and ready to work safely.
+
+For a newly qualified nurse in Kenya, that proof is often already in your hands: NCK registration or licensure status, clinical placements, competencies signed off during training, academic records and credible referees. The difficult part is arranging it so an employer can see the match quickly.
+
+The quiet mistake that removes many first-time applicants from consideration is writing a generic “hardworking nurse” profile, then burying the actual evidence below two pages of unrelated detail. This guide shows how to build a focused nursing CV for Kenyan jobs — and what evidence belongs in each section.
+
+> [!NOTE]
+> *Last verified: 13 August 2026. Regulatory and vacancy requirements change. Always confirm the individual employer’s advert and current professional requirements directly with the [Nursing Council of Kenya](https://nckenya.com/registration/).*
+
+## Start with the professional facts employers can verify
+
+The Nursing Council of Kenya says nurses practising in Kenya must be registered and licensed, and Kenyan-trained nurses apply for registration and licensure after passing the national licensure examination. [NCK: Registration and Licensing](https://nckenya.com/registration/)
+
+Put these facts near the top of your CV, not in a final “other information” section:
+
+- nursing cadre: KRCHN, BScN or Higher Diploma;
+- NCK registration and practising-licence status;
+- current county, phone number and professional email;
+- availability or internship status, stated truthfully; and
+- the clinical area named in the advert, only where it genuinely matches your exposure.
+
+Do **not** state “fully licensed” if your registration or licence is pending. Write the precise truth: “NCK licensure examination passed; registration application submitted [month/year]” or “NCK practising licence valid to [month/year].” The NCK public register supports licence-status verification and advises users to search by licence number where possible. [NCK License Status Register](https://osp.nckenya.com/LicenseStatus)
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Preparing for the move from graduation to professional practice?</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Create a NurseFiti account and build a disciplined clinical-reasoning routine →</a>
+</div>
+
+## The first-page structure for a newly qualified nurse
+
+Use a clean, reverse-chronological CV. A first-role CV does not need a long employment-history section; it needs clear evidence.
+
+### 1. Professional header
+
+Include name, mobile number, professional email and town/county. Add LinkedIn only if it is current and professional. Do not include marital status, religion, ID number, photograph or home address unless the employer explicitly requests them.
+
+### 2. Professional profile: four evidence-led lines
+
+Avoid “dynamic”, “go-getter”, “team player” and “excellent communication skills” unless the rest of the CV proves them.
+
+> *Newly qualified KRCHN nurse with supervised clinical-placement exposure in medical-surgical, maternal-child and community-health settings. NCK registration/licensure status: [accurate status]. Trained in patient assessment, vital-signs monitoring, documentation, infection prevention and escalation under supervision. Seeking an entry-level nursing role where safe bedside care, accurate records and respectful patient communication are essential.*
+
+Replace every bracket with a verified fact. The profile works because it identifies cadre, status, setting, skills and target role.
+
+### 3. Registration, licence and professional standing
+
+Make this a separate section. Include only documentary facts: NCK registration number, practising-licence number and expiry date if issued, examination/result status if relevant and true, current association membership, and valid role-relevant certifications. A diploma or degree does not replace current professional documentation. [NCK: Registration and Licensing](https://nckenya.com/registration/)
+
+## Turn clinical placement into evidence, not a list of wards
+
+“Clinical placement — County Referral Hospital” tells a recruiter almost nothing. Convert it into brief, supervised evidence.
+
+**Facility or placement setting | Department | Dates**
+
+*Student/trainee nurse under supervision*
+
+- Completed and documented focused patient observations, escalating abnormal findings to the supervising nurse according to ward procedure.
+- Participated in medication rounds, patient education, admissions, discharges or handovers only where authorised and supervised.
+- Applied standard precautions, hand hygiene and safe waste-segregation procedures during assigned care activities.
+- Used respectful communication with patients, families and multidisciplinary team members.
+
+Do not claim an independent procedure when it required supervision. Replace “managed labour ward” with “supported supervised maternal observations and documentation in labour ward placement.” A good test is simple: could your clinical instructor or referee confirm every bullet? If not, rewrite it.
+
+## Match evidence to the vacancy, line by line
+
+Before writing, make a two-column note:
+
+| Vacancy asks for | Your honest evidence |
+|---|---|
+| Valid NCK documentation | Registration/licence status and number where requested |
+| Outpatient triage | Supervised triage exposure; vital signs; escalation |
+| Patient records | Ward documentation, care plans or handover under supervision |
+| Computer skills | Specific system, training or accurate evidence |
+| Communication | Patient education, counselling observation or handover contribution |
+
+The Public Service Commission’s recruitment system asks applicants to complete personal details, professional and academic qualifications, experience, professional-body membership, referees and other relevant information before submission; it warns that incomplete applications are not considered. [PSC Online Recruitment System: applicant guidance](https://pscims.publicservice.go.ke/puio/)
+
+That is a useful rule for every application. Do not make a recruiter infer your cadre, qualification, dates or referee details.
+
+> **What not to do:** Copy every duty from an advert into a “skills” list. Match the requirement, then prove it with a placement, certificate, project or supervised responsibility.
+
+**[Use NurseFiti to keep reviewing clinical scenarios and rationales as you prepare for applications and interviews →](/signup)**
+
+## Education, certifications and referees
+
+List your highest nursing qualification first, then institution, completion year and relevant distinctions only if useful and true. Include KCSE only when an employer requests it or your post-secondary history is limited.
+
+Create a separate certification section for valid BLS, ACLS, IPC, computer or other role-relevant training. Include issuer and expiry date where applicable. Do not list a course you intend to take as a qualification.
+
+Use two or three referees who can speak to clinical conduct, reliability and learning: a clinical instructor, ward preceptor or lecturer. Ask permission first; verify their phone number, email and job title. For public-service applications, requirements follow the individual advert, but PSC guidance includes referees and relevant professional information among the information applicants should provide. [PSC Online Recruitment System](https://pscims.publicservice.go.ke/puio/)
+
+## Five common CV mistakes that cost credibility
+
+### 1. Claiming a licence or competency you do not have
+
+NCK registration and licensure are verifiable professional facts. State the exact status and update the CV when it changes. [NCK registration guidance](https://nckenya.com/registration/)
+
+### 2. Sending one unchanged CV everywhere
+
+A dialysis centre, outpatient clinic, maternity unit and county public-health role do not prioritise the same evidence. Keep one master CV, then tailor the profile and the first clinical-evidence bullets.
+
+### 3. Listing duties without setting or supervision level
+
+Newly qualified nurses are not expected to have years of independent management experience. They are expected to be truthful. Name the setting, task, supervision and patient-safety contribution.
+
+### 4. Leaving dates, cadre or contacts unclear
+
+The PSC system specifically treats incomplete applicant information as a reason an application may not be considered. [PSC applicant guidance](https://pscims.publicservice.go.ke/puio/)
+
+### 5. Sending the wrong document format
+
+Follow the advert exactly. Official notices may require a detailed CV alongside identity, academic and professional documents, while other employers use mandatory online fields. [PSC vacancy notice example](https://publicservice.go.ke/wp-content/uploads/2024/03/ADVERT-AUDIT-COMMITTEE-CHAIRPERSON-AND-MEMBER-28.11.23.pdf) Use a clear filename such as \\`Jane-Achieng-KRCHN-CV.pdf\\`, but only combine documents when the vacancy instructs you to do so.
+
+## Pre-send checklist
+
+1. Is the role title and employer name correct?
+2. Is your NCK status exact and current?
+3. Can a referee verify every clinical-evidence bullet?
+4. Did you remove claims you cannot prove?
+5. Did you meet the advert’s file, portal, document and deadline instructions?
+6. Did you keep a copy of the final CV and submitted application?
+
+A Kenyan nursing CV should not try to sound senior. It should make a strong first-role case: you are professionally accountable, ready to learn, clear about your scope and able to show evidence for each claim.
+
+For job-search and professional-development updates, join the [NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m).
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Prepare for the role before you apply</h3>
+  <p class="mb-6 opacity-90">Strengthen your clinical reasoning and keep your NCK preparation organised with NurseFiti.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+
+> *Found this practical guide for newly qualified Kenyan nurses applying for their first job. It explains what to put in a nursing CV, how to show clinical-placement evidence honestly and the mistakes to avoid: nursefiti.co.ke/blog/nursing-cv-kenyan-jobs*
+
+---
+
+### Sources & References
+
+- Nursing Council of Kenya. *Registration and Licensing.* Accessed 13 August 2026. [https://nckenya.com/registration/](https://nckenya.com/registration/)
+- Nursing Council of Kenya. *License Status: Search the Register.* Accessed 13 August 2026. [https://osp.nckenya.com/LicenseStatus](https://osp.nckenya.com/LicenseStatus)
+- Public Service Commission, Kenya. *Online Recruitment System: Quick Guiding Steps.* Accessed 13 August 2026. [https://pscims.publicservice.go.ke/puio/](https://pscims.publicservice.go.ke/puio/)
+- Public Service Commission, Kenya. *Declaration of Vacancies for the Positions of Chairperson and Member of the Public Service Commission Audit Committee.* 28 November 2023. [PDF](https://publicservice.go.ke/wp-content/uploads/2024/03/ADVERT-AUDIT-COMMITTEE-CHAIRPERSON-AND-MEMBER-28.11.23.pdf)
+
+*Always verify current employer requirements, application deadlines and professional requirements directly with the employer and at [nckenya.com](https://www.nckenya.com).*
+`,
+  },
+];
+
 const POSTS_SALARY: Post[] = [
   {
     slug: 'nurse-salary-kenya',
@@ -3031,7 +3193,7 @@ For real-time updates on nurse pay, CBAs, strikes and NCK exams, join our offici
   },
 ];
 
-const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL];
+const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL, ...POSTS_CV];
 
 // ─── generateStaticParams ────────────────────────────────────────────────────
 
