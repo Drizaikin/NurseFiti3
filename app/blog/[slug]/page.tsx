@@ -2720,6 +2720,165 @@ For real-time updates on NCK exams, community health policy and study tips, join
   },
 ];
 
+const POSTS_RENAL: Post[] = [
+  {
+    slug: 'higher-diploma-renal-nursing-kenya',
+    title: 'Higher Diploma Renal Nursing Kenya: How to Prepare (2026)',
+    excerpt: 'Discover NurseFiti’s Higher Diploma renal resources, entry evidence and renal-nursing preparation priorities for Kenyan specialist-nursing candidates.',
+    category: 'Study Guide',
+    readTime: '10 min read',
+    date: '2026-08-13',
+    cadres: ['Higher Diploma'],
+    content: `
+Renal nursing is not “just dialysis.” It is specialised work where patient assessment, infection prevention, fluid management, education and team communication matter at the same time. That is why nurses considering Higher Diploma Renal Nursing in Kenya should prepare before the first lecture — not after practicum and coursework have already become demanding.
+
+The opportunity is real, but so is the standard. Kenyan specialist programmes describe renal nursing as preparation for collaborative management of people with renal disorders, using prescribed courses, practicum and clinical assessment — not theory alone. [University of Nairobi: Higher Diploma in Renal Nursing](https://nursing.uonbi.ac.ke/programs-content-type/higher-diploma-renal-nursing)
+
+**NurseFiti now has Higher Diploma resources ready for renal candidates.** If you want a repeatable way to revise renal concepts, test clinical reasoning and return to weak areas, build that routine now — before training workload competes for every free hour.
+
+> [!NOTE]
+> *Last verified: 13 August 2026. Entry rules, intakes, fees and documentary requirements vary by institution. Confirm the current advert with the training institution and professional requirements with the [Nursing Council of Kenya](https://nckenya.com/registration/).*
+
+## What Higher Diploma Renal Nursing prepares you to do
+
+Renal nursing, also called nephrology nursing, centres on care for people with kidney disease and renal-replacement needs. The University of Nairobi says its programme addresses capacity gaps by preparing nurses for collaborative management of clients with renal disorders; its published structure includes coursework, practicum and a project. [UoN programme overview and structure](https://nursing.uonbi.ac.ke/programs-content-type/higher-diploma-renal-nursing)
+
+A strong renal nurse does not only learn machine steps. The work requires safe assessment, recognition and escalation of change, accurate documentation, patient education and collaboration with the renal team. The Kenya Nephrology Nurses Association identifies haemodialysis, peritoneal dialysis and kidney transplantation among nephrology-nursing practice areas. [Kenya Nephrology Nurses Association](https://www.nephronursekenya.org/)
+
+Use every case, lecture or placement reflection to answer three questions:
+
+1. What is changing in this patient?
+2. What must be assessed, documented or escalated now?
+3. What can the patient and family safely understand and act on after this encounter?
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Your Higher Diploma renal resources are ready.</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Create a NurseFiti account and start structured renal revision →</a>
+</div>
+
+## Check eligibility from the current institution advert
+
+Never assume one programme’s criteria apply to every school. The University of Nairobi lists a registrable nursing qualification and at least two years of nursing-practice experience for its renal nursing programme. [UoN admission requirements](https://nursing.uonbi.ac.ke/programs-content-type/higher-diploma-renal-nursing)
+
+Kenyatta University Teaching, Referral and Research Hospital lists Kenya Registered Nephrology Nursing among its specialised Higher Diploma programmes. Its published entry requirements include being an NCK-recognised nurse, a minimum of one year post-registration experience and a valid practising licence. [KUTRRH Nursing Institute](https://www.kutrrh.go.ke/nursing-institute/)
+
+The practical rule: create your evidence folder before an intake opens, but submit only what the current advert asks for.
+
+### Your evidence folder
+
+Prepare current copies of:
+
+- NCK registration certificate and valid practising licence where required;
+- nursing academic and professional certificates;
+- post-registration experience evidence where the institution specifies it;
+- your CV;
+- the application form and payment evidence where required; and
+- any vaccination, insurance or health documentation listed in the advert.
+
+The NCK states that nurses practising in Kenya must be registered and licensed, and its public register supports licence-status verification. [NCK Registration and Licensing](https://nckenya.com/registration/) [NCK License Status Register](https://osp.nckenya.com/LicenseStatus)
+
+> **Do not reuse last year’s dates, fees or checklist.** KUTRRH’s published 2026 information includes specific intake dates, a fee and requested uploads; those details are institutional and time-sensitive. [KUTRRH Nursing Institute](https://www.kutrrh.go.ke/nursing-institute/)
+
+## Prepare renal reasoning, not machine mythology
+
+Starting with machine brands, settings or procedure sequences outside your approved local protocol is the wrong order. Build concepts that transfer across supervised renal practice.
+
+### Kidney function and the clinical story
+
+Refresh renal anatomy and physiology, acute kidney injury versus chronic kidney disease, fluid balance, electrolyte concepts, blood-pressure assessment and common co-morbidities. Do not memorise an isolated value without understanding which trend, symptom or patient context makes it important.
+
+### Renal replacement therapy concepts
+
+Know the purpose and broad process of haemodialysis and peritoneal dialysis, the reason for pre- and post-treatment assessment, infection-risk awareness, access-care principles and patient-education priorities. The local protocol used by your approved training site remains the authority for procedures.
+
+### Patient safety, escalation and education
+
+When revising a scenario, state the observation, immediate safety step, documentation need and escalation path. Then practise explaining the issue in plain language a patient or caregiver can understand. This is not “soft” content; it is part of safe continuity of care.
+
+The preparation step many candidates skip is a one-page renal reasoning log. After each case, lecture or placement shift, record the presentation, change observed, assessment, escalation and teaching point. It converts exposure into evidence you can recall.
+
+## A practical six-week preparation framework
+
+This is a self-study structure, not a replacement for your institution’s curriculum or clinical protocols.
+
+### Weeks 1–2: Foundation
+
+Review renal anatomy, physiology, fluid balance and electrolytes. Summarise each area in your own words and record every missed question by concept, not just by answer.
+
+### Week 3: Assessment and clinical change
+
+Practise scenarios involving oedema, altered urine output, fatigue, shortness of breath, blood-pressure change and treatment tolerance. For each scenario, identify data to collect and who to notify under supervision.
+
+### Week 4: Renal replacement therapy
+
+Compare haemodialysis and peritoneal-dialysis purposes, care settings and patient-education priorities. Do not convert a generic online checklist into a local clinical protocol.
+
+### Week 5: Documentation, education and teamwork
+
+Practise concise ISBAR handovers. Draft patient-teaching explanations at an accessible reading level. Review infection prevention, access care and escalation requirements from approved institutional material.
+
+### Week 6: Mixed recall and readiness
+
+Review the error log rather than only familiar topics. Confirm your documents and CV are current. Re-read the programme advert and map every listed requirement to your evidence folder.
+
+**[Use NurseFiti’s Higher Diploma resources to keep renal concepts in regular review →](/signup)**
+
+## Present your experience honestly in a renal-nursing CV
+
+Do not write “expert dialysis nurse” if your exposure was supervised, observed or limited. Use verifiable evidence:
+
+> *Registered nurse with [accurate number] years of post-registration experience in [setting]. Completed supervised exposure to [accurate activity or area]. Seeking Higher Diploma Renal Nursing training to strengthen renal assessment, patient education and collaborative care.*
+
+Your CV should show current NCK status, cadre and clinical setting, relevant supervised exposure, documentation and patient-education examples a referee can confirm, and a precise reason for choosing renal nursing. For wider application evidence, read our [nursing CV guide for Kenyan jobs](/blog/nursing-cv-kenyan-jobs).
+
+## Three mistakes that make preparation shallow
+
+### 1. Treating renal nursing as dialysis only
+
+Nephrology practice is wider: the Kenyan professional association includes haemodialysis, peritoneal dialysis and kidney transplantation. [Kenya Nephrology Nurses Association](https://www.nephronursekenya.org/)
+
+### 2. Applying from an old advert
+
+One published programme may require two years of practice while another lists one year post-registration experience. The current advert for your chosen institution is decisive. [UoN](https://nursing.uonbi.ac.ke/programs-content-type/higher-diploma-renal-nursing) [KUTRRH](https://www.kutrrh.go.ke/nursing-institute/)
+
+### 3. Overstating independent competence
+
+Specialist nursing depends on safety, protocol and collaboration. Never claim independent performance when a task was observed, assisted or supervised.
+
+## Prepare with the right resources before workload peaks
+
+Higher Diploma Renal Nursing is a deliberate next step for nurses drawn to rigorous assessment, technical care, patient education and multidisciplinary practice. It is not a title to collect; it is a commitment to deeper accountability.
+
+NurseFiti’s Higher Diploma resources are ready for renal candidates who want to revise deliberately, revisit difficult concepts and arrive at training with a stronger reasoning routine. Verify your licence, review the current programme advert, build your evidence folder — then use NurseFiti to keep progressing while you wait for or begin specialist training.
+
+For nursing-study updates and practical preparation notes, join the [NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m).
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Your Higher Diploma renal resources are ready</h3>
+  <p class="mb-6 opacity-90">Build a consistent renal-nursing preparation routine with NurseFiti’s Higher Diploma resources today.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Access NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+
+> *Found this focused guide for Kenyan nurses considering Higher Diploma Renal Nursing. It covers eligibility evidence, renal-nursing preparation and the Higher Diploma resources now available in NurseFiti: nursefiti.co.ke/blog/higher-diploma-renal-nursing-kenya*
+
+---
+
+### Sources & References
+
+- University of Nairobi, Department of Nursing Sciences. *Higher Diploma in Renal Nursing.* Accessed 13 August 2026. [https://nursing.uonbi.ac.ke/programs-content-type/higher-diploma-renal-nursing](https://nursing.uonbi.ac.ke/programs-content-type/higher-diploma-renal-nursing)
+- Kenyatta University Teaching, Referral and Research Hospital. *Nursing Institute: Higher Diploma Specialized Nursing Programmes.* Accessed 13 August 2026. [https://www.kutrrh.go.ke/nursing-institute/](https://www.kutrrh.go.ke/nursing-institute/)
+- Nursing Council of Kenya. *Registration and Licensing.* Accessed 13 August 2026. [https://nckenya.com/registration/](https://nckenya.com/registration/)
+- Kenya Nephrology Nurses Association. *About and professional practice areas.* Accessed 13 August 2026. [https://www.nephronursekenya.org/](https://www.nephronursekenya.org/)
+
+*Always verify the current intake, fees, entry requirements, clinical protocols and professional requirements directly with the training institution, your employer and [nckenya.com](https://www.nckenya.com).*
+`,
+  },
+];
+
 const POSTS_SALARY: Post[] = [
   {
     slug: 'nurse-salary-kenya',
@@ -2872,7 +3031,7 @@ For real-time updates on nurse pay, CBAs, strikes and NCK exams, join our offici
   },
 ];
 
-const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY];
+const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL];
 
 // ─── generateStaticParams ────────────────────────────────────────────────────
 
