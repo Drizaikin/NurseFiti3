@@ -3000,7 +3000,7 @@ The PSC system specifically treats incomplete applicant information as a reason 
 
 ### 5. Sending the wrong document format
 
-Follow the advert exactly. Official notices may require a detailed CV alongside identity, academic and professional documents, while other employers use mandatory online fields. [PSC vacancy notice example](https://publicservice.go.ke/wp-content/uploads/2024/03/ADVERT-AUDIT-COMMITTEE-CHAIRPERSON-AND-MEMBER-28.11.23.pdf) Use a clear filename such as \\`Jane-Achieng-KRCHN-CV.pdf\\`, but only combine documents when the vacancy instructs you to do so.
+Follow the advert exactly. Official notices may require a detailed CV alongside identity, academic and professional documents, while other employers use mandatory online fields. [PSC vacancy notice example](https://publicservice.go.ke/wp-content/uploads/2024/03/ADVERT-AUDIT-COMMITTEE-CHAIRPERSON-AND-MEMBER-28.11.23.pdf) Use a clear filename such as Jane-Achieng-KRCHN-CV.pdf, but only combine documents when the vacancy instructs you to do so.
 
 ## Pre-send checklist
 
