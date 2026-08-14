@@ -2956,13 +2956,38 @@ Do not claim an independent procedure when it required supervision. Replace “m
 
 Before writing, make a two-column note:
 
-| Vacancy asks for | Your honest evidence |
-|---|---|
-| Valid NCK documentation | Registration/licence status and number where requested |
-| Outpatient triage | Supervised triage exposure; vital signs; escalation |
-| Patient records | Ward documentation, care plans or handover under supervision |
-| Computer skills | Specific system, training or accurate evidence |
-| Communication | Patient education, counselling observation or handover contribution |
+<div class="overflow-x-auto my-6 rounded-xl border border-primary/20 shadow-sm">
+  <table class="w-full min-w-[620px] text-left border-collapse">
+    <thead>
+      <tr class="bg-primary text-white">
+        <th scope="col" class="px-4 sm:px-5 py-3 font-bold text-sm tracking-wide w-2/5">Vacancy asks for</th>
+        <th scope="col" class="px-4 sm:px-5 py-3 font-bold text-sm tracking-wide w-3/5">Your honest evidence</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <th scope="row" class="px-4 sm:px-5 py-3 text-sm font-semibold text-[var(--color-text)] align-top">Valid NCK documentation</th>
+        <td class="px-4 sm:px-5 py-3 text-sm text-neutral-mid">Registration/licence status and number where requested</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight">
+        <th scope="row" class="px-4 sm:px-5 py-3 text-sm font-semibold text-[var(--color-text)] align-top">Outpatient triage</th>
+        <td class="px-4 sm:px-5 py-3 text-sm text-neutral-mid">Supervised triage exposure; vital signs; escalation</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <th scope="row" class="px-4 sm:px-5 py-3 text-sm font-semibold text-[var(--color-text)] align-top">Patient records</th>
+        <td class="px-4 sm:px-5 py-3 text-sm text-neutral-mid">Ward documentation, care plans or handover under supervision</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight">
+        <th scope="row" class="px-4 sm:px-5 py-3 text-sm font-semibold text-[var(--color-text)] align-top">Computer skills</th>
+        <td class="px-4 sm:px-5 py-3 text-sm text-neutral-mid">Specific system, training or accurate evidence</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <th scope="row" class="px-4 sm:px-5 py-3 text-sm font-semibold text-[var(--color-text)] align-top">Communication</th>
+        <td class="px-4 sm:px-5 py-3 text-sm text-neutral-mid">Patient education, counselling observation or handover contribution</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 The Public Service Commission’s recruitment system asks applicants to complete personal details, professional and academic qualifications, experience, professional-body membership, referees and other relevant information before submission; it warns that incomplete applications are not considered. [PSC Online Recruitment System: applicant guidance](https://pscims.publicservice.go.ke/puio/)
 
