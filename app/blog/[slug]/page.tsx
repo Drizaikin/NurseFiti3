@@ -3041,6 +3041,159 @@ For job-search and professional-development updates, join the [NurseFiti WhatsAp
   },
 ];
 
+const POSTS_POST_EXAM: Post[] = [
+  {
+    slug: 'after-nck-exam-kenya',
+    title: 'After the NCK Exam: Results, Jobs & Upgrades (2026)',
+    excerpt: 'Learn verified next steps after the NCK exam: results, registration, job applications and planning a nursing specialty upgrade in Kenya.',
+    category: 'NCK News',
+    readTime: '11 min read',
+    date: '2026-08-14',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+The exam is over. That relief is real — but the next mistake many candidates make is putting their career on pause until a results announcement appears.
+
+Do not do that.
+
+If you completed the August 2026 NCK examination, this waiting period is the right time to organise your registration evidence, prepare job-application materials and map the specialty you may want to pursue after you enter practice. Passing an NCK examination is not the same thing as already being registered, licensed or employed: NCK’s published process requires successful candidates to apply for registration and licensing after results are released. [Nursing Council of Kenya: Registration and Licensing](https://nckenya.com/registration/)
+
+The question is not only, *“When will results come out?”* It is: *“What will I have ready when they do?”* We will resolve the practical answer below.
+
+> [!NOTE]
+> *Last verified: 14 August 2026. NCK has not published a verified results-release date for the August 2026 sitting in the sources reviewed for this article. Confirm all result, registration and licensing information directly with [NCK](https://nckenya.com/) and the [NCK Online Services Portal](https://osp.nckenya.go.ke/).*
+
+## After NCK exam Kenya: separate the four next steps
+
+WhatsApp groups often merge four distinct steps:
+
+1. **Examination result** — NCK must release and confirm your outcome.
+2. **Registration and licensing application** — for Kenyan-trained nurses and midwives, NCK lists the result slip, online application and payment among its published requirements. [NCK Registration and Licensing](https://nckenya.com/registration/)
+3. **Route-specific professional requirements** — some BScN pathways have internship conditions before registration, while other pathways are listed differently by NCK. [NCK Registration and Licensing](https://nckenya.com/registration/)
+4. **Employment or specialty training** — these are separate applications with their own adverts, eligibility criteria and deadlines.
+
+That distinction prevents two costly assumptions: that a result automatically produces a practice licence, or that every career decision must wait until you have a job.
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Keep your momentum while you wait.</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Create a NurseFiti account and keep building clinical reasoning for interviews and professional practice →</a>
+</div>
+
+## What to prepare before NCK results are released
+
+Do not submit applications before NCK or an employer asks for them. Prepare your evidence folder now so you are not scrambling after a result notice or vacancy appears.
+
+### Build one accurate professional folder
+
+Keep current, legible copies of:
+
+- identity documentation where requested;
+- nursing academic certificates and transcripts where available;
+- current CV;
+- contacts for referees who can verify clinical conduct and learning;
+- NCK result slip once issued;
+- registration and practice-licence documents once processed; and
+- route-specific internship or professional documents only where the current requirement applies.
+
+NCK states that nurses practising in Kenya must be registered and licensed. Its online register supports practice-licence verification and recommends searching by licence number where possible. [NCK Registration and Licensing](https://nckenya.com/registration/) [NCK Licence Status Register](https://osp.nckenya.go.ke/LicenseStatus)
+
+> **Important:** Do not put an NCK registration number, practising-licence number or specialist qualification on your CV until it exists and you can verify it. “Exam completed; awaiting official results” is truthful. “Licensed nurse” is not, unless NCK has completed that process.
+
+### Follow the published NCK route — without guessing a date
+
+NCK states that Kenyan-trained nurses and midwives apply online for registration and licensing after passing the national licensure examination. Its published list identifies a result slip, online application and payment as requirements. [NCK Registration and Licensing](https://nckenya.com/registration/)
+
+NCK also publishes service timeframes of a practice licence within 72 hours and a registration certificate within four weeks after the required process is completed. These are service standards, not unconditional promises for every application; check the live portal for current prompts and application issues. [NCK Registration and Licensing](https://nckenya.com/registration/)
+
+## Job applications after NCK results: prepare evidence, not a generic CV
+
+When results are released, job seeking may begin quickly — but every vacancy has its own requirements. The Public Service Commission’s online recruitment system lets applicants create a profile and apply for vacancies or internships. It is an official government recruitment channel, not a guarantee of placement or the only route to nursing employment. [PSCIMS registration](https://www.psckjobs.go.ke/RegisterProfile.aspx) [PSCIMS login and applications](https://www.psckjobs.go.ke/loginPage.aspx)
+
+For each vacancy, tailor the first page of your CV to the role. Make five things visible: your cadre and qualification, exact NCK status, relevant supervised clinical exposure, safety/documentation/communication evidence, and referees who can verify the claims.
+
+Use our [Nursing CV for Kenyan Jobs guide](/blog/nursing-cv-kenyan-jobs) to turn clinical placement into credible evidence rather than a vague list of wards.
+
+Avoid applying everywhere with the same profile. A county facility, private hospital, outpatient clinic, renal unit and NGO may prioritise different evidence. Read the advert line by line and match requirements with proof — not copied job-description language.
+
+## Plan your specialty upgrade while applying for jobs
+
+You do not need to wait for a permanent employer to start learning which specialty pathways fit your interests and likely eligibility. Planning is not the same as applying. It means identifying the clinical work you want to grow into, the experience it may require and approved institutions to monitor.
+
+NCK says it approves nursing and midwifery programmes at degree, basic-diploma and post-basic-diploma levels, and publishes institutions together with programmes and modes of study. [NCK Approved Training Institutions](https://nckenya.com/approved-training-institutions/)
+
+### Choose a specialty by the work, not only the title
+
+Begin with the patient group and work pattern you want to build competence in:
+
+- **Renal/nephrology nursing:** kidney disease, haemodialysis, peritoneal dialysis, patient education and multidisciplinary renal care.
+- **Critical care nursing:** rapidly changing patient status, close monitoring, escalation and team-based acute care.
+- **Oncology nursing:** cancer care, symptom management, education and coordinated long-term care.
+- **Peri-operative nursing:** safe surgical preparation, theatre workflow, asepsis and recovery care.
+- **Community/public-health pathways:** prevention, health promotion and community-level service delivery.
+
+Course names, intakes, duration, experience requirements, licence requirements and fees are institution-specific. NCK approval means a programme is approved; it does not prove the next intake is open or that you meet every criterion. [NCK Approved Training Institutions](https://nckenya.com/approved-training-institutions/)
+
+KMTC separates pre-service applications, Higher Diploma/upgrading courses and short courses, but candidates must check the current admissions notice for specific availability and entry requirements. [KMTC: Apply Now](https://www.kmtc.ac.ke/apply-now) [KMTC Admissions Portal](https://admissions.kmtc.ac.ke/)
+
+**[Start free on NurseFiti and use the available Higher Diploma resources — including renal content — to keep building focused clinical reasoning while you apply for first roles →](/signup)**
+
+## A 30-day plan while awaiting NCK results
+
+### Days 1–7: Recover, then audit your evidence
+
+Rest after the examination, then create the professional folder. Update your CV using facts that a referee, certificate or official document can support.
+
+### Days 8–14: Build a job-search system
+
+Create or update your PSCIMS profile if public-service opportunities are relevant. Track official employer pages, county public-service boards, recognised hospitals and professional channels. [PSCIMS registration](https://www.psckjobs.go.ke/RegisterProfile.aspx)
+
+### Days 15–21: Pick two specialty areas to explore
+
+Choose two paths rather than researching every Higher Diploma at once. Compare patient population, work setting, approved institutions, likely entry requirements, costs to confirm and documents to prepare. [NCK Approved Training Institutions](https://nckenya.com/approved-training-institutions/)
+
+### Days 22–30: Prepare for the result-to-application handover
+
+Check official NCK communication only. Once results are officially released, follow current registration and licensing instructions rather than an old social-media checklist. NCK’s published route starts with the result slip, online application and payment for Kenyan-trained nurses and midwives. [NCK Registration and Licensing](https://nckenya.com/registration/)
+
+## The move that makes this waiting period useful
+
+The useful move is not predicting a results date. It is building a career sequence:
+
+**NCK result → registration and licensing steps → first role or internship route where applicable → deliberate specialty-upgrade plan.**
+
+Some BScN routes have internship requirements before registration while others are treated differently in NCK’s published guidance. Check the exact route that applies to your qualification rather than adopting a blanket rule from a group chat. [NCK Registration and Licensing](https://nckenya.com/registration/)
+
+That sequence lets you search for jobs without losing sight of the longer path. A first job gives you exposure, referees and a clearer view of the work you may want to specialise in; it does not have to define your whole nursing career.
+
+For NCK updates, nursing-job guidance and specialist-preparation notes, join the [NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m).
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">The exam is over. Your professional plan starts now.</h3>
+  <p class="mb-6 opacity-90">Build your post-exam routine, sharpen clinical reasoning and prepare deliberately for your first role and future specialty pathway.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+
+> *If you just finished the NCK exam, save this. It explains what to prepare while waiting for results, how registration and job applications fit together, and why you can already start planning a specialty upgrade: nursefiti.co.ke/blog/after-nck-exam-kenya*
+
+---
+
+### Sources & References
+
+- Nursing Council of Kenya. *Registration and Licensing.* Accessed 14 August 2026. [https://nckenya.com/registration/](https://nckenya.com/registration/)
+- Nursing Council of Kenya. *Examination.* Accessed 14 August 2026. [https://nckenya.com/examination/](https://nckenya.com/examination/)
+- Nursing Council of Kenya. *Approved Training Institutions.* Accessed 14 August 2026. [https://nckenya.com/approved-training-institutions/](https://nckenya.com/approved-training-institutions/)
+- Nursing Council of Kenya Online Services Portal. *Licence Status / Register.* Accessed 14 August 2026. [https://osp.nckenya.go.ke/LicenseStatus](https://osp.nckenya.go.ke/LicenseStatus)
+- Public Service Commission. *PSCIMS: Register Profile.* Accessed 14 August 2026. [https://www.psckjobs.go.ke/RegisterProfile.aspx](https://www.psckjobs.go.ke/RegisterProfile.aspx)
+- Kenya Medical Training College. *Apply Now.* Accessed 14 August 2026. [https://www.kmtc.ac.ke/apply-now](https://www.kmtc.ac.ke/apply-now)
+
+*Always verify current NCK examination, results, registration and licensing information directly at [nckenya.com](https://www.nckenya.com).*
+`,
+  },
+];
+
 const POSTS_SALARY: Post[] = [
   {
     slug: 'nurse-salary-kenya',
@@ -3193,7 +3346,7 @@ For real-time updates on nurse pay, CBAs, strikes and NCK exams, join our offici
   },
 ];
 
-const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL, ...POSTS_CV];
+const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL, ...POSTS_CV, ...POSTS_POST_EXAM];
 
 // ─── generateStaticParams ────────────────────────────────────────────────────
 
