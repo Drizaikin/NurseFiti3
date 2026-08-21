@@ -1,5 +1,14 @@
 export const POSTS = [
   {
+    slug: 'diploma-nursing-kenya',
+    title: 'Diploma in Nursing Kenya: Training & Careers (2026)',
+    excerpt: 'Explore diploma nursing courses in Kenya: entry requirements, training, NCK regulation, clinical learning and realistic career pathways.',
+    category: 'Study Guide',
+    readTime: '11 min read',
+    date: '2026-08-21',
+    cadres: ['KRCHN', 'BScN'],
+  },
+  {
     slug: 'after-nck-exam-kenya',
     title: 'After the NCK Exam: Results, Jobs & Upgrades (2026)',
     excerpt: 'Learn verified next steps after the NCK exam: results, registration, job applications and planning a nursing specialty upgrade in Kenya.',
@@ -291,6 +300,7 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
+  'diploma-nursing-kenya': 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80&auto=format&fit=crop',
   'after-nck-exam-kenya': 'https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=1200&q=80&auto=format&fit=crop',
   'nursing-cv-kenyan-jobs': 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=1200&q=80&auto=format&fit=crop',
   'higher-diploma-renal-nursing-kenya': 'https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=1200&q=80&auto=format&fit=crop',

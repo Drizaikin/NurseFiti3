@@ -3066,6 +3066,134 @@ For job-search and professional-development updates, join the [NurseFiti WhatsAp
   },
 ];
 
+const POSTS_DIPLOMA_NURSING: Post[] = [
+  {
+    slug: 'diploma-nursing-kenya',
+    title: 'Diploma in Nursing Kenya: Training & Careers (2026)',
+    excerpt: 'Explore diploma nursing courses in Kenya: entry requirements, training, NCK regulation, clinical learning and realistic career pathways.',
+    category: 'Study Guide',
+    readTime: '11 min read',
+    date: '2026-08-21',
+    cadres: ['KRCHN', 'BScN'],
+    content: `
+A Diploma in Nursing can open the door to a nursing career in Kenya — but the course name alone is not the qualification you should trust. The institution, the programme route, clinical training and the Nursing Council of Kenya (NCK) pathway all matter.
+
+That distinction protects your time, fees and future licence. Before choosing a college, start with the question most applicants skip: *is this a recognised nursing pathway, and what must I complete before I can legally practise?*
+
+> [!NOTE]
+> *Last verified: 21 August 2026. Course names, intakes, fees and entry requirements can change. Confirm current details directly with the training institution, [KMTC](https://kmtc.ac.ke/study/academic-programmes), [KUCCPS](https://www.kuccps.net/) and the [Nursing Council of Kenya](https://www.nckenya.com/).*
+
+## What “Diploma in Nursing” means in Kenya
+
+Kenya’s nursing training landscape includes diploma-level programmes with different titles. Kenya Medical Training College (KMTC) currently lists **Community Health Nursing**, **Kenya Registered Nursing and Midwifery**, **Registered Nursing Mental Health & Psychiatry**, and **Kenya Registered Nursing** among its diploma programmes. [KMTC Academic Programmes](https://kmtc.ac.ke/study/academic-programmes)
+
+A title is not a guarantee that two programmes have identical content, clinical placements or professional outcomes. Use the exact title in the current institution prospectus and confirm that the institution and programme are recognised by NCK before accepting an offer. The [NCK](https://www.nckenya.com/) is the professional regulator to check for nursing education, registration and licensing information.
+
+**Do not choose a course from an advert alone.** Confirm the programme title, campus, approval status, intake and cost in writing before paying fees. We explain why regulatory evidence belongs in every application in our [guide to building a nursing CV for Kenyan jobs](/blog/nursing-cv-kenyan-jobs).
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Planning ahead for the NCK pathway?</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Start free on NurseFiti and practise nursing-style questions as you build your foundation →</a>
+</div>
+
+## Entry requirements: start with the current official advert
+
+KMTC states that applicants for its diploma programmes need a **KCSE mean grade of C (or equivalent)** plus the relevant subject combination; its general entry-requirements page names English, Kiswahili, Biology or Biological Sciences, Mathematics, Chemistry, Physics and Physical Sciences among the relevant subjects. [KMTC entry requirements](https://kmtc.ac.ke/study/academic-programmes)
+
+That is a general KMTC rule, not a substitute for a specific course advert. The exact cluster requirements can differ by programme, institution and admission route. KUCCPS publishes current placement information through its official portal, while institutions issue their own current intake notices. [KUCCPS official website](https://www.kuccps.net/) [KMTC admissions information](https://kmtc.ac.ke/study/academic-programmes)
+
+Before applying, make a simple evidence folder with your KCSE result documents, national ID or birth documentation as applicable, current contacts, and any items listed in the actual admissions notice. Do not rely on screenshots circulated in WhatsApp groups when the official advert is available.
+
+## What the training involves
+
+KMTC describes diploma training as generally lasting **three years**, with Community Health Nursing listed as an exception at **three and a half years**. [KMTC academic programmes and duration](https://kmtc.ac.ke/study/academic-programmes)
+
+Training is more than classroom theory. KMTC’s Faculty of Nursing says its programmes prepare learners to assess patient needs, develop care plans and deliver comprehensive nursing services; it describes nursing work that includes medication administration, wound care, transfusion care, IV-line insertion, vital-sign monitoring and pre-operative preparation. [KMTC Faculty of Nursing](https://kmtc.ac.ke/faculty-of-nursing)
+
+Clinical learning is where students connect these skills with supervised patient care, documentation, communication and safety. The exact sequence of units, clinical placement sites and assessment methods is institution-specific, so ask the school for its current curriculum and clinical-placement plan rather than assuming every diploma uses the same timetable.
+
+## Training, NCK examination, registration and licence are different steps
+
+One of the costliest misunderstandings is treating graduation as the same thing as authority to practise. They are separate stages.
+
+1. **Training:** You complete an approved nursing education programme.
+2. **Professional assessment and registration process:** Follow the current NCK process and requirements for your cadre.
+3. **Practising licence:** Maintain the status required to practise lawfully in the role and setting where you work.
+
+NCK’s public channels and online services are the authoritative place to confirm the current procedure, document requirements and timelines. [NCK official website](https://www.nckenya.com/) [NCK Online Services Portal](https://osp.nckenya.go.ke/)
+
+This is why you should keep academic records, clinical-placement documentation and personal details consistent from admission onwards. Name differences or missing records can create administrative delays later.
+
+**The course gets you trained. The professional pathway gets you practice-ready.** Keep reading for the career choices that follow.
+
+## Career outcomes: pathways, not promises
+
+Nursing can lead to clinical, community, education and management work, but no diploma guarantees a job, a particular salary or immediate placement. Employment depends on licensing status, employer demand, experience, location, vacancies and any role-specific requirements.
+
+KMTC says nursing graduates may work across hospitals, research institutions, industry, airlines, banks and training organisations at local, national and international levels. [KMTC Faculty of Nursing](https://kmtc.ac.ke/faculty-of-nursing) In practice, early-career roles may include bedside nursing, outpatient or clinic work, community-focused services and employer-specific programmes where you meet the stated requirements.
+
+Your first role is also evidence for your next one. Build a credible record of supervised exposure, patient education, documentation, teamwork, infection-prevention practice and any skills your referee can confirm. For an honest way to show that evidence, use our [Kenyan nursing CV guide](/blog/nursing-cv-kenyan-jobs).
+
+<div class="my-8 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Turn training into deliberate exam preparation</h3>
+  <p class="mb-6 opacity-90 max-w-lg mx-auto">Build your study habit early with NurseFiti practice, revision tools and mock-exam preparation designed for Kenyan nursing candidates.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+## How to choose a diploma programme safely
+
+Before accepting an offer, ask the institution these questions and save the answers:
+
+- What is the exact programme title and duration?
+- What are the current entry requirements for this intake?
+- Which campus will deliver the programme?
+- How are clinical placements arranged and supervised?
+- What fees, accommodation and equipment costs are separate from tuition?
+- What NCK approval, indexing, examination, registration or licensing steps apply to this specific route?
+- Who can verify the answers in writing?
+
+A good school should be able to point you to its current prospectus, admissions office and regulatory information. If a recruiter pressures you to pay urgently without giving verifiable documentation, pause and check independently.
+
+## What to do while you are preparing to apply
+
+1. Compare only current official programme information.
+2. Confirm that your subject grades fit the specific advert.
+3. Visit or contact the institution through official channels.
+4. Build basic study habits now: anatomy, physiology, communication and safe drug-calculation foundations will support later nursing training.
+5. Follow NCK and trusted institutions directly for regulatory updates, not reposted claims.
+
+For candidates who have already completed an NCK examination, our [post-exam results, jobs and specialty-planning guide](/blog/after-nck-exam-kenya) explains how results, applications and future upgrades fit together.
+
+For updates and study support, join the [NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m).
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Start your nursing journey with a study system</h3>
+  <p class="mb-6 opacity-90">Create a free NurseFiti account and begin practising consistently before the pressure of licensure preparation arrives.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Create your free NurseFiti account</a>
+</div>
+
+---
+
+### Share This Post
+> *Found this clear guide to Diploma in Nursing courses in Kenya. It explains what to verify before applying, how training differs from NCK registration and licence steps, and realistic career pathways: nursefiti.co.ke/blog/diploma-nursing-kenya*
+
+---
+
+<div class="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
+  <h4 class="font-bold mb-3 uppercase tracking-wider text-xs">Sources & References</h4>
+  <ul class="space-y-2 list-disc pl-4">
+    <li>Kenya Medical Training College. (2026). <a href="https://kmtc.ac.ke/study/academic-programmes" class="text-primary hover:text-primary-mid">Academic Programmes and Entry Requirements</a>.</li>
+    <li>Kenya Medical Training College. (2026). <a href="https://kmtc.ac.ke/faculty-of-nursing" class="text-primary hover:text-primary-mid">Faculty of Nursing</a>.</li>
+    <li>Kenya Universities and Colleges Central Placement Service. (2026). <a href="https://www.kuccps.net/" class="text-primary hover:text-primary-mid">KUCCPS official website</a>.</li>
+    <li>Nursing Council of Kenya. (2026). <a href="https://www.nckenya.com/" class="text-primary hover:text-primary-mid">Official NCK website</a>.</li>
+    <li>Nursing Council of Kenya. (2026). <a href="https://osp.nckenya.go.ke/" class="text-primary hover:text-primary-mid">Online Services Portal</a>.</li>
+  </ul>
+  <p class="mt-4 italic text-xs">Always verify current programme approval, admissions, examination, registration and licensing information directly with the institution, NCK and KUCCPS before making a decision.</p>
+</div>
+    `,
+  },
+];
+
 const POSTS_POST_EXAM: Post[] = [
   {
     slug: 'after-nck-exam-kenya',
@@ -3371,7 +3499,7 @@ For real-time updates on nurse pay, CBAs, strikes and NCK exams, join our offici
   },
 ];
 
-const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL, ...POSTS_CV, ...POSTS_POST_EXAM];
+const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL, ...POSTS_CV, ...POSTS_POST_EXAM, ...POSTS_DIPLOMA_NURSING];
 
 // ─── generateStaticParams ────────────────────────────────────────────────────
 
