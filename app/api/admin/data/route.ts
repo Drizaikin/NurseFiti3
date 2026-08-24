@@ -134,7 +134,7 @@ export async function GET(req: NextRequest) {
       const profileIds = profiles.map(p => p.id);
       
       const spRes = profileIds.length > 0 
-        ? await admin.from('student_profiles').select('id, cadre, plan_tier, plan_expires_at').in('id', profileIds)
+        ? await admin.from('student_profiles').select('id, cadre, exam_date, exam_cycle, plan_tier, plan_expires_at').in('id', profileIds)
         : { data: [], error: null };
 
       if (spRes.error) {
@@ -144,7 +144,7 @@ export async function GET(req: NextRequest) {
 
       const spMap = new Map(
         ((spRes.data ?? []) as Array<{
-          id: string; cadre: string; plan_tier: string; plan_expires_at: string | null;
+          id: string; cadre: string; exam_date: string | null; exam_cycle: string | null; plan_tier: string; plan_expires_at: string | null;
         }>).map(s => [s.id, s])
       );
 
@@ -155,6 +155,8 @@ export async function GET(req: NextRequest) {
           full_name:      p.full_name,
           email:          p.email,
           cadre:          sp?.cadre ?? '—',
+          exam_date:      sp?.exam_date ?? null,
+          exam_cycle:     sp?.exam_cycle ?? null,
           plan_tier:      sp ? effectiveTier(sp.plan_tier, sp.plan_expires_at) : 'free',
           plan_expires_at: sp?.plan_expires_at ?? null,
           created_at:     p.created_at,

@@ -13,6 +13,8 @@ interface Student {
   full_name: string;
   email: string;
   cadre: string;
+  exam_date: string | null;
+  exam_cycle: string | null;
   plan_tier: string;
   plan_expires_at: string | null;
   created_at: string;
@@ -47,6 +49,7 @@ export default function AdminStudentsPage() {
   const [search, setSearch] = useState('');
   const [planFilter, setPlanFilter] = useState('all');
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [now, setNow] = useState(() => Date.now());
 
   // Plan modal
   const [planModal, setPlanModal] = useState<Student | null>(null);
@@ -72,6 +75,12 @@ export default function AdminStudentsPage() {
 
   useEffect(() => { loadStudents(); }, [loadStudents]);
 
+  // Match the student dashboard: all timers count toward the saved exam_date.
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(timer);
+  }, []);
+
   const filtered = students.filter(s => {
     const matchesSearch = s.full_name.toLowerCase().includes(search.toLowerCase()) ||
                           s.email.toLowerCase().includes(search.toLowerCase());
@@ -81,6 +90,32 @@ export default function AdminStudentsPage() {
     const currentTier = effectiveTier(s.plan_tier, s.plan_expires_at);
     return currentTier === planFilter;
   });
+
+  const examSummary = students.reduce((summary, student) => {
+    if (!student.exam_date) summary.unscheduled += 1;
+    else if (new Date(student.exam_date).getTime() <= now) summary.datePassed += 1;
+    else summary.upcoming += 1;
+    return summary;
+  }, { upcoming: 0, datePassed: 0, unscheduled: 0 });
+
+  const examStatus = (examDate: string | null) => {
+    if (!examDate) return { label: 'No exam date', variant: 'secondary' as const };
+    return new Date(examDate).getTime() <= now
+      ? { label: 'Exam date passed', variant: 'amber' as const }
+      : { label: 'Upcoming', variant: 'teal' as const };
+  };
+
+  const examCountdown = (examDate: string | null) => {
+    if (!examDate) return '—';
+    const diff = new Date(examDate).getTime() - now;
+    if (diff <= 0) return 'Exam date passed';
+    const totalSeconds = Math.floor(diff / 1000);
+    const days = Math.floor(totalSeconds / 86_400);
+    const hours = Math.floor((totalSeconds % 86_400) / 3_600);
+    const minutes = Math.floor((totalSeconds % 3_600) / 60);
+    const seconds = totalSeconds % 60;
+    return `${days}d ${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+  };
 
   const openPlanModal = (student: Student) => {
     setPlanModal(student);
@@ -150,6 +185,14 @@ export default function AdminStudentsPage() {
         <button onClick={loadStudents} className="text-xs text-primary hover:underline">↻ Refresh</button>
       </div>
 
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <Card className="p-4"><p className="text-xs text-neutral-mid">Upcoming exam dates</p><p className="text-2xl font-heading font-bold text-primary mt-1">{examSummary.upcoming}</p></Card>
+        <Card className="p-4"><p className="text-xs text-neutral-mid">Exam dates passed</p><p className="text-2xl font-heading font-bold text-accent-dark mt-1">{examSummary.datePassed}</p></Card>
+        <Card className="p-4"><p className="text-xs text-neutral-mid">No exam date set</p><p className="text-2xl font-heading font-bold text-neutral-mid mt-1">{examSummary.unscheduled}</p></Card>
+      </div>
+
+      <p className="text-xs text-neutral-mid">Exam status is inferred from each student’s saved target exam date; it does not confirm attendance or results.</p>
+
       <div className="flex gap-3 max-w-2xl">
         <input
           type="text"
@@ -186,6 +229,8 @@ export default function AdminStudentsPage() {
               <tr>
                 <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Student</th>
                 <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Cadre</th>
+                <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Exam cycle</th>
+                <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Live exam timer</th>
                 <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Plan</th>
                 <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Expires</th>
                 <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Joined</th>
@@ -201,6 +246,13 @@ export default function AdminStudentsPage() {
                     <p className="text-xs text-neutral-mid">{s.email}</p>
                   </td>
                   <td className="px-4 py-3 text-neutral-mid">{s.cadre}</td>
+                  <td className="px-4 py-3 text-xs text-neutral-mid">
+                    <p>{s.exam_cycle ?? '—'}</p>
+                    {s.exam_date && <p className="mt-0.5">{new Date(s.exam_date).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}</p>}
+                  </td>
+                  <td className="px-4 py-3">
+                    {(() => { const status = examStatus(s.exam_date); return <><Badge variant={status.variant} size="sm">{status.label}</Badge><p className="font-mono text-xs text-[var(--color-text)] mt-1 whitespace-nowrap">{examCountdown(s.exam_date)}</p></>; })()}
+                  </td>
                   <td className="px-4 py-3">
                     {(() => {
                       const tier = effectiveTier(s.plan_tier, s.plan_expires_at);
@@ -249,7 +301,7 @@ export default function AdminStudentsPage() {
               ))}
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="px-4 py-10 text-center text-neutral-mid">
+                  <td colSpan={9} className="px-4 py-10 text-center text-neutral-mid">
                     {search ? `No students matching "${search}"` : 'No students registered yet.'}
                   </td>
                 </tr>
