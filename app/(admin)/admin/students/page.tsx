@@ -91,23 +91,34 @@ export default function AdminStudentsPage() {
     return currentTier === planFilter;
   });
 
+  // The student dashboard counts down with `new Date(examDate)`. Keep that exact
+  // parsing rule here so both views remain synchronized for the same saved value.
+  const examTimestamp = (examDate: string | null) => {
+    if (!examDate) return null;
+    const timestamp = new Date(examDate).getTime();
+    return Number.isFinite(timestamp) ? timestamp : null;
+  };
+
   const examSummary = students.reduce((summary, student) => {
-    if (!student.exam_date) summary.unscheduled += 1;
-    else if (new Date(student.exam_date).getTime() <= now) summary.datePassed += 1;
+    const timestamp = examTimestamp(student.exam_date);
+    if (timestamp === null) summary.unscheduled += 1;
+    else if (timestamp <= now) summary.datePassed += 1;
     else summary.upcoming += 1;
     return summary;
   }, { upcoming: 0, datePassed: 0, unscheduled: 0 });
 
   const examStatus = (examDate: string | null) => {
-    if (!examDate) return { label: 'No exam date', variant: 'secondary' as const };
-    return new Date(examDate).getTime() <= now
+    const timestamp = examTimestamp(examDate);
+    if (timestamp === null) return { label: 'No exam date', variant: 'secondary' as const };
+    return timestamp <= now
       ? { label: 'Exam date passed', variant: 'amber' as const }
       : { label: 'Upcoming', variant: 'teal' as const };
   };
 
   const examCountdown = (examDate: string | null) => {
-    if (!examDate) return '—';
-    const diff = new Date(examDate).getTime() - now;
+    const timestamp = examTimestamp(examDate);
+    if (timestamp === null) return '—';
+    const diff = timestamp - now;
     if (diff <= 0) return 'Exam date passed';
     const totalSeconds = Math.floor(diff / 1000);
     const days = Math.floor(totalSeconds / 86_400);
@@ -248,7 +259,7 @@ export default function AdminStudentsPage() {
                   <td className="px-4 py-3 text-neutral-mid">{s.cadre}</td>
                   <td className="px-4 py-3 text-xs text-neutral-mid">
                     <p>{s.exam_cycle ?? '—'}</p>
-                    {s.exam_date && <p className="mt-0.5">{new Date(s.exam_date).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}</p>}
+                    {examTimestamp(s.exam_date) !== null && <p className="mt-0.5">{new Date(s.exam_date!).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}</p>}
                   </td>
                   <td className="px-4 py-3">
                     {(() => { const status = examStatus(s.exam_date); return <><Badge variant={status.variant} size="sm">{status.label}</Badge><p className="font-mono text-xs text-[var(--color-text)] mt-1 whitespace-nowrap">{examCountdown(s.exam_date)}</p></>; })()}
