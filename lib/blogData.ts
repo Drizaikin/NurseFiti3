@@ -1,5 +1,14 @@
 export const POSTS = [
   {
+    slug: "business-ideas-nursing-school-kenya",
+    title: "Business Ideas After Nursing School in Kenya (2026)",
+    excerpt: "Explore realistic business ideas after nursing school in Kenya, plus registration, funding and compliance steps for nursing graduates.",
+    category: "Community",
+    readTime: "12 min read",
+    date: "2026-08-31",
+    cadres: ["KRCHN", "BScN", "Higher Diploma"],
+  },
+  {
     slug: 'diploma-nursing-kenya',
     title: 'Diploma in Nursing Kenya: Training & Careers (2026)',
     excerpt: 'Explore diploma nursing courses in Kenya: entry requirements, training, NCK regulation, clinical learning and realistic career pathways.',
@@ -300,6 +309,7 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
+  "business-ideas-nursing-school-kenya": "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&q=80&auto=format&fit=crop",
   'diploma-nursing-kenya': 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80&auto=format&fit=crop',
   'after-nck-exam-kenya': 'https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=1200&q=80&auto=format&fit=crop',
   'nursing-cv-kenyan-jobs': 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=1200&q=80&auto=format&fit=crop',

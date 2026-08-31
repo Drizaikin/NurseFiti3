@@ -3499,7 +3499,186 @@ For real-time updates on nurse pay, CBAs, strikes and NCK exams, join our offici
   },
 ];
 
-const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL, ...POSTS_CV, ...POSTS_POST_EXAM, ...POSTS_DIPLOMA_NURSING];
+
+const POSTS_BUSINESS_IDEAS: Post[] = [
+  {
+    slug: "business-ideas-nursing-school-kenya",
+    title: "Business Ideas After Nursing School in Kenya (2026)",
+    excerpt: "Explore realistic business ideas after nursing school in Kenya, plus registration, funding and compliance steps for nursing graduates.",
+    category: "Community",
+    readTime: "12 min read",
+    date: "2026-08-31",
+    cadres: ["KRCHN", "BScN", "Higher Diploma"],
+    content: `Finishing nursing school can leave you with two urgent pressures at once: you need income, and you need to protect the professional path you have worked for. The mistake is treating “start a business” as one answer for everyone.
+
+It is not.
+
+A realistic business after nursing school is one you can test cheaply, run honestly, and keep separate from clinical practice until you have the registration, licence, competence and approvals required for patient-specific care. The strongest starting point is often not a clinic. It is a small service or resale model that solves a repeat problem for people you already understand — students, early-career workers, families or local small businesses.
+
+> [!NOTE]
+> *Last verified: 31 August 2026. Business registration, tax, county-permit, funding and health-service requirements can change. Confirm live requirements through the [Business Registration Service](https://brs.go.ke/), [Kenya Revenue Authority](https://www.kra.go.ke/), your county government and the [Nursing Council of Kenya](https://nckenya.com/registration/).*
+
+## Business ideas after nursing school Kenya: start with the compliance line
+
+Before choosing an idea, separate **non-clinical enterprise** from **clinical care**.
+
+The Nursing Council of Kenya says each nurse practising in Kenya must be registered and licensed, and successful candidates apply for registration and licensing after the national licensure examination. [NCK Registration and Licensing](https://nckenya.com/registration/) A nursing qualification alone is therefore not a reason to market yourself as ready for independent clinical practice.
+
+Kenya’s [Health Act, 2017](https://new.kenyalaw.org/akn/ke/act/2017/21) defines a health facility broadly enough to include a place designed to provide nursing, diagnostic, therapeutic, preventive or other health services, and it requires a valid licence for regulated health activities. That makes “small nurse clinic,” paid injections, wound care, home visits, IV therapy or treatment-room ideas a **compliance project**, not a casual side hustle.
+
+The same principle applies online. The [Digital Health Act, 2023](https://new.kenyalaw.org/akn/ke/act/2023/15) requires an entity providing e-health services to be a healthcare provider with a valid relevant licence or an appropriately licensed health facility, among other routes set out in the Act. A WhatsApp, TikTok or Instagram page becomes a different kind of business when it starts offering patient-specific assessment, treatment advice, records, images or remote monitoring.
+
+**The useful question is not “What can a nurse sell?”** It is: *“What problem can I solve now without pretending to provide a regulated clinical service?”* The ideas below answer that question first.
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Keep your professional foundation moving while you build income.</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Create a NurseFiti account and keep strengthening clinical reasoning for licensure and early practice →</a>
+</div>
+
+## Seven realistic, low-capital business ideas
+
+These are not guaranteed-income promises. They are models you can validate with real customers before borrowing, buying large stock or renting premises.
+
+### 1. Scrubs, shoes and practical workwear on pre-order
+
+Nursing students and early-career clinicians repeatedly need scrubs, lab coats, compression socks, ID holders, theatre caps, notebooks and comfortable work shoes. A lean model starts with a catalogue, size guide and deposits rather than a large pile of unsold stock.
+
+Ask 15–20 potential customers which items they buy repeatedly, what size or colour problems they have, and what delivery window they would accept. Sell only the few items that appear repeatedly in those conversations. Do not imply that ordinary apparel has clinical or therapeutic benefits unless you can substantiate the claim.
+
+### 2. Campus and hostel essentials resale
+
+A small order-based shop can focus on predictable, affordable items: toiletries, sanitary products, stationery, snacks, phone accessories and laundry basics. The advantage is not that nurses have a special legal right to sell them. It is that a nursing graduate may already understand the rhythm of hostels, placement days and student budgets.
+
+Use pre-orders and a simple stock sheet. The first goal is to learn which three to five products turn over consistently, not to look like a supermarket on day one.
+
+### 3. Laundry, ironing and uniform-care coordination
+
+Instead of buying machines immediately, begin as a pickup-and-delivery or booking service with an existing laundromat. Your job is clear communication: item count, collection time, return time and payment. Once demand is stable, decide whether equipment would reduce your cost enough to justify buying it.
+
+This model is only viable if you can deliver reliably. A late return before a clinical placement damages trust faster than a slightly higher price.
+
+### 4. Digital application and administration services
+
+New graduates and small local businesses often need CV formatting, document typing, printing coordination, job-application organisation, basic invoice templates or simple social-media posting. Package a defined service with a transparent price and turnaround time.
+
+Be careful with boundaries: you can help someone format a CV, but do not invent qualifications, licences, work history or referee details for them. For a nurse’s own first-role application, use our [Nursing CV for Kenyan Jobs guide](/blog/nursing-cv-kenyan-jobs) to keep every claim verifiable.
+
+### 5. Healthy snack or meal pre-orders
+
+This can work around campuses, offices, hostels or transport stages when the menu, price and collection point are simple. Begin with paid orders rather than cooking speculative volume. Food preparation and sale can require county and public-health approvals, so verify the requirements for your location before launch.
+
+Cost every ingredient, packaging, transport and spoilage item. Sales are not profit.
+
+### 6. Cleaning-supplies refill or household essentials packs
+
+Detergent, dishwashing liquid, tissue, bleach and related household consumables can create repeat demand in small affordable quantities. Start with labelled products, clear prices, simple records and a narrow product range.
+
+Do not present household products as disinfectants for clinical use or make health-protection claims that your product and labelling cannot support. If a product is marketed with therapeutic claims, product regulation becomes more serious under the [Health Act, 2017](https://new.kenyalaw.org/akn/ke/act/2017/21).
+
+### 7. Event décor, equipment hire or curated thrift workwear
+
+Small reusable rental inventory — tablecloths, a simple backdrop, ring light, chairs through a partner, or work-ready thrift clothing — can be grown booking by booking. This is suitable for someone who can market locally, track deposits and keep equipment clean and available.
+
+The business is not “easy money.” It is logistics: photos that match the item, a booking calendar, deposits, damage terms and reliable handover.
+
+## Validate before you formalise big costs
+
+A business idea becomes more realistic when you test it before you commit. Use this four-part check:
+
+1. **Customer:** Can you name a specific first customer group?
+2. **Problem:** What do they currently waste time, money or effort trying to solve?
+3. **Proof:** Will at least 10 people discuss the problem, and will some pay or place a deposit?
+4. **Numbers:** After product cost, delivery, packaging, platform fees and your time, is there still a margin?
+
+Social-media posts can reveal what people are talking about, but they are not proof of demand, earnings or legality. A recent public X scan did not produce sufficiently reliable Kenyan nurse-startup case studies to use as evidence. That is why this guide relies on official Kenyan sources for compliance and funding rather than presenting viral anecdotes as business facts.
+
+**[Use NurseFiti alongside your business plan to keep revising deliberately for the professional milestones that still matter →](/signup)**
+
+## Register and run the business properly
+
+Once you have evidence of demand, formalise the correct model rather than paying an unofficial intermediary because a social post says it is faster.
+
+The [Business Registration Service](https://brs.go.ke/) is Kenya’s official custodian of company and registered-entity information and directs users to its service on [eCitizen](https://brs.ecitizen.go.ke/). The suitable form — for example, a sole proprietorship, partnership or company — depends on ownership, liability, finance and growth plans. Check the live BRS process and fees before applying.
+
+Also confirm or obtain your KRA PIN through [KRA’s official individual PIN-registration process](https://www.kra.go.ke/individual/individual-pin-registration/learn-about-pin/how-to-register-for-a-kra-pin-individual). After choosing the business form and estimating turnover, use KRA’s current [Turnover Tax guidance](https://www.kra.go.ke/helping-tax-payers/faqs/turnover-tax-tot) to check the applicable tax treatment, registration, filing and payment rules. Do not rely on old TikTok or WhatsApp tax thresholds.
+
+Business registration and KRA compliance do **not** automatically replace county permits, public-health approvals, fire requirements, signage rules or sector-specific licences. Check your county’s current requirements for the exact business and premises.
+
+The [Micro and Small Enterprises Authority](https://msea.go.ke/) links to MSE registration and formalisation services and identifies Biashara Centres as a place where enterprise support and referrals may be available. Use it to ask focused questions about formalisation and enterprise development — not as a substitute for your own cash-flow calculation.
+
+## Funding: borrow only for a tested model
+
+Starting with a small order-based model protects you from borrowing for stock before you know what sells. If external financing is appropriate, read the live rules and calculate repayment under a conservative sales estimate.
+
+The [Youth Enterprise Development Fund’s E-YES loan](https://www.youthfund.go.ke/smart-loan/) is a group, CBO, investment-club or SACCO-linked option for eligible youth who meet its conditions; its current official page describes support for start-up, expansion or asset acquisition and lists a first-time start-up maximum of KSh 20,000. The page also requires a clear business plan for a formally recognised business and group co-guarantees.
+
+For a genuine group venture, the [YEDF Stawi loan](https://www.youthfund.go.ke/stawi-loan/) describes group financing for start-ups, existing group projects, expansion and assets; its current page lists different maximum amounts for newly formed and existing groups. The [YEDF enterprise-development programme](https://www.youthfund.go.ke/enterprise-development/) says it provides entrepreneurship training and business-development services, including pre-financing training.
+
+Those are routes to investigate, not an instruction to borrow. A loan is only useful if the business can repay it after realistic costs, not after optimistic social-media sales projections.
+
+## If you want a health-related enterprise later
+
+A health-related business can be valuable, but the order matters:
+
+1. Confirm active NCK registration and practising licence where you will be practising.
+2. Confirm that every service is within your training and competence.
+3. Obtain written guidance from the relevant county health/licensing office on facility, premises, waste, staffing, inspection and permit requirements.
+4. Create referral and escalation pathways for emergencies and out-of-scope cases.
+5. Treat patient records, photos, messages and telehealth as health-data and e-health compliance issues — not ordinary phone content.
+6. Seek Pharmacy and Poisons Board confirmation before any model involving medicines, dispensing, therapeutic products or pharmacy operations. [Pharmacy and Poisons Board](https://ppb.go.ke/)
+
+Never use a nursing title to imply you can prescribe, dispense medicines, diagnose, offer unsupervised injections or operate a clinic merely because you have finished training. The patient-safety and legal risk is too high.
+
+For graduates who have completed an NCK examination, our [post-exam results, jobs and specialty-planning guide](/blog/after-nck-exam-kenya) explains how results, registration, employment and future upgrades fit together.
+
+## The 30-day business test
+
+**Week 1:** Pick one model, define one customer group and interview at least 10 people.
+
+**Week 2:** Create a small catalogue or service menu. Ask for deposits or confirmed bookings before buying significant stock.
+
+**Week 3:** Deliver a tiny pilot. Record every cost, time commitment, complaint, repeat order and referral.
+
+**Week 4:** Decide with evidence: continue, improve, pause or change the model. If demand is real, begin the appropriate BRS, KRA and county-compliance checks.
+
+The best business idea after nursing school is not necessarily health-branded. It is the one you can run lawfully, fund cautiously and improve from genuine customer feedback — while protecting the nursing career you may still depend on.
+
+For NCK, career and study updates, join the [NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m).
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Build income without losing your professional direction</h3>
+  <p class="mb-6 opacity-90">Start free on NurseFiti and keep strengthening the clinical reasoning that supports your next exam, job application and nursing career decision.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+
+> *If you have finished nursing school and are thinking about business, save this. It gives realistic Kenyan ideas you can test with low capital, explains registration and funding checks, and draws a clear line between ordinary enterprise and regulated clinical care: nursefiti.co.ke/blog/business-ideas-nursing-school-kenya*
+
+---
+
+<div class="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
+  <h4 class="font-bold mb-3 uppercase tracking-wider text-xs">Sources & References</h4>
+  <ul class="space-y-2 list-disc pl-4">
+    <li>Business Registration Service, Kenya. <a href="https://brs.go.ke/" class="text-primary hover:text-primary-mid">Business Registration Service</a>. Accessed 31 August 2026.</li>
+    <li>Business Registration Service, Kenya. <a href="https://brs.ecitizen.go.ke/" class="text-primary hover:text-primary-mid">BRS on eCitizen</a>. Accessed 31 August 2026.</li>
+    <li>Kenya Revenue Authority. <a href="https://www.kra.go.ke/individual/individual-pin-registration/learn-about-pin/how-to-register-for-a-kra-pin-individual" class="text-primary hover:text-primary-mid">How to register for an individual KRA PIN</a>. Accessed 31 August 2026.</li>
+    <li>Kenya Revenue Authority. <a href="https://www.kra.go.ke/helping-tax-payers/faqs/turnover-tax-tot" class="text-primary hover:text-primary-mid">Turnover Tax FAQ</a>. Accessed 31 August 2026.</li>
+    <li>Micro and Small Enterprises Authority. <a href="https://msea.go.ke/" class="text-primary hover:text-primary-mid">MSEA official website</a>. Accessed 31 August 2026.</li>
+    <li>Youth Enterprise Development Fund. <a href="https://www.youthfund.go.ke/smart-loan/" class="text-primary hover:text-primary-mid">E-YES Loan</a>; <a href="https://www.youthfund.go.ke/stawi-loan/" class="text-primary hover:text-primary-mid">Stawi Loan</a>; <a href="https://www.youthfund.go.ke/enterprise-development/" class="text-primary hover:text-primary-mid">Enterprise Development</a>. Accessed 31 August 2026.</li>
+    <li>Nursing Council of Kenya. <a href="https://nckenya.com/registration/" class="text-primary hover:text-primary-mid">Registration and Licensing</a>. Accessed 31 August 2026.</li>
+    <li>Kenya Law. <a href="https://new.kenyalaw.org/akn/ke/act/2017/21" class="text-primary hover:text-primary-mid">Health Act, 2017</a>. Accessed 31 August 2026.</li>
+    <li>Kenya Law. <a href="https://new.kenyalaw.org/akn/ke/act/2023/15" class="text-primary hover:text-primary-mid">Digital Health Act, 2023</a>. Accessed 31 August 2026.</li>
+    <li>Pharmacy and Poisons Board. <a href="https://ppb.go.ke/" class="text-primary hover:text-primary-mid">PPB official website</a>. Accessed 31 August 2026.</li>
+  </ul>
+  <p class="mt-4 italic text-xs">Always verify current business-registration, tax, county-permit, professional-practice, health-facility and product requirements directly with the relevant authority before spending money or offering services. For current NCK professional requirements, check <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">nckenya.com</a>.</p>
+</div>`,
+  },
+];
+
+const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL, ...POSTS_CV, ...POSTS_POST_EXAM, ...POSTS_DIPLOMA_NURSING, ...POSTS_BUSINESS_IDEAS];
 
 // ─── generateStaticParams ────────────────────────────────────────────────────
 
