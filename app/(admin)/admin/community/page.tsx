@@ -159,7 +159,6 @@ function PostTab({ adminUserId }: { adminUserId: string | null }) {
           body: body.trim(),
           community,
           group_id: groupId || undefined,
-          admin_user_id: adminUserId,
         }),
       });
       const data = await res.json();
@@ -195,7 +194,7 @@ function PostTab({ adminUserId }: { adminUserId: string | null }) {
       {community === 'student' && (
         <div>
           <label className="block text-sm font-medium text-[var(--color-text)] mb-1.5">
-            Group <span className="text-neutral-mid font-normal">(optional)</span>
+            Group
           </label>
           {loadingGroups ? (
             <div className="flex items-center gap-2 text-sm text-neutral-mid py-2">
@@ -207,7 +206,7 @@ function PostTab({ adminUserId }: { adminUserId: string | null }) {
               onChange={e => setGroupId(e.target.value)}
               className="w-full px-3 py-2.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
             >
-              <option value="">All students (no specific group)</option>
+              <option value="">Select a study group</option>
               {groups.map(g => (
                 <option key={g.id} value={g.id}>
                   {g.name} ({g.member_count} members)
@@ -236,7 +235,7 @@ function PostTab({ adminUserId }: { adminUserId: string | null }) {
       {/* Submit */}
       <button
         onClick={handlePost}
-        disabled={posting || !body.trim()}
+        disabled={posting || !body.trim() || (community === 'student' && !groupId)}
         className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-primary to-primary-dark shadow hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {posting ? <><Spinner size="sm" color="white" /> Posting…</> : 'Post as Admin'}
@@ -274,7 +273,6 @@ function BroadcastTab({ adminUserId }: { adminUserId: string | null }) {
           title: title.trim(),
           message: message.trim(),
           target_role: targetRole === 'everyone' ? null : targetRole,
-          admin_user_id: adminUserId,
         }),
       });
       const data = await res.json();

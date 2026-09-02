@@ -100,6 +100,7 @@ export async function middleware(req: NextRequest) {
     '/nck-flashcards',
     '/revision-plans',
     '/tutoring',
+    '/nursing-students',
     '/blog',
     '/help',
     '/terms',

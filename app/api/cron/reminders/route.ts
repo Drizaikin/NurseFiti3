@@ -56,7 +56,7 @@ export async function GET(req: Request) {
     for (const session of sessions) {
       const sessionDateStr = session.session_date;
       const startTimeStr = session.start_time;
-      const sessionDateTime = new Date(`${sessionDateStr}T${startTimeStr}`);
+      const sessionDateTime = new Date(`${sessionDateStr}T${startTimeStr}+03:00`);
       
       const diffMs = sessionDateTime.getTime() - now.getTime();
       const diffMinutes = diffMs / (1000 * 60);
