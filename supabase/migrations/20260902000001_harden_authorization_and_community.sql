@@ -71,6 +71,27 @@ END;
 $$;
 GRANT EXECUTE ON FUNCTION toggle_own_post_like(UUID) TO authenticated;
 
+CREATE OR REPLACE FUNCTION sync_study_group_member_count()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  target_group_id UUID := COALESCE(NEW.group_id, OLD.group_id);
+BEGIN
+  UPDATE study_groups
+  SET member_count = (SELECT count(*) FROM group_members WHERE group_id = target_group_id)
+  WHERE id = target_group_id;
+  RETURN COALESCE(NEW, OLD);
+END;
+$$;
+
+DROP TRIGGER IF EXISTS sync_study_group_member_count_trigger ON group_members;
+CREATE TRIGGER sync_study_group_member_count_trigger
+  AFTER INSERT OR DELETE ON group_members
+  FOR EACH ROW EXECUTE FUNCTION sync_study_group_member_count();
+
 CREATE OR REPLACE FUNCTION join_study_group(p_group_id UUID)
 RETURNS void
 LANGUAGE plpgsql
