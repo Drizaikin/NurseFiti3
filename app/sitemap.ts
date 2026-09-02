@@ -52,6 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       'nck-flashcards',
       'revision-plans',
       'tutoring',
+      'nursing-students',
     ].map((path) => ({
       url: `${baseUrl}/${path}`,
       lastModified: siteUpdated,
