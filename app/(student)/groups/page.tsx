@@ -330,7 +330,11 @@ function GroupsInner() {
   const likePost = async (post: FeedPost) => {
     const nowLiked = !post.isLiked;
     setFeed(prev => prev.map(p => p.id === post.id ? { ...p, likes_count: nowLiked ? p.likes_count + 1 : Math.max(p.likes_count - 1, 0), isLiked: nowLiked } : p));
-    await (sbRef.current as any).rpc('toggle_post_like', { p_post_id: post.id, p_user_id: userId });
+    const { error } = await (sbRef.current as any).rpc('toggle_own_post_like', { p_post_id: post.id });
+    if (error) {
+      setFeed(prev => prev.map(p => p.id === post.id ? { ...p, likes_count: post.likes_count, isLiked: post.isLiked } : p));
+      toast.error('Could not update like. Please try again.');
+    }
   };
 
   const deletePost = async (post: FeedPost) => {
@@ -338,9 +342,8 @@ function GroupsInner() {
   };
 
   const joinGroup = async (g: StudyGroup) => {
-    const { error } = await (sbRef.current as any).from('group_members').insert({ group_id: g.id, student_id: userId, role: 'member' });
+    const { error } = await (sbRef.current as any).rpc('join_study_group', { p_group_id: g.id });
     if (error) { toast.error('Could not join.'); return; }
-    await (sbRef.current as any).rpc('increment_member_count', { group_id: g.id });
     toast.success(`Joined "${g.name}"!`);
     await loadGroups(userId);
   };
