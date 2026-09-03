@@ -472,6 +472,35 @@ The NurseFiti Team`;
   return sendEmail(params.to, 'Your NurseFiti subscription is active', text, undefined, buildSubscriptionHtml(params, dashboardUrl));
 }
 
+export async function sendPastPaperApprovalEmail(params: { to: string | null | undefined; firstName: string; planName: string; startDate: string; endDate: string }): Promise<MailResult> {
+  const dashboardUrl = `${getSiteUrl()}/dashboard`;
+  const text = `Dear ${params.firstName},
+
+Your past-paper upload has been approved.
+
+You have been granted the ${params.planName} paid plan from ${params.startDate} until ${params.endDate}.
+
+Open your dashboard to start using your plan: ${dashboardUrl}
+
+Thank you for contributing to NurseFiti.
+
+Warm regards,
+The NurseFiti Team`;
+  const html = emailWrapper(`
+<tr><td style="padding:36px 36px 24px;">
+  <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0A6B68;margin-bottom:10px;">Past-paper upload approved</div>
+  <h2 style="font-family:Arial,Helvetica,sans-serif;font-size:24px;font-weight:800;color:#08514F;margin:0 0 12px;">Your ${escapeHtml(params.planName)} plan is active, ${escapeHtml(params.firstName)}.</h2>
+  <p style="font-family:Arial,Helvetica,sans-serif;font-size:14.5px;color:#1E3535;line-height:1.75;margin:0 0 22px;">Thank you for submitting past papers for review. Your upload has been approved and your paid plan is now active.</p>
+  <div style="background:#F2FAFA;border:1.5px solid #D0E8E7;border-left:4px solid #08514F;border-radius:10px;padding:20px 22px;margin-bottom:24px;">
+    <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#0A6B68;margin-bottom:12px;">Plan details</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">${detailsTable([['Plan', params.planName], ['Starts', params.startDate], ['Ends', params.endDate]])}</table>
+  </div>
+  ${ctaButton(dashboardUrl, 'Open your dashboard', true)}
+  ${nfSignature('Thank you for helping strengthen NurseFiti learning resources.')}
+</td></tr>`);
+  return sendEmail(params.to, 'Your NurseFiti paid plan is active', text, undefined, html);
+}
+
 // ─── Session helpers ──────────────────────────────────────────────────────────
 
 function sessionDetailsCard(rows: Array<[string, string]>): string {
