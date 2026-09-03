@@ -3678,7 +3678,190 @@ For NCK, career and study updates, join the [NurseFiti WhatsApp channel](https:/
   },
 ];
 
-const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL, ...POSTS_CV, ...POSTS_POST_EXAM, ...POSTS_DIPLOMA_NURSING, ...POSTS_BUSINESS_IDEAS];
+
+const POSTS_CARE_PLANS: Post[] = [
+  {
+    slug: 'generating-nursing-care-plans',
+    title: 'Generating Nursing Care Plans',
+    excerpt: 'Learn how Kenyan nursing students can generate defensible care plans from assessment data, outcomes, interventions and evaluation.',
+    category: 'Study Strategy',
+    readTime: '10 min read',
+    date: '2026-09-03',
+    cadres: ['KRCHN', 'BScN'],
+    content: `Generating Nursing Care Plans
+
+A care plan does not become strong because it has many interventions. It becomes strong when every line can be traced back to what you actually assessed in this patient.
+
+That is the part that catches many Kenyan nursing students. A copied template may look organised, but it cannot show your clinical instructor why this patient needs this priority, this goal, and this evaluation today.
+
+The right approach is more useful than a perfect-looking document: assess first, identify the nursing problem, set a measurable outcome, select safe actions within the care plan, then evaluate what changed. Keep reading — the small step students skip before writing a diagnosis is what makes the whole plan either individualised or generic.
+
+> [!NOTE]
+> *Last verified: 3 September 2026. This is an educational guide for Kenyan nursing students. Follow your institution’s current care-plan format, placement policy, local clinical guidelines and supervisor instructions.*
+
+## What generating nursing care plans means in practice
+
+The nursing process is a systematic method for planning and delivering individualised nursing care. A Kenyan implementation study describes the Kenya-Nursing Process as a contextualised approach developed to support nursing-process use in clinical settings. [Ndirangu-Mugo et al., International Journal of Africa Nursing Sciences](https://doi.org/10.1016/j.ijans.2015.07.002)
+
+A care plan is the documented working record of that process. It should show your reasoning from current assessment data to a nursing problem, goal, interventions and evaluation — not replace assessment or become a list copied from the internet.
+
+A study at Naivasha District Hospital found that nursing-process use could be incomplete and unsystematic even where staff valued it, reinforcing why students need a repeatable process and practical supervision rather than a template alone. [Mwangi et al., American Journal of Nursing Science](https://doi.org/10.11648/j.ajns.20160504.15)
+
+### The care-plan sequence
+
+1. **Assessment:** collect and validate current subjective and objective data.
+2. **Nursing problem or diagnosis:** state the nursing response that your data supports.
+3. **Outcome or goal:** describe the patient-centred change you will observe within a stated timeframe.
+4. **Interventions and rationales:** choose safe nursing actions linked to the problem and explain why each matters.
+5. **Implementation:** record what was done, within your learning role and supervision.
+6. **Evaluation:** compare the patient’s current state with the goal; continue, revise or escalate as appropriate.
+
+The first step is assessment. You cannot safely choose a nursing diagnosis or intervention before you understand the patient’s current condition, priorities and documented information.
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Practise the reasoning behind a care plan — not just the headings.</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Create a free NurseFiti account and use clinical questions with rationales to strengthen your nursing-process thinking →</a>
+</div>
+
+## Start with evidence, not a ready-made diagnosis
+
+Before opening a care-plan sheet, organise the information you have. Separate what the patient reports from what you observe or verify.
+
+For example, a student might document:
+
+- *Subjective data:* “I feel breathless when walking to the bathroom.”
+- *Objective data:* respiratory rate, oxygen saturation where available, lung findings recorded by the clinical team, ability to speak, activity tolerance and the prescribed plan.
+
+Do not fill in values you did not assess. Do not write a diagnosis that your data cannot support. If the patient deteriorates, has concerning observations or needs a decision outside your authorised competence, escalate immediately according to your placement and facility procedure; completing a care plan is never a reason to delay urgent care.
+
+The International Council of Nurses says its Code of Ethics applies to both nurses and nursing students. It calls for ethical judgement in the use of paper and electronic records, including protection of privacy, confidentiality, patient preferences and community safety. [ICN Code of Ethics for Nurses](https://www.icn.ch/sites/default/files/2023-06/ICN_Code-of-Ethics_EN_Web.pdf)
+
+**A practical rule:** write only what you know, date and time what your local record requires, and never use a patient’s full identifying information in personal notes, WhatsApp groups or study screenshots.
+
+## Build a nursing problem that matches the assessment
+
+A nursing diagnosis or problem statement is not a medical diagnosis copied from the file. It identifies a patient need nurses can assess, monitor, support, educate, prevent or escalate within the plan of care.
+
+Use this check before you keep a problem on the plan:
+
+- Does my current assessment support it?
+- Is it a nursing-focused response rather than a disease label alone?
+- Is it the priority for this patient now?
+- Can I explain what I will observe to know whether it improves?
+
+For a student, the safest language is precise and supervised. Rather than claiming an outcome you cannot independently deliver, identify the observation, care activity, patient education or escalation role you will perform under supervision.
+
+## Write outcomes a supervisor can evaluate
+
+“Patient will improve” is not a usable outcome. It does not say what improvement looks like or when it should be checked.
+
+A stronger outcome is patient-centred, observable and time-bound. For example:
+
+> *Within the shift, the patient will report reduced discomfort after the prescribed comfort measures and will be able to describe when to call for assistance.*
+
+The wording must fit the assessment and the local care plan. Do not promise a laboratory, diagnostic or treatment outcome that depends on another professional, a medicine you are not authorised to prescribe, or a result you cannot evaluate.
+
+## Select interventions with a reason beside each one
+
+An intervention is not strong because it sounds advanced. It is strong when it is relevant, safe, within the plan of care and connected to a clear rationale.
+
+For each intervention, ask:
+
+1. What patient need does this address?
+2. What will I observe, do, teach, document or escalate?
+3. Why is this appropriate for this problem?
+4. What finding would require me to inform the supervising nurse or wider team?
+
+Avoid using generic phrases such as “monitor patient” without stating *what* you will monitor, *how often* your local plan requires it, and *what change* would be reported. Do not turn a blog, class note or AI answer into a facility protocol.
+
+The ICN Code also directs nursing curricula to prepare learners for accuracy, confidentiality and privacy in reporting and recording systems. [ICN Code of Ethics for Nurses](https://www.icn.ch/sites/default/files/2023-06/ICN_Code-of-Ethics_EN_Web.pdf) That means your rationale is part of professional thinking, but your documentation must stay factual and consistent with the official clinical record.
+
+**Use NurseFiti for the reasoning gap.** Clinical practice questions and rationales can help you identify why an intervention is prioritised, then discuss your actual patient plan with your instructor or preceptor.
+
+## Evaluate, revise or escalate — do not simply tick the plan
+
+Evaluation is where a care plan becomes a cycle rather than an assignment. Reassess the same indicators linked to your outcome, then state what changed.
+
+- **Goal met:** document the evidence and continue the relevant plan where indicated.
+- **Partly met:** identify what remains, revise within supervision and continue monitoring.
+- **Not met or deterioration observed:** report and escalate through the local clinical chain promptly.
+
+A plan that says “met” without current evidence is not an evaluation. If you recorded pain, activity tolerance, understanding or a clinical observation at the start, return to that exact indicator when evaluating.
+
+## Try a care-plan question
+
+<div class="sample-mcq-embed" data-question-slug="generating-nursing-care-plans-sample"></div>
+
+**[Want more clinical-reasoning practice with feedback? Create your free NurseFiti account →](/signup)**
+
+## Five care-plan mistakes that weaken student work
+
+### 1. Starting with a copied intervention list
+
+Copying makes it easy to miss the patient’s actual priority. Start with assessment data, then check whether each action belongs.
+
+### 2. Writing a disease name as the whole nursing problem
+
+A medical diagnosis gives context, but your plan must show the nursing response, evidence and patient need.
+
+### 3. Using unmeasurable outcomes
+
+Replace “patient will be okay” with an observable result and a timeframe appropriate to the shift or plan.
+
+### 4. Treating documentation as private study material
+
+Clinical information belongs in approved records and systems. Protect privacy and do not share identifiable patient content outside authorised care and learning processes. [ICN Code of Ethics for Nurses](https://www.icn.ch/sites/default/files/2023-06/ICN_Code-of-Ethics_EN_Web.pdf)
+
+### 5. Continuing to write when the patient needs escalation
+
+When there is a concerning change, act within your placement role and alert the supervising nurse or relevant team according to local procedure. Your first responsibility is patient safety.
+
+## A 15-minute care-plan practice routine
+
+After a lecture, case study or supervised shift, practise this short sequence:
+
+1. List three assessment cues from the scenario.
+2. Identify one nursing problem supported by those cues.
+3. Write one observable outcome for the relevant timeframe.
+4. Add two safe nursing actions with a brief rationale.
+5. State what you would reassess and what would make you escalate.
+
+This routine does not replace ward supervision. It makes your next care-plan discussion more focused and helps you transfer classroom knowledge into the kind of clinical reasoning that matters in unit exams, CATs, OSCEs and later NCK preparation.
+
+For broader support across CATs, placement and professional transition, visit the [NurseFiti Nursing Students Hub](/nursing-students). For placement preparation, read our [first clinical placement guide](/blog/surviving-first-clinical-placement-kenyan-public-hospital).
+
+For study updates and Kenyan nursing learning resources, join the [NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m).
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Turn every care plan into stronger clinical reasoning</h3>
+  <p class="mb-6 opacity-90">Practise the concepts behind assessment, prioritisation and evaluation with NurseFiti before your next CAT, unit exam or supervised placement shift.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+
+> *If care plans feel like filling boxes, save this. It explains how Kenyan nursing students can move from assessment data to a defensible nursing problem, outcome, interventions and evaluation — without copying a template: nursefiti.co.ke/blog/generating-nursing-care-plans*
+
+---
+
+<div class="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
+  <h4 class="font-bold mb-3 uppercase tracking-wider text-xs">Sources & References</h4>
+  <ul class="space-y-2 list-disc pl-4">
+    <li>Ndirangu-Mugo EA, Koinange PK, Mbugua RG and colleagues. <a href="https://doi.org/10.1016/j.ijans.2015.07.002" class="text-primary hover:text-primary-mid">Mainstreaming Kenya-Nursing Process in clinical settings: The case of Kenya</a>. <em>International Journal of Africa Nursing Sciences</em>. 2015.</li>
+    <li>Mwangi A and colleagues. <a href="https://doi.org/10.11648/j.ajns.20160504.15" class="text-primary hover:text-primary-mid">Implementation of the Nursing Process in Naivasha District Hospital, Kenya</a>. <em>American Journal of Nursing Science</em>. 2016.</li>
+    <li>Hagos F and colleagues. <a href="https://doi.org/10.1002/nop2.410" class="text-primary hover:text-primary-mid">The implementation of the nursing process in lower-income countries: An integrative review</a>. <em>Nursing Open</em>. 2019.</li>
+    <li>International Council of Nurses. <a href="https://www.icn.ch/sites/default/files/2023-06/ICN_Code-of-Ethics_EN_Web.pdf" class="text-primary hover:text-primary-mid">The ICN Code of Ethics for Nurses</a>. 2021.</li>
+    <li>Nursing Council of Kenya. <a href="https://nckenya.com/registration/" class="text-primary hover:text-primary-mid">Registration and Licensing</a>. Accessed 3 September 2026.</li>
+  </ul>
+  <p class="mt-4 italic text-xs">Always verify current clinical, documentation, placement and professional requirements directly with your training institution, placement facility, supervisor and <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">nckenya.com</a>.</p>
+</div>
+`,
+  },
+];
+
+const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL, ...POSTS_CV, ...POSTS_POST_EXAM, ...POSTS_DIPLOMA_NURSING, ...POSTS_BUSINESS_IDEAS, ...POSTS_CARE_PLANS];
 
 // ─── generateStaticParams ────────────────────────────────────────────────────
 
