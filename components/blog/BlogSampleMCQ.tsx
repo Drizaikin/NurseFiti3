@@ -25,6 +25,18 @@ interface SampleQuestion {
 
 // ── Hard-coded sample questions keyed by blog slug ─────────────────────────
 const SAMPLE_QUESTIONS: Record<string, SampleQuestion> = {
+  'generating-nursing-care-plans-sample': {
+    stem: 'A student nurse is asked to prepare an individualised nursing care plan for a patient. Which action should come FIRST?',
+    option_a: 'Select interventions from a generic care-plan template',
+    option_b: 'Set a measurable outcome for the next shift',
+    option_c: 'Collect and validate current assessment data',
+    option_d: 'Document that the goal has been achieved',
+    correct_option: 'C',
+    rationale: 'Care planning starts with current, validated assessment data. That information supports the nursing problem, guides a realistic outcome and helps the student select relevant interventions. Choosing a template, setting an outcome or evaluating the plan before assessment risks producing generic care that does not match the patient. This is an educational nursing-process question; students must follow their placement facility’s documentation process and supervisor guidance.',
+    unit: 'Fundamentals of Nursing',
+    topic: 'Nursing Process',
+    difficulty: 'easy',
+  },
   'nck-june-2026-update-sample': {
     stem: 'A 28-year-old female patient presents with a blood pressure of 160/100 mmHg at 34 weeks gestation. She complains of a severe headache and blurred vision. Which of the following is the PRIORITY nursing intervention?',
     option_a: 'Administer prescribed antihypertensive medication and monitor BP every 15 minutes',
