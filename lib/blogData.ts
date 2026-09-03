@@ -1,5 +1,14 @@
 export const POSTS = [
   {
+    slug: 'generating-nursing-care-plans',
+    title: 'Generating Nursing Care Plans',
+    excerpt: 'Learn how Kenyan nursing students can generate defensible care plans from assessment data, outcomes, interventions and evaluation.',
+    category: 'Study Strategy',
+    readTime: '10 min read',
+    date: '2026-09-03',
+    cadres: ['KRCHN', 'BScN'],
+  },
+  {
     slug: "business-ideas-nursing-school-kenya",
     title: "Business Ideas After Nursing School in Kenya (2026)",
     excerpt: "Explore realistic business ideas after nursing school in Kenya, plus registration, funding and compliance steps for nursing graduates.",
@@ -309,6 +318,7 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
+  'generating-nursing-care-plans': 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format&fit=crop',
   "business-ideas-nursing-school-kenya": "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&q=80&auto=format&fit=crop",
   'diploma-nursing-kenya': 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80&auto=format&fit=crop',
   'after-nck-exam-kenya': 'https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=1200&q=80&auto=format&fit=crop',
