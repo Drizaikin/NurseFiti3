@@ -16,8 +16,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createRouteClient } from '@/lib/supabase/server';
-import { createAdminClient } from '@/lib/supabase/admin';
+import { requireAdmin } from '@/lib/admin/requireAdmin';
+import { formatEmailDate, getFirstName, sendPastPaperApprovalEmail } from '@/lib/email';
 import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
@@ -32,79 +32,54 @@ const bodySchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
-    const supabase = createRouteClient();
-    const adminSupabase = createAdminClient();
-
-    // Auth check — must be logged in
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    // Role check — must be admin
-    const { data: profileData } = await adminSupabase
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single();
-    const profile = profileData as { role: string } | null;
-
-    if (!profile || profile.role !== 'admin') {
-      return NextResponse.json({ error: 'Forbidden — admin access required' }, { status: 403 });
-    }
-
-    // Validate body
+    const access = await requireAdmin();
+    if ('response' in access) return access.response;
+    const { user, admin: adminSupabase } = access;
     const body = bodySchema.safeParse(await req.json());
-    if (!body.success) {
-      return NextResponse.json(
-        { error: 'Invalid request', details: body.error.flatten() },
-        { status: 400 }
-      );
-    }
+    if (!body.success) return NextResponse.json({ error: 'Invalid request', details: body.error.flatten() }, { status: 400 });
 
     const { studentId, tier, durationDays, uploadId, note } = body.data;
+    const activatedAt = new Date();
+    const expiresAt = tier !== 'free' && durationDays > 0
+      ? new Date(activatedAt.getTime() + durationDays * 24 * 60 * 60 * 1000).toISOString()
+      : null;
 
-    // Calculate expiry
-    let expiresAt: string | null = null;
-    if (tier !== 'free' && durationDays > 0) {
-      const expiry = new Date();
-      expiry.setDate(expiry.getDate() + durationDays);
-      expiresAt = expiry.toISOString();
-    }
-
-    // Update student plan
-    const { error: updateError } = await (adminSupabase as any)
-      .from('student_profiles')
-      .update({ plan_tier: tier, plan_expires_at: expiresAt })
-      .eq('id', studentId);
-
-    if (updateError) {
-      console.error('[admin/set-plan] Update error:', updateError);
-      return NextResponse.json({ error: 'Failed to update student plan' }, { status: 500 });
-    }
-
-    // If an upload was associated, mark it as approved
+    let upload: { id: string; status: string; email_sent: boolean | null } | null = null;
     if (uploadId) {
-      await (adminSupabase as any)
-        .from('question_uploads')
-        .update({
-          status: 'approved',
-          admin_note: note ?? null,
-          reviewed_by: user.id,
-          reviewed_at: new Date().toISOString(),
-        })
-        .eq('id', uploadId);
+      const { data, error } = await adminSupabase.from('question_uploads').select('id, status, email_sent').eq('id', uploadId).eq('student_id', studentId).maybeSingle();
+      if (error) throw error;
+      if (!data) return NextResponse.json({ error: 'Past-paper upload not found for this student.' }, { status: 404 });
+      upload = data as typeof upload;
+      if (upload.status !== 'pending' && !(upload.status === 'approved' && !upload.email_sent)) {
+        return NextResponse.json({ error: 'This upload has already been reviewed.' }, { status: 409 });
+      }
     }
 
-    // Log the action
-    console.log(`[admin/set-plan] Admin ${user.id} set student ${studentId} to ${tier} (${durationDays} days)`);
+    if (!upload || upload.status === 'pending') {
+      const { error: updateError } = await adminSupabase.from('student_profiles').update({ plan_tier: tier, plan_expires_at: expiresAt }).eq('id', studentId);
+      if (updateError) throw updateError;
+      if (uploadId) {
+        const { error: uploadError } = await adminSupabase.from('question_uploads').update({ status: 'approved', admin_note: note ?? null, reviewed_by: user.id, reviewed_at: activatedAt.toISOString() }).eq('id', uploadId).eq('status', 'pending');
+        if (uploadError) throw uploadError;
+      }
+    }
 
-    return NextResponse.json({ success: true });
+    let emailSent = false;
+    if (uploadId && tier !== 'free' && expiresAt && (!upload || !upload.email_sent)) {
+      const { data: profile, error: profileError } = await adminSupabase.from('profiles').select('full_name, email').eq('id', studentId).maybeSingle();
+      if (profileError) throw profileError;
+      const result = await sendPastPaperApprovalEmail({ to: profile?.email, firstName: getFirstName(profile?.full_name), planName: tier === 'daily' ? 'Exam Boost Daily' : `${tier.charAt(0).toUpperCase()}${tier.slice(1)} Plan`, startDate: formatEmailDate(activatedAt), endDate: formatEmailDate(expiresAt) });
+      if (result.sent) {
+        const { error: emailFlagError } = await adminSupabase.from('question_uploads').update({ email_sent: true }).eq('id', uploadId).eq('email_sent', false);
+        if (emailFlagError) throw emailFlagError;
+        emailSent = true;
+      } else {
+        console.error('[admin/set-plan] Approval email was not sent:', result.reason);
+      }
+    }
+    return NextResponse.json({ success: true, emailSent });
   } catch (err) {
     console.error('[admin/set-plan]', err);
-    return NextResponse.json(
-      { error: err instanceof Error ? err.message : 'Server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
