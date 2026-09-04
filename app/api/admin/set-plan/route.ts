@@ -65,16 +65,30 @@ export async function POST(req: NextRequest) {
     }
 
     let emailSent = false;
-    if (uploadId && tier !== 'free' && expiresAt && (!upload || !upload.email_sent)) {
-      const { data: profile, error: profileError } = await adminSupabase.from('profiles').select('full_name, email').eq('id', studentId).maybeSingle();
-      if (profileError) throw profileError;
-      const result = await sendPastPaperApprovalEmail({ to: profile?.email, firstName: getFirstName(profile?.full_name), planName: tier === 'daily' ? 'Exam Boost Daily' : `${tier.charAt(0).toUpperCase()}${tier.slice(1)} Plan`, startDate: formatEmailDate(activatedAt), endDate: formatEmailDate(expiresAt) });
-      if (result.sent) {
-        const { error: emailFlagError } = await adminSupabase.from('question_uploads').update({ email_sent: true }).eq('id', uploadId).eq('email_sent', false);
-        if (emailFlagError) throw emailFlagError;
-        emailSent = true;
-      } else {
-        console.error('[admin/set-plan] Approval email was not sent:', result.reason);
+    if (uploadId && (!upload || !upload.email_sent)) {
+      const [{ data: profile, error: profileError }, { data: activePlan, error: planError }] = await Promise.all([
+        adminSupabase.from('profiles').select('full_name, email').eq('id', studentId).maybeSingle(),
+        adminSupabase.from('student_profiles').select('plan_tier, plan_expires_at').eq('id', studentId).maybeSingle(),
+      ]);
+      if (profileError || planError) throw profileError ?? planError;
+      if (!activePlan) return NextResponse.json({ error: 'Student plan could not be confirmed.' }, { status: 500 });
+      const activeTier = activePlan.plan_tier as string;
+      const activeExpiry = activePlan.plan_expires_at as string | null;
+      if (activeTier !== 'free' && activeExpiry) {
+        const result = await sendPastPaperApprovalEmail({
+          to: profile?.email,
+          firstName: getFirstName(profile?.full_name),
+          planName: activeTier === 'daily' ? 'Exam Boost Daily' : `${activeTier.charAt(0).toUpperCase()}${activeTier.slice(1)} Plan`,
+          startDate: formatEmailDate(activatedAt),
+          endDate: formatEmailDate(activeExpiry),
+        });
+        if (result.sent) {
+          const { error: emailFlagError } = await adminSupabase.from('question_uploads').update({ email_sent: true }).eq('id', uploadId).eq('email_sent', false);
+          if (emailFlagError) throw emailFlagError;
+          emailSent = true;
+        } else {
+          console.error('[admin/set-plan] Approval email was not sent:', result.reason);
+        }
       }
     }
     return NextResponse.json({ success: true, emailSent });
