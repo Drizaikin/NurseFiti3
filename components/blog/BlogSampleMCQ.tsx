@@ -25,6 +25,18 @@ interface SampleQuestion {
 
 // ── Hard-coded sample questions keyed by blog slug ─────────────────────────
 const SAMPLE_QUESTIONS: Record<string, SampleQuestion> = {
+  'generating-nursing-care-plans-sample': {
+    stem: 'A student nurse is asked to prepare an individualised nursing care plan for a patient. Which action should come FIRST?',
+    option_a: 'Select interventions from a generic care-plan template',
+    option_b: 'Set a measurable outcome for the next shift',
+    option_c: 'Collect and validate current assessment data',
+    option_d: 'Document that the goal has been achieved',
+    correct_option: 'C',
+    rationale: 'Care planning starts with current, validated assessment data. That information supports the nursing problem, guides a realistic outcome and helps the student select relevant interventions. Choosing a template, setting an outcome or evaluating the plan before assessment risks producing generic care that does not match the patient. This is an educational nursing-process question; students must follow their placement facility’s documentation process and supervisor guidance.',
+    unit: 'Fundamentals of Nursing',
+    topic: 'Nursing Process',
+    difficulty: 'easy',
+  },
   'nck-june-2026-update-sample': {
     stem: 'A 28-year-old female patient presents with a blood pressure of 160/100 mmHg at 34 weeks gestation. She complains of a severe headache and blurred vision. Which of the following is the PRIORITY nursing intervention?',
     option_a: 'Administer prescribed antihypertensive medication and monitor BP every 15 minutes',
@@ -72,6 +84,18 @@ const SAMPLE_QUESTIONS: Record<string, SampleQuestion> = {
     unit: 'Pharmacology & Drug Administration',
     topic: 'Clinical Reference Guidelines',
     difficulty: 'medium',
+  },
+  'community-health-nursing-kenya-sample': {
+    stem: 'During a Malezi Bora outreach, a community health nurse reviews the immunization card of a healthy 9-month-old infant who has received all vaccines on schedule so far. According to the Kenya national immunization (KEPI) schedule, which vaccine is due at this 9-month visit?',
+    option_a: 'Third dose of pentavalent (DPT-HepB-Hib)',
+    option_b: 'First dose of Measles-Rubella (MR) vaccine',
+    option_c: 'BCG vaccine',
+    option_d: 'Second dose of Measles-Rubella (MR) vaccine',
+    correct_option: 'B',
+    rationale: 'Under Kenya’s routine childhood immunization schedule, the FIRST dose of the Measles-Rubella (MR) vaccine is given at 9 months of age, and the SECOND dose at 18 months. BCG (C) is given at birth, and the three pentavalent doses (A) are completed by 14 weeks, so none of those are due at 9 months. Option D (MR second dose) comes later, at 18 months. A community health nurse running growth-monitoring and immunization outreaches such as Malezi Bora must know this schedule precisely to catch defaulters and prevent measles outbreaks. This aligns with the Kenya Expanded Programme on Immunization (KEPI) and WHO guidance.',
+    unit: 'Community Health Nursing',
+    topic: 'Immunization & KEPI Schedule',
+    difficulty: 'easy',
   },
 };
 

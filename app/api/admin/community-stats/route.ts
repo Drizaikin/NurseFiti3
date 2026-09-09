@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/admin';
+import { requireAdmin } from '@/lib/admin/requireAdmin';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const admin = createAdminClient();
+    const access = await requireAdmin();
+    if ('response' in access) return access.response;
+    const { admin } = access;
     const [studentMsgs, tutorMsgs, groups, broadcasts] = await Promise.all([
       admin.from('community_messages').select('id, group_id, is_admin_post, likes_count, created_at', { count: 'exact' }).order('created_at', { ascending: false }).limit(50) as any,
       admin.from('tutor_messages').select('id, is_admin_post, likes_count, created_at', { count: 'exact' }).order('created_at', { ascending: false }).limit(50) as any,

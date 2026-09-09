@@ -43,7 +43,7 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: '*',
         allow: [
           '/', '/practice-questions', '/mock-exams', '/revision-plans',
-          '/nck-flashcards', '/pricing', '/tutoring',
+          '/nck-flashcards', '/pricing', '/tutoring', '/nursing-students',
         ],
         disallow: privatePaths,
       },
@@ -61,7 +61,7 @@ export default function robots(): MetadataRoute.Robots {
         ],
         allow: [
           '/', '/blog/', '/about', '/pricing', '/practice-questions', '/mock-exams',
-          '/nck-flashcards', '/revision-plans', '/tutoring', '/help', '/privacy',
+          '/nck-flashcards', '/revision-plans', '/tutoring', '/nursing-students', '/help', '/privacy',
           '/terms', '/tutor-agreement', '/llms.txt',
         ],
         disallow: privatePaths,

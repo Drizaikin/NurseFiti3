@@ -18,6 +18,7 @@ export function MarketingFooter() {
             <Link href="/mock-exams" className="hover:text-primary">Mock exams</Link>
             <Link href="/nck-flashcards" className="hover:text-primary">Flashcards</Link>
             <Link href="/revision-plans" className="hover:text-primary">Revision plans</Link>
+            <Link href="/nursing-students" className="hover:text-primary">Nursing Students Hub</Link>
           </div>
         </div>
         <div>

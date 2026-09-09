@@ -23,6 +23,7 @@ export function MarketingHeader() {
               {label}
             </Link>
           ))}
+          <Link href="/nursing-students" className="text-sm font-semibold text-neutral-mid transition-colors hover:text-primary">Students</Link>
           <Link href="/pricing" className="text-sm font-semibold text-neutral-mid transition-colors hover:text-primary">Pricing</Link>
           <Link href="/blog" className="text-sm font-semibold text-neutral-mid transition-colors hover:text-primary">Blog</Link>
         </nav>
@@ -35,7 +36,7 @@ export function MarketingHeader() {
         </div>
       </div>
       <nav aria-label="Mobile product navigation" className="flex gap-1 overflow-x-auto border-t border-[var(--color-border)] px-4 py-2 lg:hidden">
-        {[...productLinks, ['Pricing', '/pricing'] as const, ['Blog', '/blog'] as const].map(([label, href]) => (
+        {[...productLinks, ['Students', '/nursing-students'] as const, ['Pricing', '/pricing'] as const, ['Blog', '/blog'] as const].map(([label, href]) => (
           <Link key={href} href={href} className="shrink-0 rounded-full px-3 py-1.5 text-xs font-bold text-neutral-mid hover:bg-primary-light hover:text-primary">
             {label}
           </Link>

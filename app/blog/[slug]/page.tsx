@@ -2553,7 +2553,1315 @@ Your nursing career in Kenya will be defined not just by what you know, but by w
   }
 ];
 
-const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH];
+const POSTS_AUG2026: Post[] = [
+  {
+    slug: 'community-health-nursing-kenya',
+    title: 'Community Health Nursing in Kenya: Roles & Skills (2026)',
+    excerpt: 'Discover community health nursing in Kenya: the roles, skills, and practice settings — from CHPs and KRCHN training to the 2023 Primary Health Care Act.',
+    category: 'Study Guide',
+    readTime: '11 min read',
+    date: '2026-08-06',
+    cadres: ['KRCHN', 'BScN'],
+    content: `
+In September 2023, Kenya did something few African countries have attempted at that scale: it flagged off 100,000 kitted community health workers — each with a branded kit, a smartphone and a monthly stipend — and sent them into villages to become the front door of the entire health system ([Ministry of Health](https://www.health.go.ke/kenyas-bold-step-towards-universal-health-coverage-unveiling-community-health-promoter-kits)). If you are a KRCHN or BScN graduate, that single policy quietly rewired where your career can go.
+
+Community health nursing is no longer the "soft" posting people once assumed it was. It now sits at the centre of Kenya's Universal Health Coverage (UHC) push, backed by new law and real money.
+
+There is one part of the community health structure that decides whether a nurse leads a team or is left doing paperwork — and we will get to it in the practice-settings section below. First, let us define the field precisely.
+
+> [!NOTE]
+> *Last verified: August 2026. Community health policy and financing in Kenya are changing fast under UHC — always confirm current details at [health.go.ke](https://www.health.go.ke) and [nckenya.com](https://www.nckenya.com).*
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Preparing for the NCK community health nursing exam?</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Practise community health questions free on NurseFiti →</a>
+</div>
+
+## What Is Community Health Nursing?
+
+Community health nursing is the blend of nursing and public health, applied to protect and promote the health of whole populations rather than one patient at a time ([University of Nairobi, School of Nursing Sciences](https://nursing.uonbi.ac.ke/thematic-units/community-health-nursing)). Instead of waiting for the sick to arrive at a ward, the community health nurse goes out to households, schools and villages to prevent illness before it starts.
+
+In Kenya this is not a vague ideal — it is written into the structure of the health system. The Kenya Essential Package for Health (KEPH) organises care into six levels, and **Level 1 is the community** — the household, the village and the individual. It is where promotive and preventive care begins, before Level 2 dispensaries, Level 3 health centres and the county and national hospitals above them ([Ministry of Health, Clinical Guidelines for Level 1 Community Health Services](https://health.go.ke/sites/default/files/2025-04/Clinical%20Guidelines%20for%20Level%201%20Community%20Health%20Services.pdf)).
+
+Kenya even names its most common nursing qualification after this idea. The **Kenya Registered Community Health Nurse (KRCHN)** is a three-year diploma that combines general nursing, midwifery and community health into one licence ([Kenya Medical Training College](https://kmtcguides.co.ke/diploma-in-community-health-nursing/)). If you are training as a KRCHN, community health is not an add-on — it is one of the three pillars you will be examined on.
+
+## The New Face of Community Health: Community Health Promoters
+
+For years the community level relied on unpaid Community Health Volunteers (CHVs). In April 2023, the national government and the Council of Governors agreed to rebrand and professionalise them as **Community Health Promoters (CHPs)** ([Ministry of Health FAQ](https://www.health.go.ke/sites/default/files/2023-10/Community%20health%20services%20frequently%20asked%20questions.pdf)).
+
+The scale is what makes this historic. Kenya deployed roughly 100,000 CHPs — about **10 CHPs per Community Health Unit**, with each unit covering approximately **5,000 people (about 1,000 households)** and each promoter responsible for around **100 households** ([Ministry of Health FAQ](https://www.health.go.ke/sites/default/files/2023-10/Community%20health%20services%20frequently%20asked%20questions.pdf)).
+
+Three things changed for CHPs in this reform:
+
+- **A stipend.** CHPs now receive a monthly stipend of **KES 5,000, split 50:50 — KES 2,500 from the national government and KES 2,500 from the county** ([The Standard](https://www.standardmedia.co.ke/health/health-science/article/2001510856/state-boosts-chps-work-with-stipends-gadgets-and-training)). In February 2024, the government launched a **KES 3 billion** stipend programme to fund it ([Ministry of Health](https://www.health.go.ke/government-launches-kshs-3-billion-stipend-payment-program-community-health-promoters)).
+- **A smartphone and eCHIS.** Each CHP was issued a smartphone loaded with the **electronic Community Health Information System (eCHIS)**, so household visits, referrals and commodities are recorded digitally instead of on paper ([Exemplars in Global Health](https://www.exemplars.health/stories/kenyas-echis)).
+- **A defined scope.** CHPs handle promotion, screening and referral — but the law explicitly bars them from tasks beyond their training, such as conducting deliveries ([The Primary Health Care Act, 2023](https://kenyalaw.org/kl/fileadmin/pdfdownloads/Acts/2023/ThePrimaryHealthCareAct_2023.pdf)).
+
+Here is the crucial nuance most students miss: **CHPs are not registered nurses, and they are not on the government payroll as employees** — they are facilitated through the stipend ([Ministry of Health FAQ](https://www.health.go.ke/sites/default/files/2023-10/Community%20health%20services%20frequently%20asked%20questions.pdf)). They are the eyes and hands in the community. The clinical brain that receives their referrals, runs the health facility and holds the licence is the nurse. That distinction is your career opportunity.
+
+## Where the Registered Nurse Fits In
+
+If CHPs cover Level 1, the registered community health nurse works mainly at the facility levels that receive their referrals — the **Level 2 dispensary and Level 3 health centre** — and inside community programmes. The KEPH system is built on referral and counter-referral: a CHP identifies a sick child or a pregnant mother and refers upward; the nurse assesses, treats or refers further to the county hospital ([Ministry of Health, Level 1 Guidelines](https://health.go.ke/sites/default/files/2025-04/Clinical%20Guidelines%20for%20Level%201%20Community%20Health%20Services.pdf)).
+
+In practice, a community health nurse in Kenya typically:
+
+- Runs the **maternal and child health (MCH) clinic** — antenatal care, immunisation, growth monitoring and family planning.
+- Delivers **immunisation** under the Kenya Expanded Programme on Immunization (KEPI) and follows up defaulters in the community.
+- Provides **health education** on nutrition, sanitation, malaria, HIV and non-communicable diseases.
+- Manages **community-based data and disease surveillance**, increasingly through the digital health system.
+- Coordinates **referrals** between the community, the dispensary and the hospital.
+
+<div class="my-8 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Master the Community Health & Midwifery Papers</h3>
+  <p class="mb-6 opacity-90 max-w-lg mx-auto">NurseFiti's question bank covers community health, MCH and public health with full rationales — the exact areas KRCHN and BScN candidates lose marks on. The mock exam replicates the DigiProctor interface used in the real NCK exam.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Try a free mock exam →</a>
+</div>
+
+## Core Skills Every Community Health Nurse Needs
+
+Community health nursing rewards a different skill set from ward nursing. The best community health nurses in Kenya are strong in:
+
+1. **Community assessment** — reading a household or village for risk: water, sanitation, nutrition and immunisation gaps.
+2. **Health communication** — explaining prevention in Kiswahili and local languages, and winning trust so families act.
+3. **Immunisation and MCH competence** — knowing the KEPI schedule cold (BCG at birth, pentavalent at 6, 10 and 14 weeks, and Measles-Rubella at 9 and 18 months).
+4. **Data and digital literacy** — recording accurately on eCHIS and the Kenya Health Information System so decisions are based on real numbers.
+5. **Cultural competence and ethics** — respecting beliefs while protecting patients, within the NCK Code of Conduct.
+6. **Supervision and coordination** — supporting CHPs and linking them to the facility.
+
+Notice how many of these are tested indirectly on the NCK exam through community health, MCH and public health questions. If you want a structured way to drill them, see our [KRCHN Paper I and Paper II revision guide](/blog/krchn-exam-revision-tips).
+
+## Kenyan Practice Settings: Where You Will Actually Work
+
+This is the section that answers the loop we opened at the top. Community health nurses in Kenya work across several settings, and the one you choose shapes whether you lead or simply assist:
+
+- **Dispensaries (Level 2)** — often the most junior facility, sometimes run single-handedly by one nurse serving thousands. Here the nurse is effectively the clinician-in-charge.
+- **Health centres (Level 3)** — larger teams offering MCH, minor procedures and maternity; a common place to grow into a nurse-in-charge role.
+- **Community Health Units (Level 1)** — where you supervise and mentor CHPs and drive outreaches.
+- **Primary Care Networks (PCNs)** — the new "hub-and-spoke" structure created by the 2023 law, linking several facilities so patients move smoothly between community and hospital ([The Primary Health Care Act, 2023](https://kenyalaw.org/kl/fileadmin/pdfdownloads/Acts/2023/ThePrimaryHealthCareAct_2023.pdf)).
+- **Mobile clinics and outreaches** — such as the Beyond Zero mobile clinics that reach remote wards.
+- **NGOs, faith-based hospitals and county public health offices** — where community health nurses run programmes on HIV, TB, reproductive health and nutrition.
+
+The nurse who understands the PCN structure and the digital system is the one counties promote into coordination roles. The nurse who ignores it stays at the bench.
+
+## Key Programmes You Will Work In
+
+Community health nursing in Kenya is delivered largely through national flagship programmes. Knowing them is both good practice and good exam preparation:
+
+- **Linda Mama** — free maternity care launched in 2013 and later expanded under NHIF in 2016 to cover antenatal, delivery and postnatal care for mothers ([PMC / peer-reviewed evaluation](https://pmc.ncbi.nlm.nih.gov/articles/PMC9290784/)). Its administration is now transitioning under the new Social Health Authority.
+- **Beyond Zero** — the maternal and child health initiative founded by former First Lady Margaret Kenyatta and launched in January 2014, which rolled out mobile clinics across all 47 counties ([UNAIDS](https://www.unaids.org/en/resources/presscentre/featurestories/2014/january/20140130beyondzerocampaign)).
+- **Malezi Bora** — the twice-yearly child and maternal health weeks delivering Vitamin A supplementation, deworming, immunisation and growth monitoring ([Daily Nation](https://nation.africa/kenya/health/-malezi-bora-week-our-children-our-investment-4267332)).
+- **KEPI** — the Kenya Expanded Programme on Immunization, established in 1980, which anchors all childhood vaccination.
+
+### Test Yourself: A Community Health Question
+
+The NCK exam loves community health scenarios. Try this one from the NurseFiti question bank:
+
+<div class="sample-mcq-embed" data-question-slug="community-health-nursing-kenya-sample"></div>
+
+Want thousands more community health, MCH and public health questions with rationales? **[Create your free NurseFiti account →](https://www.nursefiti.co.ke/signup)**
+
+## How the 2023 Laws Reshaped Community Health
+
+You cannot understand community health nursing in Kenya today without the four health laws assented on 19 October 2023 ([EY tax alert](https://www.ey.com/en_gl/technical/tax-alerts/kenya-s-enactment-of-new-laws-moves-towards-universal-health-cov)). Two matter most for community nurses:
+
+- **The Primary Health Care Act, 2023** legally established Community Health Units and Primary Care Networks, and formalised CHPs as part of the system rather than informal volunteers ([Kenya Law](https://kenyalaw.org/kl/fileadmin/pdfdownloads/Acts/2023/ThePrimaryHealthCareAct_2023.pdf)).
+- **The Social Health Insurance Act, 2023** replaced NHIF with the **Social Health Authority (SHA)**, whose services began on 1 October 2024 ([Ministry of Health](https://www.health.go.ke/kenya-officially-launch-social-health-authority-october-1-2024)). It created a dedicated **Primary Healthcare Fund** to pay for Level 1–3 services — meaning community health work is now directly financed, not an afterthought.
+
+For nurses, the takeaway is simple: community health has moved from the margins to the centre of how Kenya funds and delivers care. The demand for competent, licensed community health nurses is structural, not seasonal.
+
+## How to Become a Community Health Nurse in Kenya
+
+The main route is the **Diploma in Kenya Registered Community Health Nursing (KRCHN)**, a three-year programme offered at KMTC and accredited institutions. Direct entry requires a KCSE mean grade of C plain, with C plain in Biology, C plain in English or Kiswahili, and at least C− in Chemistry, Mathematics or Physics ([KMTC](https://kmtcguides.co.ke/diploma-in-community-health-nursing/)). Degree candidates take the four-year BScN, which also covers community health.
+
+From there the pathway is regulated by the **Nursing Council of Kenya (NCK)**, the sole statutory body under the Nurses Act (Cap 257) ([nckenya.com](https://www.nckenya.com)):
+
+1. **Index with the NCK** early in training — miss the window and your training may not be recognised. See our [NCK indexing 60-day deadline guide](/blog/nck-indexing-60-day-deadline-kenya).
+2. **Sit the NCK licensure examination** on the DigiProctor computer-based platform. Our [complete NCK exam preparation guide](/blog/nck-exam-preparation-guide-kenya) walks through the structure.
+3. **Apply for your practising licence** after passing — the exact portal steps are in our guide on [how to apply for the NCK licence](/blog/how-to-apply-nck-licence-kenya).
+
+## Your Next Step
+
+Community health nursing is where Kenya's health system is investing hardest right now — new law, new financing and 100,000 promoters who need licensed nurses to lead them. If that is the career you want, the licensure exam is the gate you have to pass first.
+
+For real-time updates on NCK exams, community health policy and study tips, join our official WhatsApp channel:
+[Join the NurseFiti WhatsApp Channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Pass the NCK Exam on Your First Attempt</h3>
+  <p class="mb-6 opacity-90">Practise community health, MCH and public health questions with full rationales. Start your free NurseFiti account — no credit card required.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+> *Share this: "Really clear breakdown of community health nursing in Kenya — the CHP reforms, where registered nurses actually fit, the KRCHN pathway, and how the 2023 Primary Health Care Act changed everything. Good for anyone doing the NCK exam: nursefiti.co.ke/blog/community-health-nursing-kenya"*
+
+---
+
+## Sources & References
+
+- **Ministry of Health Kenya** — *Unveiling Community Health Promoter Kits* (25 September 2023). [health.go.ke](https://www.health.go.ke/kenyas-bold-step-towards-universal-health-coverage-unveiling-community-health-promoter-kits)
+- **Ministry of Health Kenya** — *Community Health Services: Frequently Asked Questions* (2023). [health.go.ke](https://www.health.go.ke/sites/default/files/2023-10/Community%20health%20services%20frequently%20asked%20questions.pdf)
+- **Ministry of Health Kenya** — *Clinical Guidelines for Level 1 Community Health Services* (2025). [health.go.ke](https://health.go.ke/sites/default/files/2025-04/Clinical%20Guidelines%20for%20Level%201%20Community%20Health%20Services.pdf)
+- **Ministry of Health Kenya** — *Launch of the KES 3 Billion CHP Stipend Payment Programme* (February 2024). [health.go.ke](https://www.health.go.ke/government-launches-kshs-3-billion-stipend-payment-program-community-health-promoters)
+- **Ministry of Health Kenya** — *Social Health Authority Launch, 1 October 2024*. [health.go.ke](https://www.health.go.ke/kenya-officially-launch-social-health-authority-october-1-2024)
+- **The Standard** — *State boosts CHPs' work with stipends, gadgets and training*. [standardmedia.co.ke](https://www.standardmedia.co.ke/health/health-science/article/2001510856/state-boosts-chps-work-with-stipends-gadgets-and-training)
+- **Laws of Kenya** — *The Primary Health Care Act, 2023*. [kenyalaw.org](https://kenyalaw.org/kl/fileadmin/pdfdownloads/Acts/2023/ThePrimaryHealthCareAct_2023.pdf)
+- **EY** — *Kenya's enactment of new health laws (four Acts, 19 October 2023)*. [ey.com](https://www.ey.com/en_gl/technical/tax-alerts/kenya-s-enactment-of-new-laws-moves-towards-universal-health-cov)
+- **Exemplars in Global Health** — *Kenya's eCHIS: revolutionizing community health with digital innovation*. [exemplars.health](https://www.exemplars.health/stories/kenyas-echis)
+- **University of Nairobi, School of Nursing Sciences** — *Community Health Nursing thematic unit*. [nursing.uonbi.ac.ke](https://nursing.uonbi.ac.ke/thematic-units/community-health-nursing)
+- **Kenya Medical Training College** — *Diploma in Kenya Registered Community Health Nursing (KRCHN)*. [kmtc.ac.ke](https://kmtcguides.co.ke/diploma-in-community-health-nursing/)
+- **Nursing Council of Kenya** — official regulator under the Nurses Act (Cap 257). [nckenya.com](https://www.nckenya.com)
+- **Otieno et al., PMC** — *Free maternity / Linda Mama policy evaluation in Kenya*. [pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC9290784/)
+- **UNAIDS** — *Beyond Zero campaign, launched January 2014*. [unaids.org](https://www.unaids.org/en/resources/presscentre/featurestories/2014/january/20140130beyondzerocampaign)
+- **Daily Nation** — *Malezi Bora week: our children, our investment*. [nation.africa](https://nation.africa/kenya/health/-malezi-bora-week-our-children-our-investment-4267332)
+- **Njuguna et al., PMC** — *Childhood vaccination timeliness in Nairobi (Measles-Rubella at 9 and 18 months)*. [pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC8274788/)
+
+*Always verify current exam and registration information directly at [nckenya.com](https://www.nckenya.com) and current community health policy at [health.go.ke](https://www.health.go.ke).*
+`,
+  },
+];
+
+const POSTS_RENAL: Post[] = [
+  {
+    slug: 'higher-diploma-renal-nursing-kenya',
+    title: 'Higher Diploma Renal Nursing Kenya: How to Prepare (2026)',
+    excerpt: 'Discover NurseFiti’s Higher Diploma renal resources, entry evidence and renal-nursing preparation priorities for Kenyan specialist-nursing candidates.',
+    category: 'Study Guide',
+    readTime: '10 min read',
+    date: '2026-08-13',
+    cadres: ['Higher Diploma'],
+    content: `
+Renal nursing is not “just dialysis.” It is specialised work where patient assessment, infection prevention, fluid management, education and team communication matter at the same time. That is why nurses considering Higher Diploma Renal Nursing in Kenya should prepare before the first lecture — not after practicum and coursework have already become demanding.
+
+The opportunity is real, but so is the standard. Kenyan specialist programmes describe renal nursing as preparation for collaborative management of people with renal disorders, using prescribed courses, practicum and clinical assessment — not theory alone. [University of Nairobi: Higher Diploma in Renal Nursing](https://nursing.uonbi.ac.ke/programs-content-type/higher-diploma-renal-nursing)
+
+**NurseFiti now has Higher Diploma resources ready for renal candidates.** If you want a repeatable way to revise renal concepts, test clinical reasoning and return to weak areas, build that routine now — before training workload competes for every free hour.
+
+> [!NOTE]
+> *Last verified: 13 August 2026. Entry rules, intakes, fees and documentary requirements vary by institution. Confirm the current advert with the training institution and professional requirements with the [Nursing Council of Kenya](https://nckenya.com/registration/).*
+
+## What Higher Diploma Renal Nursing prepares you to do
+
+Renal nursing, also called nephrology nursing, centres on care for people with kidney disease and renal-replacement needs. The University of Nairobi says its programme addresses capacity gaps by preparing nurses for collaborative management of clients with renal disorders; its published structure includes coursework, practicum and a project. [UoN programme overview and structure](https://nursing.uonbi.ac.ke/programs-content-type/higher-diploma-renal-nursing)
+
+A strong renal nurse does not only learn machine steps. The work requires safe assessment, recognition and escalation of change, accurate documentation, patient education and collaboration with the renal team. The Kenya Nephrology Nurses Association identifies haemodialysis, peritoneal dialysis and kidney transplantation among nephrology-nursing practice areas. [Kenya Nephrology Nurses Association](https://www.nephronursekenya.org/)
+
+Use every case, lecture or placement reflection to answer three questions:
+
+1. What is changing in this patient?
+2. What must be assessed, documented or escalated now?
+3. What can the patient and family safely understand and act on after this encounter?
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Your Higher Diploma renal resources are ready.</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Create a NurseFiti account and start structured renal revision →</a>
+</div>
+
+## Check eligibility from the current institution advert
+
+Never assume one programme’s criteria apply to every school. The University of Nairobi lists a registrable nursing qualification and at least two years of nursing-practice experience for its renal nursing programme. [UoN admission requirements](https://nursing.uonbi.ac.ke/programs-content-type/higher-diploma-renal-nursing)
+
+Kenyatta University Teaching, Referral and Research Hospital lists Kenya Registered Nephrology Nursing among its specialised Higher Diploma programmes. Its published entry requirements include being an NCK-recognised nurse, a minimum of one year post-registration experience and a valid practising licence. [KUTRRH Nursing Institute](https://www.kutrrh.go.ke/nursing-institute/)
+
+The practical rule: create your evidence folder before an intake opens, but submit only what the current advert asks for.
+
+### Your evidence folder
+
+Prepare current copies of:
+
+- NCK registration certificate and valid practising licence where required;
+- nursing academic and professional certificates;
+- post-registration experience evidence where the institution specifies it;
+- your CV;
+- the application form and payment evidence where required; and
+- any vaccination, insurance or health documentation listed in the advert.
+
+The NCK states that nurses practising in Kenya must be registered and licensed, and its public register supports licence-status verification. [NCK Registration and Licensing](https://nckenya.com/registration/) [NCK License Status Register](https://osp.nckenya.com/LicenseStatus)
+
+> **Do not reuse last year’s dates, fees or checklist.** KUTRRH’s published 2026 information includes specific intake dates, a fee and requested uploads; those details are institutional and time-sensitive. [KUTRRH Nursing Institute](https://www.kutrrh.go.ke/nursing-institute/)
+
+## Prepare renal reasoning, not machine mythology
+
+Starting with machine brands, settings or procedure sequences outside your approved local protocol is the wrong order. Build concepts that transfer across supervised renal practice.
+
+### Kidney function and the clinical story
+
+Refresh renal anatomy and physiology, acute kidney injury versus chronic kidney disease, fluid balance, electrolyte concepts, blood-pressure assessment and common co-morbidities. Do not memorise an isolated value without understanding which trend, symptom or patient context makes it important.
+
+### Renal replacement therapy concepts
+
+Know the purpose and broad process of haemodialysis and peritoneal dialysis, the reason for pre- and post-treatment assessment, infection-risk awareness, access-care principles and patient-education priorities. The local protocol used by your approved training site remains the authority for procedures.
+
+### Patient safety, escalation and education
+
+When revising a scenario, state the observation, immediate safety step, documentation need and escalation path. Then practise explaining the issue in plain language a patient or caregiver can understand. This is not “soft” content; it is part of safe continuity of care.
+
+The preparation step many candidates skip is a one-page renal reasoning log. After each case, lecture or placement shift, record the presentation, change observed, assessment, escalation and teaching point. It converts exposure into evidence you can recall.
+
+## A practical six-week preparation framework
+
+This is a self-study structure, not a replacement for your institution’s curriculum or clinical protocols.
+
+### Weeks 1–2: Foundation
+
+Review renal anatomy, physiology, fluid balance and electrolytes. Summarise each area in your own words and record every missed question by concept, not just by answer.
+
+### Week 3: Assessment and clinical change
+
+Practise scenarios involving oedema, altered urine output, fatigue, shortness of breath, blood-pressure change and treatment tolerance. For each scenario, identify data to collect and who to notify under supervision.
+
+### Week 4: Renal replacement therapy
+
+Compare haemodialysis and peritoneal-dialysis purposes, care settings and patient-education priorities. Do not convert a generic online checklist into a local clinical protocol.
+
+### Week 5: Documentation, education and teamwork
+
+Practise concise ISBAR handovers. Draft patient-teaching explanations at an accessible reading level. Review infection prevention, access care and escalation requirements from approved institutional material.
+
+### Week 6: Mixed recall and readiness
+
+Review the error log rather than only familiar topics. Confirm your documents and CV are current. Re-read the programme advert and map every listed requirement to your evidence folder.
+
+**[Use NurseFiti’s Higher Diploma resources to keep renal concepts in regular review →](/signup)**
+
+## Present your experience honestly in a renal-nursing CV
+
+Do not write “expert dialysis nurse” if your exposure was supervised, observed or limited. Use verifiable evidence:
+
+> *Registered nurse with [accurate number] years of post-registration experience in [setting]. Completed supervised exposure to [accurate activity or area]. Seeking Higher Diploma Renal Nursing training to strengthen renal assessment, patient education and collaborative care.*
+
+Your CV should show current NCK status, cadre and clinical setting, relevant supervised exposure, documentation and patient-education examples a referee can confirm, and a precise reason for choosing renal nursing. For wider application evidence, read our [nursing CV guide for Kenyan jobs](/blog/nursing-cv-kenyan-jobs).
+
+## Three mistakes that make preparation shallow
+
+### 1. Treating renal nursing as dialysis only
+
+Nephrology practice is wider: the Kenyan professional association includes haemodialysis, peritoneal dialysis and kidney transplantation. [Kenya Nephrology Nurses Association](https://www.nephronursekenya.org/)
+
+### 2. Applying from an old advert
+
+One published programme may require two years of practice while another lists one year post-registration experience. The current advert for your chosen institution is decisive. [UoN](https://nursing.uonbi.ac.ke/programs-content-type/higher-diploma-renal-nursing) [KUTRRH](https://www.kutrrh.go.ke/nursing-institute/)
+
+### 3. Overstating independent competence
+
+Specialist nursing depends on safety, protocol and collaboration. Never claim independent performance when a task was observed, assisted or supervised.
+
+## Prepare with the right resources before workload peaks
+
+Higher Diploma Renal Nursing is a deliberate next step for nurses drawn to rigorous assessment, technical care, patient education and multidisciplinary practice. It is not a title to collect; it is a commitment to deeper accountability.
+
+NurseFiti’s Higher Diploma resources are ready for renal candidates who want to revise deliberately, revisit difficult concepts and arrive at training with a stronger reasoning routine. Verify your licence, review the current programme advert, build your evidence folder — then use NurseFiti to keep progressing while you wait for or begin specialist training.
+
+For nursing-study updates and practical preparation notes, join the [NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m).
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Your Higher Diploma renal resources are ready</h3>
+  <p class="mb-6 opacity-90">Build a consistent renal-nursing preparation routine with NurseFiti’s Higher Diploma resources today.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Access NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+
+> *Found this focused guide for Kenyan nurses considering Higher Diploma Renal Nursing. It covers eligibility evidence, renal-nursing preparation and the Higher Diploma resources now available in NurseFiti: nursefiti.co.ke/blog/higher-diploma-renal-nursing-kenya*
+
+---
+
+### Sources & References
+
+- University of Nairobi, Department of Nursing Sciences. *Higher Diploma in Renal Nursing.* Accessed 13 August 2026. [https://nursing.uonbi.ac.ke/programs-content-type/higher-diploma-renal-nursing](https://nursing.uonbi.ac.ke/programs-content-type/higher-diploma-renal-nursing)
+- Kenyatta University Teaching, Referral and Research Hospital. *Nursing Institute: Higher Diploma Specialized Nursing Programmes.* Accessed 13 August 2026. [https://www.kutrrh.go.ke/nursing-institute/](https://www.kutrrh.go.ke/nursing-institute/)
+- Nursing Council of Kenya. *Registration and Licensing.* Accessed 13 August 2026. [https://nckenya.com/registration/](https://nckenya.com/registration/)
+- Kenya Nephrology Nurses Association. *About and professional practice areas.* Accessed 13 August 2026. [https://www.nephronursekenya.org/](https://www.nephronursekenya.org/)
+
+*Always verify the current intake, fees, entry requirements, clinical protocols and professional requirements directly with the training institution, your employer and [nckenya.com](https://www.nckenya.com).*
+`,
+  },
+];
+
+const POSTS_CV: Post[] = [
+  {
+    slug: 'nursing-cv-kenyan-jobs',
+    title: 'Nursing CV for Kenyan Jobs: Sections and Evidence (2026)',
+    excerpt: 'Learn how newly qualified nurses in Kenya can build a clear CV with NCK evidence, clinical-placement achievements and job-specific proof for first roles.',
+    category: 'Study Strategy',
+    readTime: '10 min read',
+    date: '2026-08-13',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+A first nursing CV is not weak because you have not held a permanent nursing job yet. It becomes weak when a recruiter has to search for the proof that you are qualified, licensed and ready to work safely.
+
+For a newly qualified nurse in Kenya, that proof is often already in your hands: NCK registration or licensure status, clinical placements, competencies signed off during training, academic records and credible referees. The difficult part is arranging it so an employer can see the match quickly.
+
+The quiet mistake that removes many first-time applicants from consideration is writing a generic “hardworking nurse” profile, then burying the actual evidence below two pages of unrelated detail. This guide shows how to build a focused nursing CV for Kenyan jobs — and what evidence belongs in each section.
+
+> [!NOTE]
+> *Last verified: 13 August 2026. Regulatory and vacancy requirements change. Always confirm the individual employer’s advert and current professional requirements directly with the [Nursing Council of Kenya](https://nckenya.com/registration/).*
+
+## Start with the professional facts employers can verify
+
+The Nursing Council of Kenya says nurses practising in Kenya must be registered and licensed, and Kenyan-trained nurses apply for registration and licensure after passing the national licensure examination. [NCK: Registration and Licensing](https://nckenya.com/registration/)
+
+Put these facts near the top of your CV, not in a final “other information” section:
+
+- nursing cadre: KRCHN, BScN or Higher Diploma;
+- NCK registration and practising-licence status;
+- current county, phone number and professional email;
+- availability or internship status, stated truthfully; and
+- the clinical area named in the advert, only where it genuinely matches your exposure.
+
+Do **not** state “fully licensed” if your registration or licence is pending. Write the precise truth: “NCK licensure examination passed; registration application submitted [month/year]” or “NCK practising licence valid to [month/year].” The NCK public register supports licence-status verification and advises users to search by licence number where possible. [NCK License Status Register](https://osp.nckenya.com/LicenseStatus)
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Preparing for the move from graduation to professional practice?</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Create a NurseFiti account and build a disciplined clinical-reasoning routine →</a>
+</div>
+
+## The first-page structure for a newly qualified nurse
+
+Use a clean, reverse-chronological CV. A first-role CV does not need a long employment-history section; it needs clear evidence.
+
+### 1. Professional header
+
+Include name, mobile number, professional email and town/county. Add LinkedIn only if it is current and professional. Do not include marital status, religion, ID number, photograph or home address unless the employer explicitly requests them.
+
+### 2. Professional profile: four evidence-led lines
+
+Avoid “dynamic”, “go-getter”, “team player” and “excellent communication skills” unless the rest of the CV proves them.
+
+> *Newly qualified KRCHN nurse with supervised clinical-placement exposure in medical-surgical, maternal-child and community-health settings. NCK registration/licensure status: [accurate status]. Trained in patient assessment, vital-signs monitoring, documentation, infection prevention and escalation under supervision. Seeking an entry-level nursing role where safe bedside care, accurate records and respectful patient communication are essential.*
+
+Replace every bracket with a verified fact. The profile works because it identifies cadre, status, setting, skills and target role.
+
+### 3. Registration, licence and professional standing
+
+Make this a separate section. Include only documentary facts: NCK registration number, practising-licence number and expiry date if issued, examination/result status if relevant and true, current association membership, and valid role-relevant certifications. A diploma or degree does not replace current professional documentation. [NCK: Registration and Licensing](https://nckenya.com/registration/)
+
+## Turn clinical placement into evidence, not a list of wards
+
+“Clinical placement — County Referral Hospital” tells a recruiter almost nothing. Convert it into brief, supervised evidence.
+
+**Facility or placement setting | Department | Dates**
+
+*Student/trainee nurse under supervision*
+
+- Completed and documented focused patient observations, escalating abnormal findings to the supervising nurse according to ward procedure.
+- Participated in medication rounds, patient education, admissions, discharges or handovers only where authorised and supervised.
+- Applied standard precautions, hand hygiene and safe waste-segregation procedures during assigned care activities.
+- Used respectful communication with patients, families and multidisciplinary team members.
+
+Do not claim an independent procedure when it required supervision. Replace “managed labour ward” with “supported supervised maternal observations and documentation in labour ward placement.” A good test is simple: could your clinical instructor or referee confirm every bullet? If not, rewrite it.
+
+## Match evidence to the vacancy, line by line
+
+Before writing, make a two-column note:
+
+<div class="overflow-x-auto my-6 rounded-xl border border-primary/20 shadow-sm">
+  <table class="w-full min-w-[620px] text-left border-collapse">
+    <thead>
+      <tr class="bg-primary text-white">
+        <th scope="col" class="px-4 sm:px-5 py-3 font-bold text-sm tracking-wide w-2/5">Vacancy asks for</th>
+        <th scope="col" class="px-4 sm:px-5 py-3 font-bold text-sm tracking-wide w-3/5">Your honest evidence</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <th scope="row" class="px-4 sm:px-5 py-3 text-sm font-semibold text-[var(--color-text)] align-top">Valid NCK documentation</th>
+        <td class="px-4 sm:px-5 py-3 text-sm text-neutral-mid">Registration/licence status and number where requested</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight">
+        <th scope="row" class="px-4 sm:px-5 py-3 text-sm font-semibold text-[var(--color-text)] align-top">Outpatient triage</th>
+        <td class="px-4 sm:px-5 py-3 text-sm text-neutral-mid">Supervised triage exposure; vital signs; escalation</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <th scope="row" class="px-4 sm:px-5 py-3 text-sm font-semibold text-[var(--color-text)] align-top">Patient records</th>
+        <td class="px-4 sm:px-5 py-3 text-sm text-neutral-mid">Ward documentation, care plans or handover under supervision</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight">
+        <th scope="row" class="px-4 sm:px-5 py-3 text-sm font-semibold text-[var(--color-text)] align-top">Computer skills</th>
+        <td class="px-4 sm:px-5 py-3 text-sm text-neutral-mid">Specific system, training or accurate evidence</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <th scope="row" class="px-4 sm:px-5 py-3 text-sm font-semibold text-[var(--color-text)] align-top">Communication</th>
+        <td class="px-4 sm:px-5 py-3 text-sm text-neutral-mid">Patient education, counselling observation or handover contribution</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+The Public Service Commission’s recruitment system asks applicants to complete personal details, professional and academic qualifications, experience, professional-body membership, referees and other relevant information before submission; it warns that incomplete applications are not considered. [PSC Online Recruitment System: applicant guidance](https://pscims.publicservice.go.ke/puio/)
+
+That is a useful rule for every application. Do not make a recruiter infer your cadre, qualification, dates or referee details.
+
+> **What not to do:** Copy every duty from an advert into a “skills” list. Match the requirement, then prove it with a placement, certificate, project or supervised responsibility.
+
+**[Use NurseFiti to keep reviewing clinical scenarios and rationales as you prepare for applications and interviews →](/signup)**
+
+## Education, certifications and referees
+
+List your highest nursing qualification first, then institution, completion year and relevant distinctions only if useful and true. Include KCSE only when an employer requests it or your post-secondary history is limited.
+
+Create a separate certification section for valid BLS, ACLS, IPC, computer or other role-relevant training. Include issuer and expiry date where applicable. Do not list a course you intend to take as a qualification.
+
+Use two or three referees who can speak to clinical conduct, reliability and learning: a clinical instructor, ward preceptor or lecturer. Ask permission first; verify their phone number, email and job title. For public-service applications, requirements follow the individual advert, but PSC guidance includes referees and relevant professional information among the information applicants should provide. [PSC Online Recruitment System](https://pscims.publicservice.go.ke/puio/)
+
+## Five common CV mistakes that cost credibility
+
+### 1. Claiming a licence or competency you do not have
+
+NCK registration and licensure are verifiable professional facts. State the exact status and update the CV when it changes. [NCK registration guidance](https://nckenya.com/registration/)
+
+### 2. Sending one unchanged CV everywhere
+
+A dialysis centre, outpatient clinic, maternity unit and county public-health role do not prioritise the same evidence. Keep one master CV, then tailor the profile and the first clinical-evidence bullets.
+
+### 3. Listing duties without setting or supervision level
+
+Newly qualified nurses are not expected to have years of independent management experience. They are expected to be truthful. Name the setting, task, supervision and patient-safety contribution.
+
+### 4. Leaving dates, cadre or contacts unclear
+
+The PSC system specifically treats incomplete applicant information as a reason an application may not be considered. [PSC applicant guidance](https://pscims.publicservice.go.ke/puio/)
+
+### 5. Sending the wrong document format
+
+Follow the advert exactly. Official notices may require a detailed CV alongside identity, academic and professional documents, while other employers use mandatory online fields. [PSC vacancy notice example](https://publicservice.go.ke/wp-content/uploads/2024/03/ADVERT-AUDIT-COMMITTEE-CHAIRPERSON-AND-MEMBER-28.11.23.pdf) Use a clear filename such as Jane-Achieng-KRCHN-CV.pdf, but only combine documents when the vacancy instructs you to do so.
+
+## Pre-send checklist
+
+1. Is the role title and employer name correct?
+2. Is your NCK status exact and current?
+3. Can a referee verify every clinical-evidence bullet?
+4. Did you remove claims you cannot prove?
+5. Did you meet the advert’s file, portal, document and deadline instructions?
+6. Did you keep a copy of the final CV and submitted application?
+
+A Kenyan nursing CV should not try to sound senior. It should make a strong first-role case: you are professionally accountable, ready to learn, clear about your scope and able to show evidence for each claim.
+
+For job-search and professional-development updates, join the [NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m).
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Prepare for the role before you apply</h3>
+  <p class="mb-6 opacity-90">Strengthen your clinical reasoning and keep your NCK preparation organised with NurseFiti.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+
+> *Found this practical guide for newly qualified Kenyan nurses applying for their first job. It explains what to put in a nursing CV, how to show clinical-placement evidence honestly and the mistakes to avoid: nursefiti.co.ke/blog/nursing-cv-kenyan-jobs*
+
+---
+
+### Sources & References
+
+- Nursing Council of Kenya. *Registration and Licensing.* Accessed 13 August 2026. [https://nckenya.com/registration/](https://nckenya.com/registration/)
+- Nursing Council of Kenya. *License Status: Search the Register.* Accessed 13 August 2026. [https://osp.nckenya.com/LicenseStatus](https://osp.nckenya.com/LicenseStatus)
+- Public Service Commission, Kenya. *Online Recruitment System: Quick Guiding Steps.* Accessed 13 August 2026. [https://pscims.publicservice.go.ke/puio/](https://pscims.publicservice.go.ke/puio/)
+- Public Service Commission, Kenya. *Declaration of Vacancies for the Positions of Chairperson and Member of the Public Service Commission Audit Committee.* 28 November 2023. [PDF](https://publicservice.go.ke/wp-content/uploads/2024/03/ADVERT-AUDIT-COMMITTEE-CHAIRPERSON-AND-MEMBER-28.11.23.pdf)
+
+*Always verify current employer requirements, application deadlines and professional requirements directly with the employer and at [nckenya.com](https://www.nckenya.com).*
+`,
+  },
+];
+
+const POSTS_DIPLOMA_NURSING: Post[] = [
+  {
+    slug: 'diploma-nursing-kenya',
+    title: 'Diploma in Nursing Kenya: Training & Careers (2026)',
+    excerpt: 'Explore diploma nursing courses in Kenya: entry requirements, training, NCK regulation, clinical learning and realistic career pathways.',
+    category: 'Study Guide',
+    readTime: '11 min read',
+    date: '2026-08-21',
+    cadres: ['KRCHN', 'BScN'],
+    content: `
+A Diploma in Nursing can open the door to a nursing career in Kenya — but the course name alone is not the qualification you should trust. The institution, the programme route, clinical training and the Nursing Council of Kenya (NCK) pathway all matter.
+
+That distinction protects your time, fees and future licence. Before choosing a college, start with the question most applicants skip: *is this a recognised nursing pathway, and what must I complete before I can legally practise?*
+
+> [!NOTE]
+> *Last verified: 21 August 2026. Course names, intakes, fees and entry requirements can change. Confirm current details directly with the training institution, [KMTC](https://kmtc.ac.ke/study/academic-programmes), [KUCCPS](https://www.kuccps.net/) and the [Nursing Council of Kenya](https://www.nckenya.com/).*
+
+## What “Diploma in Nursing” means in Kenya
+
+Kenya’s nursing training landscape includes diploma-level programmes with different titles. Kenya Medical Training College (KMTC) currently lists **Community Health Nursing**, **Kenya Registered Nursing and Midwifery**, **Registered Nursing Mental Health & Psychiatry**, and **Kenya Registered Nursing** among its diploma programmes. [KMTC Academic Programmes](https://kmtc.ac.ke/study/academic-programmes)
+
+A title is not a guarantee that two programmes have identical content, clinical placements or professional outcomes. Use the exact title in the current institution prospectus and confirm that the institution and programme are recognised by NCK before accepting an offer. The [NCK](https://www.nckenya.com/) is the professional regulator to check for nursing education, registration and licensing information.
+
+**Do not choose a course from an advert alone.** Confirm the programme title, campus, approval status, intake and cost in writing before paying fees. We explain why regulatory evidence belongs in every application in our [guide to building a nursing CV for Kenyan jobs](/blog/nursing-cv-kenyan-jobs).
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Planning ahead for the NCK pathway?</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Start free on NurseFiti and practise nursing-style questions as you build your foundation →</a>
+</div>
+
+## Entry requirements: start with the current official advert
+
+KMTC states that applicants for its diploma programmes need a **KCSE mean grade of C (or equivalent)** plus the relevant subject combination; its general entry-requirements page names English, Kiswahili, Biology or Biological Sciences, Mathematics, Chemistry, Physics and Physical Sciences among the relevant subjects. [KMTC entry requirements](https://kmtc.ac.ke/study/academic-programmes)
+
+That is a general KMTC rule, not a substitute for a specific course advert. The exact cluster requirements can differ by programme, institution and admission route. KUCCPS publishes current placement information through its official portal, while institutions issue their own current intake notices. [KUCCPS official website](https://www.kuccps.net/) [KMTC admissions information](https://kmtc.ac.ke/study/academic-programmes)
+
+Before applying, make a simple evidence folder with your KCSE result documents, national ID or birth documentation as applicable, current contacts, and any items listed in the actual admissions notice. Do not rely on screenshots circulated in WhatsApp groups when the official advert is available.
+
+## What the training involves
+
+KMTC describes diploma training as generally lasting **three years**, with Community Health Nursing listed as an exception at **three and a half years**. [KMTC academic programmes and duration](https://kmtc.ac.ke/study/academic-programmes)
+
+Training is more than classroom theory. KMTC’s Faculty of Nursing says its programmes prepare learners to assess patient needs, develop care plans and deliver comprehensive nursing services; it describes nursing work that includes medication administration, wound care, transfusion care, IV-line insertion, vital-sign monitoring and pre-operative preparation. [KMTC Faculty of Nursing](https://kmtc.ac.ke/faculty-of-nursing)
+
+Clinical learning is where students connect these skills with supervised patient care, documentation, communication and safety. The exact sequence of units, clinical placement sites and assessment methods is institution-specific, so ask the school for its current curriculum and clinical-placement plan rather than assuming every diploma uses the same timetable.
+
+## Training, NCK examination, registration and licence are different steps
+
+One of the costliest misunderstandings is treating graduation as the same thing as authority to practise. They are separate stages.
+
+1. **Training:** You complete an approved nursing education programme.
+2. **Professional assessment and registration process:** Follow the current NCK process and requirements for your cadre.
+3. **Practising licence:** Maintain the status required to practise lawfully in the role and setting where you work.
+
+NCK’s public channels and online services are the authoritative place to confirm the current procedure, document requirements and timelines. [NCK official website](https://www.nckenya.com/) [NCK Online Services Portal](https://osp.nckenya.go.ke/)
+
+This is why you should keep academic records, clinical-placement documentation and personal details consistent from admission onwards. Name differences or missing records can create administrative delays later.
+
+**The course gets you trained. The professional pathway gets you practice-ready.** Keep reading for the career choices that follow.
+
+## Career outcomes: pathways, not promises
+
+Nursing can lead to clinical, community, education and management work, but no diploma guarantees a job, a particular salary or immediate placement. Employment depends on licensing status, employer demand, experience, location, vacancies and any role-specific requirements.
+
+KMTC says nursing graduates may work across hospitals, research institutions, industry, airlines, banks and training organisations at local, national and international levels. [KMTC Faculty of Nursing](https://kmtc.ac.ke/faculty-of-nursing) In practice, early-career roles may include bedside nursing, outpatient or clinic work, community-focused services and employer-specific programmes where you meet the stated requirements.
+
+Your first role is also evidence for your next one. Build a credible record of supervised exposure, patient education, documentation, teamwork, infection-prevention practice and any skills your referee can confirm. For an honest way to show that evidence, use our [Kenyan nursing CV guide](/blog/nursing-cv-kenyan-jobs).
+
+<div class="my-8 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Turn training into deliberate exam preparation</h3>
+  <p class="mb-6 opacity-90 max-w-lg mx-auto">Build your study habit early with NurseFiti practice, revision tools and mock-exam preparation designed for Kenyan nursing candidates.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+## How to choose a diploma programme safely
+
+Before accepting an offer, ask the institution these questions and save the answers:
+
+- What is the exact programme title and duration?
+- What are the current entry requirements for this intake?
+- Which campus will deliver the programme?
+- How are clinical placements arranged and supervised?
+- What fees, accommodation and equipment costs are separate from tuition?
+- What NCK approval, indexing, examination, registration or licensing steps apply to this specific route?
+- Who can verify the answers in writing?
+
+A good school should be able to point you to its current prospectus, admissions office and regulatory information. If a recruiter pressures you to pay urgently without giving verifiable documentation, pause and check independently.
+
+## What to do while you are preparing to apply
+
+1. Compare only current official programme information.
+2. Confirm that your subject grades fit the specific advert.
+3. Visit or contact the institution through official channels.
+4. Build basic study habits now: anatomy, physiology, communication and safe drug-calculation foundations will support later nursing training.
+5. Follow NCK and trusted institutions directly for regulatory updates, not reposted claims.
+
+For candidates who have already completed an NCK examination, our [post-exam results, jobs and specialty-planning guide](/blog/after-nck-exam-kenya) explains how results, applications and future upgrades fit together.
+
+For updates and study support, join the [NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m).
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Start your nursing journey with a study system</h3>
+  <p class="mb-6 opacity-90">Create a free NurseFiti account and begin practising consistently before the pressure of licensure preparation arrives.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Create your free NurseFiti account</a>
+</div>
+
+---
+
+### Share This Post
+> *Found this clear guide to Diploma in Nursing courses in Kenya. It explains what to verify before applying, how training differs from NCK registration and licence steps, and realistic career pathways: nursefiti.co.ke/blog/diploma-nursing-kenya*
+
+---
+
+<div class="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
+  <h4 class="font-bold mb-3 uppercase tracking-wider text-xs">Sources & References</h4>
+  <ul class="space-y-2 list-disc pl-4">
+    <li>Kenya Medical Training College. (2026). <a href="https://kmtc.ac.ke/study/academic-programmes" class="text-primary hover:text-primary-mid">Academic Programmes and Entry Requirements</a>.</li>
+    <li>Kenya Medical Training College. (2026). <a href="https://kmtc.ac.ke/faculty-of-nursing" class="text-primary hover:text-primary-mid">Faculty of Nursing</a>.</li>
+    <li>Kenya Universities and Colleges Central Placement Service. (2026). <a href="https://www.kuccps.net/" class="text-primary hover:text-primary-mid">KUCCPS official website</a>.</li>
+    <li>Nursing Council of Kenya. (2026). <a href="https://www.nckenya.com/" class="text-primary hover:text-primary-mid">Official NCK website</a>.</li>
+    <li>Nursing Council of Kenya. (2026). <a href="https://osp.nckenya.go.ke/" class="text-primary hover:text-primary-mid">Online Services Portal</a>.</li>
+  </ul>
+  <p class="mt-4 italic text-xs">Always verify current programme approval, admissions, examination, registration and licensing information directly with the institution, NCK and KUCCPS before making a decision.</p>
+</div>
+    `,
+  },
+];
+
+const POSTS_POST_EXAM: Post[] = [
+  {
+    slug: 'after-nck-exam-kenya',
+    title: 'After the NCK Exam: Results, Jobs & Upgrades (2026)',
+    excerpt: 'Learn verified next steps after the NCK exam: results, registration, job applications and planning a nursing specialty upgrade in Kenya.',
+    category: 'NCK News',
+    readTime: '11 min read',
+    date: '2026-08-14',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+The exam is over. That relief is real — but the next mistake many candidates make is putting their career on pause until a results announcement appears.
+
+Do not do that.
+
+If you completed the August 2026 NCK examination, this waiting period is the right time to organise your registration evidence, prepare job-application materials and map the specialty you may want to pursue after you enter practice. Passing an NCK examination is not the same thing as already being registered, licensed or employed: NCK’s published process requires successful candidates to apply for registration and licensing after results are released. [Nursing Council of Kenya: Registration and Licensing](https://nckenya.com/registration/)
+
+The question is not only, *“When will results come out?”* It is: *“What will I have ready when they do?”* We will resolve the practical answer below.
+
+> [!NOTE]
+> *Last verified: 14 August 2026. NCK has not published a verified results-release date for the August 2026 sitting in the sources reviewed for this article. Confirm all result, registration and licensing information directly with [NCK](https://nckenya.com/) and the [NCK Online Services Portal](https://osp.nckenya.go.ke/).*
+
+## After NCK exam Kenya: separate the four next steps
+
+WhatsApp groups often merge four distinct steps:
+
+1. **Examination result** — NCK must release and confirm your outcome.
+2. **Registration and licensing application** — for Kenyan-trained nurses and midwives, NCK lists the result slip, online application and payment among its published requirements. [NCK Registration and Licensing](https://nckenya.com/registration/)
+3. **Route-specific professional requirements** — some BScN pathways have internship conditions before registration, while other pathways are listed differently by NCK. [NCK Registration and Licensing](https://nckenya.com/registration/)
+4. **Employment or specialty training** — these are separate applications with their own adverts, eligibility criteria and deadlines.
+
+That distinction prevents two costly assumptions: that a result automatically produces a practice licence, or that every career decision must wait until you have a job.
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Keep your momentum while you wait.</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Create a NurseFiti account and keep building clinical reasoning for interviews and professional practice →</a>
+</div>
+
+## What to prepare before NCK results are released
+
+Do not submit applications before NCK or an employer asks for them. Prepare your evidence folder now so you are not scrambling after a result notice or vacancy appears.
+
+### Build one accurate professional folder
+
+Keep current, legible copies of:
+
+- identity documentation where requested;
+- nursing academic certificates and transcripts where available;
+- current CV;
+- contacts for referees who can verify clinical conduct and learning;
+- NCK result slip once issued;
+- registration and practice-licence documents once processed; and
+- route-specific internship or professional documents only where the current requirement applies.
+
+NCK states that nurses practising in Kenya must be registered and licensed. Its online register supports practice-licence verification and recommends searching by licence number where possible. [NCK Registration and Licensing](https://nckenya.com/registration/) [NCK Licence Status Register](https://osp.nckenya.go.ke/LicenseStatus)
+
+> **Important:** Do not put an NCK registration number, practising-licence number or specialist qualification on your CV until it exists and you can verify it. “Exam completed; awaiting official results” is truthful. “Licensed nurse” is not, unless NCK has completed that process.
+
+### Follow the published NCK route — without guessing a date
+
+NCK states that Kenyan-trained nurses and midwives apply online for registration and licensing after passing the national licensure examination. Its published list identifies a result slip, online application and payment as requirements. [NCK Registration and Licensing](https://nckenya.com/registration/)
+
+NCK also publishes service timeframes of a practice licence within 72 hours and a registration certificate within four weeks after the required process is completed. These are service standards, not unconditional promises for every application; check the live portal for current prompts and application issues. [NCK Registration and Licensing](https://nckenya.com/registration/)
+
+## Job applications after NCK results: prepare evidence, not a generic CV
+
+When results are released, job seeking may begin quickly — but every vacancy has its own requirements. The Public Service Commission’s online recruitment system lets applicants create a profile and apply for vacancies or internships. It is an official government recruitment channel, not a guarantee of placement or the only route to nursing employment. [PSCIMS registration](https://www.psckjobs.go.ke/RegisterProfile.aspx) [PSCIMS login and applications](https://www.psckjobs.go.ke/loginPage.aspx)
+
+For each vacancy, tailor the first page of your CV to the role. Make five things visible: your cadre and qualification, exact NCK status, relevant supervised clinical exposure, safety/documentation/communication evidence, and referees who can verify the claims.
+
+Use our [Nursing CV for Kenyan Jobs guide](/blog/nursing-cv-kenyan-jobs) to turn clinical placement into credible evidence rather than a vague list of wards.
+
+Avoid applying everywhere with the same profile. A county facility, private hospital, outpatient clinic, renal unit and NGO may prioritise different evidence. Read the advert line by line and match requirements with proof — not copied job-description language.
+
+## Plan your specialty upgrade while applying for jobs
+
+You do not need to wait for a permanent employer to start learning which specialty pathways fit your interests and likely eligibility. Planning is not the same as applying. It means identifying the clinical work you want to grow into, the experience it may require and approved institutions to monitor.
+
+NCK says it approves nursing and midwifery programmes at degree, basic-diploma and post-basic-diploma levels, and publishes institutions together with programmes and modes of study. [NCK Approved Training Institutions](https://nckenya.com/approved-training-institutions/)
+
+### Choose a specialty by the work, not only the title
+
+Begin with the patient group and work pattern you want to build competence in:
+
+- **Renal/nephrology nursing:** kidney disease, haemodialysis, peritoneal dialysis, patient education and multidisciplinary renal care.
+- **Critical care nursing:** rapidly changing patient status, close monitoring, escalation and team-based acute care.
+- **Oncology nursing:** cancer care, symptom management, education and coordinated long-term care.
+- **Peri-operative nursing:** safe surgical preparation, theatre workflow, asepsis and recovery care.
+- **Community/public-health pathways:** prevention, health promotion and community-level service delivery.
+
+Course names, intakes, duration, experience requirements, licence requirements and fees are institution-specific. NCK approval means a programme is approved; it does not prove the next intake is open or that you meet every criterion. [NCK Approved Training Institutions](https://nckenya.com/approved-training-institutions/)
+
+KMTC separates pre-service applications, Higher Diploma/upgrading courses and short courses, but candidates must check the current admissions notice for specific availability and entry requirements. [KMTC: Apply Now](https://www.kmtc.ac.ke/apply-now) [KMTC Admissions Portal](https://admissions.kmtc.ac.ke/)
+
+**[Start free on NurseFiti and use the available Higher Diploma resources — including renal content — to keep building focused clinical reasoning while you apply for first roles →](/signup)**
+
+## A 30-day plan while awaiting NCK results
+
+### Days 1–7: Recover, then audit your evidence
+
+Rest after the examination, then create the professional folder. Update your CV using facts that a referee, certificate or official document can support.
+
+### Days 8–14: Build a job-search system
+
+Create or update your PSCIMS profile if public-service opportunities are relevant. Track official employer pages, county public-service boards, recognised hospitals and professional channels. [PSCIMS registration](https://www.psckjobs.go.ke/RegisterProfile.aspx)
+
+### Days 15–21: Pick two specialty areas to explore
+
+Choose two paths rather than researching every Higher Diploma at once. Compare patient population, work setting, approved institutions, likely entry requirements, costs to confirm and documents to prepare. [NCK Approved Training Institutions](https://nckenya.com/approved-training-institutions/)
+
+### Days 22–30: Prepare for the result-to-application handover
+
+Check official NCK communication only. Once results are officially released, follow current registration and licensing instructions rather than an old social-media checklist. NCK’s published route starts with the result slip, online application and payment for Kenyan-trained nurses and midwives. [NCK Registration and Licensing](https://nckenya.com/registration/)
+
+## The move that makes this waiting period useful
+
+The useful move is not predicting a results date. It is building a career sequence:
+
+**NCK result → registration and licensing steps → first role or internship route where applicable → deliberate specialty-upgrade plan.**
+
+Some BScN routes have internship requirements before registration while others are treated differently in NCK’s published guidance. Check the exact route that applies to your qualification rather than adopting a blanket rule from a group chat. [NCK Registration and Licensing](https://nckenya.com/registration/)
+
+That sequence lets you search for jobs without losing sight of the longer path. A first job gives you exposure, referees and a clearer view of the work you may want to specialise in; it does not have to define your whole nursing career.
+
+For NCK updates, nursing-job guidance and specialist-preparation notes, join the [NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m).
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">The exam is over. Your professional plan starts now.</h3>
+  <p class="mb-6 opacity-90">Build your post-exam routine, sharpen clinical reasoning and prepare deliberately for your first role and future specialty pathway.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+
+> *If you just finished the NCK exam, save this. It explains what to prepare while waiting for results, how registration and job applications fit together, and why you can already start planning a specialty upgrade: nursefiti.co.ke/blog/after-nck-exam-kenya*
+
+---
+
+### Sources & References
+
+- Nursing Council of Kenya. *Registration and Licensing.* Accessed 14 August 2026. [https://nckenya.com/registration/](https://nckenya.com/registration/)
+- Nursing Council of Kenya. *Examination.* Accessed 14 August 2026. [https://nckenya.com/examination/](https://nckenya.com/examination/)
+- Nursing Council of Kenya. *Approved Training Institutions.* Accessed 14 August 2026. [https://nckenya.com/approved-training-institutions/](https://nckenya.com/approved-training-institutions/)
+- Nursing Council of Kenya Online Services Portal. *Licence Status / Register.* Accessed 14 August 2026. [https://osp.nckenya.go.ke/LicenseStatus](https://osp.nckenya.go.ke/LicenseStatus)
+- Public Service Commission. *PSCIMS: Register Profile.* Accessed 14 August 2026. [https://www.psckjobs.go.ke/RegisterProfile.aspx](https://www.psckjobs.go.ke/RegisterProfile.aspx)
+- Kenya Medical Training College. *Apply Now.* Accessed 14 August 2026. [https://www.kmtc.ac.ke/apply-now](https://www.kmtc.ac.ke/apply-now)
+
+*Always verify current NCK examination, results, registration and licensing information directly at [nckenya.com](https://www.nckenya.com).*
+`,
+  },
+];
+
+const POSTS_SALARY: Post[] = [
+  {
+    slug: 'nurse-salary-kenya',
+    title: 'Nurse Salary in Kenya: What Changes Your Pay (2026)',
+    excerpt: 'How much do nurses earn in Kenya? See what changes pay across roles and employers — job grades, intern stipends, allowances, county, private and abroad.',
+    category: 'Community',
+    readTime: '12 min read',
+    date: '2026-08-06',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+    content: `
+Two nurses graduate from the same college, pass the same NCK exam, and start work the same month. Three years later, one earns barely KES 40,000 a month at a rural dispensary while the other clears six figures in a Nairobi private hospital or a Gulf contract. Same qualification, wildly different pay.
+
+Nurse salary in Kenya is not one number — it is a moving target shaped by who employs you, where you work, your job grade, your specialisation, and a stack of allowances most students never think to ask about.
+
+Here is the uncomfortable truth we will unpack below: the single decision that changes your pay the most is not how hard you study, but which employer and cadre you enter — and there is one recent legal ruling that quietly reset what interns and new nurses can earn. Let us break it all down.
+
+> [!NOTE]
+> *Last verified: August 2026. Nurse pay in Kenya is disputed and changing — a nationwide strike and a UHC absorption deal are both live in mid-2026. Figures below are indicative; salary tables from private employers and aggregators are market estimates, not official rates. Always confirm current terms with your employer, the [Salaries and Remuneration Commission](https://src.go.ke), and [nckenya.com](https://www.nckenya.com).*
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Before the salary, there is the licence.</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Prepare for the NCK exam free on NurseFiti →</a>
+</div>
+
+## How Nurses Are Paid in Kenya
+
+A Kenyan nurse's monthly pay is built from two parts: a **basic salary** tied to a job grade, and a set of **allowances** on top. The allowances often make the difference between an unlivable and a comfortable salary — which is exactly why they dominate every nurses' strike.
+
+In the public service, nurses are graded on a scheme of service. Registered Nurses historically ran from **Job Group H at entry up to Job Group P**, while the degree-holding Nursing Officer cadre starts higher and rises to director level ([Kenyans.co.ke](https://www.kenyans.co.ke/news/81388-qualifications-salaries-diploma-degree-nurses)). Since a 2017 job evaluation, the Salaries and Remuneration Commission (SRC) has been migrating these old job groups into new Common Salary Grades ([The Standard](https://www.standardmedia.co.ke/counties/article/2001441183/breakdown-job-groups-salaries-and-allowances-in-kenya)).
+
+**One warning before any number:** there is no single public SRC table mapping each nurse cadre to an exact basic salary. The widely shared "Registered Nurse III earns KES X" tables come from secondary sites and disagree with each other, so treat every job-group figure in circulation — including the ones below — as *indicative*, not gospel.
+
+## What a New Nurse Actually Earns
+
+The most reliable evidence of entry pay is not a blog table — it is an actual county recruitment advert. A **Uasin Gishu County advert for Registered Nurse III (KRCHN diploma holders)** set the basic salary scale at **KES 26,900 – 35,380 per month**, plus a house allowance of KES 4,500 and commuter allowance of KES 4,000 ([Uasin Gishu County Public Service Board](https://jobs.uasingishu.go.ke/advertdetails.aspx?mAdvertNo=UGC/CPSB/RNIII/04/23)). A **Narok County** advert for Enrolled Nurse III started around **KES 25,420** ([Narok County Government](https://narok.go.ke/wp-content/uploads/2026/03/NAROK-COUNTY-GOVERNMENT-HEALTH-EXTERNAL-ADVERTISEMENT.pdf)).
+
+So a realistic public-sector entry basic for a new KRCHN is roughly **KES 27,000–35,000**, before allowances. Once house, commuter and other allowances are added, gross take-home rises — which is why market aggregators quote higher "KES 50,000+" figures. The lesson: always separate *basic* from *gross*, because unions negotiate over basic while your bank sees gross.
+
+If you are still working toward that first salary, our guides on [how to apply for the NCK licence after passing](/blog/how-to-apply-nck-licence-kenya) and [community health nursing roles and settings](/blog/community-health-nursing-kenya) show where these entry jobs actually are.
+
+## The Intern Stipend: Where Pay Got Complicated
+
+Before you reach a permanent salary, most graduates go through internship — and this is where Kenyan nurse pay became a national controversy.
+
+In a directive dated **13 March 2024**, the SRC advised the Ministry of Health to cut the stipend for a degree-holding nursing intern from around **KES 105,000 (the old Job Group K rate) to between KES 35,000 and KES 50,000** ([Employment and Labour Relations Court judgment, Kenya Law](https://new.kenyalaw.org/akn/ke/judgment/keelrc/2024/2506/eng@2024-10-17)). Under the same directive, medical officer interns were set at **KES 47,000–70,000**, and diploma clinical officer interns at **KES 27,000–35,000** ([Capital FM](https://www.capitalfm.co.ke/news/2024/10/high-court-rules-in-favour-of-src-on-medical-interns-stipend/)).
+
+Unions were furious. The doctors' union called it a roughly 91% cut from the previous KES 206,000 intern package, while the **Kenya National Union of Nurses (KNUN) rejected the proposal outright** ([The Standard](https://www.standardmedia.co.ke/health/health-science/article/2001512093/kmpdu-warns-of-strike-if-government-slashes-intern-pay)). The "KES 20,000" figure many nurses quoted was net take-home after deductions, not the SRC's gross band.
+
+The dispute went to court — and on **17 October 2024 the Employment and Labour Relations Court upheld the SRC directive**, ruling it was justified on budgetary grounds and dismissing the petitions ([Kenya Law](https://new.kenyalaw.org/akn/ke/judgment/keelrc/2024/2506/eng@2024-10-17)). For a new nurse, the takeaway is blunt: your internship stipend is now materially lower than it was for the cohort just ahead of you, and it is legally settled.
+
+<div class="my-8 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Pass First, Earn Sooner</h3>
+  <p class="mb-6 opacity-90 max-w-lg mx-auto">Every exam cycle you fail is 4–6 months of lost salary and internship time. NurseFiti's mock exam replicates the DigiProctor interface so you pass on the first attempt and start earning.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Try a free mock exam →</a>
+</div>
+
+## Allowances: The Part That Changes Your Take-Home
+
+This is the "wait, that's in my payslip?" section. In the landmark **2017 CBA** between KNUN and the Council of Governors, nurses were promised a stack of enhanced allowances, including a uniform allowance of **KES 50,000 a year**, a health-risk allowance raised to **KES 5,000/month**, an extraneous allowance, a non-practising allowance of **KES 6,000–20,000**, and a commuter allowance of **KES 15,000–25,000** ([The Standard](https://www.standardmedia.co.ke/health/article/2000140276/new-pay-and-allowances-for-kenya-nurses)).
+
+**But here is the catch every nurse should know:** that 2017 package was largely never implemented across the counties — only a handful, such as Mombasa, Machakos and Migori, actually paid the enhanced allowances, and the uniform figure many nurses continued to receive was closer to **KES 10,000 a year** ([Business Today](https://businesstoday.co.ke/curse-devolution-kenyas-health-system/)). This gap between what was signed and what was paid is the single biggest reason nurses keep striking — including in 2026.
+
+The allowances that reliably move your take-home are:
+
+- **House allowance** — set by SRC housing "clusters": Cluster 1 is Nairobi (highest), Cluster 2 covers Mombasa, Kisumu, Nakuru and major municipalities, and Cluster 3 is everywhere else (lowest) ([Tuko](https://www.tuko.co.ke/319051-latest-allowances-diem-rates-civil-servants-kenya.html)).
+- **Commuter allowance** — commonly **KES 3,000–25,000/month** depending on grade ([Tuko](https://www.tuko.co.ke/319051-latest-allowances-diem-rates-civil-servants-kenya.html)).
+- **Health-risk, extraneous, uniform and emergency-call allowances** — which vary by county and are frequently the subject of disputes.
+
+Because house and commuter allowances scale with your grade and town, two nurses on the same basic salary can take home noticeably different amounts.
+
+## Employer Changes Everything
+
+If one factor dominates your pay, it is your employer. The same nurse can earn very differently across these settings:
+
+- **County government (public):** most nurses work here. Pay follows the public scale plus allowances, but salaries can be delayed (see the next section). Entry basic around **KES 27,000–35,000** ([Uasin Gishu CPSB](https://jobs.uasingishu.go.ke/advertdetails.aspx?mAdvertNo=UGC/CPSB/RNIII/04/23)).
+- **National referral hospitals (e.g. Kenyatta National Hospital):** market data puts an average registered nurse there around **KES 32,000/month** basic, rising with seniority and allowances ([Payscale — market estimate](https://www.payscale.com/research/KE/Job=Registered_Nurse_(RN)/Salary/30335f13/Kenyatta-National-Hospital)).
+- **Large private hospitals (Aga Khan, Nairobi Hospital):** salary aggregators indicate registered nurses commonly earn **KES 55,000–100,000/month**, the higher end of the local market ([Glassdoor — market estimate](https://www.glassdoor.com/Salary/The-Aga-Khan-Hospitals-Nairobi-Salaries-EI_IE2077857.0,22_IL.23,30_IC2896002.htm)).
+- **Faith-based and NGO facilities (e.g. CHAK/mission hospitals):** pay tends to track near or slightly below the public scale and is donor-dependent, though no single published rate exists ([CHAK](https://www.chak.or.ke/)).
+- **Abroad:** this is where the numbers jump. Kenyan nurses recruited to Saudi Arabia have been offered a **minimum of around KES 150,000/month for fresh graduates**, with accommodation and other benefits on top ([Daily Nation](https://nation.africa/kenya/news/500-men-apply-for-women-s-saudi-nursing-jobs-4515738)). In the UK, a newly qualified staff nurse sits on **NHS Band 5, roughly £29,969–£36,483 a year for 2025/26** ([NHS pay band data](https://nhspayband.co.uk/nhs-band-5-salary/)).
+
+That gap is why Kenya faces a real health-worker exodus ([Think Global Health](https://www.thinkglobalhealth.org/article/kenyas-health-worker-exodus-brain-drain-or-economic-opportunity)). To weigh it up, it helps to be plugged into the profession — our guide to [nursing forums and networks in Kenya](/blog/nursing-forums-networks-kenya) lists where nurses share real offers and contracts.
+
+## Role and Specialisation: How Pay Grows
+
+Within any employer, your pay climbs with seniority and specialisation. In the public service the ladder runs from Registered Nurse III at entry up through Senior, Chief and Principal grades, with the degree-holding Nursing Officer cadre topping out at Director of Nursing Services — a jump of several multiples in basic pay from bottom to top ([Kenyans.co.ke](https://www.kenyans.co.ke/news/81388-qualifications-salaries-diploma-degree-nurses)).
+
+Specialisation pays. Market data (indicative, not official) suggests:
+
+- **Critical care / ICU nurses** command around **KES 100,000–130,000/month**, well above general ward pay ([market estimate](https://campuscybercafe.com/blog/post/kenya-icu-nurse-salary-per-month-benefits-job-challenges/)).
+- **Theatre, renal, oncology and anaesthetic nurses** similarly earn premiums for their Higher Diploma qualifications.
+
+This is the practical case for a Higher Diploma: it moves you into a higher-paying niche and out of the crowded general cadre. If specialisation is your plan, keeping your NCK licence and CPD current matters — see [how to apply for and maintain your NCK licence](/blog/how-to-apply-nck-licence-kenya).
+
+## Why Kenyan Nurses Aren't Always Paid on Time
+
+A salary you are promised is not the same as a salary you receive on the 28th. When Kenya devolved health to the **47 county governments at the end of 2013**, pay and industrial relations fractured — the country has seen more than 20 health-sector strikes since, including a nurses' strike that ran **150 days in 2017** ([BMJ Global Health / PMC](https://ncbi.nlm.nih.gov/pmc/articles/PMC6278918)).
+
+Delayed salaries remain a live problem: counties have been reported holding around **KES 44 billion** in unpaid worker dues built up over three years, with Nairobi alone accounting for the bulk ([Daily Nation](https://nation.africa/kenya/business/counties-hold-sh44bn-unpaid-workers-dues-more-than-3-years--5516548)).
+
+In mid-2026, two big pay stories are running at once:
+
+- **A nationwide strike.** KNUN issued a strike notice dated 22 July 2026 and downed tools on **29 July 2026**, citing grievances dating back to the 2017 CBA and demanding conclusion of the 2025–2029 CBA ([People Daily](https://peopledaily.digital/news/nurses-issue-7-day-strike-notice-over-unresolved-pay-cba-and-career-grievances)). The Employment and Labour Relations Court in Mombasa later suspended the strike and ordered nurses back to work pending determination ([Daily Nation](https://nation.africa/kenya/health/court-halts-nationwide-nurses-strike-orders-immediate-return-to-work-5547464)).
+- **UHC absorption.** The government confirmed that Universal Health Coverage staff — including thousands of nurses on insecure short-term contracts — would move to **permanent and pensionable terms from 1 July 2026**, backed by about **KES 8.6 billion** approved by the National Assembly, with 7,414 workers verified for transition ([The Star](https://www.the-star.co.ke/news/2026-08-03-thousands-of-uhc-workers-set-for-permanent-jobs-in-sh86bn-plan)).
+
+For anyone planning a nursing career in Kenya, the message is clear: your headline salary matters, but so does the security and timeliness of the employer paying it.
+
+## Your Next Step
+
+You cannot control county budgets or SRC directives. You *can* control whether you pass the NCK licensure exam on the first attempt — because every failed cycle is another four to six months without a salary at all.
+
+For real-time updates on nurse pay, CBAs, strikes and NCK exams, join our official WhatsApp channel:
+[Join the NurseFiti WhatsApp Channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m)
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Start Earning Sooner — Pass the NCK Exam First</h3>
+  <p class="mb-6 opacity-90">Practise thousands of NCK questions with rationales and full mock exams. Start your free NurseFiti account — no credit card required.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+> *Share this: "Solid breakdown of nurse salaries in Kenya — what new nurses actually earn, the intern stipend court ruling, the allowances nobody explains, and how county vs private vs abroad changes everything. Worth a read: nursefiti.co.ke/blog/nurse-salary-kenya"*
+
+---
+
+## Sources & References
+
+- **Kenyans.co.ke** — *Qualifications and salaries of diploma and degree nurses in Kenya*. [kenyans.co.ke](https://www.kenyans.co.ke/news/81388-qualifications-salaries-diploma-degree-nurses)
+- **The Standard** — *Breakdown: job groups, salaries and allowances in Kenya*. [standardmedia.co.ke](https://www.standardmedia.co.ke/counties/article/2001441183/breakdown-job-groups-salaries-and-allowances-in-kenya)
+- **Uasin Gishu County Public Service Board** — Registered Nurse III recruitment advert (basic scale and allowances). [jobs.uasingishu.go.ke](https://jobs.uasingishu.go.ke/advertdetails.aspx?mAdvertNo=UGC/CPSB/RNIII/04/23)
+- **Narok County Government** — Health department external recruitment advert. [narok.go.ke](https://narok.go.ke/wp-content/uploads/2026/03/NAROK-COUNTY-GOVERNMENT-HEALTH-EXTERNAL-ADVERTISEMENT.pdf)
+- **Employment and Labour Relations Court (Kenya Law)** — *Mike & 7 others v SRC & others* [2024] KEELRC 2506, 17 October 2024 (medical/nurse intern stipend judgment). [new.kenyalaw.org](https://new.kenyalaw.org/akn/ke/judgment/keelrc/2024/2506/eng@2024-10-17)
+- **Capital FM** — *High Court rules in favour of SRC on medical interns' stipend*. [capitalfm.co.ke](https://www.capitalfm.co.ke/news/2024/10/high-court-rules-in-favour-of-src-on-medical-interns-stipend/)
+- **The Standard** — *KMPDU warns of strike if government slashes intern pay*. [standardmedia.co.ke](https://www.standardmedia.co.ke/health/health-science/article/2001512093/kmpdu-warns-of-strike-if-government-slashes-intern-pay)
+- **The Standard** — *New pay and allowances for Kenya nurses (2017 CBA)*. [standardmedia.co.ke](https://www.standardmedia.co.ke/health/article/2000140276/new-pay-and-allowances-for-kenya-nurses)
+- **Business Today** — *The curse of devolution in Kenya's health system (unimplemented CBA allowances)*. [businesstoday.co.ke](https://businesstoday.co.ke/curse-devolution-kenyas-health-system/)
+- **Tuko** — *Latest allowances and per diem rates for civil servants in Kenya (SRC housing clusters, commuter)*. [tuko.co.ke](https://www.tuko.co.ke/319051-latest-allowances-diem-rates-civil-servants-kenya.html)
+- **Payscale** — Registered Nurse salary, Kenyatta National Hospital (market estimate). [payscale.com](https://www.payscale.com/research/KE/Job=Registered_Nurse_(RN)/Salary/30335f13/Kenyatta-National-Hospital)
+- **Glassdoor** — Aga Khan University Hospital Nairobi nurse salaries (market estimate). [glassdoor.com](https://www.glassdoor.com/Salary/The-Aga-Khan-Hospitals-Nairobi-Salaries-EI_IE2077857.0,22_IL.23,30_IC2896002.htm)
+- **Christian Health Association of Kenya (CHAK)** — member facilities and careers. [chak.or.ke](https://www.chak.or.ke/)
+- **Daily Nation** — *Kenyan nurses recruited for Saudi Arabia nursing jobs (offer terms)*. [nation.africa](https://nation.africa/kenya/news/500-men-apply-for-women-s-saudi-nursing-jobs-4515738)
+- **NHS pay band data** — NHS Band 5 salary scale 2025/26. [nhspayband.co.uk](https://nhspayband.co.uk/nhs-band-5-salary/)
+- **Think Global Health** — *Kenya's health worker exodus: brain drain or economic opportunity?* [thinkglobalhealth.org](https://www.thinkglobalhealth.org/article/kenyas-health-worker-exodus-brain-drain-or-economic-opportunity)
+- **BMJ Global Health (PMC)** — *Health-sector strikes and devolution in Kenya*. [ncbi.nlm.nih.gov](https://ncbi.nlm.nih.gov/pmc/articles/PMC6278918)
+- **Daily Nation** — *Counties hold Sh44bn in unpaid workers' dues*. [nation.africa](https://nation.africa/kenya/business/counties-hold-sh44bn-unpaid-workers-dues-more-than-3-years--5516548)
+- **People Daily** — *Nurses issue 7-day strike notice over unresolved pay, CBA and career grievances (July 2026)*. [peopledaily.digital](https://peopledaily.digital/news/nurses-issue-7-day-strike-notice-over-unresolved-pay-cba-and-career-grievances)
+- **Daily Nation** — *Court halts nationwide nurses' strike, orders immediate return to work*. [nation.africa](https://nation.africa/kenya/health/court-halts-nationwide-nurses-strike-orders-immediate-return-to-work-5547464)
+- **The Star** — *Thousands of UHC workers set for permanent jobs in Sh8.6bn plan*. [the-star.co.ke](https://www.the-star.co.ke/news/2026-08-03-thousands-of-uhc-workers-set-for-permanent-jobs-in-sh86bn-plan)
+
+*Salary figures in this article are indicative and, where drawn from private employers or salary aggregators, are market estimates rather than official rates. Always verify current pay, allowances and terms with your employer and the [Salaries and Remuneration Commission](https://src.go.ke), and confirm exam and licensing details at [nckenya.com](https://www.nckenya.com).*
+`,
+  },
+];
+
+
+const POSTS_BUSINESS_IDEAS: Post[] = [
+  {
+    slug: "business-ideas-nursing-school-kenya",
+    title: "Business Ideas After Nursing School in Kenya (2026)",
+    excerpt: "Explore realistic business ideas after nursing school in Kenya, plus registration, funding and compliance steps for nursing graduates.",
+    category: "Community",
+    readTime: "12 min read",
+    date: "2026-08-31",
+    cadres: ["KRCHN", "BScN", "Higher Diploma"],
+    content: `Finishing nursing school can leave you with two urgent pressures at once: you need income, and you need to protect the professional path you have worked for. The mistake is treating “start a business” as one answer for everyone.
+
+It is not.
+
+A realistic business after nursing school is one you can test cheaply, run honestly, and keep separate from clinical practice until you have the registration, licence, competence and approvals required for patient-specific care. The strongest starting point is often not a clinic. It is a small service or resale model that solves a repeat problem for people you already understand — students, early-career workers, families or local small businesses.
+
+> [!NOTE]
+> *Last verified: 31 August 2026. Business registration, tax, county-permit, funding and health-service requirements can change. Confirm live requirements through the [Business Registration Service](https://brs.go.ke/), [Kenya Revenue Authority](https://www.kra.go.ke/), your county government and the [Nursing Council of Kenya](https://nckenya.com/registration/).*
+
+## Business ideas after nursing school Kenya: start with the compliance line
+
+Before choosing an idea, separate **non-clinical enterprise** from **clinical care**.
+
+The Nursing Council of Kenya says each nurse practising in Kenya must be registered and licensed, and successful candidates apply for registration and licensing after the national licensure examination. [NCK Registration and Licensing](https://nckenya.com/registration/) A nursing qualification alone is therefore not a reason to market yourself as ready for independent clinical practice.
+
+Kenya’s [Health Act, 2017](https://new.kenyalaw.org/akn/ke/act/2017/21) defines a health facility broadly enough to include a place designed to provide nursing, diagnostic, therapeutic, preventive or other health services, and it requires a valid licence for regulated health activities. That makes “small nurse clinic,” paid injections, wound care, home visits, IV therapy or treatment-room ideas a **compliance project**, not a casual side hustle.
+
+The same principle applies online. The [Digital Health Act, 2023](https://new.kenyalaw.org/akn/ke/act/2023/15) requires an entity providing e-health services to be a healthcare provider with a valid relevant licence or an appropriately licensed health facility, among other routes set out in the Act. A WhatsApp, TikTok or Instagram page becomes a different kind of business when it starts offering patient-specific assessment, treatment advice, records, images or remote monitoring.
+
+**The useful question is not “What can a nurse sell?”** It is: *“What problem can I solve now without pretending to provide a regulated clinical service?”* The ideas below answer that question first.
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Keep your professional foundation moving while you build income.</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Create a NurseFiti account and keep strengthening clinical reasoning for licensure and early practice →</a>
+</div>
+
+## Seven realistic, low-capital business ideas
+
+These are not guaranteed-income promises. They are models you can validate with real customers before borrowing, buying large stock or renting premises.
+
+### 1. Scrubs, shoes and practical workwear on pre-order
+
+Nursing students and early-career clinicians repeatedly need scrubs, lab coats, compression socks, ID holders, theatre caps, notebooks and comfortable work shoes. A lean model starts with a catalogue, size guide and deposits rather than a large pile of unsold stock.
+
+Ask 15–20 potential customers which items they buy repeatedly, what size or colour problems they have, and what delivery window they would accept. Sell only the few items that appear repeatedly in those conversations. Do not imply that ordinary apparel has clinical or therapeutic benefits unless you can substantiate the claim.
+
+### 2. Campus and hostel essentials resale
+
+A small order-based shop can focus on predictable, affordable items: toiletries, sanitary products, stationery, snacks, phone accessories and laundry basics. The advantage is not that nurses have a special legal right to sell them. It is that a nursing graduate may already understand the rhythm of hostels, placement days and student budgets.
+
+Use pre-orders and a simple stock sheet. The first goal is to learn which three to five products turn over consistently, not to look like a supermarket on day one.
+
+### 3. Laundry, ironing and uniform-care coordination
+
+Instead of buying machines immediately, begin as a pickup-and-delivery or booking service with an existing laundromat. Your job is clear communication: item count, collection time, return time and payment. Once demand is stable, decide whether equipment would reduce your cost enough to justify buying it.
+
+This model is only viable if you can deliver reliably. A late return before a clinical placement damages trust faster than a slightly higher price.
+
+### 4. Digital application and administration services
+
+New graduates and small local businesses often need CV formatting, document typing, printing coordination, job-application organisation, basic invoice templates or simple social-media posting. Package a defined service with a transparent price and turnaround time.
+
+Be careful with boundaries: you can help someone format a CV, but do not invent qualifications, licences, work history or referee details for them. For a nurse’s own first-role application, use our [Nursing CV for Kenyan Jobs guide](/blog/nursing-cv-kenyan-jobs) to keep every claim verifiable.
+
+### 5. Healthy snack or meal pre-orders
+
+This can work around campuses, offices, hostels or transport stages when the menu, price and collection point are simple. Begin with paid orders rather than cooking speculative volume. Food preparation and sale can require county and public-health approvals, so verify the requirements for your location before launch.
+
+Cost every ingredient, packaging, transport and spoilage item. Sales are not profit.
+
+### 6. Cleaning-supplies refill or household essentials packs
+
+Detergent, dishwashing liquid, tissue, bleach and related household consumables can create repeat demand in small affordable quantities. Start with labelled products, clear prices, simple records and a narrow product range.
+
+Do not present household products as disinfectants for clinical use or make health-protection claims that your product and labelling cannot support. If a product is marketed with therapeutic claims, product regulation becomes more serious under the [Health Act, 2017](https://new.kenyalaw.org/akn/ke/act/2017/21).
+
+### 7. Event décor, equipment hire or curated thrift workwear
+
+Small reusable rental inventory — tablecloths, a simple backdrop, ring light, chairs through a partner, or work-ready thrift clothing — can be grown booking by booking. This is suitable for someone who can market locally, track deposits and keep equipment clean and available.
+
+The business is not “easy money.” It is logistics: photos that match the item, a booking calendar, deposits, damage terms and reliable handover.
+
+## Validate before you formalise big costs
+
+A business idea becomes more realistic when you test it before you commit. Use this four-part check:
+
+1. **Customer:** Can you name a specific first customer group?
+2. **Problem:** What do they currently waste time, money or effort trying to solve?
+3. **Proof:** Will at least 10 people discuss the problem, and will some pay or place a deposit?
+4. **Numbers:** After product cost, delivery, packaging, platform fees and your time, is there still a margin?
+
+Social-media posts can reveal what people are talking about, but they are not proof of demand, earnings or legality. A recent public X scan did not produce sufficiently reliable Kenyan nurse-startup case studies to use as evidence. That is why this guide relies on official Kenyan sources for compliance and funding rather than presenting viral anecdotes as business facts.
+
+**[Use NurseFiti alongside your business plan to keep revising deliberately for the professional milestones that still matter →](/signup)**
+
+## Register and run the business properly
+
+Once you have evidence of demand, formalise the correct model rather than paying an unofficial intermediary because a social post says it is faster.
+
+The [Business Registration Service](https://brs.go.ke/) is Kenya’s official custodian of company and registered-entity information and directs users to its service on [eCitizen](https://brs.ecitizen.go.ke/). The suitable form — for example, a sole proprietorship, partnership or company — depends on ownership, liability, finance and growth plans. Check the live BRS process and fees before applying.
+
+Also confirm or obtain your KRA PIN through [KRA’s official individual PIN-registration process](https://www.kra.go.ke/individual/individual-pin-registration/learn-about-pin/how-to-register-for-a-kra-pin-individual). After choosing the business form and estimating turnover, use KRA’s current [Turnover Tax guidance](https://www.kra.go.ke/helping-tax-payers/faqs/turnover-tax-tot) to check the applicable tax treatment, registration, filing and payment rules. Do not rely on old TikTok or WhatsApp tax thresholds.
+
+Business registration and KRA compliance do **not** automatically replace county permits, public-health approvals, fire requirements, signage rules or sector-specific licences. Check your county’s current requirements for the exact business and premises.
+
+The [Micro and Small Enterprises Authority](https://msea.go.ke/) links to MSE registration and formalisation services and identifies Biashara Centres as a place where enterprise support and referrals may be available. Use it to ask focused questions about formalisation and enterprise development — not as a substitute for your own cash-flow calculation.
+
+## Funding: borrow only for a tested model
+
+Starting with a small order-based model protects you from borrowing for stock before you know what sells. If external financing is appropriate, read the live rules and calculate repayment under a conservative sales estimate.
+
+The [Youth Enterprise Development Fund’s E-YES loan](https://www.youthfund.go.ke/smart-loan/) is a group, CBO, investment-club or SACCO-linked option for eligible youth who meet its conditions; its current official page describes support for start-up, expansion or asset acquisition and lists a first-time start-up maximum of KSh 20,000. The page also requires a clear business plan for a formally recognised business and group co-guarantees.
+
+For a genuine group venture, the [YEDF Stawi loan](https://www.youthfund.go.ke/stawi-loan/) describes group financing for start-ups, existing group projects, expansion and assets; its current page lists different maximum amounts for newly formed and existing groups. The [YEDF enterprise-development programme](https://www.youthfund.go.ke/enterprise-development/) says it provides entrepreneurship training and business-development services, including pre-financing training.
+
+Those are routes to investigate, not an instruction to borrow. A loan is only useful if the business can repay it after realistic costs, not after optimistic social-media sales projections.
+
+## If you want a health-related enterprise later
+
+A health-related business can be valuable, but the order matters:
+
+1. Confirm active NCK registration and practising licence where you will be practising.
+2. Confirm that every service is within your training and competence.
+3. Obtain written guidance from the relevant county health/licensing office on facility, premises, waste, staffing, inspection and permit requirements.
+4. Create referral and escalation pathways for emergencies and out-of-scope cases.
+5. Treat patient records, photos, messages and telehealth as health-data and e-health compliance issues — not ordinary phone content.
+6. Seek Pharmacy and Poisons Board confirmation before any model involving medicines, dispensing, therapeutic products or pharmacy operations. [Pharmacy and Poisons Board](https://ppb.go.ke/)
+
+Never use a nursing title to imply you can prescribe, dispense medicines, diagnose, offer unsupervised injections or operate a clinic merely because you have finished training. The patient-safety and legal risk is too high.
+
+For graduates who have completed an NCK examination, our [post-exam results, jobs and specialty-planning guide](/blog/after-nck-exam-kenya) explains how results, registration, employment and future upgrades fit together.
+
+## The 30-day business test
+
+**Week 1:** Pick one model, define one customer group and interview at least 10 people.
+
+**Week 2:** Create a small catalogue or service menu. Ask for deposits or confirmed bookings before buying significant stock.
+
+**Week 3:** Deliver a tiny pilot. Record every cost, time commitment, complaint, repeat order and referral.
+
+**Week 4:** Decide with evidence: continue, improve, pause or change the model. If demand is real, begin the appropriate BRS, KRA and county-compliance checks.
+
+The best business idea after nursing school is not necessarily health-branded. It is the one you can run lawfully, fund cautiously and improve from genuine customer feedback — while protecting the nursing career you may still depend on.
+
+For NCK, career and study updates, join the [NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m).
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Build income without losing your professional direction</h3>
+  <p class="mb-6 opacity-90">Start free on NurseFiti and keep strengthening the clinical reasoning that supports your next exam, job application and nursing career decision.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+
+> *If you have finished nursing school and are thinking about business, save this. It gives realistic Kenyan ideas you can test with low capital, explains registration and funding checks, and draws a clear line between ordinary enterprise and regulated clinical care: nursefiti.co.ke/blog/business-ideas-nursing-school-kenya*
+
+---
+
+<div class="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
+  <h4 class="font-bold mb-3 uppercase tracking-wider text-xs">Sources & References</h4>
+  <ul class="space-y-2 list-disc pl-4">
+    <li>Business Registration Service, Kenya. <a href="https://brs.go.ke/" class="text-primary hover:text-primary-mid">Business Registration Service</a>. Accessed 31 August 2026.</li>
+    <li>Business Registration Service, Kenya. <a href="https://brs.ecitizen.go.ke/" class="text-primary hover:text-primary-mid">BRS on eCitizen</a>. Accessed 31 August 2026.</li>
+    <li>Kenya Revenue Authority. <a href="https://www.kra.go.ke/individual/individual-pin-registration/learn-about-pin/how-to-register-for-a-kra-pin-individual" class="text-primary hover:text-primary-mid">How to register for an individual KRA PIN</a>. Accessed 31 August 2026.</li>
+    <li>Kenya Revenue Authority. <a href="https://www.kra.go.ke/helping-tax-payers/faqs/turnover-tax-tot" class="text-primary hover:text-primary-mid">Turnover Tax FAQ</a>. Accessed 31 August 2026.</li>
+    <li>Micro and Small Enterprises Authority. <a href="https://msea.go.ke/" class="text-primary hover:text-primary-mid">MSEA official website</a>. Accessed 31 August 2026.</li>
+    <li>Youth Enterprise Development Fund. <a href="https://www.youthfund.go.ke/smart-loan/" class="text-primary hover:text-primary-mid">E-YES Loan</a>; <a href="https://www.youthfund.go.ke/stawi-loan/" class="text-primary hover:text-primary-mid">Stawi Loan</a>; <a href="https://www.youthfund.go.ke/enterprise-development/" class="text-primary hover:text-primary-mid">Enterprise Development</a>. Accessed 31 August 2026.</li>
+    <li>Nursing Council of Kenya. <a href="https://nckenya.com/registration/" class="text-primary hover:text-primary-mid">Registration and Licensing</a>. Accessed 31 August 2026.</li>
+    <li>Kenya Law. <a href="https://new.kenyalaw.org/akn/ke/act/2017/21" class="text-primary hover:text-primary-mid">Health Act, 2017</a>. Accessed 31 August 2026.</li>
+    <li>Kenya Law. <a href="https://new.kenyalaw.org/akn/ke/act/2023/15" class="text-primary hover:text-primary-mid">Digital Health Act, 2023</a>. Accessed 31 August 2026.</li>
+    <li>Pharmacy and Poisons Board. <a href="https://ppb.go.ke/" class="text-primary hover:text-primary-mid">PPB official website</a>. Accessed 31 August 2026.</li>
+  </ul>
+  <p class="mt-4 italic text-xs">Always verify current business-registration, tax, county-permit, professional-practice, health-facility and product requirements directly with the relevant authority before spending money or offering services. For current NCK professional requirements, check <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">nckenya.com</a>.</p>
+</div>`,
+  },
+];
+
+
+const POSTS_CARE_PLANS: Post[] = [
+  {
+    slug: 'generating-nursing-care-plans',
+    title: 'Generating Nursing Care Plans',
+    excerpt: 'Learn how Kenyan nursing students can generate defensible care plans from assessment data, outcomes, interventions and evaluation.',
+    category: 'Study Strategy',
+    readTime: '10 min read',
+    date: '2026-09-03',
+    cadres: ['KRCHN', 'BScN'],
+    content: `Generating Nursing Care Plans
+
+A care plan does not become strong because it has many interventions. It becomes strong when every line can be traced back to what you actually assessed in this patient.
+
+That is the part that catches many Kenyan nursing students. A copied template may look organised, but it cannot show your clinical instructor why this patient needs this priority, this goal, and this evaluation today.
+
+The right approach is more useful than a perfect-looking document: assess first, identify the nursing problem, set a measurable outcome, select safe actions within the care plan, then evaluate what changed. Keep reading — the small step students skip before writing a diagnosis is what makes the whole plan either individualised or generic.
+
+> [!NOTE]
+> *Last verified: 3 September 2026. This is an educational guide for Kenyan nursing students. Follow your institution’s current care-plan format, placement policy, local clinical guidelines and supervisor instructions.*
+
+## What generating nursing care plans means in practice
+
+The nursing process is a systematic method for planning and delivering individualised nursing care. A Kenyan implementation study describes the Kenya-Nursing Process as a contextualised approach developed to support nursing-process use in clinical settings. [Ndirangu-Mugo et al., International Journal of Africa Nursing Sciences](https://doi.org/10.1016/j.ijans.2015.07.002)
+
+A care plan is the documented working record of that process. It should show your reasoning from current assessment data to a nursing problem, goal, interventions and evaluation — not replace assessment or become a list copied from the internet.
+
+A study at Naivasha District Hospital found that nursing-process use could be incomplete and unsystematic even where staff valued it, reinforcing why students need a repeatable process and practical supervision rather than a template alone. [Mwangi et al., American Journal of Nursing Science](https://doi.org/10.11648/j.ajns.20160504.15)
+
+### The care-plan sequence
+
+1. **Assessment:** collect and validate current subjective and objective data.
+2. **Nursing problem or diagnosis:** state the nursing response that your data supports.
+3. **Outcome or goal:** describe the patient-centred change you will observe within a stated timeframe.
+4. **Interventions and rationales:** choose safe nursing actions linked to the problem and explain why each matters.
+5. **Implementation:** record what was done, within your learning role and supervision.
+6. **Evaluation:** compare the patient’s current state with the goal; continue, revise or escalate as appropriate.
+
+The first step is assessment. You cannot safely choose a nursing diagnosis or intervention before you understand the patient’s current condition, priorities and documented information.
+
+<div class="my-8 text-center bg-primary-xlight p-6 rounded-2xl border border-primary/20">
+  <p class="text-primary-dark font-semibold mb-2">Practise the reasoning behind a care plan — not just the headings.</p>
+  <a href="/signup" class="text-primary font-bold hover:text-primary-mid underline">Create a free NurseFiti account and use clinical questions with rationales to strengthen your nursing-process thinking →</a>
+</div>
+
+## Start with evidence, not a ready-made diagnosis
+
+Before opening a care-plan sheet, organise the information you have. Separate what the patient reports from what you observe or verify.
+
+For example, a student might document:
+
+- *Subjective data:* “I feel breathless when walking to the bathroom.”
+- *Objective data:* respiratory rate, oxygen saturation where available, lung findings recorded by the clinical team, ability to speak, activity tolerance and the prescribed plan.
+
+Do not fill in values you did not assess. Do not write a diagnosis that your data cannot support. If the patient deteriorates, has concerning observations or needs a decision outside your authorised competence, escalate immediately according to your placement and facility procedure; completing a care plan is never a reason to delay urgent care.
+
+The International Council of Nurses says its Code of Ethics applies to both nurses and nursing students. It calls for ethical judgement in the use of paper and electronic records, including protection of privacy, confidentiality, patient preferences and community safety. [ICN Code of Ethics for Nurses](https://www.icn.ch/sites/default/files/2023-06/ICN_Code-of-Ethics_EN_Web.pdf)
+
+**A practical rule:** write only what you know, date and time what your local record requires, and never use a patient’s full identifying information in personal notes, WhatsApp groups or study screenshots.
+
+## Build a nursing problem that matches the assessment
+
+A nursing diagnosis or problem statement is not a medical diagnosis copied from the file. It identifies a patient need nurses can assess, monitor, support, educate, prevent or escalate within the plan of care.
+
+Use this check before you keep a problem on the plan:
+
+- Does my current assessment support it?
+- Is it a nursing-focused response rather than a disease label alone?
+- Is it the priority for this patient now?
+- Can I explain what I will observe to know whether it improves?
+
+For a student, the safest language is precise and supervised. Rather than claiming an outcome you cannot independently deliver, identify the observation, care activity, patient education or escalation role you will perform under supervision.
+
+## Write outcomes a supervisor can evaluate
+
+“Patient will improve” is not a usable outcome. It does not say what improvement looks like or when it should be checked.
+
+A stronger outcome is patient-centred, observable and time-bound. For example:
+
+> *Within the shift, the patient will report reduced discomfort after the prescribed comfort measures and will be able to describe when to call for assistance.*
+
+The wording must fit the assessment and the local care plan. Do not promise a laboratory, diagnostic or treatment outcome that depends on another professional, a medicine you are not authorised to prescribe, or a result you cannot evaluate.
+
+## Select interventions with a reason beside each one
+
+An intervention is not strong because it sounds advanced. It is strong when it is relevant, safe, within the plan of care and connected to a clear rationale.
+
+For each intervention, ask:
+
+1. What patient need does this address?
+2. What will I observe, do, teach, document or escalate?
+3. Why is this appropriate for this problem?
+4. What finding would require me to inform the supervising nurse or wider team?
+
+Avoid using generic phrases such as “monitor patient” without stating *what* you will monitor, *how often* your local plan requires it, and *what change* would be reported. Do not turn a blog, class note or AI answer into a facility protocol.
+
+The ICN Code also directs nursing curricula to prepare learners for accuracy, confidentiality and privacy in reporting and recording systems. [ICN Code of Ethics for Nurses](https://www.icn.ch/sites/default/files/2023-06/ICN_Code-of-Ethics_EN_Web.pdf) That means your rationale is part of professional thinking, but your documentation must stay factual and consistent with the official clinical record.
+
+**Use NurseFiti for the reasoning gap.** Clinical practice questions and rationales can help you identify why an intervention is prioritised, then discuss your actual patient plan with your instructor or preceptor.
+
+## Evaluate, revise or escalate — do not simply tick the plan
+
+Evaluation is where a care plan becomes a cycle rather than an assignment. Reassess the same indicators linked to your outcome, then state what changed.
+
+- **Goal met:** document the evidence and continue the relevant plan where indicated.
+- **Partly met:** identify what remains, revise within supervision and continue monitoring.
+- **Not met or deterioration observed:** report and escalate through the local clinical chain promptly.
+
+A plan that says “met” without current evidence is not an evaluation. If you recorded pain, activity tolerance, understanding or a clinical observation at the start, return to that exact indicator when evaluating.
+
+## Try a care-plan question
+
+<div class="sample-mcq-embed" data-question-slug="generating-nursing-care-plans-sample"></div>
+
+**[Want more clinical-reasoning practice with feedback? Create your free NurseFiti account →](/signup)**
+
+## Five care-plan mistakes that weaken student work
+
+### 1. Starting with a copied intervention list
+
+Copying makes it easy to miss the patient’s actual priority. Start with assessment data, then check whether each action belongs.
+
+### 2. Writing a disease name as the whole nursing problem
+
+A medical diagnosis gives context, but your plan must show the nursing response, evidence and patient need.
+
+### 3. Using unmeasurable outcomes
+
+Replace “patient will be okay” with an observable result and a timeframe appropriate to the shift or plan.
+
+### 4. Treating documentation as private study material
+
+Clinical information belongs in approved records and systems. Protect privacy and do not share identifiable patient content outside authorised care and learning processes. [ICN Code of Ethics for Nurses](https://www.icn.ch/sites/default/files/2023-06/ICN_Code-of-Ethics_EN_Web.pdf)
+
+### 5. Continuing to write when the patient needs escalation
+
+When there is a concerning change, act within your placement role and alert the supervising nurse or relevant team according to local procedure. Your first responsibility is patient safety.
+
+## A 15-minute care-plan practice routine
+
+After a lecture, case study or supervised shift, practise this short sequence:
+
+1. List three assessment cues from the scenario.
+2. Identify one nursing problem supported by those cues.
+3. Write one observable outcome for the relevant timeframe.
+4. Add two safe nursing actions with a brief rationale.
+5. State what you would reassess and what would make you escalate.
+
+This routine does not replace ward supervision. It makes your next care-plan discussion more focused and helps you transfer classroom knowledge into the kind of clinical reasoning that matters in unit exams, CATs, OSCEs and later NCK preparation.
+
+For broader support across CATs, placement and professional transition, visit the [NurseFiti Nursing Students Hub](/nursing-students). For placement preparation, read our [first clinical placement guide](/blog/surviving-first-clinical-placement-kenyan-public-hospital).
+
+For study updates and Kenyan nursing learning resources, join the [NurseFiti WhatsApp channel](https://whatsapp.com/channel/0029VbChmRR4SpkDcdghnW3m).
+
+<div class="mt-12 bg-gradient-to-br from-[#08514F] to-[#0A6865] rounded-2xl p-8 text-center text-white shadow-xl">
+  <h3 class="text-2xl font-bold mb-3 text-white">Turn every care plan into stronger clinical reasoning</h3>
+  <p class="mb-6 opacity-90">Practise the concepts behind assessment, prioritisation and evaluation with NurseFiti before your next CAT, unit exam or supervised placement shift.</p>
+  <a href="/signup" class="inline-block bg-[#F59E0B] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#D97706] transition-colors">Start free on NurseFiti</a>
+</div>
+
+---
+
+### Share This Post
+
+> *If care plans feel like filling boxes, save this. It explains how Kenyan nursing students can move from assessment data to a defensible nursing problem, outcome, interventions and evaluation — without copying a template: nursefiti.co.ke/blog/generating-nursing-care-plans*
+
+---
+
+<div class="mt-8 pt-6 border-t border-primary/20 text-sm text-neutral-mid">
+  <h4 class="font-bold mb-3 uppercase tracking-wider text-xs">Sources & References</h4>
+  <ul class="space-y-2 list-disc pl-4">
+    <li>Ndirangu-Mugo EA, Koinange PK, Mbugua RG and colleagues. <a href="https://doi.org/10.1016/j.ijans.2015.07.002" class="text-primary hover:text-primary-mid">Mainstreaming Kenya-Nursing Process in clinical settings: The case of Kenya</a>. <em>International Journal of Africa Nursing Sciences</em>. 2015.</li>
+    <li>Mwangi A and colleagues. <a href="https://doi.org/10.11648/j.ajns.20160504.15" class="text-primary hover:text-primary-mid">Implementation of the Nursing Process in Naivasha District Hospital, Kenya</a>. <em>American Journal of Nursing Science</em>. 2016.</li>
+    <li>Hagos F and colleagues. <a href="https://doi.org/10.1002/nop2.410" class="text-primary hover:text-primary-mid">The implementation of the nursing process in lower-income countries: An integrative review</a>. <em>Nursing Open</em>. 2019.</li>
+    <li>International Council of Nurses. <a href="https://www.icn.ch/sites/default/files/2023-06/ICN_Code-of-Ethics_EN_Web.pdf" class="text-primary hover:text-primary-mid">The ICN Code of Ethics for Nurses</a>. 2021.</li>
+    <li>Nursing Council of Kenya. <a href="https://nckenya.com/registration/" class="text-primary hover:text-primary-mid">Registration and Licensing</a>. Accessed 3 September 2026.</li>
+  </ul>
+  <p class="mt-4 italic text-xs">Always verify current clinical, documentation, placement and professional requirements directly with your training institution, placement facility, supervisor and <a href="https://www.nckenya.com" class="text-primary hover:text-primary-mid">nckenya.com</a>.</p>
+</div>
+`,
+  },
+];
+
+const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL, ...POSTS_CV, ...POSTS_POST_EXAM, ...POSTS_DIPLOMA_NURSING, ...POSTS_BUSINESS_IDEAS, ...POSTS_CARE_PLANS];
 
 // ─── generateStaticParams ────────────────────────────────────────────────────
 
@@ -2605,6 +3913,16 @@ export async function generateMetadata({
 
 // Per-post hero images (Unsplash free CDN)
 const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> = {
+  'nurse-salary-kenya': {
+    url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Calculator and financial documents representing nurse salary, allowances and pay calculations in Kenya',
+    credit: 'Unsplash',
+  },
+  'community-health-nursing-kenya': {
+    url: 'https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Community health nurse in scrubs checking a patient\'s blood pressure during a health screening',
+    credit: 'Unsplash',
+  },
   'moh-nursing-internship-deployment-kenya-2026': {
     url: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200&q=80&auto=format&fit=crop',
     alt: 'Medical professional reviewing documents - MOH Internship Deployment',

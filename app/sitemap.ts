@@ -16,9 +16,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }]));
   for (const post of cmsPosts) mergedPosts.set(post.slug, post);
   const posts = Array.from(mergedPosts.values());
-  const latestPostDate = new Date(
-    Math.max(...posts.map((post) => new Date(post.updatedAt).getTime()))
-  );
+  const latestPostDate = posts.length > 0
+    ? new Date(Math.max(...posts.map((post) => new Date(post.updatedAt).getTime())))
+    : siteUpdated;
   const blogEntries: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: new Date(post.updatedAt),
@@ -52,6 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       'nck-flashcards',
       'revision-plans',
       'tutoring',
+      'nursing-students',
     ].map((path) => ({
       url: `${baseUrl}/${path}`,
       lastModified: siteUpdated,

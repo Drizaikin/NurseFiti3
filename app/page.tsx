@@ -1015,6 +1015,7 @@ export default async function Home() {
             <div>
               <h4 className="font-heading font-bold mb-4 text-sm uppercase tracking-wider text-neutral-light">Resources</h4>
               <ul className="space-y-2 text-sm text-neutral-light">
+                <li><Link href="/nursing-students" className="hover:text-white transition-colors">Nursing Students Hub</Link></li>
                 <li><Link href="/blog" className="hover:text-white transition-colors">NCK Study Blog</Link></li>
                 <li><Link href="/about" className="hover:text-white transition-colors">About NurseFiti</Link></li>
                 <li><Link href="/help" className="hover:text-white transition-colors">Help Centre</Link></li>
