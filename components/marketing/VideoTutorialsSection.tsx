@@ -14,6 +14,15 @@ export type VideoTutorial = {
 
 export const VIDEO_TUTORIALS: VideoTutorial[] = [
   {
+    id: 'signing-up',
+    icon: '✨',
+    title: 'Create your account',
+    desc: 'Sign up, pick your cadre and institution, take a quick tour, and land on your fresh dashboard.',
+    duration: '0:44',
+    src: '/videos/tutorials/signing-up.mp4',
+    poster: '/images/tutorials/signing-up.jpg',
+  },
+  {
     id: 'signup-login',
     icon: '🔐',
     title: 'Log in & your dashboard',
