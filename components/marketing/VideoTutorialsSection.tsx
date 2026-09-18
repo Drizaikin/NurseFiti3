@@ -40,33 +40,6 @@ export const VIDEO_TUTORIALS: VideoTutorial[] = [
     src: '/videos/tutorials/practice-mock-exams.mp4',
     poster: '/images/tutorials/practice-mock-exams.jpg',
   },
-  {
-    id: 'flashcards-revision',
-    icon: '🎴',
-    title: 'Flashcards & revision plans',
-    desc: 'Review NCK flashcards with spaced repetition and generate a personalised revision schedule.',
-    duration: '0:10',
-    src: '/videos/tutorials/flashcards-revision.mp4',
-    poster: '/images/tutorials/flashcards-revision.jpg',
-  },
-  {
-    id: 'analytics',
-    icon: '📊',
-    title: 'How to read your analytics',
-    desc: 'Understand your readiness score, topic breakdowns, and how to decide what to revise next.',
-    duration: '0:08',
-    src: '/videos/tutorials/analytics.mp4',
-    poster: '/images/tutorials/analytics.jpg',
-  },
-  {
-    id: 'tutoring',
-    icon: '👨‍🏫',
-    title: 'Booking a tutor',
-    desc: 'Find a verified tutor for your cadre and book a one-to-one study session.',
-    duration: '0:07',
-    src: '/videos/tutorials/tutoring.mp4',
-    poster: '/images/tutorials/tutoring.jpg',
-  },
 ];
 
 function VideoModal({ tutorial, onClose }: { tutorial: VideoTutorial; onClose: () => void }) {
