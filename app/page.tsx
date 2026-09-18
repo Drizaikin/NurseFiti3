@@ -8,6 +8,7 @@ import { NurseFitiLogo } from '@/components/shared/NurseFitiLogo';
 import { FeedbackWall } from '@/components/shared/FeedbackWall';
 import { LandingFeedbackButton } from '@/components/shared/LandingFeedbackButton';
 import { MarketingHeader } from '@/components/marketing/MarketingHeader';
+import { VideoTutorialsSection } from '@/components/marketing/VideoTutorialsSection';
 
 export const metadata: Metadata = {
   title: { absolute: 'NurseFiti — NCK Exam Preparation Kenya' },
@@ -723,6 +724,9 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── VIDEO TUTORIALS ── */}
+      <VideoTutorialsSection />
 
       {/* ── PRICING ── */}
       <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8">
