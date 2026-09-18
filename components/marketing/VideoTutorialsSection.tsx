@@ -18,7 +18,7 @@ export const VIDEO_TUTORIALS: VideoTutorial[] = [
     icon: '✨',
     title: 'Create your account',
     desc: 'Sign up, pick your cadre and institution, take a quick tour, and land on your fresh dashboard.',
-    duration: '0:44',
+    duration: '0:37',
     src: '/videos/tutorials/signing-up.mp4',
     poster: '/images/tutorials/signing-up.jpg',
   },
@@ -47,7 +47,7 @@ export const VIDEO_TUTORIALS: VideoTutorial[] = [
     desc: 'Review NCK flashcards with spaced repetition and generate a personalised revision schedule.',
     duration: '0:10',
     src: '/videos/tutorials/flashcards-revision.mp4',
-    poster: '/images/tutorials/flashcards-revision.svg',
+    poster: '/images/tutorials/flashcards-revision.jpg',
   },
   {
     id: 'analytics',
@@ -56,7 +56,7 @@ export const VIDEO_TUTORIALS: VideoTutorial[] = [
     desc: 'Understand your readiness score, topic breakdowns, and how to decide what to revise next.',
     duration: '0:08',
     src: '/videos/tutorials/analytics.mp4',
-    poster: '/images/tutorials/analytics.svg',
+    poster: '/images/tutorials/analytics.jpg',
   },
   {
     id: 'tutoring',
@@ -65,7 +65,7 @@ export const VIDEO_TUTORIALS: VideoTutorial[] = [
     desc: 'Find a verified tutor for your cadre and book a one-to-one study session.',
     duration: '0:07',
     src: '/videos/tutorials/tutoring.mp4',
-    poster: '/images/tutorials/tutoring.svg',
+    poster: '/images/tutorials/tutoring.jpg',
   },
 ];
 
