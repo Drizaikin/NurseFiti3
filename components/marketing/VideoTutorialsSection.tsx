@@ -16,20 +16,20 @@ export const VIDEO_TUTORIALS: VideoTutorial[] = [
   {
     id: 'signup-login',
     icon: '🔐',
-    title: 'Sign up & log in',
-    desc: 'Create your account, pick your cadre, and get into your dashboard in under two minutes.',
-    duration: '0:08',
+    title: 'Log in & your dashboard',
+    desc: 'Log in and land straight on your personalised dashboard — streak, average score, and study time at a glance.',
+    duration: '0:18',
     src: '/videos/tutorials/signup-login.mp4',
-    poster: '/images/tutorials/signup-login.svg',
+    poster: '/images/tutorials/signup-login.jpg',
   },
   {
     id: 'practice-mock-exams',
     icon: '📝',
-    title: 'Practice questions & mock exams',
-    desc: 'Answer adaptive MCQs and take a timed, DigiProctor-style mock exam like the real NCK exam.',
-    duration: '0:12',
+    title: 'Practice questions',
+    desc: 'Resume or start a practice session, answer MCQs, and get instant feedback with a full explanation.',
+    duration: '0:27',
     src: '/videos/tutorials/practice-mock-exams.mp4',
-    poster: '/images/tutorials/practice-mock-exams.svg',
+    poster: '/images/tutorials/practice-mock-exams.jpg',
   },
   {
     id: 'flashcards-revision',
@@ -99,7 +99,7 @@ function VideoModal({ tutorial, onClose }: { tutorial: VideoTutorial; onClose: (
         <div className="rounded-2xl overflow-hidden bg-black shadow-2xl aspect-video">
           {tutorial.src ? (
             <video
-              className="w-full h-full"
+              className="w-full h-full object-contain"
               src={tutorial.src}
               poster={tutorial.poster}
               controls
