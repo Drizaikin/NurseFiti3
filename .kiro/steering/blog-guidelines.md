@@ -45,7 +45,7 @@ Every post must do all three. A post that educates but does not market is incomp
   - Official NCK website: [nckenya.com](https://www.nckenya.com)
   - NCK Online Services Portal: [osp.nckenya.go.ke](https://osp.nckenya.go.ke)
   - Kenya Ministry of Health: [health.go.ke](https://www.health.go.ke)
-  - WHO Kenya / global WHO guidelines
+  - [WHO Kenya](https://www.who.int/kenya) / [WHO global guidelines](https://www.who.int)
   - Kenya Gazette / official legislation
   - Peer-reviewed academic journals (cite author, year, journal, DOI)
   - Established Kenyan news outlets (Tuko, Citizen Digital, Nation, Standard, KBC, Kahawa Tungu) — for news/announcements only
