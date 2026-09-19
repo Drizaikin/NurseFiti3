@@ -4497,8 +4497,8 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
     credit: 'Unsplash',
   },
   'become-nurse-kenya-kcse-registration': {
-    url: 'https://images.unsplash.com/photo-8qshh8LXfuE?w=1200&q=80&auto=format&fit=crop',
-    alt: 'Kenyan nursing graduate in cap and gown holding diploma, representing KCSE to NCK registration',
+    url: 'https://images.unsplash.com/photo-1666887360742-974c8fce8e6b?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Kenyan nurse in uniform, representing the pathway from KCSE to NCK registration',
     credit: 'Unsplash',
   },
 };

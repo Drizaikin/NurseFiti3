@@ -354,7 +354,7 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
-  'become-nurse-kenya-kcse-registration': 'https://images.unsplash.com/photo-8qshh8LXfuE?w=1200&q=80&auto=format&fit=crop',
+  'become-nurse-kenya-kcse-registration': 'https://images.unsplash.com/photo-1666887360742-974c8fce8e6b?w=1200&q=80&auto=format&fit=crop',
   'anatomy-physiology-nursing-study-map': 'https://images.unsplash.com/photo-F7_KSrZofbQ?w=1200&q=80&auto=format&fit=crop',
   'nursing-student-burnout-recovery-kenya': 'https://images.unsplash.com/photo-r4DfnsCINp4?w=1200&q=80&auto=format&fit=crop',
   'nursing-documentation-examples-kenya': 'https://images.unsplash.com/photo-8WYkI3cEZm8?w=1200&q=80&auto=format&fit=crop',
