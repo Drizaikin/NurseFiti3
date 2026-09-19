@@ -97,6 +97,30 @@ const SAMPLE_QUESTIONS: Record<string, SampleQuestion> = {
     topic: 'Immunization & KEPI Schedule',
     difficulty: 'easy',
   },
+  'nursing-documentation-examples-kenya-sample': {
+    stem: 'A student nurse writes in a patient’s chart: “Patient appears anxious and uncooperative.” Which revised entry is MOST objective and defensible?',
+    option_a: '“Patient states, ‘I don’t want this injection.’ Declines prescribed medication. BP 148/92, HR 110. Physician notified at 10:15.”',
+    option_b: '“Patient is being difficult about treatment and refusing to cooperate with the care plan.”',
+    option_c: '“Patient seems very worried about the procedure today.”',
+    option_d: '“Patient’s attitude has not improved since this morning.”',
+    correct_option: 'A',
+    rationale: 'A defensible nursing note separates subjective and objective data and links them to a specific action. Option A quotes the patient directly, records objective vital signs, states the exact action taken (declined medication, physician notified) and includes a timestamp. Options B and D record the nurse’s opinion of the patient’s character rather than observable behaviour, and Option C is a vague impression with no supporting data. Charts that blur observation and opinion are harder to defend if care is later reviewed or challenged.',
+    unit: 'Fundamentals of Nursing',
+    topic: 'Documentation and Reporting',
+    difficulty: 'easy',
+  },
+  'anatomy-physiology-nursing-study-map-sample': {
+    stem: 'Which statement correctly describes how the respiratory and cardiovascular systems work together in gas exchange?',
+    option_a: 'The digestive system absorbs oxygen from food, which the respiratory system then releases into the blood',
+    option_b: 'The respiratory system brings oxygen into the lungs and removes carbon dioxide, while the cardiovascular system transports these gases to and from body tissues',
+    option_c: 'The skeletal system stores oxygen for release during muscle contraction, independent of the lungs',
+    option_d: 'The endocrine system exchanges oxygen and carbon dioxide directly at the cellular level, bypassing the lungs',
+    correct_option: 'B',
+    rationale: 'Gas exchange depends on two systems working together: the respiratory system brings oxygen into the alveoli and removes carbon dioxide through breathing, while the cardiovascular system circulates blood to carry that oxygen to body tissues and return carbon dioxide to the lungs for exhalation. Neither system’s function is complete without the other, which is why they are studied as a functional pair. The digestive (A), skeletal (C) and endocrine (D) systems are not involved in gas exchange.',
+    unit: 'Anatomy and Physiology',
+    topic: 'Respiratory and Cardiovascular Systems',
+    difficulty: 'easy',
+  },
 };
 
 export function BlogSampleMCQ({ questionSlug }: { questionSlug: string }) {

@@ -1,5 +1,41 @@
 export const POSTS = [
   {
+    slug: 'become-nurse-kenya-kcse-registration',
+    title: 'How to Become a Nurse in Kenya: From KCSE to NCK (2026)',
+    excerpt: 'Discover the full pathway to becoming a nurse in Kenya, from KCSE grades and KUCCPS placement through training to NCK licensure and registration.',
+    category: 'Study Guide',
+    readTime: '13 min read',
+    date: '2026-09-19',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
+    slug: 'anatomy-physiology-nursing-study-map',
+    title: 'Anatomy & Physiology for Nurses: A Study Map (2026)',
+    excerpt: 'Explore a system-by-system anatomy and physiology study map built for KRCHN and BScN students preparing for the NCK licensure exam in Kenya.',
+    category: 'Study Guide',
+    readTime: '12 min read',
+    date: '2026-09-19',
+    cadres: ['KRCHN', 'BScN'],
+  },
+  {
+    slug: 'nursing-student-burnout-recovery-kenya',
+    title: 'Nursing Student Burnout in Kenya: Signs & Recovery (2026)',
+    excerpt: 'Spot early nursing student burnout signs in Kenya and follow a practical, evidence-based recovery plan to protect your studies and mental health.',
+    category: 'Community',
+    readTime: '10 min read',
+    date: '2026-09-19',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
+    slug: 'nursing-documentation-examples-kenya',
+    title: 'Nursing Documentation Examples: Defensible Notes (2026)',
+    excerpt: 'Learn nursing documentation examples that are clear, objective and legally defensible, built on Nursing Council of Kenya and clinical evidence standards.',
+    category: 'Study Strategy',
+    readTime: '11 min read',
+    date: '2026-09-19',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
     slug: 'generating-nursing-care-plans',
     title: 'Generating Nursing Care Plans',
     excerpt: 'Learn how Kenyan nursing students can generate defensible care plans from assessment data, outcomes, interventions and evaluation.',
@@ -318,6 +354,10 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
+  'become-nurse-kenya-kcse-registration': 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80&auto=format&fit=crop',
+  'anatomy-physiology-nursing-study-map': 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=1200&q=80&auto=format&fit=crop',
+  'nursing-student-burnout-recovery-kenya': 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=1200&q=80&auto=format&fit=crop',
+  'nursing-documentation-examples-kenya': 'https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=1200&q=80&auto=format&fit=crop',
   'generating-nursing-care-plans': 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format&fit=crop',
   "business-ideas-nursing-school-kenya": "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&q=80&auto=format&fit=crop",
   'diploma-nursing-kenya': 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80&auto=format&fit=crop',
