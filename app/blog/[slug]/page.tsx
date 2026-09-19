@@ -4482,23 +4482,23 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
     credit: 'Unsplash',
   },
   'nursing-documentation-examples-kenya': {
-    url: 'https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=1200&q=80&auto=format&fit=crop',
+    url: 'https://images.unsplash.com/photo-8WYkI3cEZm8?w=1200&q=80&auto=format&fit=crop',
     alt: 'Nurse writing clear, objective nursing documentation notes on a patient chart',
     credit: 'Unsplash',
   },
   'nursing-student-burnout-recovery-kenya': {
-    url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80&auto=format&fit=crop',
-    alt: 'Exhausted nursing student showing early signs of academic burnout while studying',
+    url: 'https://images.unsplash.com/photo-r4DfnsCINp4?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Exhausted nursing student resting head on hand, showing early signs of academic burnout',
     credit: 'Unsplash',
   },
   'anatomy-physiology-nursing-study-map': {
-    url: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&q=80&auto=format&fit=crop',
-    alt: 'Nursing student studying anatomy and physiology notes at a desk',
+    url: 'https://images.unsplash.com/photo-F7_KSrZofbQ?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Anatomical drawing of the human skeleton and muscles used for system-by-system study',
     credit: 'Unsplash',
   },
   'become-nurse-kenya-kcse-registration': {
-    url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80&auto=format&fit=crop',
-    alt: 'Kenyan nursing students collaborating on the path from KCSE to NCK registration',
+    url: 'https://images.unsplash.com/photo-8qshh8LXfuE?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Kenyan nursing graduate in cap and gown holding diploma, representing KCSE to NCK registration',
     credit: 'Unsplash',
   },
 };
