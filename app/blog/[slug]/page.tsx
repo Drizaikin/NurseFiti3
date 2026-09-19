@@ -4482,17 +4482,17 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
     credit: 'Unsplash',
   },
   'nursing-documentation-examples-kenya': {
-    url: 'https://images.unsplash.com/photo-8WYkI3cEZm8?w=1200&q=80&auto=format&fit=crop',
+    url: '/images/blog/nursing-documentation-examples-kenya.jpg',
     alt: 'Nurse writing clear, objective nursing documentation notes on a patient chart',
     credit: 'Unsplash',
   },
   'nursing-student-burnout-recovery-kenya': {
-    url: 'https://images.unsplash.com/photo-r4DfnsCINp4?w=1200&q=80&auto=format&fit=crop',
+    url: '/images/blog/nursing-student-burnout-recovery-kenya.jpg',
     alt: 'Exhausted nursing student resting head on hand, showing early signs of academic burnout',
     credit: 'Unsplash',
   },
   'anatomy-physiology-nursing-study-map': {
-    url: 'https://images.unsplash.com/photo-F7_KSrZofbQ?w=1200&q=80&auto=format&fit=crop',
+    url: '/images/blog/anatomy-physiology-nursing-study-map.jpg',
     alt: 'Anatomical drawing of the human skeleton and muscles used for system-by-system study',
     credit: 'Unsplash',
   },

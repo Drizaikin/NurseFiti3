@@ -355,9 +355,9 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 
 export const POST_IMAGES: Record<string, string> = {
   'become-nurse-kenya-kcse-registration': 'https://images.unsplash.com/photo-1666887360742-974c8fce8e6b?w=1200&q=80&auto=format&fit=crop',
-  'anatomy-physiology-nursing-study-map': 'https://images.unsplash.com/photo-F7_KSrZofbQ?w=1200&q=80&auto=format&fit=crop',
-  'nursing-student-burnout-recovery-kenya': 'https://images.unsplash.com/photo-r4DfnsCINp4?w=1200&q=80&auto=format&fit=crop',
-  'nursing-documentation-examples-kenya': 'https://images.unsplash.com/photo-8WYkI3cEZm8?w=1200&q=80&auto=format&fit=crop',
+  'anatomy-physiology-nursing-study-map': '/images/blog/anatomy-physiology-nursing-study-map.jpg',
+  'nursing-student-burnout-recovery-kenya': '/images/blog/nursing-student-burnout-recovery-kenya.jpg',
+  'nursing-documentation-examples-kenya': '/images/blog/nursing-documentation-examples-kenya.jpg',
   'generating-nursing-care-plans': 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&q=80&auto=format&fit=crop',
   "business-ideas-nursing-school-kenya": "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&q=80&auto=format&fit=crop",
   'diploma-nursing-kenya': 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80&auto=format&fit=crop',
