@@ -4487,18 +4487,18 @@ const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> 
     credit: 'Unsplash',
   },
   'nursing-student-burnout-recovery-kenya': {
-    url: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=1200&q=80&auto=format&fit=crop',
+    url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80&auto=format&fit=crop',
     alt: 'Exhausted nursing student showing early signs of academic burnout while studying',
     credit: 'Unsplash',
   },
   'anatomy-physiology-nursing-study-map': {
-    url: 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=1200&q=80&auto=format&fit=crop',
-    alt: 'Human skeletal model used for system-by-system anatomy and physiology study',
+    url: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Nursing student studying anatomy and physiology notes at a desk',
     credit: 'Unsplash',
   },
   'become-nurse-kenya-kcse-registration': {
-    url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80&auto=format&fit=crop',
-    alt: 'Kenyan nursing graduate holding certificate representing the path from KCSE to NCK registration',
+    url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Kenyan nursing students collaborating on the path from KCSE to NCK registration',
     credit: 'Unsplash',
   },
 };
