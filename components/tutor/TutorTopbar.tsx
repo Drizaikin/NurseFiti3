@@ -8,6 +8,7 @@ import { Avatar } from '../ui/Avatar';
 import { DarkModeToggle } from '../shared/DarkModeToggle';
 import { NurseFitiLogo } from '../shared/NurseFitiLogo';
 import NotificationsPanel, { useUnreadCount } from '@/components/shared/NotificationsPanel';
+import { clearActivityCache } from '@/components/student/ActivityTracker';
 
 interface TutorProfile {
   full_name: string;
@@ -28,13 +29,13 @@ export function TutorTopbar() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) return;
-        setUserId(user.id);
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) return;
+        setUserId(session.user.id);
 
         const [{ data: profileData }, { data: tutorData }] = await Promise.all([
-          supabase.from('profiles').select('full_name, avatar_url').eq('id', user.id).single(),
-          supabase.from('tutor_profiles').select('verification_tier, average_rating').eq('id', user.id).single(),
+          supabase.from('profiles').select('full_name, avatar_url').eq('id', session.user.id).single(),
+          supabase.from('tutor_profiles').select('verification_tier, average_rating').eq('id', session.user.id).single(),
         ]);
 
         if (profileData) {
@@ -54,6 +55,9 @@ export function TutorTopbar() {
   }, []);
 
   const handleLogout = async () => {
+    // Clear the role cookie and activity cache so middleware/tracker don't use stale data
+    document.cookie = 'nf_role=; path=/; max-age=0; samesite=lax';
+    clearActivityCache();
     await supabase.auth.signOut();
     router.push('/login');
   };

@@ -76,6 +76,8 @@ export default function TutorPendingPage() {
   }, [router]);
 
   const handleLogout = async () => {
+    // Clear the role cookie so middleware doesn't use a stale role
+    document.cookie = 'nf_role=; path=/; max-age=0; samesite=lax';
     await supabase.auth.signOut();
     router.push('/login');
   };

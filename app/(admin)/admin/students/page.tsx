@@ -30,17 +30,28 @@ const TIER_BADGE: Record<string, 'amber' | 'teal' | 'secondary'> = {
 };
 
 const PLAN_OPTIONS = [
-  { tier: 'standard', label: 'Success Plan (30 days)',       days: 30  },
-  { tier: 'premium',  label: 'Elite Prep (90 days)',         days: 90  },
-  { tier: 'weekly',   label: 'Exam Boost Weekly (7 days)',   days: 7   },
-  { tier: 'daily',    label: 'Exam Boost Daily (1 day)',     days: 1   },
-  { tier: 'free',     label: 'Test Yourself (no expiry)',    days: 0   },
+  { tier: 'standard', label: 'Success Plan (30 days)',     days: 30 },
+  { tier: 'premium',  label: 'Elite Prep (90 days)',       days: 90 },
+  { tier: 'weekly',   label: 'Exam Boost Weekly (7 days)', days: 7  },
+  { tier: 'daily',    label: 'Exam Boost Daily (1 day)',   days: 1  },
+  { tier: 'free',     label: 'Test Yourself (no expiry)',  days: 0  },
 ];
+
+const EXAM_CYCLES = ['May', 'August', 'November'] as const;
+type ExamCycle = typeof EXAM_CYCLES[number];
 
 type ConfirmAction =
   | { type: 'lock';   student: Student }
   | { type: 'unlock'; student: Student }
   | { type: 'delete'; student: Student };
+
+/** Suggest the most likely NCK exam cycle from a date */
+function inferCycle(dateStr: string): ExamCycle {
+  const month = new Date(dateStr).getUTCMonth(); // 0-indexed
+  if (month >= 3 && month <= 5) return 'May';
+  if (month >= 6 && month <= 8) return 'August';
+  return 'November';
+}
 
 export default function AdminStudentsPage() {
   const [students, setStudents] = useState<Student[]>([]);
@@ -55,6 +66,12 @@ export default function AdminStudentsPage() {
   const [planModal, setPlanModal] = useState<Student | null>(null);
   const [selectedTier, setSelectedTier] = useState('standard');
   const [selectedDays, setSelectedDays] = useState(30);
+
+  // Exam date edit modal
+  const [examModal, setExamModal] = useState<Student | null>(null);
+  const [examDateInput, setExamDateInput] = useState('');
+  const [examCycleInput, setExamCycleInput] = useState<ExamCycle>('May');
+  const [examDateError, setExamDateError] = useState('');
 
   // Confirm modal for lock / delete
   const [confirmAction, setConfirmAction] = useState<ConfirmAction | null>(null);
@@ -75,58 +92,56 @@ export default function AdminStudentsPage() {
 
   useEffect(() => { loadStudents(); }, [loadStudents]);
 
-  // Match the student dashboard: all timers count toward the saved exam_date.
   useEffect(() => {
     const timer = window.setInterval(() => setNow(Date.now()), 1000);
     return () => window.clearInterval(timer);
   }, []);
 
   const filtered = students.filter(s => {
-    const matchesSearch = s.full_name.toLowerCase().includes(search.toLowerCase()) ||
-                          s.email.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch =
+      s.full_name.toLowerCase().includes(search.toLowerCase()) ||
+      s.email.toLowerCase().includes(search.toLowerCase());
     if (!matchesSearch) return false;
     if (planFilter === 'all') return true;
-    
-    const currentTier = effectiveTier(s.plan_tier, s.plan_expires_at);
-    return currentTier === planFilter;
+    return effectiveTier(s.plan_tier, s.plan_expires_at) === planFilter;
   });
 
-  // The student dashboard counts down with `new Date(examDate)`. Keep that exact
-  // parsing rule here so both views remain synchronized for the same saved value.
   const examTimestamp = (examDate: string | null) => {
     if (!examDate) return null;
-    const timestamp = new Date(examDate).getTime();
-    return Number.isFinite(timestamp) ? timestamp : null;
+    const ts = new Date(examDate).getTime();
+    return Number.isFinite(ts) ? ts : null;
   };
 
-  const examSummary = students.reduce((summary, student) => {
-    const timestamp = examTimestamp(student.exam_date);
-    if (timestamp === null) summary.unscheduled += 1;
-    else if (timestamp <= now) summary.datePassed += 1;
-    else summary.upcoming += 1;
-    return summary;
+  const examSummary = students.reduce((acc, s) => {
+    const ts = examTimestamp(s.exam_date);
+    if (ts === null) acc.unscheduled += 1;
+    else if (ts <= now) acc.datePassed += 1;
+    else acc.upcoming += 1;
+    return acc;
   }, { upcoming: 0, datePassed: 0, unscheduled: 0 });
 
   const examStatus = (examDate: string | null) => {
-    const timestamp = examTimestamp(examDate);
-    if (timestamp === null) return { label: 'No exam date', variant: 'secondary' as const };
-    return timestamp <= now
+    const ts = examTimestamp(examDate);
+    if (ts === null) return { label: 'No exam date', variant: 'secondary' as const };
+    return ts <= now
       ? { label: 'Exam date passed', variant: 'amber' as const }
       : { label: 'Upcoming', variant: 'teal' as const };
   };
 
   const examCountdown = (examDate: string | null) => {
-    const timestamp = examTimestamp(examDate);
-    if (timestamp === null) return '—';
-    const diff = timestamp - now;
+    const ts = examTimestamp(examDate);
+    if (ts === null) return '—';
+    const diff = ts - now;
     if (diff <= 0) return 'Exam date passed';
-    const totalSeconds = Math.floor(diff / 1000);
-    const days = Math.floor(totalSeconds / 86_400);
-    const hours = Math.floor((totalSeconds % 86_400) / 3_600);
-    const minutes = Math.floor((totalSeconds % 3_600) / 60);
-    const seconds = totalSeconds % 60;
-    return `${days}d ${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+    const total = Math.floor(diff / 1000);
+    const d = Math.floor(total / 86_400);
+    const h = Math.floor((total % 86_400) / 3_600);
+    const m = Math.floor((total % 3_600) / 60);
+    const sec = total % 60;
+    return `${d}d ${String(h).padStart(2, '0')}h ${String(m).padStart(2, '0')}m ${String(sec).padStart(2, '00')}s`;
   };
+
+  // ── Plan modal ──────────────────────────────────────────────────────────
 
   const openPlanModal = (student: Student) => {
     setPlanModal(student);
@@ -155,6 +170,54 @@ export default function AdminStudentsPage() {
     }
   };
 
+  // ── Exam date modal ──────────────────────────────────────────────────────
+
+  const openExamModal = (student: Student) => {
+    const existing = student.exam_date ? student.exam_date.slice(0, 10) : '';
+    setExamModal(student);
+    setExamDateInput(existing);
+    setExamCycleInput(
+      student.exam_cycle && (EXAM_CYCLES as readonly string[]).includes(student.exam_cycle)
+        ? (student.exam_cycle as ExamCycle)
+        : existing ? inferCycle(existing) : 'May'
+    );
+    setExamDateError('');
+  };
+
+  const handleExamDateChange = (val: string) => {
+    setExamDateInput(val);
+    setExamDateError('');
+    if (val) setExamCycleInput(inferCycle(val));
+  };
+
+  const handleSetExamDate = async () => {
+    if (!examModal) return;
+    if (!examDateInput) { setExamDateError('Please select a date.'); return; }
+    if (new Date(examDateInput).getTime() <= Date.now()) {
+      setExamDateError('Exam date must be in the future.');
+      return;
+    }
+    setActionLoading(examModal.id);
+    try {
+      const res = await fetch('/api/admin/set-exam-date', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentId: examModal.id, examDate: examDateInput, examCycle: examCycleInput }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Failed');
+      toast.success(`Exam date updated for ${examModal.full_name}`);
+      setExamModal(null);
+      await loadStudents();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Action failed');
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  // ── Lock / delete ────────────────────────────────────────────────────────
+
   const handleConfirmedAction = async () => {
     if (!confirmAction) return;
     const { student } = confirmAction;
@@ -167,7 +230,6 @@ export default function AdminStudentsPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'Failed');
-
       if (confirmAction.type === 'delete') {
         toast.success(`${student.full_name}'s account has been deleted`);
       } else if (confirmAction.type === 'lock') {
@@ -183,6 +245,11 @@ export default function AdminStudentsPage() {
       setActionLoading(null);
     }
   };
+
+  // Minimum date for the exam date picker: tomorrow
+  const minExamDate = new Date(Date.now() + 86_400_000).toISOString().slice(0, 10);
+
+  // ── Render ───────────────────────────────────────────────────────────────
 
   return (
     <div className="space-y-6">
@@ -259,10 +326,20 @@ export default function AdminStudentsPage() {
                   <td className="px-4 py-3 text-neutral-mid">{s.cadre}</td>
                   <td className="px-4 py-3 text-xs text-neutral-mid">
                     <p>{s.exam_cycle ?? '—'}</p>
-                    {examTimestamp(s.exam_date) !== null && <p className="mt-0.5">{new Date(s.exam_date!).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}</p>}
+                    {examTimestamp(s.exam_date) !== null && (
+                      <p className="mt-0.5">{new Date(s.exam_date!).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                    )}
                   </td>
                   <td className="px-4 py-3">
-                    {(() => { const status = examStatus(s.exam_date); return <><Badge variant={status.variant} size="sm">{status.label}</Badge><p className="font-mono text-xs text-[var(--color-text)] mt-1 whitespace-nowrap">{examCountdown(s.exam_date)}</p></>; })()}
+                    {(() => {
+                      const status = examStatus(s.exam_date);
+                      return (
+                        <>
+                          <Badge variant={status.variant} size="sm">{status.label}</Badge>
+                          <p className="font-mono text-xs text-[var(--color-text)] mt-1 whitespace-nowrap">{examCountdown(s.exam_date)}</p>
+                        </>
+                      );
+                    })()}
                   </td>
                   <td className="px-4 py-3">
                     {(() => {
@@ -290,6 +367,9 @@ export default function AdminStudentsPage() {
                     <div className="flex items-center gap-2 flex-wrap">
                       <Button variant="outline" size="sm" onClick={() => openPlanModal(s)}>
                         Set Plan
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => openExamModal(s)}>
+                        Edit Exam Date
                       </Button>
                       {s.is_locked ? (
                         <Button variant="ghost" size="sm"
@@ -322,7 +402,7 @@ export default function AdminStudentsPage() {
         </div>
       )}
 
-      {/* Plan modal */}
+      {/* ── Plan modal ── */}
       {planModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
           <div className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl p-6 max-w-sm w-full">
@@ -348,7 +428,79 @@ export default function AdminStudentsPage() {
         </div>
       )}
 
-      {/* Confirm lock / unlock / delete modal */}
+      {/* ── Edit exam date modal ── */}
+      {examModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+          <div className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl p-6 max-w-sm w-full">
+            <h3 className="text-lg font-heading font-bold mb-1">Edit Exam Date</h3>
+            <p className="text-sm text-neutral-mid mb-4">{examModal.full_name}</p>
+
+            {examModal.exam_date && (
+              <p className="text-xs text-neutral-mid mb-3">
+                Current:{' '}
+                <span className="font-semibold text-[var(--color-text)]">
+                  {new Date(examModal.exam_date).toLocaleDateString('en-KE', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  {examModal.exam_cycle ? ` · ${examModal.exam_cycle} cycle` : ''}
+                </span>
+              </p>
+            )}
+
+            <div className="mb-3">
+              <label className="block text-sm font-semibold mb-1.5 text-[var(--color-text)]">
+                New exam date <span className="text-error">*</span>
+              </label>
+              <input
+                type="date"
+                value={examDateInput}
+                min={minExamDate}
+                onChange={e => handleExamDateChange(e.target.value)}
+                className="w-full px-4 py-2.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
+              />
+              {examDateError && (
+                <p className="mt-1 text-xs text-error">{examDateError}</p>
+              )}
+            </div>
+
+            <div className="mb-5">
+              <label className="block text-sm font-semibold mb-1.5 text-[var(--color-text)]">
+                Exam cycle <span className="text-error">*</span>
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {EXAM_CYCLES.map(cycle => (
+                  <button
+                    key={cycle}
+                    type="button"
+                    onClick={() => setExamCycleInput(cycle)}
+                    className={`py-2 rounded-xl border-2 text-sm font-semibold transition-all ${
+                      examCycleInput === cycle
+                        ? 'border-primary bg-primary-light text-primary'
+                        : 'border-[var(--color-border)] text-neutral-mid hover:border-primary/40'
+                    }`}
+                  >
+                    {cycle}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <Button variant="ghost" className="flex-1" onClick={() => setExamModal(null)} disabled={actionLoading !== null}>
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                className="flex-1"
+                onClick={handleSetExamDate}
+                disabled={actionLoading !== null || !examDateInput}
+              >
+                {actionLoading ? <Spinner size="sm" color="white" /> : 'Save'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Confirm lock / unlock / delete modal ── */}
       {confirmAction && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
           <div className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl p-6 max-w-sm w-full">
@@ -413,9 +565,7 @@ export default function AdminStudentsPage() {
                     <p className="text-xs text-neutral-mid">User will be able to log in again</p>
                   </div>
                 </div>
-                <p className="text-sm text-[var(--color-text)] mb-2">
-                  Restore access for:
-                </p>
+                <p className="text-sm text-[var(--color-text)] mb-2">Restore access for:</p>
                 <div className="bg-success/5 border border-success/20 rounded-xl p-3 mb-4">
                   <p className="font-semibold text-[var(--color-text)]">{confirmAction.student.full_name}</p>
                   <p className="text-xs text-neutral-mid">{confirmAction.student.email}</p>
@@ -424,12 +574,11 @@ export default function AdminStudentsPage() {
             )}
 
             <div className="flex gap-3">
-              <Button variant="ghost" className="flex-1" onClick={() => setConfirmAction(null)}
-                disabled={actionLoading !== null}>
+              <Button variant="ghost" className="flex-1" onClick={() => setConfirmAction(null)} disabled={actionLoading !== null}>
                 Cancel
               </Button>
               <Button
-                variant={confirmAction.type === 'delete' ? 'danger' : confirmAction.type === 'lock' ? 'primary' : 'primary'}
+                variant={confirmAction.type === 'delete' ? 'danger' : 'primary'}
                 className="flex-1"
                 onClick={handleConfirmedAction}
                 disabled={actionLoading !== null}

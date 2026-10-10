@@ -38,7 +38,15 @@ export const studentSignupSchema = z.object({
     .max(200, 'Institution name is too long'),
   
   examDate: z.string()
-    .refine(val => !isNaN(Date.parse(val)), 'Invalid exam date'),
+    .min(1, 'Exam date is required')
+    .refine(val => !isNaN(Date.parse(val)), 'Invalid exam date')
+    .refine(val => {
+      // The signup form uses type="month" so val may be "YYYY-MM".
+      // Normalise to first day of that month for comparison.
+      const normalised = val.length === 7 ? `${val}-01` : val;
+      // Must be strictly in the future (after today)
+      return new Date(normalised).getTime() > Date.now();
+    }, 'Exam date must be in the future — please select a future month'),
   
   examCycle: z.enum(['May', 'August', 'November'], {
     errorMap: () => ({ message: 'Please select exam cycle' })

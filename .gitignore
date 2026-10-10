@@ -51,3 +51,4 @@ env.download
 
 # Local Claude Code settings and worktrees
 .claude/
+graphify-out/

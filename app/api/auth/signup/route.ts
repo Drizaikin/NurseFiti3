@@ -64,6 +64,15 @@ export async function POST(req: NextRequest) {
 
     const data = validation.data;
 
+    // Server-side future-date check (client validation can be bypassed)
+    const normalisedExamDate = data.examDate.length === 7 ? `${data.examDate}-01` : data.examDate;
+    if (new Date(normalisedExamDate).getTime() <= Date.now()) {
+      return NextResponse.json(
+        { error: 'Exam date must be in the future. Please select a valid upcoming exam date.' },
+        { status: 400 }
+      );
+    }
+
     // Normalise phone: 07xx → +254xx
     const phone = data.phone.startsWith('0')
       ? '+254' + data.phone.slice(1)

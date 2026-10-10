@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -10,8 +10,13 @@ import 'react-quill/dist/quill.snow.css';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
+// ── Types ─────────────────────────────────────────────────────────────────────
+
 type TargetRole = 'student' | 'tutor';
 type ExamFilter = 'all' | 'passed' | 'active';
+// 'bulk' = send to all students or all tutors (with optional exam filter)
+// 'specific' = send only to individually selected students
+type SendMode = 'bulk' | 'specific';
 
 type SendResult = {
   sent: number;
@@ -21,6 +26,14 @@ type SendResult = {
   failures: Array<{ email: string; reason: string }>;
 };
 
+type StudentRecord = {
+  id: string;
+  full_name: string;
+  email: string;
+};
+
+// ── Constants ─────────────────────────────────────────────────────────────────
+
 const MAX_TOTAL_ATTACHMENT_BYTES = 20 * 1024 * 1024;
 
 function formatBytes(bytes: number): string {
@@ -29,12 +42,16 @@ function formatBytes(bytes: number): string {
 }
 
 const EXAM_FILTER_OPTIONS: Array<{ value: ExamFilter; label: string; desc: string }> = [
-  { value: 'all',    label: 'All students',          desc: 'Every registered student' },
+  { value: 'all',    label: 'All students',           desc: 'Every registered student' },
   { value: 'active', label: 'Upcoming / no date set', desc: 'Exam date in the future, or no date set' },
   { value: 'passed', label: 'Exam date passed',       desc: 'Students whose exam date has already passed' },
 ];
 
+// ── Main page ─────────────────────────────────────────────────────────────────
+
 export default function AdminEmailPage() {
+  // Composition state
+  const [sendMode, setSendMode] = useState<SendMode>('bulk');
   const [targetRole, setTargetRole] = useState<TargetRole>('student');
   const [examFilter, setExamFilter] = useState<ExamFilter>('all');
   const [subject, setSubject] = useState('');
@@ -43,27 +60,119 @@ export default function AdminEmailPage() {
   const [isSending, setIsSending] = useState(false);
   const [result, setResult] = useState<SendResult | null>(null);
 
+  // Individual mode state
+  const [studentList, setStudentList] = useState<StudentRecord[]>([]);
+  const [studentListLoading, setStudentListLoading] = useState(false);
+  const [studentListLoaded, setStudentListLoaded] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [studentSearch, setStudentSearch] = useState('');
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  // ── Derived ──────────────────────────────────────────────────────────────
+
   const totalAttachmentBytes = useMemo(
     () => attachments.reduce((sum, file) => sum + file.size, 0),
     [attachments]
   );
 
-  const canSend = subject.trim().length > 0 &&
+  const filteredStudents = useMemo(() => {
+    const q = studentSearch.toLowerCase().trim();
+    if (!q) return studentList;
+    return studentList.filter(
+      s => s.full_name.toLowerCase().includes(q) || s.email.toLowerCase().includes(q)
+    );
+  }, [studentList, studentSearch]);
+
+  const canSend =
+    subject.trim().length > 0 &&
     message.trim().length > 0 &&
     totalAttachmentBytes <= MAX_TOTAL_ATTACHMENT_BYTES &&
-    !isSending;
+    !isSending &&
+    (sendMode === 'bulk' || selectedIds.size > 0);
 
-  // Reset exam filter when switching to tutors (not applicable)
+  // ── Load student list (lazy, only when specific mode is first entered) ────
+
+  const loadStudentList = useCallback(async () => {
+    if (studentListLoaded) return;
+    setStudentListLoading(true);
+    try {
+      const res = await fetch('/api/admin/data?type=students');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Failed to load students');
+      const students: StudentRecord[] = (data.students ?? []).map((s: any) => ({
+        id: s.id,
+        full_name: s.full_name ?? '',
+        email: s.email ?? '',
+      }));
+      setStudentList(students);
+      setStudentListLoaded(true);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Failed to load student list');
+    } finally {
+      setStudentListLoading(false);
+    }
+  }, [studentListLoaded]);
+
+  // ── Mode switching ────────────────────────────────────────────────────────
+
+  const handleModeChange = (mode: SendMode) => {
+    setSendMode(mode);
+    if (mode === 'specific') {
+      loadStudentList();
+      // Focus search once list is shown
+      setTimeout(() => searchRef.current?.focus(), 100);
+    }
+  };
+
   const handleRoleChange = (role: TargetRole) => {
     setTargetRole(role);
     if (role === 'tutor') setExamFilter('all');
   };
 
+  // ── Selection helpers ─────────────────────────────────────────────────────
+
+  const toggleStudent = (id: string) => {
+    setSelectedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleAll = () => {
+    if (filteredStudents.every(s => selectedIds.has(s.id))) {
+      // Deselect all currently visible
+      setSelectedIds(prev => {
+        const next = new Set(prev);
+        filteredStudents.forEach(s => next.delete(s.id));
+        return next;
+      });
+    } else {
+      // Select all currently visible
+      setSelectedIds(prev => {
+        const next = new Set(prev);
+        filteredStudents.forEach(s => next.add(s.id));
+        return next;
+      });
+    }
+  };
+
+  const clearSelection = () => setSelectedIds(new Set());
+
+  // ── Audience summary for sidebar ──────────────────────────────────────────
+
   const audienceSummary = () => {
+    if (sendMode === 'specific') {
+      return selectedIds.size === 0
+        ? 'None selected'
+        : `${selectedIds.size} student${selectedIds.size !== 1 ? 's' : ''} selected`;
+    }
     if (targetRole === 'tutor') return 'Tutors only';
     const filterLabel = EXAM_FILTER_OPTIONS.find(o => o.value === examFilter)?.label ?? 'All students';
     return `Students — ${filterLabel}`;
   };
+
+  // ── Submit ────────────────────────────────────────────────────────────────
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -74,11 +183,17 @@ export default function AdminEmailPage() {
 
     try {
       const formData = new FormData();
-      formData.append('targetRole', targetRole);
-      formData.append('examFilter', examFilter);
+      formData.append('sendMode', sendMode);
       formData.append('subject', subject.trim());
       formData.append('message', message.trim());
       attachments.forEach(file => formData.append('attachments', file));
+
+      if (sendMode === 'specific') {
+        formData.append('specificIds', Array.from(selectedIds).join(','));
+      } else {
+        formData.append('targetRole', targetRole);
+        formData.append('examFilter', examFilter);
+      }
 
       const response = await fetch('/api/admin/bulk-email', {
         method: 'POST',
@@ -101,41 +216,74 @@ export default function AdminEmailPage() {
     }
   };
 
+  const handleClear = () => {
+    setSubject('');
+    setMessage('');
+    setAttachments([]);
+    setResult(null);
+    if (sendMode === 'specific') clearSelection();
+  };
+
+  const sendButtonLabel = () => {
+    if (isSending) return null;
+    if (sendMode === 'specific') return `Send to ${selectedIds.size} student${selectedIds.size !== 1 ? 's' : ''}`;
+    return `Send to ${targetRole === 'student' ? 'Students' : 'Tutors'}`;
+  };
+
+  // ── Render ────────────────────────────────────────────────────────────────
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-heading font-bold text-primary">Bulk Email</h1>
-        <p className="text-neutral-mid text-sm mt-1">Send Gmail announcements to registered students or tutors.</p>
+        <p className="text-neutral-mid text-sm mt-1">
+          Send announcements to all students, all tutors, or specific individuals.
+        </p>
       </div>
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-6">
         <Card className="space-y-5">
-          {/* Audience role */}
+
+          {/* ── Send mode tabs ── */}
           <div>
-            <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Audience</label>
-            <div className="grid grid-cols-2 gap-3">
+            <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Send to</label>
+            <div className="grid grid-cols-3 gap-2">
               {[
-                { value: 'student' as const, label: 'Students only' },
-                { value: 'tutor' as const, label: 'Tutors only' },
-              ].map(option => (
-                <button
-                  key={option.value}
-                  type="button"
-                  onClick={() => handleRoleChange(option.value)}
-                  className={`rounded-xl border-2 px-4 py-3 text-sm font-semibold transition-all ${
-                    targetRole === option.value
-                      ? 'border-primary bg-primary-light text-primary'
-                      : 'border-[var(--color-border)] text-neutral-mid hover:border-primary/40'
-                  }`}
-                >
-                  {option.label}
-                </button>
-              ))}
+                { value: 'bulk'     as const, label: 'All Students' },
+                { value: 'bulk'     as const, label: 'All Tutors',   role: 'tutor' as TargetRole },
+                { value: 'specific' as const, label: 'Specific Students' },
+              ].map((opt, idx) => {
+                const isActive =
+                  idx === 2
+                    ? sendMode === 'specific'
+                    : sendMode === 'bulk' && targetRole === (opt.role ?? 'student');
+                return (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => {
+                      if (idx === 2) {
+                        handleModeChange('specific');
+                      } else {
+                        handleModeChange('bulk');
+                        handleRoleChange(opt.role ?? 'student');
+                      }
+                    }}
+                    className={`rounded-xl border-2 px-3 py-3 text-sm font-semibold transition-all text-center ${
+                      isActive
+                        ? 'border-primary bg-primary-light text-primary'
+                        : 'border-[var(--color-border)] text-neutral-mid hover:border-primary/40'
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Exam date filter — students only */}
-          {targetRole === 'student' && (
+          {/* ── Exam date filter (bulk students only) ── */}
+          {sendMode === 'bulk' && targetRole === 'student' && (
             <div>
               <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">
                 Filter by exam date
@@ -171,7 +319,116 @@ export default function AdminEmailPage() {
             </div>
           )}
 
-          {/* Subject */}
+          {/* ── Individual student picker ── */}
+          {sendMode === 'specific' && (
+            <div>
+              <div className="flex items-center justify-between mb-2 gap-3 flex-wrap">
+                <label className="text-sm font-semibold text-[var(--color-text)]">
+                  Select students
+                  {selectedIds.size > 0 && (
+                    <span className="ml-2 inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary text-white text-[10px] font-bold">
+                      {selectedIds.size > 99 ? '99+' : selectedIds.size}
+                    </span>
+                  )}
+                </label>
+                {selectedIds.size > 0 && (
+                  <button
+                    type="button"
+                    onClick={clearSelection}
+                    className="text-xs text-error hover:underline"
+                  >
+                    Clear all ({selectedIds.size})
+                  </button>
+                )}
+              </div>
+
+              {/* Search */}
+              <input
+                ref={searchRef}
+                type="text"
+                value={studentSearch}
+                onChange={e => setStudentSearch(e.target.value)}
+                placeholder="Search by name or email…"
+                className="w-full px-4 py-2.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 mb-2"
+              />
+
+              {/* Student list */}
+              <div className="border border-[var(--color-border)] rounded-xl overflow-hidden">
+                {studentListLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <Spinner size="md" color="primary" />
+                  </div>
+                ) : studentList.length === 0 ? (
+                  <div className="py-8 text-center text-sm text-neutral-mid">
+                    No students found.
+                  </div>
+                ) : (
+                  <>
+                    {/* Select-all row */}
+                    <div className="flex items-center gap-3 px-4 py-2.5 bg-primary-xlight/50 dark:bg-primary/5 border-b border-[var(--color-border)]">
+                      <input
+                        id="select-all-students"
+                        type="checkbox"
+                        checked={filteredStudents.length > 0 && filteredStudents.every(s => selectedIds.has(s.id))}
+                        onChange={toggleAll}
+                        className="accent-primary w-4 h-4 shrink-0"
+                      />
+                      <label htmlFor="select-all-students" className="text-xs font-semibold text-neutral-mid cursor-pointer select-none">
+                        {filteredStudents.every(s => selectedIds.has(s.id)) && filteredStudents.length > 0
+                          ? `Deselect all ${filteredStudents.length} shown`
+                          : `Select all ${filteredStudents.length} shown`}
+                      </label>
+                    </div>
+
+                    {/* Scrollable list */}
+                    <div className="max-h-64 overflow-y-auto divide-y divide-[var(--color-border)]">
+                      {filteredStudents.length === 0 ? (
+                        <div className="py-6 text-center text-sm text-neutral-mid">
+                          No students match &ldquo;{studentSearch}&rdquo;
+                        </div>
+                      ) : (
+                        filteredStudents.map(s => {
+                          const checked = selectedIds.has(s.id);
+                          return (
+                            <label
+                              key={s.id}
+                              className={`flex items-center gap-3 px-4 py-2.5 cursor-pointer transition-colors select-none ${
+                                checked
+                                  ? 'bg-primary-light dark:bg-primary/10'
+                                  : 'hover:bg-primary-xlight/40 dark:hover:bg-primary/5'
+                              }`}
+                            >
+                              <input
+                                type="checkbox"
+                                checked={checked}
+                                onChange={() => toggleStudent(s.id)}
+                                className="accent-primary w-4 h-4 shrink-0"
+                              />
+                              <div className="min-w-0 flex-1">
+                                <p className="text-sm font-medium text-[var(--color-text)] truncate">{s.full_name || '—'}</p>
+                                <p className="text-xs text-neutral-mid truncate">{s.email}</p>
+                              </div>
+                              {checked && (
+                                <span className="text-primary shrink-0 text-sm">✓</span>
+                              )}
+                            </label>
+                          );
+                        })
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {selectedIds.size === 0 && !studentListLoading && (
+                <p className="mt-1.5 text-xs text-neutral-mid">
+                  Select at least one student to send the email.
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* ── Subject ── */}
           <div>
             <label htmlFor="subject" className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Subject</label>
             <input
@@ -184,7 +441,7 @@ export default function AdminEmailPage() {
             />
           </div>
 
-          {/* Message */}
+          {/* ── Message ── */}
           <div>
             <label htmlFor="message" className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Message</label>
             <div className="bg-[var(--color-card)] rounded-xl overflow-hidden [&_.ql-toolbar]:border-[var(--color-border)] [&_.ql-container]:border-[var(--color-border)] [&_.ql-editor]:min-h-[250px] [&_.ql-editor]:text-sm [&_.ql-editor]:leading-relaxed focus-within:ring-2 focus-within:ring-primary/40 focus-within:border-transparent transition-all">
@@ -206,7 +463,7 @@ export default function AdminEmailPage() {
             </div>
           </div>
 
-          {/* Attachments */}
+          {/* ── Attachments ── */}
           <div>
             <label htmlFor="attachments" className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Attachments</label>
             <input
@@ -232,27 +489,18 @@ export default function AdminEmailPage() {
             )}
           </div>
 
+          {/* ── Actions ── */}
           <div className="flex items-center justify-end gap-3 pt-2">
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => {
-                setSubject('');
-                setMessage('');
-                setAttachments([]);
-                setResult(null);
-              }}
-              disabled={isSending}
-            >
+            <Button type="button" variant="ghost" onClick={handleClear} disabled={isSending}>
               Clear
             </Button>
             <Button type="submit" variant="primary" disabled={!canSend}>
-              {isSending ? <Spinner size="sm" color="white" /> : `Send to ${targetRole === 'student' ? 'Students' : 'Tutors'}`}
+              {isSending ? <Spinner size="sm" color="white" /> : sendButtonLabel()}
             </Button>
           </div>
         </Card>
 
-        {/* Right sidebar */}
+        {/* ── Right sidebar ── */}
         <div className="space-y-4">
           <Card>
             <h2 className="font-heading font-bold text-[var(--color-text)] mb-3">Send Summary</h2>

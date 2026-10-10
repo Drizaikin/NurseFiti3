@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/Badge';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Spinner } from '@/components/ui/Spinner';
 import toast from 'react-hot-toast';
-import { BADGE_DEFS } from '@/lib/badges';
+import { BADGE_DEFS, BADGE_CATEGORIES, BadgeCategory } from '@/lib/badges';
 
 
 
@@ -239,6 +239,7 @@ export default function AchievementsPage() {
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [leaderTab, setLeaderTab] = useState<'weekly' | 'alltime'>('alltime');
   const [achievementTab, setAchievementTab] = useState<'badges' | 'leaderboard'>('badges');
+  const [selectedCategory, setSelectedCategory] = useState<'all' | BadgeCategory>('all');
   const [isLoading, setIsLoading] = useState(true);
   const [streakDays, setStreakDays] = useState<Record<string, 'done' | 'missed' | 'today'>>({});
 
@@ -420,17 +421,88 @@ export default function AchievementsPage() {
         </div>
 
         {achievementTab === 'badges' ? (
-          <div>
-            <h2 className="text-xl font-heading font-bold mb-4">Badges</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {BADGE_DEFS.map(b => {
+          <div className="space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-[var(--color-border)]">
+              <div>
+                <h2 className="text-xl font-heading font-bold">Badges & Honors</h2>
+                <p className="text-xs text-neutral-mid mt-0.5">
+                  Unlock clinical competencies, revision streaks, and exam readiness trophies.
+                </p>
+              </div>
+              <div className="flex items-center gap-2 bg-[var(--color-bg)] px-3 py-1.5 rounded-xl border border-[var(--color-border)] text-xs self-start sm:self-auto">
+                <span className="font-semibold text-[var(--color-text)]">
+                  {BADGE_DEFS.filter(b => earnedBadges.has(b.id)).length} of {BADGE_DEFS.length} Unlocked
+                </span>
+                <span className="text-accent font-bold">
+                  ({Math.round((BADGE_DEFS.filter(b => earnedBadges.has(b.id)).length / BADGE_DEFS.length) * 100)}%)
+                </span>
+              </div>
+            </div>
+
+            {/* Category Filter Pills */}
+            <div className="flex flex-wrap gap-2" role="group" aria-label="Badge categories">
+              {BADGE_CATEGORIES.map(cat => {
+                const totalInCat = cat.id === 'all' 
+                  ? BADGE_DEFS.length 
+                  : BADGE_DEFS.filter(b => b.category === cat.id).length;
+                const earnedInCat = cat.id === 'all'
+                  ? BADGE_DEFS.filter(b => earnedBadges.has(b.id)).length
+                  : BADGE_DEFS.filter(b => b.category === cat.id && earnedBadges.has(b.id)).length;
+                const isActive = selectedCategory === cat.id;
+
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => setSelectedCategory(cat.id)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                      isActive 
+                        ? 'bg-primary text-white shadow-sm ring-1 ring-primary' 
+                        : 'bg-[var(--color-bg)] text-neutral-mid hover:text-[var(--color-text)] border border-[var(--color-border)]'
+                    }`}
+                  >
+                    <span>{cat.label}</span>
+                    <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                      isActive ? 'bg-white/20 text-white' : 'bg-neutral-border text-neutral-mid'
+                    }`}>
+                      {earnedInCat}/{totalInCat}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Badges Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {(selectedCategory === 'all' ? BADGE_DEFS : BADGE_DEFS.filter(b => b.category === selectedCategory)).map(b => {
                 const earned = earnedBadges.has(b.id);
                 return (
-                  <div key={b.id} className={`flex flex-col items-center text-center p-4 rounded-xl border-2 transition-all ${earned ? 'border-accent bg-accent/5' : 'border-[var(--color-border)] opacity-50 grayscale'}`}>
-                    <span className="text-4xl mb-2">{b.icon}</span>
-                    <p className="font-semibold text-sm text-[var(--color-text)]">{b.name}</p>
-                    <p className="text-xs text-neutral-mid mt-1">{b.description}</p>
-                    {earned && <Badge variant="amber" size="sm" className="mt-2">Earned</Badge>}
+                  <div
+                    key={b.id}
+                    className={`flex flex-col items-center text-center p-4 rounded-xl border-2 transition-all relative h-full justify-between ${
+                      earned 
+                        ? 'border-accent/60 bg-accent/5 shadow-sm' 
+                        : 'border-[var(--color-border)] opacity-50 grayscale hover:opacity-75'
+                    }`}
+                  >
+                    <div className="flex flex-col items-center w-full">
+                      <span className="text-4xl mb-2 select-none">{b.icon}</span>
+                      <p className="font-semibold text-sm text-[var(--color-text)] leading-tight min-h-[2.5rem] flex items-center justify-center line-clamp-2" title={b.name}>
+                        {b.name}
+                      </p>
+                      <p className="text-xs text-neutral-mid mt-1 line-clamp-2" title={b.description}>
+                        {b.description}
+                      </p>
+                    </div>
+                    <div className="pt-3 w-full flex justify-center">
+                      {earned ? (
+                        <Badge variant="amber" size="sm">Earned</Badge>
+                      ) : (
+                        <span className="text-[10px] font-mono text-neutral-mid bg-neutral-border/50 px-2 py-0.5 rounded">
+                          {b.condition}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 );
               })}

@@ -42,7 +42,7 @@ NurseFiti is a Kenya-specific NCK licensure exam preparation platform for nursin
 | Daily (Exam Boost) | KSh 99 | 1 day | Unlimited | 2 |
 | Weekly (Exam Boost) | KSh 499 | 7 days | Unlimited | 2 |
 | Standard (Success Plan) | KSh 1,199 | 30 days | Unlimited | 2 |
-| Premium (Elite Prep) | KSh 3,500 | 60 days | Unlimited | Unlimited |
+| Premium (Elite Prep) | KSh 3,500 | 90 days | Unlimited | Unlimited |
 
 ### Enforcement points
 - **Practice** — `getLimits(planTier).practiceQuestionsPerDay` cap enforced in `startPractice()`

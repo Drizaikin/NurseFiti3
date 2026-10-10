@@ -73,7 +73,8 @@ export default function ResetPasswordPage() {
       setDone(true);
       toast.success('Password updated successfully!');
 
-      // Sign out so they log in fresh with the new password
+      // Sign out so they log in fresh with the new password; clear role cookie
+      document.cookie = 'nf_role=; path=/; max-age=0; samesite=lax';
       await supabase.auth.signOut();
       setTimeout(() => router.push('/login'), 2500);
     } catch (err: any) {

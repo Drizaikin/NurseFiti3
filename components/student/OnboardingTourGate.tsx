@@ -23,14 +23,14 @@ export function OnboardingTourGate() {
 
   useEffect(() => {
     const check = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-      setUserId(user.id);
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+      setUserId(session.user.id);
 
       const { data } = await supabase
         .from('student_profiles')
         .select('tour_version')
-        .eq('id', user.id)
+        .eq('id', session.user.id)
         .maybeSingle();
 
       // Show if tour_version column exists and user hasn't seen current version

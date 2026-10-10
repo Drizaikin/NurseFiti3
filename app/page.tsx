@@ -350,7 +350,25 @@ function VerificationBadge({ tier }: { tier: 'gold' | 'standard' }) {
 
 export default async function Home() {
   const supabase = createClient();
-  const settings = await fetchPlatformSettings(supabase as any);
+
+  // Run all DB queries in parallel — settings fetch uses in-memory cache after first call
+  const [
+    settings,
+    { count: questionsCount },
+    { count: flashcardsCount },
+    { data: initialFeedbacks },
+  ] = await Promise.all([
+    fetchPlatformSettings(supabase as any),
+    supabase.from('questions').select('*', { count: 'exact', head: true }),
+    supabase.from('flashcards').select('*', { count: 'exact', head: true }),
+    (supabase as any)
+      .from('app_feedback')
+      .select('id, display_name, cadre, user_role, category, rating, message, helpful_count, is_pinned, created_at')
+      .eq('is_approved', true)
+      .order('is_pinned', { ascending: false })
+      .order('created_at', { ascending: false }),
+  ]);
+
   const PRICING = getPricing(settings);
   const offers = [
       { '@type': 'Offer', price: '0', priceCurrency: 'KES', name: 'Test Yourself', url: 'https://www.nursefiti.co.ke/signup' },
@@ -395,21 +413,6 @@ export default async function Home() {
     })),
   };
   
-  const [
-    { count: questionsCount },
-    { count: flashcardsCount },
-    { data: initialFeedbacks }
-  ] = await Promise.all([
-    supabase.from('questions').select('*', { count: 'exact', head: true }),
-    supabase.from('flashcards').select('*', { count: 'exact', head: true }),
-    (supabase as any)
-      .from('app_feedback')
-      .select('id, display_name, cadre, user_role, category, rating, message, helpful_count, is_pinned, created_at')
-      .eq('is_approved', true)
-      .order('is_pinned', { ascending: false })
-      .order('created_at', { ascending: false })
-  ]);
-
   const stats = [
     { value: '1,000+', label: 'Students Enrolled' },
     { value: questionsCount ? questionsCount.toLocaleString() : '5,000+', label: 'Practice Questions' },

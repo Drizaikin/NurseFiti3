@@ -20,10 +20,10 @@ export function BadgeProvider({ children }: { children: ReactNode }) {
   const supabase = createClient();
 
   const checkBadges = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return;
 
-    const newlyEarned = await evaluateUserBadges(supabase, user.id);
+    const newlyEarned = await evaluateUserBadges(supabase, session.user.id);
     if (newlyEarned.length > 0) {
       setUnlockedBadges(prev => [...prev, ...newlyEarned]);
     }

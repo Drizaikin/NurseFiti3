@@ -518,6 +518,13 @@ export default function SettingsPage() {
   const handleSaveProfile = async () => {
     if (!editForm.full_name.trim()) { toast.error('Full name is required'); return; }
     if (!editForm.phone.trim()) { toast.error('Phone number is required'); return; }
+    // Validate exam date — must be in the future
+    if (editForm.exam_date) {
+      if (new Date(editForm.exam_date).getTime() <= Date.now()) {
+        toast.error('Exam date must be in the future. Please select a future date.');
+        return;
+      }
+    }
     // Validate username: alphanumeric + underscores only, 3–30 chars
     if (editForm.username.trim() && !/^[a-zA-Z0-9_]{3,30}$/.test(editForm.username.trim())) {
       toast.error('Username must be 3–30 characters: letters, numbers, and underscores only');
@@ -609,6 +616,8 @@ export default function SettingsPage() {
 
   // ── Logout ──────────────────────────────────────────────────────────────────
   const handleLogout = async () => {
+    // Clear the role cookie so middleware doesn't use a stale role
+    document.cookie = 'nf_role=; path=/; max-age=0; samesite=lax';
     await supabase.auth.signOut();
     router.push('/login');
   };
@@ -770,6 +779,7 @@ export default function SettingsPage() {
                     <input
                       type="date"
                       value={editForm.exam_date}
+                      min={new Date(Date.now() + 86_400_000).toISOString().slice(0, 10)}
                       onChange={e => setEditForm(f => ({ ...f, exam_date: e.target.value }))}
                       className={inputClass()}
                     />

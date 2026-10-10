@@ -78,7 +78,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             />
           )}
           <button
-            onClick={async () => { await supabase.auth.signOut(); router.push('/login'); }}
+            onClick={async () => {
+              document.cookie = 'nf_role=; path=/; max-age=0; samesite=lax';
+              await supabase.auth.signOut();
+              router.push('/login');
+            }}
             className="text-xs text-neutral-mid hover:text-error transition-colors"
           >
             Sign Out

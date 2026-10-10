@@ -8,7 +8,7 @@
  *   daily    — KSh 99/day  (same features as standard, 1-day access)
  *   weekly   — KSh 499/week (same features as standard, 7-day access)
  *   standard — KSh 1,199/month (full features, 2 mock exams per week)
- *   premium  — KSh 3,500/60-day cycle (all features, unlimited mock exams = 1/day)
+ *   premium  — KSh 3,500/90-day cycle (all features, unlimited mock exams = 1/day)
  */
 
 export type PlanTier = 'free' | 'daily' | 'weekly' | 'standard' | 'premium';

@@ -94,6 +94,8 @@ export default function StudentSignupPage() {
       }
 
       toast.success('Welcome to NurseFiti!');
+      // Set role cookie so middleware skips the DB query on first protected request
+      document.cookie = `nf_role=student; path=/; max-age=86400; samesite=lax${location.protocol === 'https:' ? '; secure' : ''}`;
       router.refresh();
       router.push('/dashboard');
     } catch (error: any) {
@@ -309,7 +311,13 @@ export default function StudentSignupPage() {
                   type="month"
                   id="examDate"
                   className="input"
-                  min={new Date().toISOString().slice(0, 7)}
+                  min={(() => {
+                    // Minimum is next month — ensures the chosen month-date
+                    // (normalised to the 1st) is always in the future.
+                    const d = new Date();
+                    d.setMonth(d.getMonth() + 1);
+                    return d.toISOString().slice(0, 7);
+                  })()}
                   disabled={isLoading}
                   onChange={(e) => {
                     register('examDate').onChange(e);

@@ -25,7 +25,7 @@ const DEFAULT_SETTINGS: PlatformSettings = {
 // In-memory cache to avoid excessive DB calls during identical renders
 let cachedSettings: PlatformSettings | null = null;
 let lastFetchTime = 0;
-const CACHE_TTL_MS = 60 * 1000; // 1 minute cache
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes — settings rarely change
 
 export function clearPlatformSettingsCache() {
   cachedSettings = null;

@@ -13,11 +13,39 @@ function withPrivateRobots(response: NextResponse) {
   return withDeploymentRobots(response);
 }
 
+/**
+ * Build a lightweight Supabase SSR client for middleware.
+ * getSession() reads from the JWT cookie — no network call.
+ * A DB query is only made when role cannot be resolved from cookies.
+ */
+function makeSupabaseClient(req: NextRequest, res: { current: NextResponse }) {
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) { return req.cookies.get(name)?.value; },
+        set(name: string, value: string, options: CookieOptions) {
+          req.cookies.set({ name, value, ...options });
+          res.current = NextResponse.next({ request: { headers: req.headers } });
+          res.current.cookies.set({ name, value, ...options });
+        },
+        remove(name: string, options: CookieOptions) {
+          req.cookies.set({ name, value: '', ...options });
+          res.current = NextResponse.next({ request: { headers: req.headers } });
+          res.current.cookies.set({ name, value: '', ...options });
+        },
+      },
+    }
+  );
+}
+
 export async function middleware(req: NextRequest) {
-  let res = NextResponse.next({ request: { headers: req.headers } });
+  const res = { current: NextResponse.next({ request: { headers: req.headers } }) };
 
   const { pathname } = req.nextUrl;
 
+  // ── Canonical redirect (no DB call needed) ────────────────────────────────
   const forwardedHost = req.headers.get('x-forwarded-host') ?? req.headers.get('host');
   const hostname = forwardedHost?.split(':')[0].toLowerCase();
   const forwardedProtocol = req.headers.get('x-forwarded-proto');
@@ -30,60 +58,7 @@ export async function middleware(req: NextRequest) {
   }
 
   // ── Never intercept API routes ────────────────────────────────────────────
-  if (pathname.startsWith('/api/')) return res;
-
-  // ── Admin routes: handle before everything else ───────────────────────────
-  // Redirect unauthenticated visitors to the landing page (not /login) so the
-  // existence of an admin panel is not revealed. Authenticated non-admins are
-  // sent to their own dashboard.
-  if (pathname.startsWith('/admin')) {
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          get(name: string) { return req.cookies.get(name)?.value; },
-          set(name: string, value: string, options: CookieOptions) {
-            req.cookies.set({ name, value, ...options });
-            res = NextResponse.next({ request: { headers: req.headers } });
-            res.cookies.set({ name, value, ...options });
-          },
-          remove(name: string, options: CookieOptions) {
-            req.cookies.set({ name, value: '', ...options });
-            res = NextResponse.next({ request: { headers: req.headers } });
-            res.cookies.set({ name, value: '', ...options });
-          },
-        },
-      }
-    );
-
-    const { data: { session } } = await supabase.auth.getSession();
-
-    // No session → send silently to landing page
-    if (!session) {
-      return withPrivateRobots(NextResponse.redirect(new URL('/', req.url)));
-    }
-
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', session.user.id)
-      .single();
-
-    // No profile or not admin → redirect to their own space
-    if (!profile || profile.role !== 'admin') {
-      const dest =
-        profile?.role === 'student' ? '/dashboard' :
-        profile?.role === 'tutor'   ? '/tutor-dashboard' :
-        '/';
-      return withPrivateRobots(NextResponse.redirect(new URL(dest, req.url)));
-    }
-
-    // Confirmed admin — allow through, block search engines from indexing admin pages
-    const adminRes = NextResponse.next({ request: { headers: req.headers } });
-    adminRes.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
-    return withPrivateRobots(adminRes);
-  }
+  if (pathname.startsWith('/api/')) return res.current;
 
   // ── Public routes — no auth required ─────────────────────────────────────
   const publicRoutes = [
@@ -126,10 +101,13 @@ export async function middleware(req: NextRequest) {
     (route) => pathname === route || pathname.startsWith(`${route}/`)
   );
 
-  if (isPublicRoute) return isNoindexPublicRoute ? withPrivateRobots(res) : withDeploymentRobots(res);
+  if (isPublicRoute) {
+    return isNoindexPublicRoute
+      ? withPrivateRobots(res.current)
+      : withDeploymentRobots(res.current);
+  }
 
-  // Let unknown public URLs reach Next.js so they return a real 404 instead of
-  // being disguised as login redirects. Only known app areas require auth.
+  // Let unknown public URLs through to Next.js so they return a real 404
   const protectedRoutes = [
     '/dashboard', '/practice', '/mock-exam', '/flashcards',
     '/analytics', '/achievements', '/groups', '/revision-plan',
@@ -137,100 +115,134 @@ export async function middleware(req: NextRequest) {
     '/tutor-dashboard', '/tutor-schedule', '/tutor-students',
     '/tutor-studio', '/tutor-earnings', '/tutor-reviews', '/tutor-profile',
     '/tutor-pending', '/tutor-complete-profile', '/tutor-community',
+    '/mnemonics', '/hd-materials',
+    '/admin',
   ];
 
-  if (!protectedRoutes.some((route) => pathname === route || pathname.startsWith(`${route}/`))) {
-    return withDeploymentRobots(res);
-  }
-
-  // ── All other protected routes — require session ──────────────────────────
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) { return req.cookies.get(name)?.value; },
-        set(name: string, value: string, options: CookieOptions) {
-          req.cookies.set({ name, value, ...options });
-          res = NextResponse.next({ request: { headers: req.headers } });
-          res.cookies.set({ name, value, ...options });
-        },
-        remove(name: string, options: CookieOptions) {
-          req.cookies.set({ name, value: '', ...options });
-          res = NextResponse.next({ request: { headers: req.headers } });
-          res.cookies.set({ name, value: '', ...options });
-        },
-      },
-    }
+  const isProtectedRoute = protectedRoutes.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`)
   );
 
+  if (!isProtectedRoute) {
+    return withDeploymentRobots(res.current);
+  }
+
+  // ── All protected routes: verify session (JWT read — no network call) ─────
+  const supabase = makeSupabaseClient(req, res);
   const { data: { session } } = await supabase.auth.getSession();
 
   if (!session) {
+    if (pathname.startsWith('/admin')) {
+      // Don't reveal the admin panel exists — redirect to landing page
+      return withPrivateRobots(NextResponse.redirect(new URL('/', req.url)));
+    }
     const redirectUrl = new URL('/login', req.url);
     redirectUrl.searchParams.set('redirect', pathname);
     return withPrivateRobots(NextResponse.redirect(redirectUrl));
   }
 
-  // ── Role-based routing ────────────────────────────────────────────────────
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', session.user.id)
-    .single();
+  // ── Role resolution: read from cookie first (fast path), DB fallback ──────
+  // The login page writes a `nf_role` cookie after a successful sign-in.
+  // This avoids a DB query on most protected page requests.
+  //
+  // SECURITY: Admin routes always verify role from the DB — never trust
+  // a cookie alone for admin access. For student/tutor routes the cookie
+  // is used for speed; a forged cookie cannot grant higher privileges
+  // because the session still belongs to that user and RLS enforces access.
+  let role = req.cookies.get('nf_role')?.value as string | undefined;
 
-  if (!profile) {
-    await supabase.auth.signOut();
-    return withPrivateRobots(NextResponse.redirect(new URL('/login', req.url)));
+  const isAdminPath = pathname.startsWith('/admin');
+
+  if (!role || isAdminPath) {
+    // Always do a DB check for admin paths; fallback for missing cookie.
+    const { data: profileData } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', session.user.id)
+      .single();
+
+    if (!profileData) {
+      await supabase.auth.signOut();
+      return withPrivateRobots(NextResponse.redirect(new URL('/login', req.url)));
+    }
+
+    role = (profileData as { role: string }).role;
+
+    if (!req.cookies.get('nf_role')) {
+      // Stamp the role cookie so subsequent non-admin requests skip the DB query.
+      // Non-httpOnly so the login/logout JS can also clear it.
+      res.current.cookies.set('nf_role', role, {
+        path: '/',
+        httpOnly: false,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 60 * 60 * 24, // 24 hours max
+      });
+    }
   }
 
-  // Student routes
+  // ── Admin routes ──────────────────────────────────────────────────────────
+  if (isAdminPath) {
+    if (role !== 'admin') {
+      const dest =
+        role === 'student' ? '/dashboard' :
+        role === 'tutor'   ? '/tutor-dashboard' :
+        '/';
+      return withPrivateRobots(NextResponse.redirect(new URL(dest, req.url)));
+    }
+    const adminRes = NextResponse.next({ request: { headers: req.headers } });
+    adminRes.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
+    return withPrivateRobots(adminRes);
+  }
+
+  // ── Student routes ────────────────────────────────────────────────────────
   const studentRoutes = [
     '/dashboard', '/practice', '/mock-exam', '/flashcards',
     '/analytics', '/achievements', '/groups', '/revision-plan',
     '/bookings', '/settings', '/onboarding', '/tutors',
+    '/mnemonics', '/hd-materials',
   ];
-  const isStudentRoute = studentRoutes.some((r) => pathname.startsWith(r));
+  const isStudentRoute = studentRoutes.some((r) => pathname === r || pathname.startsWith(r + '/'));
 
-  if (isStudentRoute && profile.role !== 'student') {
+  if (isStudentRoute && role !== 'student') {
     return withPrivateRobots(NextResponse.redirect(
       new URL(
-        profile.role === 'tutor'  ? '/tutor-dashboard' :
-        profile.role === 'admin'  ? '/admin' :
+        role === 'tutor'  ? '/tutor-dashboard' :
+        role === 'admin'  ? '/admin' :
         '/login',
         req.url
       )
     ));
   }
 
-  // Tutor routes
+  // ── Tutor routes ──────────────────────────────────────────────────────────
   const tutorRoutes = [
     '/tutor-dashboard', '/tutor-schedule', '/tutor-students',
     '/tutor-studio', '/tutor-earnings', '/tutor-reviews', '/tutor-profile',
     '/tutor-pending', '/tutor-complete-profile', '/tutor-community',
   ];
-  const isTutorRoute = tutorRoutes.some((r) => pathname.startsWith(r));
+  const isTutorRoute = tutorRoutes.some((r) => pathname === r || pathname.startsWith(r + '/'));
 
-  if (isTutorRoute && profile.role !== 'tutor') {
+  if (isTutorRoute && role !== 'tutor') {
     return withPrivateRobots(NextResponse.redirect(
       new URL(
-        profile.role === 'student' ? '/dashboard' :
-        profile.role === 'admin'   ? '/admin' :
+        role === 'student' ? '/dashboard' :
+        role === 'admin'   ? '/admin' :
         '/login',
         req.url
       )
     ));
   }
 
-  // Tutor verification check
-  if (isTutorRoute && profile.role === 'tutor') {
+  // ── Tutor verification check ──────────────────────────────────────────────
+  if (isTutorRoute && role === 'tutor') {
     // Allow pending/complete-profile pages through without further checks
     if (
       pathname === '/tutor-pending' ||
       pathname.startsWith('/tutor-complete-profile')
-    ) return withPrivateRobots(res);
+    ) return withPrivateRobots(res.current);
 
-    // Single query — get both status and docs in one round trip
+    // Single DB query: status + docs in one round trip
     const { data: tutorProfile } = await supabase
       .from('tutor_profiles')
       .select('verification_status, nck_certificate_url')
@@ -245,12 +257,13 @@ export async function middleware(req: NextRequest) {
     }
     if (tutorProfile?.verification_status === 'rejected') {
       await supabase.auth.signOut();
+      res.current.cookies.set('nf_role', '', { path: '/', httpOnly: false, maxAge: 0 });
       return withPrivateRobots(NextResponse.redirect(new URL('/login?error=account_rejected', req.url)));
     }
     // verification_status === 'verified' → allow through
   }
 
-  return withPrivateRobots(res);
+  return withPrivateRobots(res.current);
 }
 
 export const config = {

@@ -257,8 +257,8 @@ export function FeedbackWall({
     setHelpfulSet(prev => new Set([...Array.from(prev), feedbackId]));
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
         // Revert optimistic update if not logged in
         setItems(prev => prev.map(i =>
           i.id === feedbackId ? { ...i, helpful_count: i.helpful_count - 1 } : i
@@ -270,7 +270,7 @@ export function FeedbackWall({
       // Insert the vote record (will fail silently on duplicate due to PRIMARY KEY)
       const { error: insertError } = await (supabase as any)
         .from('feedback_helpful')
-        .insert({ feedback_id: feedbackId, user_id: user.id });
+        .insert({ feedback_id: feedbackId, user_id: session.user.id });
 
       if (insertError) {
         // Duplicate vote — revert the optimistic update
@@ -293,15 +293,16 @@ export function FeedbackWall({
     }
   };
 
-  // Load which items the current user has already voted on
+  // Load which items the current user has already voted on.
+  // Uses getSession() (no network call) to check auth before making a DB query.
   const loadUserVotes = useCallback(async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return; // Not logged in — skip DB query entirely
       const { data } = await supabase
         .from('feedback_helpful')
         .select('feedback_id')
-        .eq('user_id', user.id);
+        .eq('user_id', session.user.id);
       if (data) {
         setHelpfulSet(new Set((data as Array<{ feedback_id: string }>).map(r => r.feedback_id)));
       }

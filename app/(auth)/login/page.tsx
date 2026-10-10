@@ -68,6 +68,10 @@ function LoginForm() {
 
       toast.success('Welcome back!');
 
+      // Write a lightweight role cookie so middleware can skip DB queries
+      // on subsequent protected-route requests this session.
+      document.cookie = `nf_role=${profile.role}; path=/; max-age=86400; samesite=lax${location.protocol === 'https:' ? '; secure' : ''}`;
+
       // router.refresh() syncs the session cookie with the server before
       // navigating — without it, middleware may not see the new session
       // and will loop back to /login (the "freeze" / stays-on-login bug).

@@ -106,12 +106,12 @@ export function Sidebar() {
   // Fetch cadre once on mount to conditionally show HD Materials link
   useEffect(() => {
     const loadCadre = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
       const { data } = await supabase
         .from('student_profiles')
         .select('cadre')
-        .eq('id', user.id)
+        .eq('id', session.user.id)
         .single() as any;
       setIsHd(data?.cadre === 'Higher Diploma');
     };
