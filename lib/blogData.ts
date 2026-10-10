@@ -1,5 +1,50 @@
 export const POSTS = [
   {
+    slug: 'sha-shif-transition-nurses-kenya-reality',
+    title: 'SHA/SHIF Transition Kenya: Nurse Reality & Rights (2026)',
+    excerpt: 'Discover how Kenyan nurses navigate SHA/SHIF digital downtime, avoid salary surcharges, and protect emergency patient rights under Article 43(2) in 2026.',
+    category: 'NCK News',
+    readTime: '13 min read',
+    date: '2026-10-10',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
+    slug: 'kenya-nurse-relocation-uk-gulf-reality',
+    title: 'Kenyan Nurse Relocation: UK & Gulf Reality Guide (2026)',
+    excerpt: 'Explore real costs of Kenyan nurse relocation to UK and Gulf: NHS Band 4 down-banding, Pearson VUE NCLEX testing, and rogue agency red flags in 2026.',
+    category: 'Study Strategy',
+    readTime: '15 min read',
+    date: '2026-10-10',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
+    slug: 'nurses-eat-their-young-preceptorship-kenya',
+    title: 'Why Nurses Eat Their Young: Stopping Ward Bullying (2026)',
+    excerpt: 'Learn why lateral violence persists in Kenyan hospital wards, how toxic preceptorship harms patients, and practical assertive scripts to survive in 2026.',
+    category: 'Study Strategy',
+    readTime: '12 min read',
+    date: '2026-10-10',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
+    slug: 'ai-nursing-documentation-liability-burnout',
+    title: 'AI Scribes in Nursing: Charting Traps & Legal Risks (2026)',
+    excerpt: 'Discover how ambient AI scribes create legal traps for nurses: hallucinated vitals, liability clauses, and Kenya Data Protection Act rules (2026).',
+    category: 'Study Strategy',
+    readTime: '13 min read',
+    date: '2026-10-10',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
+    slug: 'tiktok-nurse-privacy-ethics-kenya',
+    title: 'The TikTok Nurse Dilemma: Privacy & NCK Ethics (2026)',
+    excerpt: 'Find out how viral TikTok trends, ER dark humor, and clout can trigger NCK licence revocation and Data Protection Act criminal penalties in 2026.',
+    category: 'NCK News',
+    readTime: '12 min read',
+    date: '2026-10-10',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
     slug: 'become-nurse-kenya-kcse-registration',
     title: 'How to Become a Nurse in Kenya: From KCSE to NCK (2026)',
     excerpt: 'Discover the full pathway to becoming a nurse in Kenya, from KCSE grades and KUCCPS placement through training to NCK licensure and registration.',
@@ -354,6 +399,11 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
+  'sha-shif-transition-nurses-kenya-reality': 'https://images.unsplash.com/photo-1504813184591-01572f98c85f?w=1200&q=80&auto=format&fit=crop',
+  'kenya-nurse-relocation-uk-gulf-reality': 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200&q=80&auto=format&fit=crop',
+  'nurses-eat-their-young-preceptorship-kenya': 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=1200&q=80&auto=format&fit=crop',
+  'ai-nursing-documentation-liability-burnout': 'https://images.unsplash.com/photo-1551076805-e1869033e561?w=1200&q=80&auto=format&fit=crop',
+  'tiktok-nurse-privacy-ethics-kenya': 'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=1200&q=80&auto=format&fit=crop',
   'become-nurse-kenya-kcse-registration': 'https://images.unsplash.com/photo-1666887360742-974c8fce8e6b?w=1200&q=80&auto=format&fit=crop',
   'anatomy-physiology-nursing-study-map': '/images/blog/anatomy-physiology-nursing-study-map.jpg',
   'nursing-student-burnout-recovery-kenya': '/images/blog/nursing-student-burnout-recovery-kenya.jpg',

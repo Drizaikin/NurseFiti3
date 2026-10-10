@@ -11,6 +11,7 @@ import { serializeJsonLd } from '@/lib/jsonLd';
 import BlogComments from '@/components/blog/BlogComments';
 import BlogShareButtons from '@/components/blog/BlogShareButtons';
 import CommunityLinks from '@/components/blog/CommunityLinks';
+import { POSTS_OCTOBER_CONTROVERSIES } from '@/lib/blog/octoberPosts';
 
 // ─── Post data ───────────────────────────────────────────────────────────────
 
@@ -4319,7 +4320,7 @@ Whichever stage you're at right now, you don't have to plan around it alone — 
   },
 ];
 
-const ALL_POSTS = [...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL, ...POSTS_CV, ...POSTS_POST_EXAM, ...POSTS_DIPLOMA_NURSING, ...POSTS_BUSINESS_IDEAS, ...POSTS_CARE_PLANS, ...POSTS_NURSING_TOPICS];
+const ALL_POSTS = [...POSTS_OCTOBER_CONTROVERSIES, ...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL, ...POSTS_CV, ...POSTS_POST_EXAM, ...POSTS_DIPLOMA_NURSING, ...POSTS_BUSINESS_IDEAS, ...POSTS_CARE_PLANS, ...POSTS_NURSING_TOPICS];
 
 // ─── generateStaticParams ────────────────────────────────────────────────────
 
@@ -4371,6 +4372,31 @@ export async function generateMetadata({
 
 // Per-post hero images (Unsplash free CDN)
 const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> = {
+  'sha-shif-transition-nurses-kenya-reality': {
+    url: 'https://images.unsplash.com/photo-1504813184591-01572f98c85f?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Healthcare professionals at hospital triage managing patient records during the SHA transition in Kenya',
+    credit: 'Unsplash',
+  },
+  'kenya-nurse-relocation-uk-gulf-reality': {
+    url: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Passports, travel documents, and stethoscope representing Kenyan nurse relocation to the UK and Gulf',
+    credit: 'Unsplash',
+  },
+  'nurses-eat-their-young-preceptorship-kenya': {
+    url: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Nurses discussing clinical care in a hospital hallway representing preceptorship and ward dynamics',
+    credit: 'Unsplash',
+  },
+  'ai-nursing-documentation-liability-burnout': {
+    url: 'https://images.unsplash.com/photo-1551076805-e1869033e561?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Nurse utilizing modern digital tablet for clinical EHR charting and ambient documentation',
+    credit: 'Unsplash',
+  },
+  'tiktok-nurse-privacy-ethics-kenya': {
+    url: 'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Nurse in scrubs reflecting while holding smartphone representing social media ethics in healthcare',
+    credit: 'Unsplash',
+  },
   'nurse-salary-kenya': {
     url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80&auto=format&fit=crop',
     alt: 'Calculator and financial documents representing nurse salary, allowances and pay calculations in Kenya',
