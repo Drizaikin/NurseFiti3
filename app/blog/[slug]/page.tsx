@@ -4590,6 +4590,13 @@ function renderContent(content: string) {
       if (slugMatch) {
         elements.push(<BlogSampleMCQ key={key++} questionSlug={slugMatch[1]} />);
       }
+    } else if (trimmed.startsWith('#### ')) {
+      const heading = trimmed.slice(5);
+      elements.push(
+        <h4 key={key++} className="text-lg font-heading font-bold text-[var(--color-text)] mt-6 mb-2">
+          {heading}
+        </h4>
+      );
     } else if (trimmed.startsWith('### ')) {
       const heading = trimmed.slice(4);
       inSourcesSection = heading.toLowerCase().includes('source') || heading.toLowerCase().includes('reference');
@@ -4657,6 +4664,82 @@ function renderContent(content: string) {
           ))}
         </ol>
       );
+    } else if (trimmed.startsWith('> ')) {
+      const quoteText = trimmed.slice(2).trim();
+      if (quoteText.startsWith('[!NOTE]') || quoteText.startsWith('[!IMPORTANT]') || quoteText.startsWith('[!WARNING]') || quoteText.startsWith('[!TIP]')) {
+        let alertType = 'NOTE';
+        let alertContent = quoteText;
+        if (quoteText.startsWith('[!NOTE]')) {
+          alertType = 'NOTE';
+          alertContent = quoteText.replace(/^\[!NOTE\]\s*/, '');
+        } else if (quoteText.startsWith('[!IMPORTANT]')) {
+          alertType = 'IMPORTANT';
+          alertContent = quoteText.replace(/^\[!IMPORTANT\]\s*/, '');
+        } else if (quoteText.startsWith('[!WARNING]')) {
+          alertType = 'WARNING';
+          alertContent = quoteText.replace(/^\[!WARNING\]\s*/, '');
+        } else if (quoteText.startsWith('[!TIP]')) {
+          alertType = 'TIP';
+          alertContent = quoteText.replace(/^\[!TIP\]\s*/, '');
+        }
+        
+        const badgeColors: Record<string, string> = {
+          NOTE: 'border-l-4 border-primary bg-primary-light/40 text-[var(--color-text)]',
+          IMPORTANT: 'border-l-4 border-accent bg-accent-light/50 text-[var(--color-text)]',
+          WARNING: 'border-l-4 border-error bg-[#FFF0F0] dark:bg-error/10 text-[var(--color-text)]',
+          TIP: 'border-l-4 border-primary bg-primary-xlight text-[var(--color-text)]',
+        };
+        const activeColor = badgeColors[alertType] || badgeColors.NOTE;
+
+        elements.push(
+          <div key={key++} className={`my-6 p-4 rounded-r-xl ${activeColor}`}>
+            <p className="text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: formatInline(alertContent) }} />
+          </div>
+        );
+      } else {
+        elements.push(
+          <blockquote key={key++} className="my-6 border-l-4 border-accent bg-accent-light/30 px-5 py-4 rounded-r-xl text-[var(--color-text)] italic">
+            <span dangerouslySetInnerHTML={{ __html: formatInline(quoteText) }} />
+          </blockquote>
+        );
+      }
+    } else if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+      const tableLines: string[] = [];
+      while (index < lines.length && lines[index].trim().startsWith('|') && lines[index].trim().endsWith('|')) {
+        tableLines.push(lines[index].trim());
+        index++;
+      }
+      index--;
+      if (tableLines.length >= 2) {
+        const headerRow = tableLines[0].split('|').slice(1, -1).map(c => c.trim());
+        const startRow = tableLines[1].includes('---') ? 2 : 1;
+        const bodyRows = tableLines.slice(startRow).map(line =>
+          line.split('|').slice(1, -1).map(c => c.trim())
+        );
+
+        elements.push(
+          <div key={key++} className="overflow-x-auto my-6 rounded-xl border border-primary/20 shadow-sm">
+            <table className="w-full text-sm text-left border-collapse">
+              <thead>
+                <tr className="bg-primary text-white">
+                  {headerRow.map((h, hIdx) => (
+                    <th key={hIdx} className="px-5 py-3 font-bold text-sm tracking-wide" dangerouslySetInnerHTML={{ __html: formatInline(h) }} />
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {bodyRows.map((row, rIdx) => (
+                  <tr key={rIdx} className={`border-t border-primary/10 ${rIdx % 2 === 0 ? 'bg-white dark:bg-[var(--color-card)]' : 'bg-primary-xlight/60 dark:bg-primary-light/10'}`}>
+                    {row.map((cell, cIdx) => (
+                      <td key={cIdx} className="px-5 py-3 font-medium text-[var(--color-text)]" dangerouslySetInnerHTML={{ __html: formatInline(cell) }} />
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      }
     } else {
       if (inSourcesSection) {
         elements.push(

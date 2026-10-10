@@ -47,19 +47,19 @@ Under regulations published by the **[Kenya Ministry of Health](https://www.heal
 
 While the statutory blueprint published by the **[Social Health Authority](https://sha.go.ke)** is progressive, the digital reality at hospital admission desks is starkly different.
 
-### The 3 Frontline Bottlenecks Paralyzing Hospital Wards
+## The 3 Frontline Bottlenecks Paralyzing Hospital Wards
 
 Recent field reports documented by the **[Kenya National Union of Nurses (KNUN)](https://knun.org)** and viral discussions on X (#SHA_Fail, #SHIFCrisis) highlight three critical bottlenecks:
 
-#### 1. The Biometric and OTP Authentication Chokehold
+### 1. The Biometric and OTP Authentication Chokehold
 Unlike the legacy NHIF card system—which permitted retrospective paperwork reconciliation within 24 to 48 hours of admission—the SHA claims engine enforces upfront digital pre-authorization. 
 
 In peri-urban and rural facilities with unstable bandwidth, authenticating a single patient can take over 45 minutes. When elderly hypertensive patients, patients in active labour, or trauma victims arrive without biometric matches, automated pharmacy dispensing systems lock down, preventing the release of IV cannulas, analgesics, and antibiotics.
 
-#### 2. The Internal Surcharge Threat
+### 2. The Internal Surcharge Threat
 Facing cash-flow strains from delayed SHA reimbursement claims, several private and faith-based hospital administrations have issued internal memos warning clinical staff that non-verified interventions will be surcharged against departmental budgets or staff salaries. This practice directly violates the **[Nursing Council of Kenya (NCK) Code of Ethics](https://www.nckenya.com)**, which forbids compromising clinical safety for commercial considerations.
 
-#### 3. The Dual-Charting Trap
+### 3. The Dual-Charting Trap
 Because digital hospital management information systems (HMIS) frequently crash, nurses must maintain complete physical Kardex records for bedside care, and then spend 2 to 3 hours after shift handover re-entering data into the SHA web portal. This severe workload mirrors the systemic challenges we examined in our **[nursing student burnout recovery guide](/blog/nursing-student-burnout-recovery-kenya)** and our analysis of **[surviving your first clinical placement in a Kenyan hospital](/blog/surviving-first-clinical-placement-kenyan-public-hospital)**.
 
 ## The Clinical Moral Injury on Frontline Nurses
@@ -82,25 +82,31 @@ In medical jurisprudence, the standard remains uncompromising: **"If it was not 
 
 Whenever the SHA portal or hospital HMIS is offline, record this exact factual sequence in the patient's physical chart:
 
-#### 1. Timestamp and Objective ABCDE Assessment
+### 1. Timestamp and Objective ABCDE Assessment
 Record the exact arrival time and objective vital parameters:
-\`\`\`
-10/10/2026, 02:15 AM: 4yo male admitted in acute respiratory distress. Vitals: SpO2 88% room air, RR 56/min with intercostal retractions, HR 148 bpm, Temp 38.6°C. Immediate humidified oxygen initiated via nasal prongs at 2L/min.
-\`\`\`
 
-#### 2. Objective Notation of System Outage
+<div class="my-4 p-4 rounded-xl bg-primary-xlight/60 border-l-4 border-primary text-xs sm:text-sm font-mono text-[var(--color-text)] leading-relaxed">
+  <span class="block font-sans font-bold text-primary text-xs uppercase tracking-wider mb-1">📋 Clinical Documentation Entry:</span>
+  10/10/2026, 02:15 AM: 4yo male admitted in acute respiratory distress. Vitals: SpO2 88% room air, RR 56/min with intercostal retractions, HR 148 bpm, Temp 38.6°C. Immediate humidified oxygen initiated via nasal prongs at 2L/min.
+</div>
+
+### 2. Objective Notation of System Outage
 Document the technical failure factually without emotional language:
-\`\`\`
-02:22 AM: SHA portal inaccessible due to recurring "Error 504: Gateway Timeout". Biometric reader unresponsive to fingerprint authentication. System outage reported to Hospital IT Desk and Nursing Officer in Charge.
-\`\`\`
 
-#### 3. Formal Invocation of Article 43(2)
+<div class="my-4 p-4 rounded-xl bg-primary-xlight/60 border-l-4 border-primary text-xs sm:text-sm font-mono text-[var(--color-text)] leading-relaxed">
+  <span class="block font-sans font-bold text-primary text-xs uppercase tracking-wider mb-1">📋 System Outage Entry:</span>
+  02:22 AM: SHA portal inaccessible due to recurring "Error 504: Gateway Timeout". Biometric reader unresponsive to fingerprint authentication. System outage reported to Hospital IT Desk and Nursing Officer in Charge.
+</div>
+
+### 3. Formal Invocation of Article 43(2)
 State clearly that emergency clinical stabilization was prioritized pursuant to statutory mandates:
-\`\`\`
-02:25 AM: Pursuant to Article 43(2) of the Constitution of Kenya and hospital emergency triage protocol, life-saving resuscitation prioritized over administrative billing clearance. IV access secured (24G right dorsum). Hydrocortisone 50mg IV stat administered as per Doctor's emergency order. SpO2 improved to 94% on oxygen.
-\`\`\`
 
-#### 4. The Counter-Signature Shield
+<div class="my-4 p-4 rounded-xl bg-primary-xlight/60 border-l-4 border-primary text-xs sm:text-sm font-mono text-[var(--color-text)] leading-relaxed">
+  <span class="block font-sans font-bold text-primary text-xs uppercase tracking-wider mb-1">📋 Statutory Emergency Entry:</span>
+  02:25 AM: Pursuant to Article 43(2) of the Constitution of Kenya and hospital emergency triage protocol, life-saving resuscitation prioritized over administrative billing clearance. IV access secured (24G right dorsum). Hydrocortisone 50mg IV stat administered as per Doctor's emergency order. SpO2 improved to 94% on oxygen.
+</div>
+
+### 4. The Counter-Signature Shield
 Ensure the attending Medical Officer or Clinical Officer co-signs your emergency notes in the physical file. If an administrator verbally orders you to pause emergency care due to SHA non-verification, calmly request that directive in writing:
 > *"Sister, under NCK Scope of Practice and Article 43(2), withholding emergency care will result in fatal hypoxic arrest. If you wish care halted, please write and sign that instruction in the patient's Kardex."*
 
@@ -175,24 +181,83 @@ In Kenya, an experienced KRCHN or BScN nurse manages 30-bed acute wards, runs em
 
 During this transition, you are legally barred from administering intravenous medications, performing complex dressings without supervision, or signing off clinical orders. If you fail your three permitted OSCE attempts, your visa sponsorship can be revoked, leaving you facing deportation and significant debt. Learn more about post-licensure career pacing in our guide to **[what comes after the NCK exam in Kenya](/blog/after-nck-exam-kenya)**.
 
-### The Real Net Income Math for an NHS Band 5 Nurse (2026)
+## The Real Net Income Math for an NHS Band 5 Nurse (2026)
 
 Recruiters in Nairobi frequently quote gross figures like *"£28,407 to £34,581 annually"*. But when UK taxation, mandatory national insurance, and housing costs are deducted, the net reality requires careful budgeting:
 
-| Budget Item | Monthly Amount (£ GBP) | Equivalent (KES approx.) |
-| :--- | :--- | :--- |
-| **Gross Monthly Base Salary (Band 5, Point 1)** | **£2,367** | **~Ksh 390,000** |
-| UK Income Tax (20% bracket) | - £242 | - Ksh 40,000 |
-| National Insurance (NI) Contribution | - £135 | - Ksh 22,200 |
-| NHS Pension Scheme Deduction (7.4%) | - £175 | - Ksh 28,800 |
-| **Net Take-Home Pay in Bank Account** | **£1,815** | **~Ksh 299,000** |
-| Shared House / Studio Rental (Regional UK) | - £850 | - Ksh 140,000 |
-| Council Tax (Municipal Tax) | - £130 | - Ksh 21,500 |
-| Energy, Gas, Water & Utilities | - £160 | - Ksh 26,400 |
-| Groceries & Basic Sustenance | - £250 | - Ksh 41,200 |
-| Bus / Train Commute Card | - £110 | - Ksh 18,100 |
-| Mobile Phone & Home Broadband | - £45 | - Ksh 7,400 |
-| **Realistic Discretionary Balance Remaining** | **£270** | **~Ksh 44,500** |
+<div class="overflow-x-auto my-6 rounded-xl border border-primary/20 shadow-sm">
+  <table class="w-full text-sm text-left border-collapse">
+    <thead>
+      <tr class="bg-primary text-white">
+        <th class="px-5 py-3.5 font-bold text-sm">Monthly Budget Item</th>
+        <th class="px-5 py-3.5 font-bold text-sm">Amount (£ GBP)</th>
+        <th class="px-5 py-3.5 font-bold text-sm">Approximate Equivalent (KES)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-t border-primary/10 bg-primary-xlight/70 font-semibold text-primary">
+        <td class="px-5 py-3 font-bold">Gross Base Pay (Band 5, Point 1)</td>
+        <td class="px-5 py-3 font-bold">£2,367</td>
+        <td class="px-5 py-3 font-bold">~Ksh 390,000</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3">UK Income Tax (20% bracket)</td>
+        <td class="px-5 py-3 text-error font-medium">- £242</td>
+        <td class="px-5 py-3 text-neutral-mid">- Ksh 40,000</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight/30">
+        <td class="px-5 py-3">National Insurance (NI) Contribution</td>
+        <td class="px-5 py-3 text-error font-medium">- £135</td>
+        <td class="px-5 py-3 text-neutral-mid">- Ksh 22,200</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3">NHS Pension Scheme Deduction (7.4%)</td>
+        <td class="px-5 py-3 text-error font-medium">- £175</td>
+        <td class="px-5 py-3 text-neutral-mid">- Ksh 28,800</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight/80 font-bold text-primary">
+        <td class="px-5 py-3">Net Take-Home Pay in Bank Account</td>
+        <td class="px-5 py-3">£1,815</td>
+        <td class="px-5 py-3">~Ksh 299,000</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3">Shared House / Studio Rental (Regional UK)</td>
+        <td class="px-5 py-3 text-error font-medium">- £850</td>
+        <td class="px-5 py-3 text-neutral-mid">- Ksh 140,000</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight/30">
+        <td class="px-5 py-3">Council Tax (Local Municipal Tax)</td>
+        <td class="px-5 py-3 text-error font-medium">- £130</td>
+        <td class="px-5 py-3 text-neutral-mid">- Ksh 21,500</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3">Energy, Gas, Water & Utilities</td>
+        <td class="px-5 py-3 text-error font-medium">- £160</td>
+        <td class="px-5 py-3 text-neutral-mid">- Ksh 26,400</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight/30">
+        <td class="px-5 py-3">Groceries & Basic Sustenance</td>
+        <td class="px-5 py-3 text-error font-medium">- £250</td>
+        <td class="px-5 py-3 text-neutral-mid">- Ksh 41,200</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3">Public Transport Commuter Card</td>
+        <td class="px-5 py-3 text-error font-medium">- £110</td>
+        <td class="px-5 py-3 text-neutral-mid">- Ksh 18,100</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight/30">
+        <td class="px-5 py-3">Mobile Phone & Home Internet</td>
+        <td class="px-5 py-3 text-error font-medium">- £45</td>
+        <td class="px-5 py-3 text-neutral-mid">- Ksh 7,400</td>
+      </tr>
+      <tr class="border-t-2 border-primary/30 bg-accent-light/60 font-bold text-accent-dark">
+        <td class="px-5 py-3.5">Realistic Monthly Savings Remaining</td>
+        <td class="px-5 py-3.5 text-base">£270</td>
+        <td class="px-5 py-3.5 text-base">~Ksh 44,500</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 From this remaining £270, diaspora nurses must support family members in Kenya via remittances, repay relocation loans, and build emergency savings. To bridge the gap, nurses routinely take on demanding weekend and night "bank shifts" (overtime), heightening physical burnout. Review our comparison in **[nurse salary in Kenya across public, private, and diaspora roles](/blog/nurse-salary-kenya)**.
 
@@ -221,14 +286,55 @@ Check all prospective agencies against the **[National Employment Authority (NEA
 
 To protect your career and finances, follow this verified statutory pipeline:
 
-\`\`\`mermaid
-flowchart TD
-    A["1. NCK Licensure & Active Registration"] --> B["2. English Proficiency: OET (Grade B) or IELTS (7.0)"]
-    B --> C["3. Primary Source Verification: Dataflow or CGFNS"]
-    C --> D["4. NCK Certificate of Good Standing via OSP Portal"]
-    D --> E["5. Target Board CBT / NCLEX Examination"]
-    E --> F["6. Direct Accredited Employer Interview & Visa"]
-\`\`\`
+<div class="my-8 p-6 bg-[var(--color-card)] rounded-2xl border border-primary/20 shadow-sm space-y-3">
+  <h3 class="text-lg font-heading font-bold text-primary flex items-center gap-2 mb-3">
+    <span>🧭</span> The 6-Step Verified Relocation Process
+  </h3>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <div class="p-4 rounded-xl bg-primary-xlight/50 border border-primary/10 flex items-start gap-3">
+      <span class="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+      <div>
+        <p class="font-bold text-sm text-[var(--color-text)]">NCK Licensure & Registration</p>
+        <p class="text-xs text-neutral-mid mt-0.5">Hold an active, unencumbered practising licence with the Nursing Council of Kenya.</p>
+      </div>
+    </div>
+    <div class="p-4 rounded-xl bg-primary-xlight/50 border border-primary/10 flex items-start gap-3">
+      <span class="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+      <div>
+        <p class="font-bold text-sm text-[var(--color-text)]">English Language Assessment</p>
+        <p class="text-xs text-neutral-mid mt-0.5">Pass OET with minimum Grade B, or IELTS Academic with 7.0 (6.5 in writing).</p>
+      </div>
+    </div>
+    <div class="p-4 rounded-xl bg-primary-xlight/50 border border-primary/10 flex items-start gap-3">
+      <span class="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+      <div>
+        <p class="font-bold text-sm text-[var(--color-text)]">Primary Source Verification</p>
+        <p class="text-xs text-neutral-mid mt-0.5">Verify academic credentials through CGFNS (US/Canada) or Dataflow (Gulf).</p>
+      </div>
+    </div>
+    <div class="p-4 rounded-xl bg-primary-xlight/50 border border-primary/10 flex items-start gap-3">
+      <span class="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+      <div>
+        <p class="font-bold text-sm text-[var(--color-text)]">Certificate of Good Standing</p>
+        <p class="text-xs text-neutral-mid mt-0.5">Request official verification transmitted directly by NCK to your target licensing board.</p>
+      </div>
+    </div>
+    <div class="p-4 rounded-xl bg-primary-xlight/50 border border-primary/10 flex items-start gap-3">
+      <span class="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">5</span>
+      <div>
+        <p class="font-bold text-sm text-[var(--color-text)]">Licensing CBT / NCLEX Examination</p>
+        <p class="text-xs text-neutral-mid mt-0.5">Sit the licensing exam (e.g. NCLEX-RN at the Pearson VUE testing centre in Nairobi).</p>
+      </div>
+    </div>
+    <div class="p-4 rounded-xl bg-primary-xlight/50 border border-primary/10 flex items-start gap-3">
+      <span class="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">6</span>
+      <div>
+        <p class="font-bold text-sm text-[var(--color-text)]">Direct Employer Interview & Visa</p>
+        <p class="text-xs text-neutral-mid mt-0.5">Secure an accredited hospital sponsor with flights and visa fees covered by the employer.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 ### 1. English Proficiency: Why OET Outperforms IELTS for Nurses
 - **IELTS Academic:** Demands a minimum of 7.0 in Listening, Reading, and Speaking, and 6.5 in Writing. Over 60% of fluent Kenyan nurses struggle with IELTS writing on their first attempt due to abstract academic essay rubrics.
@@ -322,13 +428,29 @@ Harvard researcher **[Amy Edmondson's Psychological Safety research](https://www
 
 When psychological safety is compromised, clinical errors multiply:
 
-\`\`\`mermaid
-flowchart TD
-    A["Preceptor Humiliates Junior Nurse"] --> B["Junior Nurse Experiences Fear & Silence"]
-    B --> C["Junior Nurse Hesitates to Clarify Ambiguous Order"]
-    C --> D["Medication Error or Missed Deterioration Occurs"]
-    D --> E["Adverse Patient Harm and Disciplinary Crisis"]
-\`\`\`
+<div class="my-8 p-6 bg-[var(--color-card)] rounded-2xl border border-error/20 shadow-sm space-y-4">
+  <h3 class="text-base font-heading font-bold text-error flex items-center gap-2">
+    <span>⚠️</span> The Dangerous Chain: How Lateral Violence Harms Patients
+  </h3>
+  <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 text-center text-xs">
+    <div class="p-3.5 rounded-xl bg-[#FFF0F0] dark:bg-error/10 border border-error/20 flex flex-col justify-center">
+      <span class="font-bold text-error block mb-1">1. Humiliation</span>
+      <p class="text-neutral-mid text-[11px]">Senior preceptor mocks student during morning handover</p>
+    </div>
+    <div class="p-3.5 rounded-xl bg-[#FFF0F0] dark:bg-error/10 border border-error/20 flex flex-col justify-center">
+      <span class="font-bold text-error block mb-1">2. Fear & Silence</span>
+      <p class="text-neutral-mid text-[11px]">Junior nurse retreats into silence and self-doubt</p>
+    </div>
+    <div class="p-3.5 rounded-xl bg-[#FFF0F0] dark:bg-error/10 border border-error/20 flex flex-col justify-center">
+      <span class="font-bold text-error block mb-1">3. Unchecked Orders</span>
+      <p class="text-neutral-mid text-[11px]">Nurse fears asking to verify ambiguous medication dose</p>
+    </div>
+    <div class="p-3.5 rounded-xl bg-error text-white flex flex-col justify-center shadow-sm">
+      <span class="font-bold block mb-1">4. Clinical Error</span>
+      <p class="text-white/90 text-[11px]">Medication error occurs, causing preventable patient harm</p>
+    </div>
+  </div>
+</div>
 
 ### Real Clinical Risks Triggered by Hostility:
 1. **Unverified Medication Prescriptions:** A new nurse receives an ambiguous doctor's order for *"Regular Insulin 10U IV"*. Because the preceptor reprimanded her earlier for asking questions, she hesitates to confirm whether it was subcutaneous or intravenous, risking profound hypoglycemia.
@@ -454,21 +576,24 @@ Standard software agreements include disclaimers such as:
 
 If an AI scribe records an erroneous observation and you sign the chart without correcting it, you cannot argue before the NCK Disciplinary Tribunal or a court of law that the algorithm failed. In law, **you** made the statement. Review established principles in our guide on **[nursing documentation examples: defensible notes in Kenya](/blog/nursing-documentation-examples-kenya)** and **[generating defensible nursing care plans](/blog/generating-nursing-care-plans)**.
 
-### 3 Algorithmic Hallucination Risks in Nursing
+## 3 Algorithmic Hallucination Risks in Nursing
 
 Clinical studies published in **[BMJ Health & Care Informatics](https://informatics.bmj.com)** identify three common AI failure modes:
 
-#### 1. The Automated "Normal Physical Exam" Hallucination
+### 1. The Automated "Normal Physical Exam" Hallucination
 Language models trained on medical corpora tend to default to standard normal templates. If a nurse verbally assesses: *"Bilateral wheezing in lower lobes"*, the AI may fill out an entire unperformed respiratory template:
-\`\`\`
-Respiratory: Bilateral breath sounds equal with lower lobe wheezing. Trachea midline. Chest expansion symmetrical. RR 16 bpm. No cyanosis.
-\`\`\`
+
+<div class="my-4 p-4 rounded-xl bg-primary-xlight/60 border-l-4 border-error text-xs sm:text-sm font-mono text-[var(--color-text)] leading-relaxed">
+  <span class="block font-sans font-bold text-error text-xs uppercase tracking-wider mb-1">⚠️ Example of AI Hallucinated Normal Template:</span>
+  Respiratory: Bilateral breath sounds equal with lower lobe wheezing. Trachea midline. Chest expansion symmetrical. RR 16 bpm. No cyanosis.
+</div>
+
 If you did not inspect chest expansion or verify a respiratory rate of 16, signing this record constitutes a false entry of unperformed clinical care.
 
-#### 2. Number and Dosage Transcription Errors
+### 2. Number and Dosage Transcription Errors
 Ambient microphones capture monitor alarms, oxygen concentrators, and crying infants. If a nurse states: *"Administering 15 units of regular insulin"*, background interference can cause transcription as *"Administering 50 units"*. Review high-risk medication rules in our guide to **[common pharmacology mistakes in NCK exams](/blog/common-pharmacology-mistakes-nck-exam)**.
 
-#### 3. Acoustic Bleed in Open Wards
+### 3. Acoustic Bleed in Open Wards
 In multi-bed hospital bays common in Kenyan public and mission hospitals, ambient microphones can capture conversation from adjacent beds. An allergy reported by a neighboring patient can inadvertently merge into your patient's chart.
 
 ## Cultural and Linguistic Gaps in Kenya
@@ -490,14 +615,41 @@ Under the **[Kenya Data Protection Act of 2019](http://kenyalaw.org/kl/fileadmin
 
 If your facility utilizes ambient charting tools, follow this 4-step protocol before applying your digital signature:
 
-\`\`\`mermaid
-flowchart TD
-    A["Bedside Consultation with Ambient Microphone"] --> B["AI Produces Draft Nursing Summary"]
-    B --> C["Step 1: Check Vitals, Dosages, and Time Stamps"]
-    C --> D["Step 2: Delete Unperformed Normal Exam Templates"]
-    D --> E["Step 3: Confirm Correct Patient Bed & Identification"]
-    E --> F["Step 4: Sign Record as Licensed Professional"]
-\`\`\`
+<div class="my-8 p-6 bg-[var(--color-card)] rounded-2xl border border-primary/20 shadow-sm space-y-3">
+  <h3 class="text-lg font-heading font-bold text-primary flex items-center gap-2 mb-3">
+    <span>🛡️</span> The 4-Step "Verify First" AI Documentation Checklist
+  </h3>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+    <div class="p-4 rounded-xl bg-primary-xlight/50 border border-primary/10 flex items-start gap-3">
+      <span class="w-7 h-7 rounded-full bg-primary text-white font-bold flex items-center justify-center flex-shrink-0 text-xs">1</span>
+      <div>
+        <strong class="text-[var(--color-text)] text-sm block mb-1">Bedside Consultation Captured</strong>
+        <p class="text-neutral-mid text-xs">Ambient microphone listens to patient-nurse interaction and produces initial draft SBAR note.</p>
+      </div>
+    </div>
+    <div class="p-4 rounded-xl bg-primary-xlight/50 border border-primary/10 flex items-start gap-3">
+      <span class="w-7 h-7 rounded-full bg-primary text-white font-bold flex items-center justify-center flex-shrink-0 text-xs">2</span>
+      <div>
+        <strong class="text-[var(--color-text)] text-sm block mb-1">Scrutinize Critical Numbers First</strong>
+        <p class="text-neutral-mid text-xs">Verify blood pressure, pulse, drug dosage, and unit against bedside monitors and medical orders.</p>
+      </div>
+    </div>
+    <div class="p-4 rounded-xl bg-primary-xlight/50 border border-primary/10 flex items-start gap-3">
+      <span class="w-7 h-7 rounded-full bg-primary text-white font-bold flex items-center justify-center flex-shrink-0 text-xs">3</span>
+      <div>
+        <strong class="text-[var(--color-text)] text-sm block mb-1">Purge Unperformed Normals</strong>
+        <p class="text-neutral-mid text-xs">Highlight and delete any automated physical exam findings not physically examined during the shift.</p>
+      </div>
+    </div>
+    <div class="p-4 rounded-xl bg-primary-xlight/50 border border-primary/10 flex items-start gap-3">
+      <span class="w-7 h-7 rounded-full bg-accent text-white font-bold flex items-center justify-center flex-shrink-0 text-xs">4</span>
+      <div>
+        <strong class="text-[var(--color-text)] text-sm block mb-1">Affix Final Electronic Signature</strong>
+        <p class="text-neutral-mid text-xs">Sign the record only after confirming correct patient identity, bed assignment, and chart accuracy.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 1. **Review Every Draft Carefully:** Read every generated sentence before signing. Never approve notes on autopilot.
 2. **Scrutinize Numbers First:** Verify blood pressures, pulse rates, and drug dosages against bedside monitors and medical orders.
@@ -575,12 +727,39 @@ However, competitive social media formats have led to concerning trends:
 
 Frontline clinicians have long utilized humor to manage acute stress and avoid emotional burnout. But there is a vital distinction between private debriefing among bonded colleagues and public broadcasting to algorithmic feeds:
 
-| Dimension | Private Breakroom Debriefing | Public Social Media Post |
-| :--- | :--- | :--- |
-| **Audience** | Trusted colleagues who share clinical context | Grieving families, future patients, and regulatory boards |
-| **Context** | Shared clinical reality with immediate mutual support | Short decontextualized clip lacking medical context |
-| **Intent** | Stress decompression to maintain clinical focus | Follower growth, engagement metrics, and visibility |
-| **Trust Impact** | Contained within the immediate care team | Weakens public confidence in the nursing profession |
+<div class="overflow-x-auto my-6 rounded-xl border border-primary/20 shadow-sm">
+  <table class="w-full text-sm text-left border-collapse">
+    <thead>
+      <tr class="bg-primary text-white">
+        <th class="px-5 py-3.5 font-bold text-sm">Comparison Dimension</th>
+        <th class="px-5 py-3.5 font-bold text-sm">Private Breakroom Debriefing</th>
+        <th class="px-5 py-3.5 font-bold text-sm">Public Social Media Post (TikTok / Reels)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3 font-bold text-primary">Audience</td>
+        <td class="px-5 py-3">Trusted colleagues who share direct clinical context</td>
+        <td class="px-5 py-3 text-neutral-mid">Grieving families, future patients, and regulatory boards</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight/30">
+        <td class="px-5 py-3 font-bold text-primary">Context</td>
+        <td class="px-5 py-3">Shared clinical reality with immediate mutual support</td>
+        <td class="px-5 py-3 text-neutral-mid">Short decontextualized clip lacking medical nuance</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-white dark:bg-[var(--color-card)]">
+        <td class="px-5 py-3 font-bold text-primary">Primary Intent</td>
+        <td class="px-5 py-3">Stress decompression to maintain clinical focus</td>
+        <td class="px-5 py-3 text-neutral-mid">Follower growth, engagement algorithms, and visibility</td>
+      </tr>
+      <tr class="border-t border-primary/10 bg-primary-xlight/70 font-semibold text-accent-dark">
+        <td class="px-5 py-3 font-bold text-primary">Impact on Public Trust</td>
+        <td class="px-5 py-3 text-primary">Contained safely within the immediate care team</td>
+        <td class="px-5 py-3 text-error">Weakens community trust in the nursing profession</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 When patients or family members encounter videos ridiculing clinical vulnerability, they see callousness rather than coping. Public trust—the cornerstone of nursing care—is eroded. Learn more about professional advocacy in **[nursing politics, leadership, and professional advocacy in Kenya](/blog/nursing-politics-leadership-kenya)**.
 
@@ -590,21 +769,28 @@ Clinicians facing regulatory review often assert: *"I never named the patient, s
 
 Under privacy jurisprudence, this defense fails due to the **Mosaic Effect**:
 
-\`\`\`mermaid
-flowchart LR
-    A["Distinctive Ward Interior / Scrub Emblem"] --> D["MOSAIC IDENTIFICATION"]
-    B["Post Timestamp and Shift Context"] --> D
-    C["Specific Rare Clinical Presentation Mentioned"] --> D
-    D --> E["Patient or Family Identifies Case & Lodges Complaint"]
-\`\`\`
-
-The Mosaic Effect occurs when separate non-identifying details combine to identify a specific individual:
-- The architectural design or paint scheme of a regional hospital ward.
-- The timing of the post matching an admission window.
-- A distinctive diagnosis or patient age group.
-- The creator's public profile disclosing their employment location.
-
-Once assembled, breach of confidentiality is established under statutory law.
+<div class="my-8 p-6 bg-[var(--color-card)] rounded-2xl border border-primary/20 shadow-sm space-y-4">
+  <h3 class="text-base font-heading font-bold text-primary flex items-center gap-2">
+    <span>🧩</span> How the "Mosaic Effect" Identifies Patients Without Names
+  </h3>
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center text-xs">
+    <div class="p-3.5 rounded-xl bg-primary-xlight/50 border border-primary/10 flex flex-col justify-center">
+      <strong class="text-primary text-sm block mb-1">Visual Clues</strong>
+      <p class="text-neutral-mid text-[11px]">Distinctive ward curtains, scrub embroidery, or hospital architecture</p>
+    </div>
+    <div class="p-3.5 rounded-xl bg-primary-xlight/50 border border-primary/10 flex flex-col justify-center">
+      <strong class="text-primary text-sm block mb-1">Temporal Context</strong>
+      <p class="text-neutral-mid text-[11px]">Video timestamp matching a 3:00 AM admission on a specific ward</p>
+    </div>
+    <div class="p-3.5 rounded-xl bg-primary-xlight/50 border border-primary/10 flex flex-col justify-center">
+      <strong class="text-primary text-sm block mb-1">Clinical Details</strong>
+      <p class="text-neutral-mid text-[11px]">Mention of patient age group and unique symptoms or diagnosis</p>
+    </div>
+  </div>
+  <div class="p-3.5 rounded-xl bg-accent-light/60 border border-accent/20 text-center text-xs font-semibold text-accent-dark">
+    Legal Outcome: When pieced together, these separate clues definitively identify the patient under the Kenya Data Protection Act, resulting in an unlawful disclosure.
+  </div>
+</div>
 
 ## Statutory Regulations in Kenya and Globally
 
