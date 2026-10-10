@@ -202,7 +202,7 @@ export default function AdminStudentsPage() {
         <Card className="p-4"><p className="text-xs text-neutral-mid">No exam date set</p><p className="text-2xl font-heading font-bold text-neutral-mid mt-1">{examSummary.unscheduled}</p></Card>
       </div>
 
-      <p className="text-xs text-neutral-mid">Exam status is inferred from each student’s saved target exam date; it does not confirm attendance or results.</p>
+      <p className="text-xs text-neutral-mid">Exam status is inferred from each student's saved target exam date; it does not confirm attendance or results.</p>
 
       <div className="flex gap-3 max-w-2xl">
         <input
@@ -405,7 +405,7 @@ export default function AdminStudentsPage() {
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 rounded-full bg-success/10 flex items-center justify-center flex-shrink-0">
                     <svg className="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 002 2z" />
                     </svg>
                   </div>
                   <div>

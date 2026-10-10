@@ -8,6 +8,12 @@ export const dynamic = 'force-dynamic';
 
 type TargetRole = 'student' | 'tutor';
 
+// examFilter is only applicable when targetRole === 'student'
+// 'all'    → all students (default)
+// 'passed' → students whose exam_date is in the past
+// 'active' → students whose exam_date is in the future OR has not been set
+type ExamFilter = 'all' | 'passed' | 'active';
+
 const MAX_TOTAL_ATTACHMENT_BYTES = 20 * 1024 * 1024;
 const BATCH_SIZE = 5;
 const ALLOWED_ATTACHMENT_TYPES = new Set([
@@ -75,6 +81,7 @@ export async function POST(req: NextRequest) {
 
     const formData = await req.formData();
     const targetRole = formData.get('targetRole');
+    const examFilterRaw = String(formData.get('examFilter') ?? 'all').trim();
     const subject = String(formData.get('subject') ?? '').trim();
     const message = String(formData.get('message') ?? '').trim();
     const files = formData.getAll('attachments').filter((entry): entry is File => entry instanceof File && entry.size > 0);
@@ -82,6 +89,10 @@ export async function POST(req: NextRequest) {
     if (targetRole !== 'student' && targetRole !== 'tutor') {
       return NextResponse.json({ error: 'Choose students or tutors.' }, { status: 400 });
     }
+
+    const examFilter: ExamFilter = (examFilterRaw === 'passed' || examFilterRaw === 'active')
+      ? examFilterRaw
+      : 'all';
 
     if (!subject || !message) {
       return NextResponse.json({ error: 'Subject and message are required.' }, { status: 400 });
@@ -109,19 +120,58 @@ export async function POST(req: NextRequest) {
     );
 
     const admin = createAdminClient();
-    const { data: recipientsData, error: recipientsError } = await admin
+
+    // Fetch ALL profiles for the role — no artificial cap.
+    const { data: profilesData, error: profilesError } = await admin
       .from('profiles')
       .select('id, full_name, email')
       .eq('role', targetRole as TargetRole)
-      .order('created_at', { ascending: false })
-      .limit(500);
+      .order('created_at', { ascending: false });
 
-    if (recipientsError) throw recipientsError;
+    if (profilesError) throw profilesError;
 
-    const recipients = (recipientsData ?? []) as Array<{ id: string; full_name: string | null; email: string | null }>;
-    const validRecipients = recipients.filter((profile): profile is { id: string; full_name: string | null; email: string } => Boolean(profile.email));
+    let profiles = (profilesData ?? []) as Array<{ id: string; full_name: string | null; email: string | null }>;
+
+    // Apply exam-date filter for students only.
+    if (targetRole === 'student' && examFilter !== 'all') {
+      const profileIds = profiles.map(p => p.id);
+      if (profileIds.length > 0) {
+        const { data: spData } = await admin
+          .from('student_profiles')
+          .select('id, exam_date')
+          .in('id', profileIds);
+
+        const examDateMap = new Map(
+          ((spData ?? []) as Array<{ id: string; exam_date: string | null }>).map(s => [s.id, s.exam_date])
+        );
+
+        const now = new Date();
+
+        profiles = profiles.filter(p => {
+          const examDateRaw = examDateMap.get(p.id) ?? null;
+          if (!examDateRaw) {
+            // No exam date set — treat as "active" (not passed)
+            return examFilter === 'active';
+          }
+          const examTs = new Date(examDateRaw).getTime();
+          if (!Number.isFinite(examTs)) {
+            // Unparseable date — treat as "active"
+            return examFilter === 'active';
+          }
+          const hasPassed = examTs <= now.getTime();
+          return examFilter === 'passed' ? hasPassed : !hasPassed;
+        });
+      }
+    }
+
+    const validRecipients = profiles.filter(
+      (p): p is { id: string; full_name: string | null; email: string } => Boolean(p.email)
+    );
+
+    const skipped = profiles.length - validRecipients.length;
+
     if (validRecipients.length === 0) {
-      return NextResponse.json({ sent: 0, failed: 0, skipped: 0, total: 0, failures: [] });
+      return NextResponse.json({ sent: 0, failed: 0, skipped, total: profiles.length, failures: [] });
     }
 
     let sent = 0;
@@ -141,7 +191,6 @@ export async function POST(req: NextRequest) {
             attachments,
             renderBulkEmailHtml(firstName, message)
           );
-
           return { recipient, result };
         })
       );
@@ -158,8 +207,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       sent,
       failed: failures.length,
-      skipped: recipients.length - validRecipients.length,
-      total: recipients.length,
+      skipped,
+      total: profiles.length,
       failures: failures.slice(0, 20),
     });
   } catch (err) {

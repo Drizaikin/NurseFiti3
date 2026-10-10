@@ -11,6 +11,7 @@ import 'react-quill/dist/quill.snow.css';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 type TargetRole = 'student' | 'tutor';
+type ExamFilter = 'all' | 'passed' | 'active';
 
 type SendResult = {
   sent: number;
@@ -27,8 +28,15 @@ function formatBytes(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
+const EXAM_FILTER_OPTIONS: Array<{ value: ExamFilter; label: string; desc: string }> = [
+  { value: 'all',    label: 'All students',          desc: 'Every registered student' },
+  { value: 'active', label: 'Upcoming / no date set', desc: 'Exam date in the future, or no date set' },
+  { value: 'passed', label: 'Exam date passed',       desc: 'Students whose exam date has already passed' },
+];
+
 export default function AdminEmailPage() {
   const [targetRole, setTargetRole] = useState<TargetRole>('student');
+  const [examFilter, setExamFilter] = useState<ExamFilter>('all');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [attachments, setAttachments] = useState<File[]>([]);
@@ -45,6 +53,18 @@ export default function AdminEmailPage() {
     totalAttachmentBytes <= MAX_TOTAL_ATTACHMENT_BYTES &&
     !isSending;
 
+  // Reset exam filter when switching to tutors (not applicable)
+  const handleRoleChange = (role: TargetRole) => {
+    setTargetRole(role);
+    if (role === 'tutor') setExamFilter('all');
+  };
+
+  const audienceSummary = () => {
+    if (targetRole === 'tutor') return 'Tutors only';
+    const filterLabel = EXAM_FILTER_OPTIONS.find(o => o.value === examFilter)?.label ?? 'All students';
+    return `Students — ${filterLabel}`;
+  };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!canSend) return;
@@ -55,6 +75,7 @@ export default function AdminEmailPage() {
     try {
       const formData = new FormData();
       formData.append('targetRole', targetRole);
+      formData.append('examFilter', examFilter);
       formData.append('subject', subject.trim());
       formData.append('message', message.trim());
       attachments.forEach(file => formData.append('attachments', file));
@@ -89,6 +110,7 @@ export default function AdminEmailPage() {
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-6">
         <Card className="space-y-5">
+          {/* Audience role */}
           <div>
             <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Audience</label>
             <div className="grid grid-cols-2 gap-3">
@@ -99,7 +121,7 @@ export default function AdminEmailPage() {
                 <button
                   key={option.value}
                   type="button"
-                  onClick={() => setTargetRole(option.value)}
+                  onClick={() => handleRoleChange(option.value)}
                   className={`rounded-xl border-2 px-4 py-3 text-sm font-semibold transition-all ${
                     targetRole === option.value
                       ? 'border-primary bg-primary-light text-primary'
@@ -112,6 +134,44 @@ export default function AdminEmailPage() {
             </div>
           </div>
 
+          {/* Exam date filter — students only */}
+          {targetRole === 'student' && (
+            <div>
+              <label className="block text-sm font-semibold mb-2 text-[var(--color-text)]">
+                Filter by exam date
+              </label>
+              <div className="grid grid-cols-1 gap-2">
+                {EXAM_FILTER_OPTIONS.map(option => (
+                  <label
+                    key={option.value}
+                    className={`flex items-start gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all ${
+                      examFilter === option.value
+                        ? 'border-primary bg-primary-light'
+                        : 'border-[var(--color-border)] hover:border-primary/40'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="examFilter"
+                      value={option.value}
+                      checked={examFilter === option.value}
+                      onChange={() => setExamFilter(option.value)}
+                      className="mt-0.5 accent-primary shrink-0"
+                    />
+                    <div>
+                      <p className="text-sm font-semibold text-[var(--color-text)]">{option.label}</p>
+                      <p className="text-xs text-neutral-mid">{option.desc}</p>
+                    </div>
+                    {examFilter === option.value && (
+                      <span className="ml-auto text-primary shrink-0">✓</span>
+                    )}
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Subject */}
           <div>
             <label htmlFor="subject" className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Subject</label>
             <input
@@ -124,6 +184,7 @@ export default function AdminEmailPage() {
             />
           </div>
 
+          {/* Message */}
           <div>
             <label htmlFor="message" className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Message</label>
             <div className="bg-[var(--color-card)] rounded-xl overflow-hidden [&_.ql-toolbar]:border-[var(--color-border)] [&_.ql-container]:border-[var(--color-border)] [&_.ql-editor]:min-h-[250px] [&_.ql-editor]:text-sm [&_.ql-editor]:leading-relaxed focus-within:ring-2 focus-within:ring-primary/40 focus-within:border-transparent transition-all">
@@ -145,6 +206,7 @@ export default function AdminEmailPage() {
             </div>
           </div>
 
+          {/* Attachments */}
           <div>
             <label htmlFor="attachments" className="block text-sm font-semibold mb-2 text-[var(--color-text)]">Attachments</label>
             <input
@@ -190,13 +252,14 @@ export default function AdminEmailPage() {
           </div>
         </Card>
 
+        {/* Right sidebar */}
         <div className="space-y-4">
           <Card>
             <h2 className="font-heading font-bold text-[var(--color-text)] mb-3">Send Summary</h2>
             <dl className="space-y-3 text-sm">
               <div className="flex justify-between gap-4">
                 <dt className="text-neutral-mid">Audience</dt>
-                <dd className="font-semibold text-[var(--color-text)]">{targetRole === 'student' ? 'Students only' : 'Tutors only'}</dd>
+                <dd className="font-semibold text-[var(--color-text)] text-right">{audienceSummary()}</dd>
               </div>
               <div className="flex justify-between gap-4">
                 <dt className="text-neutral-mid">Attachments</dt>

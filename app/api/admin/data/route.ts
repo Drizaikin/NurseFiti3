@@ -119,8 +119,7 @@ export async function GET(req: NextRequest) {
           .from('profiles')
           .select('id, full_name, email, created_at, is_locked')
           .eq('role', 'student')
-          .order('created_at', { ascending: false })
-          .limit(200);
+          .order('created_at', { ascending: false });
 
       if (profilesRes.error) {
         console.error('[admin/data] profiles query error:', profilesRes.error);
@@ -172,8 +171,7 @@ export async function GET(req: NextRequest) {
           .from('profiles')
           .select('id, full_name, email, phone, created_at, is_locked')
           .eq('role', 'tutor')
-          .order('created_at', { ascending: false })
-          .limit(200);
+          .order('created_at', { ascending: false });
 
       if (profilesRes.error) {
         console.error('[admin/data] tutor profiles query error:', profilesRes.error);
