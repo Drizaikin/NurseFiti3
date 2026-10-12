@@ -462,6 +462,74 @@ export async function GET(req: NextRequest) {
       }
     }
 
+    // ─── Expired exam active — students with past exam date who logged in recently ─
+    if (type === 'expired-exam-active') {
+      try {
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+        const { data: recentLogins, error: loginsError } = await (admin as any)
+          .from('user_logins')
+          .select('user_id, logged_in_at')
+          .eq('role', 'student')
+          .gte('logged_in_at', thirtyDaysAgo.toISOString());
+
+        if (loginsError || !recentLogins || recentLogins.length === 0) {
+          return NextResponse.json({ students: [] });
+        }
+
+        // Build map: user_id -> most recent login timestamp
+        const loginMap = new Map<string, string>();
+        for (const row of recentLogins as Array<{ user_id: string; logged_in_at: string }>) {
+          const existing = loginMap.get(row.user_id);
+          if (!existing || row.logged_in_at > existing) {
+            loginMap.set(row.user_id, row.logged_in_at);
+          }
+        }
+        const recentUserIds = Array.from(loginMap.keys());
+
+        // Query student_profiles for those users and filter by expired exam_date
+        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+        const { data: spData } = await (admin as any)
+          .from('student_profiles')
+          .select('id, exam_date, exam_cycle')
+          .in('id', recentUserIds)
+          .lt('exam_date', today);
+
+        if (!spData || spData.length === 0) {
+          return NextResponse.json({ students: [] });
+        }
+
+        const expiredProfiles = spData as Array<{ id: string; exam_date: string; exam_cycle: string | null }>;
+        const expiredIds = expiredProfiles.map(s => s.id);
+        const spMap = new Map(expiredProfiles.map(s => [s.id, s]));
+
+        // Fetch display names and emails from profiles table
+        const { data: profilesData } = await (admin as any)
+          .from('profiles')
+          .select('id, full_name, email')
+          .in('id', expiredIds);
+
+        const students = ((profilesData ?? []) as Array<{ id: string; full_name: string; email: string }>)
+          .map(p => {
+            const sp = spMap.get(p.id);
+            return {
+              id: p.id,
+              full_name: p.full_name,
+              email: p.email,
+              exam_date: sp?.exam_date ?? '',
+              exam_cycle: sp?.exam_cycle ?? null,
+              last_login_at: loginMap.get(p.id) ?? '',
+            };
+          })
+          .sort((a, b) => b.last_login_at.localeCompare(a.last_login_at));
+
+        return NextResponse.json({ students });
+      } catch {
+        return NextResponse.json({ students: [], notice: 'Failed to load expired-exam-active data.' });
+      }
+    }
+
     return NextResponse.json({ error: 'Unknown type' }, { status: 400 });
   } catch (err) {
     console.error('[admin/data]', err);

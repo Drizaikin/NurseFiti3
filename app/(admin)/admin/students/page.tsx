@@ -21,6 +21,15 @@ interface Student {
   is_locked: boolean;
 }
 
+interface ExpiredActiveStudent {
+  id: string;
+  full_name: string;
+  email: string;
+  exam_date: string;
+  exam_cycle: string | null;
+  last_login_at: string;
+}
+
 const TIER_BADGE: Record<string, 'amber' | 'teal' | 'secondary'> = {
   premium:  'amber',
   standard: 'teal',
@@ -75,6 +84,13 @@ export default function AdminStudentsPage() {
 
   // Confirm modal for lock / delete
   const [confirmAction, setConfirmAction] = useState<ConfirmAction | null>(null);
+
+  // Expired-exam-active section
+  const [expiredActive, setExpiredActive] = useState<ExpiredActiveStudent[]>([]);
+  const [expiredLoading, setExpiredLoading] = useState(false);
+  const [expiredError, setExpiredError] = useState('');
+  const [showExpired, setShowExpired] = useState(false);
+  const [expiredFetched, setExpiredFetched] = useState(false);
 
   const loadStudents = useCallback(async () => {
     setIsLoading(true);
@@ -249,6 +265,30 @@ export default function AdminStudentsPage() {
   // Minimum date for the exam date picker: tomorrow
   const minExamDate = new Date(Date.now() + 86_400_000).toISOString().slice(0, 10);
 
+  // ── Expired-exam-active ───────────────────────────────────────────────────
+
+  const loadExpiredActive = async () => {
+    setExpiredLoading(true);
+    setExpiredError('');
+    try {
+      const res = await fetch('/api/admin/data?type=expired-exam-active');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Failed to load');
+      setExpiredActive(data.students ?? []);
+    } catch (err) {
+      setExpiredError(err instanceof Error ? err.message : 'Failed to load');
+    } finally {
+      setExpiredLoading(false);
+      setExpiredFetched(true);
+    }
+  };
+
+  const toggleExpiredSection = () => {
+    const next = !showExpired;
+    setShowExpired(next);
+    if (next && !expiredFetched) loadExpiredActive();
+  };
+
   // ── Render ───────────────────────────────────────────────────────────────
 
   return (
@@ -401,6 +441,105 @@ export default function AdminStudentsPage() {
           </table>
         </div>
       )}
+
+      {/* ── Recently Active — Expired Exam Date ── */}
+      <div className="border border-[var(--color-border)] rounded-2xl overflow-hidden">
+        <button
+          onClick={toggleExpiredSection}
+          className="w-full flex items-center justify-between px-5 py-4 bg-amber-50 dark:bg-amber-900/10 hover:bg-amber-100 dark:hover:bg-amber-900/20 transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            <span className="text-amber-600 text-xl">⚠️</span>
+            <div className="text-left">
+              <p className="font-heading font-semibold text-amber-900 dark:text-amber-100 text-sm">
+                Recently Active — Expired Exam Date
+              </p>
+              <p className="text-xs text-amber-700 dark:text-amber-300/70">
+                Students who logged in within the last 30 days but have a past exam date
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            {expiredFetched && (
+              <span className="bg-amber-200 dark:bg-amber-800 text-amber-900 dark:text-amber-100 text-xs font-bold px-2 py-0.5 rounded-full">
+                {expiredActive.length}
+              </span>
+            )}
+            <svg className={`w-4 h-4 text-amber-600 transition-transform ${showExpired ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </button>
+
+        {showExpired && (
+          <div className="p-4">
+            {expiredLoading ? (
+              <div className="flex items-center justify-center py-8"><Spinner size="lg" color="primary" /></div>
+            ) : expiredError ? (
+              <div className="text-center py-6">
+                <p className="text-error text-sm mb-3">{expiredError}</p>
+                <Button variant="outline" size="sm" onClick={loadExpiredActive}>Retry</Button>
+              </div>
+            ) : expiredActive.length === 0 ? (
+              <p className="text-center py-6 text-neutral-mid text-sm">
+                No recently-active students with a past exam date. ✅
+              </p>
+            ) : (
+              <div className="overflow-x-auto rounded-xl border border-[var(--color-border)]">
+                <table className="w-full text-sm">
+                  <thead className="bg-amber-50 dark:bg-amber-900/10">
+                    <tr>
+                      <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Student</th>
+                      <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Exam Date (Passed)</th>
+                      <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Cycle</th>
+                      <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Last Login</th>
+                      <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {expiredActive.map((s, i) => (
+                      <tr key={s.id} className={`border-t border-[var(--color-border)] ${i % 2 === 0 ? '' : 'bg-amber-50/30 dark:bg-amber-900/5'}`}>
+                        <td className="px-4 py-3">
+                          <p className="font-medium text-[var(--color-text)]">{s.full_name}</p>
+                          <p className="text-xs text-neutral-mid">{s.email}</p>
+                        </td>
+                        <td className="px-4 py-3">
+                          <span className="text-error font-semibold text-xs">
+                            {new Date(s.exam_date).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-xs text-neutral-mid">{s.exam_cycle ?? '—'}</td>
+                        <td className="px-4 py-3 text-xs text-neutral-mid">
+                          {new Date(s.last_login_at).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}
+                          <span className="block text-[10px] text-neutral-mid/70">
+                            {new Date(s.last_login_at).toLocaleTimeString('en-KE', { hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3">
+                          <Button variant="outline" size="sm" onClick={() => openExamModal({
+                            id: s.id,
+                            full_name: s.full_name,
+                            email: s.email,
+                            cadre: '—',
+                            exam_date: s.exam_date,
+                            exam_cycle: s.exam_cycle,
+                            plan_tier: 'free',
+                            plan_expires_at: null,
+                            created_at: '',
+                            is_locked: false,
+                          })}>
+                            Fix Exam Date
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
 
       {/* ── Plan modal ── */}
       {planModal && (

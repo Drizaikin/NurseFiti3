@@ -1,0 +1,26 @@
+{
+  "id": "FEAT-002",
+  "type": "feat",
+  "description": "Add an admin view for students with expired exam dates who have logged in recently (within 30 days). Implementation: (1) extend /api/admin/data route with a new type='expired-exam-active' query, (2) add a new collapsible section or tab to the existing admin students page showing the filtered list. The admin students page is already appropriately sized and can accept a new in-page section — no sub-page needed. Independent of FEAT-001.",
+  "status": "completed",
+  "steps": [
+    "In app/api/admin/data/route.ts, add a new branch: if (type === 'expired-exam-active'). This branch: (a) computes a cutoff of 30 days ago (const thirtyDaysAgo = new Date(); thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)), (b) queries user_logins via the admin client to find distinct user_ids of students who logged in within the last 30 days: const { data: recentLogins } = await (admin as any).from('user_logins').select('user_id').eq('role', 'student').gte('logged_in_at', thirtyDaysAgo.toISOString()), (c) deduplicate those user_ids into an array recentUserIds, (d) queries student_profiles for those users: .from('student_profiles').select('id, exam_date, exam_cycle').in('id', recentUserIds), (e) filters in code to keep only those where exam_date < today (new Date().toISOString().split('T')[0]), (f) fetches their profiles from the profiles table: .from('profiles').select('id, full_name, email').in('id', filteredIds), (g) finds the most recent logged_in_at for each user from the recentLogins results, (h) joins and returns an array { id, full_name, email, exam_date, exam_cycle, last_login_at }. Return as NextResponse.json({ students: [...] }).",
+    "In app/(admin)/admin/students/page.tsx, add a new state: const [expiredActive, setExpiredActive] = useState<ExpiredActiveStudent[]>([]); const [expiredLoading, setExpiredLoading] = useState(false); const [expiredError, setExpiredError] = useState(''); const [showExpired, setShowExpired] = useState(false). Add an interface: interface ExpiredActiveStudent { id: string; full_name: string; email: string; exam_date: string; exam_cycle: string | null; last_login_at: string; }.",
+    "Add a fetchExpiredActive function that calls fetch('/api/admin/data?type=expired-exam-active') and populates setExpiredActive.",
+    "In the JSX, after the existing student table section, add a collapsible 'Recently Active — Expired Exam Date' section. A toggle button (chevron + count badge) expands/collapses it. When expanded and expiredActive is empty (and not loading), call fetchExpiredActive on first open (use a useEffect or call it inline on button click). Show a table with columns: Student (name + email), Exam Date (past date in red), Exam Cycle, Last Login. Each row has an 'Edit Exam Date' button that calls openExamModal(s) — but the student type here is ExpiredActiveStudent, which is compatible with the modal's needs (id, full_name, exam_date, exam_cycle). Cast or adapt as needed. Add 'No exam date set' display safety. Table uses the same styling as the main students table (border, alternating rows).",
+    "Run npx tsc --noEmit and fix any TypeScript errors."
+  ],
+  "acceptance_criteria": [
+    "GET /api/admin/data?type=expired-exam-active returns a JSON array of students whose exam_date < today AND who have a user_logins record within the last 30 days.",
+    "The admin students page has a collapsible section that, when expanded, fetches and displays that list.",
+    "Expired exam dates are highlighted in red/amber.",
+    "Last login date is shown.",
+    "The 'Edit Exam Date' button in the expired section opens the existing exam-date modal and allows the admin to set a new date.",
+    "No TypeScript errors introduced."
+  ],
+  "verification": [
+    "Run `npx tsc --noEmit` in c:\\Users\\Administrator\\Nursefiti3 — zero new errors on admin/students/page.tsx and app/api/admin/data/route.ts."
+  ],
+  "blocked_reason": null,
+  "findings": "Implemented successfully. Zero TypeScript errors in either modified file. 25 pre-existing errors exist in unrelated files (app/api/admin/broadcast/route.ts, app/api/admin/community-post/route.ts, app/api/admin/flagged/resolve/route.ts, app/api/admin/questions/[id]/route.ts, app/api/admin/set-exam-date/route.ts, app/api/admin/set-plan/route.ts, app/api/admin/settings/route.ts, components/student/WhatsNewModal.tsx) — none introduced by this change. The expired-exam-active API branch gracefully returns { students: [] } if user_logins table does not exist or returns an error, following the same pattern as the analytics branch."
+}
