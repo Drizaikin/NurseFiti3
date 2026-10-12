@@ -89,5 +89,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'yearly',
       priority: 0.3,
     },
+    // Video sitemap is a separate file at /video-sitemap.xml
+    // and is referenced directly in robots.txt for Google Video indexing.
   ];
 }

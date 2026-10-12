@@ -10,6 +10,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createRouteClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { effectiveTier } from '@/lib/planLimits';
+import type { QuestionStatus } from '@/lib/types/database.types';
 
 // Force dynamic rendering — this route reads cookies (auth session)
 // and must never be statically generated at build time.
@@ -243,7 +244,7 @@ export async function GET(req: NextRequest) {
       const { data: questionsData } = await admin
         .from('questions')
         .select('id, cadre, unit, topic, stem, option_a, option_b, option_c, option_d, correct_option, rationale, difficulty, contributor_id, status, created_at')
-        .eq('status', statusFilter)
+        .eq('status', statusFilter as QuestionStatus)
         .order('created_at', { ascending: false })
         .limit(200);
 

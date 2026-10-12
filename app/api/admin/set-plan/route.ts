@@ -44,12 +44,12 @@ export async function POST(req: NextRequest) {
       ? new Date(activatedAt.getTime() + durationDays * 24 * 60 * 60 * 1000).toISOString()
       : null;
 
-    let upload: { id: string; status: string; email_sent: boolean | null } | null = null;
+    let upload: { id: string; status: string; email_sent: boolean } | null = null;
     if (uploadId) {
       const { data, error } = await adminSupabase.from('question_uploads').select('id, status, email_sent').eq('id', uploadId).eq('student_id', studentId).maybeSingle();
       if (error) throw error;
       if (!data) return NextResponse.json({ error: 'Past-paper upload not found for this student.' }, { status: 404 });
-      upload = data as typeof upload;
+      upload = data;
       if (upload.status !== 'pending' && !(upload.status === 'approved' && !upload.email_sent)) {
         return NextResponse.json({ error: 'This upload has already been reviewed.' }, { status: 409 });
       }

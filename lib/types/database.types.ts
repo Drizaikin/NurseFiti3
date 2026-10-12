@@ -1,12 +1,16 @@
 /**
  * Supabase database types — hand-maintained until `supabase gen types` is run.
  * Covers all tables defined in the migration files.
+ *
+ * Every table carries `Relationships: []` to satisfy GenericTable in
+ * @supabase/postgrest-js v2, which requires that field to be present or
+ * `.from()` calls return `never`.
  */
 
 export type UserRole = 'student' | 'tutor' | 'admin';
 export type Cadre = 'KRCHN' | 'BScN' | 'Higher Diploma';
 export type ExamCycle = 'May' | 'August' | 'November';
-export type PlanTier = 'free' | 'standard' | 'premium';
+export type PlanTier = 'free' | 'daily' | 'weekly' | 'standard' | 'premium';
 export type VerificationStatus = 'pending' | 'verified' | 'rejected';
 export type VerificationTier = 'standard' | 'gold';
 export type QuestionStatus = 'pending_review' | 'approved' | 'rejected' | 'needs_revision';
@@ -36,6 +40,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['profiles']['Row'], 'created_at' | 'is_locked'> & { is_locked?: boolean };
         Update: Partial<Database['public']['Tables']['profiles']['Row']>;
+        Relationships: [];
       };
 
       student_profiles: {
@@ -68,6 +73,7 @@ export interface Database {
           plan_expires_at?: string | null;
         };
         Update: Partial<Database['public']['Tables']['student_profiles']['Row']>;
+        Relationships: [];
       };
 
       tutor_profiles: {
@@ -98,10 +104,13 @@ export interface Database {
           academic_qualification_url: string | null;
           national_id_url: string | null;
           rejection_reason: string | null;
+          is_anonymous?: boolean;
+          pseudonym?: string | null;
         };
         Insert: Omit<Database['public']['Tables']['tutor_profiles']['Row'],
           'total_students' | 'total_sessions' | 'average_rating' | 'pass_rate'>;
         Update: Partial<Database['public']['Tables']['tutor_profiles']['Row']>;
+        Relationships: [];
       };
 
       questions: {
@@ -131,6 +140,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['questions']['Row'], 'id' | 'views' | 'created_at'>;
         Update: Partial<Database['public']['Tables']['questions']['Row']>;
+        Relationships: [];
       };
 
       student_answers: {
@@ -147,6 +157,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['student_answers']['Row'], 'id' | 'answered_at'>;
         Update: Partial<Database['public']['Tables']['student_answers']['Row']>;
+        Relationships: [];
       };
 
       mock_exam_results: {
@@ -165,6 +176,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['mock_exam_results']['Row'], 'id'>;
         Update: Partial<Database['public']['Tables']['mock_exam_results']['Row']>;
+        Relationships: [];
       };
 
       flashcard_decks: {
@@ -180,6 +192,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['flashcard_decks']['Row'], 'id' | 'card_count' | 'created_at'>;
         Update: Partial<Database['public']['Tables']['flashcard_decks']['Row']>;
+        Relationships: [];
       };
 
       flashcards: {
@@ -196,6 +209,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['flashcards']['Row'], 'id' | 'created_at'>;
         Update: Partial<Database['public']['Tables']['flashcards']['Row']>;
+        Relationships: [];
       };
 
       flashcard_progress: {
@@ -213,6 +227,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['flashcard_progress']['Row'], 'id' | 'updated_at'>;
         Update: Partial<Database['public']['Tables']['flashcard_progress']['Row']>;
+        Relationships: [];
       };
 
       tutor_availability: {
@@ -226,6 +241,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['tutor_availability']['Row'], 'id'>;
         Update: Partial<Database['public']['Tables']['tutor_availability']['Row']>;
+        Relationships: [];
       };
 
       sessions: {
@@ -262,6 +278,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['sessions']['Row'], 'id' | 'booked_at' | 'reviewed'>;
         Update: Partial<Database['public']['Tables']['sessions']['Row']>;
+        Relationships: [];
       };
 
       session_reviews: {
@@ -278,6 +295,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['session_reviews']['Row'], 'id' | 'created_at'>;
         Update: Partial<Database['public']['Tables']['session_reviews']['Row']>;
+        Relationships: [];
       };
 
       study_groups: {
@@ -295,6 +313,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['study_groups']['Row'], 'id' | 'member_count' | 'created_at'>;
         Update: Partial<Database['public']['Tables']['study_groups']['Row']>;
+        Relationships: [];
       };
 
       group_members: {
@@ -306,6 +325,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['group_members']['Row'], 'joined_at'>;
         Update: Partial<Database['public']['Tables']['group_members']['Row']>;
+        Relationships: [];
       };
 
       revision_plans: {
@@ -326,6 +346,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['revision_plans']['Row'], 'id' | 'generated_at'>;
         Update: Partial<Database['public']['Tables']['revision_plans']['Row']>;
+        Relationships: [];
       };
 
       student_badges: {
@@ -337,6 +358,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['student_badges']['Row'], 'id' | 'earned_at'>;
         Update: Partial<Database['public']['Tables']['student_badges']['Row']>;
+        Relationships: [];
       };
 
       notifications: {
@@ -348,10 +370,17 @@ export interface Database {
           body: string;
           is_read: boolean;
           action_url: string | null;
+          is_broadcast: boolean;
+          read_count: number;
+          target_role: string | null;
           created_at: string;
         };
-        Insert: Omit<Database['public']['Tables']['notifications']['Row'], 'id' | 'is_read' | 'created_at'>;
+        Insert: Omit<Database['public']['Tables']['notifications']['Row'], 'id' | 'is_read' | 'read_count' | 'created_at'> & {
+          is_broadcast?: boolean;
+          target_role?: string | null;
+        };
         Update: Partial<Database['public']['Tables']['notifications']['Row']>;
+        Relationships: [];
       };
 
       payments: {
@@ -382,6 +411,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['payments']['Row'], 'id' | 'initiated_at'>;
         Update: Partial<Database['public']['Tables']['payments']['Row']>;
+        Relationships: [];
       };
 
       tutor_payouts: {
@@ -390,9 +420,9 @@ export interface Database {
           tutor_id: string;
           amount: number;
           currency: string;
-          tracking_id: string | null;       // IntaSend send-money tracking ID
-          recipient_code: string | null;    // Legacy Paystack field
-          transfer_code: string | null;     // Legacy Paystack field
+          tracking_id: string | null;
+          recipient_code: string | null;
+          transfer_code: string | null;
           status: PayoutStatus;
           reason: string | null;
           initiated_at: string;
@@ -400,6 +430,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['tutor_payouts']['Row'], 'id' | 'initiated_at'>;
         Update: Partial<Database['public']['Tables']['tutor_payouts']['Row']>;
+        Relationships: [];
       };
 
       study_notes: {
@@ -416,6 +447,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['study_notes']['Row'], 'id' | 'views' | 'created_at'>;
         Update: Partial<Database['public']['Tables']['study_notes']['Row']>;
+        Relationships: [];
       };
 
       flagged_questions: {
@@ -424,9 +456,13 @@ export interface Database {
           student_id: string;
           question_id: string;
           flagged_at: string;
+          status: string | null;
+          reason: string | null;
+          details: string | null;
         };
         Insert: Omit<Database['public']['Tables']['flagged_questions']['Row'], 'id' | 'flagged_at'>;
         Update: Partial<Database['public']['Tables']['flagged_questions']['Row']>;
+        Relationships: [];
       };
 
       session_notes: {
@@ -440,6 +476,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['session_notes']['Row'], 'id' | 'created_at' | 'updated_at'>;
         Update: Partial<Database['public']['Tables']['session_notes']['Row']>;
+        Relationships: [];
       };
 
       units: {
@@ -456,6 +493,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['units']['Row'], 'id' | 'question_count' | 'created_at'>;
         Update: Partial<Database['public']['Tables']['units']['Row']>;
+        Relationships: [];
       };
 
       app_feedback: {
@@ -476,6 +514,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['app_feedback']['Row'], 'id' | 'helpful_count' | 'is_pinned' | 'created_at'>;
         Update: Partial<Database['public']['Tables']['app_feedback']['Row']>;
+        Relationships: [];
       };
 
       feedback_helpful: {
@@ -486,6 +525,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['feedback_helpful']['Row'], 'created_at'>;
         Update: never;
+        Relationships: [];
       };
 
       practice_sessions: {
@@ -502,6 +542,7 @@ export interface Database {
         };
         Insert: Omit<Database['public']['Tables']['practice_sessions']['Row'], 'id' | 'questions_answered' | 'correct_answers' | 'started_at'>;
         Update: Partial<Database['public']['Tables']['practice_sessions']['Row']>;
+        Relationships: [];
       };
 
       activity_logs: {
@@ -516,6 +557,7 @@ export interface Database {
         };
         Insert: Partial<Database['public']['Tables']['activity_logs']['Row']>;
         Update: Partial<Database['public']['Tables']['activity_logs']['Row']>;
+        Relationships: [];
       };
 
       page_views: {
@@ -529,6 +571,118 @@ export interface Database {
         };
         Insert: Partial<Database['public']['Tables']['page_views']['Row']>;
         Update: Partial<Database['public']['Tables']['page_views']['Row']>;
+        Relationships: [];
+      };
+
+      tutor_messages: {
+        Row: {
+          id: string;
+          author_id: string;
+          body: string;
+          reply_to_id: string | null;
+          quote_body: string | null;
+          quote_author: string | null;
+          is_deleted: boolean;
+          is_admin_post: boolean;
+          likes_count: number;
+          views_count: number;
+          created_at: string;
+        };
+        Insert: {
+          author_id: string;
+          body: string;
+          reply_to_id?: string | null;
+          quote_body?: string | null;
+          quote_author?: string | null;
+          is_deleted?: boolean;
+          is_admin_post?: boolean;
+          likes_count?: number;
+          views_count?: number;
+        };
+        Update: Partial<Database['public']['Tables']['tutor_messages']['Row']>;
+        Relationships: [];
+      };
+
+      community_messages: {
+        Row: {
+          id: string;
+          author_id: string;
+          group_id: string;
+          body: string;
+          reply_to_id: string | null;
+          quote_body: string | null;
+          quote_author: string | null;
+          is_deleted: boolean;
+          is_admin_post: boolean;
+          likes_count: number;
+          views_count: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          author_id: string;
+          group_id: string;
+          body: string;
+          reply_to_id?: string | null;
+          quote_body?: string | null;
+          quote_author?: string | null;
+          is_deleted?: boolean;
+          is_admin_post?: boolean;
+          likes_count?: number;
+          views_count?: number;
+        };
+        Update: Partial<Database['public']['Tables']['community_messages']['Row']>;
+        Relationships: [];
+      };
+
+      question_uploads: {
+        Row: {
+          id: string;
+          student_id: string;
+          file_urls: string[];
+          file_names: string[];
+          file_count: number;
+          status: string;
+          rejection_reason: string | null;
+          admin_note: string | null;
+          reviewed_by: string | null;
+          reviewed_at: string | null;
+          email_sent: boolean;
+          submitted_at: string;
+        };
+        Insert: {
+          student_id: string;
+          file_urls: string[];
+          file_names: string[];
+          file_count: number;
+          status?: string;
+          rejection_reason?: string | null;
+          admin_note?: string | null;
+          reviewed_by?: string | null;
+          reviewed_at?: string | null;
+          email_sent?: boolean;
+        };
+        Update: Partial<Database['public']['Tables']['question_uploads']['Row']>;
+        Relationships: [];
+      };
+
+      platform_settings: {
+        Row: {
+          id: number;
+          allow_tutor_custom_pricing: boolean;
+          krchn_hourly_rate: number;
+          bscn_hourly_rate: number;
+          plan_daily_price: number;
+          plan_weekly_price: number;
+          plan_standard_price: number;
+          plan_premium_price: number;
+          hd_material_price: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Partial<Database['public']['Tables']['platform_settings']['Row']>;
+        Update: Partial<Database['public']['Tables']['platform_settings']['Row']>;
+        Relationships: [];
       };
 
       scholarship_campaigns: {
@@ -547,6 +701,7 @@ export interface Database {
         };
         Insert: Partial<Database['public']['Tables']['scholarship_campaigns']['Row']>;
         Update: Partial<Database['public']['Tables']['scholarship_campaigns']['Row']>;
+        Relationships: [];
       };
 
       scholarship_deposits: {
@@ -560,6 +715,7 @@ export interface Database {
         };
         Insert: Partial<Database['public']['Tables']['scholarship_deposits']['Row']>;
         Update: Partial<Database['public']['Tables']['scholarship_deposits']['Row']>;
+        Relationships: [];
       };
 
       scholarship_applications: {
@@ -587,6 +743,7 @@ export interface Database {
         };
         Insert: Partial<Database['public']['Tables']['scholarship_applications']['Row']>;
         Update: Partial<Database['public']['Tables']['scholarship_applications']['Row']>;
+        Relationships: [];
       };
 
       scholarship_beneficiaries: {
@@ -602,6 +759,7 @@ export interface Database {
         };
         Insert: Partial<Database['public']['Tables']['scholarship_beneficiaries']['Row']>;
         Update: Partial<Database['public']['Tables']['scholarship_beneficiaries']['Row']>;
+        Relationships: [];
       };
 
       scholarship_allocation_ledger: {
@@ -617,6 +775,7 @@ export interface Database {
         };
         Insert: Partial<Database['public']['Tables']['scholarship_allocation_ledger']['Row']>;
         Update: Partial<Database['public']['Tables']['scholarship_allocation_ledger']['Row']>;
+        Relationships: [];
       };
 
       scholarship_fund_reservations: {
@@ -632,6 +791,7 @@ export interface Database {
         };
         Insert: Partial<Database['public']['Tables']['scholarship_fund_reservations']['Row']>;
         Update: Partial<Database['public']['Tables']['scholarship_fund_reservations']['Row']>;
+        Relationships: [];
       };
     };
     Views: Record<string, never>;
