@@ -1,0 +1,7 @@
+{
+  "task_id": "task-expired-exam-audit",
+  "task_description": "Add student expired-exam-date notification banner, add admin view for recently-active students with expired exam dates, and audit the full platform for TypeScript errors and regressions.",
+  "status": "pending",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003"],
+  "blocked_reason": null
+}

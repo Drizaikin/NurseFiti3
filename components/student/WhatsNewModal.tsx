@@ -48,6 +48,9 @@ interface WhatsNewRelease {
   version: number;
   date: string;
   items: WhatsNewItem[];
+  title?: string;
+  description?: string;
+  highlights?: string[];
 }
 
 const WHATS_NEW_RELEASES: WhatsNewRelease[] = [

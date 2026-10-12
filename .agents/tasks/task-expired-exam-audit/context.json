@@ -1,0 +1,32 @@
+{
+  "project_type": "Next.js 14 App Router (TypeScript) + Supabase backend. Client components use '@/lib/supabase/client'; server components and API routes use '@/lib/supabase/server' (createClient / createRouteClient) and '@/lib/supabase/admin' (createAdminClient with service-role key).",
+  "language": "TypeScript / TSX",
+  "build_system": "Next.js 14 with npm. No special quirks.",
+  "test_framework": "vitest (npm run test). TypeScript check: npm run typecheck (tsc --noEmit).",
+  "build_command": "npm run build",
+  "test_command": "npm run typecheck",
+  "verification_instructions": "Run `npx tsc --noEmit` in c:\\Users\\Administrator\\Nursefiti3 to check for TypeScript errors. Inspect output for zero errors on new files and report pre-existing errors separately.",
+  "snapshot_or_generated_files": null,
+  "environment_constraints": "Windows PowerShell. Do NOT push to git — local commits only when asked. All absolute paths use c:\\Users\\Administrator\\Nursefiti3 as root.",
+  "contribution_requirements": "No new npm dependencies. Match NurseFiti teal/emerald palette. Use existing UI components: Card, Button, Badge, Spinner from @/components/ui/. 'use client' only when interactivity is required.",
+  "key_patterns": "Dashboard (app/(student)/dashboard/page.tsx) is 'use client'. Banners are rendered inline in DashboardPage's JSX return, before <HeroBanner>. Admin data fetches go through /api/admin/data?type=X (admin client). New admin data types are added as new 'if (type === ...)' branches. Activity tracking: user_logins table (user_id, role, logged_in_at) and page_visits table (user_id, role, page_slug, visited_at) — both queried via createAdminClient. Badge variants: teal, amber, green, red, secondary, warning. All client components in dashboard already have 'data.student.exam_date' available as a string from state.",
+  "relevant_files": [
+    "app/(student)/dashboard/page.tsx",
+    "app/(student)/settings/page.tsx",
+    "app/(admin)/admin/students/page.tsx",
+    "app/(admin)/admin/scholarships/[campaignId]/ClientManager.tsx",
+    "app/(admin)/admin/scholarships/[campaignId]/page.tsx",
+    "app/sponsor/[slug]/page.tsx",
+    "app/scholarships/[slug]/apply/page.tsx",
+    "app/api/admin/data/route.ts",
+    "lib/supabase/admin.ts",
+    "lib/supabase/client.ts",
+    "lib/supabase/server.ts",
+    "lib/types/database.types.ts",
+    "components/ui/Badge.tsx",
+    "components/ui/Card.tsx",
+    "components/ui/Button.tsx",
+    "components/ui/Spinner.tsx"
+  ],
+  "directory_structure": "app/(student)/ — student-facing pages. app/(admin)/admin/ — all admin pages. app/api/admin/ — admin-only API routes. components/ui/ — shared UI primitives. lib/supabase/ — Supabase client factories. lib/types/ — TypeScript type definitions. supabase/migrations/ — SQL migration files."
+}

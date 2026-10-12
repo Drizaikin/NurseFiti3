@@ -1,0 +1,25 @@
+{
+  "id": "FEAT-001",
+  "type": "feat",
+  "description": "Add a prominent expired-exam-date warning banner to the student dashboard. When data.student.exam_date is a past date (strictly before midnight today, local time), render a teal/amber dismissible alert banner ABOVE the HeroBanner. The banner tells the student their exam date has passed and links them to /settings to update it. Do NOT show if exam_date is today, in the future, or null/empty.",
+  "status": "completed",
+  "steps": [
+    "In app/(student)/dashboard/page.tsx, after the final xpProgress computation (around line 520) and before the JSX return, compute a boolean: const examDateExpired = (() => { if (!data.student.exam_date) return false; const examTs = new Date(data.student.exam_date).setHours(0,0,0,0); const todayTs = new Date().setHours(0,0,0,0); return examTs < todayTs; })();",
+    "In the JSX return of DashboardPage, BEFORE the <HeroBanner> element (approximately line 523), insert the banner conditionally: {examDateExpired && ( <div className='bg-amber-50 dark:bg-amber-900/20 border border-amber-300 dark:border-amber-700/50 rounded-2xl p-4 sm:p-5 shadow-sm'> ... </div> )}. The banner must: show an amber/yellow alert icon (⚠️ or SVG), heading 'Your Exam Date Has Passed', a sentence explaining the exam date they set (formatted with toLocaleDateString('en-KE', { day: 'numeric', month: 'long', year: 'numeric' })) is in the past and they should update it if incorrect, and a teal 'Update Exam Date' button that is a <Link href='/settings'> wrapping a Button with variant='primary'. Add a dismiss button (×) in the top-right corner that hides the banner — use a local useState<boolean> called examBannerDismissed defaulting to false, and guard the banner render with !examBannerDismissed.",
+    "Add the examBannerDismissed state near the other useState declarations at the top of DashboardPage.",
+    "Verify the TypeScript compiles: run npx tsc --noEmit and confirm no new errors on dashboard/page.tsx."
+  ],
+  "acceptance_criteria": [
+    "When a student's exam_date is strictly before today (midnight local time), the banner renders above HeroBanner.",
+    "When exam_date is today, in the future, or null, NO banner is shown.",
+    "Clicking 'Update Exam Date' navigates to /settings.",
+    "Clicking the dismiss (×) button hides the banner without a page reload.",
+    "Banner uses teal/amber palette consistent with other dashboard alerts (e.g., the IS_UNDER_AUDIT amber alert pattern already in the file).",
+    "No TypeScript errors introduced."
+  ],
+  "verification": [
+    "Run `npx tsc --noEmit` in c:\\Users\\Administrator\\Nursefiti3 — zero new errors on dashboard/page.tsx."
+  ],
+  "blocked_reason": null,
+  "findings": "Implemented at app/(student)/dashboard/page.tsx. State added at line 397. examDateExpired computed at lines 517-522 (after xpProgress). Banner JSX inserted at lines 529-551, before <HeroBanner>. TypeScript check: node_modules not installed on this machine; all TS errors are pre-existing 'Cannot find module' errors from missing dependencies — no new errors introduced by this change. Commit: 7cffad2."
+}
