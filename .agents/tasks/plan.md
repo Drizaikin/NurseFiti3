@@ -1,304 +1,322 @@
-# Implementation Plan — Expired Exam Date Notification + Admin View + Audit
+# Implementation Plan: TypeScript Fixes + Platform Performance
 
-## Design decisions
+## Context
 
-**Feature 1 — Banner placement:** The dashboard is a `'use client'` component with `data.student.exam_date` already available in state after `fetchDashboardData`. The banner is computed inline (no extra API call needed) using a simple `Date` comparison: `exam_date < midnight today (local)`. It is placed immediately before `<HeroBanner>` in the JSX return, following the same pattern as the existing `IS_UNDER_AUDIT` amber alert and the Telegram community banner already in the file. A `useState<boolean>` flag (`examBannerDismissed`) allows dismissal without page reload.
-
-**Feature 2 — Admin view placement:** The existing `app/(admin)/admin/students/page.tsx` is large but fully functional. A new collapsible section at the bottom of the page (toggled by a header button) is the right approach — avoids a sub-page, keeps all student management in one place, and follows the existing accordion pattern. Data is fetched lazily (only when the section is first expanded) via a new `type=expired-exam-active` branch in `/api/admin/data/route.ts`. The query joins `user_logins` (last 30 days, role=student) against `student_profiles` (exam_date < today) and `profiles` (name/email). The service-role admin client handles both tables cleanly. Last login is computed from the most recent `logged_in_at` per user_id.
-
-**Feature 3 — Audit strategy:** Run `npx tsc --noEmit`, which is already wired as `npm run typecheck`. Audit the 7 specified files for broken imports and logic bugs. New errors from FEAT-001/002 are fixed; pre-existing errors are documented separately in the FEAT-003 findings field.
-
----
-
-- [ ] 1. **Add expired exam date warning banner to student dashboard**
-      In `app/(student)/dashboard/page.tsx`: add `const [examBannerDismissed, setExamBannerDismissed] = useState(false)` near existing state declarations. After the `xpProgress` computation, add:
-      ```ts
-      const examDateExpired = (() => {
-        if (!data.student.exam_date) return false;
-        const examTs = new Date(data.student.exam_date).setHours(0, 0, 0, 0);
-        const todayTs = new Date().setHours(0, 0, 0, 0);
-        return examTs < todayTs;
-      })();
-      ```
-      In the JSX return, BEFORE `<HeroBanner ...>`, insert:
-      ```tsx
-      {examDateExpired && !examBannerDismissed && (
-        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-300 dark:border-amber-700/50 rounded-2xl p-4 sm:p-5 shadow-sm relative">
-          <button
-            onClick={() => setExamBannerDismissed(true)}
-            className="absolute top-3 right-3 text-amber-500 hover:text-amber-700 text-lg leading-none"
-            aria-label="Dismiss"
-          >×</button>
-          <div className="flex gap-4 items-start">
-            <div className="w-10 h-10 bg-amber-100 dark:bg-amber-900/50 text-amber-600 rounded-full flex items-center justify-center flex-shrink-0 text-xl">⚠️</div>
-            <div className="flex-1 min-w-0">
-              <h3 className="font-heading font-bold text-amber-900 dark:text-amber-100 mb-1">Your Exam Date Has Passed</h3>
-              <p className="text-sm text-amber-800 dark:text-amber-200/80 mb-3">
-                The exam date you set ({new Date(data.student.exam_date).toLocaleDateString('en-KE', { day: 'numeric', month: 'long', year: 'numeric' })}) is in the past. If this is incorrect, please update it so your countdown stays accurate.
-              </p>
-              <Link href="/settings">
-                <Button variant="primary" size="sm">Update Exam Date</Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
-      ```
-      Files: `app/(student)/dashboard/page.tsx`
-      Verify: `npx tsc --noEmit` — zero new errors on this file.
-
-- [ ] 2. **Extend /api/admin/data with expired-exam-active query**
-      In `app/api/admin/data/route.ts`, add a new branch **before** the final `return NextResponse.json({ error: 'Unknown type' })`:
-      ```ts
-      if (type === 'expired-exam-active') {
-        const thirtyDaysAgo = new Date();
-        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-        const { data: recentLogins } = await (admin as any)
-          .from('user_logins')
-          .select('user_id, logged_in_at')
-          .eq('role', 'student')
-          .gte('logged_in_at', thirtyDaysAgo.toISOString());
-
-        if (!recentLogins || recentLogins.length === 0) {
-          return NextResponse.json({ students: [] });
-        }
-
-        // Build map: user_id -> most recent login
-        const loginMap = new Map<string, string>();
-        for (const row of recentLogins as Array<{ user_id: string; logged_in_at: string }>) {
-          const existing = loginMap.get(row.user_id);
-          if (!existing || row.logged_in_at > existing) loginMap.set(row.user_id, row.logged_in_at);
-        }
-        const recentUserIds = Array.from(loginMap.keys());
-
-        // Filter by expired exam_date
-        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-        const { data: spData } = await (admin as any)
-          .from('student_profiles')
-          .select('id, exam_date, exam_cycle')
-          .in('id', recentUserIds)
-          .lt('exam_date', today);  // exam_date < today
-
-        if (!spData || spData.length === 0) {
-          return NextResponse.json({ students: [] });
-        }
-
-        const expiredIds = (spData as Array<{ id: string; exam_date: string; exam_cycle: string | null }>).map(s => s.id);
-        const spMap = new Map(
-          (spData as Array<{ id: string; exam_date: string; exam_cycle: string | null }>).map(s => [s.id, s])
-        );
-
-        const { data: profilesData } = await (admin as any)
-          .from('profiles')
-          .select('id, full_name, email')
-          .in('id', expiredIds);
-
-        const students = ((profilesData ?? []) as Array<{ id: string; full_name: string; email: string }>).map(p => {
-          const sp = spMap.get(p.id);
-          return {
-            id: p.id,
-            full_name: p.full_name,
-            email: p.email,
-            exam_date: sp?.exam_date ?? '',
-            exam_cycle: sp?.exam_cycle ?? null,
-            last_login_at: loginMap.get(p.id) ?? '',
-          };
-        }).sort((a, b) => b.last_login_at.localeCompare(a.last_login_at));
-
-        return NextResponse.json({ students });
-      }
-      ```
-      Files: `app/api/admin/data/route.ts`
-      Verify: `npx tsc --noEmit` — no errors on this file.
-
-- [ ] 3. **Add "Recently Active — Expired Exam Date" section to admin students page**
-      In `app/(admin)/admin/students/page.tsx`:
-      
-      a. Add interface near existing `Student` interface:
-      ```ts
-      interface ExpiredActiveStudent {
-        id: string;
-        full_name: string;
-        email: string;
-        exam_date: string;
-        exam_cycle: string | null;
-        last_login_at: string;
-      }
-      ```
-      
-      b. Add state near existing state declarations:
-      ```ts
-      const [expiredActive, setExpiredActive] = useState<ExpiredActiveStudent[]>([]);
-      const [expiredLoading, setExpiredLoading] = useState(false);
-      const [expiredError, setExpiredError] = useState('');
-      const [showExpired, setShowExpired] = useState(false);
-      const [expiredFetched, setExpiredFetched] = useState(false);
-      ```
-      
-      c. Add fetch function:
-      ```ts
-      const loadExpiredActive = async () => {
-        setExpiredLoading(true);
-        setExpiredError('');
-        try {
-          const res = await fetch('/api/admin/data?type=expired-exam-active');
-          const data = await res.json();
-          if (!res.ok) throw new Error(data.error ?? 'Failed to load');
-          setExpiredActive(data.students ?? []);
-        } catch (err) {
-          setExpiredError(err instanceof Error ? err.message : 'Failed to load');
-        } finally {
-          setExpiredLoading(false);
-          setExpiredFetched(true);
-        }
-      };
-      ```
-      
-      d. Add a toggle handler that lazy-loads on first open:
-      ```ts
-      const toggleExpiredSection = () => {
-        const next = !showExpired;
-        setShowExpired(next);
-        if (next && !expiredFetched) loadExpiredActive();
-      };
-      ```
-      
-      e. In the JSX return, **after** the main student table section and **before** the plan modal, add:
-      ```tsx
-      {/* ── Recently Active — Expired Exam Date ── */}
-      <div className="border border-[var(--color-border)] rounded-2xl overflow-hidden">
-        <button
-          onClick={toggleExpiredSection}
-          className="w-full flex items-center justify-between px-5 py-4 bg-amber-50 dark:bg-amber-900/10 hover:bg-amber-100 dark:hover:bg-amber-900/20 transition-colors"
-        >
-          <div className="flex items-center gap-3">
-            <span className="text-amber-600 text-xl">⚠️</span>
-            <div className="text-left">
-              <p className="font-heading font-semibold text-amber-900 dark:text-amber-100 text-sm">
-                Recently Active — Expired Exam Date
-              </p>
-              <p className="text-xs text-amber-700 dark:text-amber-300/70">
-                Students who logged in within the last 30 days but have a past exam date
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            {expiredFetched && (
-              <span className="bg-amber-200 dark:bg-amber-800 text-amber-900 dark:text-amber-100 text-xs font-bold px-2 py-0.5 rounded-full">
-                {expiredActive.length}
-              </span>
-            )}
-            <svg className={`w-4 h-4 text-amber-600 transition-transform ${showExpired ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </button>
-
-        {showExpired && (
-          <div className="p-4">
-            {expiredLoading ? (
-              <div className="flex items-center justify-center py-8"><Spinner size="lg" color="primary" /></div>
-            ) : expiredError ? (
-              <div className="text-center py-6">
-                <p className="text-error text-sm mb-3">{expiredError}</p>
-                <Button variant="outline" size="sm" onClick={loadExpiredActive}>Retry</Button>
-              </div>
-            ) : expiredActive.length === 0 ? (
-              <p className="text-center py-6 text-neutral-mid text-sm">
-                No recently-active students with a past exam date. ✅
-              </p>
-            ) : (
-              <div className="overflow-x-auto rounded-xl border border-[var(--color-border)]">
-                <table className="w-full text-sm">
-                  <thead className="bg-amber-50 dark:bg-amber-900/10">
-                    <tr>
-                      <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Student</th>
-                      <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Exam Date (Passed)</th>
-                      <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Cycle</th>
-                      <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Last Login</th>
-                      <th className="text-left px-4 py-3 text-neutral-mid font-semibold">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {expiredActive.map((s, i) => (
-                      <tr key={s.id} className={`border-t border-[var(--color-border)] ${i % 2 === 0 ? '' : 'bg-amber-50/30 dark:bg-amber-900/5'}`}>
-                        <td className="px-4 py-3">
-                          <p className="font-medium text-[var(--color-text)]">{s.full_name}</p>
-                          <p className="text-xs text-neutral-mid">{s.email}</p>
-                        </td>
-                        <td className="px-4 py-3">
-                          <span className="text-error font-semibold text-xs">
-                            {new Date(s.exam_date).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}
-                          </span>
-                        </td>
-                        <td className="px-4 py-3 text-xs text-neutral-mid">{s.exam_cycle ?? '—'}</td>
-                        <td className="px-4 py-3 text-xs text-neutral-mid">
-                          {new Date(s.last_login_at).toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' })}
-                          <span className="block text-[10px] text-neutral-mid/70">
-                            {new Date(s.last_login_at).toLocaleTimeString('en-KE', { hour: '2-digit', minute: '2-digit' })}
-                          </span>
-                        </td>
-                        <td className="px-4 py-3">
-                          <Button variant="outline" size="sm" onClick={() => openExamModal({
-                            id: s.id,
-                            full_name: s.full_name,
-                            email: s.email,
-                            cadre: '—',
-                            exam_date: s.exam_date,
-                            exam_cycle: s.exam_cycle,
-                            plan_tier: 'free',
-                            plan_expires_at: null,
-                            created_at: '',
-                            is_locked: false,
-                          })}>
-                            Fix Exam Date
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-      ```
-      
-      Files: `app/(admin)/admin/students/page.tsx`
-      Verify: `npx tsc --noEmit` — no errors on this file.
-
-- [ ] 4. **Platform audit — run tsc and fix new errors**
-      Run `npx tsc --noEmit` in `c:\Users\Administrator\Nursefiti3`. 
-      
-      **Audit checklist for the 7 key files:**
-      
-      - `app/(student)/dashboard/page.tsx` — confirm banner logic and HeroBanner still receives exam_date; no broken imports.
-      - `app/(student)/settings/page.tsx` — confirm exam date validation `new Date(editForm.exam_date).getTime() <= Date.now()` still works; no conflict with the banner (settings updates exam_date; banner re-evaluates on next login).
-      - `app/(admin)/admin/students/page.tsx` — confirm new ExpiredActiveStudent interface, new state, and new JSX compile cleanly; openExamModal adapter cast is correct.
-      - `app/(admin)/admin/scholarships/[campaignId]/ClientManager.tsx` — check the `availableFunds` computation; verify all supabase calls compile; look for any uncast property accesses on `any` types that TypeScript might flag.
-      - `app/(admin)/admin/scholarships/[campaignId]/page.tsx` — verify `premiumPrice` is a `number` (from `settings.plan_premium_price`) and passes cleanly to `<ClientManager>`.
-      - `app/sponsor/[slug]/page.tsx` — verify recharts imports (BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer) are all used and types resolve; verify `SponsorCheckout` import resolves.
-      - `app/scholarships/[slug]/apply/page.tsx` — verify `ApplyForm` import resolves to `app/scholarships/[slug]/apply/ApplyForm.tsx`; if this file does not exist, create a minimal stub (client component with a form that posts to `/api/scholarships/apply`).
-      
-      Fix any errors introduced by FEAT-001, FEAT-002, or pre-existing trivial issues. Document non-trivial pre-existing errors without fixing them.
-      
-      Files: any of the 7 audited files that have fixable errors.
-      Verify: `npx tsc --noEmit` — zero errors introduced by this task.
+- **Project**: NurseFiti — Next.js 14 App Router, Supabase, TypeScript
+- **Build command**: `npm run build` (or `npx next build`)
+- **Typecheck command**: `npm run typecheck` (i.e. `tsc --noEmit`)
+- **TypeScript errors are ignored during `next build`** (`typescript.ignoreBuildErrors: true` in next.config.mjs), so `tsc --noEmit` is the definitive verification command.
+- **No test suite exists** for these files; verification = the typecheck passing cleanly.
 
 ---
 
-## Risks and gotchas found during exploration
+## Part 1: Fix 24 TypeScript Errors (database.types.ts additions)
 
-1. **`user_logins` table may not exist in all environments.** The existing analytics branch already handles this gracefully (checks for error on the query). The new `expired-exam-active` branch should similarly guard against a missing table by checking if `recentLogins` has an error and returning `{ students: [] }` instead of a 500.
+### Root Cause Analysis
 
-2. **`exam_date` is stored as a date string (`YYYY-MM-DD`) in `student_profiles`.** The Supabase `.lt('exam_date', today)` filter compares ISO date strings lexicographically, which is correct for `YYYY-MM-DD` format.
+The Supabase client is typed via `Database` in `lib/types/database.types.ts`. When a table definition is missing, `.from('missing_table')` returns `never` for all operations, causing every insert/update/select on that table to emit TS errors.
 
-3. **Dashboard banner dismissal is in-memory only.** Refreshing the page will show the banner again. This is intentional — the student should be nudged every session until they fix their date. If persistence is needed, `localStorage` can be added later.
+The 7 affected route files operate on these **5 missing/incomplete tables**:
 
-4. **The `openExamModal` in the admin page validates that the new date must be in the future** (line ~163: `if (new Date(examDateInput).getTime() <= Date.now())`). This is correct behavior — the admin must set a future date.
+---
 
-5. **`ApplyForm.tsx`** — need to verify it exists at `app/scholarships/[slug]/apply/ApplyForm.tsx`. The import in `apply/page.tsx` assumes it does. If missing, FEAT-003 must create a stub.
+### Table 1: `notifications` — missing `is_broadcast` and `target_role` columns
 
-6. **TypeScript `as any` casts** are used pervasively in `ClientManager.tsx` and `sponsor/[slug]/page.tsx` to bypass Supabase type inference. This is the existing pattern — do not remove them, as it would introduce more errors than it fixes.
+**Used by**: `app/api/admin/broadcast/route.ts` line 37 — inserts `{ ..., is_broadcast: true, target_role: ... }`.
+
+The migration `20260606000001_community_v2.sql` added:
+```sql
+ALTER TABLE notifications
+  ADD COLUMN IF NOT EXISTS is_broadcast BOOLEAN DEFAULT FALSE,
+  ADD COLUMN IF NOT EXISTS read_count   INTEGER DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS target_role  TEXT;
+```
+
+**Fix**: Add `is_broadcast: boolean`, `read_count: number`, `target_role: string | null` to `notifications.Row` and allow them in `Insert`.
+
+---
+
+### Table 2: `tutor_messages` — entirely missing from database.types.ts
+
+**Used by**: `app/api/admin/community-post/route.ts` line 21 — `.from('tutor_messages').insert(...)`.
+
+From `20260606000001_community_v2.sql`:
+```sql
+CREATE TABLE IF NOT EXISTS tutor_messages (
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  author_id     UUID REFERENCES profiles NOT NULL,
+  body          TEXT NOT NULL CHECK (char_length(body) <= 2000),
+  reply_to_id   UUID REFERENCES tutor_messages(id) ON DELETE SET NULL,
+  quote_body    TEXT,
+  quote_author  TEXT,
+  is_deleted    BOOLEAN DEFAULT FALSE,
+  is_admin_post BOOLEAN DEFAULT FALSE,
+  likes_count   INTEGER DEFAULT 0,
+  views_count   INTEGER DEFAULT 0,
+  created_at    TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+**Fix**: Add full `tutor_messages` table definition.
+
+---
+
+### Table 3: `community_messages` — entirely missing from database.types.ts
+
+**Used by**: `app/api/admin/community-post/route.ts` line 30 — `.from('community_messages').insert(...)`.
+
+From `20260604000002_avatars_chat_onboarding.sql` (plus v2 additions):
+```sql
+CREATE TABLE IF NOT EXISTS community_messages (
+  id            UUID,
+  author_id     UUID,
+  group_id      UUID,
+  body          TEXT,
+  reply_to_id   UUID | null,
+  quote_body    TEXT | null,
+  quote_author  TEXT | null,
+  is_deleted    BOOLEAN,
+  is_admin_post BOOLEAN,   -- added in community_v2
+  likes_count   INTEGER,   -- added in community_v2
+  views_count   INTEGER,   -- added in community_v2
+  created_at    TIMESTAMPTZ,
+  updated_at    TIMESTAMPTZ
+);
+```
+
+**Fix**: Add full `community_messages` table definition.
+
+---
+
+### Table 4: `flagged_questions` — missing `status`, `reason`, `details` columns
+
+**Used by**: `app/api/admin/flagged/resolve/route.ts` line 71 — `.update({ status: 'resolved' })`.
+
+From `20260626000005_update_flagged_questions.sql`:
+```sql
+ALTER TABLE flagged_questions
+  ADD COLUMN IF NOT EXISTS reason TEXT,
+  ADD COLUMN IF NOT EXISTS details TEXT,
+  ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'pending';
+```
+
+The existing `flagged_questions.Row` has only `id, student_id, question_id, flagged_at`. It needs `status`, `reason`, and `details` added.
+
+**Fix**: Extend `flagged_questions.Row` and `Update` with `status: string | null`, `reason: string | null`, `details: string | null`.
+
+---
+
+### Table 5: `question_uploads` — entirely missing from database.types.ts
+
+**Used by**: `app/api/admin/set-plan/route.ts` — queries `question_uploads` for `.select('id, status, email_sent')` and `.update({ status, admin_note, reviewed_by, reviewed_at })`.
+
+From `20260524000004_daily_weekly_plans_and_uploads.sql`:
+```sql
+CREATE TABLE IF NOT EXISTS question_uploads (
+  id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  student_id      UUID REFERENCES profiles NOT NULL,
+  file_urls       TEXT[] NOT NULL,
+  file_names      TEXT[] NOT NULL,
+  file_count      INTEGER NOT NULL,
+  status          TEXT CHECK (status IN ('pending', 'approved', 'rejected', 'duplicate')) DEFAULT 'pending',
+  rejection_reason TEXT,
+  admin_note      TEXT,
+  reviewed_by     UUID REFERENCES profiles,
+  reviewed_at     TIMESTAMPTZ,
+  email_sent      BOOLEAN DEFAULT FALSE,
+  submitted_at    TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+**Fix**: Add full `question_uploads` table definition.
+
+---
+
+### Table 6: `platform_settings` — entirely missing from database.types.ts
+
+**Used by**: `app/api/admin/settings/route.ts` — `.update(payload.data).eq('id', 1)` where payload includes fields like `allow_tutor_custom_pricing`, `krchn_hourly_rate`, etc.
+
+From `20260707120000_dynamic_pricing_and_anonymity.sql` plus `20260728150000_hd_materials_feature.sql`:
+```sql
+CREATE TABLE IF NOT EXISTS platform_settings (
+    id integer PRIMARY KEY DEFAULT 1,
+    allow_tutor_custom_pricing boolean DEFAULT false,
+    krchn_hourly_rate numeric DEFAULT 1500,
+    bscn_hourly_rate numeric DEFAULT 1800,
+    plan_daily_price numeric DEFAULT 99,
+    plan_weekly_price numeric DEFAULT 499,
+    plan_standard_price numeric DEFAULT 1199,
+    plan_premium_price numeric DEFAULT 3500,
+    hd_material_price integer DEFAULT 500,        -- added in hd_materials_feature
+    created_at timestamptz,
+    updated_at timestamptz,
+    CONSTRAINT single_row CHECK (id = 1)
+);
+```
+
+**Fix**: Add full `platform_settings` table definition.
+
+---
+
+### Additional TypeScript Issue: `set-plan/route.ts` null guard
+
+**Error lines**: `set-plan/route.ts:53` — three TS18047 (`upload` is possibly `null`).
+
+The variable `upload` is typed as `{ id: string; status: string; email_sent: boolean | null } | null` and on line 53 it's used without a null check inside an `if (uploadId)` branch. The fix is adding `&& upload !== null` to the condition on line 53 that checks `upload.status`, matching the existing null pattern already used in the route.
+
+---
+
+### Ordered Fix Steps (Part 1)
+
+- [ ] 1. Add the 6 missing/incomplete table definitions to `lib/types/database.types.ts`.
+        Extend `notifications.Row/Insert` with `is_broadcast`, `read_count`, `target_role`.
+        Add `tutor_messages`, `community_messages`, `question_uploads`, `platform_settings` as new table entries.
+        Extend `flagged_questions.Row/Update` with `status`, `reason`, `details`.
+        **Files**: `lib/types/database.types.ts`
+        **Verify**: `npm run typecheck` — the 24 errors in the 7 admin routes drop to zero. No new errors introduced.
+
+- [ ] 2. Fix the null-guard TypeScript error in `set-plan/route.ts`.
+        On the line that reads `if (!upload || upload.status === 'pending') {` (line ~53), this is fine as written but TS cannot narrow it after the earlier `return` guard. The root cause is that `upload` is typed as `{ id; status; email_sent } | null`. The question_uploads table definition added in step 1 will resolve most of these via the typed client. If TS errors 53, 58, 59, 62, 68, 75, 76, 79, 80, 86 persist after step 1 (because the route uses `.maybeSingle()` which still returns `T | null`), add an explicit null-narrowing guard: `if (!upload) { ... already handled above ... }` is already present; the remaining errors at lines 58+ are inside `if (!upload || upload.status === 'pending')` which is safe. If TS still complains, cast the local `upload` variable type explicitly after the null check.
+        **Files**: `app/api/admin/set-plan/route.ts`
+        **Verify**: `npm run typecheck` — zero errors.
+
+---
+
+## Part 2: Performance Optimizations
+
+### P0 — Highest Impact
+
+- [ ] 3. **Parallelize login page auth check** (login/page.tsx — sequential DB calls on sign-in).
+        After `signInWithPassword` succeeds, the login form does two sequential awaits: `supabase.auth.signInWithPassword` → then `supabase.from('profiles').select('role')` → then (for tutors only) `supabase.from('tutor_profiles').select(...)`. The profile fetch is sequential but only one query, so it's not a bottleneck. However for **tutor login**, there are two sequential DB queries after auth. Wrap the tutor path in a `Promise.all`: fetch `profiles` (role) and `tutor_profiles` (verification status) simultaneously in a single `Promise.all` for any login attempt (not just tutor), since we don't know the role until after the first query. **Risk**: The role must be known before choosing which second query to fire. The safest optimization is to always fire `profiles.select('role')` after sign-in as currently done (1 query, already fast), then only fire `tutor_profiles` for tutors. No further parallelization is possible here without over-fetching. **Verdict**: Leave the login page as-is; the sequential queries are role-conditional and cannot be parallelized without knowing role first. Documented as already optimal.
+
+- [ ] 4. **Add `priority` prop to above-the-fold Next.js `<Image>` components**.
+        Audit `(marketing)` pages and the `NurseFitiLogo` component (used on login/signup pages) for `<Image>` tags that are above the fold but lack `priority`. The NurseFitiLogo renders an `<img>` element (or SVG inline) — verify whether it uses `next/image` with `priority`.
+        **Files to check and update**: Search `components/shared/NurseFitiLogo.tsx`, any hero images in `app/(marketing)/**/*.tsx`.
+        **Files**: `components/shared/NurseFitiLogo.tsx` and any marketing hero images.
+        **Verify**: `npm run typecheck` passes, `npm run build` succeeds.
+
+- [ ] 5. **Dashboard parallel fetch is already optimal** — the client-side `fetchDashboardData` already uses `Promise.all` with 9 parallel queries (confirmed in `dashboard/page.tsx` lines ~100–110). No change needed here.
+
+---
+
+### P1 — Meaningful Wins
+
+- [ ] 6. **Add Suspense boundary to the login page's `<LoginForm>` component**.
+        The login page already correctly wraps `<LoginForm>` in `<Suspense>` (visible at the bottom of `app/(auth)/login/page.tsx`). This is already done correctly.
+
+- [ ] 7. **Middleware static-asset exclusion audit**.
+        The middleware `config.matcher` already correctly excludes `_next/static`, `_next/image`, `favicon.ico`, images (svg, png, jpg, etc.), and `api/` routes:
+        ```js
+        matcher: ['/((?!_next/static|_next/image|favicon.ico|api/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|xml|txt)$).*)']
+        ```
+        This is already optimal — no changes needed.
+
+- [ ] 8. **Middleware: add `.ico` and font extensions to static exclusion**.
+        The current matcher excludes common image extensions but not font files (`.woff`, `.woff2`, `.ttf`) or `.ico` (only `favicon.ico` by exact name). Add font extensions to the regex so middleware never runs on font requests.
+        **Files**: `middleware.ts`
+        **Change**: Update the `matcher` regex to:
+        ```
+        '/((?!_next/static|_next/image|favicon.ico|api/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|xml|txt|ico|woff|woff2|ttf|eot|otf)$).*)'
+        ```
+        **Risk**: Low. This only skips middleware for font file requests, which should never require auth checks.
+        **Verify**: `npm run typecheck` passes. Confirm in the browser that auth still works on protected routes.
+
+---
+
+### P2 — Moderate Wins (safe, no API changes)
+
+- [ ] 9. **Lazy-load `FeedbackWall` and `FeedbackWidget` on the dashboard with `next/dynamic`**.
+        Both components are below the fold on the dashboard and non-critical for initial render. They currently load synchronously, adding to the JS bundle for the first paint.
+        **Files**: `app/(student)/dashboard/page.tsx`
+        **Change**:
+        ```ts
+        import dynamic from 'next/dynamic';
+        const FeedbackWidget = dynamic(() => import('@/components/shared/FeedbackWidget').then(m => ({ default: m.FeedbackWidget })), { ssr: false });
+        const FeedbackWall = dynamic(() => import('@/components/shared/FeedbackWall').then(m => ({ default: m.FeedbackWall })), { ssr: false });
+        ```
+        Remove the existing static imports for `FeedbackWidget` and `FeedbackWall`.
+        **Risk**: These are client-only widgets (`"use client"`). `ssr: false` prevents hydration mismatches.
+        **Verify**: `npm run build` succeeds with no errors. Dashboard still shows the feedback components after scrolling down.
+
+- [ ] 10. **Lazy-load `AppRatingModal` with `next/dynamic`**.
+        `AppRatingModal` is imported statically on the dashboard but only shown on a delayed timer/trigger — it is never part of the initial paint.
+        **Files**: `app/(student)/dashboard/page.tsx`
+        **Change**:
+        ```ts
+        const AppRatingModal = dynamic(() => import('./AppRatingModal').then(m => ({ default: m.AppRatingModal })), { ssr: false });
+        ```
+        Remove the existing static import.
+        **Risk**: Low. The component is gated behind a modal trigger, not rendered until user interaction.
+        **Verify**: `npm run build` succeeds. The app rating modal still appears when triggered.
+
+- [ ] 11. **Lazy-load `WhatsNewProvider` and `OnboardingTourGate` in student layout**.
+        Both components in `app/(student)/layout.tsx` are secondary UX layers (tour and what's-new modal). They do not affect the first meaningful paint. Lazy-loading them reduces the server-rendered HTML and initial JS.
+        **Files**: `app/(student)/layout.tsx`
+        **Change**:
+        ```ts
+        const OnboardingTourGate = dynamic(() => import('@/components/student/OnboardingTourGate').then(m => ({ default: m.OnboardingTourGate })), { ssr: false });
+        const WhatsNewProvider = dynamic(() => import('@/components/student/WhatsNewProvider').then(m => ({ default: m.WhatsNewProvider })), { ssr: false });
+        ```
+        Keep `Sidebar`, `Topbar`, `BadgeProvider`, `ActivityTracker` as static imports — these are required at first paint.
+        **Risk**: Low. Both components are only shown after the main content loads and are not layout-critical.
+        **Verify**: `npm run build` and `npm run typecheck` pass. Onboarding tour and what's-new modal still function.
+
+- [ ] 12. **next.config.mjs: enable `compress` and verify image optimization settings**.
+        Next.js has `compress: true` by default. The current config already has `formats: ['image/avif', 'image/webp']` and `optimizePackageImports` for recharts/framer-motion. No changes needed here — config is already well-optimized.
+
+---
+
+### P3 — Report Only (do NOT fix — require schema/architecture changes)
+
+The following N+1 patterns exist but fixing them would require either schema changes or component API changes that fall outside the scope of this task:
+
+1. **Admin students page** (`/api/admin/data?type=students`): loads ALL students at once without pagination. With thousands of users this will slow down and hit Supabase row limits. Fix requires adding server-side pagination (limit/offset params) to the API and infinite scroll or page controls to the frontend. Deferred — not safe to change without UI changes.
+
+2. **Dashboard `fetchDashboardData`**: queries `flashcard_progress` counting ALL rows for that user with `.select('id')` (line: `supabase.from('flashcard_progress').select('id').eq('student_id', user.id)`). As the user reviews thousands of cards this row count grows. Fix: use `{ count: 'exact', head: true }` for a COUNT query instead of fetching all rows. **This is safe to fix** — see item 13 below.
+
+- [ ] 13. **Fix flashcard count query to use COUNT instead of fetching all rows** (dashboard).
+        **Files**: `app/(student)/dashboard/page.tsx`
+        **Change**: Replace:
+        ```ts
+        supabase.from('flashcard_progress').select('id').eq('student_id', user.id),
+        ```
+        With:
+        ```ts
+        supabase.from('flashcard_progress').select('id', { count: 'exact', head: true }).eq('student_id', user.id),
+        ```
+        And update the data access from `flashRes.data?.length ?? 0` to `flashRes.count ?? 0`.
+        Same optimization for `mock_exam_results`:
+        ```ts
+        supabase.from('mock_exam_results').select('id', { count: 'exact', head: true }).eq('student_id', user.id),
+        ```
+        And `mockRes.data?.length ?? 0` → `mockRes.count ?? 0`.
+        **Risk**: Low. Both are read-only stat counts. The count value is functionally identical.
+        **Verify**: `npm run typecheck` passes. Dashboard still shows correct mock exam and flashcard counts.
+
+---
+
+## Execution Order (dependency-aware)
+
+1. Step 1 — fix database.types.ts (unblocks steps 2, and is prerequisite for correct typing)
+2. Step 2 — fix set-plan null guard (depends on step 1 for the typed client)
+3. Steps 3–6 — verify existing implementations are already optimal (no code changes)
+4. Step 8 — middleware matcher update (standalone, safe)
+5. Step 9 — lazy-load FeedbackWall/FeedbackWidget (standalone)
+6. Step 10 — lazy-load AppRatingModal (standalone)
+7. Step 11 — lazy-load layout providers (standalone)
+8. Step 13 — fix COUNT queries on dashboard (standalone)
+
+**Final verification after all steps**: `npm run typecheck` → 0 errors. `npm run build` → clean build.
+
+---
+
+## Risks and Skipped Items
+
+| Item | Risk | Decision |
+|------|------|----------|
+| Login page sequential DB calls | Queries are role-conditional; can't parallelize without over-fetching | Skip |
+| Admin students pagination | Requires frontend UI changes | Report only (P3) |
+| Route logic changes | Out of scope; only types/imports changed | Not touched |
+| `next.config.mjs` compress/images | Already optimal | No change |
+| Middleware auth logic | Correct and already well-structured | No change |
+| `<Image priority>` on logo | NurseFitiLogo uses SVG/CSS logo, not `<Image>` — verify in step 4 | Verify then act |

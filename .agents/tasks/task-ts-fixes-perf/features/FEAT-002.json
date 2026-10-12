@@ -1,0 +1,31 @@
+{
+  "id": "FEAT-002",
+  "type": "perf",
+  "description": "Apply safe platform performance optimizations with no breaking changes: lazy-load non-critical dashboard components with next/dynamic, fix N+1 COUNT queries on the dashboard, and extend middleware static-asset exclusion for font files. All changes are isolated to 3 files.",
+  "status": "pending",
+  "steps": [
+    "Read app/(student)/dashboard/page.tsx to confirm the current imports and the fetchDashboardData function before editing.",
+    "In app/(student)/dashboard/page.tsx, replace the static imports for FeedbackWidget, FeedbackWall, and AppRatingModal with dynamic imports using next/dynamic and ssr: false. These components are below-the-fold and non-critical for the first render. The existing import paths are: '@/components/shared/FeedbackWidget' (named export FeedbackWidget), '@/components/shared/FeedbackWall' (named export FeedbackWall), and './AppRatingModal' (named export AppRatingModal). Add `import dynamic from 'next/dynamic'` at the top. Remove the three static import lines.",
+    "In app/(student)/dashboard/page.tsx, in fetchDashboardData, fix the mock_exam_results and flashcard_progress queries to use COUNT instead of fetching all rows. Replace: `supabase.from('mock_exam_results').select('id').eq('student_id', user.id)` with `supabase.from('mock_exam_results').select('id', { count: 'exact', head: true }).eq('student_id', user.id)`. Replace: `supabase.from('flashcard_progress').select('id').eq('student_id', user.id)` with `supabase.from('flashcard_progress').select('id', { count: 'exact', head: true }).eq('student_id', user.id)`. Update the data access: `mockRes.data?.length ?? 0` becomes `mockRes.count ?? 0`, and `flashRes.data?.length ?? 0` becomes `flashRes.count ?? 0`.",
+    "Read app/(student)/layout.tsx to confirm the current imports before editing.",
+    "In app/(student)/layout.tsx, replace the static imports for OnboardingTourGate and WhatsNewProvider with next/dynamic (ssr: false). These are post-paint overlays that do not affect initial layout. Keep Sidebar, Topbar, ActivityTracker, BadgeProvider as static imports — they are layout-critical.",
+    "Read middleware.ts to confirm the current matcher config before editing.",
+    "In middleware.ts, update the config.matcher regex to also exclude font file extensions. Current regex excludes: `svg|png|jpg|jpeg|gif|webp|xml|txt`. Add: `ico|woff|woff2|ttf|eot|otf`. New regex: `'/((?!_next/static|_next/image|favicon.ico|api/|.*\\\\.(?:svg|png|jpg|jpeg|gif|webp|xml|txt|ico|woff|woff2|ttf|eot|otf)$).*)'`. Do NOT change any middleware logic, only the matcher config string.",
+    "Run `npm run typecheck` to confirm zero new TypeScript errors from these changes.",
+    "Run `npm run build` to confirm the build completes successfully."
+  ],
+  "acceptance_criteria": [
+    "FeedbackWidget, FeedbackWall, and AppRatingModal are loaded via next/dynamic with ssr: false in app/(student)/dashboard/page.tsx.",
+    "OnboardingTourGate and WhatsNewProvider are loaded via next/dynamic with ssr: false in app/(student)/layout.tsx.",
+    "mock_exam_results and flashcard_progress queries in fetchDashboardData use { count: 'exact', head: true } and access .count instead of .data.length.",
+    "middleware.ts config.matcher regex includes font file extensions (woff, woff2, ttf, eot, otf, ico).",
+    "`npm run typecheck` reports 0 new errors introduced by these changes.",
+    "`npm run build` completes successfully."
+  ],
+  "verification": [
+    "cd c:\\Users\\Administrator\\Nursefiti3 && npm run typecheck",
+    "cd c:\\Users\\Administrator\\Nursefiti3 && npm run build"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

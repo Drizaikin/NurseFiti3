@@ -1,0 +1,7 @@
+{
+  "task_id": "task-ts-fixes-perf",
+  "task_description": "Fix 24 TypeScript errors in 7 admin API routes by adding missing table definitions to database.types.ts, then apply safe performance optimizations: lazy-load non-critical dashboard components, fix COUNT queries, update middleware matcher.",
+  "status": "pending",
+  "feature_order": ["FEAT-001", "FEAT-002"],
+  "blocked_reason": null
+}
