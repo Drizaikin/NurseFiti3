@@ -394,6 +394,7 @@ export default function DashboardPage() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [dynamicMeta, setDynamicMeta] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [examBannerDismissed, setExamBannerDismissed] = useState(false);
 
   useEffect(() => {
     fetchDashboardData();
@@ -514,8 +515,38 @@ export default function DashboardPage() {
   const xpInLevel = data.student.xp % xpPerLevel;
   const xpProgress = Math.min(100, (xpInLevel / xpPerLevel) * 100);
 
+  const examDateExpired = (() => {
+    if (!data.student.exam_date) return false;
+    const examTs = new Date(data.student.exam_date).setHours(0, 0, 0, 0);
+    const todayTs = new Date().setHours(0, 0, 0, 0);
+    return examTs < todayTs;
+  })();
+
   return (
     <div className="space-y-5 pb-24 lg:pb-6">
+
+      {/* ── Expired exam date warning banner ───────────────────────────── */}
+      {examDateExpired && !examBannerDismissed && (
+        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-300 dark:border-amber-700/50 rounded-2xl p-4 sm:p-5 shadow-sm relative">
+          <button
+            onClick={() => setExamBannerDismissed(true)}
+            className="absolute top-3 right-3 text-amber-500 hover:text-amber-700 text-lg leading-none"
+            aria-label="Dismiss"
+          >×</button>
+          <div className="flex gap-4 items-start">
+            <div className="w-10 h-10 bg-amber-100 dark:bg-amber-900/50 text-amber-600 rounded-full flex items-center justify-center flex-shrink-0 text-xl">⚠️</div>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-heading font-bold text-amber-900 dark:text-amber-100 mb-1">Your Exam Date Has Passed</h3>
+              <p className="text-sm text-amber-800 dark:text-amber-200/80 mb-3">
+                The exam date you set ({new Date(data.student.exam_date).toLocaleDateString('en-KE', { day: 'numeric', month: 'long', year: 'numeric' })}) is in the past. If this is incorrect, please update it so your countdown stays accurate.
+              </p>
+              <Link href="/settings">
+                <Button variant="primary" size="sm">Update Exam Date</Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── Hero banner ────────────────────────────────────────────────── */}
       <HeroBanner
