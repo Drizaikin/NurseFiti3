@@ -86,6 +86,7 @@ export async function middleware(req: NextRequest) {
     '/revision-plan/share',
     '/scholarships',
     '/sitemap.xml',
+    '/video-sitemap.xml',
     '/robots.txt',
   ];
 
@@ -268,6 +269,6 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|api/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|xml|txt)$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|api/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|xml|txt|ico|woff|woff2|ttf|eot|otf)$).*)',
   ],
 };

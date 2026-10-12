@@ -1,10 +1,19 @@
 import type { Metadata } from 'next';
 import { Sidebar } from '@/components/student/Sidebar';
 import { Topbar } from '@/components/student/Topbar';
-import { OnboardingTourGate } from '@/components/student/OnboardingTourGate';
 import { ActivityTracker } from '@/components/student/ActivityTracker';
 import { BadgeProvider } from '@/components/student/BadgeProvider';
-import { WhatsNewProvider } from '@/components/student/WhatsNewProvider';
+import nextDynamic from 'next/dynamic';
+
+// Non-critical layout overlays — lazy-loaded so they don't block first paint
+const OnboardingTourGate = nextDynamic(
+  () => import('@/components/student/OnboardingTourGate').then(m => ({ default: m.OnboardingTourGate })),
+  { ssr: false, loading: () => null }
+);
+const WhatsNewProvider = nextDynamic(
+  () => import('@/components/student/WhatsNewProvider').then(m => ({ default: m.WhatsNewProvider })),
+  { ssr: false, loading: () => null }
+);
 
 // All student pages are dynamic — they require auth and live Supabase data
 export const dynamic = 'force-dynamic';

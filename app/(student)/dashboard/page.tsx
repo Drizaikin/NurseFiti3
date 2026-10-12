@@ -9,13 +9,23 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { Spinner } from '@/components/ui/Spinner';
-import { FeedbackWidget } from '@/components/shared/FeedbackWidget';
-import { FeedbackWall } from '@/components/shared/FeedbackWall';
 import { effectiveTier } from '@/lib/planLimits';
 import { fetchPlatformSettings, buildDynamicPlanPricingMeta } from '@/lib/platformSettings';
 import { IS_UNDER_AUDIT } from '@/components/student/MaintenanceCurtain';
+import dynamic from 'next/dynamic';
 
-import { AppRatingModal } from './AppRatingModal';
+const FeedbackWidget = dynamic(
+  () => import('@/components/shared/FeedbackWidget').then(m => ({ default: m.FeedbackWidget })),
+  { ssr: false, loading: () => null }
+);
+const FeedbackWall = dynamic(
+  () => import('@/components/shared/FeedbackWall').then(m => ({ default: m.FeedbackWall })),
+  { ssr: false, loading: () => null }
+);
+const AppRatingModal = dynamic(
+  () => import('./AppRatingModal').then(m => ({ default: m.AppRatingModal })),
+  { ssr: false, loading: () => null }
+);
 
 // ── Time-aware greeting (uses browser local time = user's timezone) ────────
 function useGreeting() {
@@ -411,8 +421,8 @@ export default function DashboardPage() {
         supabase.from('profiles').select('full_name').eq('id', user.id).single(),
         supabase.from('student_profiles').select('*').eq('id', user.id).single(),
         supabase.rpc('get_student_dashboard_stats', { user_uuid: user.id }),
-        supabase.from('mock_exam_results').select('id').eq('student_id', user.id),
-        supabase.from('flashcard_progress').select('id').eq('student_id', user.id),
+        supabase.from('mock_exam_results').select('id', { count: 'exact', head: true }).eq('student_id', user.id),
+        supabase.from('flashcard_progress').select('id', { count: 'exact', head: true }).eq('student_id', user.id),
         supabase.from('sessions')
           .select('id, session_date, start_time, topic, tutor:profiles!tutor_id(full_name)')
           .eq('student_id', user.id).eq('status', 'confirmed')
@@ -471,8 +481,8 @@ export default function DashboardPage() {
           correct_answers: correctAnswers,
           accuracy_percentage: accuracy,
           total_study_time_minutes: studyTime,
-          mock_exams_taken: mockRes.data?.length ?? 0,
-          flashcards_reviewed: flashRes.data?.length ?? 0,
+          mock_exams_taken: mockRes.count ?? 0,
+          flashcards_reviewed: flashRes.count ?? 0,
           badges: earnedBadges,
         },
         upcomingSessions: sessions.map(s => ({
