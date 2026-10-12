@@ -8,11 +8,11 @@ import nextDynamic from 'next/dynamic';
 // Non-critical layout overlays — lazy-loaded so they don't block first paint
 const OnboardingTourGate = nextDynamic(
   () => import('@/components/student/OnboardingTourGate').then(m => ({ default: m.OnboardingTourGate })),
-  { ssr: false, loading: () => null }
+  { ssr: false }
 );
 const WhatsNewProvider = nextDynamic(
   () => import('@/components/student/WhatsNewProvider').then(m => ({ default: m.WhatsNewProvider })),
-  { ssr: false, loading: () => null }
+  { ssr: false }
 );
 
 // All student pages are dynamic — they require auth and live Supabase data

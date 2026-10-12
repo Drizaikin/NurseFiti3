@@ -16,15 +16,15 @@ import dynamic from 'next/dynamic';
 
 const FeedbackWidget = dynamic(
   () => import('@/components/shared/FeedbackWidget').then(m => ({ default: m.FeedbackWidget })),
-  { ssr: false, loading: () => null }
+  { ssr: false }
 );
 const FeedbackWall = dynamic(
   () => import('@/components/shared/FeedbackWall').then(m => ({ default: m.FeedbackWall })),
-  { ssr: false, loading: () => null }
+  { ssr: false }
 );
 const AppRatingModal = dynamic(
   () => import('./AppRatingModal').then(m => ({ default: m.AppRatingModal })),
-  { ssr: false, loading: () => null }
+  { ssr: false }
 );
 
 // ── Time-aware greeting (uses browser local time = user's timezone) ────────
