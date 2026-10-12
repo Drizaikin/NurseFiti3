@@ -1,0 +1,118 @@
+{
+  "id": "FEAT-003",
+  "type": "fix",
+  "description": "Full platform audit. Run tsc --noEmit, identify ALL TypeScript errors across the platform. Fix any errors introduced by FEAT-001 and FEAT-002. Report pre-existing errors (errors that existed before this task) separately in the findings field. Audit the 7 key files for broken imports, logic bugs, and runtime issues. Depends on FEAT-001 and FEAT-002 being complete.",
+  "status": "completed",
+  "steps": [
+    "Run `npx tsc --noEmit` in c:\\Users\\Administrator\\Nursefiti3. Capture the full output.",
+    "Categorise each error: (a) new — introduced by FEAT-001 or FEAT-002, (b) pre-existing — was already there before this task. Fix ALL errors in category (a). Document category (b) in findings without fixing them (they are pre-existing and out of scope unless trivial).",
+    "Audit app/(student)/dashboard/page.tsx: verify the banner logic (exam date comparison) is correct; verify that the HeroBanner still receives examDate even when the date is past (it should — the countdown will show 0 but that's expected); verify no import is broken.",
+    "Audit app/(student)/settings/page.tsx: verify the exam date validation (must be in the future) still works and does not conflict with the new banner logic.",
+    "Audit app/(admin)/admin/students/page.tsx: verify existing modals and actions still function; verify the new ExpiredActiveStudent interface and fetch logic compile cleanly.",
+    "Audit app/(admin)/admin/scholarships/[campaignId]/ClientManager.tsx: check for any TypeScript errors on the supabase calls (the file uses 'supabase as any' casts throughout — look for any non-cast calls that could error); verify the availableFunds calculation is correct.",
+    "Audit app/(admin)/admin/scholarships/[campaignId]/page.tsx: verify the server component fetches and passes premiumPrice correctly.",
+    "Audit app/sponsor/[slug]/page.tsx: verify all imports (BarChart etc. from recharts) are used and resolve; verify the security check logic for is_public is correct.",
+    "Audit app/scholarships/[slug]/apply/page.tsx: verify the ApplyForm import resolves (app/scholarships/[slug]/apply/ApplyForm.tsx must exist); if it does not exist, create a stub that satisfies the TypeScript import.",
+    "Audit app/(admin)/admin/students/page.tsx (again, final check): confirm the 'Edit Exam Date' button in the new expired section calls openExamModal with a Student-compatible object.",
+    "Run `npx tsc --noEmit` a final time. All new errors must be zero. Record final output in findings."
+  ],
+  "acceptance_criteria": [
+    "npx tsc --noEmit completes with zero errors introduced by FEAT-001 and FEAT-002.",
+    "All 7 audited files import cleanly with no broken import paths.",
+    "Pre-existing errors are documented in findings without being introduced or worsened.",
+    "No functionality regressions — existing features (plan modal, lock/unlock, exam date modal, scholarship banner, community banner, audit banner) remain intact."
+  ],
+  "verification": [
+    "Run `npx tsc --noEmit` in c:\\Users\\Administrator\\Nursefiti3. Zero errors that were not present before this task."
+  ],
+  "blocked_reason": null,
+  "findings": {
+    "new_errors_introduced_by_feat001_or_feat002": 0,
+    "pre_existing_errors": 25,
+    "final_tsc_run_summary": "25 errors in 8 files — all pre-existing, none in the 7 audited files.",
+    "pre_existing_error_locations": [
+      {
+        "file": "app/api/admin/broadcast/route.ts",
+        "count": 1,
+        "root_cause": "Supabase database.types.ts does not have the 'notifications' table typed; insert() parameter resolves to never[]."
+      },
+      {
+        "file": "app/api/admin/community-post/route.ts",
+        "count": 2,
+        "root_cause": "Supabase database.types.ts does not have 'tutor_messages' and 'community_messages' tables typed; insert() fields resolve to never."
+      },
+      {
+        "file": "app/api/admin/flagged/resolve/route.ts",
+        "count": 6,
+        "root_cause": "Supabase type inference resolves flagged question row as never; all property accesses fail."
+      },
+      {
+        "file": "app/api/admin/questions/[id]/route.ts",
+        "count": 1,
+        "root_cause": "Supabase database.types.ts; update() on 'questions' table resolves to never."
+      },
+      {
+        "file": "app/api/admin/set-exam-date/route.ts",
+        "count": 1,
+        "root_cause": "Supabase database.types.ts; update({ exam_date, exam_cycle }) on 'student_profiles' resolves to never. Route itself predates the FEAT task (commit 45711f5). Pattern is identical to set-plan errors."
+      },
+      {
+        "file": "app/api/admin/set-plan/route.ts",
+        "count": 12,
+        "root_cause": "Supabase database.types.ts missing or mistyped for 'student_profiles', 'question_uploads', 'profiles'; multiple update() and property access errors."
+      },
+      {
+        "file": "app/api/admin/settings/route.ts",
+        "count": 1,
+        "root_cause": "Supabase database.types.ts; update() on 'platform_settings' resolves to never."
+      },
+      {
+        "file": "components/student/WhatsNewModal.tsx",
+        "count": 1,
+        "root_cause": "WhatsNewRelease interface does not include a 'title' field but version 17 entry uses one. Pre-existing mismatch."
+      }
+    ],
+    "audited_files_status": [
+      {
+        "file": "app/(student)/dashboard/page.tsx",
+        "status": "CLEAN",
+        "notes": "FEAT-001 changes verified: examDateExpired computed correctly (compares date with today at midnight), examBannerDismissed state correctly initialized, HeroBanner still receives examDate unchanged, Link to /settings in banner is correct. No broken imports."
+      },
+      {
+        "file": "app/(student)/settings/page.tsx",
+        "status": "CLEAN",
+        "notes": "Exam date validation (must be in the future) is intact and unchanged. No conflict with new banner logic. No broken imports."
+      },
+      {
+        "file": "app/(admin)/admin/students/page.tsx",
+        "status": "CLEAN",
+        "notes": "FEAT-002 changes verified: ExpiredActiveStudent interface is correct, expired-exam-active section renders correctly, openExamModal is called with a fully-shaped Student-compatible object (all required fields including cadre, plan_tier, plan_expires_at, created_at, is_locked). All existing modals and actions (plan modal, confirm modal, lock/delete) untouched."
+      },
+      {
+        "file": "app/(admin)/admin/scholarships/[campaignId]/ClientManager.tsx",
+        "status": "CLEAN",
+        "notes": "All supabase calls use 'supabase as any' casts throughout. availableFunds = totalDeposits - totalAllocated is correct. No broken imports."
+      },
+      {
+        "file": "app/(admin)/admin/scholarships/[campaignId]/page.tsx",
+        "status": "CLEAN",
+        "notes": "Server component fetches campaign and passes premiumPrice correctly via fetchPlatformSettings. No broken imports."
+      },
+      {
+        "file": "app/sponsor/[slug]/page.tsx",
+        "status": "CLEAN",
+        "notes": "BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer from recharts are all imported and used in JSX. Security check (is_public) logic is correct. No broken imports."
+      },
+      {
+        "file": "app/scholarships/[slug]/apply/page.tsx",
+        "status": "CLEAN",
+        "notes": "ApplyForm import resolves — app/scholarships/[slug]/apply/ApplyForm.tsx exists. No broken imports."
+      }
+    ],
+    "api_route_audit": {
+      "file": "app/api/admin/data/route.ts",
+      "status": "CLEAN",
+      "notes": "FEAT-002 added the 'expired-exam-active' branch. Logic is correct: queries user_logins for last 30 days, builds loginMap, queries student_profiles with exam_date < today, joins with profiles for names/emails, sorts by last_login_at descending. No TypeScript errors."
+    }
+  }
+}
