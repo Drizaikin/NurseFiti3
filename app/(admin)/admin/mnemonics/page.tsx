@@ -9,6 +9,8 @@ interface BreakdownItem { emoji: string; phrase: string; meaning: string; }
 interface Mnemonic {
   id: string;
   title: string;
+  acronym: string;
+  description: string;
   category: string;
   specialty: string;
   tags: string[];
@@ -24,7 +26,7 @@ interface Mnemonic {
 }
 
 const EMPTY: Mnemonic = {
-  id: '', title: '', category: 'Pharmacology', specialty: 'General',
+  id: '', title: '', acronym: '', description: '', category: 'Pharmacology', specialty: 'General',
   tags: [], phrases: [], breakdown: [],
   clinical_significance: '', causes: '', exam_traps: '',
   memory_pearl: '', high_yield_tip: '', practice_question: '',
@@ -85,6 +87,8 @@ export default function AdminMnemonicsPage() {
     try {
       const payload: any = {
         title: formData.title,
+        acronym: formData.acronym,
+        description: formData.description,
         category: formData.category,
         specialty: formData.specialty,
         tags: formData.tags,
@@ -127,7 +131,8 @@ export default function AdminMnemonicsPage() {
   const openModal = (m?: any) => {
     if (m) {
       setFormData({
-        id: m.id, title: m.title, category: m.category || 'Pharmacology',
+        id: m.id, title: m.title, acronym: m.acronym || '', description: m.description || '',
+        category: m.category || 'Pharmacology',
         specialty: m.specialty || 'General', tags: m.tags || [], phrases: m.phrases || [],
         breakdown: m.breakdown || [],
         clinical_significance: m.clinical_significance || '',
@@ -267,6 +272,22 @@ export default function AdminMnemonicsPage() {
                       className={input}>
                       {SPECIALTIES.map(s => <option key={s}>{s}</option>)}
                     </select>
+                  </div>
+                </div>
+
+                {/* Row 1b: Acronym and Description */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className={label}>Acronym / Key Memory Phrase</label>
+                    <input type="text" value={formData.acronym}
+                      onChange={e => setFormData({ ...formData, acronym: e.target.value })}
+                      className={input} placeholder="e.g., VEAL CHOP or MONA" />
+                  </div>
+                  <div>
+                    <label className={label}>Short Description</label>
+                    <input type="text" value={formData.description}
+                      onChange={e => setFormData({ ...formData, description: e.target.value })}
+                      className={input} placeholder="e.g., Fetal heart rate deceleration patterns in labor" />
                   </div>
                 </div>
 

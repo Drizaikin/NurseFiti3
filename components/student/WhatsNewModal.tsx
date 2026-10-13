@@ -33,7 +33,7 @@ import { Button } from "@/components/ui/Button";
 // ❶  RELEASES REGISTRY — edit here to announce new features
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CURRENT_VERSION = 17;
+const CURRENT_VERSION = 19;
 
 interface WhatsNewItem {
   icon: string;
@@ -540,6 +540,51 @@ const WHATS_NEW_RELEASES: WhatsNewRelease[] = [
         description:
           "Found and corrected over 870 misclassified questions. Family planning questions moved from Midwifery to MCH, Gynaecology moved to Med-Surg, and Paper I / Paper II boundaries are now perfectly strict.",
         cta: { label: "Keep Practising", href: "/practice" },
+      },
+    ],
+  },
+
+  // ── Version 19 — High-Yield Clinical Mnemonics Suite ─────────────────────
+  {
+    version: 19,
+    date: "October 2026",
+    title: "High-Yield Clinical Mnemonics Suite",
+    description:
+      "Master complex pharmacology, med-surg, obstetrics, and emergency concepts with 69+ clinically audited memory aids, instant search, bookmarks, and interactive practice questions.",
+    highlights: [
+      "Full interactive Mnemonics Library launched",
+      "69+ high-yield clinical memory aids covering NCK exam traps",
+      "Zero-lag instant search & category filtering",
+      "Personalized bookmarking for high-yield revision",
+      "Embedded practice questions with rationales for every mnemonic",
+    ],
+    items: [
+      {
+        icon: "🧠",
+        tag: "New Feature",
+        tagColor: "bg-primary/20 text-primary",
+        title: "All-New Mnemonics Library",
+        description:
+          "Browse our curated collection of 69+ high-yield nursing mnemonics across Pharmacology, Obstetrics, Med-Surg, Neurology, Emergency, Pediatrics, and Community Health.",
+        cta: { label: "Explore Mnemonics", href: "/mnemonics" },
+      },
+      {
+        icon: "🎯",
+        tag: "Exam Prep",
+        tagColor: "bg-emerald-500/20 text-emerald-400",
+        title: "NCK Exam Traps & Clinical Pearls",
+        description:
+          "Every mnemonic now features clinically verified breakdowns, common NCK exam pitfalls, memory pearls, and interactive practice questions with detailed rationales.",
+        cta: { label: "Try Today's Mnemonic", href: "/mnemonics/today" },
+      },
+      {
+        icon: "⚡",
+        tag: "Performance",
+        tagColor: "bg-amber-500/20 text-amber-400",
+        title: "Instant 0ms Search & Bookmarks",
+        description:
+          "Zero-lag client search by acronym, drug name, or condition, plus offline bookmarking to save tricky mnemonics for rapid exam day revision.",
+        cta: { label: "Open Library", href: "/mnemonics" },
       },
     ],
   },

@@ -9,6 +9,8 @@ import { toast } from 'react-hot-toast';
 import { effectiveTier } from '@/lib/planLimits';
 import { useRouter } from 'next/navigation';
 
+import { ALL_MNEMONICS, getMnemonicOfTheDay } from '@/lib/mnemonicsData';
+
 interface BreakdownItem { emoji: string; phrase: string; meaning: string; }
 interface PracticeQuestion { question: string; options: string[]; answer: string; explanation: string; }
 interface Mnemonic {
@@ -142,12 +144,68 @@ function PracticeQuestionBlock({ pq, catColor }: { pq: { question: string; optio
 }
 
 export default function MnemonicTodayPage() {
-  const supabase  = createClient();
-  const router    = useRouter();
-  const [mnemonic, setMnemonic]         = useState<Mnemonic | null>(null);
+  const supabase = createClient();
+  const router = useRouter();
+
+  // Instant zero-lag dataset
+  const [mnemonicList, setMnemonicList] = useState<any[]>(() =>
+    ALL_MNEMONICS.map(d => ({
+      id:                    d.id,
+      topic:                 d.title,
+      category:              d.category || 'Pharmacology',
+      specialty:             d.specialty || 'General',
+      phrases:               d.phrases   || [],
+      breakdown:             d.breakdown || [],
+      tags:                  d.tags      || [],
+      clinical_significance: d.clinical_significance || '',
+      causes:                d.causes    || [],
+      exam_traps:            d.exam_traps || '',
+      memory_pearl:          d.memory_pearl || '',
+      high_yield_tip:        d.high_yield_tip || '',
+      practice_question:     d.practice_question || null,
+    }))
+  );
+
+  const dayOfYear = Math.floor(
+    (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000
+  );
+
+  const [currentIndex, setCurrentIndex] = useState<number>(dayOfYear % ALL_MNEMONICS.length);
   const [showBreakdown, setShowBreakdown] = useState(false);
-  const [isLoading, setIsLoading]       = useState(true);
-  const [planTier, setPlanTier]         = useState<string>('free');
+  const [planTier, setPlanTier] = useState<string>('free');
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  const mnemonic = mnemonicList[currentIndex % mnemonicList.length];
+
+  // Sync bookmark state from localStorage
+  useEffect(() => {
+    if (!mnemonic) return;
+    try {
+      const stored = localStorage.getItem('nf_bookmarked_mnemonics');
+      if (stored) {
+        const set = new Set(JSON.parse(stored));
+        setIsBookmarked(set.has(mnemonic.id));
+      }
+    } catch { /* ignore */ }
+  }, [mnemonic]);
+
+  const toggleBookmark = () => {
+    if (!mnemonic) return;
+    try {
+      const stored = localStorage.getItem('nf_bookmarked_mnemonics');
+      const set = new Set(stored ? JSON.parse(stored) : []);
+      if (set.has(mnemonic.id)) {
+        set.delete(mnemonic.id);
+        setIsBookmarked(false);
+        toast('Removed from saved mnemonics', { icon: '🗑️' });
+      } else {
+        set.add(mnemonic.id);
+        setIsBookmarked(true);
+        toast.success('Saved to your mnemonics!');
+      }
+      localStorage.setItem('nf_bookmarked_mnemonics', JSON.stringify(Array.from(set)));
+    } catch { /* ignore */ }
+  };
 
   useEffect(() => {
     async function load() {
@@ -160,14 +218,11 @@ export default function MnemonicTodayPage() {
             .eq('id', user.id).single();
           setPlanTier(effectiveTier((prof as any)?.plan_tier, (prof as any)?.plan_expires_at));
         }
-        const { data, error } = await supabase
-          .from('mnemonics').select('*').order('id', { ascending: true });
-        if (!error && data?.length) {
-          const day = Math.floor(
-            (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000
-          );
-          const d = (data as any[])[day % data.length];
-          setMnemonic({
+
+        // Background check for newly added rows from Supabase
+        const { data } = await supabase.from('mnemonics').select('*');
+        if (data?.length) {
+          const mapped = data.map((d: any) => ({
             id:                    d.id,
             topic:                 d.title,
             category:              d.category || 'Pharmacology',
@@ -181,10 +236,10 @@ export default function MnemonicTodayPage() {
             memory_pearl:          d.memory_pearl || '',
             high_yield_tip:        d.high_yield_tip || '',
             practice_question:     d.practice_question || null,
-          });
+          }));
+          setMnemonicList(mapped);
         }
-      } catch { /* silent */ }
-      finally { setIsLoading(false); }
+      } catch { /* silent fallback to ALL_MNEMONICS */ }
     }
     load();
   }, []);
@@ -207,8 +262,8 @@ h1{color:#08514F;font-size:30px;border-bottom:3px solid #F5A623;padding-bottom:1
 </head><body>
 <div class="cat">${mnemonic.category}</div>
 <h1>${mnemonic.topic}</h1>
-<div class="phrases">${mnemonic.phrases.map(p=>`<div class="phrase">${p}</div>`).join('')}</div>
-${mnemonic.breakdown.map(b=>`<div class="item"><div class="emoji">${b.emoji}</div><div><div class="ph">${b.phrase}</div><div class="mn">${b.meaning}</div></div></div>`).join('')}
+<div class="phrases">${mnemonic.phrases.map((p: string)=>`<div class="phrase">${p}</div>`).join('')}</div>
+${mnemonic.breakdown.map((b: any)=>`<div class="item"><div class="emoji">${b.emoji}</div><div><div class="ph">${b.phrase}</div><div class="mn">${b.meaning}</div></div></div>`).join('')}
 <div class="foot">Downloaded from NurseFiti.com · Keep Learning!</div>
 </body></html>`;
     const a = Object.assign(document.createElement('a'), {
@@ -218,17 +273,6 @@ ${mnemonic.breakdown.map(b=>`<div class="item"><div class="emoji">${b.emoji}</di
     document.body.appendChild(a); a.click(); a.remove();
     toast.success('Download started. Open the file in any browser to view or print.');
   };
-
-  /* ─── Loading ──────────────────────────────────────────────────── */
-  if (isLoading) return (
-    <div className="min-h-screen flex items-center justify-center"
-         style={{ background:'linear-gradient(135deg,#051F1E 0%,#08514F 60%,#0A6865 100%)' }}>
-      <motion.div animate={{ opacity:[0.4,1,0.4] }} transition={{ duration:1.6, repeat:Infinity }}
-                  className="text-white/60 text-base font-medium tracking-wide font-body">
-        Loading today&apos;s mnemonic…
-      </motion.div>
-    </div>
-  );
 
   if (!mnemonic) return null;
   const cat = CAT[mnemonic.category] ?? FallbackCat;
@@ -296,6 +340,59 @@ ${mnemonic.breakdown.map(b=>`<div class="item"><div class="emoji">${b.emoji}</di
             animate={{ opacity:1, y:0 }}
             transition={{ duration:0.5, ease:[0.22,1,0.36,1] }}
           >
+
+            {/* ── Top Navigation Bar ───────────────────────────────── */}
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+              <Link
+                href="/mnemonics"
+                className="inline-flex items-center gap-1.5 text-xs font-heading font-extrabold text-primary hover:text-accent-dark transition-colors px-3 py-1.5 rounded-full bg-primary-light/60 border border-[var(--color-border)] shadow-xs"
+              >
+                <span>←</span> Library (69 Mnemonics)
+              </Link>
+
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setCurrentIndex((idx) => (idx - 1 + mnemonicList.length) % mnemonicList.length)}
+                  className="p-1.5 px-2.5 rounded-xl border border-[var(--color-border)] bg-white/80 hover:bg-white text-xs font-bold text-primary transition-all shadow-xs"
+                  title="Previous Mnemonic"
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCurrentIndex(dayOfYear % mnemonicList.length)}
+                  className="px-2.5 py-1.5 rounded-xl border border-[var(--color-border)] bg-white/80 hover:bg-white text-xs font-bold text-primary transition-all shadow-xs"
+                  title="Today's featured Mnemonic"
+                >
+                  Today
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCurrentIndex((idx) => (idx + 1) % mnemonicList.length)}
+                  className="p-1.5 px-2.5 rounded-xl border border-[var(--color-border)] bg-white/80 hover:bg-white text-xs font-bold text-primary transition-all shadow-xs"
+                  title="Next Mnemonic"
+                >
+                  →
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCurrentIndex(Math.floor(Math.random() * mnemonicList.length))}
+                  className="p-1.5 px-2.5 rounded-xl border border-[var(--color-border)] bg-white/80 hover:bg-white text-xs font-bold text-accent-dark transition-all shadow-xs"
+                  title="Random Mnemonic"
+                >
+                  🎲
+                </button>
+                <button
+                  type="button"
+                  onClick={toggleBookmark}
+                  className="p-1.5 px-2.5 rounded-xl border border-[var(--color-border)] bg-white/80 hover:bg-white text-xs font-bold transition-all shadow-xs"
+                  title={isBookmarked ? 'Remove bookmark' : 'Bookmark mnemonic'}
+                >
+                  {isBookmarked ? '⭐' : '☆'}
+                </button>
+              </div>
+            </div>
 
             {/* ── Eyebrow ─────────────────────────────────────────── */}
             <div className="flex items-center mb-6">
@@ -634,10 +731,10 @@ ${mnemonic.breakdown.map(b=>`<div class="item"><div class="emoji">${b.emoji}</di
                     <span style={{ fontSize:26, flexShrink:0, lineHeight:1 }}>📚</span>
                     <div style={{ flex:1 }}>
                       <div className="font-heading font-extrabold" style={{ fontSize:15, color:'var(--color-dark)', lineHeight:1.2 }}>
-                        View Archive
+                        Browse Full Library (69+ Mnemonics)
                       </div>
                       <div className="font-body" style={{ fontSize:11.5, color:'rgba(15,28,28,0.55)', marginTop:3 }}>
-                        Browse all past mnemonics
+                        Search, filter by specialty, and bookmark high-yield memory anchors
                       </div>
                     </div>
                     <span style={{ color:'rgba(15,28,28,0.45)', fontSize:18 }}>›</span>
