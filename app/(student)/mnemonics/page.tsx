@@ -229,7 +229,7 @@ ${mnemonic.high_yield_tip ? `<div class="section"><div class="section-title">Hig
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 16 }}
         transition={{ duration: 0.22, ease: 'easeOut' }}
-        className="bg-white dark:bg-[var(--color-card)] rounded-2xl sm:rounded-3xl shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col border border-[var(--color-border)] overflow-hidden my-auto"
+        className="bg-white dark:bg-[var(--color-card)] rounded-2xl sm:rounded-3xl shadow-2xl max-w-5xl w-full max-h-[92vh] flex flex-col border border-[var(--color-border)] overflow-hidden my-auto"
       >
         {/* Header */}
         <div
@@ -260,6 +260,15 @@ ${mnemonic.high_yield_tip ? `<div class="section"><div class="section-title">Hig
             </p>
           </div>
           <div className="flex items-center gap-2 flex-shrink-0">
+            <Link href={`/mnemonics/today?id=${mnemonic.id}`}>
+              <button
+                type="button"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-accent text-dark text-xs font-heading font-bold uppercase tracking-wider hover:bg-accent-light transition-all shadow-xs"
+                title="Open full page experience"
+              >
+                <span>↗</span> Full Page
+              </button>
+            </Link>
             <button
               onClick={() => onToggleBookmark(mnemonic.id)}
               className="p-2 rounded-xl border border-[var(--color-border)] bg-white hover:bg-neutral-light/30 transition-colors"
@@ -277,128 +286,145 @@ ${mnemonic.high_yield_tip ? `<div class="section"><div class="section-title">Hig
           </div>
         </div>
 
-        {/* Body */}
-        <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-5">
-          {/* Timeline Phrases */}
-          <div className="p-4 rounded-xl bg-primary-xlight/40 border border-primary/15">
-            <p className="text-xs font-heading font-extrabold text-primary uppercase tracking-wider mb-2.5">
-              Key Memory Phrases
-            </p>
-            <div className="flex flex-col gap-2">
-              {mnemonic.phrases.map((phrase, i) => (
-                <div key={i} className="flex items-center gap-2.5 text-sm font-semibold text-primary">
-                  <span className="w-5 h-5 rounded-full bg-accent text-dark text-xs flex items-center justify-center font-bold flex-shrink-0">
-                    {i + 1}
-                  </span>
-                  <span>{phrase}</span>
+        {/* Body - Responsive 2 Columns on desktop */}
+        <div className="flex-1 overflow-y-auto p-5 sm:p-6">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+            {/* Left Column (5 cols): Key Phrases & Breakdown */}
+            <div className="md:col-span-5 space-y-5">
+              {/* Timeline Phrases */}
+              <div className="p-4 rounded-xl bg-primary-xlight/40 border border-primary/15">
+                <p className="text-xs font-heading font-extrabold text-primary uppercase tracking-wider mb-2.5">
+                  Key Memory Phrases
+                </p>
+                <div className="flex flex-col gap-2">
+                  {mnemonic.phrases.map((phrase, i) => (
+                    <div key={i} className="flex items-center gap-2.5 text-sm font-semibold text-primary">
+                      <span className="w-5 h-5 rounded-full bg-accent text-dark text-xs flex items-center justify-center font-bold flex-shrink-0">
+                        {i + 1}
+                      </span>
+                      <span>{phrase}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
 
-          {/* Breakdown Items */}
-          <div>
-            <h3 className="text-xs font-heading font-extrabold text-[var(--color-neutral-mid)] uppercase tracking-wider mb-3">
-              Anatomical & Clinical Breakdown
-            </h3>
-            <div className="space-y-2.5">
-              {mnemonic.breakdown.map((item: BreakdownItem, i: number) => (
-                <div
-                  key={i}
-                  className="flex gap-3.5 p-3.5 rounded-xl bg-white dark:bg-[var(--color-card)] border border-[var(--color-border)] shadow-sm hover:border-primary/30 transition-all"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-primary-xlight border border-primary/10 flex items-center justify-center text-xl flex-shrink-0">
-                    {item.emoji}
+              {/* Breakdown Items */}
+              <div>
+                <h3 className="text-xs font-heading font-extrabold text-[var(--color-neutral-mid)] uppercase tracking-wider mb-3">
+                  Anatomical & Clinical Breakdown
+                </h3>
+                <div className="space-y-2.5">
+                  {mnemonic.breakdown.map((item: BreakdownItem, i: number) => (
+                    <div
+                      key={i}
+                      className="flex gap-3.5 p-3.5 rounded-xl bg-white dark:bg-[var(--color-card)] border border-[var(--color-border)] shadow-sm hover:border-primary/30 transition-all"
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-primary-xlight border border-primary/10 flex items-center justify-center text-xl flex-shrink-0">
+                        {item.emoji}
+                      </div>
+                      <div>
+                        <h4 className="font-heading font-bold text-sm text-primary">
+                          {item.phrase}
+                        </h4>
+                        <p className="font-body text-xs sm:text-sm text-[var(--color-neutral-mid)] leading-relaxed mt-0.5">
+                          {item.meaning}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column (7 cols): Clinical Significance, Causes, Traps, Pearls, Practice Question */}
+            <div className="md:col-span-7 space-y-5">
+              {/* Clinical Significance */}
+              {mnemonic.clinical_significance && (
+                <div className="p-4 rounded-xl bg-primary-xlight/50 border-l-4 border-primary">
+                  <div className="flex items-center gap-2 text-xs font-heading font-extrabold text-primary uppercase tracking-wider mb-1.5">
+                    <span>🩺</span> Clinical Significance
                   </div>
-                  <div>
-                    <h4 className="font-heading font-bold text-sm text-primary">
-                      {item.phrase}
-                    </h4>
-                    <p className="font-body text-xs sm:text-sm text-[var(--color-neutral-mid)] leading-relaxed mt-0.5">
-                      {item.meaning}
+                  <p className="text-xs sm:text-sm text-[var(--color-neutral-mid)] leading-relaxed m-0">
+                    {mnemonic.clinical_significance}
+                  </p>
+                </div>
+              )}
+
+              {/* Common Causes */}
+              {mnemonic.causes && mnemonic.causes.length > 0 && (
+                <div className="p-4 rounded-xl bg-accent-light/40 border-l-4 border-accent">
+                  <div className="flex items-center gap-2 text-xs font-heading font-extrabold text-accent-dark uppercase tracking-wider mb-2">
+                    <span>💊</span> Common Causes & Associated Conditions
+                  </div>
+                  <ul className="text-xs sm:text-sm text-[var(--color-neutral-mid)] space-y-1 pl-4 list-disc m-0">
+                    {mnemonic.causes.map((c, i) => (
+                      <li key={i}>{c}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Exam Traps */}
+              {mnemonic.exam_traps && (
+                <div className="p-4 rounded-xl bg-[#FFF0F0] dark:bg-error/10 border-l-4 border-error">
+                  <div className="flex items-center gap-2 text-xs font-heading font-extrabold text-error uppercase tracking-wider mb-1.5">
+                    <span>⚠️</span> Common NCK Exam Traps
+                  </div>
+                  <p className="text-xs sm:text-sm text-[var(--color-neutral-mid)] leading-relaxed m-0">
+                    {mnemonic.exam_traps}
+                  </p>
+                </div>
+              )}
+
+              {/* Memory Pearl & High-Yield Tip */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {mnemonic.memory_pearl && (
+                  <div className="p-4 rounded-xl bg-accent-light/50 border-l-4 border-accent">
+                    <div className="flex items-center gap-2 text-xs font-heading font-extrabold text-accent-dark uppercase tracking-wider mb-1.5">
+                      <span>💡</span> Memory Pearl
+                    </div>
+                    <p className="text-xs sm:text-sm font-semibold italic text-accent-dark leading-relaxed m-0">
+                      {mnemonic.memory_pearl}
                     </p>
                   </div>
-                </div>
-              ))}
+                )}
+
+                {mnemonic.high_yield_tip && (
+                  <div className="p-4 rounded-xl bg-primary-xlight/60 border-l-4 border-primary">
+                    <div className="flex items-center gap-2 text-xs font-heading font-extrabold text-primary uppercase tracking-wider mb-1.5">
+                      <span>🎯</span> NCK High-Yield Tip
+                    </div>
+                    <p className="text-xs sm:text-sm font-medium text-primary leading-relaxed m-0">
+                      {mnemonic.high_yield_tip}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Practice Question */}
+              {mnemonic.practice_question && (
+                <PracticeQuestionCard pq={mnemonic.practice_question} catColor={cat.bg} />
+              )}
             </div>
           </div>
-
-          {/* Clinical Significance */}
-          {mnemonic.clinical_significance && (
-            <div className="p-4 rounded-xl bg-primary-xlight/50 border-l-4 border-primary">
-              <div className="flex items-center gap-2 text-xs font-heading font-extrabold text-primary uppercase tracking-wider mb-1.5">
-                <span>🩺</span> Clinical Significance
-              </div>
-              <p className="text-xs sm:text-sm text-[var(--color-neutral-mid)] leading-relaxed m-0">
-                {mnemonic.clinical_significance}
-              </p>
-            </div>
-          )}
-
-          {/* Common Causes */}
-          {mnemonic.causes && mnemonic.causes.length > 0 && (
-            <div className="p-4 rounded-xl bg-accent-light/40 border-l-4 border-accent">
-              <div className="flex items-center gap-2 text-xs font-heading font-extrabold text-accent-dark uppercase tracking-wider mb-2">
-                <span>💊</span> Common Causes & Associated Conditions
-              </div>
-              <ul className="text-xs sm:text-sm text-[var(--color-neutral-mid)] space-y-1 pl-4 list-disc m-0">
-                {mnemonic.causes.map((c, i) => (
-                  <li key={i}>{c}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Exam Traps */}
-          {mnemonic.exam_traps && (
-            <div className="p-4 rounded-xl bg-[#FFF0F0] dark:bg-error/10 border-l-4 border-error">
-              <div className="flex items-center gap-2 text-xs font-heading font-extrabold text-error uppercase tracking-wider mb-1.5">
-                <span>⚠️</span> Common NCK Exam Traps
-              </div>
-              <p className="text-xs sm:text-sm text-[var(--color-neutral-mid)] leading-relaxed m-0">
-                {mnemonic.exam_traps}
-              </p>
-            </div>
-          )}
-
-          {/* Memory Pearl */}
-          {mnemonic.memory_pearl && (
-            <div className="p-4 rounded-xl bg-accent-light/50 border-l-4 border-accent">
-              <div className="flex items-center gap-2 text-xs font-heading font-extrabold text-accent-dark uppercase tracking-wider mb-1.5">
-                <span>💡</span> NurseFiti Memory Pearl
-              </div>
-              <p className="text-xs sm:text-sm font-semibold italic text-accent-dark leading-relaxed m-0">
-                {mnemonic.memory_pearl}
-              </p>
-            </div>
-          )}
-
-          {/* High-Yield Tip */}
-          {mnemonic.high_yield_tip && (
-            <div className="p-4 rounded-xl bg-primary-xlight/60 border-l-4 border-primary">
-              <div className="flex items-center gap-2 text-xs font-heading font-extrabold text-primary uppercase tracking-wider mb-1.5">
-                <span>🎯</span> NCK High-Yield Examination Tip
-              </div>
-              <p className="text-xs sm:text-sm font-medium text-primary leading-relaxed m-0">
-                {mnemonic.high_yield_tip}
-              </p>
-            </div>
-          )}
-
-          {/* Practice Question */}
-          {mnemonic.practice_question && (
-            <PracticeQuestionCard pq={mnemonic.practice_question} catColor={cat.bg} />
-          )}
         </div>
 
         {/* Footer */}
         <div className="p-4 sm:p-5 border-t border-[var(--color-border)] bg-[var(--color-bg)] flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            <Link href={`/mnemonics/today?id=${mnemonic.id}`}>
+              <button
+                type="button"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-accent text-dark text-xs font-heading font-extrabold uppercase tracking-wider hover:bg-accent-light transition-all shadow-xs"
+              >
+                <span>📖</span> Full Page View →
+              </button>
+            </Link>
             <button
               onClick={handleShare}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-[var(--color-border)] bg-white text-xs font-semibold text-primary hover:bg-neutral-light/20 transition-all"
             >
-              <span>📋</span> Copy Study Notes
+              <span>📋</span> Copy Notes
             </button>
             <button
               onClick={handleDownload}
@@ -562,10 +588,10 @@ export default function StudentMnemonicsPage() {
   }, [mnemonics, searchQuery, selectedCategory, selectedSpecialty, onlyBookmarked, bookmarkedIds]);
 
   return (
-    <div className="min-h-screen pb-16 bg-[var(--color-bg)] text-[var(--color-text)]">
+    <div className="w-full max-w-7xl mx-auto space-y-6 pb-20 text-[var(--color-text)]">
       {/* ── Top Header ────────────────────────────────────────────── */}
-      <div className="border-b border-white/10 bg-primary-dark/95 text-white py-10 px-5 sm:px-8">
-        <div className="max-w-7xl mx-auto">
+      <div className="rounded-2xl sm:rounded-3xl bg-gradient-to-r from-primary-dark via-primary to-primary-mid text-white py-8 sm:py-10 px-6 sm:px-8 shadow-xl border border-primary-light/20">
+        <div>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
@@ -577,7 +603,7 @@ export default function StudentMnemonicsPage() {
               <h1 className="text-2xl sm:text-4xl font-heading font-extrabold text-white tracking-tight">
                 Mnemonics Library
               </h1>
-              <p className="text-white/70 text-sm sm:text-base max-w-2xl mt-1.5 leading-relaxed font-body">
+              <p className="text-white/80 text-sm sm:text-base max-w-2xl mt-1.5 leading-relaxed font-body">
                 Master 69+ scientifically verified clinical mnemonics. Handpicked from top nursing social channels, NCK exam guidelines, and clinical ward practice.
               </p>
             </div>
@@ -604,7 +630,7 @@ export default function StudentMnemonicsPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 py-8 space-y-8">
+      <div className="space-y-6">
         {/* ── Mnemonic of the Day Spotlight Banner ───────────────────── */}
         {todayMnemonic && !onlyBookmarked && !searchQuery && (
           <div className="rounded-2xl sm:rounded-3xl p-6 sm:p-7 relative overflow-hidden bg-gradient-to-r from-primary to-primary-mid text-white shadow-xl border border-primary-light/20">
@@ -819,15 +845,25 @@ export default function StudentMnemonicsPage() {
                   </div>
 
                   {/* Card Action */}
-                  <div className="p-4 pt-3 flex items-center justify-between text-xs">
+                  <div className="p-3.5 sm:p-4 pt-3 flex items-center justify-between text-xs border-t border-[var(--color-border)] bg-[var(--color-bg)]/40">
                     <span className="font-heading font-bold text-primary group-hover:underline">
-                      View 7-Section Spec →
+                      View Details →
                     </span>
-                    {m.practice_question && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700">
-                        Quiz Included
-                      </span>
-                    )}
+                    <div className="flex items-center gap-1.5">
+                      {m.practice_question && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300">
+                          Quiz
+                        </span>
+                      )}
+                      <Link
+                        href={`/mnemonics/today?id=${m.id}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="px-2.5 py-1 rounded-lg bg-accent/20 hover:bg-accent text-dark font-heading font-extrabold text-[10px] uppercase tracking-wider transition-colors"
+                        title="Open full page view"
+                      >
+                        Full ↗
+                      </Link>
+                    </div>
                   </div>
                 </motion.div>
               );

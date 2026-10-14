@@ -1,181 +1,259 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import type React from 'react';
+import React, { useEffect, useState, useMemo, Suspense } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { effectiveTier } from '@/lib/planLimits';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-import { ALL_MNEMONICS, getMnemonicOfTheDay } from '@/lib/mnemonicsData';
+import {
+  ALL_MNEMONICS,
+  CATEGORIES,
+  CATEGORY_COLORS,
+  getMnemonicOfTheDay,
+  type Mnemonic as FullMnemonic,
+  type BreakdownItem,
+  type PracticeQuestion
+} from '@/lib/mnemonicsData';
 
-interface BreakdownItem { emoji: string; phrase: string; meaning: string; }
-interface PracticeQuestion { question: string; options: string[]; answer: string; explanation: string; }
-interface Mnemonic {
-  id: string;
-  topic: string;
-  category: string;
-  specialty: string;
-  phrases: string[];
-  breakdown: BreakdownItem[];
-  tags: string[];
-  // Rich 7-section spec fields
-  clinical_significance: string;
-  causes: string[];
-  exam_traps: string;
-  memory_pearl: string;
-  high_yield_tip: string;
-  practice_question: PracticeQuestion | null;
-}
-
-// Per-category accent — these are intentional content variety colours,
-// distinct from the brand primary/accent but harmonious with it.
-const CAT: Record<string, { bg: string; text: string; soft: string; border: string }> = {
-  Pharmacology:   { bg:'#F5A623', text:'#0F1C1C', soft:'rgba(245,166,35,0.12)',  border:'rgba(245,166,35,0.30)'  },
-  Anatomy:        { bg:'#F97316', text:'#0F1C1C', soft:'rgba(249,115,22,0.12)',  border:'rgba(249,115,22,0.30)'  },
-  Obstetrics:     { bg:'#EC4899', text:'#fff',    soft:'rgba(236,72,153,0.12)',  border:'rgba(236,72,153,0.28)'  },
-  Neurology:      { bg:'#7C3AED', text:'#fff',    soft:'rgba(124,58,237,0.12)',  border:'rgba(124,58,237,0.28)'  },
-  'Med-Surgical': { bg:'#08514F', text:'#E8F5F4', soft:'rgba(8,81,79,0.10)',    border:'rgba(8,81,79,0.28)'     },
-  Emergency:      { bg:'#EF4444', text:'#fff',    soft:'rgba(239,68,68,0.12)',   border:'rgba(239,68,68,0.28)'   },
-  Community:      { bg:'#10B981', text:'#0F1C1C', soft:'rgba(16,185,129,0.12)', border:'rgba(16,185,129,0.28)'  },
-  Pediatrics:     { bg:'#3B82F6', text:'#fff',    soft:'rgba(59,130,246,0.12)', border:'rgba(59,130,246,0.28)'  },
+// Fallback color scheme for categories
+const FallbackCat = {
+  bg: '#08514F',
+  text: '#FFFFFF',
+  soft: 'rgba(8,81,79,0.12)',
+  border: 'rgba(8,81,79,0.28)'
 };
-const FallbackCat = CAT.Pharmacology;
 
-// ── Section block component ───────────────────────────────────────────────────
-function SectionBlock({ icon, title, accent, soft, children }: {
-  icon: string; title: string; accent: string; soft?: boolean; children: React.ReactNode;
+// ── Section Card Component ───────────────────────────────────────────────────
+function SectionCard({
+  icon,
+  title,
+  accent,
+  soft,
+  bgClass,
+  children,
+}: {
+  icon: string;
+  title: string;
+  accent: string;
+  soft?: boolean;
+  bgClass?: string;
+  children: React.ReactNode;
 }) {
   return (
-    <div style={{
-      background: soft ? `${accent}14` : 'rgba(255,255,255,0.7)',
-      border: `1.5px solid ${soft ? `${accent}35` : 'var(--color-border)'}`,
-      borderLeft: `4px solid ${accent}`,
-      borderRadius: 14, padding: '16px 18px', marginBottom: 12,
-    }}>
-      <div className="font-heading font-extrabold" style={{
-        fontSize: 11, color: accent,
-        letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8,
-        display: 'flex', alignItems: 'center', gap: 6,
-      }}>
-        <span style={{ fontSize: 14 }}>{icon}</span> {title}
+    <div
+      className={`rounded-2xl sm:rounded-3xl p-5 sm:p-6 transition-all duration-200 border ${
+        bgClass || 'bg-white dark:bg-[var(--color-card)]'
+      }`}
+      style={{
+        borderColor: soft ? `${accent}40` : 'var(--color-border)',
+        borderLeftWidth: '5px',
+        borderLeftColor: accent,
+        boxShadow: 'var(--shadow-card, 0 2px 10px rgba(0,0,0,0.04))',
+      }}
+    >
+      <div
+        className="font-heading font-extrabold flex items-center gap-2 mb-3"
+        style={{
+          fontSize: 12,
+          color: accent,
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+        }}
+      >
+        <span className="text-base sm:text-lg">{icon}</span>
+        <span>{title}</span>
       </div>
       {children}
     </div>
   );
 }
 
-// ── Practice question component ───────────────────────────────────────────────
-function PracticeQuestionBlock({ pq, catColor }: { pq: { question: string; options: string[]; answer: string; explanation: string }; catColor: string }) {
-  const [revealed, setRevealed] = useState(false);
+// ── Interactive Practice Question Component ──────────────────────────────────
+function PracticeQuestionCard({
+  pq,
+  catColor,
+}: {
+  pq: PracticeQuestion;
+  catColor: string;
+}) {
   const [selected, setSelected] = useState<string | null>(null);
+  const [revealed, setRevealed] = useState(false);
+
+  // Reset when question changes
+  useEffect(() => {
+    setSelected(null);
+    setRevealed(false);
+  }, [pq.question]);
 
   return (
-    <div style={{
-      background: 'rgba(255,255,255,0.7)',
-      border: '1.5px solid var(--color-border)',
-      borderLeft: `4px solid ${catColor}`,
-      borderRadius: 14, padding: '18px 18px', marginBottom: 12,
-    }}>
-      <div className="font-heading font-extrabold" style={{
-        fontSize: 11, color: catColor,
-        letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 12,
-        display: 'flex', alignItems: 'center', gap: 6,
-      }}>
-        <span style={{ fontSize: 14 }}>❓</span> Practice Question
+    <div
+      className="bg-white dark:bg-[var(--color-card)] rounded-2xl sm:rounded-3xl p-5 sm:p-6 border transition-all"
+      style={{
+        borderColor: 'var(--color-border)',
+        borderLeftWidth: '5px',
+        borderLeftColor: catColor,
+        boxShadow: 'var(--shadow-card, 0 2px 10px rgba(0,0,0,0.04))',
+      }}
+    >
+      <div
+        className="font-heading font-extrabold flex items-center gap-2 mb-3"
+        style={{
+          fontSize: 12,
+          color: catColor,
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+        }}
+      >
+        <span className="text-base">❓</span>
+        <span>Interactive Practice Question</span>
       </div>
-      <p className="font-body" style={{ fontSize: 14, color: 'var(--color-dark)', lineHeight: 1.65, marginBottom: 14, fontWeight: 600 }}>
+
+      <p className="font-body font-semibold text-sm sm:text-base text-dark dark:text-white leading-relaxed mb-4">
         {pq.question}
       </p>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 14 }}>
+
+      <div className="flex flex-col gap-2.5 mb-5">
         {pq.options.map((opt, i) => {
           const letter = opt.charAt(0);
           const isCorrect = letter === pq.answer;
           const isSelected = selected === letter;
-          let bg = 'rgba(255,255,255,0.85)';
-          let border = 'var(--color-border)';
-          let color = 'var(--color-dark)';
+
+          let btnBg = 'bg-[var(--color-bg)]';
+          let borderCol = 'border-[var(--color-border)]';
+          let textCol = 'text-dark dark:text-white';
+
           if (revealed) {
-            if (isCorrect) { bg = 'rgba(26,158,117,0.12)'; border = '#1A9E75'; color = '#1A9E75'; }
-            else if (isSelected) { bg = 'rgba(232,69,69,0.10)'; border = '#E84545'; color = '#E84545'; }
-          } else if (isSelected) { bg = 'var(--color-primary-light)'; border = 'var(--color-primary)'; color = 'var(--color-primary)'; }
+            if (isCorrect) {
+              btnBg = 'bg-emerald-50 dark:bg-emerald-950/30';
+              borderCol = 'border-emerald-500';
+              textCol = 'text-emerald-700 dark:text-emerald-300 font-semibold';
+            } else if (isSelected) {
+              btnBg = 'bg-rose-50 dark:bg-rose-950/30';
+              borderCol = 'border-rose-500';
+              textCol = 'text-rose-700 dark:text-rose-300';
+            }
+          } else if (isSelected) {
+            btnBg = 'bg-primary/10 dark:bg-primary/20';
+            borderCol = 'border-primary';
+            textCol = 'text-primary dark:text-primary-light font-bold';
+          }
+
           return (
-            <button key={i} onClick={() => { if (!revealed) setSelected(letter); }}
-              style={{
-                background: bg, border: `1.5px solid ${border}`,
-                borderRadius: 10, padding: '11px 16px',
-                textAlign: 'left', cursor: revealed ? 'default' : 'pointer',
-                transition: 'all 0.18s ease',
-              }}>
-              <span className="font-body" style={{ fontSize: 13.5, color, lineHeight: 1.5 }}>{opt}</span>
+            <button
+              key={i}
+              type="button"
+              onClick={() => {
+                if (!revealed) setSelected(letter);
+              }}
+              className={`p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border text-left transition-all flex items-start gap-3 min-h-[44px] ${btnBg} ${borderCol} ${
+                revealed ? 'cursor-default' : 'hover:border-primary/50 cursor-pointer'
+              }`}
+            >
+              <span
+                className={`w-6 h-6 rounded-lg text-xs font-heading font-extrabold flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                  revealed && isCorrect
+                    ? 'bg-emerald-500 text-white'
+                    : revealed && isSelected
+                    ? 'bg-rose-500 text-white'
+                    : isSelected
+                    ? 'bg-primary text-white'
+                    : 'bg-neutral-200 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300'
+                }`}
+              >
+                {letter}
+              </span>
+              <span className={`text-xs sm:text-sm leading-relaxed ${textCol}`}>
+                {opt}
+              </span>
             </button>
           );
         })}
       </div>
+
       {!revealed ? (
-        <button onClick={() => { if (selected) setRevealed(true); }}
-          className="font-heading font-extrabold"
+        <button
+          type="button"
+          onClick={() => {
+            if (selected) setRevealed(true);
+          }}
+          disabled={!selected}
+          className="w-full sm:w-auto font-heading font-extrabold uppercase tracking-wider text-xs px-6 py-3 rounded-xl transition-all shadow-sm"
           style={{
-            background: selected ? `linear-gradient(135deg,${catColor},${catColor}cc)` : 'var(--color-primary-light)',
-            border: 'none', borderRadius: 10, padding: '11px 20px',
-            fontSize: 12, color: selected ? 'white' : 'var(--color-neutral-mid)',
+            background: selected
+              ? `linear-gradient(135deg, ${catColor}, ${catColor}dd)`
+              : 'var(--color-primary-light)',
+            color: selected ? '#FFFFFF' : 'var(--color-neutral-mid)',
             cursor: selected ? 'pointer' : 'not-allowed',
-            letterSpacing: '0.08em', textTransform: 'uppercase',
-          }}>
-          {selected ? 'Reveal Answer' : 'Select an option first'}
+          }}
+        >
+          {selected ? 'Reveal Answer & Clinical Rationale' : 'Select an option to reveal'}
         </button>
       ) : (
-        <div style={{
-          background: 'rgba(26,158,117,0.08)', border: '1.5px solid rgba(26,158,117,0.3)',
-          borderRadius: 10, padding: '12px 16px',
-        }}>
-          <div className="font-heading font-extrabold" style={{ fontSize: 11, color: '#1A9E75', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 6 }}>
-            ✓ Correct Answer: {pq.answer}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-4 sm:p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30"
+        >
+          <div className="font-heading font-extrabold text-xs mb-2 uppercase tracking-wider text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
+            <span>✓</span> Correct Answer: {pq.answer}
           </div>
-          <p className="font-body" style={{ fontSize: 13, color: 'var(--color-neutral-mid)', lineHeight: 1.65, margin: 0 }}>
+          <p className="font-body text-xs sm:text-sm leading-relaxed text-dark dark:text-neutral-200 m-0">
             {pq.explanation}
           </p>
-        </div>
+        </motion.div>
       )}
     </div>
   );
 }
 
-export default function MnemonicTodayPage() {
-  const supabase = createClient();
+// ── Inner Page Component ─────────────────────────────────────────────────────
+function MnemonicTodayContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const requestedId = searchParams.get('id');
+
+  const supabase = createClient();
 
   // Instant zero-lag dataset
-  const [mnemonicList, setMnemonicList] = useState<any[]>(() =>
-    ALL_MNEMONICS.map(d => ({
-      id:                    d.id,
-      topic:                 d.title,
-      category:              d.category || 'Pharmacology',
-      specialty:             d.specialty || 'General',
-      phrases:               d.phrases   || [],
-      breakdown:             d.breakdown || [],
-      tags:                  d.tags      || [],
-      clinical_significance: d.clinical_significance || '',
-      causes:                d.causes    || [],
-      exam_traps:            d.exam_traps || '',
-      memory_pearl:          d.memory_pearl || '',
-      high_yield_tip:        d.high_yield_tip || '',
-      practice_question:     d.practice_question || null,
-    }))
-  );
+  const [mnemonicList, setMnemonicList] = useState<FullMnemonic[]>(ALL_MNEMONICS);
 
-  const dayOfYear = Math.floor(
-    (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000
-  );
+  const dayOfYear = useMemo(() => {
+    return Math.floor(
+      (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000
+    );
+  }, []);
 
-  const [currentIndex, setCurrentIndex] = useState<number>(dayOfYear % ALL_MNEMONICS.length);
-  const [showBreakdown, setShowBreakdown] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState<number>(() => {
+    if (requestedId) {
+      const idx = ALL_MNEMONICS.findIndex(
+        (m) => m.id === requestedId || m.title.toLowerCase().includes(requestedId.toLowerCase())
+      );
+      if (idx !== -1) return idx;
+    }
+    return dayOfYear % ALL_MNEMONICS.length;
+  });
+
+  const [showBreakdown, setShowBreakdown] = useState(true);
   const [planTier, setPlanTier] = useState<string>('free');
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [searchFilter, setSearchFilter] = useState('');
 
-  const mnemonic = mnemonicList[currentIndex % mnemonicList.length];
+  // Handle URL param changes dynamically
+  useEffect(() => {
+    if (requestedId && mnemonicList.length > 0) {
+      const idx = mnemonicList.findIndex(
+        (m) => m.id === requestedId || m.title.toLowerCase().includes(requestedId.toLowerCase())
+      );
+      if (idx !== -1 && idx !== currentIndex) {
+        setCurrentIndex(idx);
+      }
+    }
+  }, [requestedId, mnemonicList]);
+
+  const mnemonic = mnemonicList[currentIndex % mnemonicList.length] || ALL_MNEMONICS[0];
 
   // Sync bookmark state from localStorage
   useEffect(() => {
@@ -185,15 +263,19 @@ export default function MnemonicTodayPage() {
       if (stored) {
         const set = new Set(JSON.parse(stored));
         setIsBookmarked(set.has(mnemonic.id));
+      } else {
+        setIsBookmarked(false);
       }
-    } catch { /* ignore */ }
+    } catch {
+      /* ignore */
+    }
   }, [mnemonic]);
 
   const toggleBookmark = () => {
     if (!mnemonic) return;
     try {
       const stored = localStorage.getItem('nf_bookmarked_mnemonics');
-      const set = new Set(stored ? JSON.parse(stored) : []);
+      const set = new Set<string>(stored ? JSON.parse(stored) : []);
       if (set.has(mnemonic.id)) {
         set.delete(mnemonic.id);
         setIsBookmarked(false);
@@ -204,559 +286,698 @@ export default function MnemonicTodayPage() {
         toast.success('Saved to your mnemonics!');
       }
       localStorage.setItem('nf_bookmarked_mnemonics', JSON.stringify(Array.from(set)));
-    } catch { /* ignore */ }
+    } catch {
+      /* ignore */
+    }
   };
 
+  // Background check for newly added rows from Supabase
   useEffect(() => {
     async function load() {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         if (user) {
           const { data: prof } = await supabase
             .from('student_profiles')
-            .select('plan_tier,plan_expires_at')
-            .eq('id', user.id).single();
+            .select('plan_tier, plan_expires_at')
+            .eq('id', user.id)
+            .single();
           setPlanTier(effectiveTier((prof as any)?.plan_tier, (prof as any)?.plan_expires_at));
         }
 
-        // Background check for newly added rows from Supabase
         const { data } = await supabase.from('mnemonics').select('*');
-        if (data?.length) {
-          const mapped = data.map((d: any) => ({
-            id:                    d.id,
-            topic:                 d.title,
-            category:              d.category || 'Pharmacology',
-            specialty:             d.specialty || 'General',
-            phrases:               d.phrases   || [],
-            breakdown:             d.breakdown || [],
-            tags:                  d.tags      || [],
-            clinical_significance: d.clinical_significance || '',
-            causes:                d.causes    || [],
-            exam_traps:            d.exam_traps || '',
-            memory_pearl:          d.memory_pearl || '',
-            high_yield_tip:        d.high_yield_tip || '',
-            practice_question:     d.practice_question || null,
-          }));
-          setMnemonicList(mapped);
+        if (data && data.length > 0) {
+          const dbMap = new Map(data.map((d: any) => [d.title.toLowerCase().trim(), d]));
+          const merged = ALL_MNEMONICS.map((m) => {
+            const found = dbMap.get(m.title.toLowerCase().trim());
+            return found ? { ...m, ...found } : m;
+          });
+
+          const staticTitles = new Set(ALL_MNEMONICS.map((m) => m.title.toLowerCase().trim()));
+          for (const d of data) {
+            if (!staticTitles.has((d.title || '').toLowerCase().trim())) {
+              merged.push({
+                id: d.id,
+                title: d.title,
+                acronym: d.acronym || d.title,
+                description: d.description || '',
+                category: d.category || 'Pharmacology',
+                specialty: d.specialty || 'General',
+                tags: d.tags || [],
+                phrases: d.phrases || [],
+                breakdown: d.breakdown || [],
+                clinical_significance: d.clinical_significance || '',
+                causes: d.causes || [],
+                exam_traps: d.exam_traps || '',
+                memory_pearl: d.memory_pearl || '',
+                high_yield_tip: d.high_yield_tip || '',
+                practice_question: d.practice_question || null,
+              });
+            }
+          }
+          setMnemonicList(merged);
         }
-      } catch { /* silent fallback to ALL_MNEMONICS */ }
+      } catch {
+        /* silent fallback */
+      }
     }
     load();
   }, []);
 
   const handleDownload = () => {
     if (planTier === 'free') {
-      toast.error('Downloading PDFs is a premium feature. Please upgrade your plan.');
-      router.push('/settings'); return;
+      toast.error('Downloading printable study sheets is a premium feature. Please upgrade your plan.');
+      router.push('/settings');
+      return;
     }
     if (!mnemonic) return;
-    const html = `<!DOCTYPE html><html><head><title>NurseFiti – ${mnemonic.topic}</title>
-<style>body{font-family:Arial,sans-serif;background:#FFFDF8;color:#0F1C1C;padding:40px;max-width:780px;margin:0 auto}
-h1{color:#08514F;font-size:30px;border-bottom:3px solid #F5A623;padding-bottom:10px;margin-top:0}
-.cat{display:inline-block;background:#F5A623;color:#0F1C1C;padding:4px 14px;border-radius:999px;font-weight:700;font-size:11px;margin-bottom:18px;text-transform:uppercase;letter-spacing:.08em}
-.phrases{margin:24px 0;border-left:4px solid #F5A623;padding-left:20px}
-.phrase{font-size:17px;font-weight:700;color:#08514F;margin-bottom:8px}
-.item{display:flex;gap:14px;padding:14px;background:#fff;border-radius:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(8,81,79,.07)}
-.emoji{font-size:26px;flex-shrink:0}.ph{font-weight:700;font-size:15px;color:#F5A623;margin-bottom:3px}
-.mn{color:#4A6565;line-height:1.6;font-size:13px}.foot{text-align:center;margin-top:50px;font-size:11px;color:#7A9E9E}</style>
+
+    const html = `<!DOCTYPE html><html><head><title>NurseFiti Study Note – ${mnemonic.title}</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background: #FFFDF8; color: #0F1C1C; padding: 40px; max-width: 860px; margin: 0 auto; line-height: 1.6; }
+h1 { color: #08514F; font-size: 28px; border-bottom: 3px solid #F5A623; padding-bottom: 8px; margin: 12px 0; }
+.badge { display: inline-block; background: #F5A623; color: #0F1C1C; padding: 5px 14px; border-radius: 999px; font-weight: bold; font-size: 11px; text-transform: uppercase; }
+.acronym-box { background: #E8F5F4; border-left: 4px solid #08514F; padding: 14px 18px; border-radius: 10px; margin: 16px 0; font-size: 16px; font-weight: bold; color: #08514F; }
+.section { margin: 20px 0; padding: 16px 20px; background: #FFFFFF; border-radius: 14px; border: 1px solid #E2E8F0; }
+.section-title { font-size: 12px; font-weight: bold; color: #08514F; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.phrases-list { list-style: none; padding: 0; margin: 0; }
+.phrase-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #F1F5F9; font-weight: 600; font-size: 15px; color: #08514F; }
+.item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #F1F5F9; }
+.emoji { font-size: 22px; flex-shrink: 0; }
+.ph { font-weight: bold; font-size: 14.5px; color: #08514F; }
+.mn { color: #4A6565; font-size: 13.5px; line-height: 1.5; }
+.alert-box { background: #FEF3C7; border-left: 4px solid #F5A623; padding: 14px 18px; border-radius: 10px; margin: 16px 0; }
+.alert-red { background: #FFF0F0; border-left: 4px solid #EF4444; padding: 14px 18px; border-radius: 10px; margin: 16px 0; }
+.foot { text-align: center; margin-top: 40px; font-size: 11px; color: #7A9E9E; border-top: 1px solid #E2E8F0; padding-top: 20px; }
+</style>
 </head><body>
-<div class="cat">${mnemonic.category}</div>
-<h1>${mnemonic.topic}</h1>
-<div class="phrases">${mnemonic.phrases.map((p: string)=>`<div class="phrase">${p}</div>`).join('')}</div>
-${mnemonic.breakdown.map((b: any)=>`<div class="item"><div class="emoji">${b.emoji}</div><div><div class="ph">${b.phrase}</div><div class="mn">${b.meaning}</div></div></div>`).join('')}
-<div class="foot">Downloaded from NurseFiti.com · Keep Learning!</div>
+<div class="badge">${mnemonic.category} · ${mnemonic.specialty}</div>
+<h1>${mnemonic.title}</h1>
+<div class="acronym-box">Acronym / Anchor: ${mnemonic.acronym}</div>
+<p style="color: #4A6565; font-size: 14px;">${mnemonic.description}</p>
+
+<div class="section">
+  <div class="section-title">Sequence & Phrases</div>
+  <ul class="phrases-list">
+    ${mnemonic.phrases.map((p, i) => `<li class="phrase-item"><span>${i + 1}.</span> <strong>${p}</strong></li>`).join('')}
+  </ul>
+</div>
+
+<div class="section">
+  <div class="section-title">Anatomical & Clinical Breakdown</div>
+  ${mnemonic.breakdown.map((b) => `<div class="item"><div class="emoji">${b.emoji}</div><div><div class="ph">${b.phrase}</div><div class="mn">${b.meaning}</div></div></div>`).join('')}
+</div>
+
+${mnemonic.clinical_significance ? `<div class="section"><div class="section-title">Clinical Significance</div><p class="mn">${mnemonic.clinical_significance}</p></div>` : ''}
+
+${mnemonic.causes && mnemonic.causes.length > 0 ? `<div class="section"><div class="section-title">Common Causes & Etiology</div><ul>${mnemonic.causes.map((c) => `<li class="mn">${c}</li>`).join('')}</ul></div>` : ''}
+
+${mnemonic.exam_traps ? `<div class="alert-red"><div class="section-title" style="color: #991B1B;">Common NCK Exam Traps</div><p class="mn" style="color: #7F1D1D;">${mnemonic.exam_traps}</p></div>` : ''}
+
+${mnemonic.memory_pearl ? `<div class="alert-box"><div class="section-title" style="color: #92400E;">NurseFiti Memory Pearl</div><p class="mn" style="font-style: italic; color: #78350F;">${mnemonic.memory_pearl}</p></div>` : ''}
+
+${mnemonic.high_yield_tip ? `<div class="section"><div class="section-title">NCK High-Yield Examination Tip</div><p class="mn">${mnemonic.high_yield_tip}</p></div>` : ''}
+
+${
+  mnemonic.practice_question
+    ? `<div class="section"><div class="section-title">NCK Practice Question</div><p><strong>${mnemonic.practice_question.question}</strong></p><ul>${mnemonic.practice_question.options.map((o) => `<li>${o}</li>`).join('')}</ul><p style="color:#059669; font-weight:bold;">Correct Answer: ${mnemonic.practice_question.answer}</p><p class="mn">${mnemonic.practice_question.explanation}</p></div>`
+    : ''
+}
+
+<div class="foot">Downloaded from NurseFiti.com · Kenya's #1 Nursing Prep Platform · All Rights Reserved.</div>
 </body></html>`;
-    const a = Object.assign(document.createElement('a'), {
-      href: URL.createObjectURL(new Blob([html],{type:'text/html'})),
-      download: `nursefiti-${mnemonic.topic.replace(/\s+/g,'-').toLowerCase()}.html`,
-    });
-    document.body.appendChild(a); a.click(); a.remove();
-    toast.success('Download started. Open the file in any browser to view or print.');
+
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `nursefiti-mnemonic-${mnemonic.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.html`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    toast.success('Study sheet ready! Open to view or print as PDF.');
   };
 
-  if (!mnemonic) return null;
-  const cat = CAT[mnemonic.category] ?? FallbackCat;
+  const handleShare = () => {
+    const text = `🧠 NurseFiti Mnemonic: ${mnemonic.title} (${mnemonic.acronym})\n\nSequence:\n${mnemonic.phrases
+      .map((p, i) => `${i + 1}. ${p}`)
+      .join('\n')}\n\nClinical Significance:\n${mnemonic.clinical_significance}\n\nMaster 69+ NCK Nursing Mnemonics on https://www.nursefiti.co.ke/mnemonics`;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+      toast.success('Copied mnemonic study note to clipboard!');
+    }
+  };
+
+  const cat = CATEGORY_COLORS[mnemonic.category] || FallbackCat;
+
+  // Filter list for dropdown search
+  const filteredJumpList = useMemo(() => {
+    if (!searchFilter) return mnemonicList;
+    const q = searchFilter.toLowerCase();
+    return mnemonicList.filter(
+      (m) =>
+        m.title.toLowerCase().includes(q) ||
+        m.acronym.toLowerCase().includes(q) ||
+        m.category.toLowerCase().includes(q) ||
+        m.specialty.toLowerCase().includes(q)
+    );
+  }, [mnemonicList, searchFilter]);
 
   return (
     <>
-      {/* ── Global keyframes ──────────────────────────────────────── */}
+      {/* ── Keyframe Animations ───────────────────────────────────────── */}
       <style>{`
-        @keyframes blobDrift {
-          0%,100%{ transform:translate(0,0) scale(1); }
-          40%    { transform:translate(50px,-35px) scale(1.1); }
-          70%    { transform:translate(-30px,25px) scale(0.93); }
+        @keyframes subtleDrift {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(30px, -20px) scale(1.05); }
         }
-        @keyframes shimmer {
-          0%  { background-position:-500px 0; }
-          100%{ background-position: 500px 0; }
+        .ph-card {
+          transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, border-color 0.2s ease;
         }
-        .ph-card { transition: transform .22s cubic-bezier(.34,1.56,.64,1),
-                               box-shadow .22s ease; }
-        .ph-card:hover { transform:translateY(-3px) scale(1.015);
-                         box-shadow:0 12px 32px rgba(8,81,79,0.12); }
-        .bk-row:hover { background:rgba(8,81,79,0.04); border-radius:14px; }
-        .bk-row { transition:background .18s ease; }
+        .ph-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 24px rgba(8, 81, 79, 0.10);
+        }
       `}</style>
 
-      {/* ── Page root — respects brand bg token ───────────────────── */}
-      <div className="relative min-h-screen overflow-hidden"
-           style={{ background:'var(--color-bg)' }}>
-
-        {/* ── Ambient blobs ─────────────────────────────────────────
-            Colours: brand primary teal + brand accent amber.
-            These never override foreground, only add atmosphere.      */}
-        <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex:0 }}>
-          {/* Amber top-right */}
-          <div style={{
-            position:'absolute', top:'-12%', right:'-8%',
-            width:560, height:560, borderRadius:'50%',
-            background:'radial-gradient(circle,rgba(245,166,35,0.16) 0%,transparent 68%)',
-            filter:'blur(72px)',
-            animation:'blobDrift 20s ease-in-out infinite',
-          }}/>
-          {/* Primary teal bottom-left */}
-          <div style={{
-            position:'absolute', bottom:'-14%', left:'-10%',
-            width:640, height:640, borderRadius:'50%',
-            background:'radial-gradient(circle,rgba(8,81,79,0.14) 0%,transparent 68%)',
-            filter:'blur(90px)',
-            animation:'blobDrift 26s ease-in-out infinite reverse 2s',
-          }}/>
-          {/* Category accent mid-page — subtle */}
-          <div style={{
-            position:'absolute', top:'38%', left:'18%',
-            width:380, height:380, borderRadius:'50%',
-            background:`radial-gradient(circle,${cat.soft.replace('0.12','0.10')} 0%,transparent 70%)`,
-            filter:'blur(80px)',
-            animation:'blobDrift 16s ease-in-out infinite 5s',
-          }}/>
+      {/* ── Full Width Container (Maximising Page Space) ──────────────── */}
+      <div className="relative min-h-screen w-full pb-20">
+        {/* Ambient atmospheric glows */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+          <div
+            style={{
+              position: 'absolute',
+              top: '-10%',
+              right: '-5%',
+              width: 600,
+              height: 600,
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(245,166,35,0.08) 0%, transparent 70%)',
+              filter: 'blur(80px)',
+              animation: 'subtleDrift 22s ease-in-out infinite',
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '-10%',
+              left: '-5%',
+              width: 600,
+              height: 600,
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(8,81,79,0.08) 0%, transparent 70%)',
+              filter: 'blur(90px)',
+              animation: 'subtleDrift 26s ease-in-out infinite reverse',
+            }}
+          />
         </div>
 
-        {/* ── Content ───────────────────────────────────────────────── */}
-        <div className="relative max-w-2xl mx-auto px-5 sm:px-8 py-10 sm:py-16"
-             style={{ zIndex:1 }}>
-          <motion.div
-            initial={{ opacity:0, y:24 }}
-            animate={{ opacity:1, y:0 }}
-            transition={{ duration:0.5, ease:[0.22,1,0.36,1] }}
-          >
+        {/* ── Content Canvas: Uses Full Space Responsively ─────────────── */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto space-y-6">
 
-            {/* ── Top Navigation Bar ───────────────────────────────── */}
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+          {/* ── Top Bar: Navigation, Search/Jump & Quick Actions ──────── */}
+          <div className="bg-white/90 dark:bg-[var(--color-card)] backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-[var(--color-border)] shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+            {/* Left: Back & Category pills */}
+            <div className="flex items-center gap-2.5 flex-wrap">
               <Link
                 href="/mnemonics"
-                className="inline-flex items-center gap-1.5 text-xs font-heading font-extrabold text-primary hover:text-accent-dark transition-colors px-3 py-1.5 rounded-full bg-primary-light/60 border border-[var(--color-border)] shadow-xs"
+                className="inline-flex items-center gap-1.5 text-xs font-heading font-extrabold text-primary dark:text-primary-light hover:text-accent-dark transition-all px-3.5 py-2 rounded-xl bg-primary-light/40 dark:bg-primary/20 border border-[var(--color-border)] hover:bg-primary-light"
               >
-                <span>←</span> Library (69 Mnemonics)
+                <span>←</span> All Mnemonics ({mnemonicList.length})
               </Link>
 
-              <div className="flex items-center gap-1.5">
-                <button
-                  type="button"
-                  onClick={() => setCurrentIndex((idx) => (idx - 1 + mnemonicList.length) % mnemonicList.length)}
-                  className="p-1.5 px-2.5 rounded-xl border border-[var(--color-border)] bg-white/80 hover:bg-white text-xs font-bold text-primary transition-all shadow-xs"
-                  title="Previous Mnemonic"
-                >
-                  ←
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setCurrentIndex(dayOfYear % mnemonicList.length)}
-                  className="px-2.5 py-1.5 rounded-xl border border-[var(--color-border)] bg-white/80 hover:bg-white text-xs font-bold text-primary transition-all shadow-xs"
-                  title="Today's featured Mnemonic"
-                >
-                  Today
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setCurrentIndex((idx) => (idx + 1) % mnemonicList.length)}
-                  className="p-1.5 px-2.5 rounded-xl border border-[var(--color-border)] bg-white/80 hover:bg-white text-xs font-bold text-primary transition-all shadow-xs"
-                  title="Next Mnemonic"
-                >
-                  →
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setCurrentIndex(Math.floor(Math.random() * mnemonicList.length))}
-                  className="p-1.5 px-2.5 rounded-xl border border-[var(--color-border)] bg-white/80 hover:bg-white text-xs font-bold text-accent-dark transition-all shadow-xs"
-                  title="Random Mnemonic"
-                >
-                  🎲
-                </button>
-                <button
-                  type="button"
-                  onClick={toggleBookmark}
-                  className="p-1.5 px-2.5 rounded-xl border border-[var(--color-border)] bg-white/80 hover:bg-white text-xs font-bold transition-all shadow-xs"
-                  title={isBookmarked ? 'Remove bookmark' : 'Bookmark mnemonic'}
-                >
-                  {isBookmarked ? '⭐' : '☆'}
-                </button>
-              </div>
-            </div>
-
-            {/* ── Eyebrow ─────────────────────────────────────────── */}
-            <div className="flex items-center mb-6">
-              <span className="font-heading text-[11px] font-bold tracking-[0.14em] uppercase"
-                    style={{
-                      background:'var(--color-primary-light)',
-                      border:'1px solid var(--color-border)',
-                      borderRadius:999, padding:'6px 20px',
-                      display:'inline-flex', alignItems:'center', gap:0,
-                    }}>
-                {/* Logo wordmark colours matching the actual logo */}
-                <span className="logo-nurse-theme" style={{ fontWeight:400, letterSpacing:'0.01em' }}>Nurse</span>
-                <span className="logo-fiti-theme"  style={{ letterSpacing:'0.01em' }}>Fiti</span>
-                <span style={{ color:'var(--color-neutral-light)', margin:'0 6px' }}>·</span>
-                <span style={{ color:'var(--color-neutral-mid)', fontWeight:700 }}>Daily Mnemonic</span>
-              </span>
-            </div>
-
-            {/* ── Category badge ──────────────────────────────────── */}
-            <motion.div
-              initial={{ opacity:0, scale:0.88 }}
-              animate={{ opacity:1, scale:1 }}
-              transition={{ delay:0.1, type:'spring', stiffness:200 }}
-              className="mb-3 inline-block"
-            >
-              <span className="font-heading text-[11px] font-extrabold tracking-[0.16em] uppercase"
-                    style={{
-                      background: cat.soft,
-                      border:`1.5px solid ${cat.border}`,
-                      borderRadius:999, padding:'5px 18px',
-                      color: cat.bg,
-                      boxShadow:`0 2px 14px ${cat.border}`,
-                    }}>
+              <span
+                className="text-[11px] font-heading font-extrabold uppercase tracking-wider px-3 py-1 rounded-full"
+                style={{
+                  background: cat.soft,
+                  color: cat.bg,
+                  border: `1px solid ${cat.border}`,
+                }}
+              >
                 {mnemonic.category}
               </span>
-            </motion.div>
 
-            {/* ── Title ───────────────────────────────────────────── */}
-            <motion.h1
-              initial={{ opacity:0, y:14 }}
-              animate={{ opacity:1, y:0 }}
-              transition={{ delay:0.14, duration:0.48 }}
-              className="font-heading font-black tracking-tight leading-[1.08] mb-8"
-              style={{
-                fontSize:'clamp(1.9rem,5.5vw,2.75rem)',
-                color:'var(--color-primary)',
-              }}
-            >
-              {mnemonic.topic}
-            </motion.h1>
+              <span className="text-[11px] font-heading font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-primary/10 text-primary dark:text-primary-light border border-primary/20">
+                {mnemonic.specialty}
+              </span>
+            </div>
 
-            {/* ── Main glassmorphic card ───────────────────────────── */}
-            <div style={{
-              background:'rgba(255,255,255,0.64)',
-              backdropFilter:'blur(28px)',
-              WebkitBackdropFilter:'blur(28px)',
-              borderRadius:28,
-              border:'1.5px solid rgba(255,255,255,0.92)',
-              boxShadow:'var(--shadow-premium), 0 1px 0 rgba(255,255,255,0.8) inset',
-              overflow:'hidden',
-            }}>
-              {/* Category-coloured top stripe */}
-              <div style={{
-                height:4,
-                background:`linear-gradient(90deg,${cat.bg} 0%,${cat.border} 60%,transparent 100%)`,
-              }}/>
+            {/* Center: Jump to Mnemonic Dropdown */}
+            <div className="flex-1 max-w-xs">
+              <select
+                value={mnemonic.id}
+                onChange={(e) => {
+                  const idx = mnemonicList.findIndex((m) => m.id === e.target.value);
+                  if (idx !== -1) setCurrentIndex(idx);
+                }}
+                className="w-full py-2 px-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] text-xs font-semibold text-dark dark:text-white focus:outline-none focus:border-primary transition-all truncate"
+                aria-label="Select mnemonic"
+              >
+                {mnemonicList.map((m, idx) => (
+                  <option key={m.id} value={m.id}>
+                    #{idx + 1}: {m.title} ({m.acronym})
+                  </option>
+                ))}
+              </select>
+            </div>
 
-              <div style={{ padding:'28px 28px 0' }}>
+            {/* Right: Controls (Prev, Today, Next, Random, Bookmark, PDF) */}
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+              <span className="text-xs font-bold text-[var(--color-neutral-mid)] hidden lg:inline mr-1">
+                {currentIndex + 1} / {mnemonicList.length}
+              </span>
 
-                {/* ── Phrase timeline ─────────────────────────────── */}
-                <div style={{ position:'relative', paddingLeft:26 }}>
-                  {/* Glowing vertical rail — brand amber */}
-                  <div style={{
-                    position:'absolute', left:0, top:10, bottom:10,
-                    width:4, borderRadius:4,
-                    background:`linear-gradient(180deg,var(--color-accent) 0%,var(--color-accent-dark) 100%)`,
-                    boxShadow:'var(--shadow-glow-amber)',
-                  }}/>
+              <button
+                type="button"
+                onClick={() => setCurrentIndex((idx) => (idx - 1 + mnemonicList.length) % mnemonicList.length)}
+                className="p-2 sm:px-3 rounded-xl border border-[var(--color-border)] bg-white dark:bg-[var(--color-card)] hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs font-bold text-primary dark:text-primary-light transition-all shadow-xs min-h-[40px] min-w-[40px] flex items-center justify-center"
+                title="Previous Mnemonic"
+              >
+                ← Prev
+              </button>
 
-                  <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
-                    {mnemonic.phrases.map((phrase, i) => (
-                      <motion.div key={i} className="ph-card"
-                        initial={{ opacity:0, x:-16 }}
-                        animate={{ opacity:1, x:0 }}
-                        transition={{ delay:0.18 + i*0.09, type:'spring', stiffness:130, damping:16 }}
-                        style={{ position:'relative' }}
-                      >
-                        {/* Dot */}
-                        <div style={{
-                          position:'absolute', left:-33, top:'50%',
-                          transform:'translateY(-50%)',
-                          width:14, height:14, borderRadius:'50%',
-                          background:'white',
-                          border:`3.5px solid var(--color-accent)`,
-                          boxShadow:'var(--shadow-glow-amber)',
-                          zIndex:2,
-                        }}/>
+              <button
+                type="button"
+                onClick={() => setCurrentIndex(dayOfYear % mnemonicList.length)}
+                className={`px-3 py-2 rounded-xl border text-xs font-heading font-bold transition-all shadow-xs min-h-[40px] ${
+                  currentIndex === dayOfYear % mnemonicList.length
+                    ? 'bg-accent text-dark border-accent-dark'
+                    : 'border-[var(--color-border)] bg-white dark:bg-[var(--color-card)] hover:bg-neutral-100 dark:hover:bg-neutral-800 text-primary dark:text-primary-light'
+                }`}
+                title="Today's featured Mnemonic"
+              >
+                📅 Today
+              </button>
 
-                        <div style={{
-                          background:'rgba(255,255,255,0.82)',
-                          backdropFilter:'blur(10px)',
-                          border:'1.5px solid rgba(255,255,255,0.95)',
-                          borderRadius:16,
-                          padding:'14px 20px',
-                          boxShadow:'var(--shadow-card)',
-                        }}>
-                          <span className="font-heading font-semibold leading-relaxed"
-                                style={{ fontSize:16, color:'var(--color-primary)' }}>
-                            {phrase}{i < mnemonic.phrases.length - 1 ? ',' : '.'}
-                          </span>
-                        </div>
-                      </motion.div>
-                    ))}
+              <button
+                type="button"
+                onClick={() => setCurrentIndex((idx) => (idx + 1) % mnemonicList.length)}
+                className="p-2 sm:px-3 rounded-xl border border-[var(--color-border)] bg-white dark:bg-[var(--color-card)] hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs font-bold text-primary dark:text-primary-light transition-all shadow-xs min-h-[40px] min-w-[40px] flex items-center justify-center"
+                title="Next Mnemonic"
+              >
+                Next →
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setCurrentIndex(Math.floor(Math.random() * mnemonicList.length))}
+                className="p-2 sm:px-2.5 rounded-xl border border-[var(--color-border)] bg-white dark:bg-[var(--color-card)] hover:bg-neutral-100 dark:hover:bg-neutral-800 text-xs font-bold text-accent-dark transition-all shadow-xs min-h-[40px] min-w-[40px] flex items-center justify-center"
+                title="Shuffle Random Mnemonic"
+              >
+                🎲
+              </button>
+
+              <button
+                type="button"
+                onClick={toggleBookmark}
+                className="p-2 sm:px-2.5 rounded-xl border border-[var(--color-border)] bg-white dark:bg-[var(--color-card)] hover:bg-neutral-100 dark:hover:bg-neutral-800 text-base font-bold transition-all shadow-xs min-h-[40px] min-w-[40px] flex items-center justify-center text-accent"
+                title={isBookmarked ? 'Remove bookmark' : 'Bookmark mnemonic'}
+              >
+                {isBookmarked ? '⭐' : '☆'}
+              </button>
+
+              <button
+                type="button"
+                onClick={handleShare}
+                className="p-2 sm:px-2.5 rounded-xl border border-[var(--color-border)] bg-white dark:bg-[var(--color-card)] hover:bg-neutral-100 dark:hover:bg-neutral-800 text-sm font-bold text-primary dark:text-primary-light transition-all shadow-xs min-h-[40px] min-w-[40px] flex items-center justify-center"
+                title="Copy study note"
+              >
+                📋
+              </button>
+
+              <button
+                type="button"
+                onClick={handleDownload}
+                className="px-3 py-2 rounded-xl bg-primary hover:bg-primary-mid text-white text-xs font-heading font-extrabold uppercase tracking-wider transition-all shadow-sm min-h-[40px] flex items-center gap-1.5"
+                title="Download study sheet"
+              >
+                <span>⬇</span> PDF
+              </button>
+            </div>
+          </div>
+
+          {/* ── Hero Title Banner ────────────────────────────────────────── */}
+          <div className="bg-gradient-to-r from-primary-dark via-primary to-primary-mid rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden border border-primary-light/20">
+            <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+              <div className="space-y-3 max-w-3xl">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/25 border border-accent/40 text-accent text-xs font-heading font-extrabold uppercase tracking-widest">
+                    <span>⚡</span> High-Yield NCK Anchor
+                  </span>
+                  <span className="text-xs font-heading font-bold uppercase tracking-wider text-white/70">
+                    Category: {mnemonic.category}
+                  </span>
+                </div>
+
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-black tracking-tight leading-tight text-white">
+                  {mnemonic.title}
+                </h1>
+
+                {mnemonic.description && (
+                  <p className="text-white/85 text-xs sm:text-sm lg:text-base leading-relaxed font-body">
+                    {mnemonic.description}
+                  </p>
+                )}
+              </div>
+
+              {/* Acronym Spotlight Box */}
+              <div className="flex-shrink-0 self-start lg:self-center">
+                <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-5 text-center min-w-[180px]">
+                  <div className="text-[10px] font-heading font-extrabold uppercase tracking-widest text-accent mb-1">
+                    Memory Key
+                  </div>
+                  <div className="text-xl sm:text-2xl lg:text-3xl font-heading font-black text-accent tracking-wide">
+                    {mnemonic.acronym}
+                  </div>
+                  <div className="text-[11px] font-body text-white/60 mt-1">
+                    {mnemonic.phrases.length} Sequence Anchor Points
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
 
-                {/* ── Breakdown toggle ────────────────────────────── */}
-                <div style={{ marginTop:22 }}>
-                  <button
-                    onClick={() => setShowBreakdown(v => !v)}
-                    className="w-full text-left"
-                    style={{
-                      background: showBreakdown
-                        ? 'var(--color-primary-light)' : 'var(--color-primary-xlight)',
-                      border:`1.5px solid ${showBreakdown ? 'var(--color-primary)' : 'var(--color-border)'}`,
-                      borderRadius:16, padding:'17px 20px',
-                      cursor:'pointer', transition:'all 0.22s ease',
-                      display:'flex', alignItems:'center', justifyContent:'space-between',
-                    }}
-                  >
-                    <div style={{ display:'flex', alignItems:'center', gap:14 }}>
-                      <div style={{
-                        width:40, height:40, borderRadius:12, flexShrink:0,
-                        background: showBreakdown ? 'var(--color-primary)' : 'rgba(8,81,79,0.08)',
-                        border:`1px solid ${showBreakdown ? 'transparent' : 'var(--color-border)'}`,
-                        display:'flex', alignItems:'center', justifyContent:'center',
-                        transition:'all 0.22s ease',
-                      }}>
-                        <motion.span
-                          animate={{ rotate: showBreakdown ? 90 : 0 }}
-                          transition={{ type:'spring', stiffness:250, damping:20 }}
-                          style={{
-                            fontSize:20, lineHeight:1,
-                            color: showBreakdown ? 'white' : 'var(--color-primary)',
-                          }}
-                        >›</motion.span>
-                      </div>
-                      <span className="font-heading font-extrabold uppercase tracking-widest"
-                            style={{ fontSize:14, color:'var(--color-primary)' }}>
-                        What it means
-                      </span>
+          {/* ── Main Dynamic 2-Column Responsive Grid ──────────────────── */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+
+            {/* ════ LEFT COLUMN: Memory Anchor Sequence & Breakdown (5 cols) ════ */}
+            <div className="lg:col-span-5 space-y-6">
+
+              {/* 1. Sequence & Phrases Timeline */}
+              <div className="bg-white dark:bg-[var(--color-card)] rounded-2xl sm:rounded-3xl border border-[var(--color-border)] shadow-sm overflow-hidden">
+                {/* Category accent line */}
+                <div
+                  className="h-1.5 w-full"
+                  style={{
+                    background: `linear-gradient(90deg, ${cat.bg} 0%, ${cat.border} 70%, transparent 100%)`,
+                  }}
+                />
+
+                <div className="p-5 sm:p-6">
+                  <div className="flex items-center justify-between gap-3 mb-5 pb-3 border-b border-[var(--color-border)]">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">🔤</span>
+                      <h2 className="text-sm sm:text-base font-heading font-black text-primary dark:text-white uppercase tracking-wider">
+                        Memory Sequence
+                      </h2>
                     </div>
-                    <span className="font-body font-bold uppercase tracking-widest hidden sm:block"
-                          style={{ fontSize:10, color:'var(--color-neutral-mid)' }}>
-                      {showBreakdown ? 'Click to close' : 'Click to expand'}
+                    <span className="text-xs font-heading font-extrabold text-accent-dark bg-accent/15 px-2.5 py-1 rounded-full">
+                      {mnemonic.acronym}
                     </span>
-                  </button>
-                </div>
+                  </div>
 
-                {/* ── Breakdown panel ─────────────────────────────── */}
+                  {/* Vertical Glowing Rail with Step Nodes */}
+                  <div className="relative pl-7 sm:pl-8">
+                    {/* Glowing vertical rail */}
+                    <div
+                      className="absolute left-2.5 top-3 bottom-3 w-1 rounded-full"
+                      style={{
+                        background: 'linear-gradient(180deg, var(--color-accent) 0%, var(--color-accent-dark) 100%)',
+                        boxShadow: '0 0 10px rgba(245, 166, 35, 0.4)',
+                      }}
+                    />
+
+                    <div className="flex flex-col gap-3">
+                      {mnemonic.phrases.map((phrase, i) => {
+                        // Extract first letter or acronym letter if applicable
+                        const letterMatch = phrase.trim().charAt(0).toUpperCase();
+
+                        return (
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.05 + i * 0.05 }}
+                            className="relative ph-card"
+                          >
+                            {/* Step Node Circle on Rail */}
+                            <div
+                              className="absolute -left-[27px] sm:-left-[31px] top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-white dark:bg-[var(--color-card)] flex items-center justify-center font-heading font-black text-[10px] text-dark shadow-sm z-10"
+                              style={{
+                                border: '3px solid var(--color-accent)',
+                              }}
+                            >
+                              {i + 1}
+                            </div>
+
+                            {/* Phrase Card */}
+                            <div className="bg-[var(--color-bg)] rounded-xl sm:rounded-2xl p-3.5 sm:p-4 border border-[var(--color-border)] hover:border-primary/40 transition-all flex items-center gap-3">
+                              <span className="w-8 h-8 rounded-xl bg-accent/20 border border-accent/40 text-accent-dark font-heading font-black text-sm flex items-center justify-center flex-shrink-0">
+                                {letterMatch}
+                              </span>
+                              <span className="font-heading font-bold text-sm sm:text-base text-primary dark:text-white leading-snug">
+                                {phrase}
+                                {i < mnemonic.phrases.length - 1 ? ',' : '.'}
+                              </span>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. Anatomical & Clinical Breakdown ("What it means") */}
+              <div className="bg-white dark:bg-[var(--color-card)] rounded-2xl sm:rounded-3xl border border-[var(--color-border)] shadow-sm overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setShowBreakdown((v) => !v)}
+                  className="w-full p-4 sm:p-5 flex items-center justify-between text-left hover:bg-neutral-50 dark:hover:bg-neutral-800/40 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-9 h-9 rounded-xl flex items-center justify-center text-lg font-bold transition-colors"
+                      style={{
+                        background: showBreakdown ? 'var(--color-primary)' : 'rgba(8,81,79,0.08)',
+                        color: showBreakdown ? '#FFFFFF' : 'var(--color-primary)',
+                      }}
+                    >
+                      <motion.span
+                        animate={{ rotate: showBreakdown ? 90 : 0 }}
+                        transition={{ type: 'spring', stiffness: 250, damping: 20 }}
+                      >
+                        ›
+                      </motion.span>
+                    </div>
+                    <div>
+                      <h3 className="font-heading font-extrabold text-sm sm:text-base text-primary dark:text-white uppercase tracking-wider">
+                        What It Means
+                      </h3>
+                      <p className="font-body text-xs text-[var(--color-neutral-mid)]">
+                        {mnemonic.breakdown.length} Clinical & Anatomical breakdown points
+                      </p>
+                    </div>
+                  </div>
+
+                  <span className="text-xs font-heading font-bold text-primary dark:text-primary-light uppercase tracking-wider">
+                    {showBreakdown ? 'Collapse' : 'Expand'}
+                  </span>
+                </button>
+
                 <AnimatePresence>
                   {showBreakdown && (
                     <motion.div
-                      initial={{ opacity:0, height:0 }}
-                      animate={{ opacity:1, height:'auto' }}
-                      exit={{ opacity:0, height:0 }}
-                      transition={{ duration:0.38, ease:[0.04,0.62,0.23,0.98] }}
-                      style={{ overflow:'hidden', marginTop:10 }}
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="border-t border-[var(--color-border)] p-4 sm:p-5 space-y-3"
                     >
-                      <div style={{
-                        background:'rgba(255,255,255,0.55)',
-                        backdropFilter:'blur(16px)',
-                        border:'1.5px solid var(--color-border)',
-                        borderRadius:20, padding:'16px 18px',
-                        boxShadow:'var(--shadow-card)',
-                      }}>
-                        {mnemonic.breakdown.map((item, i) => (
-                          <motion.div key={i} className="bk-row"
-                            initial={{ opacity:0, y:8 }}
-                            animate={{ opacity:1, y:0 }}
-                            transition={{ delay:i*0.055 }}
-                            style={{
-                              display:'flex', gap:14,
-                              padding:'13px 10px',
-                              borderBottom: i < mnemonic.breakdown.length-1
-                                ? '1px solid var(--color-border)' : 'none',
-                            }}
-                          >
-                            <div style={{
-                              width:44, height:44, flexShrink:0, borderRadius:12,
-                              background:'var(--color-card)',
-                              border:'1px solid var(--color-border)',
-                              display:'flex', alignItems:'center', justifyContent:'center',
-                              fontSize:21, boxShadow:'var(--shadow-card)',
-                            }}>
-                              {item.emoji}
-                            </div>
-                            <div style={{ paddingTop:2 }}>
-                              <div className="font-heading font-extrabold"
-                                   style={{ fontSize:16, color:'var(--color-primary)', marginBottom:3 }}>
-                                {item.phrase}
-                              </div>
-                              <div className="font-body"
-                                   style={{ fontSize:14, color:'var(--color-neutral-mid)',
-                                            lineHeight:1.65, fontWeight:500 }}>
-                                {item.meaning}
-                              </div>
-                            </div>
-                          </motion.div>
-                        ))}
-                      </div>
+                      {mnemonic.breakdown.map((item: BreakdownItem, i: number) => (
+                        <div
+                          key={i}
+                          className="flex items-start gap-3.5 p-3 sm:p-3.5 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] hover:border-primary/30 transition-all"
+                        >
+                          <div className="w-10 h-10 rounded-xl bg-white dark:bg-[var(--color-card)] border border-[var(--color-border)] flex items-center justify-center text-xl flex-shrink-0 shadow-xs">
+                            {item.emoji}
+                          </div>
+                          <div className="min-w-0">
+                            <h4 className="font-heading font-bold text-sm text-primary dark:text-white">
+                              {item.phrase}
+                            </h4>
+                            <p className="font-body text-xs sm:text-sm text-[var(--color-neutral-mid)] leading-relaxed mt-0.5">
+                              {item.meaning}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
 
-              {/* ── Tags ─────────────────────────────────────────── */}
-              {mnemonic.tags.length > 0 && (
-                <div style={{ padding:'16px 28px 0', display:'flex', flexWrap:'wrap', gap:8 }}>
-                  {mnemonic.tags.map((tag, i) => (
-                    <span key={i} className="font-body font-bold"
-                          style={{
-                            background:'var(--color-primary-light)',
-                            border:'1px solid var(--color-border)',
-                            borderRadius:999, padding:'5px 14px',
-                            fontSize:12, color:'var(--color-primary)',
-                          }}>
-                      #{tag}
-                    </span>
-                  ))}
+              {/* 3. Tags & Actions */}
+              {mnemonic.tags && mnemonic.tags.length > 0 && (
+                <div className="bg-white dark:bg-[var(--color-card)] rounded-2xl sm:rounded-3xl p-5 border border-[var(--color-border)] shadow-sm">
+                  <div className="text-xs font-heading font-extrabold text-[var(--color-neutral-mid)] uppercase tracking-wider mb-3">
+                    Clinical Topics & Tags
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {mnemonic.tags.map((tag, i) => (
+                      <span
+                        key={i}
+                        className="font-body font-bold text-xs px-3 py-1.5 rounded-xl bg-primary-light/50 dark:bg-primary/20 text-primary dark:text-primary-light border border-primary/15"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               )}
 
-              {/* ── Rich 7-section content ──────────────────────── */}
-              <div style={{ padding:'20px 28px 0' }}>
-
-                {/* Clinical Significance */}
-                {mnemonic.clinical_significance && (
-                  <SectionBlock icon="🩺" title="Clinical Significance" accent="var(--color-primary)">
-                    <p className="font-body" style={{ fontSize:14, color:'var(--color-neutral-mid)', lineHeight:1.7, margin:0 }}>
-                      {mnemonic.clinical_significance}
-                    </p>
-                  </SectionBlock>
-                )}
-
-                {/* Causes */}
-                {mnemonic.causes.length > 0 && (
-                  <SectionBlock icon="💊" title="Common Causes / Associated Conditions" accent="var(--color-accent-dark)">
-                    <ul style={{ margin:0, paddingLeft:18, display:'flex', flexDirection:'column', gap:4 }}>
-                      {mnemonic.causes.map((c, i) => (
-                        <li key={i} className="font-body" style={{ fontSize:13.5, color:'var(--color-neutral-mid)', lineHeight:1.6 }}>{c}</li>
-                      ))}
-                    </ul>
-                  </SectionBlock>
-                )}
-
-                {/* Exam Traps */}
-                {mnemonic.exam_traps && (
-                  <SectionBlock icon="⚠️" title="Common NCK Exam Traps" accent="#EF4444">
-                    <p className="font-body" style={{ fontSize:14, color:'var(--color-neutral-mid)', lineHeight:1.7, margin:0, whiteSpace:'pre-line' }}>
-                      {mnemonic.exam_traps}
-                    </p>
-                  </SectionBlock>
-                )}
-
-                {/* Memory Pearl */}
-                {mnemonic.memory_pearl && (
-                  <SectionBlock icon="💡" title="NurseFiti Memory Pearl" accent="#F5A623" soft>
-                    <p className="font-heading font-bold" style={{ fontSize:15, color:'var(--color-accent-dark)', lineHeight:1.6, margin:0, fontStyle:'italic' }}>
-                      {mnemonic.memory_pearl}
-                    </p>
-                  </SectionBlock>
-                )}
-
-                {/* High-Yield Tip */}
-                {mnemonic.high_yield_tip && (
-                  <SectionBlock icon="🎯" title="NCK High-Yield Tip" accent="var(--color-primary)" soft>
-                    <p className="font-body" style={{ fontSize:14, color:'var(--color-primary)', lineHeight:1.7, margin:0, whiteSpace:'pre-line' }}>
-                      {mnemonic.high_yield_tip}
-                    </p>
-                  </SectionBlock>
-                )}
-
-                {/* Practice Question */}
-                {mnemonic.practice_question && (
-                  <PracticeQuestionBlock pq={mnemonic.practice_question} catColor={cat.bg} />
-                )}
-
-              </div>
-
-              {/* ── Actions — screenshot button style ────────────── */}
-              <div style={{ padding:'20px 28px 28px', display:'flex', flexDirection:'column', gap:12 }}>
-
-                {/* Download — teal filled, icon + bold title + subtitle + chevron */}
-                <motion.button
+              {/* 4. Quick Action Cards */}
+              <div className="space-y-3">
+                <button
+                  type="button"
                   onClick={handleDownload}
-                  whileHover={{ scale:1.015 }}
-                  whileTap={{ scale:0.97 }}
-                  className="w-full"
-                  style={{
-                    border:'none', cursor:'pointer', borderRadius:18,
-                    padding:'18px 22px',
-                    background:'linear-gradient(135deg,var(--color-primary) 0%,var(--color-primary-mid) 100%)',
-                    boxShadow:'var(--shadow-glow-teal)',
-                    display:'flex', alignItems:'center', gap:16,
-                    textAlign:'left',
-                    position:'relative', overflow:'hidden',
-                  }}
+                  className="w-full p-4 rounded-2xl bg-gradient-to-r from-primary to-primary-mid text-white flex items-center justify-between hover:shadow-lg transition-all"
                 >
-                  <span style={{ fontSize:26, flexShrink:0, lineHeight:1 }}>⬇</span>
-                  <div style={{ flex:1 }}>
-                    <div className="font-heading font-extrabold" style={{ fontSize:15, color:'white', lineHeight:1.2 }}>
-                      Download PDF
-                    </div>
-                    <div className="font-body" style={{ fontSize:11.5, color:'rgba(255,255,255,0.60)', marginTop:3 }}>
-                      Save this mnemonic to your device
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">⬇</span>
+                    <div className="text-left">
+                      <div className="font-heading font-extrabold text-sm">Download Printable PDF</div>
+                      <div className="text-xs text-white/70">Save this study sheet for offline revision</div>
                     </div>
                   </div>
-                  <span style={{ color:'rgba(255,255,255,0.55)', fontSize:18 }}>›</span>
-                </motion.button>
+                  <span className="text-lg">›</span>
+                </button>
 
-                {/* Archive — amber filled, icon + bold title + subtitle + chevron */}
-                <Link href="/mnemonics" style={{ textDecoration:'none' }}>
-                  <motion.div
-                    whileHover={{ scale:1.015 }}
-                    whileTap={{ scale:0.97 }}
-                    className="w-full"
-                    style={{
-                      borderRadius:18, padding:'18px 22px',
-                      background:'linear-gradient(135deg,var(--color-accent) 0%,var(--color-accent-dark) 100%)',
-                      boxShadow:'var(--shadow-glow-amber)',
-                      display:'flex', alignItems:'center', gap:16,
-                      cursor:'pointer',
-                    }}
-                  >
-                    <span style={{ fontSize:26, flexShrink:0, lineHeight:1 }}>📚</span>
-                    <div style={{ flex:1 }}>
-                      <div className="font-heading font-extrabold" style={{ fontSize:15, color:'var(--color-dark)', lineHeight:1.2 }}>
-                        Browse Full Library (69+ Mnemonics)
-                      </div>
-                      <div className="font-body" style={{ fontSize:11.5, color:'rgba(15,28,28,0.55)', marginTop:3 }}>
-                        Search, filter by specialty, and bookmark high-yield memory anchors
+                <Link href="/mnemonics" className="block text-decoration-none">
+                  <div className="w-full p-4 rounded-2xl bg-gradient-to-r from-accent to-accent-dark text-dark flex items-center justify-between hover:shadow-lg transition-all">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">📚</span>
+                      <div className="text-left">
+                        <div className="font-heading font-extrabold text-sm">Explore All 69+ Mnemonics</div>
+                        <div className="text-xs text-dark/70">Search, filter by ward & bookmark</div>
                       </div>
                     </div>
-                    <span style={{ color:'rgba(15,28,28,0.45)', fontSize:18 }}>›</span>
-                  </motion.div>
+                    <span className="text-lg">›</span>
+                  </div>
                 </Link>
               </div>
+
             </div>
 
-            {/* ── Floating brain ──────────────────────────────────── */}
-            <motion.div
-              animate={{ y:[-8,8,-8], rotate:[-2,2,-2] }}
-              transition={{ duration:6, repeat:Infinity, ease:'easeInOut' }}
-              style={{
-                position:'absolute', top:-28, right:0,
-                fontSize:70, pointerEvents:'none', zIndex:10,
-                filter:'drop-shadow(0 16px 28px rgba(8,81,79,0.18))',
-              }}
-            >🧠</motion.div>
+            {/* ════ RIGHT COLUMN: Clinical & Exam Deep Dive (7 cols) ════ */}
+            <div className="lg:col-span-7 space-y-6">
 
-          </motion.div>
+              {/* 1. Clinical Significance */}
+              {mnemonic.clinical_significance && (
+                <SectionCard
+                  icon="🩺"
+                  title="Clinical Significance & Pathophysiology"
+                  accent="var(--color-primary)"
+                >
+                  <p className="font-body text-xs sm:text-sm lg:text-base text-dark dark:text-neutral-200 leading-relaxed m-0">
+                    {mnemonic.clinical_significance}
+                  </p>
+                </SectionCard>
+              )}
+
+              {/* 2. Common Causes & Associated Conditions */}
+              {mnemonic.causes && mnemonic.causes.length > 0 && (
+                <SectionCard
+                  icon="💊"
+                  title="Common Causes & Associated Conditions"
+                  accent="var(--color-accent-dark)"
+                >
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {mnemonic.causes.map((c, i) => (
+                      <div
+                        key={i}
+                        className="flex items-start gap-2 p-3 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)]"
+                      >
+                        <span className="text-accent-dark font-bold text-xs mt-0.5">•</span>
+                        <span className="font-body text-xs sm:text-sm text-dark dark:text-neutral-200 leading-snug">
+                          {c}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </SectionCard>
+              )}
+
+              {/* 3. Common NCK Exam Traps */}
+              {mnemonic.exam_traps && (
+                <SectionCard
+                  icon="⚠️"
+                  title="Common NCK Exam Traps & Pitfalls"
+                  accent="#EF4444"
+                  bgClass="bg-rose-50/70 dark:bg-rose-950/20"
+                >
+                  <p className="font-body text-xs sm:text-sm lg:text-base text-rose-900 dark:text-rose-200 leading-relaxed m-0 whitespace-pre-line">
+                    {mnemonic.exam_traps}
+                  </p>
+                </SectionCard>
+              )}
+
+              {/* 4. High-Yield Insights Sub-Grid (Memory Pearl & High-Yield Tip) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {mnemonic.memory_pearl && (
+                  <SectionCard
+                    icon="💡"
+                    title="Memory Pearl"
+                    accent="#F5A623"
+                    soft
+                    bgClass="bg-amber-50/70 dark:bg-amber-950/20"
+                  >
+                    <p className="font-heading font-bold text-xs sm:text-sm text-amber-950 dark:text-amber-200 italic leading-relaxed m-0">
+                      &ldquo;{mnemonic.memory_pearl}&rdquo;
+                    </p>
+                  </SectionCard>
+                )}
+
+                {mnemonic.high_yield_tip && (
+                  <SectionCard
+                    icon="🎯"
+                    title="NCK High-Yield Tip"
+                    accent="var(--color-primary)"
+                    soft
+                    bgClass="bg-teal-50/70 dark:bg-teal-950/20"
+                  >
+                    <p className="font-body text-xs sm:text-sm font-medium text-teal-950 dark:text-teal-200 leading-relaxed m-0 whitespace-pre-line">
+                      {mnemonic.high_yield_tip}
+                    </p>
+                  </SectionCard>
+                )}
+              </div>
+
+              {/* 5. Interactive Practice Question */}
+              {mnemonic.practice_question && (
+                <PracticeQuestionCard
+                  pq={mnemonic.practice_question}
+                  catColor={cat.bg}
+                />
+              )}
+
+            </div>
+
+          </div>
+
         </div>
       </div>
     </>
+  );
+}
+
+// ── Exported Page with Suspense Boundary for useSearchParams ──────────────────
+export default function MnemonicTodayPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center p-8">
+          <div className="text-center space-y-3">
+            <div className="w-10 h-10 border-3 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
+            <p className="text-sm font-heading font-bold text-primary">Loading Mnemonic...</p>
+          </div>
+        </div>
+      }
+    >
+      <MnemonicTodayContent />
+    </Suspense>
   );
 }
