@@ -28,6 +28,22 @@ function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
+  // If already logged in, redirect immediately to the appropriate dashboard
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        const role =
+          session.user.user_metadata?.role ||
+          (typeof document !== 'undefined'
+            ? document.cookie.split('; ').find((r) => r.startsWith('nf_role='))?.split('=')[1]
+            : null) ||
+          'student';
+        const dest = role === 'admin' ? '/admin' : role === 'tutor' ? '/tutor-dashboard' : '/dashboard';
+        window.location.replace(dest);
+      }
+    });
+  }, []);
+
   // Show message if redirected from signup
   useEffect(() => {
     const message = searchParams.get('message');
@@ -53,66 +69,85 @@ function LoginForm() {
         throw new Error('Login failed. Please try again.');
       }
 
-      // Get user profile to determine role
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', authData.user.id)
-        .single();
+      const roleFromMeta = authData.user.user_metadata?.role as 'student' | 'tutor' | 'admin' | undefined;
+      let role: 'student' | 'tutor' | 'admin' = 'student';
+      let tutorProfile: {
+        verification_status: 'pending' | 'verified' | 'rejected';
+        nck_certificate_url: string | null;
+      } | null = null;
 
-      if (profileError || !profileData) {
-        throw new Error('Failed to load user profile');
-      }
-
-      const profile = profileData as { role: 'student' | 'tutor' | 'admin' };
-
-      toast.success('Welcome back!');
-
-      // Write a lightweight role cookie so middleware can skip DB queries
-      // on subsequent protected-route requests this session.
-      document.cookie = `nf_role=${profile.role}; path=/; max-age=86400; samesite=lax${location.protocol === 'https:' ? '; secure' : ''}`;
-
-      // router.refresh() syncs the session cookie with the server before
-      // navigating — without it, middleware may not see the new session
-      // and will loop back to /login (the "freeze" / stays-on-login bug).
-      router.refresh();
-
-      // Redirect based on role — middleware handles auth state from session cookie
-      if (profile.role === 'student') {
-        router.push('/dashboard');
-      } else if (profile.role === 'tutor') {
-        // Check tutor verification status
-        const { data: tutorProfileData } = await supabase
-          .from('tutor_profiles')
-          .select('verification_status, nck_certificate_url')
+      if (roleFromMeta === 'tutor') {
+        // Fast path for tutors: fetch profile and tutor_profile in parallel
+        const [profileRes, tutorRes] = await Promise.all([
+          supabase.from('profiles').select('role').eq('id', authData.user.id).single(),
+          supabase
+            .from('tutor_profiles')
+            .select('verification_status, nck_certificate_url')
+            .eq('id', authData.user.id)
+            .single(),
+        ]);
+        role = (profileRes.data?.role as any) || 'tutor';
+        tutorProfile = tutorRes.data as any;
+      } else {
+        const { data: profileData, error: profileError } = await supabase
+          .from('profiles')
+          .select('role')
           .eq('id', authData.user.id)
           .single();
 
-        const tutorProfile = tutorProfileData as {
-          verification_status: 'pending' | 'verified' | 'rejected';
-          nck_certificate_url: string | null;
-        } | null;
-
-        if (tutorProfile?.verification_status === 'verified') {
-          router.push('/tutor-dashboard');
-        } else if (tutorProfile?.verification_status === 'pending') {
-          if (!tutorProfile.nck_certificate_url) {
-            router.push('/tutor-complete-profile');
-          } else {
-            router.push('/tutor-pending');
-          }
+        if (!profileError && profileData?.role) {
+          role = profileData.role as any;
+        } else if (roleFromMeta) {
+          role = roleFromMeta;
         } else {
-          router.push('/tutor-complete-profile');
+          throw new Error('Failed to load user profile');
         }
-      } else if (profile.role === 'admin') {
-        router.push('/admin');
-      } else {
-        router.push('/dashboard');
+
+        if (role === 'tutor') {
+          const { data: tutorRes } = await supabase
+            .from('tutor_profiles')
+            .select('verification_status, nck_certificate_url')
+            .eq('id', authData.user.id)
+            .single();
+          tutorProfile = tutorRes as any;
+        }
       }
+
+      toast.success('Welcome back!');
+
+      // Write lightweight role cookie so middleware can skip DB queries on protected routes
+      document.cookie = `nf_role=${role}; path=/; max-age=86400; samesite=lax${
+        location.protocol === 'https:' ? '; secure' : ''
+      }`;
+
+      // Respect intended redirect URL if provided, verifying it matches role permissions
+      const rawRedirect = searchParams.get('redirect');
+      const isValidRedirect = rawRedirect && rawRedirect.startsWith('/') && !rawRedirect.startsWith('//');
+
+      let targetUrl = '/dashboard';
+      if (role === 'student') {
+        targetUrl =
+          isValidRedirect && !rawRedirect.startsWith('/tutor-') && !rawRedirect.startsWith('/admin')
+            ? rawRedirect
+            : '/dashboard';
+      } else if (role === 'tutor') {
+        if (tutorProfile?.verification_status === 'verified') {
+          targetUrl = isValidRedirect && rawRedirect.startsWith('/tutor-') ? rawRedirect : '/tutor-dashboard';
+        } else if (tutorProfile?.verification_status === 'pending') {
+          targetUrl = tutorProfile.nck_certificate_url ? '/tutor-pending' : '/tutor-complete-profile';
+        } else {
+          targetUrl = '/tutor-complete-profile';
+        }
+      } else if (role === 'admin') {
+        targetUrl = isValidRedirect && rawRedirect.startsWith('/admin') ? rawRedirect : '/admin';
+      }
+
+      // Fast direct navigation: transmits fresh cookies in request headers directly,
+      // avoiding redundant server re-render of /login and client router cache freeze
+      window.location.replace(targetUrl);
     } catch (error: any) {
       console.error('Login error:', error);
       toast.error(error.message || 'Invalid email or password');
-    } finally {
       setIsLoading(false);
     }
   };
@@ -151,6 +186,7 @@ function LoginForm() {
                 placeholder="john@example.com"
                 disabled={isLoading}
                 autoComplete="email"
+                autoFocus
               />
               {errors.email && (
                 <p className="mt-1 text-sm text-error">{errors.email.message}</p>

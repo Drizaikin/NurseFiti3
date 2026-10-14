@@ -55,12 +55,9 @@ function SectionCard({
       }}
     >
       <div
-        className="font-heading font-extrabold flex items-center gap-2 mb-3"
+        className="font-body font-bold flex items-center gap-2 mb-3 text-xs uppercase tracking-wider"
         style={{
-          fontSize: 12,
           color: accent,
-          letterSpacing: '0.12em',
-          textTransform: 'uppercase',
         }}
       >
         <span className="text-base sm:text-lg">{icon}</span>
@@ -99,12 +96,9 @@ function PracticeQuestionCard({
       }}
     >
       <div
-        className="font-heading font-extrabold flex items-center gap-2 mb-3"
+        className="font-body font-bold flex items-center gap-2 mb-3 text-xs uppercase tracking-wider"
         style={{
-          fontSize: 12,
           color: catColor,
-          letterSpacing: '0.12em',
-          textTransform: 'uppercase',
         }}
       >
         <span className="text-base">❓</span>
@@ -153,7 +147,7 @@ function PracticeQuestionCard({
               }`}
             >
               <span
-                className={`w-6 h-6 rounded-lg text-xs font-heading font-extrabold flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                className={`w-6 h-6 rounded-lg text-xs font-bold font-body flex items-center justify-center flex-shrink-0 mt-0.5 ${
                   revealed && isCorrect
                     ? 'bg-emerald-500 text-white'
                     : revealed && isSelected
@@ -180,7 +174,7 @@ function PracticeQuestionCard({
             if (selected) setRevealed(true);
           }}
           disabled={!selected}
-          className="w-full sm:w-auto font-heading font-extrabold uppercase tracking-wider text-xs px-6 py-3 rounded-xl transition-all shadow-sm"
+          className="w-full sm:w-auto font-body font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition-all shadow-sm"
           style={{
             background: selected
               ? `linear-gradient(135deg, ${catColor}, ${catColor}dd)`
@@ -197,7 +191,7 @@ function PracticeQuestionCard({
           animate={{ opacity: 1, y: 0 }}
           className="p-4 sm:p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30"
         >
-          <div className="font-heading font-extrabold text-xs mb-2 uppercase tracking-wider text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
+          <div className="font-body font-bold text-xs mb-2 uppercase tracking-wider text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
             <span>✓</span> Correct Answer: {pq.answer}
           </div>
           <p className="font-body text-xs sm:text-sm leading-relaxed text-dark dark:text-neutral-200 m-0">
@@ -296,8 +290,9 @@ function MnemonicTodayContent() {
     async function load() {
       try {
         const {
-          data: { user },
-        } = await supabase.auth.getUser();
+          data: { session },
+        } = await supabase.auth.getSession();
+        const user = session?.user;
         if (user) {
           const { data: prof } = await supabase
             .from('student_profiles')
@@ -504,23 +499,23 @@ ${
             <div className="flex items-center gap-2.5 flex-wrap">
               <Link
                 href="/mnemonics"
-                className="inline-flex items-center gap-1.5 text-xs font-heading font-extrabold text-primary dark:text-primary-light hover:text-accent-dark transition-all px-3.5 py-2 rounded-xl bg-primary-light/40 dark:bg-primary/20 border border-[var(--color-border)] hover:bg-primary-light"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-primary dark:text-primary-light hover:text-accent-dark transition-all px-3.5 py-2 rounded-xl bg-primary-light/40 dark:bg-primary/20 border border-[var(--color-border)] hover:bg-primary-light"
               >
                 <span>←</span> All Mnemonics ({mnemonicList.length})
               </Link>
 
               <span
-                className="text-[11px] font-heading font-extrabold uppercase tracking-wider px-3 py-1 rounded-full"
+                className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-xs"
                 style={{
-                  background: cat.soft,
-                  color: cat.bg,
+                  background: cat.bg,
+                  color: cat.text,
                   border: `1px solid ${cat.border}`,
                 }}
               >
                 {mnemonic.category}
               </span>
 
-              <span className="text-[11px] font-heading font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-primary/10 text-primary dark:text-primary-light border border-primary/20">
+              <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-primary/10 text-primary dark:text-primary-light border border-primary/20">
                 {mnemonic.specialty}
               </span>
             </div>
@@ -562,7 +557,7 @@ ${
               <button
                 type="button"
                 onClick={() => setCurrentIndex(dayOfYear % mnemonicList.length)}
-                className={`px-3 py-2 rounded-xl border text-xs font-heading font-bold transition-all shadow-xs min-h-[40px] ${
+                className={`px-3 py-2 rounded-xl border text-xs font-bold transition-all shadow-xs min-h-[40px] ${
                   currentIndex === dayOfYear % mnemonicList.length
                     ? 'bg-accent text-dark border-accent-dark'
                     : 'border-[var(--color-border)] bg-white dark:bg-[var(--color-card)] hover:bg-neutral-100 dark:hover:bg-neutral-800 text-primary dark:text-primary-light'
@@ -611,7 +606,7 @@ ${
               <button
                 type="button"
                 onClick={handleDownload}
-                className="px-3 py-2 rounded-xl bg-primary hover:bg-primary-mid text-white text-xs font-heading font-extrabold uppercase tracking-wider transition-all shadow-sm min-h-[40px] flex items-center gap-1.5"
+                className="px-3 py-2 rounded-xl bg-primary hover:bg-primary-mid text-white text-xs font-bold uppercase tracking-wider transition-all shadow-sm min-h-[40px] flex items-center gap-1.5"
                 title="Download study sheet"
               >
                 <span>⬇</span> PDF
@@ -620,24 +615,52 @@ ${
           </div>
 
           {/* ── Hero Title Banner ────────────────────────────────────────── */}
-          <div className="bg-gradient-to-r from-primary-dark via-primary to-primary-mid rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden border border-primary-light/20">
+          <div
+            className="rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden border border-white/10"
+            style={{
+              background: '#0D2B1F',
+            }}
+          >
+            {/* Layer: background gradient overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              aria-hidden="true"
+              style={{
+                background: 'linear-gradient(135deg, #053735 0%, #08514F 55%, #0A6865 100%)',
+              }}
+            />
+
+            {/* Layer: soft decorative radial glow */}
+            <div
+              className="absolute pointer-events-none"
+              aria-hidden="true"
+              style={{
+                top: '-40px',
+                right: '-40px',
+                width: '320px',
+                height: '320px',
+                background: 'radial-gradient(circle, rgba(245,166,35,0.18) 0%, transparent 70%)',
+                filter: 'blur(50px)',
+              }}
+            />
+
             <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
               <div className="space-y-3 max-w-3xl">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/25 border border-accent/40 text-accent text-xs font-heading font-extrabold uppercase tracking-widest">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/20 border border-accent/40 text-accent text-xs font-bold uppercase tracking-wider">
                     <span>⚡</span> High-Yield NCK Anchor
                   </span>
-                  <span className="text-xs font-heading font-bold uppercase tracking-wider text-white/70">
+                  <span className="text-xs font-bold uppercase tracking-wider text-white/80">
                     Category: {mnemonic.category}
                   </span>
                 </div>
 
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-black tracking-tight leading-tight text-white">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold leading-tight text-white">
                   {mnemonic.title}
                 </h1>
 
                 {mnemonic.description && (
-                  <p className="text-white/85 text-xs sm:text-sm lg:text-base leading-relaxed font-body">
+                  <p className="text-white/90 text-sm sm:text-base leading-relaxed font-body">
                     {mnemonic.description}
                   </p>
                 )}
@@ -646,13 +669,13 @@ ${
               {/* Acronym Spotlight Box */}
               <div className="flex-shrink-0 self-start lg:self-center">
                 <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-5 text-center min-w-[180px]">
-                  <div className="text-[10px] font-heading font-extrabold uppercase tracking-widest text-accent mb-1">
+                  <div className="text-xs font-bold uppercase tracking-wider text-accent mb-1 font-body">
                     Memory Key
                   </div>
-                  <div className="text-xl sm:text-2xl lg:text-3xl font-heading font-black text-accent tracking-wide">
+                  <div className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-accent tracking-wide">
                     {mnemonic.acronym}
                   </div>
-                  <div className="text-[11px] font-body text-white/60 mt-1">
+                  <div className="text-xs font-body text-white/80 mt-1">
                     {mnemonic.phrases.length} Sequence Anchor Points
                   </div>
                 </div>
@@ -680,11 +703,11 @@ ${
                   <div className="flex items-center justify-between gap-3 mb-5 pb-3 border-b border-[var(--color-border)]">
                     <div className="flex items-center gap-2">
                       <span className="text-xl">🔤</span>
-                      <h2 className="text-sm sm:text-base font-heading font-black text-primary dark:text-white uppercase tracking-wider">
+                      <h2 className="text-base font-heading font-bold text-primary dark:text-white">
                         Memory Sequence
                       </h2>
                     </div>
-                    <span className="text-xs font-heading font-extrabold text-accent-dark bg-accent/15 px-2.5 py-1 rounded-full">
+                    <span className="text-xs font-bold font-body text-dark bg-accent px-2.5 py-1 rounded-full shadow-xs">
                       {mnemonic.acronym}
                     </span>
                   </div>
@@ -715,7 +738,7 @@ ${
                           >
                             {/* Step Node Circle on Rail */}
                             <div
-                              className="absolute -left-[27px] sm:-left-[31px] top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-white dark:bg-[var(--color-card)] flex items-center justify-center font-heading font-black text-[10px] text-dark shadow-sm z-10"
+                              className="absolute -left-[27px] sm:-left-[31px] top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-white dark:bg-[var(--color-card)] flex items-center justify-center font-bold font-body text-[11px] text-dark shadow-sm z-10"
                               style={{
                                 border: '3px solid var(--color-accent)',
                               }}
@@ -725,10 +748,10 @@ ${
 
                             {/* Phrase Card */}
                             <div className="bg-[var(--color-bg)] rounded-xl sm:rounded-2xl p-3.5 sm:p-4 border border-[var(--color-border)] hover:border-primary/40 transition-all flex items-center gap-3">
-                              <span className="w-8 h-8 rounded-xl bg-accent/20 border border-accent/40 text-accent-dark font-heading font-black text-sm flex items-center justify-center flex-shrink-0">
+                              <span className="w-8 h-8 rounded-xl bg-accent/20 border border-accent/40 text-accent-dark font-bold font-body text-sm flex items-center justify-center flex-shrink-0">
                                 {letterMatch}
                               </span>
-                              <span className="font-heading font-bold text-sm sm:text-base text-primary dark:text-white leading-snug">
+                              <span className="font-body font-bold text-sm sm:text-base text-primary dark:text-white leading-snug">
                                 {phrase}
                                 {i < mnemonic.phrases.length - 1 ? ',' : '.'}
                               </span>
@@ -764,7 +787,7 @@ ${
                       </motion.span>
                     </div>
                     <div>
-                      <h3 className="font-heading font-extrabold text-sm sm:text-base text-primary dark:text-white uppercase tracking-wider">
+                      <h3 className="font-heading font-bold text-base text-primary dark:text-white">
                         What It Means
                       </h3>
                       <p className="font-body text-xs text-[var(--color-neutral-mid)]">
@@ -773,7 +796,7 @@ ${
                     </div>
                   </div>
 
-                  <span className="text-xs font-heading font-bold text-primary dark:text-primary-light uppercase tracking-wider">
+                  <span className="text-xs font-bold text-primary dark:text-primary-light font-body">
                     {showBreakdown ? 'Collapse' : 'Expand'}
                   </span>
                 </button>
@@ -796,7 +819,7 @@ ${
                             {item.emoji}
                           </div>
                           <div className="min-w-0">
-                            <h4 className="font-heading font-bold text-sm text-primary dark:text-white">
+                            <h4 className="font-bold font-body text-sm text-primary dark:text-white">
                               {item.phrase}
                             </h4>
                             <p className="font-body text-xs sm:text-sm text-[var(--color-neutral-mid)] leading-relaxed mt-0.5">
@@ -813,7 +836,7 @@ ${
               {/* 3. Tags & Actions */}
               {mnemonic.tags && mnemonic.tags.length > 0 && (
                 <div className="bg-white dark:bg-[var(--color-card)] rounded-2xl sm:rounded-3xl p-5 border border-[var(--color-border)] shadow-sm">
-                  <div className="text-xs font-heading font-extrabold text-[var(--color-neutral-mid)] uppercase tracking-wider mb-3">
+                  <div className="text-xs font-bold font-body text-[var(--color-neutral-mid)] uppercase tracking-wider mb-3">
                     Clinical Topics & Tags
                   </div>
                   <div className="flex flex-wrap gap-2">
@@ -839,8 +862,8 @@ ${
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">⬇</span>
                     <div className="text-left">
-                      <div className="font-heading font-extrabold text-sm">Download Printable PDF</div>
-                      <div className="text-xs text-white/70">Save this study sheet for offline revision</div>
+                      <div className="font-bold text-sm font-body">Download Printable PDF</div>
+                      <div className="text-xs text-white/80 font-body">Save this study sheet for offline revision</div>
                     </div>
                   </div>
                   <span className="text-lg">›</span>
@@ -851,8 +874,8 @@ ${
                     <div className="flex items-center gap-3">
                       <span className="text-2xl">📚</span>
                       <div className="text-left">
-                        <div className="font-heading font-extrabold text-sm">Explore All 69+ Mnemonics</div>
-                        <div className="text-xs text-dark/70">Search, filter by ward & bookmark</div>
+                        <div className="font-bold text-sm font-body">Explore All 69+ Mnemonics</div>
+                        <div className="text-xs text-dark/80 font-body">Search, filter by ward & bookmark</div>
                       </div>
                     </div>
                     <span className="text-lg">›</span>
@@ -925,7 +948,7 @@ ${
                     soft
                     bgClass="bg-amber-50/70 dark:bg-amber-950/20"
                   >
-                    <p className="font-heading font-bold text-xs sm:text-sm text-amber-950 dark:text-amber-200 italic leading-relaxed m-0">
+                    <p className="font-body font-semibold text-xs sm:text-sm text-amber-950 dark:text-amber-200 italic leading-relaxed m-0">
                       &ldquo;{mnemonic.memory_pearl}&rdquo;
                     </p>
                   </SectionCard>

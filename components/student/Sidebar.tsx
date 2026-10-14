@@ -99,13 +99,22 @@ function SidebarContent({ onNavClick, isHd }: { onNavClick?: () => void; isHd?: 
 
 export function Sidebar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isHd, setIsHd]             = useState(false);
+  const [isHd, setIsHd]             = useState(() => {
+    if (typeof window !== 'undefined') {
+      const cached = sessionStorage.getItem('nf_cadre');
+      if (cached) return cached === 'Higher Diploma';
+    }
+    return false;
+  });
   const pathname = usePathname();
   const supabase = createClient();
 
   // Fetch cadre once on mount to conditionally show HD Materials link
   useEffect(() => {
     const loadCadre = async () => {
+      if (typeof window !== 'undefined' && sessionStorage.getItem('nf_cadre')) {
+        return;
+      }
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) return;
       const { data } = await supabase
@@ -113,7 +122,12 @@ export function Sidebar() {
         .select('cadre')
         .eq('id', session.user.id)
         .single() as any;
-      setIsHd(data?.cadre === 'Higher Diploma');
+      if (data?.cadre) {
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('nf_cadre', data.cadre);
+        }
+        setIsHd(data.cadre === 'Higher Diploma');
+      }
     };
     loadCadre();
   // eslint-disable-next-line react-hooks/exhaustive-deps

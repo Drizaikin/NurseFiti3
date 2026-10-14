@@ -45,6 +45,23 @@ async function resolveUserIdentity(): Promise<{ userId: string; role: string } |
     if (cachedUserId === session.user.id && cachedRole) {
       return { userId: cachedUserId, role: cachedRole };
     }
+
+    // Fast path: Check session user_metadata or nf_role cookie first (zero network lag)
+    const fastRole =
+      session.user.user_metadata?.role ||
+      (typeof document !== 'undefined'
+        ? document.cookie
+            .split('; ')
+            .find((row) => row.startsWith('nf_role='))
+            ?.split('=')[1]
+        : null);
+
+    if (fastRole) {
+      cachedUserId = session.user.id;
+      cachedRole = fastRole;
+      return { userId: session.user.id, role: fastRole };
+    }
+
     // Cache miss or different user — fetch from DB
     const { data: profile } = await (supabase as any)
       .from('profiles')

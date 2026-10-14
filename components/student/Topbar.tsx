@@ -21,7 +21,17 @@ interface StudentProfile {
 export function Topbar() {
   const router = useRouter();
   const supabase = createClient();
-  const [profile, setProfile] = useState<StudentProfile | null>(null);
+  const [profile, setProfile] = useState<StudentProfile | null>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const cached = sessionStorage.getItem('nf_topbar_profile');
+        if (cached) return JSON.parse(cached);
+      } catch {
+        /* ignore */
+      }
+    }
+    return null;
+  });
   const [showMenu, setShowMenu] = useState(false);
   const [showNotifs, setShowNotifs] = useState(false);
   const [userId, setUserId] = useState('');
@@ -45,13 +55,21 @@ export function Topbar() {
       ]);
 
       if (profileData && studentData) {
-        setProfile({
+        const updatedProfile = {
           full_name: (profileData as any).full_name,
           avatar_url: (profileData as any).avatar_url,
           xp: (studentData as any).xp ?? 0,
           level: (studentData as any).level ?? 1,
           streak_count: (studentData as any).streak_count ?? 0,
-        });
+        };
+        setProfile(updatedProfile);
+        if (typeof window !== 'undefined') {
+          try {
+            sessionStorage.setItem('nf_topbar_profile', JSON.stringify(updatedProfile));
+          } catch {
+            /* ignore */
+          }
+        }
       }
     } catch (error) {
       console.error('Error fetching profile:', error);
@@ -59,8 +77,16 @@ export function Topbar() {
   };
 
   const handleLogout = async () => {
-    // Clear the role cookie and activity cache so middleware/tracker don't use stale data
+    // Clear the role cookie, session storage and activity cache so middleware/tracker don't use stale data
     document.cookie = 'nf_role=; path=/; max-age=0; samesite=lax';
+    if (typeof window !== 'undefined') {
+      try {
+        sessionStorage.removeItem('nf_topbar_profile');
+        sessionStorage.removeItem('nf_cadre');
+      } catch {
+        /* ignore */
+      }
+    }
     clearActivityCache();
     await supabase.auth.signOut();
     router.push('/login');

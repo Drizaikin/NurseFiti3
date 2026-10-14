@@ -414,7 +414,12 @@ export default function DashboardPage() {
 
   const fetchDashboardData = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { session } } = await supabase.auth.getSession();
+      let user = session?.user;
+      if (!user) {
+        const { data: { user: authUser } } = await supabase.auth.getUser();
+        user = authUser;
+      }
       if (!user) { router.push('/login'); return; }
 
       const [profileRes, studentRes, statsRes, mockRes, flashRes, sessionsRes, scholarshipRes, unreadRes, settings] = await Promise.all([
@@ -443,6 +448,20 @@ export default function DashboardPage() {
       } | null;
 
       if (!studentData) { router.push('/onboarding'); return; }
+
+      if (typeof window !== 'undefined') {
+        try {
+          if (studentData.cadre) sessionStorage.setItem('nf_cadre', studentData.cadre);
+          sessionStorage.setItem('nf_topbar_profile', JSON.stringify({
+            full_name: profileData?.full_name ?? '',
+            xp: studentData.xp ?? 0,
+            level: studentData.level ?? 1,
+            streak_count: studentData.streak_count ?? 0,
+          }));
+        } catch {
+          /* ignore */
+        }
+      }
 
       const stats = statsRes.data && statsRes.data.length > 0 ? statsRes.data[0] : {};
       const totalAnswers = Number(stats.total_answers || 0);

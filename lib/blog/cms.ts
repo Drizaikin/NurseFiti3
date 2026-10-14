@@ -92,7 +92,16 @@ export function mapBlogRow(row: BlogRow): CmsBlogPost {
   };
 }
 
+const BLOG_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+let postsListCache: { data: CmsBlogPost[]; expiresAt: number } | null = null;
+const singlePostCache = new Map<string, { data: CmsBlogPost | null; expiresAt: number }>();
+
 export async function listPublishedCmsPosts(): Promise<CmsBlogPost[]> {
+  const now = Date.now();
+  if (postsListCache && postsListCache.expiresAt > now) {
+    return postsListCache.data;
+  }
+
   const supabase = publicClient();
   if (!supabase) return [];
   const { data, error } = await supabase
@@ -103,10 +112,18 @@ export async function listPublishedCmsPosts(): Promise<CmsBlogPost[]> {
     .order('featured', { ascending: false })
     .order('published_at', { ascending: false });
   if (error) return [];
-  return ((data ?? []) as unknown as BlogRow[]).map(mapBlogRow);
+  const mapped = ((data ?? []) as unknown as BlogRow[]).map(mapBlogRow);
+  postsListCache = { data: mapped, expiresAt: now + BLOG_CACHE_TTL_MS };
+  return mapped;
 }
 
 export async function getPublishedCmsPost(slug: string): Promise<CmsBlogPost | null> {
+  const now = Date.now();
+  const cached = singlePostCache.get(slug);
+  if (cached && cached.expiresAt > now) {
+    return cached.data;
+  }
+
   const supabase = publicClient();
   if (!supabase) return null;
   const { data, error } = await supabase
@@ -116,6 +133,11 @@ export async function getPublishedCmsPost(slug: string): Promise<CmsBlogPost | n
     .eq('status', 'published')
     .lte('published_at', new Date().toISOString())
     .maybeSingle();
-  if (error || !data) return null;
-  return mapBlogRow(data as unknown as BlogRow);
+  if (error || !data) {
+    singlePostCache.set(slug, { data: null, expiresAt: now + 30 * 1000 });
+    return null;
+  }
+  const mapped = mapBlogRow(data as unknown as BlogRow);
+  singlePostCache.set(slug, { data: mapped, expiresAt: now + BLOG_CACHE_TTL_MS });
+  return mapped;
 }
