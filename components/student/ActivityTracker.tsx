@@ -67,7 +67,7 @@ async function resolveUserIdentity(): Promise<{ userId: string; role: string } |
       .from('profiles')
       .select('role')
       .eq('id', session.user.id)
-      .single();
+      .maybeSingle();
     if (!profile) return null;
     cachedUserId = session.user.id;
     cachedRole = profile.role;

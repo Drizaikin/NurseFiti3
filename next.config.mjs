@@ -5,8 +5,9 @@ const contentSecurityPolicy = [
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.intasend.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://*.supabase.co https://images.unsplash.com https://www.nursefiti.co.ke",
+  "media-src 'self' blob:",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.intasend.com https://*.googleapis.com",
+  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.intasend.com https://*.googleapis.com https://api.deepgram.com wss://api.deepgram.com",
   "frame-src 'self' https://*.intasend.com",
   "object-src 'none'",
   "base-uri 'self'",
@@ -27,7 +28,7 @@ const nextConfig = {
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(self), geolocation=()' },
           { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
           { key: 'Content-Security-Policy-Report-Only', value: contentSecurityPolicy },
         ],
@@ -57,7 +58,7 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['recharts', 'framer-motion'],
     // Tell Next.js not to bundle these CJS packages; load them at runtime instead.
-    serverComponentsExternalPackages: ['intasend-node'],
+    serverComponentsExternalPackages: ['intasend-node', 'pdf-parse', 'mammoth'],
   },
   // Tell Next.js not to bundle these CJS packages — load them at runtime instead
   eslint: {

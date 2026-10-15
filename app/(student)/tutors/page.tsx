@@ -168,7 +168,7 @@ export default function TutorsPage() {
           `)
           .eq('verification_status', 'verified'),
         supabase.from('student_profiles').select('cadre').eq('id', user.id).maybeSingle(),
-        supabase.from('platform_settings').select('*').eq('id', 1).single()
+        supabase.from('platform_settings').select('*').eq('id', 1).maybeSingle()
       ]);
 
       let queryData = tutorsDataRes.data ?? [];

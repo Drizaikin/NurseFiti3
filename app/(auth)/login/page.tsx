@@ -79,24 +79,25 @@ function LoginForm() {
       if (roleFromMeta === 'tutor') {
         // Fast path for tutors: fetch profile and tutor_profile in parallel
         const [profileRes, tutorRes] = await Promise.all([
-          supabase.from('profiles').select('role').eq('id', authData.user.id).single(),
+          supabase.from('profiles').select('role').eq('id', authData.user.id).maybeSingle(),
           supabase
             .from('tutor_profiles')
             .select('verification_status, nck_certificate_url')
             .eq('id', authData.user.id)
-            .single(),
+            .maybeSingle(),
         ]);
-        role = (profileRes.data?.role as any) || 'tutor';
+        role = ((profileRes as any).data?.role as any) || 'tutor';
         tutorProfile = tutorRes.data as any;
       } else {
         const { data: profileData, error: profileError } = await supabase
           .from('profiles')
           .select('role')
           .eq('id', authData.user.id)
-          .single();
+          .maybeSingle();
 
-        if (!profileError && profileData?.role) {
-          role = profileData.role as any;
+        const resolvedRole = (profileData as any)?.role;
+        if (!profileError && resolvedRole) {
+          role = resolvedRole as any;
         } else if (roleFromMeta) {
           role = roleFromMeta;
         } else {
@@ -108,7 +109,7 @@ function LoginForm() {
             .from('tutor_profiles')
             .select('verification_status, nck_certificate_url')
             .eq('id', authData.user.id)
-            .single();
+            .maybeSingle();
           tutorProfile = tutorRes as any;
         }
       }

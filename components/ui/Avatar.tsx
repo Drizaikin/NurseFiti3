@@ -31,6 +31,7 @@ export function Avatar({ src, alt, name, size = 'md', className = '' }: AvatarPr
           src={src}
           alt={alt || name || 'Avatar'}
           fill
+          sizes={size === 'sm' ? '32px' : size === 'md' ? '48px' : size === 'lg' ? '64px' : '96px'}
           className="object-cover"
         />
       </div>

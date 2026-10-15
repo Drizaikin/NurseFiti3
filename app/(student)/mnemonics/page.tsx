@@ -482,15 +482,16 @@ export default function StudentMnemonicsPage() {
             .from('student_profiles')
             .select('plan_tier, plan_expires_at')
             .eq('id', user.id)
-            .single();
+            .maybeSingle();
           setPlanTier(effectiveTier((prof as any)?.plan_tier, (prof as any)?.plan_expires_at));
         }
 
         // Background sync: Fetch any newly added admin mnemonics from Supabase
-        const { data: dbData, error } = await supabase.from('mnemonics').select('*');
-        if (!error && dbData && dbData.length > 0) {
+        const { data: dbDataRaw, error } = await (supabase as any).from('mnemonics').select('*');
+        const dbData = (dbDataRaw as any[]) || [];
+        if (!error && dbData.length > 0) {
           // Merge with static list seamlessly
-          const dbMap = new Map(dbData.map(d => [d.title.toLowerCase().trim(), d]));
+          const dbMap = new Map(dbData.map((d: any) => [d.title?.toLowerCase().trim(), d]));
           const merged = ALL_MNEMONICS.map(m => {
             const found = dbMap.get(m.title.toLowerCase().trim());
             return found ? { ...m, ...found } : m;

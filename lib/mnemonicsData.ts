@@ -34,6 +34,7 @@ export interface Mnemonic {
   high_yield_tip: string;
   practice_question: PracticeQuestion | null;
   created_at?: string;
+  created_by?: string | null;
 }
 
 export const CATEGORIES = [

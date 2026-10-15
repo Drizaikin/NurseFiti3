@@ -1,152 +1,51 @@
-'use client';
-
-import { useEffect, useRef, useState } from 'react';
-
-export type VideoTutorial = {
-  id: string;
-  icon: string;
-  title: string;
-  desc: string;
-  duration: string;
-  src: string | null;
-  poster: string;
-};
-
-export const VIDEO_TUTORIALS: VideoTutorial[] = [
-  {
-    id: 'signing-up',
-    icon: '✨',
-    title: 'Create your account',
-    desc: 'Sign up, pick your cadre and institution, take a quick tour, and land on your fresh dashboard.',
-    duration: '0:37',
-    src: '/videos/tutorials/signing-up.mp4',
-    poster: '/images/tutorials/signing-up.jpg',
-  },
-  {
-    id: 'signup-login',
-    icon: '🔐',
-    title: 'Log in & your dashboard',
-    desc: 'Log in and land straight on your personalised dashboard — streak, average score, and study time at a glance.',
-    duration: '0:18',
-    src: '/videos/tutorials/signup-login.mp4',
-    poster: '/images/tutorials/signup-login.jpg',
-  },
-  {
-    id: 'practice-mock-exams',
-    icon: '📝',
-    title: 'Practice questions',
-    desc: 'Resume or start a practice session, answer MCQs, and get instant feedback with a full explanation.',
-    duration: '0:27',
-    src: '/videos/tutorials/practice-mock-exams.mp4',
-    poster: '/images/tutorials/practice-mock-exams.jpg',
-  },
-];
-
-function VideoModal({ tutorial, onClose }: { tutorial: VideoTutorial; onClose: () => void }) {
-  const dialogRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    document.addEventListener('keydown', onKeyDown);
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      document.body.style.overflow = '';
-    };
-  }, [onClose]);
-
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
-      role="dialog"
-      aria-modal="true"
-      aria-label={tutorial.title}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
-      <div ref={dialogRef} className="w-full max-w-3xl">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-white font-heading font-bold text-lg">{tutorial.title}</h3>
-          <button
-            onClick={onClose}
-            aria-label="Close video"
-            className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-          >
-            ✕
-          </button>
-        </div>
-        <div className="rounded-2xl overflow-hidden bg-black shadow-2xl aspect-video">
-          {tutorial.src ? (
-            <video
-              className="w-full h-full object-contain"
-              src={tutorial.src}
-              poster={tutorial.poster}
-              controls
-              autoPlay
-              playsInline
-            >
-              Sorry, your browser doesn&apos;t support embedded videos.
-            </video>
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-white/70 text-sm px-6 text-center">
-              This tutorial video is coming soon.
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
+import Link from 'next/link';
+import { VIDEO_TUTORIALS, formatVideoDuration } from '@/lib/videoTutorials';
 
 export function VideoTutorialsSection() {
-  const [active, setActive] = useState<VideoTutorial | null>(null);
-
   return (
-    <section id="tutorials" className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-14">
-          <h2 className="text-3xl sm:text-4xl font-heading font-bold text-[var(--color-text)] mb-4">
+    <section id="tutorials" className="px-4 py-20 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-14 text-center">
+          <h2 className="mb-4 text-3xl font-heading font-bold text-[var(--color-text)] sm:text-4xl">
             Watch how NurseFiti works
           </h2>
-          <p className="text-neutral-mid max-w-2xl mx-auto">
-            Short video walkthroughs of every core feature — from creating your account to booking a tutor.
+          <p className="mx-auto max-w-2xl text-neutral-mid">
+            Short video walkthroughs of the core features, from creating an account to practising NCK questions.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {VIDEO_TUTORIALS.map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setActive(t)}
-              className="group text-left bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl overflow-hidden hover:shadow-card-hover transition-shadow"
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {VIDEO_TUTORIALS.map((video) => (
+            <Link
+              key={video.slug}
+              href={`/tutorials/${video.slug}`}
+              className="group overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] text-left transition-shadow hover:shadow-card-hover"
+              aria-label={`Watch video: ${video.title}`}
             >
-              <div
-                className="relative aspect-video bg-primary-light dark:bg-dark-mid bg-cover bg-center"
-                style={{ backgroundImage: `url(${t.poster})` }}
-              >
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/35 transition-colors flex items-center justify-center">
-                  <div className="w-14 h-14 rounded-full bg-white/90 group-hover:scale-110 transition-transform flex items-center justify-center shadow-lg">
-                    <svg className="w-6 h-6 text-primary ml-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <div className="relative aspect-video bg-primary-light dark:bg-dark-mid">
+                {/* A real image element makes the thumbnail discoverable and usable without CSS. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={video.poster} alt="" className="h-full w-full object-cover" loading="lazy" />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-colors group-hover:bg-black/35">
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-primary shadow-lg transition-transform group-hover:scale-110" aria-hidden="true">
+                    <svg className="ml-0.5 h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M6.3 2.8A1 1 0 004.8 3.7v12.6a1 1 0 001.5.9l10.6-6.3a1 1 0 000-1.8L6.3 2.8z" />
                     </svg>
-                  </div>
+                  </span>
                 </div>
-                <span className="absolute bottom-2 right-2 px-2 py-0.5 rounded-md text-xs font-semibold bg-black/70 text-white">
-                  {t.duration}
+                <span className="absolute bottom-2 right-2 rounded-md bg-black/70 px-2 py-0.5 text-xs font-semibold text-white">
+                  {formatVideoDuration(video.durationSeconds)}
                 </span>
               </div>
               <div className="p-5">
-                <div className="text-2xl mb-2">{t.icon}</div>
-                <h3 className="font-heading font-bold text-[var(--color-text)] mb-1.5">{t.title}</h3>
-                <p className="text-sm text-neutral-mid leading-relaxed">{t.desc}</p>
+                <div className="mb-2 text-2xl" aria-hidden="true">{video.icon}</div>
+                <h3 className="mb-1.5 font-heading font-bold text-[var(--color-text)]">{video.title}</h3>
+                <p className="text-sm leading-relaxed text-neutral-mid">{video.cardDescription}</p>
+                <span className="mt-4 inline-flex font-semibold text-primary">Watch tutorial <span className="ml-1" aria-hidden="true">→</span></span>
               </div>
-            </button>
+            </Link>
           ))}
         </div>
       </div>
-      {active && <VideoModal tutorial={active} onClose={() => setActive(null)} />}
     </section>
   );
 }

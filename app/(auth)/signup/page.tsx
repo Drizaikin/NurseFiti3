@@ -96,6 +96,17 @@ export default function StudentSignupPage() {
       toast.success('Welcome to NurseFiti!');
       // Set role cookie so middleware skips the DB query on first protected request
       document.cookie = `nf_role=student; path=/; max-age=86400; samesite=lax${location.protocol === 'https:' ? '; secure' : ''}`;
+      if (data.cadre) {
+        try { sessionStorage.setItem('nf_cadre', data.cadre); } catch {}
+      }
+      try {
+        sessionStorage.setItem('nf_topbar_profile', JSON.stringify({
+          full_name: data.fullName ?? '',
+          avatar_url: null,
+          role: 'student',
+          is_premium: false,
+        }));
+      } catch {}
       router.refresh();
       router.push('/dashboard');
     } catch (error: any) {

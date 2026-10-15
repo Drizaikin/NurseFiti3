@@ -77,6 +77,7 @@ export async function middleware(req: NextRequest) {
     '/tutoring',
     '/nursing-students',
     '/blog',
+    '/tutorials',
     '/help',
     '/terms',
     '/privacy',
@@ -116,7 +117,7 @@ export async function middleware(req: NextRequest) {
     '/tutor-dashboard', '/tutor-schedule', '/tutor-students',
     '/tutor-studio', '/tutor-earnings', '/tutor-reviews', '/tutor-profile',
     '/tutor-pending', '/tutor-complete-profile', '/tutor-community',
-    '/mnemonics', '/hd-materials',
+    '/mnemonics', '/hd-materials', '/ai-tutor',
     '/admin',
   ];
 
@@ -201,7 +202,7 @@ export async function middleware(req: NextRequest) {
     '/dashboard', '/practice', '/mock-exam', '/flashcards',
     '/analytics', '/achievements', '/groups', '/revision-plan',
     '/bookings', '/settings', '/onboarding', '/tutors',
-    '/mnemonics', '/hd-materials',
+    '/mnemonics', '/hd-materials', '/ai-tutor',
   ];
   const isStudentRoute = studentRoutes.some((r) => pathname === r || pathname.startsWith(r + '/'));
 

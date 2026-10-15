@@ -34,8 +34,8 @@ export function TutorTopbar() {
         setUserId(session.user.id);
 
         const [{ data: profileData }, { data: tutorData }] = await Promise.all([
-          supabase.from('profiles').select('full_name, avatar_url').eq('id', session.user.id).single(),
-          supabase.from('tutor_profiles').select('verification_tier, average_rating').eq('id', session.user.id).single(),
+          supabase.from('profiles').select('full_name, avatar_url').eq('id', session.user.id).maybeSingle(),
+          supabase.from('tutor_profiles').select('verification_tier, average_rating').eq('id', session.user.id).maybeSingle(),
         ]);
 
         if (profileData) {

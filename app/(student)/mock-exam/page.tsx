@@ -133,7 +133,7 @@ export default function MockExamPage() {
         .from('student_profiles')
         .select('cadre, plan_tier, plan_expires_at')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
       const sp = spData as { cadre: string; plan_tier: string; plan_expires_at: string | null } | null;
 
       if (sp?.cadre) {

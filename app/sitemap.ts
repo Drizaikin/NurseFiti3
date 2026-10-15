@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { POSTS } from '@/lib/blogData';
 import { listPublishedCmsPosts } from '@/lib/blog/cms';
+import { VIDEO_TUTORIALS } from '@/lib/videoTutorials';
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.nursefiti.co.ke';
 
@@ -33,6 +34,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 1.0,
     },
+    ...VIDEO_TUTORIALS.map((video) => ({
+      url: `${baseUrl}/tutorials/${video.slug}`,
+      lastModified: new Date(video.uploadDate),
+      changeFrequency: 'yearly' as const,
+      priority: 0.75,
+    })),
     {
       url: `${baseUrl}/blog`,
       lastModified: latestPostDate,

@@ -298,13 +298,14 @@ function MnemonicTodayContent() {
             .from('student_profiles')
             .select('plan_tier, plan_expires_at')
             .eq('id', user.id)
-            .single();
+            .maybeSingle();
           setPlanTier(effectiveTier((prof as any)?.plan_tier, (prof as any)?.plan_expires_at));
         }
 
-        const { data } = await supabase.from('mnemonics').select('*');
-        if (data && data.length > 0) {
-          const dbMap = new Map(data.map((d: any) => [d.title.toLowerCase().trim(), d]));
+        const { data: rawDbData } = await (supabase as any).from('mnemonics').select('*');
+        const data = (rawDbData as any[]) || [];
+        if (data.length > 0) {
+          const dbMap = new Map(data.map((d: any) => [d.title?.toLowerCase().trim(), d]));
           const merged = ALL_MNEMONICS.map((m) => {
             const found = dbMap.get(m.title.toLowerCase().trim());
             return found ? { ...m, ...found } : m;

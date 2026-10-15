@@ -1,5 +1,50 @@
 export const POSTS = [
   {
+    slug: 'kenyan-nurse-personal-finance-salary-delays-investing',
+    title: 'Surviving Delayed County Salaries: A Kenyan Nurse\'s Financial Playbook (2026)',
+    excerpt: 'Navigate delayed county pay, protect your SACCO shares from unremitted deductions, build a 6-month MMF emergency fund, and invest safely in Kenya (2026).',
+    category: 'Community',
+    readTime: '14 min read',
+    date: '2026-10-14',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
+    slug: 'how-to-open-private-clinic-nurse-kenya-licensing',
+    title: 'How to Open a Private Clinic as a Nurse in Kenya: NCK & KMPDC Guide (2026)',
+    excerpt: 'Step-by-step regulatory guide for Kenyan nurses to license a private clinic, pass SCHMT inspections, meet NEMA waste rules, and empaneled with SHA (2026).',
+    category: 'Study Guide',
+    readTime: '15 min read',
+    date: '2026-10-14',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
+    slug: 'cbet-nursing-curriculum-nck-e-logbook-kenya',
+    title: 'The CBET Nursing Curriculum & NCK E-Logbook Shift in Kenya (2026)',
+    excerpt: 'Explore Kenya\'s transition to Competency-Based Nursing Education (CBET), NCK OSP e-logbook verification, and how it transforms licensure exams in 2026.',
+    category: 'Study Guide',
+    readTime: '13 min read',
+    date: '2026-10-14',
+    cadres: ['KRCHN', 'BScN'],
+  },
+  {
+    slug: 'devolution-kenyan-nurses-salary-deductions-hsc',
+    title: 'Devolution vs Kenyan Nurses: The Battle for Health Service Commission (2026)',
+    excerpt: 'Uncover why 13 years of health devolution created delayed salaries and stalled promotions for Kenyan nurses, and why the Health Service Commission (HSC) is critical.',
+    category: 'NCK News',
+    readTime: '14 min read',
+    date: '2026-10-14',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
+    slug: 'higher-diploma-critical-care-nursing-kenya',
+    title: 'Higher Diploma in Critical Care Nursing Kenya: Complete ICU Guide (2026)',
+    excerpt: 'Complete guide to the Higher Diploma in Critical Care Nursing (KRCCN) in Kenya: KMTC entry criteria, ICU competencies, costs, and NCK exam prep (2026).',
+    category: 'Study Guide',
+    readTime: '15 min read',
+    date: '2026-10-14',
+    cadres: ['KRCHN', 'BScN', 'Higher Diploma'],
+  },
+  {
     slug: 'sha-shif-transition-nurses-kenya-reality',
     title: 'SHA/SHIF Transition Kenya: Nurse Reality & Rights (2026)',
     excerpt: 'Discover how Kenyan nurses navigate SHA/SHIF digital downtime, avoid salary surcharges, and protect emergency patient rights under Article 43(2) in 2026.',
@@ -399,6 +444,11 @@ export const CATEGORY_STYLES: Record<string, { badge: string }> = {
 };
 
 export const POST_IMAGES: Record<string, string> = {
+  'kenyan-nurse-personal-finance-salary-delays-investing': 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80&auto=format&fit=crop',
+  'how-to-open-private-clinic-nurse-kenya-licensing': 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200&q=80&auto=format&fit=crop',
+  'cbet-nursing-curriculum-nck-e-logbook-kenya': 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&q=80&auto=format&fit=crop',
+  'devolution-kenyan-nurses-salary-deductions-hsc': 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200&q=80&auto=format&fit=crop',
+  'higher-diploma-critical-care-nursing-kenya': 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200&q=80&auto=format&fit=crop',
   'sha-shif-transition-nurses-kenya-reality': 'https://images.unsplash.com/photo-1504813184591-01572f98c85f?w=1200&q=80&auto=format&fit=crop',
   'kenya-nurse-relocation-uk-gulf-reality': 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200&q=80&auto=format&fit=crop',
   'nurses-eat-their-young-preceptorship-kenya': 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=1200&q=80&auto=format&fit=crop',

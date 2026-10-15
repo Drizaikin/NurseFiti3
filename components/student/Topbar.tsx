@@ -21,23 +21,21 @@ interface StudentProfile {
 export function Topbar() {
   const router = useRouter();
   const supabase = createClient();
-  const [profile, setProfile] = useState<StudentProfile | null>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const cached = sessionStorage.getItem('nf_topbar_profile');
-        if (cached) return JSON.parse(cached);
-      } catch {
-        /* ignore */
-      }
-    }
-    return null;
-  });
+  // Keep the first client render identical to the server render. Read the
+  // session-only cache after hydration so it can't change the initial markup.
+  const [profile, setProfile] = useState<StudentProfile | null>(null);
   const [showMenu, setShowMenu] = useState(false);
   const [showNotifs, setShowNotifs] = useState(false);
   const [userId, setUserId] = useState('');
   const unreadCount = useUnreadCount(userId);
 
   useEffect(() => {
+    try {
+      const cached = sessionStorage.getItem('nf_topbar_profile');
+      if (cached) setProfile(JSON.parse(cached) as StudentProfile);
+    } catch {
+      /* ignore unavailable or invalid session storage */
+    }
     fetchProfile();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -50,17 +48,17 @@ export function Topbar() {
       setUserId(session.user.id);
 
       const [{ data: profileData }, { data: studentData }] = await Promise.all([
-        supabase.from('profiles').select('full_name, avatar_url').eq('id', session.user.id).single(),
-        supabase.from('student_profiles').select('xp, level, streak_count').eq('id', session.user.id).single(),
+        supabase.from('profiles').select('full_name, avatar_url').eq('id', session.user.id).maybeSingle(),
+        supabase.from('student_profiles').select('xp, level, streak_count').eq('id', session.user.id).maybeSingle(),
       ]);
 
-      if (profileData && studentData) {
+      if (profileData) {
         const updatedProfile = {
           full_name: (profileData as any).full_name,
           avatar_url: (profileData as any).avatar_url,
-          xp: (studentData as any).xp ?? 0,
-          level: (studentData as any).level ?? 1,
-          streak_count: (studentData as any).streak_count ?? 0,
+          xp: (studentData as any)?.xp ?? 0,
+          level: (studentData as any)?.level ?? 0,
+          streak_count: (studentData as any)?.streak_count ?? 0,
         };
         setProfile(updatedProfile);
         if (typeof window !== 'undefined') {

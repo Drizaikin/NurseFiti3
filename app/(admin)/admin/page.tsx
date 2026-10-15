@@ -147,6 +147,12 @@ export default function AdminOverviewPage() {
             <p className="text-sm text-neutral-mid">Manage Higher Diploma course materials, uploads, and pricing.</p>
           </Card>
         </Link>
+        <Link href="/admin/ai-tutor">
+          <Card className="hover:border-primary/40 transition-all cursor-pointer h-full">
+            <h2 className="font-heading font-bold text-[var(--color-text)] mb-1">🤖 AI Tutor KB</h2>
+            <p className="text-sm text-neutral-mid">Upload and manage textbooks used by the grounded student AI Tutor.</p>
+          </Card>
+        </Link>
         <Link href="/admin/settings">
           <Card className="hover:border-primary/40 transition-all cursor-pointer h-full">
             <h2 className="font-heading font-bold text-[var(--color-text)] mb-1">⚙️ Settings</h2>

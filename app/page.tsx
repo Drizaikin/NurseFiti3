@@ -432,64 +432,7 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
-      <Script
-        id="json-ld-videos"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'ItemList',
-          itemListElement: [
-            {
-              '@type': 'ListItem',
-              position: 1,
-              item: {
-                '@type': 'VideoObject',
-                '@id': 'https://www.nursefiti.co.ke/#video-signing-up',
-                name: 'Create your NurseFiti account',
-                description: 'Sign up for NurseFiti, pick your nursing cadre and institution, take a quick orientation tour, and land on your personalised NCK exam preparation dashboard.',
-                thumbnailUrl: 'https://www.nursefiti.co.ke/images/tutorials/signing-up.jpg',
-                contentUrl: 'https://www.nursefiti.co.ke/videos/tutorials/signing-up.mp4',
-                duration: 'PT37S',
-                uploadDate: '2026-05-01',
-                embedUrl: 'https://www.nursefiti.co.ke/#tutorials',
-                publisher: { '@id': 'https://www.nursefiti.co.ke/#organization' },
-              },
-            },
-            {
-              '@type': 'ListItem',
-              position: 2,
-              item: {
-                '@type': 'VideoObject',
-                '@id': 'https://www.nursefiti.co.ke/#video-signup-login',
-                name: 'Log in and explore your NurseFiti dashboard',
-                description: 'Log in to NurseFiti and navigate your personalised dashboard — view your study streak, average score, and total study time at a glance.',
-                thumbnailUrl: 'https://www.nursefiti.co.ke/images/tutorials/signup-login.jpg',
-                contentUrl: 'https://www.nursefiti.co.ke/videos/tutorials/signup-login.mp4',
-                duration: 'PT18S',
-                uploadDate: '2026-05-01',
-                embedUrl: 'https://www.nursefiti.co.ke/#tutorials',
-                publisher: { '@id': 'https://www.nursefiti.co.ke/#organization' },
-              },
-            },
-            {
-              '@type': 'ListItem',
-              position: 3,
-              item: {
-                '@type': 'VideoObject',
-                '@id': 'https://www.nursefiti.co.ke/#video-practice',
-                name: 'NCK practice questions on NurseFiti',
-                description: 'Start or resume a practice session, answer multiple-choice questions for the NCK licensure exam, and get instant feedback with a full rationale.',
-                thumbnailUrl: 'https://www.nursefiti.co.ke/images/tutorials/practice-mock-exams.jpg',
-                contentUrl: 'https://www.nursefiti.co.ke/videos/tutorials/practice-mock-exams.mp4',
-                duration: 'PT27S',
-                uploadDate: '2026-05-01',
-                embedUrl: 'https://www.nursefiti.co.ke/#tutorials',
-                publisher: { '@id': 'https://www.nursefiti.co.ke/#organization' },
-              },
-            },
-          ],
-        }) }}
-      />
+
 
       <MarketingHeader />
 

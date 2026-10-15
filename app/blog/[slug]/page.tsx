@@ -12,6 +12,7 @@ import BlogComments from '@/components/blog/BlogComments';
 import BlogShareButtons from '@/components/blog/BlogShareButtons';
 import CommunityLinks from '@/components/blog/CommunityLinks';
 import { POSTS_OCTOBER_CONTROVERSIES } from '@/lib/blog/octoberPosts';
+import { POSTS_RESEARCHED_2026 } from '@/lib/blog/researchedPosts2026';
 
 // ─── Post data ───────────────────────────────────────────────────────────────
 
@@ -4320,7 +4321,7 @@ Whichever stage you're at right now, you don't have to plan around it alone — 
   },
 ];
 
-const ALL_POSTS = [...POSTS_OCTOBER_CONTROVERSIES, ...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL, ...POSTS_CV, ...POSTS_POST_EXAM, ...POSTS_DIPLOMA_NURSING, ...POSTS_BUSINESS_IDEAS, ...POSTS_CARE_PLANS, ...POSTS_NURSING_TOPICS];
+const ALL_POSTS = [...POSTS_RESEARCHED_2026, ...POSTS_OCTOBER_CONTROVERSIES, ...POSTS_INTERN, ...POSTS_JUNE15, ...POSTS_NEWS, ...POSTS, ...POSTS_EXTRA, ...POSTS_NEW, ...POSTS_LATEST_RESEARCH, ...POSTS_AUG2026, ...POSTS_SALARY, ...POSTS_RENAL, ...POSTS_CV, ...POSTS_POST_EXAM, ...POSTS_DIPLOMA_NURSING, ...POSTS_BUSINESS_IDEAS, ...POSTS_CARE_PLANS, ...POSTS_NURSING_TOPICS];
 
 // ─── generateStaticParams ────────────────────────────────────────────────────
 
@@ -4372,6 +4373,31 @@ export async function generateMetadata({
 
 // Per-post hero images (Unsplash free CDN)
 const POST_IMAGES: Record<string, { url: string; alt: string; credit: string }> = {
+  'kenyan-nurse-personal-finance-salary-delays-investing': {
+    url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Calculator, Kenyan currency, and financial ledger representing nurse personal finance and salary budgeting',
+    credit: 'Unsplash',
+  },
+  'how-to-open-private-clinic-nurse-kenya-licensing': {
+    url: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Modern clean outpatient medical clinic reception and consultation room in Kenya',
+    credit: 'Unsplash',
+  },
+  'cbet-nursing-curriculum-nck-e-logbook-kenya': {
+    url: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Nursing student reviewing competency-based syllabus and digital e-logbook on tablet',
+    credit: 'Unsplash',
+  },
+  'devolution-kenyan-nurses-salary-deductions-hsc': {
+    url: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Kenyan healthcare workers advocating for health service commission and labor rights',
+    credit: 'Unsplash',
+  },
+  'higher-diploma-critical-care-nursing-kenya': {
+    url: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200&q=80&auto=format&fit=crop',
+    alt: 'Intensive care unit monitors and medical equipment for critical care nursing',
+    credit: 'Unsplash',
+  },
   'sha-shif-transition-nurses-kenya-reality': {
     url: 'https://images.unsplash.com/photo-1504813184591-01572f98c85f?w=1200&q=80&auto=format&fit=crop',
     alt: 'Healthcare professionals at hospital triage managing patient records during the SHA transition in Kenya',

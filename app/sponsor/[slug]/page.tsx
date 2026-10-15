@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const supabase = createClient() as any;
-  const { data } = await supabase.from('scholarship_campaigns').select('name').eq('slug', params.slug).single();
+  const { data } = await supabase.from('scholarship_campaigns').select('name').eq('slug', params.slug).maybeSingle();
   return {
     title: data ? `${data.name} | Impact Dashboard` : 'Sponsor Dashboard',
     description: 'Private or campaign-specific NurseFiti scholarship impact information.',
@@ -28,7 +28,7 @@ export default async function SponsorDashboardPage({ params }: { params: { slug:
     .from('scholarship_campaigns')
     .select('*')
     .eq('slug', params.slug)
-    .single();
+    .maybeSingle();
 
   if (campaignError || !campaign) {
     notFound();
@@ -42,7 +42,7 @@ export default async function SponsorDashboardPage({ params }: { params: { slug:
       // For this implementation, we simply block unauthenticated users if it's private.
       return <div className="p-12 text-center font-bold text-red-600">This dashboard is private. Please log in as an administrator.</div>;
     }
-    const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single();
+    const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).maybeSingle();
     if (profile?.role !== 'admin') {
       return <div className="p-12 text-center font-bold text-red-600">This dashboard is private.</div>;
     }

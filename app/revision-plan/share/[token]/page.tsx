@@ -21,7 +21,7 @@ export default async function SharedRevisionPlanPage({ params }: { params: { tok
     .from('revision_plans')
     .select('plan_html, cadre, exam_date, student_id')
     .eq('share_token', params.token)
-    .single();
+    .maybeSingle();
 
   if (!plan || !(plan as any).plan_html) {
     notFound();

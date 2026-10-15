@@ -151,7 +151,7 @@ export default function TutorProfilePage() {
         supabase.from('tutor_availability').select('id, day_of_week, start_time, end_time, is_recurring, specific_date').eq('tutor_id', tutorId).eq('is_active', true),
         supabase.from('sessions').select('session_date, start_time, status, booked_at').eq('tutor_id', tutorId).in('status', ['confirmed', 'pending_approval', 'pending_payment']).gte('session_date', toLocalDateStr(new Date())),
         supabase.from('session_reviews').select('id, rating, review_text, keywords, created_at, student_id').eq('tutor_id', tutorId).eq('is_published', true).order('created_at', { ascending: false }).limit(10),
-        supabase.from('platform_settings').select('*').eq('id', 1).single()
+        supabase.from('platform_settings').select('*').eq('id', 1).maybeSingle()
       ]);
 
       if (!tutorRes.data || !profileRes.data) {

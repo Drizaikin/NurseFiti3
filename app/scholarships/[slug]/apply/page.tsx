@@ -22,7 +22,7 @@ export default async function ScholarshipApplyPage({ params }: { params: { slug:
     .from('scholarship_campaigns')
     .select('*')
     .eq('slug', params.slug)
-    .single();
+    .maybeSingle();
 
   if (error || !campaign) {
     notFound();
@@ -48,7 +48,7 @@ export default async function ScholarshipApplyPage({ params }: { params: { slug:
     .select('status')
     .eq('campaign_id', campaign.id)
     .eq('student_id', user.id)
-    .single();
+    .maybeSingle();
 
   if (existingApp) {
     return (
@@ -71,7 +71,7 @@ export default async function ScholarshipApplyPage({ params }: { params: { slug:
   }
 
   // Fetch user profile to prefill form
-  const { data: profile } = await supabase.from('profiles').select('*').eq('id', user.id).single();
+  const { data: profile } = await supabase.from('profiles').select('*').eq('id', user.id).maybeSingle();
 
   return (
     <div className="min-h-screen bg-[var(--color-bg)] py-12 px-4 relative overflow-hidden">

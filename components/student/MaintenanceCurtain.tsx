@@ -16,6 +16,14 @@ export function MaintenanceCurtain({ children }: { children: React.ReactNode }) 
     let isMounted = true;
     const fetchCadre = async () => {
       try {
+        if (typeof window !== 'undefined') {
+          const cached = sessionStorage.getItem('nf_cadre');
+          if (cached && isMounted) {
+            setCadre(cached);
+            setLoading(false);
+            return;
+          }
+        }
         const supabase = createClient();
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
@@ -23,7 +31,7 @@ export function MaintenanceCurtain({ children }: { children: React.ReactNode }) 
             .from('student_profiles')
             .select('cadre')
             .eq('id', user.id)
-            .single();
+            .maybeSingle();
           if (isMounted) setCadre((data as any)?.cadre ?? null);
         }
       } catch (err) {
