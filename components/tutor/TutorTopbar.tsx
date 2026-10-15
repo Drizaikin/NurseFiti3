@@ -54,12 +54,27 @@ export function TutorTopbar() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleLogout = async () => {
-    // Clear the role cookie and activity cache so middleware/tracker don't use stale data
+  const executeActualSignOut = async () => {
     document.cookie = 'nf_role=; path=/; max-age=0; samesite=lax';
     clearActivityCache();
     await supabase.auth.signOut();
     router.push('/login');
+  };
+
+  const handleLogout = async () => {
+    const hasReviewed = typeof window !== 'undefined' && localStorage.getItem('nf_has_submitted_general_review') === 'true';
+    if (!hasReviewed && typeof window !== 'undefined') {
+      const event = new CustomEvent('nf:trigger-general-review', {
+        detail: {
+          reason: 'logout',
+          onProceed: executeActualSignOut,
+        },
+      });
+      window.dispatchEvent(event);
+      return;
+    }
+
+    await executeActualSignOut();
   };
 
   return (

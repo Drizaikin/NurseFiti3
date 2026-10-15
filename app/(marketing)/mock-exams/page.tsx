@@ -1,3 +1,5 @@
+export const revalidate = 300;
+
 import { ProductLandingPage } from '@/components/marketing/ProductLandingPage';
 import { PUBLIC_PRODUCTS, productMetadata } from '@/lib/publicProducts';
 

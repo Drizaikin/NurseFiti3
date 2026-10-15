@@ -4,6 +4,13 @@ import { TutorTopbar } from '@/components/tutor/TutorTopbar';
 import { TutorOnboardingTourGate } from '@/components/tutor/OnboardingTourGate';
 import { ActivityTracker } from '@/components/student/ActivityTracker';
 
+import nextDynamic from 'next/dynamic';
+
+const ReviewPromptModal = nextDynamic(
+  () => import('@/components/shared/ReviewPromptModal').then(m => ({ default: m.ReviewPromptModal })),
+  { ssr: false }
+);
+
 // All tutor pages are dynamic — they require auth and live Supabase data
 export const dynamic = 'force-dynamic';
 
@@ -41,6 +48,9 @@ export default function TutorLayout({ children }: { children: React.ReactNode })
 
       {/* Onboarding tour — shown once to new tutor accounts */}
       <TutorOnboardingTourGate />
+
+      {/* General Review Prompt — prompts unreviewed tutors on login and logout, permanently suppressed once reviewed */}
+      <ReviewPromptModal role="tutor" />
 
       {/* Activity tracking — login + page visit events for admin analytics */}
       <ActivityTracker />

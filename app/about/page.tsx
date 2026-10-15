@@ -1,3 +1,5 @@
+export const revalidate = 86400;
+
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import Link from 'next/link';

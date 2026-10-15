@@ -366,7 +366,8 @@ export default async function Home() {
       .select('id, display_name, cadre, user_role, category, rating, message, helpful_count, is_pinned, created_at')
       .eq('is_approved', true)
       .order('is_pinned', { ascending: false })
-      .order('created_at', { ascending: false }),
+      .order('created_at', { ascending: false })
+      .limit(24),
   ]);
 
   const PRICING = getPricing(settings);

@@ -14,6 +14,10 @@ const WhatsNewProvider = nextDynamic(
   () => import('@/components/student/WhatsNewProvider').then(m => ({ default: m.WhatsNewProvider })),
   { ssr: false }
 );
+const ReviewPromptModal = nextDynamic(
+  () => import('@/components/shared/ReviewPromptModal').then(m => ({ default: m.ReviewPromptModal })),
+  { ssr: false }
+);
 
 // All student pages are dynamic — they require auth and live Supabase data
 export const dynamic = 'force-dynamic';
@@ -66,6 +70,9 @@ export default function StudentLayout({
 
       {/* What's New — animated modal shown on each new release, with floating re-open trigger */}
       <WhatsNewProvider />
+
+      {/* Review prompt modal — prompts unreviewed users on login and logout, permanently suppressed once reviewed */}
+      <ReviewPromptModal role="student" />
 
       {/* Activity tracking — login + page visit events for admin analytics */}
       <ActivityTracker />

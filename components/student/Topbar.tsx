@@ -74,8 +74,7 @@ export function Topbar() {
     }
   };
 
-  const handleLogout = async () => {
-    // Clear the role cookie, session storage and activity cache so middleware/tracker don't use stale data
+  const executeActualSignOut = async () => {
     document.cookie = 'nf_role=; path=/; max-age=0; samesite=lax';
     if (typeof window !== 'undefined') {
       try {
@@ -88,6 +87,23 @@ export function Topbar() {
     clearActivityCache();
     await supabase.auth.signOut();
     router.push('/login');
+  };
+
+  const handleLogout = async () => {
+    // If user has not left a review yet, trigger exit review prompt
+    const hasReviewed = typeof window !== 'undefined' && localStorage.getItem('nf_has_submitted_general_review') === 'true';
+    if (!hasReviewed && typeof window !== 'undefined') {
+      const event = new CustomEvent('nf:trigger-general-review', {
+        detail: {
+          reason: 'logout',
+          onProceed: executeActualSignOut,
+        },
+      });
+      window.dispatchEvent(event);
+      return;
+    }
+
+    await executeActualSignOut();
   };
 
   return (

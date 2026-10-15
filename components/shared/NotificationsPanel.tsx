@@ -165,26 +165,80 @@ export default function NotificationsPanel({
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
+  function getReadBroadcastIds(): Set<string> {
+    if (typeof window === 'undefined') return new Set();
+    try {
+      const raw = localStorage.getItem('nf_read_broadcast_notifs');
+      return new Set(raw ? JSON.parse(raw) : []);
+    } catch {
+      return new Set();
+    }
+  }
+
+  function markBroadcastIdRead(id: string) {
+    if (typeof window === 'undefined') return;
+    try {
+      const current = getReadBroadcastIds();
+      current.add(id);
+      localStorage.setItem('nf_read_broadcast_notifs', JSON.stringify(Array.from(current)));
+    } catch {}
+  }
+
   async function fetchNotifications() {
     if (!userId) return;
     setLoading(true);
-    const { data } = await supabase
-      .from("notifications")
-      .select("*")
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false })
-      .limit(50);
-    setNotifications((data ?? []) as Notification[]);
-    setLoading(false);
+    const readBroadcasts = getReadBroadcastIds();
+
+    try {
+      const { data } = await supabase
+        .from("notifications")
+        .select("*")
+        .or(`user_id.eq.${userId},is_broadcast.eq.true`)
+        .order("created_at", { ascending: false })
+        .limit(50);
+
+      const items: Notification[] = (data ?? []).map((n: any) => ({
+        ...n,
+        is_read: n.is_read || (n.is_broadcast && readBroadcasts.has(n.id)),
+      }));
+
+      // Ensure the official AI Tutor Launch announcement is delivered to every single user
+      const launchNotifId = 'a1707001-0000-4000-8000-000000000001';
+      const hasLaunchNotif = items.some((n) => n.id === launchNotifId || n.type === 'ai_tutor_launch');
+
+      if (!hasLaunchNotif) {
+        const isLaunchRead = readBroadcasts.has(launchNotifId);
+        items.unshift({
+          id: launchNotifId,
+          type: 'ai_tutor_launch',
+          title: '🩺 New: AI Clinical Tutor with Multi-Voice & Accents is Live!',
+          body: 'We have upgraded the AI Clinical Tutor with multiple voice personalities and British & American accents! Practice clinical cases, test knowledge against accredited textbooks, and hear lifelike speech. Please test it out and share your reviews and recommendations — your feedback is highly appreciated!',
+          action_url: '/ai-tutor',
+          is_read: isLaunchRead,
+          is_broadcast: true,
+          created_at: new Date().toISOString(),
+        });
+      }
+
+      setNotifications(items);
+    } catch (err) {
+      console.warn('[NotificationsPanel] fetchNotifications warning:', err);
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function markAsRead(notif: Notification) {
     if (!notif.is_read) {
-      await (supabase as any)
-        .from("notifications")
-        .update({ is_read: true })
-        .eq("id", notif.id)
-        .eq("user_id", userId);
+      if (notif.is_broadcast) {
+        markBroadcastIdRead(notif.id);
+      } else {
+        await (supabase as any)
+          .from("notifications")
+          .update({ is_read: true })
+          .eq("id", notif.id)
+          .eq("user_id", userId);
+      }
       setNotifications((prev) =>
         prev.map((n) => (n.id === notif.id ? { ...n, is_read: true } : n))
       );
@@ -196,6 +250,9 @@ export default function NotificationsPanel({
   }
 
   async function markAllRead() {
+    notifications.forEach((n) => {
+      if (n.is_broadcast) markBroadcastIdRead(n.id);
+    });
     await (supabase as any)
       .from("notifications")
       .update({ is_read: true })
@@ -396,12 +453,37 @@ export function useUnreadCount(userId: string): number {
     if (!userId) { setCount(0); return; }
 
     async function fetchCount() {
-      const { count: c } = await supabase
-        .from("notifications")
-        .select("*", { count: "exact", head: true })
-        .eq("user_id", userId)
-        .eq("is_read", false);
-      setCount(c ?? 0);
+      let readBroadcasts = new Set<string>();
+      if (typeof window !== 'undefined') {
+        try {
+          const raw = localStorage.getItem('nf_read_broadcast_notifs');
+          if (raw) readBroadcasts = new Set(JSON.parse(raw));
+        } catch {}
+      }
+
+      try {
+        const { data } = await supabase
+          .from("notifications")
+          .select("id, is_read, is_broadcast")
+          .or(`user_id.eq.${userId},is_broadcast.eq.true`)
+          .eq("is_read", false);
+
+        const unreadItems = (data ?? []).filter(
+          (n: any) => !n.is_read && !(n.is_broadcast && readBroadcasts.has(n.id))
+        );
+
+        let unreadTotal = unreadItems.length;
+
+        const launchNotifId = 'a1707001-0000-4000-8000-000000000001';
+        const inDb = (data ?? []).some((n: any) => n.id === launchNotifId);
+        if (!inDb && !readBroadcasts.has(launchNotifId)) {
+          unreadTotal += 1;
+        }
+
+        setCount(unreadTotal);
+      } catch {
+        setCount(0);
+      }
     }
 
     fetchCount();

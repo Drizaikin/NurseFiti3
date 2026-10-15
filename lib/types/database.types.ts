@@ -517,6 +517,30 @@ export interface Database {
         Relationships: [];
       };
 
+      ai_tutor_reviews: {
+        Row: {
+          id: string;
+          user_id: string | null;
+          user_name: string | null;
+          user_role: string | null;
+          cadre: string | null;
+          rating: number;
+          experience: string | null;
+          expected: string | null;
+          disappointing: string | null;
+          recommendations: string | null;
+          selected_voice: string | null;
+          session_message_count: number;
+          created_at: string;
+        };
+        Insert: Omit<Database['public']['Tables']['ai_tutor_reviews']['Row'], 'id' | 'created_at'> & {
+          id?: string;
+          created_at?: string;
+        };
+        Update: Partial<Database['public']['Tables']['ai_tutor_reviews']['Row']>;
+        Relationships: [];
+      };
+
       feedback_helpful: {
         Row: {
           feedback_id: string;

@@ -11,6 +11,8 @@ interface AiTutorExitFeedbackModalProps {
   onProceedExit: () => void;
   onStay: () => void;
   sessionMessageCount?: number;
+  selectedVoice?: string;
+  isReviewOnly?: boolean;
 }
 
 export function AiTutorExitFeedbackModal({
@@ -18,6 +20,8 @@ export function AiTutorExitFeedbackModal({
   onProceedExit,
   onStay,
   sessionMessageCount = 0,
+  selectedVoice,
+  isReviewOnly = false,
 }: AiTutorExitFeedbackModalProps) {
   const supabase = createClient();
 
@@ -26,6 +30,7 @@ export function AiTutorExitFeedbackModal({
   const [experience, setExperience] = useState('');
   const [expected, setExpected] = useState('');
   const [disappointing, setDisappointing] = useState('');
+  const [recommendations, setRecommendations] = useState('');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [insistWarning, setInsistWarning] = useState(false);
@@ -33,6 +38,11 @@ export function AiTutorExitFeedbackModal({
 
   // When user clicks "Leave without feedback" or dismiss
   const handleAttemptBypass = () => {
+    if (isReviewOnly) {
+      onStay();
+      return;
+    }
+
     // Insist at least once if fields are blank
     if ((!experience.trim() || !expected.trim() || !disappointing.trim() || rating === 0) && insistAttempts < 1) {
       setInsistWarning(true);
@@ -47,16 +57,13 @@ export function AiTutorExitFeedbackModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Check if user filled in the requested statements
     if (rating === 0) {
-      setInsistWarning(true);
-      toast.error('Please tap a star rating (1-5).');
+      toast.error('Please select a star rating between 1 and 5 stars');
       return;
     }
 
-    if (!experience.trim() || !expected.trim() || !disappointing.trim()) {
-      setInsistWarning(true);
-      toast.error('Please answer all 3 short questions to help us improve the tutor.');
+    if (!experience.trim() || !expected.trim()) {
+      toast.error('Please share what your experience was and what you expected.');
       return;
     }
 
@@ -72,45 +79,36 @@ export function AiTutorExitFeedbackModal({
           .from('profiles')
           .select('full_name')
           .eq('id', user.id)
-          .single();
+          .maybeSingle();
         if ((profile as any)?.full_name) fullName = (profile as any).full_name;
 
         const { data: studentProfile } = await supabase
           .from('student_profiles')
           .select('cadre')
           .eq('id', user.id)
-          .single();
+          .maybeSingle();
         if ((studentProfile as any)?.cadre) cadre = (studentProfile as any).cadre;
       }
 
-      const formattedMessage = [
-        `[AI Tutor Exit Feedback - ${sessionMessageCount} messages in session]`,
-        `⭐ Rating: ${rating}/5`,
-        ``,
-        `1. EXPERIENCE WITH AI TUTOR:`,
-        experience.trim(),
-        ``,
-        `2. WHAT THEY EXPECTED:`,
-        expected.trim(),
-        ``,
-        `3. WHAT THEY FOUND DISAPPOINTING / FRUSTRATING:`,
-        disappointing.trim(),
-      ].join('\n');
+      // Submit strictly to private AI Tutor feedback endpoint (Admin-only, NOT public)
+      const res = await fetch('/api/ai/tutor/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          rating,
+          experience: experience.trim(),
+          expected: expected.trim(),
+          disappointing: disappointing.trim(),
+          recommendations: recommendations.trim(),
+          selectedVoice: selectedVoice || null,
+          sessionMessageCount,
+          userName: fullName,
+          cadre,
+        }),
+      });
 
-      if (user) {
-        await (supabase as any).from('app_feedback').insert([
-          {
-            user_id: user.id,
-            user_role: 'student',
-            display_name: fullName,
-            cadre,
-            category: rating >= 4 ? 'praise' : 'complaint',
-            rating,
-            message: formattedMessage,
-            contact_channel: 'none',
-            is_approved: true,
-          },
-        ]);
+      if (!res.ok) {
+        console.warn('[ai/tutor/feedback] Server responded with error status:', res.status);
       }
 
       // Also save locally as a backup record
@@ -122,20 +120,29 @@ export function AiTutorExitFeedbackModal({
           experience: experience.trim(),
           expected: expected.trim(),
           disappointing: disappointing.trim(),
+          recommendations: recommendations.trim(),
+          selectedVoice,
         });
         localStorage.setItem('nursefiti_ai_tutor_feedback_log', JSON.stringify(localLogs.slice(-20)));
       } catch {}
 
-      toast.success('Thank you! Your feedback will directly improve the AI Tutor 🩺💙', {
+      toast.success('Thank you! Your review & recommendations will directly improve the AI Tutor 🩺💙', {
         duration: 4000,
       });
 
-      // Proceed with original navigation
-      onProceedExit();
+      if (isReviewOnly) {
+        onStay();
+      } else {
+        onProceedExit();
+      }
     } catch (err: any) {
       console.warn('[ai/tutor/feedback] Error submitting feedback:', err);
       toast.success('Thank you for your feedback! 🩺');
-      onProceedExit();
+      if (isReviewOnly) {
+        onStay();
+      } else {
+        onProceedExit();
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -147,51 +154,45 @@ export function AiTutorExitFeedbackModal({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-          {/* Backdrop */}
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          {/* Backdrop blur */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 bg-neutral-950/70 backdrop-blur-md"
             onClick={handleAttemptBypass}
           />
 
-          {/* Modal Container */}
+          {/* Dialog Container */}
           <motion.div
-            initial={{ scale: 0.92, opacity: 0, y: 20 }}
-            animate={
-              insistWarning
-                ? { scale: 1, opacity: 1, y: 0, x: [-6, 6, -5, 5, -2, 2, 0] }
-                : { scale: 1, opacity: 1, y: 0, x: 0 }
-            }
-            transition={{ duration: 0.3 }}
-            exit={{ scale: 0.92, opacity: 0, y: 20 }}
-            className="relative z-10 w-full max-w-xl bg-[var(--color-card)] border border-[var(--color-border)] rounded-3xl shadow-2xl overflow-hidden my-auto"
-            onClick={(e) => e.stopPropagation()}
+            initial={{ scale: 0.92, opacity: 0, y: 16 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.92, opacity: 0, y: 16 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="relative w-full max-w-lg bg-[var(--color-card)] border-2 border-primary/30 rounded-3xl shadow-2xl overflow-hidden z-10"
           >
-            {/* Header Banner */}
-            <div className="bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 p-5 sm:p-6 text-white relative">
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center text-2xl shrink-0 border border-white/15 shadow-inner">
-                    🩺
-                  </div>
+            {/* Header Badge & Title */}
+            <div className="bg-gradient-to-r from-teal-700 via-primary to-teal-800 p-5 sm:p-6 text-white relative">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-2xl sm:text-3xl">🩺</span>
                   <div>
-                    <h3 className="text-lg sm:text-xl font-heading font-bold leading-tight">
-                      Before you leave the AI Tutor…
+                    <h3 className="font-heading font-bold text-lg sm:text-xl text-white leading-tight">
+                      {isReviewOnly ? 'Review & Recommend AI Tutor' : 'Help Us Improve AI Tutor'}
                     </h3>
-                    <p className="text-xs sm:text-sm text-emerald-100/90 mt-0.5">
-                      Help us train and fine-tune the tutor for your NCK exam preparation.
+                    <p className="text-xs text-white/80 mt-0.5">
+                      {isReviewOnly
+                        ? 'Private review for academic & clinical development'
+                        : 'Your honest feedback is private and read directly by our clinical team'}
                     </p>
                   </div>
                 </div>
 
                 <button
-                  type="button"
                   onClick={handleAttemptBypass}
-                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white flex items-center justify-center transition-colors text-sm shrink-0"
-                  title="Close"
+                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white/90 hover:text-white flex items-center justify-center transition-colors text-sm"
+                  aria-label="Close"
                 >
                   ✕
                 </button>
@@ -208,7 +209,7 @@ export function AiTutorExitFeedbackModal({
                   >
                     <span className="text-base shrink-0">⚠️</span>
                     <span>
-                      Please don&apos;t leave just yet! A quick 1-sentence thought on what was disappointing or what you expected helps us fix it right away.
+                      Please share a quick thought before leaving! Your recommendations help us upgrade the clinical tutor for everyone.
                     </span>
                   </motion.div>
                 )}
@@ -293,21 +294,30 @@ export function AiTutorExitFeedbackModal({
               {/* Question 3: Disappointing */}
               <div className="space-y-1.5">
                 <label className="block text-xs sm:text-sm font-semibold text-[var(--color-text)]">
-                  3. What did you find disappointing or frustrating? <span className="text-rose-500">*</span>
+                  3. What did you find disappointing or frustrating?
                 </label>
                 <textarea
                   value={disappointing}
-                  onChange={(e) => {
-                    setDisappointing(e.target.value);
-                    if (insistWarning) setInsistWarning(false);
-                  }}
+                  onChange={(e) => setDisappointing(e.target.value)}
                   rows={2}
                   maxLength={500}
-                  placeholder="e.g. The answer was too long, it hesitated on pediatric fluid dosage, voice was too fast, or didn't notice my uploaded notes..."
-                  className={`input w-full text-xs sm:text-sm py-2 px-3 resize-none ${
-                    insistWarning && !disappointing.trim() ? 'border-amber-500 ring-2 ring-amber-500/30' : ''
-                  }`}
-                  required
+                  placeholder="e.g. The answer was too long, voice was too fast, or didn't notice my uploaded notes..."
+                  className="input w-full text-xs sm:text-sm py-2 px-3 resize-none"
+                />
+              </div>
+
+              {/* Question 4: Recommendations */}
+              <div className="space-y-1.5">
+                <label className="block text-xs sm:text-sm font-semibold text-[var(--color-text)]">
+                  4. Your Recommendations & Feature Requests
+                </label>
+                <textarea
+                  value={recommendations}
+                  onChange={(e) => setRecommendations(e.target.value)}
+                  rows={2}
+                  maxLength={500}
+                  placeholder="e.g. Add more British accents, add clinical scenario roleplay, let me upload my clinical rotation cases..."
+                  className="input w-full text-xs sm:text-sm py-2 px-3 resize-none"
                 />
               </div>
 
@@ -318,17 +328,19 @@ export function AiTutorExitFeedbackModal({
                   onClick={onStay}
                   className="text-xs text-[var(--color-text-secondary)] hover:text-primary transition-colors py-1 order-3 sm:order-1"
                 >
-                  ← Stay on AI Tutor
+                  {isReviewOnly ? 'Cancel' : '← Stay on AI Tutor'}
                 </button>
 
                 <div className="flex items-center gap-2 w-full sm:w-auto order-1 sm:order-2 justify-end">
-                  <button
-                    type="button"
-                    onClick={handleAttemptBypass}
-                    className="text-xs text-neutral-400 hover:text-rose-500 dark:hover:text-rose-400 transition-colors px-2 py-1.5"
-                  >
-                    {insistAttempts > 0 ? 'Leave anyway' : 'Skip & leave'}
-                  </button>
+                  {!isReviewOnly && (
+                    <button
+                      type="button"
+                      onClick={handleAttemptBypass}
+                      className="text-xs text-neutral-400 hover:text-rose-500 dark:hover:text-rose-400 transition-colors px-2 py-1.5"
+                    >
+                      {insistAttempts > 0 ? 'Leave anyway' : 'Skip & leave'}
+                    </button>
+                  )}
 
                   <Button
                     type="submit"
@@ -336,7 +348,11 @@ export function AiTutorExitFeedbackModal({
                     disabled={isSubmitting}
                     className="text-xs sm:text-sm py-2 px-4 font-bold shadow-md bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 flex-1 sm:flex-initial justify-center"
                   >
-                    {isSubmitting ? 'Submitting…' : 'Submit Feedback & Exit ➔'}
+                    {isSubmitting
+                      ? 'Submitting…'
+                      : isReviewOnly
+                      ? 'Submit Review & Recommendations ★'
+                      : 'Submit Feedback & Exit ➔'}
                   </Button>
                 </div>
               </div>

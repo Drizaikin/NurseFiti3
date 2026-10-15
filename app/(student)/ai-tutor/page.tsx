@@ -55,6 +55,122 @@ const SUGGESTED_PROMPTS = [
   '🏥 What should I remember for the NCK exam?',
 ];
 
+interface TutorVoiceOption {
+  id: string;
+  name: string;
+  accent: 'British' | 'American';
+  gender: 'Female' | 'Male';
+  flag: string;
+  persona: string;
+  sample: string;
+  langCode: string;
+}
+
+const AI_TUTOR_VOICES: TutorVoiceOption[] = [
+  {
+    id: 'aura-athena-en',
+    name: 'Athena',
+    accent: 'British',
+    gender: 'Female',
+    flag: '🇬🇧',
+    persona: 'Scholarly UK Clinical Professor · Crisp, Academic & Articulate',
+    sample: 'Hello! I am Athena. We will review clinical scenarios and NCLEX principles methodically.',
+    langCode: 'en-GB',
+  },
+  {
+    id: 'aura-angus-en',
+    name: 'Angus',
+    accent: 'British',
+    gender: 'Male',
+    flag: '🇬🇧',
+    persona: 'Senior UK Consultant Clinician · Analytical, Grounded & Clear',
+    sample: 'Greetings. Let us examine the physiological mechanism and diagnostic criteria together.',
+    langCode: 'en-GB',
+  },
+  {
+    id: 'aura-asteria-en',
+    name: 'Asteria',
+    accent: 'American',
+    gender: 'Female',
+    flag: '🇺🇸',
+    persona: 'Warm Bedside Nurse Preceptor · Compassionate & Encouraging',
+    sample: 'Hi there! I am Asteria. Remember to always prioritize airway and circulation first.',
+    langCode: 'en-US',
+  },
+  {
+    id: 'aura-luna-en',
+    name: 'Luna',
+    accent: 'American',
+    gender: 'Female',
+    flag: '🇺🇸',
+    persona: 'Calm Clinical Coach · Patient, Soothing & Reassuring',
+    sample: 'Take a steady breath. We have plenty of time to master this pharmacology concept.',
+    langCode: 'en-US',
+  },
+  {
+    id: 'aura-stella-en',
+    name: 'Stella',
+    accent: 'American',
+    gender: 'Female',
+    flag: '🇺🇸',
+    persona: 'Focused NCLEX Specialist · Direct, Sharp & High-Yield',
+    sample: 'Let us isolate the key question stem and eliminate the incorrect distractors.',
+    langCode: 'en-US',
+  },
+  {
+    id: 'aura-hera-en',
+    name: 'Hera',
+    accent: 'American',
+    gender: 'Female',
+    flag: '🇺🇸',
+    persona: 'Senior Nurse Specialist · Confident, Authoritative & Decisive',
+    sample: 'In critical emergencies, swift clinical judgment and standardized protocols save lives.',
+    langCode: 'en-US',
+  },
+  {
+    id: 'aura-orion-en',
+    name: 'Orion',
+    accent: 'American',
+    gender: 'Male',
+    flag: '🇺🇸',
+    persona: 'Steady Clinical Guide · Methodical, Calm & Structured',
+    sample: 'Good work. Let us trace this pathophysiology from cellular origin to presenting symptoms.',
+    langCode: 'en-US',
+  },
+  {
+    id: 'aura-arcas-en',
+    name: 'Arcas',
+    accent: 'American',
+    gender: 'Male',
+    flag: '🇺🇸',
+    persona: 'Healthcare Educator · Smooth, Approachable & Accessible',
+    sample: 'Welcome back. Let us break down this nursing care plan into manageable milestones.',
+    langCode: 'en-US',
+  },
+  {
+    id: 'aura-perseus-en',
+    name: 'Perseus',
+    accent: 'American',
+    gender: 'Male',
+    flag: '🇺🇸',
+    persona: 'Dynamic Clinical Instructor · Energetic, Inspiring & Engaging',
+    sample: 'Fantastic question! Here is the clinical pearl that makes this concept click every time.',
+    langCode: 'en-US',
+  },
+  {
+    id: 'aura-zeus-en',
+    name: 'Zeus',
+    accent: 'American',
+    gender: 'Male',
+    flag: '🇺🇸',
+    persona: 'Senior Medical Authority · Deep Resonance, Resolute & Commanding',
+    sample: 'Standardized nursing practice demands vigilance, sterile precision, and sound evidence.',
+    langCode: 'en-US',
+  },
+];
+
+const STORAGE_KEY_VOICE = 'nf_ai_tutor_selected_voice';
+
 function createDefaultSession(): ChatSession {
   return {
     id: crypto.randomUUID(),
@@ -80,6 +196,10 @@ export default function AiTutorPage() {
 
   // Audio / Voice state
   const [voiceEnabled, setVoiceEnabled] = useState(false);
+  const [selectedVoice, setSelectedVoice] = useState<string>('aura-asteria-en');
+  const [showVoicePicker, setShowVoicePicker] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [previewingVoiceId, setPreviewingVoiceId] = useState<string | null>(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
   const [isSynthesizingVoice, setIsSynthesizingVoice] = useState(false);
@@ -210,6 +330,14 @@ export default function AiTutorPage() {
   // 1. Initial Load: Instant 0ms Local Storage Cache + Background Remote Sync
   useEffect(() => {
     loadMaterials();
+
+    // Instant local voice preference load
+    try {
+      const savedVoice = localStorage.getItem(STORAGE_KEY_VOICE);
+      if (savedVoice && AI_TUTOR_VOICES.some((v) => v.id === savedVoice)) {
+        setSelectedVoice(savedVoice);
+      }
+    } catch {}
 
     // Instant local load (zero lag)
     try {
@@ -439,19 +567,34 @@ export default function AiTutorPage() {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = 1.0;
       utterance.pitch = 1.0;
-      utterance.lang = 'en-US';
+
+      const currentVoice = AI_TUTOR_VOICES.find((v) => v.id === selectedVoice);
+      const isBritish = currentVoice?.accent === 'British';
+      utterance.lang = isBritish ? 'en-GB' : 'en-US';
 
       const voices = window.speechSynthesis.getVoices();
-      const naturalVoice = voices.find(
-        (v) =>
-          v.lang.startsWith('en') &&
-          (v.name.includes('Natural') ||
-            v.name.includes('Google') ||
-            v.name.includes('Samantha') ||
-            v.name.includes('Jenny') ||
-            v.name.includes('Ava') ||
-            v.name.includes('Karen'))
-      ) || voices.find((v) => v.lang.startsWith('en'));
+      let naturalVoice: SpeechSynthesisVoice | undefined;
+
+      if (isBritish) {
+        naturalVoice = voices.find(
+          (v) =>
+            (v.lang.startsWith('en-GB') || v.lang.startsWith('en-UK')) &&
+            (currentVoice?.gender === 'Male' ? v.name.includes('Male') || v.name.includes('George') : true)
+        ) || voices.find((v) => v.lang.startsWith('en-GB') || v.lang.startsWith('en-UK'));
+      }
+
+      if (!naturalVoice) {
+        naturalVoice = voices.find(
+          (v) =>
+            v.lang.startsWith('en') &&
+            (v.name.includes('Natural') ||
+              v.name.includes('Google') ||
+              v.name.includes('Samantha') ||
+              v.name.includes('Jenny') ||
+              v.name.includes('Ava') ||
+              v.name.includes('Karen'))
+        ) || voices.find((v) => v.lang.startsWith('en'));
+      }
 
       if (naturalVoice) utterance.voice = naturalVoice;
 
@@ -496,6 +639,66 @@ export default function AiTutorPage() {
     setIsSpeaking(false);
     setSpeakingMessageId(null);
     setIsSynthesizingVoice(false);
+    setPreviewingVoiceId(null);
+  };
+
+  const handleSelectVoice = (voiceId: string) => {
+    setSelectedVoice(voiceId);
+    try {
+      localStorage.setItem(STORAGE_KEY_VOICE, voiceId);
+    } catch {}
+    const v = AI_TUTOR_VOICES.find((item) => item.id === voiceId);
+    toast.success(`Voice set to ${v?.name || voiceId} (${v?.accent} Accent)`);
+    setShowVoicePicker(false);
+  };
+
+  const previewVoiceSample = async (e: React.MouseEvent, v: TutorVoiceOption) => {
+    e.stopPropagation();
+    if (previewingVoiceId === v.id && isSpeaking) {
+      stopVoicePlayback();
+      return;
+    }
+
+    stopVoicePlayback();
+    setPreviewingVoiceId(v.id);
+    setIsSynthesizingVoice(true);
+
+    try {
+      const res = await fetch('/api/ai/tutor/speak', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: v.sample, model: v.id }),
+      });
+
+      if (res.ok) {
+        const audioBlob = await res.blob();
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audioPlayerRef.current = audio;
+
+        audio.onplay = () => {
+          setIsSpeaking(true);
+          setIsSynthesizingVoice(false);
+        };
+        audio.onended = () => {
+          setIsSpeaking(false);
+          setPreviewingVoiceId(null);
+          URL.revokeObjectURL(audioUrl);
+          audioPlayerRef.current = null;
+        };
+        audio.onerror = () => {
+          setPreviewingVoiceId(null);
+          playBrowserSpeech(v.sample);
+        };
+        await audio.play();
+        return;
+      }
+    } catch (err) {
+      console.warn('[ai/tutor] Voice preview API error, falling back to browser speech:', err);
+    }
+
+    setPreviewingVoiceId(null);
+    playBrowserSpeech(v.sample);
   };
 
   const playTutorAudio = async (text: string, messageId?: string) => {
@@ -525,7 +728,7 @@ export default function AiTutorPage() {
       const res = await fetch('/api/ai/tutor/speak', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: speechSegment }),
+        body: JSON.stringify({ text: speechSegment, model: selectedVoice }),
       });
 
       if (!res.ok) {
@@ -967,6 +1170,35 @@ export default function AiTutorPage() {
             {voiceEnabled ? '🔊 Voice on' : '🔇 Voice off'}
           </Button>
 
+          {/* Voice Accent & Model Selector Button */}
+          {(() => {
+            const curVoice = AI_TUTOR_VOICES.find((v) => v.id === selectedVoice) || AI_TUTOR_VOICES[0];
+            return (
+              <button
+                type="button"
+                onClick={() => setShowVoicePicker(true)}
+                className="flex items-center gap-1.5 text-xs sm:text-sm h-8 sm:h-9 px-2.5 sm:px-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] hover:border-primary/60 hover:bg-primary/5 transition-all font-medium text-[var(--color-text)] shadow-xs"
+                title="Change AI Tutor voice & accent (British, American, clinical personalities)"
+              >
+                <span>{curVoice.flag}</span>
+                <span className="font-semibold text-primary">{curVoice.name}</span>
+                <span className="text-[11px] text-[var(--color-text-secondary)] hidden md:inline">({curVoice.accent})</span>
+                <span className="text-[10px] opacity-70">▾</span>
+              </button>
+            );
+          })()}
+
+          {/* Review AI Tutor Button */}
+          <Button
+            variant="outline"
+            size="sm"
+            className="text-xs sm:text-sm h-8 sm:h-9 px-2 sm:px-3 font-semibold text-amber-600 dark:text-amber-400 border-amber-500/30 hover:bg-amber-500/10"
+            onClick={() => setShowReviewModal(true)}
+            title="Review & recommend features for the AI Tutor (Private to admin)"
+          >
+            ⭐ Review Tutor
+          </Button>
+
           {isSpeaking && (
             <Button
               variant="danger"
@@ -1311,7 +1543,184 @@ export default function AiTutorPage() {
         onProceedExit={handleProceedExit}
         onStay={handleStay}
         sessionMessageCount={messages.filter((m) => m.content).length}
+        selectedVoice={selectedVoice}
       />
+
+      {/* Manual In-App Review & Recommendations Modal */}
+      <AiTutorExitFeedbackModal
+        isOpen={showReviewModal}
+        onProceedExit={() => setShowReviewModal(false)}
+        onStay={() => setShowReviewModal(false)}
+        sessionMessageCount={messages.filter((m) => m.content).length}
+        selectedVoice={selectedVoice}
+        isReviewOnly={true}
+      />
+
+      {/* Voice & Accent Selector Modal */}
+      {showVoicePicker && (
+        <div className="fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+          <div
+            className="fixed inset-0 bg-neutral-950/60 backdrop-blur-xs"
+            onClick={() => setShowVoicePicker(false)}
+          />
+
+          <div className="relative w-full max-w-xl bg-[var(--color-card)] border border-[var(--color-border)] rounded-3xl shadow-2xl overflow-hidden z-10 flex flex-col max-h-[90vh]">
+            {/* Modal Header */}
+            <div className="p-4 sm:p-5 border-b border-[var(--color-border)] bg-gradient-to-r from-primary/10 via-primary/5 to-transparent flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-2.5">
+                <span className="text-2xl">🎙️</span>
+                <div>
+                  <h3 className="font-heading font-bold text-base sm:text-lg text-[var(--color-text)]">
+                    Choose AI Tutor Voice & Accent
+                  </h3>
+                  <p className="text-xs text-[var(--color-text-secondary)]">
+                    Select British or American clinical accents to match your preferred study style
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowVoicePicker(false)}
+                className="w-8 h-8 rounded-full bg-neutral-200/50 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 flex items-center justify-center text-sm transition-colors text-[var(--color-text)]"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Voices List */}
+            <div className="p-3 sm:p-5 space-y-4 overflow-y-auto">
+              {/* British Accents */}
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-base">🇬🇧</span>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-secondary)]">
+                    British Accents (Crisp & Scholarly)
+                  </h4>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {AI_TUTOR_VOICES.filter((v) => v.accent === 'British').map((v) => {
+                    const isSelected = selectedVoice === v.id;
+                    const isPreviewing = previewingVoiceId === v.id && isSpeaking;
+                    return (
+                      <div
+                        key={v.id}
+                        onClick={() => handleSelectVoice(v.id)}
+                        className={`p-3 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between gap-2 text-left relative ${
+                          isSelected
+                            ? 'border-primary ring-2 ring-primary/20 bg-primary/5 shadow-xs'
+                            : 'border-[var(--color-border)] hover:border-primary/50 hover:bg-[var(--color-bg-secondary)]'
+                        }`}
+                      >
+                        <div>
+                          <div className="flex items-center justify-between gap-1">
+                            <span className="font-bold text-sm text-[var(--color-text)] flex items-center gap-1.5">
+                              <span>{v.flag}</span> {v.name}
+                            </span>
+                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[var(--color-border)]/60 text-[var(--color-text-secondary)]">
+                              {v.gender}
+                            </span>
+                          </div>
+                          <p className="text-xs text-[var(--color-text-secondary)] mt-1 line-clamp-2 leading-relaxed">
+                            {v.persona}
+                          </p>
+                        </div>
+
+                        <div className="flex items-center justify-between gap-2 pt-1 border-t border-[var(--color-border)]/40 mt-1">
+                          <button
+                            type="button"
+                            onClick={(e) => previewVoiceSample(e, v)}
+                            className="text-xs font-semibold text-primary hover:text-primary-dark transition-colors flex items-center gap-1 px-2 py-1 rounded-lg bg-primary/10 hover:bg-primary/20"
+                            title="Hear voice sample"
+                          >
+                            <span>{isPreviewing ? '⏹️ Stop' : '▶ Sample'}</span>
+                          </button>
+
+                          {isSelected && (
+                            <span className="text-xs font-bold text-primary flex items-center gap-1">
+                              ✓ Active
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* American Accents */}
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-base">🇺🇸</span>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-secondary)]">
+                    American Accents (Warm, Direct & Clinical)
+                  </h4>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {AI_TUTOR_VOICES.filter((v) => v.accent === 'American').map((v) => {
+                    const isSelected = selectedVoice === v.id;
+                    const isPreviewing = previewingVoiceId === v.id && isSpeaking;
+                    return (
+                      <div
+                        key={v.id}
+                        onClick={() => handleSelectVoice(v.id)}
+                        className={`p-3 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between gap-2 text-left relative ${
+                          isSelected
+                            ? 'border-primary ring-2 ring-primary/20 bg-primary/5 shadow-xs'
+                            : 'border-[var(--color-border)] hover:border-primary/50 hover:bg-[var(--color-bg-secondary)]'
+                        }`}
+                      >
+                        <div>
+                          <div className="flex items-center justify-between gap-1">
+                            <span className="font-bold text-sm text-[var(--color-text)] flex items-center gap-1.5">
+                              <span>{v.flag}</span> {v.name}
+                            </span>
+                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[var(--color-border)]/60 text-[var(--color-text-secondary)]">
+                              {v.gender}
+                            </span>
+                          </div>
+                          <p className="text-xs text-[var(--color-text-secondary)] mt-1 line-clamp-2 leading-relaxed">
+                            {v.persona}
+                          </p>
+                        </div>
+
+                        <div className="flex items-center justify-between gap-2 pt-1 border-t border-[var(--color-border)]/40 mt-1">
+                          <button
+                            type="button"
+                            onClick={(e) => previewVoiceSample(e, v)}
+                            className="text-xs font-semibold text-primary hover:text-primary-dark transition-colors flex items-center gap-1 px-2 py-1 rounded-lg bg-primary/10 hover:bg-primary/20"
+                            title="Hear voice sample"
+                          >
+                            <span>{isPreviewing ? '⏹️ Stop' : '▶ Sample'}</span>
+                          </button>
+
+                          {isSelected && (
+                            <span className="text-xs font-bold text-primary flex items-center gap-1">
+                              ✓ Active
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-3 sm:p-4 border-t border-[var(--color-border)] bg-[var(--color-card)] flex justify-end shrink-0">
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => setShowVoicePicker(false)}
+                className="text-xs sm:text-sm px-4"
+              >
+                Done
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
