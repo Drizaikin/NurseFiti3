@@ -7,12 +7,25 @@ export const maxDuration = 60;
 export async function POST(req: NextRequest) {
   const apiKey = process.env.DEEPGRAM_API_KEY;
   if (!apiKey) {
-    return NextResponse.json({ error: 'Voice service is not configured.' }, { status: 503 });
+    console.warn('[ai/tutor/speak] DEEPGRAM_API_KEY is not configured in environment.');
+    return NextResponse.json({ error: 'Voice service is not configured.', fallback: 'browser' }, { status: 503 });
   }
 
   const supabase = createRouteClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  let user = null;
+  try {
+    const { data: userData } = await supabase.auth.getUser();
+    user = userData?.user ?? null;
+  } catch {}
+  if (!user) {
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      user = sessionData?.session?.user ?? null;
+    } catch {}
+  }
+  if (!user) {
+    return NextResponse.json({ error: 'Unauthorized', fallback: 'browser' }, { status: 401 });
+  }
 
   const body = await req.json().catch(() => ({}));
   const rawText = String(body?.text ?? '').trim().slice(0, 1500);
@@ -31,6 +44,9 @@ export async function POST(req: NextRequest) {
   // Natural clinical voice options: aura-asteria-en (warm female), aura-luna-en, aura-angus-en (clear male)
   const model = typeof body?.model === 'string' ? body.model : 'aura-asteria-en';
 
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 15000);
+
   try {
     const response = await fetch(`https://api.deepgram.com/v1/speak?model=${encodeURIComponent(model)}`, {
       method: 'POST',
@@ -39,12 +55,15 @@ export async function POST(req: NextRequest) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ text: cleanText }),
+      signal: controller.signal,
     });
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       const errText = await response.text();
       console.error('[ai/tutor/speak] Deepgram error:', response.status, errText);
-      return NextResponse.json({ error: 'Voice synthesis failed.' }, { status: response.status });
+      return NextResponse.json({ error: 'Voice synthesis failed.', details: errText, fallback: 'browser' }, { status: response.status });
     }
 
     const audioBuffer = await response.arrayBuffer();
@@ -57,7 +76,8 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (err: any) {
-    console.error('[ai/tutor/speak] Request failed:', err);
-    return NextResponse.json({ error: 'Voice generation failed.' }, { status: 500 });
+    clearTimeout(timeoutId);
+    console.error('[ai/tutor/speak] Request failed:', err?.message || err);
+    return NextResponse.json({ error: 'Voice generation failed.', details: err?.message, fallback: 'browser' }, { status: 500 });
   }
 }

@@ -292,6 +292,9 @@ export default function AiTutorPage() {
         audioPlayerRef.current.pause();
         audioPlayerRef.current = null;
       }
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
       processorRef.current?.disconnect();
       mediaStreamRef.current?.getTracks().forEach((track) => track.stop());
       try {
@@ -422,12 +425,73 @@ export default function AiTutorPage() {
     toast.success('Session deleted');
   };
 
-  // Voice Audio Engine: Plays tutor audio via `/api/ai/tutor/speak`
+  // Browser Speech Synthesis fallback: Guaranteed offline/client voice support
+  const playBrowserSpeech = (text: string, messageId?: string) => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+      setIsSynthesizingVoice(false);
+      setSpeakingMessageId(null);
+      setIsSpeaking(false);
+      return;
+    }
+
+    try {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1.0;
+      utterance.pitch = 1.0;
+      utterance.lang = 'en-US';
+
+      const voices = window.speechSynthesis.getVoices();
+      const naturalVoice = voices.find(
+        (v) =>
+          v.lang.startsWith('en') &&
+          (v.name.includes('Natural') ||
+            v.name.includes('Google') ||
+            v.name.includes('Samantha') ||
+            v.name.includes('Jenny') ||
+            v.name.includes('Ava') ||
+            v.name.includes('Karen'))
+      ) || voices.find((v) => v.lang.startsWith('en'));
+
+      if (naturalVoice) utterance.voice = naturalVoice;
+
+      utterance.onstart = () => {
+        setIsSpeaking(true);
+        setIsSynthesizingVoice(false);
+        if (messageId) setSpeakingMessageId(messageId);
+      };
+
+      utterance.onend = () => {
+        setIsSpeaking(false);
+        setSpeakingMessageId(null);
+        setIsSynthesizingVoice(false);
+      };
+
+      utterance.onerror = (e) => {
+        console.warn('[ai/tutor] Browser speech error:', e);
+        setIsSpeaking(false);
+        setSpeakingMessageId(null);
+        setIsSynthesizingVoice(false);
+      };
+
+      window.speechSynthesis.speak(utterance);
+    } catch (e) {
+      console.warn('[ai/tutor] Web speech synthesis failed:', e);
+      setIsSpeaking(false);
+      setSpeakingMessageId(null);
+      setIsSynthesizingVoice(false);
+    }
+  };
+
+  // Voice Audio Engine: Plays tutor audio via neural `/api/ai/tutor/speak` with browser fallback
   const stopVoicePlayback = () => {
     if (audioPlayerRef.current) {
       audioPlayerRef.current.pause();
       audioPlayerRef.current.currentTime = 0;
       audioPlayerRef.current = null;
+    }
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
     }
     setIsSpeaking(false);
     setSpeakingMessageId(null);
@@ -465,7 +529,10 @@ export default function AiTutorPage() {
       });
 
       if (!res.ok) {
-        throw new Error('Voice generation failed');
+        // Fall back seamlessly to browser speech synthesis
+        console.info('[ai/tutor] Neural voice API returned', res.status, '— using browser speech synthesis');
+        playBrowserSpeech(speechSegment, messageId);
+        return;
       }
 
       const audioBlob = await res.blob();
@@ -488,17 +555,21 @@ export default function AiTutorPage() {
 
       audio.onerror = () => {
         URL.revokeObjectURL(audioUrl);
-        setIsSpeaking(false);
-        setSpeakingMessageId(null);
         audioPlayerRef.current = null;
+        // Fallback to browser speech synthesis on decode/playback failure
+        playBrowserSpeech(speechSegment, messageId);
       };
 
-      await audio.play();
+      try {
+        await audio.play();
+      } catch (playErr: any) {
+        // Browser autoplay policy blocked unprompted play — fallback to speech synthesis
+        console.info('[ai/tutor] Audio play interrupted by browser policy, using speech synthesis:', playErr?.message);
+        playBrowserSpeech(speechSegment, messageId);
+      }
     } catch (err: any) {
-      console.warn('[ai/tutor] Voice playback error:', err);
-      setIsSynthesizingVoice(false);
-      setSpeakingMessageId(null);
-      setIsSpeaking(false);
+      console.warn('[ai/tutor] Neural audio fetch error, using browser speech synthesis:', err?.message || err);
+      playBrowserSpeech(speechSegment, messageId);
     }
   };
 
@@ -885,6 +956,9 @@ export default function AiTutorPage() {
               if (!next) {
                 stopVoicePlayback();
               } else {
+                if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+                  try { window.speechSynthesis.getVoices(); } catch {}
+                }
                 toast.success('Auto-voice enabled. The tutor will speak responses aloud.');
               }
             }}
