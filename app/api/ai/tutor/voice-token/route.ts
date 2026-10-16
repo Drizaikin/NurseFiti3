@@ -3,9 +3,29 @@ import { createRouteClient } from '@/lib/supabase/server';
 
 export const dynamic = 'force-dynamic';
 
-export async function POST() {
+export async function POST(req: Request) {
   const supabase = createRouteClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  let user = null;
+  try {
+    const { data: userData } = await supabase.auth.getUser();
+    user = userData?.user ?? null;
+  } catch {}
+  if (!user) {
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      user = sessionData?.session?.user ?? null;
+    } catch {}
+  }
+  if (!user) {
+    const authHeader = req.headers.get('authorization');
+    if (authHeader?.startsWith('Bearer ')) {
+      const token = authHeader.slice(7).trim();
+      try {
+        const { data: tokenUser } = await supabase.auth.getUser(token);
+        user = tokenUser?.user ?? null;
+      } catch {}
+    }
+  }
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const apiKey = process.env.DEEPGRAM_API_KEY;

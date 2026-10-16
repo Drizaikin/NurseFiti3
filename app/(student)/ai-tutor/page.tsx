@@ -74,6 +74,8 @@ interface TutorVoiceOption {
   persona: string;
   sample: string;
   langCode: string;
+  pitch: number;
+  rate: number;
 }
 
 const AI_TUTOR_VOICES: TutorVoiceOption[] = [
@@ -86,6 +88,8 @@ const AI_TUTOR_VOICES: TutorVoiceOption[] = [
     persona: 'Scholarly UK Clinical Professor · Crisp, Academic & Articulate',
     sample: 'Hello! I am Athena. We will review clinical scenarios and NCLEX principles methodically.',
     langCode: 'en-GB',
+    pitch: 1.05,
+    rate: 1.00,
   },
   {
     id: 'aura-angus-en',
@@ -96,6 +100,8 @@ const AI_TUTOR_VOICES: TutorVoiceOption[] = [
     persona: 'Senior UK Consultant Clinician · Analytical, Grounded & Clear',
     sample: 'Greetings. Let us examine the physiological mechanism and diagnostic criteria together.',
     langCode: 'en-GB',
+    pitch: 0.90,
+    rate: 0.98,
   },
   {
     id: 'aura-asteria-en',
@@ -106,6 +112,8 @@ const AI_TUTOR_VOICES: TutorVoiceOption[] = [
     persona: 'Warm Bedside Nurse Preceptor · Compassionate & Encouraging',
     sample: 'Hi there! I am Asteria. Remember to always prioritize airway and circulation first.',
     langCode: 'en-US',
+    pitch: 1.00,
+    rate: 1.00,
   },
   {
     id: 'aura-luna-en',
@@ -116,6 +124,8 @@ const AI_TUTOR_VOICES: TutorVoiceOption[] = [
     persona: 'Calm Clinical Coach · Patient, Soothing & Reassuring',
     sample: 'Take a steady breath. We have plenty of time to master this pharmacology concept.',
     langCode: 'en-US',
+    pitch: 1.12,
+    rate: 0.92,
   },
   {
     id: 'aura-stella-en',
@@ -126,6 +136,8 @@ const AI_TUTOR_VOICES: TutorVoiceOption[] = [
     persona: 'Focused NCLEX Specialist · Direct, Sharp & High-Yield',
     sample: 'Let us isolate the key question stem and eliminate the incorrect distractors.',
     langCode: 'en-US',
+    pitch: 1.18,
+    rate: 1.06,
   },
   {
     id: 'aura-hera-en',
@@ -136,6 +148,8 @@ const AI_TUTOR_VOICES: TutorVoiceOption[] = [
     persona: 'Senior Nurse Specialist · Confident, Authoritative & Decisive',
     sample: 'In critical emergencies, swift clinical judgment and standardized protocols save lives.',
     langCode: 'en-US',
+    pitch: 0.94,
+    rate: 1.02,
   },
   {
     id: 'aura-orion-en',
@@ -146,6 +160,8 @@ const AI_TUTOR_VOICES: TutorVoiceOption[] = [
     persona: 'Steady Clinical Guide · Methodical, Calm & Structured',
     sample: 'Good work. Let us trace this pathophysiology from cellular origin to presenting symptoms.',
     langCode: 'en-US',
+    pitch: 0.88,
+    rate: 0.96,
   },
   {
     id: 'aura-arcas-en',
@@ -156,6 +172,8 @@ const AI_TUTOR_VOICES: TutorVoiceOption[] = [
     persona: 'Healthcare Educator · Smooth, Approachable & Accessible',
     sample: 'Welcome back. Let us break down this nursing care plan into manageable milestones.',
     langCode: 'en-US',
+    pitch: 0.96,
+    rate: 1.02,
   },
   {
     id: 'aura-perseus-en',
@@ -166,6 +184,8 @@ const AI_TUTOR_VOICES: TutorVoiceOption[] = [
     persona: 'Dynamic Clinical Instructor · Energetic, Inspiring & Engaging',
     sample: 'Fantastic question! Here is the clinical pearl that makes this concept click every time.',
     langCode: 'en-US',
+    pitch: 1.04,
+    rate: 1.08,
   },
   {
     id: 'aura-zeus-en',
@@ -176,6 +196,8 @@ const AI_TUTOR_VOICES: TutorVoiceOption[] = [
     persona: 'Senior Medical Authority · Deep Resonance, Resolute & Commanding',
     sample: 'Standardized nursing practice demands vigilance, sterile precision, and sound evidence.',
     langCode: 'en-US',
+    pitch: 0.80,
+    rate: 0.92,
   },
 ];
 
@@ -209,6 +231,33 @@ export default function AiTutorPage() {
   // Audio / Voice state
   const [voiceEnabled, setVoiceEnabled] = useState(false);
   const [selectedVoice, setSelectedVoice] = useState<string>('aura-asteria-en');
+  const selectedVoiceRef = useRef<string>('aura-asteria-en');
+
+  useEffect(() => {
+    selectedVoiceRef.current = selectedVoice;
+  }, [selectedVoice]);
+
+  const getAuthHeaders = useCallback(async () => {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    try {
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.access_token) {
+        headers['Authorization'] = `Bearer ${session.access_token}`;
+      }
+    } catch {}
+    return headers;
+  }, []);
+
+  // Preload speech synthesis voices so they are instantly ready when fallback is needed
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.getVoices();
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
+      };
+    }
+  }, []);
   const [showVoicePicker, setShowVoicePicker] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [previewingVoiceId, setPreviewingVoiceId] = useState<string | null>(null);
@@ -361,6 +410,7 @@ export default function AiTutorPage() {
       const savedVoice = localStorage.getItem(STORAGE_KEY_VOICE);
       if (savedVoice && AI_TUTOR_VOICES.some((v) => v.id === savedVoice)) {
         setSelectedVoice(savedVoice);
+        selectedVoiceRef.current = savedVoice;
       }
     } catch {}
 
@@ -578,54 +628,88 @@ export default function AiTutorPage() {
     toast.success('Session deleted');
   };
 
-  // Browser Speech Synthesis fallback: Guaranteed offline/client voice support
-  const playBrowserSpeech = (text: string, messageId?: string) => {
+  // Browser Speech Synthesis fallback: Guaranteed offline/client voice support with distinct persona acoustics
+  const playBrowserSpeech = (text: string, messageId?: string, voiceOverride?: TutorVoiceOption) => {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
       setIsSynthesizingVoice(false);
       setSpeakingMessageId(null);
       setIsSpeaking(false);
+      setPreviewingVoiceId(null);
       return;
     }
 
     try {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 1.0;
-      utterance.pitch = 1.0;
 
-      const currentVoice = AI_TUTOR_VOICES.find((v) => v.id === selectedVoice);
-      const isBritish = currentVoice?.accent === 'British';
-      utterance.lang = isBritish ? 'en-GB' : 'en-US';
+      const targetVoice =
+        voiceOverride ||
+        AI_TUTOR_VOICES.find((v) => v.id === selectedVoiceRef.current) ||
+        AI_TUTOR_VOICES[0];
+
+      // Set custom pitch & rate to ensure every persona sounds distinct even on limited system synthesizers
+      utterance.pitch = targetVoice.pitch ?? 1.0;
+      utterance.rate = targetVoice.rate ?? 1.0;
+      utterance.lang = targetVoice.langCode || (targetVoice.accent === 'British' ? 'en-GB' : 'en-US');
 
       const voices = window.speechSynthesis.getVoices();
-      let naturalVoice: SpeechSynthesisVoice | undefined;
+      const isBritish = targetVoice.accent === 'British';
+      const isMale = targetVoice.gender === 'Male';
 
-      if (isBritish) {
-        naturalVoice = voices.find(
-          (v) =>
-            (v.lang.startsWith('en-GB') || v.lang.startsWith('en-UK')) &&
-            (currentVoice?.gender === 'Male' ? v.name.includes('Male') || v.name.includes('George') : true)
-        ) || voices.find((v) => v.lang.startsWith('en-GB') || v.lang.startsWith('en-UK'));
+      const maleKeywords = ['david', 'mark', 'alex', 'fred', 'george', 'daniel', 'guy', 'oliver', 'tom', 'male', 'ryan', 'arthur'];
+      const femaleKeywords = ['zira', 'samantha', 'jenny', 'ava', 'karen', 'hazel', 'susan', 'stephanie', 'kate', 'serena', 'female', 'fiona', 'sonia', 'libby'];
+
+      let matchedVoice: SpeechSynthesisVoice | undefined;
+
+      if (voices.length > 0) {
+        // Step 1: Match both accent/locale and gender
+        const targetLocaleVoices = voices.filter((v) => {
+          const l = v.lang.toLowerCase();
+          return isBritish
+            ? l.startsWith('en-gb') || l.startsWith('en-uk') || l.startsWith('en_gb')
+            : l.startsWith('en-us') || l.startsWith('en_us');
+        });
+
+        const pool = targetLocaleVoices.length > 0 ? targetLocaleVoices : voices.filter((v) => v.lang.toLowerCase().startsWith('en'));
+
+        if (pool.length > 0) {
+          const targetKeywords = isMale ? maleKeywords : femaleKeywords;
+          const avoidKeywords = isMale ? femaleKeywords : maleKeywords;
+
+          // Prefer matching positive keywords and not matching opposite keywords
+          matchedVoice = pool.find((v) => {
+            const nameLower = v.name.toLowerCase();
+            const hasTarget = targetKeywords.some((k) => nameLower.includes(k));
+            const hasAvoid = avoidKeywords.some((k) => nameLower.includes(k));
+            return hasTarget && !hasAvoid;
+          });
+
+          // Second pass: any voice matching target gender keyword in name
+          if (!matchedVoice) {
+            matchedVoice = pool.find((v) => {
+              const nameLower = v.name.toLowerCase();
+              return targetKeywords.some((k) => nameLower.includes(k));
+            });
+          }
+
+          // Third pass: pick a distinct voice by hashing persona ID across candidate pool
+          if (!matchedVoice && pool.length > 0) {
+            const voiceIndex = Math.abs(
+              targetVoice.id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
+            ) % pool.length;
+            matchedVoice = pool[voiceIndex];
+          }
+        }
       }
 
-      if (!naturalVoice) {
-        naturalVoice = voices.find(
-          (v) =>
-            v.lang.startsWith('en') &&
-            (v.name.includes('Natural') ||
-              v.name.includes('Google') ||
-              v.name.includes('Samantha') ||
-              v.name.includes('Jenny') ||
-              v.name.includes('Ava') ||
-              v.name.includes('Karen'))
-        ) || voices.find((v) => v.lang.startsWith('en'));
+      if (matchedVoice) {
+        utterance.voice = matchedVoice;
       }
-
-      if (naturalVoice) utterance.voice = naturalVoice;
 
       utterance.onstart = () => {
         setIsSpeaking(true);
         setIsSynthesizingVoice(false);
+        if (voiceOverride) setPreviewingVoiceId(voiceOverride.id);
         if (messageId) setSpeakingMessageId(messageId);
       };
 
@@ -633,6 +717,7 @@ export default function AiTutorPage() {
         setIsSpeaking(false);
         setSpeakingMessageId(null);
         setIsSynthesizingVoice(false);
+        if (voiceOverride) setPreviewingVoiceId(null);
       };
 
       utterance.onerror = (e) => {
@@ -640,6 +725,7 @@ export default function AiTutorPage() {
         setIsSpeaking(false);
         setSpeakingMessageId(null);
         setIsSynthesizingVoice(false);
+        if (voiceOverride) setPreviewingVoiceId(null);
       };
 
       window.speechSynthesis.speak(utterance);
@@ -648,6 +734,7 @@ export default function AiTutorPage() {
       setIsSpeaking(false);
       setSpeakingMessageId(null);
       setIsSynthesizingVoice(false);
+      if (voiceOverride) setPreviewingVoiceId(null);
     }
   };
 
@@ -669,6 +756,7 @@ export default function AiTutorPage() {
 
   const handleSelectVoice = (voiceId: string) => {
     setSelectedVoice(voiceId);
+    selectedVoiceRef.current = voiceId;
     try {
       localStorage.setItem(STORAGE_KEY_VOICE, voiceId);
     } catch {}
@@ -689,9 +777,10 @@ export default function AiTutorPage() {
     setIsSynthesizingVoice(true);
 
     try {
+      const headers = await getAuthHeaders();
       const res = await fetch('/api/ai/tutor/speak', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({ text: v.sample, model: v.id }),
       });
 
@@ -713,7 +802,7 @@ export default function AiTutorPage() {
         };
         audio.onerror = () => {
           setPreviewingVoiceId(null);
-          playBrowserSpeech(v.sample);
+          playBrowserSpeech(v.sample, undefined, v);
         };
         await audio.play();
         return;
@@ -723,7 +812,7 @@ export default function AiTutorPage() {
     }
 
     setPreviewingVoiceId(null);
-    playBrowserSpeech(v.sample);
+    playBrowserSpeech(v.sample, undefined, v);
   };
 
   const playTutorAudio = async (text: string, messageId?: string) => {
@@ -746,20 +835,25 @@ export default function AiTutorPage() {
     const speechSegment = clean.slice(0, 1200);
     if (!speechSegment) return;
 
+    const activeVoiceId = selectedVoiceRef.current;
+    const currentVoiceOption =
+      AI_TUTOR_VOICES.find((v) => v.id === activeVoiceId) || AI_TUTOR_VOICES[0];
+
     setIsSynthesizingVoice(true);
     if (messageId) setSpeakingMessageId(messageId);
 
     try {
+      const headers = await getAuthHeaders();
       const res = await fetch('/api/ai/tutor/speak', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: speechSegment, model: selectedVoice }),
+        headers,
+        body: JSON.stringify({ text: speechSegment, model: activeVoiceId }),
       });
 
       if (!res.ok) {
         // Fall back seamlessly to browser speech synthesis
         console.info('[ai/tutor] Neural voice API returned', res.status, '— using browser speech synthesis');
-        playBrowserSpeech(speechSegment, messageId);
+        playBrowserSpeech(speechSegment, messageId, currentVoiceOption);
         return;
       }
 
@@ -785,7 +879,7 @@ export default function AiTutorPage() {
         URL.revokeObjectURL(audioUrl);
         audioPlayerRef.current = null;
         // Fallback to browser speech synthesis on decode/playback failure
-        playBrowserSpeech(speechSegment, messageId);
+        playBrowserSpeech(speechSegment, messageId, currentVoiceOption);
       };
 
       try {
@@ -793,11 +887,11 @@ export default function AiTutorPage() {
       } catch (playErr: any) {
         // Browser autoplay policy blocked unprompted play — fallback to speech synthesis
         console.info('[ai/tutor] Audio play interrupted by browser policy, using speech synthesis:', playErr?.message);
-        playBrowserSpeech(speechSegment, messageId);
+        playBrowserSpeech(speechSegment, messageId, currentVoiceOption);
       }
     } catch (err: any) {
       console.warn('[ai/tutor] Neural audio fetch error, using browser speech synthesis:', err?.message || err);
-      playBrowserSpeech(speechSegment, messageId);
+      playBrowserSpeech(speechSegment, messageId, currentVoiceOption);
     }
   };
 
@@ -1163,7 +1257,8 @@ export default function AiTutorPage() {
     // 1. Attempt Deepgram live streaming if mic access is available
     if (navigator.mediaDevices?.getUserMedia) {
       try {
-        const tokenResponse = await fetch('/api/ai/tutor/voice-token', { method: 'POST' });
+        const tokenHeaders = await getAuthHeaders();
+        const tokenResponse = await fetch('/api/ai/tutor/voice-token', { method: 'POST', headers: tokenHeaders });
         if (tokenResponse.ok) {
           const tokenData = await tokenResponse.json();
           if (tokenData?.accessToken) {

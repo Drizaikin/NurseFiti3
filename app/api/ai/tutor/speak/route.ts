@@ -23,6 +23,18 @@ export async function POST(req: NextRequest) {
       user = sessionData?.session?.user ?? null;
     } catch {}
   }
+  // Also check Bearer token if cookies were blocked or omitted
+  if (!user) {
+    const authHeader = req.headers.get('authorization');
+    if (authHeader?.startsWith('Bearer ')) {
+      const token = authHeader.slice(7).trim();
+      try {
+        const { data: tokenUser } = await supabase.auth.getUser(token);
+        user = tokenUser?.user ?? null;
+      } catch {}
+    }
+  }
+
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized', fallback: 'browser' }, { status: 401 });
   }
