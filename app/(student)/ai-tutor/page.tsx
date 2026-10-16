@@ -8,6 +8,15 @@ import { TutorMarkdown } from '@/components/ai/TutorMarkdown';
 import { AiTutorExitFeedbackModal } from '@/components/ai/AiTutorExitFeedbackModal';
 import { createClient } from '@/lib/supabase/client';
 import toast from 'react-hot-toast';
+import {
+  LocalMaterial,
+  getLocalMaterials,
+  saveLocalMaterial,
+  deleteLocalMaterial,
+  searchLocalChunks,
+  extractTextFromClientFile,
+  chunkClientText,
+} from '@/lib/ai/localTutorStore';
 
 interface Material {
   id: string;
@@ -192,8 +201,10 @@ export default function AiTutorPage() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [materials, setMaterials] = useState<Material[]>([]);
+  const [localMaterials, setLocalMaterials] = useState<LocalMaterial[]>([]);
   const [selectedMaterial, setSelectedMaterial] = useState<string>('');
   const [showUploadPanel, setShowUploadPanel] = useState(false);
+  const [shareWithLibrary, setShareWithLibrary] = useState(true);
 
   // Audio / Voice state
   const [voiceEnabled, setVoiceEnabled] = useState(false);
@@ -330,9 +341,20 @@ export default function AiTutorPage() {
     } catch {}
   }, []);
 
+  // Load student-uploaded local materials from browser IndexedDB (zero database quota used)
+  const loadLocalMaterials = useCallback(async () => {
+    try {
+      const items = await getLocalMaterials();
+      setLocalMaterials(items);
+    } catch (err) {
+      console.warn('[ai-tutor] Failed to load local materials:', err);
+    }
+  }, []);
+
   // 1. Initial Load: Instant 0ms Local Storage Cache + Background Remote Sync
   useEffect(() => {
     loadMaterials();
+    loadLocalMaterials();
 
     // Instant local voice preference load
     try {
@@ -779,7 +801,7 @@ export default function AiTutorPage() {
     }
   };
 
-  // Upload student study notes (uses direct Supabase storage upload to avoid 413 Payload Too Large)
+  // Upload student study notes (Option 2: parsed and stored 100% on student device via IndexedDB; zero Supabase database quota used)
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!uploadFile) {
@@ -792,86 +814,135 @@ export default function AiTutorPage() {
     }
 
     setIsUploading(true);
-    setUploadStatus('Requesting secure upload authorization…');
+    setUploadStatus('Reading and extracting text on your device…');
 
     try {
-      // Step 1: Request signed upload URL from backend
-      const signRes = await fetch('/api/ai/tutor/materials', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'get-upload-url',
-          fileName: uploadFile.name,
-          fileType: uploadFile.type || 'application/octet-stream',
-          fileSize: uploadFile.size,
-          title: uploadTitle.trim() || undefined,
-        }),
-      });
+      // Step 1: Extract text client-side directly on device
+      const rawText = await extractTextFromClientFile(uploadFile);
+      const chunks = chunkClientText(rawText);
 
-      const signData = await signRes.json();
-      if (!signRes.ok) throw new Error(signData.error ?? 'Failed to prepare upload');
+      if (chunks.length === 0) {
+        throw new Error('No readable text found in document. If it is an image scan, please use an OCR or text document.');
+      }
 
-      // Step 2: Upload file directly to Supabase Storage (bypasses Vercel 4.5MB 413 limit)
-      setUploadStatus(`Uploading ${uploadFile.name} directly to storage…`);
-      const supabase = createClient();
-      let uploadSuccess = false;
+      const title = uploadTitle.trim() || uploadFile.name.replace(/\.[^.]+$/, '');
+      const localId = `local-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 
-      try {
-        const { error: uploadError } = await supabase.storage
-          .from('ai-tutor-materials')
-          .uploadToSignedUrl(signData.path, signData.token, uploadFile, {
-            contentType: uploadFile.type || 'application/octet-stream',
-            upsert: false,
+      // Step 2: Save to browser IndexedDB (zero database bytes/quotas used on Supabase)
+      setUploadStatus(`Indexing ${chunks.length} sections into your browser…`);
+      const localMaterial: LocalMaterial = {
+        id: localId,
+        title,
+        fileName: uploadFile.name,
+        fileSize: uploadFile.size,
+        chunkCount: chunks.length,
+        createdAt: new Date().toISOString(),
+        sharedWithAdmin: shareWithLibrary,
+      };
+
+      const localChunkItems = chunks.map((content, idx) => ({
+        id: `${localId}-chunk-${idx}`,
+        materialId: localId,
+        materialTitle: title,
+        chunkIndex: idx,
+        content,
+      }));
+
+      await saveLocalMaterial(localMaterial, localChunkItems);
+
+      // Step 3: If user opted into sharing with NurseFiti Library, upload raw file for Admin (zero DB chunks generated)
+      if (shareWithLibrary) {
+        setUploadStatus('Sharing copy with NurseFiti Library…');
+        try {
+          const signRes = await fetch('/api/ai/tutor/materials', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              action: 'get-upload-url',
+              fileName: uploadFile.name,
+              fileType: uploadFile.type || 'application/octet-stream',
+              fileSize: uploadFile.size,
+              title,
+            }),
           });
-        if (!uploadError) uploadSuccess = true;
-      } catch (err) {
-        console.warn('[ai-tutor] uploadToSignedUrl fallback to PUT:', err);
+
+          if (signRes.ok) {
+            const signData = await signRes.json();
+            if (signData?.filePath) {
+              const supabase = createClient();
+              let uploadSuccess = false;
+
+              try {
+                const { error: uploadError } = await supabase.storage
+                  .from('ai-tutor-materials')
+                  .uploadToSignedUrl(signData.path, signData.token, uploadFile, {
+                    contentType: uploadFile.type || 'application/octet-stream',
+                    upsert: false,
+                  });
+                if (!uploadError) uploadSuccess = true;
+              } catch (err) {
+                console.warn('[ai-tutor] uploadToSignedUrl fallback to PUT:', err);
+              }
+
+              if (!uploadSuccess && signData.signedUrl) {
+                const putRes = await fetch(signData.signedUrl, {
+                  method: 'PUT',
+                  body: uploadFile,
+                  headers: { 'Content-Type': uploadFile.type || 'application/octet-stream' },
+                });
+                if (putRes.ok) uploadSuccess = true;
+              }
+
+              if (uploadSuccess) {
+                await fetch('/api/ai/tutor/materials', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    action: 'share-with-admin',
+                    filePath: signData.filePath,
+                    fileName: uploadFile.name,
+                    fileSize: uploadFile.size,
+                    fileType: uploadFile.type || 'application/octet-stream',
+                    title,
+                  }),
+                });
+              }
+            }
+          }
+        } catch (shareErr) {
+          console.warn('[ai-tutor] Share copy with library notice:', shareErr);
+        }
       }
 
-      if (!uploadSuccess && signData.signedUrl) {
-        const putRes = await fetch(signData.signedUrl, {
-          method: 'PUT',
-          body: uploadFile,
-          headers: { 'Content-Type': uploadFile.type || 'application/octet-stream' },
-        });
-        if (!putRes.ok) throw new Error('Failed to upload file to storage.');
-        uploadSuccess = true;
-      }
-
-      if (!uploadSuccess) {
-        throw new Error('Upload to storage failed.');
-      }
-
-      // Step 3: Trigger server-side ingestion
-      setUploadStatus('Extracting text and indexing chunks…');
-      const ingestRes = await fetch('/api/ai/tutor/materials', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'ingest',
-          filePath: signData.filePath,
-          fileName: uploadFile.name,
-          fileSize: uploadFile.size,
-          fileType: uploadFile.type || 'application/octet-stream',
-          title: uploadTitle.trim() || undefined,
-        }),
-      });
-
-      const ingestData = await ingestRes.json();
-      if (!ingestRes.ok) throw new Error(ingestData.error ?? 'Ingestion failed');
-
-      toast.success(`Added ${ingestData.chunk_count} chunks from "${ingestData.title}"`);
+      toast.success(
+        `Added "${title}" (${chunks.length} sections) to your device!${
+          shareWithLibrary ? ' Copy shared with NurseFiti Library.' : ''
+        }`
+      );
       setUploadFile(null);
       setUploadTitle('');
       if (fileInputRef.current) fileInputRef.current.value = '';
-      await loadMaterials();
+      await loadLocalMaterials();
+      setSelectedMaterial(localId);
       setShowUploadPanel(false);
     } catch (err: any) {
-      console.error('[ai-tutor] upload error:', err);
+      console.error('[ai-tutor] local upload error:', err);
       toast.error(err.message ?? 'Upload failed');
     } finally {
       setIsUploading(false);
       setUploadStatus('');
+    }
+  };
+
+  const handleDeleteLocalMaterial = async (id: string, name: string) => {
+    if (!confirm(`Delete "${name}" from your browser's local storage?`)) return;
+    try {
+      await deleteLocalMaterial(id);
+      toast.success(`Removed "${name}" from your device`);
+      if (selectedMaterial === id) setSelectedMaterial('');
+      await loadLocalMaterials();
+    } catch (err: any) {
+      toast.error(err.message ?? 'Failed to delete');
     }
   };
 
@@ -909,6 +980,21 @@ export default function AiTutorPage() {
 
     let fullAssistantContent = '';
 
+    // Search student device IndexedDB chunks (Option 2: instant local search, zero Supabase quota used)
+    let localContext: Array<{ title: string; content: string }> = [];
+    try {
+      const isLocal = selectedMaterial.startsWith('local-');
+      const targetId = isLocal ? selectedMaterial : null;
+      if (isLocal || !selectedMaterial) {
+        const hits = await searchLocalChunks(trimmed, targetId, 4);
+        if (hits.length > 0) {
+          localContext = hits.map((h) => ({ title: h.title, content: h.content }));
+        }
+      }
+    } catch (err) {
+      console.warn('[ai-tutor] local chunk search error:', err);
+    }
+
     try {
       const response = await fetch('/api/ai/tutor', {
         method: 'POST',
@@ -917,7 +1003,8 @@ export default function AiTutorPage() {
         body: JSON.stringify({
           message: trimmed,
           history,
-          materialId: selectedMaterial || null,
+          materialId: selectedMaterial.startsWith('local-') ? null : (selectedMaterial || null),
+          localContext,
           stream: true,
         }),
       });
@@ -1275,12 +1362,24 @@ export default function AiTutorPage() {
             aria-label="Filter source textbook"
           >
             <option value="">📚 All Textbooks</option>
-            {materials.map((m) => (
-              <option key={m.id} value={m.id}>
-                {m.scope === 'personal' ? '📝 ' : '📚 '}
-                {m.title}
-              </option>
-            ))}
+            {materials.length > 0 && (
+              <optgroup label="🌐 NurseFiti Knowledge Base">
+                {materials.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    📚 {m.title}
+                  </option>
+                ))}
+              </optgroup>
+            )}
+            {localMaterials.length > 0 && (
+              <optgroup label="📱 Your Device (Local Storage)">
+                {localMaterials.map((lm) => (
+                  <option key={lm.id} value={lm.id}>
+                    📝 {lm.title}
+                  </option>
+                ))}
+              </optgroup>
+            )}
           </select>
 
           <Button
@@ -1357,47 +1456,85 @@ export default function AiTutorPage() {
         </div>
       </div>
 
-      {/* Collapsible Upload Panel */}
+      {/* Collapsible Upload Panel (Option 2: 100% on student device) */}
       {showUploadPanel && (
         <div className="rounded-xl border border-dashed border-primary/40 bg-[var(--color-card)] p-3 sm:p-4 space-y-3 shrink-0 shadow-sm transition-all animate-fadeIn">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <p className="text-sm font-semibold text-[var(--color-text)]">
-              Upload Your Study Notes or Textbook (PDF, DOCX, TXT)
-            </p>
-            <p className="text-xs text-[var(--color-text-secondary)]">
-              Private to your account — analyzed in synergy with core textbooks.
-            </p>
+            <div>
+              <p className="text-sm font-semibold text-[var(--color-text)] flex items-center gap-1.5">
+                <span>📱</span> Upload Study Notes / Textbook (PDF, DOCX, TXT)
+              </p>
+              <p className="text-xs text-[var(--color-text-secondary)] mt-0.5">
+                Processed & stored 100% on your device (IndexedDB). Zero server storage quota consumed.
+              </p>
+            </div>
           </div>
-          <form onSubmit={handleUpload} className="flex flex-wrap gap-2 items-center">
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".pdf,.doc,.docx,.txt,.md"
-              onChange={(e) => setUploadFile(e.target.files?.[0] ?? null)}
-              className="text-sm"
-              disabled={isUploading}
-            />
-            <input
-              type="text"
-              value={uploadTitle}
-              onChange={(e) => setUploadTitle(e.target.value)}
-              placeholder="Title (optional, e.g. Pediatric Notes)"
-              className="input text-sm flex-1 min-w-[180px]"
-              disabled={isUploading}
-            />
-            <Button type="submit" variant="primary" size="sm" disabled={!uploadFile || isUploading}>
-              {isUploading ? <><Spinner size="sm" color="primary" /> {uploadStatus || 'Uploading & Indexing…'}</> : 'Upload & Ingest'}
-            </Button>
+
+          <form onSubmit={handleUpload} className="space-y-3">
+            <div className="flex flex-wrap gap-2 items-center">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".pdf,.doc,.docx,.txt,.md"
+                onChange={(e) => setUploadFile(e.target.files?.[0] ?? null)}
+                className="text-sm"
+                disabled={isUploading}
+              />
+              <input
+                type="text"
+                value={uploadTitle}
+                onChange={(e) => setUploadTitle(e.target.value)}
+                placeholder="Title (optional, e.g. Pediatric Notes)"
+                className="input text-sm flex-1 min-w-[180px]"
+                disabled={isUploading}
+              />
+              <Button type="submit" variant="primary" size="sm" disabled={!uploadFile || isUploading}>
+                {isUploading ? <><Spinner size="sm" color="primary" /> {uploadStatus || 'Processing…'}</> : 'Save to Device'}
+              </Button>
+            </div>
+
+            <div className="flex items-center gap-2 pt-1 text-xs text-[var(--color-text-secondary)]">
+              <label className="flex items-center gap-1.5 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={shareWithLibrary}
+                  onChange={(e) => setShareWithLibrary(e.target.checked)}
+                  className="rounded border-[var(--color-border)] text-primary focus:ring-primary"
+                  disabled={isUploading}
+                />
+                <span>Share a copy with NurseFiti Library (Allows Admin to review & download)</span>
+              </label>
+            </div>
           </form>
-          {materials.some((m) => m.scope === 'personal') && (
-            <div className="text-xs text-[var(--color-text-secondary)] pt-1 border-t border-[var(--color-border)]/50">
-              Your personal materials:{' '}
-              <span className="font-medium text-[var(--color-text)]">
-                {materials
-                  .filter((m) => m.scope === 'personal')
-                  .map((m) => m.title)
-                  .join(', ')}
-              </span>
+
+          {localMaterials.length > 0 && (
+            <div className="pt-2 border-t border-[var(--color-border)]/50 space-y-1.5">
+              <p className="text-xs font-semibold text-[var(--color-text)]">
+                Stored on this device ({localMaterials.length}):
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {localMaterials.map((lm) => (
+                  <div
+                    key={lm.id}
+                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs bg-[var(--color-bg)] border border-[var(--color-border)]"
+                  >
+                    <span className="font-medium text-[var(--color-text)] truncate max-w-[200px]" title={lm.title}>
+                      📝 {lm.title}
+                    </span>
+                    <span className="text-[10px] text-[var(--color-text-secondary)]">
+                      ({lm.chunkCount} sections)
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteLocalMaterial(lm.id, lm.title)}
+                      className="text-error hover:text-red-700 ml-1 font-bold text-xs"
+                      title="Delete from device storage"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>

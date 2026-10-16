@@ -28,11 +28,13 @@ export function Avatar({ src, alt, name, size = 'md', className = '' }: AvatarPr
     return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
   };
   
-  if (src && !imgError) {
+  const validSrc = src && src !== 'null' && src !== 'undefined' ? src : null;
+
+  if (validSrc && !imgError) {
     return (
       <div className={`relative rounded-full overflow-hidden ${sizeStyles[size]} ${className}`}>
         <Image
-          src={src}
+          src={validSrc}
           alt={alt || name || 'Avatar'}
           fill
           unoptimized

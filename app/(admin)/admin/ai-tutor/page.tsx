@@ -12,11 +12,16 @@ interface Material {
   title: string;
   description: string | null;
   file_name: string;
+  file_path?: string;
   file_size_bytes: number | null;
   chunk_count: number;
   status: string;
+  scope?: string;
   error_message: string | null;
   created_at: string;
+  uploaded_by?: string | null;
+  uploader_name?: string | null;
+  uploader_email?: string | null;
 }
 
 interface AiTutorReview {
@@ -45,7 +50,7 @@ function formatBytes(bytes: number | null) {
 export const dynamic = 'force-dynamic';
 
 export default function AdminAiTutorPage() {
-  const [activeTab, setActiveTab] = useState<'textbooks' | 'reviews'>('textbooks');
+  const [activeTab, setActiveTab] = useState<'textbooks' | 'student-shared' | 'reviews'>('textbooks');
   const [materials, setMaterials] = useState<Material[]>([]);
   const [reviews, setReviews] = useState<AiTutorReview[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -56,6 +61,8 @@ export default function AdminAiTutorPage() {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadStatus, setUploadStatus] = useState<string>('');
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [promotingId, setPromotingId] = useState<string | null>(null);
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const [ratingFilter, setRatingFilter] = useState<number | 'all'>('all');
 
   const loadMaterials = async () => {
@@ -206,6 +213,51 @@ export default function AdminAiTutorPage() {
     }
   };
 
+  const handleDownload = async (m: Material) => {
+    if (!m.file_path) {
+      toast.error('File path missing for this material.');
+      return;
+    }
+    setDownloadingId(m.id);
+    try {
+      const res = await fetch(`/api/admin/signed-url?path=${encodeURIComponent(m.file_path)}&bucket=ai-tutor-materials`);
+      const data = await res.json();
+      if (!res.ok || !data.url) throw new Error(data.error ?? 'Failed to generate download link');
+
+      const a = document.createElement('a');
+      a.href = data.url;
+      a.download = m.file_name || `${m.title}.pdf`;
+      a.target = '_blank';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      toast.success(`Downloading ${m.file_name}…`);
+    } catch (err: any) {
+      toast.error(err.message ?? 'Download failed');
+    } finally {
+      setDownloadingId(null);
+    }
+  };
+
+  const handlePromote = async (materialId: string) => {
+    setPromotingId(materialId);
+    try {
+      const res = await fetch('/api/admin/ai-tutor/materials', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'promote-to-global', materialId }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Failed to promote material');
+      toast.success(`Promoted! Added ${data.chunk_count} indexed chunks to Knowledge Base.`);
+      await loadMaterials();
+    } catch (err: any) {
+      toast.error(err.message ?? 'Promotion failed');
+    } finally {
+      setPromotingId(null);
+    }
+  };
+
   const filteredReviews = reviews.filter((r) => {
     if (ratingFilter === 'all') return true;
     return r.rating === ratingFilter;
@@ -214,6 +266,13 @@ export default function AdminAiTutorPage() {
   const avgRating = reviews.length > 0
     ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)
     : '0.0';
+
+  const knowledgeBaseMaterials = materials.filter(
+    (m) => (m.scope === 'global' || !m.scope) && m.status !== 'hidden'
+  );
+  const studentSharedMaterials = materials.filter(
+    (m) => m.status === 'hidden' || (m.scope === 'personal' && m.chunk_count === 0)
+  );
 
   return (
     <div className="space-y-6 pb-20 max-w-5xl">
@@ -228,17 +287,34 @@ export default function AdminAiTutorPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-[var(--color-border)] pb-2">
+      <div className="flex items-center gap-2 border-b border-[var(--color-border)] pb-2 overflow-x-auto">
         <button
           type="button"
           onClick={() => setActiveTab('textbooks')}
-          className={`px-4 py-2 text-sm font-semibold rounded-xl transition-all ${
+          className={`px-4 py-2 text-sm font-semibold rounded-xl transition-all whitespace-nowrap ${
             activeTab === 'textbooks'
               ? 'bg-primary text-white shadow-xs'
               : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-card)]'
           }`}
         >
-          📚 Knowledge Base ({materials.length})
+          📚 Knowledge Base ({knowledgeBaseMaterials.length})
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab('student-shared')}
+          className={`px-4 py-2 text-sm font-semibold rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
+            activeTab === 'student-shared'
+              ? 'bg-primary text-white shadow-xs'
+              : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-card)]'
+          }`}
+        >
+          <span>📥 Student Shared Textbooks</span>
+          <span className={`text-xs px-2 py-0.5 rounded-full ${
+            activeTab === 'student-shared' ? 'bg-white/20 text-white' : 'bg-primary/10 text-primary'
+          }`}>
+            {studentSharedMaterials.length}
+          </span>
         </button>
 
         <button
@@ -247,7 +323,7 @@ export default function AdminAiTutorPage() {
             setActiveTab('reviews');
             loadReviews();
           }}
-          className={`px-4 py-2 text-sm font-semibold rounded-xl transition-all flex items-center gap-1.5 ${
+          className={`px-4 py-2 text-sm font-semibold rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
             activeTab === 'reviews'
               ? 'bg-primary text-white shadow-xs'
               : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-card)]'
@@ -307,20 +383,20 @@ export default function AdminAiTutorPage() {
           </Card>
 
           <div>
-            <h2 className="font-heading font-semibold text-[var(--color-text)] mb-3">Uploaded materials</h2>
+            <h2 className="font-heading font-semibold text-[var(--color-text)] mb-3">Knowledge Base Materials</h2>
             {isLoading ? (
               <div className="flex justify-center py-12"><Spinner size="lg" color="primary" /></div>
-            ) : materials.length === 0 ? (
+            ) : knowledgeBaseMaterials.length === 0 ? (
               <p className="text-[var(--color-text-secondary)] text-sm">No materials yet.</p>
             ) : (
               <div className="space-y-3">
-                {materials.map((m) => (
+                {knowledgeBaseMaterials.map((m) => (
                   <Card key={m.id} className="space-y-2">
                     <div className="flex items-start justify-between gap-3 flex-wrap">
-                      <div>
+                      <div className="space-y-1">
                         <h3 className="font-heading font-bold text-[var(--color-text)]">{m.title}</h3>
                         {m.description && <p className="text-sm text-[var(--color-text-secondary)] mt-0.5">{m.description}</p>}
-                        <div className="text-xs text-[var(--color-text-secondary)] mt-1 flex flex-wrap gap-x-4">
+                        <div className="text-xs text-[var(--color-text-secondary)] mt-1 flex flex-wrap gap-x-4 gap-y-1">
                           <span>📄 {m.file_name}</span>
                           <span>📦 {formatBytes(m.file_size_bytes)}</span>
                           <span>🧩 {m.chunk_count} chunks</span>
@@ -330,14 +406,134 @@ export default function AdminAiTutorPage() {
                           <p className="text-xs text-error mt-1">{m.error_message}</p>
                         )}
                       </div>
-                      <Button
-                        variant="ghost"
-                        className="text-sm text-error"
-                        onClick={() => handleDelete(m.id)}
-                        disabled={deleting === m.id}
-                      >
-                        {deleting === m.id ? <Spinner size="sm" color="primary" /> : 'Delete'}
-                      </Button>
+                      <div className="flex items-center gap-2">
+                        {m.file_path && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-xs h-8 px-2.5"
+                            onClick={() => handleDownload(m)}
+                            disabled={downloadingId === m.id}
+                            title="Download original file to your computer"
+                          >
+                            {downloadingId === m.id ? <Spinner size="sm" color="primary" /> : '⬇️ Download'}
+                          </Button>
+                        )}
+                        <Button
+                          variant="ghost"
+                          className="text-sm text-error"
+                          onClick={() => handleDelete(m.id)}
+                          disabled={deleting === m.id}
+                        >
+                          {deleting === m.id ? <Spinner size="sm" color="primary" /> : 'Delete'}
+                        </Button>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Tab 2: Student Shared Textbooks (Option 2 - Conserves DB quota with zero chunk rows) */}
+      {activeTab === 'student-shared' && (
+        <div className="space-y-6">
+          <Card className="p-4 bg-primary/5 border border-primary/20 space-y-1">
+            <h2 className="font-heading font-semibold text-primary flex items-center gap-2">
+              <span>📥</span> Student Shared Textbooks (Zero DB Storage Used)
+            </h2>
+            <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
+              These are textbooks uploaded by students who chose to share a copy with NurseFiti.
+              To conserve Supabase database quota, they consume <strong>0 rows</strong> in your vector chunk database.
+              You can download any textbook directly to your personal computer, or promote it to the global knowledge base for all students.
+            </p>
+          </Card>
+
+          <div>
+            {isLoading ? (
+              <div className="flex justify-center py-12"><Spinner size="lg" color="primary" /></div>
+            ) : studentSharedMaterials.length === 0 ? (
+              <Card className="p-8 text-center space-y-2">
+                <span className="text-3xl">📚</span>
+                <p className="text-sm font-semibold text-[var(--color-text)]">
+                  No student-shared textbooks yet.
+                </p>
+                <p className="text-xs text-[var(--color-text-secondary)]">
+                  When students upload materials with &quot;Share with NurseFiti Library&quot; checked, they will appear here.
+                </p>
+              </Card>
+            ) : (
+              <div className="space-y-3">
+                {studentSharedMaterials.map((m) => (
+                  <Card key={m.id} className="space-y-3 p-4">
+                    <div className="flex items-start justify-between gap-3 flex-wrap">
+                      <div className="space-y-1 flex-1 min-w-[240px]">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="font-heading font-bold text-[var(--color-text)]">{m.title}</h3>
+                          <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                            Shared by student
+                          </span>
+                        </div>
+                        {m.description && <p className="text-sm text-[var(--color-text-secondary)]">{m.description}</p>}
+                        <div className="text-xs text-[var(--color-text-secondary)] flex flex-wrap gap-x-4 gap-y-1">
+                          <span>📄 {m.file_name}</span>
+                          <span>📦 {formatBytes(m.file_size_bytes)}</span>
+                          {m.uploader_name && <span>👤 {m.uploader_name}</span>}
+                          {m.uploader_email && <span>✉️ {m.uploader_email}</span>}
+                          <span>📅 {new Date(m.created_at).toLocaleDateString()}</span>
+                        </div>
+                        {m.status === 'failed' && m.error_message && (
+                          <p className="text-xs text-error mt-1">{m.error_message}</p>
+                        )}
+                      </div>
+
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {/* 1. Download to local computer */}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-xs h-8 px-3"
+                          onClick={() => handleDownload(m)}
+                          disabled={downloadingId === m.id}
+                          title="Download this file to your local computer"
+                        >
+                          {downloadingId === m.id ? (
+                            <><Spinner size="sm" color="primary" /> Preparing…</>
+                          ) : (
+                            '⬇️ Download to PC'
+                          )}
+                        </Button>
+
+                        {/* 2. Promote to Global Knowledge Base */}
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          className="text-xs h-8 px-3"
+                          onClick={() => handlePromote(m.id)}
+                          disabled={promotingId === m.id}
+                          title="Extract text, generate chunks, and add to global library for all students"
+                        >
+                          {promotingId === m.id ? (
+                            <><Spinner size="sm" color="primary" /> Indexing…</>
+                          ) : (
+                            '🚀 Add to Knowledge Base'
+                          )}
+                        </Button>
+
+                        {/* 3. Delete */}
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-xs h-8 text-error hover:bg-error/10 px-2.5"
+                          onClick={() => handleDelete(m.id)}
+                          disabled={deleting === m.id}
+                          title="Delete file and record"
+                        >
+                          {deleting === m.id ? <Spinner size="sm" color="primary" /> : '🗑️ Delete'}
+                        </Button>
+                      </div>
                     </div>
                   </Card>
                 ))}

@@ -43,8 +43,12 @@ export async function GET() {
 
   let materials = data ?? [];
   if (role !== 'admin') {
-    // Non-admins can use global materials only when approved.
-    materials = materials.filter((m: any) => (m.scope === 'personal' && m.uploaded_by === user.id) || (m.scope === 'global' && m.status === 'approved'));
+    // Non-admins can use global materials only when approved, and personal materials only if not hidden/pending review
+    materials = materials.filter(
+      (m: any) =>
+        m.status !== 'hidden' &&
+        ((m.scope === 'personal' && m.uploaded_by === user.id) || (m.scope === 'global' && m.status === 'approved'))
+    );
   }
 
   return NextResponse.json({ materials });
@@ -97,7 +101,53 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // 1B: Ingest file that was already uploaded to Supabase Storage
+    // 1B: Share with Admin (saves file reference for Admin to review/download without generating any DB chunks)
+    if (action === 'share-with-admin') {
+      const filePath = String(body?.filePath ?? '').trim();
+      const fileName = String(body?.fileName ?? '').trim() || 'document.pdf';
+      const fileSize = Number(body?.fileSize ?? 0);
+      const mimeType = String(body?.fileType || body?.mimeType || 'application/octet-stream');
+      const titleInput = body?.title;
+      const descriptionInput = body?.description;
+
+      if (!filePath) {
+        return NextResponse.json({ error: 'filePath is required.' }, { status: 400 });
+      }
+
+      const title = sanitizeTitle(fileName, typeof titleInput === 'string' ? titleInput : null);
+
+      const { data: material, error: insertError } = await (admin as any)
+        .from('ai_tutor_materials')
+        .insert({
+          title,
+          description: typeof descriptionInput === 'string' ? descriptionInput.trim() || null : null,
+          file_name: fileName,
+          file_path: filePath,
+          mime_type: mimeType,
+          file_size_bytes: fileSize,
+          status: 'hidden', // Queued for admin review, zero database chunks generated
+          scope: 'personal',
+          chunk_count: 0,
+          extracted_char_count: 0,
+          uploaded_by: user.id,
+        })
+        .select('id')
+        .single();
+
+      if (insertError) {
+        console.error('[ai-tutor/share-with-admin] insert error', insertError);
+        return NextResponse.json({ error: 'Failed to record shared material.' }, { status: 500 });
+      }
+
+      return NextResponse.json({
+        ok: true,
+        material_id: material.id,
+        title,
+        message: 'Material shared with Admin successfully.',
+      });
+    }
+
+    // 1C: Ingest file that was already uploaded to Supabase Storage
     if (action === 'ingest' || body?.filePath) {
       const filePath = String(body?.filePath ?? '').trim();
       const fileName = String(body?.fileName ?? '').trim() || 'document.pdf';

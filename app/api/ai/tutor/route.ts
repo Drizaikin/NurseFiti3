@@ -18,6 +18,10 @@ interface SourceRef {
   isStudentDoc?: boolean;
 }
 
+function isLocalId(id: unknown): boolean {
+  return typeof id === 'string' && (id === 'local' || id.startsWith('local-'));
+}
+
 export async function POST(req: NextRequest) {
   if (!process.env.GEMINI_API_KEY) {
     return NextResponse.json({ error: 'The AI service is not configured. Please contact support.' }, { status: 503 });
@@ -36,7 +40,15 @@ export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({}));
   const streamRequested = body?.stream === true;
   const message = String(body?.message ?? '').trim().slice(0, 1000);
-  const materialId = body?.materialId ? String(body.materialId) : null;
+  const materialId = body?.materialId && !isLocalId(body.materialId) ? String(body.materialId) : null;
+  const rawLocalContext = Array.isArray(body?.localContext) ? body.localContext : [];
+  const localContext: Array<{ title: string; content: string }> = rawLocalContext
+    .slice(0, 5)
+    .map((item: any) => ({
+      title: String(item?.title ?? 'Personal Study Material').slice(0, 100),
+      content: String(item?.content ?? '').slice(0, 3000),
+    }))
+    .filter((c: { title: string; content: string }) => c.content.trim().length > 0);
   const history: ChatMessage[] = Array.isArray(body?.history) ? body.history : [];
 
   if (!message) {
@@ -51,7 +63,24 @@ export async function POST(req: NextRequest) {
   // Retrieve grounded context with Admin Global + Student Personal synergy
   let chunks: Array<{ id: string; material_id: string; title: string; chunk_index: number; content: string; isStudentDoc?: boolean; _score?: number }> = [];
 
-  if (materialId) {
+  // Ingest client-side local context (from student device IndexedDB, zero server storage/DB quota used)
+  if (localContext.length > 0) {
+    for (let idx = 0; idx < localContext.length; idx++) {
+      const item = localContext[idx];
+      if (item?.content) {
+        chunks.push({
+          id: `local-${idx}`,
+          material_id: 'local',
+          title: item.title || 'Personal Study Material',
+          chunk_index: idx,
+          content: item.content,
+          isStudentDoc: true,
+        });
+      }
+    }
+  }
+
+  if (materialId && materialId !== 'local') {
     // 1. Retrieve excerpts from the student's selected document
     try {
       const { data: studentData } = await (admin as any).rpc('search_ai_tutor_chunks', {
@@ -121,10 +150,6 @@ export async function POST(req: NextRequest) {
         .select('id, material_id, chunk_index, content, ai_tutor_materials(title, scope, uploaded_by, status)')
         .or(orClause);
 
-      if (materialId) {
-        kwQuery = kwQuery.or(`material_id.eq.${materialId},ai_tutor_materials.scope.eq.global`);
-      }
-
       const { data: kwData } = await kwQuery.limit(24);
       if (Array.isArray(kwData)) {
         const existing = new Set(chunks.map((c) => c.id));
@@ -134,6 +159,7 @@ export async function POST(req: NextRequest) {
           const isGlobal = mat?.scope === 'global';
           const isOwner = mat?.uploaded_by === user.id;
           if (!isGlobal && !isOwner) continue;
+          if (materialId && row.material_id !== materialId && !isGlobal) continue;
 
           if (existing.has(row.id)) continue;
           existing.add(row.id);
@@ -153,32 +179,38 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Add neighboring chunks for continuity so the model sees surrounding context
+  // Add neighboring chunks for continuity so the model sees surrounding context (database chunks only)
   if (chunks.length > 0) {
     try {
       const chunkIds = new Set(chunks.map((c) => c.id));
-      const selectedPositions = chunks.slice(0, 8).map((c) => ({ material_id: c.material_id, chunk_index: c.chunk_index, isStudentDoc: c.isStudentDoc }));
-      const positionFilters = selectedPositions
-        .map((p) => `and(material_id.eq.${p.material_id},chunk_index.in.(${p.chunk_index - 1},${p.chunk_index},${p.chunk_index + 1}))`)
-        .join(',');
-      const { data: neighborData } = await (admin as any)
-        .from('ai_tutor_chunks')
-        .select('id, material_id, chunk_index, content, ai_tutor_materials(title)')
-        .or(positionFilters)
-        .limit(48);
-      if (Array.isArray(neighborData)) {
-        for (const row of neighborData) {
-          if (chunkIds.has(row.id)) continue;
-          chunkIds.add(row.id);
-          const isStudentDoc = Boolean(materialId && row.material_id === materialId);
-          chunks.push({
-            id: row.id,
-            material_id: row.material_id,
-            title: row.ai_tutor_materials?.title ?? 'Uploaded textbook',
-            chunk_index: row.chunk_index,
-            content: row.content,
-            isStudentDoc,
-          });
+      const selectedPositions = chunks
+        .filter((c) => !isLocalId(c.material_id))
+        .slice(0, 8)
+        .map((c) => ({ material_id: c.material_id, chunk_index: c.chunk_index, isStudentDoc: c.isStudentDoc }));
+
+      if (selectedPositions.length > 0) {
+        const positionFilters = selectedPositions
+          .map((p) => `and(material_id.eq.${p.material_id},chunk_index.in.(${p.chunk_index - 1},${p.chunk_index},${p.chunk_index + 1}))`)
+          .join(',');
+        const { data: neighborData } = await (admin as any)
+          .from('ai_tutor_chunks')
+          .select('id, material_id, chunk_index, content, ai_tutor_materials(title)')
+          .or(positionFilters)
+          .limit(48);
+        if (Array.isArray(neighborData)) {
+          for (const row of neighborData) {
+            if (chunkIds.has(row.id)) continue;
+            chunkIds.add(row.id);
+            const isStudentDoc = Boolean(materialId && row.material_id === materialId);
+            chunks.push({
+              id: row.id,
+              material_id: row.material_id,
+              title: row.ai_tutor_materials?.title ?? 'Uploaded textbook',
+              chunk_index: row.chunk_index,
+              content: row.content,
+              isStudentDoc,
+            });
+          }
         }
       }
     } catch (e) {
