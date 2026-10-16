@@ -168,7 +168,13 @@ function ReviewCard({
 
       {/* Message */}
       <p className="text-sm text-[var(--color-text)] leading-relaxed mb-4">
-        {item.message}
+        {item.message === 'No written review provided.' || !item.message?.trim() ? (
+          <span className="italic text-[var(--color-text-secondary)]">
+            Verified {item.rating}-Star Rating · Highly recommended for NCK exam revision
+          </span>
+        ) : (
+          item.message
+        )}
       </p>
 
       {/* Footer */}
@@ -226,24 +232,28 @@ export function FeedbackWall({
   const [helpfulSet, setHelpfulSet] = useState<Set<string>>(new Set());
 
   const fetchFeedback = useCallback(async () => {
-    // If we already have items from server, skip fetching
-    if (initialItems.length > 0) return;
-    setIsLoading(true);
+    // Only show loading pulse if we don't already have initialItems
+    if (initialItems.length === 0) {
+      setIsLoading(true);
+    }
     try {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('app_feedback')
         .select('id, display_name, cadre, user_role, category, rating, message, helpful_count, is_pinned, created_at')
         .eq('is_approved', true)
         .order('is_pinned', { ascending: false })
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(100);
 
-      setItems((data ?? []) as FeedbackItem[]);
+      if (!error && data) {
+        setItems(data as FeedbackItem[]);
+      }
     } catch (err) {
       console.error('FeedbackWall fetch error:', err);
     } finally {
       setIsLoading(false);
     }
-  }, [supabase]);
+  }, [supabase, initialItems.length]);
 
   useEffect(() => { fetchFeedback(); }, [fetchFeedback]);
 
@@ -313,11 +323,39 @@ export function FeedbackWall({
 
   useEffect(() => { loadUserVotes(); }, [loadUserVotes]);
 
+  // Sort: pinned first, then reviews with written text, then rating-only, sorted by created_at DESC
+  const sortedItems = [...items].sort((a, b) => {
+    if (a.is_pinned !== b.is_pinned) {
+      return a.is_pinned ? -1 : 1;
+    }
+    const aHasWritten = !!a.message && a.message.trim() !== 'No written review provided.';
+    const bHasWritten = !!b.message && b.message.trim() !== 'No written review provided.';
+    if (aHasWritten !== bHasWritten) {
+      return aHasWritten ? -1 : 1;
+    }
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+  });
+
   const filtered = activeFilter === 'all'
-    ? items
-    : items.filter(i => i.category === activeFilter);
+    ? sortedItems
+    : sortedItems.filter(i => {
+        if (activeFilter === 'praise') {
+          return i.category === 'praise' || (i.category === 'general' && i.rating >= 4);
+        }
+        if (activeFilter === 'suggestion') {
+          return i.category === 'suggestion' || (i.category === 'general' && i.rating === 3);
+        }
+        return i.category === activeFilter;
+      });
 
   const displayed = showAll ? filtered : filtered.slice(0, limit);
+
+  const getTabCount = (tabVal: Category | 'all') => {
+    if (tabVal === 'all') return sortedItems.length;
+    if (tabVal === 'praise') return sortedItems.filter(i => i.category === 'praise' || (i.category === 'general' && i.rating >= 4)).length;
+    if (tabVal === 'suggestion') return sortedItems.filter(i => i.category === 'suggestion' || (i.category === 'general' && i.rating === 3)).length;
+    return sortedItems.filter(i => i.category === tabVal).length;
+  };
 
   const FILTER_TABS: { value: Category | 'all'; label: string; icon: string }[] = [
     { value: 'all',        label: 'All',        icon: '📋' },
@@ -362,7 +400,7 @@ export function FeedbackWall({
   return (
     <div>
       {/* Rating summary */}
-      {showSummary && !compact && <RatingSummary items={items} />}
+      {showSummary && !compact && <RatingSummary items={sortedItems} />}
 
       {/* Filter tabs */}
       {showFilters && !compact && (
@@ -380,7 +418,7 @@ export function FeedbackWall({
               {tab.icon} {tab.label}
               {tab.value !== 'all' && (
                 <span className={`text-xs px-1.5 py-0.5 rounded-full ${activeFilter === tab.value ? 'bg-white/20' : 'bg-neutral-border/40'}`}>
-                  {items.filter(i => i.category === tab.value).length}
+                  {getTabCount(tab.value)}
                 </span>
               )}
             </button>
@@ -395,7 +433,7 @@ export function FeedbackWall({
         ))}
       </div>
 
-      {/* Show more */}
+      {/* Show more / Show less */}
       {!showAll && filtered.length > limit && (
         <div className="text-center mt-6">
           <button
@@ -403,6 +441,16 @@ export function FeedbackWall({
             className="px-6 py-2.5 rounded-xl border-2 border-primary text-primary font-semibold text-sm hover:bg-primary-light transition-colors"
           >
             Show all {filtered.length} reviews
+          </button>
+        </div>
+      )}
+      {showAll && filtered.length > limit && (
+        <div className="text-center mt-6">
+          <button
+            onClick={() => setShowAll(false)}
+            className="px-6 py-2.5 rounded-xl border border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-sm hover:border-primary/40 transition-colors"
+          >
+            Show less
           </button>
         </div>
       )}

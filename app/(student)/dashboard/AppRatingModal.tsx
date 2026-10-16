@@ -95,7 +95,7 @@ export function AppRatingModal() {
           category: rating >= 4 ? 'praise' : 'suggestion',
           rating: rating,
           message: message.trim() || 'No written review provided.',
-          is_approved: rating >= 4 
+          is_approved: true, // Auto-approve for public feedback wall
         } as any]);
 
       if (error) throw error;

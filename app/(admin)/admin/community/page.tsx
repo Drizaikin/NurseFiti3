@@ -36,6 +36,7 @@ interface CommunityStats {
 const TABS = [
   { id: 'post',      label: 'Post to Community'       },
   { id: 'broadcast', label: 'Broadcast Notification'  },
+  { id: 'reviews',   label: 'Community Reviews'       },
   { id: 'analytics', label: 'Analytics'               },
 ];
 const TAB_SET_ID = 'admin-community-tabs';
@@ -58,7 +59,7 @@ export default function AdminCommunityPage() {
       <div>
         <h1 className="text-2xl font-heading font-bold text-primary">Community Management</h1>
         <p className="text-neutral-mid text-sm mt-1">
-          Post messages, send broadcasts, and view community analytics.
+          Post messages, send broadcasts, moderate reviews, and view community analytics.
         </p>
       </div>
 
@@ -90,6 +91,14 @@ export default function AdminCommunityPage() {
             hidden={activeTab !== 'broadcast'}
           >
             {activeTab === 'broadcast' && <BroadcastTab adminUserId={adminUserId} />}
+          </div>
+          <div
+            id={getTabPanelId(TAB_SET_ID, 'reviews')}
+            role="tabpanel"
+            aria-labelledby={getTabId(TAB_SET_ID, 'reviews')}
+            hidden={activeTab !== 'reviews'}
+          >
+            {activeTab === 'reviews' && <ReviewsTab />}
           </div>
           <div
             id={getTabPanelId(TAB_SET_ID, 'analytics')}
@@ -535,6 +544,339 @@ function StatCard({
         </p>
         <p className="text-xs text-neutral-mid mt-0.5">{label}</p>
       </div>
+    </div>
+  );
+}
+
+// ─── Tab 3 — Community Reviews ────────────────────────────────────────────────
+
+interface AdminFeedbackItem {
+  id: string;
+  user_id: string;
+  user_role: 'student' | 'tutor';
+  display_name: string;
+  cadre: string | null;
+  category: 'general' | 'complaint' | 'suggestion' | 'bug_report' | 'praise';
+  rating: number;
+  message: string;
+  is_approved: boolean;
+  is_pinned: boolean;
+  helpful_count: number;
+  created_at: string;
+}
+
+function ReviewsTab() {
+  const [reviews, setReviews] = useState<AdminFeedbackItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterRating, setFilterRating] = useState<'all' | '5' | '4' | '3' | '2' | '1'>('all');
+  const [filterStatus, setFilterStatus] = useState<'all' | 'pinned' | 'approved' | 'unapproved'>('all');
+  const [actionId, setActionId] = useState<string | null>(null);
+
+  const loadReviews = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch('/api/admin/feedback');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to load reviews');
+      setReviews(data.feedback || []);
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to load reviews');
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadReviews();
+  }, [loadReviews]);
+
+  const togglePin = async (id: string, current: boolean) => {
+    setActionId(id);
+    try {
+      const res = await fetch('/api/admin/feedback', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, is_pinned: !current }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to update review');
+      setReviews(prev => prev.map(r => r.id === id ? { ...r, is_pinned: !current } : r));
+      toast.success(!current ? 'Review pinned as Featured!' : 'Review unpinned.');
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to pin review');
+    } finally {
+      setActionId(null);
+    }
+  };
+
+  const toggleApprove = async (id: string, current: boolean) => {
+    setActionId(id);
+    try {
+      const res = await fetch('/api/admin/feedback', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, is_approved: !current }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to update review');
+      setReviews(prev => prev.map(r => r.id === id ? { ...r, is_approved: !current } : r));
+      toast.success(!current ? 'Review approved for public landing page!' : 'Review hidden from public.');
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to update approval');
+    } finally {
+      setActionId(null);
+    }
+  };
+
+  const deleteReview = async (id: string) => {
+    if (!confirm('Are you sure you want to permanently delete this review? This cannot be undone.')) return;
+    setActionId(id);
+    try {
+      const res = await fetch('/api/admin/feedback', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to delete review');
+      setReviews(prev => prev.filter(r => r.id !== id));
+      toast.success('Review permanently deleted.');
+    } catch (err: any) {
+      toast.error(err.message || 'Failed to delete review');
+    } finally {
+      setActionId(null);
+    }
+  };
+
+  const filtered = reviews.filter(r => {
+    if (filterRating !== 'all' && r.rating !== Number(filterRating)) return false;
+    if (filterStatus === 'pinned' && !r.is_pinned) return false;
+    if (filterStatus === 'approved' && !r.is_approved) return false;
+    if (filterStatus === 'unapproved' && r.is_approved) return false;
+    if (searchTerm.trim()) {
+      const term = searchTerm.toLowerCase();
+      const matchName = r.display_name.toLowerCase().includes(term);
+      const matchMsg = r.message.toLowerCase().includes(term);
+      const matchCadre = (r.cadre || '').toLowerCase().includes(term);
+      if (!matchName && !matchMsg && !matchCadre) return false;
+    }
+    return true;
+  });
+
+  const avgRating = reviews.length > 0
+    ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)
+    : '0.0';
+
+  const pinnedCount = reviews.filter(r => r.is_pinned).length;
+  const approvedCount = reviews.filter(r => r.is_approved).length;
+
+  return (
+    <div className="space-y-6">
+      {/* Metric tiles */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <StatCard
+          label="Total Reviews"
+          value={reviews.length}
+          icon={<span className="text-xl">💬</span>}
+        />
+        <div className="flex items-center gap-4 p-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] shadow-sm">
+          <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center text-xl">
+            ⭐
+          </div>
+          <div>
+            <p className="text-2xl font-heading font-bold text-[var(--color-text)]">
+              {avgRating} <span className="text-sm font-normal text-neutral-mid">/ 5.0</span>
+            </p>
+            <p className="text-xs text-neutral-mid mt-0.5">Average Rating</p>
+          </div>
+        </div>
+        <StatCard
+          label="Featured (Pinned)"
+          value={pinnedCount}
+          icon={<span className="text-xl">📌</span>}
+        />
+        <StatCard
+          label="Publicly Approved"
+          value={approvedCount}
+          icon={<span className="text-xl">✅</span>}
+        />
+      </div>
+
+      {/* Controls & Search */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-[var(--color-card)] p-4 rounded-2xl border border-[var(--color-border)]">
+        <div className="flex items-center gap-2 flex-1">
+          <input
+            type="text"
+            placeholder="Search reviews by name, cadre, or keywords…"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full text-sm px-3.5 py-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-primary/40"
+          />
+          {searchTerm && (
+            <button
+              onClick={() => setSearchTerm('')}
+              className="text-xs text-neutral-mid hover:text-primary px-2"
+            >
+              Clear
+            </button>
+          )}
+        </div>
+
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
+          <select
+            value={filterRating}
+            onChange={(e) => setFilterRating(e.target.value as any)}
+            className="text-xs px-3 py-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)]"
+          >
+            <option value="all">All Stars</option>
+            <option value="5">5 Stars only</option>
+            <option value="4">4 Stars only</option>
+            <option value="3">3 Stars only</option>
+            <option value="2">2 Stars only</option>
+            <option value="1">1 Star only</option>
+          </select>
+
+          <select
+            value={filterStatus}
+            onChange={(e) => setFilterStatus(e.target.value as any)}
+            className="text-xs px-3 py-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)]"
+          >
+            <option value="all">All Statuses</option>
+            <option value="pinned">Featured / Pinned Only</option>
+            <option value="approved">Approved Only</option>
+            <option value="unapproved">Hidden / Unapproved Only</option>
+          </select>
+
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={loadReviews}
+            disabled={isLoading}
+            className="text-xs"
+          >
+            {isLoading ? <Spinner size="sm" /> : 'Refresh'}
+          </Button>
+        </div>
+      </div>
+
+      {/* Reviews list */}
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <Spinner size="lg" />
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="text-center py-12 border border-[var(--color-border)] rounded-2xl bg-[var(--color-card)]">
+          <p className="text-3xl mb-2">🔍</p>
+          <p className="font-semibold text-[var(--color-text)]">No reviews match your filter</p>
+          <p className="text-xs text-neutral-mid mt-1">Try resetting the search or filter options.</p>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {filtered.map((r) => (
+            <div
+              key={r.id}
+              className={`p-4 sm:p-5 rounded-2xl border transition-all ${
+                r.is_pinned
+                  ? 'border-accent bg-accent/5 ring-1 ring-accent/30'
+                  : !r.is_approved
+                  ? 'border-neutral-mid/30 bg-neutral-mid/5 opacity-70'
+                  : 'border-[var(--color-border)] bg-[var(--color-card)]'
+              }`}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                <div className="flex items-center gap-2.5">
+                  <span className="font-bold text-sm text-[var(--color-text)]">
+                    {r.display_name}
+                  </span>
+                  {r.cadre && (
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-primary-light text-primary font-medium">
+                      {r.cadre}
+                    </span>
+                  )}
+                  <span className="text-xs text-neutral-mid capitalize">
+                    · {r.user_role}
+                  </span>
+                  {r.is_pinned && (
+                    <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-accent/20 text-accent font-bold">
+                      ⭐ Featured
+                    </span>
+                  )}
+                  {!r.is_approved && (
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-500 font-semibold">
+                      Hidden from Landing
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-2 text-xs text-neutral-mid">
+                  <span className="font-bold text-accent">
+                    {'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}
+                  </span>
+                  <span>·</span>
+                  <span>{new Date(r.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                </div>
+              </div>
+
+              {/* Message text */}
+              <p className="text-sm text-[var(--color-text)] leading-relaxed mb-3">
+                {r.message === 'No written review provided.' || !r.message?.trim() ? (
+                  <span className="italic text-neutral-mid">
+                    Verified {r.rating}-Star Rating (no written review provided)
+                  </span>
+                ) : (
+                  r.message
+                )}
+              </p>
+
+              {/* Actions footer */}
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[var(--color-border)] text-xs">
+                <div className="flex items-center gap-2 text-neutral-mid">
+                  <span className="capitalize px-2 py-0.5 rounded bg-[var(--color-bg)] border border-[var(--color-border)]">
+                    Category: {r.category}
+                  </span>
+                  <span>👍 {r.helpful_count} helpful</span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => togglePin(r.id, r.is_pinned)}
+                    disabled={actionId === r.id}
+                    className={`px-3 py-1.5 rounded-lg font-semibold transition-colors ${
+                      r.is_pinned
+                        ? 'bg-accent/20 text-accent hover:bg-accent/30'
+                        : 'border border-[var(--color-border)] text-[var(--color-text)] hover:border-accent hover:text-accent'
+                    }`}
+                  >
+                    {r.is_pinned ? '★ Unpin Featured' : '☆ Pin as Featured'}
+                  </button>
+
+                  <button
+                    onClick={() => toggleApprove(r.id, r.is_approved)}
+                    disabled={actionId === r.id}
+                    className={`px-3 py-1.5 rounded-lg font-semibold transition-colors ${
+                      r.is_approved
+                        ? 'border border-[var(--color-border)] text-neutral-mid hover:text-rose-500'
+                        : 'bg-emerald-600 text-white hover:bg-emerald-700'
+                    }`}
+                  >
+                    {r.is_approved ? 'Hide from Landing' : 'Approve for Landing'}
+                  </button>
+
+                  <button
+                    onClick={() => deleteReview(r.id)}
+                    disabled={actionId === r.id}
+                    className="px-2.5 py-1.5 rounded-lg text-rose-500 hover:bg-rose-500/10 font-semibold transition-colors"
+                    title="Delete permanently"
+                  >
+                    🗑️
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
