@@ -10,7 +10,7 @@ export async function POST() {
 
   const apiKey = process.env.DEEPGRAM_API_KEY;
   if (!apiKey) {
-    return NextResponse.json({ error: 'Live voice tutoring is not configured.' }, { status: 503 });
+    return NextResponse.json({ error: 'Live voice tutoring is not configured.', fallback: 'browser' }, { status: 503 });
   }
 
   try {
@@ -28,7 +28,7 @@ export async function POST() {
     const result = await response.json().catch(() => ({}));
     if (!response.ok || typeof result.access_token !== 'string') {
       console.error('[ai/tutor/voice-token] Deepgram token request failed:', response.status);
-      return NextResponse.json({ error: 'Could not start live voice. Please try again.' }, { status: 502 });
+      return NextResponse.json({ error: 'Could not start live voice. Please try again.', fallback: 'browser' }, { status: 502 });
     }
 
     return NextResponse.json(
@@ -37,6 +37,6 @@ export async function POST() {
     );
   } catch (error) {
     console.error('[ai/tutor/voice-token] Request failed:', error);
-    return NextResponse.json({ error: 'Could not start live voice. Please try again.' }, { status: 502 });
+    return NextResponse.json({ error: 'Could not start live voice. Please try again.', fallback: 'browser' }, { status: 502 });
   }
 }

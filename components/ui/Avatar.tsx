@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Image from 'next/image';
 
 interface AvatarProps {
@@ -10,6 +12,8 @@ interface AvatarProps {
 }
 
 export function Avatar({ src, alt, name, size = 'md', className = '' }: AvatarProps) {
+  const [imgError, setImgError] = useState(false);
+
   const sizeStyles = {
     sm: 'w-8 h-8 text-xs',
     md: 'w-12 h-12 text-base',
@@ -24,15 +28,17 @@ export function Avatar({ src, alt, name, size = 'md', className = '' }: AvatarPr
     return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
   };
   
-  if (src) {
+  if (src && !imgError) {
     return (
       <div className={`relative rounded-full overflow-hidden ${sizeStyles[size]} ${className}`}>
         <Image
           src={src}
           alt={alt || name || 'Avatar'}
           fill
+          unoptimized
           sizes={size === 'sm' ? '32px' : size === 'md' ? '48px' : size === 'lg' ? '64px' : '96px'}
           className="object-cover"
+          onError={() => setImgError(true)}
         />
       </div>
     );

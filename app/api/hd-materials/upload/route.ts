@@ -56,7 +56,93 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Only tutors can upload materials.' }, { status: 403 });
     }
 
-    // Parse form data
+    const contentType = req.headers.get('content-type') || '';
+    const admin = createAdminClient();
+
+    // Branch 1: JSON payload (get-upload-url OR save-record after direct storage upload)
+    if (contentType.includes('application/json')) {
+      const body = await req.json().catch(() => ({}));
+      const action = body?.action;
+
+      if (action === 'get-upload-url') {
+        const fileName = String(body?.fileName ?? '').trim();
+        const fileSize = Number(body?.fileSize ?? 0);
+        const fileType = String(body?.fileType ?? 'application/octet-stream');
+        const title = String(body?.title ?? '').trim();
+        const specialty = String(body?.specialty ?? '').trim();
+
+        if (!fileName) return NextResponse.json({ error: 'fileName is required.' }, { status: 400 });
+        if (!title) return NextResponse.json({ error: 'Title is required.' }, { status: 400 });
+        if (!specialty || !VALID_SPECIALTIES.includes(specialty)) {
+          return NextResponse.json({ error: `Specialty must be one of: ${VALID_SPECIALTIES.join(', ')}` }, { status: 400 });
+        }
+        if (!ALLOWED_TYPES.includes(fileType) && !fileName.match(/\.(pdf|doc|docx|ppt|pptx)$/i)) {
+          return NextResponse.json({ error: 'Unsupported file type. Please upload PDF, Word, or PowerPoint files.' }, { status: 400 });
+        }
+        if (fileSize > MAX_SIZE_BYTES) {
+          return NextResponse.json({ error: 'File too large. Maximum size is 50 MB.' }, { status: 400 });
+        }
+
+        const fileId = crypto.randomUUID();
+        const safeName = fileName.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const filePath = `${user.id}/${fileId}/${safeName}`;
+
+        const { data: signData, error: signError } = await admin.storage
+          .from('hd-materials')
+          .createSignedUploadUrl(filePath);
+
+        if (signError || !signData) {
+          console.error('[hd-materials/upload-url]', signError);
+          return NextResponse.json({ error: 'Failed to create signed upload URL.' }, { status: 500 });
+        }
+
+        return NextResponse.json({
+          signedUrl: signData.signedUrl,
+          token: signData.token,
+          path: signData.path,
+          filePath,
+        });
+      }
+
+      if (action === 'save-record' || body?.filePath) {
+        const filePath = String(body?.filePath ?? '').trim();
+        const fileName = String(body?.fileName ?? '').trim();
+        const fileSize = Number(body?.fileSize ?? 0);
+        const fileType = String(body?.fileType ?? 'application/octet-stream');
+        const title = String(body?.title ?? '').trim();
+        const description = String(body?.description ?? '').trim();
+        const specialty = String(body?.specialty ?? '').trim();
+
+        if (!filePath) return NextResponse.json({ error: 'filePath is required.' }, { status: 400 });
+        if (!title) return NextResponse.json({ error: 'Title is required.' }, { status: 400 });
+
+        const { data: material, error: dbError } = await (admin as any)
+          .from('hd_materials')
+          .insert({
+            tutor_id: user.id,
+            title,
+            description: description || null,
+            specialty,
+            file_path: filePath,
+            file_name: fileName,
+            file_size_bytes: fileSize,
+            file_type: fileType,
+            status: 'pending',
+          })
+          .select('id')
+          .single() as any;
+
+        if (dbError) {
+          console.error('[hd-materials/save-record]', dbError);
+          await admin.storage.from('hd-materials').remove([filePath]);
+          return NextResponse.json({ error: 'Failed to save material record.' }, { status: 500 });
+        }
+
+        return NextResponse.json({ material_id: material.id });
+      }
+    }
+
+    // Branch 2: Fallback for multipart form data (< 4.5MB)
     const formData = await req.formData();
     const file      = formData.get('file') as File | null;
     const title     = (formData.get('title') as string | null)?.trim();
@@ -88,7 +174,6 @@ export async function POST(req: NextRequest) {
     const filePath  = `${user.id}/${fileId}/${safeName}`;
 
     // Upload to storage using admin client (bypasses user-level storage RLS issues)
-    const admin = createAdminClient();
     const fileBytes = await file.arrayBuffer();
 
     const { error: storageError } = await admin.storage

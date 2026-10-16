@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Spinner } from '@/components/ui/Spinner';
 import { TutorMarkdown } from '@/components/ai/TutorMarkdown';
 import { AiTutorExitFeedbackModal } from '@/components/ai/AiTutorExitFeedbackModal';
+import { createClient } from '@/lib/supabase/client';
 import toast from 'react-hot-toast';
 
 interface Material {
@@ -210,6 +211,7 @@ export default function AiTutorPage() {
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [uploadTitle, setUploadTitle] = useState('');
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState<string>('');
 
   // Refs
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -219,6 +221,7 @@ export default function AiTutorPage() {
   const audioContextRef = useRef<AudioContext | null>(null);
   const processorRef = useRef<ScriptProcessorNode | null>(null);
   const listenConnectionRef = useRef<any>(null);
+  const browserRecognitionRef = useRef<any>(null);
   const voiceEnabledRef = useRef(false);
   const replyAbortRef = useRef<AbortController | null>(null);
   const replySequenceRef = useRef(0);
@@ -776,31 +779,99 @@ export default function AiTutorPage() {
     }
   };
 
-  // Upload student study notes
+  // Upload student study notes (uses direct Supabase storage upload to avoid 413 Payload Too Large)
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!uploadFile) {
       toast.error('Choose a textbook file first.');
       return;
     }
+    if (uploadFile.size > 50 * 1024 * 1024) {
+      toast.error('File too large. Maximum size is 50 MB.');
+      return;
+    }
+
     setIsUploading(true);
+    setUploadStatus('Requesting secure upload authorization…');
+
     try {
-      const fd = new FormData();
-      fd.append('file', uploadFile);
-      if (uploadTitle.trim()) fd.append('title', uploadTitle.trim());
-      const res = await fetch('/api/ai/tutor/materials', { method: 'POST', body: fd });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? 'Upload failed');
-      toast.success(`Added ${data.chunk_count} chunks from "${data.title}"`);
+      // Step 1: Request signed upload URL from backend
+      const signRes = await fetch('/api/ai/tutor/materials', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'get-upload-url',
+          fileName: uploadFile.name,
+          fileType: uploadFile.type || 'application/octet-stream',
+          fileSize: uploadFile.size,
+          title: uploadTitle.trim() || undefined,
+        }),
+      });
+
+      const signData = await signRes.json();
+      if (!signRes.ok) throw new Error(signData.error ?? 'Failed to prepare upload');
+
+      // Step 2: Upload file directly to Supabase Storage (bypasses Vercel 4.5MB 413 limit)
+      setUploadStatus(`Uploading ${uploadFile.name} directly to storage…`);
+      const supabase = createClient();
+      let uploadSuccess = false;
+
+      try {
+        const { error: uploadError } = await supabase.storage
+          .from('ai-tutor-materials')
+          .uploadToSignedUrl(signData.path, signData.token, uploadFile, {
+            contentType: uploadFile.type || 'application/octet-stream',
+            upsert: false,
+          });
+        if (!uploadError) uploadSuccess = true;
+      } catch (err) {
+        console.warn('[ai-tutor] uploadToSignedUrl fallback to PUT:', err);
+      }
+
+      if (!uploadSuccess && signData.signedUrl) {
+        const putRes = await fetch(signData.signedUrl, {
+          method: 'PUT',
+          body: uploadFile,
+          headers: { 'Content-Type': uploadFile.type || 'application/octet-stream' },
+        });
+        if (!putRes.ok) throw new Error('Failed to upload file to storage.');
+        uploadSuccess = true;
+      }
+
+      if (!uploadSuccess) {
+        throw new Error('Upload to storage failed.');
+      }
+
+      // Step 3: Trigger server-side ingestion
+      setUploadStatus('Extracting text and indexing chunks…');
+      const ingestRes = await fetch('/api/ai/tutor/materials', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'ingest',
+          filePath: signData.filePath,
+          fileName: uploadFile.name,
+          fileSize: uploadFile.size,
+          fileType: uploadFile.type || 'application/octet-stream',
+          title: uploadTitle.trim() || undefined,
+        }),
+      });
+
+      const ingestData = await ingestRes.json();
+      if (!ingestRes.ok) throw new Error(ingestData.error ?? 'Ingestion failed');
+
+      toast.success(`Added ${ingestData.chunk_count} chunks from "${ingestData.title}"`);
       setUploadFile(null);
       setUploadTitle('');
       if (fileInputRef.current) fileInputRef.current.value = '';
       await loadMaterials();
       setShowUploadPanel(false);
     } catch (err: any) {
+      console.error('[ai-tutor] upload error:', err);
       toast.error(err.message ?? 'Upload failed');
     } finally {
       setIsUploading(false);
+      setUploadStatus('');
     }
   };
 
@@ -972,6 +1043,12 @@ export default function AiTutorPage() {
   };
 
   const stopVoiceSession = () => {
+    if (browserRecognitionRef.current) {
+      try {
+        browserRecognitionRef.current.stop();
+      } catch {}
+      browserRecognitionRef.current = null;
+    }
     processorRef.current?.disconnect();
     processorRef.current = null;
     mediaStreamRef.current?.getTracks().forEach((track) => track.stop());
@@ -987,92 +1064,159 @@ export default function AiTutorPage() {
   };
 
   const startListening = async () => {
-    if (!navigator.mediaDevices?.getUserMedia) {
-      toast.error('Microphone access is not supported in this browser.');
-      return;
-    }
-
     stopVoicePlayback();
+
+    const SpeechRecognition = typeof window !== 'undefined'
+      ? ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition)
+      : null;
+
+    let deepgramStarted = false;
     let mediaStream: MediaStream | null = null;
-    try {
-      mediaStream = await navigator.mediaDevices.getUserMedia({
-        audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true, autoGainControl: true },
-      });
-      mediaStreamRef.current = mediaStream;
 
-      const tokenResponse = await fetch('/api/ai/tutor/voice-token', { method: 'POST' });
-      const tokenData = await tokenResponse.json();
-      if (!tokenResponse.ok) throw new Error(tokenData.error ?? 'Could not start live voice.');
+    // 1. Attempt Deepgram live streaming if mic access is available
+    if (navigator.mediaDevices?.getUserMedia) {
+      try {
+        const tokenResponse = await fetch('/api/ai/tutor/voice-token', { method: 'POST' });
+        if (tokenResponse.ok) {
+          const tokenData = await tokenResponse.json();
+          if (tokenData?.accessToken) {
+            mediaStream = await navigator.mediaDevices.getUserMedia({
+              audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+            });
+            mediaStreamRef.current = mediaStream;
 
-      const client = new DeepgramClient({ accessToken: tokenData.accessToken });
-      const listenConnection = await client.listen.v2.connect({
-        model: 'flux-general-en',
-        encoding: 'linear16',
-        sample_rate: '16000',
-        eot_threshold: 0.7,
-        connectionTimeoutInSeconds: 12,
-        reconnectAttempts: 1,
-      });
-      listenConnectionRef.current = listenConnection;
+            const client = new DeepgramClient({ accessToken: tokenData.accessToken });
+            const listenConnection = await client.listen.v2.connect({
+              model: 'flux-general-en',
+              encoding: 'linear16',
+              sample_rate: '16000',
+              eot_threshold: 0.7,
+              connectionTimeoutInSeconds: 12,
+              reconnectAttempts: 1,
+            });
+            listenConnectionRef.current = listenConnection;
 
-      listenConnection.on('message', (message: any) => {
-        if (message?.type !== 'TurnInfo') return;
-        if (message.event === 'StartOfTurn') {
-          setInterimTranscript('Listening…');
-          replyAbortRef.current?.abort();
-          replyAbortRef.current = null;
-          setIsLoading(false);
-          stopVoicePlayback();
-        } else if (message.event === 'Update') {
-          setInterimTranscript(message.transcript ?? '');
-        } else if (message.event === 'EndOfTurn') {
-          const transcript = String(message.transcript ?? '').trim();
-          setInterimTranscript('');
-          if (transcript) {
-            sendMessageRef.current(transcript);
+            listenConnection.on('message', (message: any) => {
+              if (message?.type !== 'TurnInfo') return;
+              if (message.event === 'StartOfTurn') {
+                setInterimTranscript('Listening…');
+                replyAbortRef.current?.abort();
+                replyAbortRef.current = null;
+                setIsLoading(false);
+                stopVoicePlayback();
+              } else if (message.event === 'Update') {
+                setInterimTranscript(message.transcript ?? '');
+              } else if (message.event === 'EndOfTurn') {
+                const transcript = String(message.transcript ?? '').trim();
+                setInterimTranscript('');
+                if (transcript) {
+                  sendMessageRef.current(transcript);
+                }
+              }
+            });
+
+            listenConnection.on('error', (error: Error) => {
+              console.warn('[ai/tutor] Deepgram live error:', error);
+              stopVoiceSession();
+            });
+
+            listenConnection.connect();
+            await listenConnection.waitForOpen();
+
+            const audioContext = new AudioContext({ latencyHint: 'interactive' });
+            await audioContext.resume();
+            audioContextRef.current = audioContext;
+
+            const source = audioContext.createMediaStreamSource(mediaStream);
+            const processor = audioContext.createScriptProcessor(4096, 1, 1);
+            const gain = audioContext.createGain();
+            gain.gain.value = 0;
+
+            processor.onaudioprocess = (event) => {
+              const connection = listenConnectionRef.current;
+              if (!connection || connection.readyState !== 1) return;
+              const pcm = downsampleTo16k(event.inputBuffer.getChannelData(0), audioContext.sampleRate);
+              if (pcm.length) connection.sendMedia(pcm.buffer);
+            };
+
+            source.connect(processor);
+            processor.connect(gain);
+            gain.connect(audioContext.destination);
+            processorRef.current = processor;
+
+            deepgramStarted = true;
+            setIsListening(true);
+            toast.success('Listening… Speak your clinical question naturally.');
+            return;
           }
         }
-      });
-
-      listenConnection.on('error', (error: Error) => {
-        console.error('[ai/tutor] Deepgram transcription error:', error);
-        toast.error('Live transcription disconnected.');
-        stopVoiceSession();
-      });
-
-      listenConnection.connect();
-      await listenConnection.waitForOpen();
-
-      const audioContext = new AudioContext({ latencyHint: 'interactive' });
-      await audioContext.resume();
-      audioContextRef.current = audioContext;
-
-      const source = audioContext.createMediaStreamSource(mediaStream);
-      const processor = audioContext.createScriptProcessor(4096, 1, 1);
-      const gain = audioContext.createGain();
-      gain.gain.value = 0;
-
-      processor.onaudioprocess = (event) => {
-        const connection = listenConnectionRef.current;
-        if (!connection || connection.readyState !== 1) return;
-        const pcm = downsampleTo16k(event.inputBuffer.getChannelData(0), audioContext.sampleRate);
-        if (pcm.length) connection.sendMedia(pcm.buffer);
-      };
-
-      source.connect(processor);
-      processor.connect(gain);
-      gain.connect(audioContext.destination);
-      processorRef.current = processor;
-
-      setIsListening(true);
-      toast.success('Listening… Speak your clinical question naturally.');
-    } catch (error: any) {
-      mediaStream?.getTracks().forEach((track) => track.stop());
-      mediaStreamRef.current = null;
-      stopVoiceSession();
-      console.error('[ai/tutor] Voice session error:', error);
-      toast.error(error.message ?? 'Could not start microphone. Check browser permissions.');
+      } catch (deepgramErr) {
+        console.warn('[ai/tutor] Deepgram streaming unavailable, falling back to Web Speech API:', deepgramErr);
+      }
     }
+
+    // Clean up acquired media stream tracks if Deepgram didn't connect
+    mediaStream?.getTracks().forEach((track) => track.stop());
+    mediaStreamRef.current = null;
+
+    // 2. Seamless Fallback: Native Browser SpeechRecognition (Chrome, Edge, Safari, Android)
+    if (SpeechRecognition) {
+      try {
+        const recognition = new SpeechRecognition();
+        browserRecognitionRef.current = recognition;
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'en-US';
+
+        recognition.onstart = () => {
+          setIsListening(true);
+          setInterimTranscript('Listening… (Browser Voice)');
+          toast.success('Listening… Speak your clinical question naturally.');
+        };
+
+        recognition.onresult = (event: any) => {
+          let interim = '';
+          let final = '';
+          for (let i = event.resultIndex; i < event.results.length; ++i) {
+            const transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+              final += transcript;
+            } else {
+              interim += transcript;
+            }
+          }
+          if (interim) {
+            setInterimTranscript(interim);
+          }
+          if (final.trim()) {
+            setInterimTranscript('');
+            stopVoiceSession();
+            sendMessageRef.current(final.trim());
+          }
+        };
+
+        recognition.onerror = (event: any) => {
+          console.warn('[ai/tutor] Browser speech recognition:', event.error);
+          if (event.error !== 'no-speech') {
+            toast.error(event.error === 'not-allowed' ? 'Microphone permission denied.' : `Voice recognition: ${event.error}`);
+          }
+          stopVoiceSession();
+        };
+
+        recognition.onend = () => {
+          setIsListening(false);
+          setInterimTranscript('');
+        };
+
+        recognition.start();
+        return;
+      } catch (recErr: any) {
+        console.error('[ai/tutor] Failed to start browser SpeechRecognition:', recErr);
+      }
+    }
+
+    stopVoiceSession();
+    toast.error('Voice input requires a browser with Web Speech support (Chrome, Edge, Safari) or Deepgram configuration.');
   };
 
   const activeSession = sessions.find((s) => s.id === activeSessionId);
@@ -1242,7 +1386,7 @@ export default function AiTutorPage() {
               disabled={isUploading}
             />
             <Button type="submit" variant="primary" size="sm" disabled={!uploadFile || isUploading}>
-              {isUploading ? 'Uploading & Indexing…' : 'Upload & Ingest'}
+              {isUploading ? <><Spinner size="sm" color="primary" /> {uploadStatus || 'Uploading & Indexing…'}</> : 'Upload & Ingest'}
             </Button>
           </form>
           {materials.some((m) => m.scope === 'personal') && (

@@ -129,15 +129,69 @@ export default function TutorHdMaterialsPage() {
 
     setUploading(true);
     try {
-      const fd = new FormData();
-      fd.append('file', file);
-      fd.append('title', form.title.trim());
-      fd.append('description', form.description.trim());
-      fd.append('specialty', form.specialty);
+      // Step 1: Request signed upload URL
+      const signRes = await fetch('/api/hd-materials/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'get-upload-url',
+          fileName: file.name,
+          fileSize: file.size,
+          fileType: file.type || 'application/octet-stream',
+          title: form.title.trim(),
+          specialty: form.specialty,
+        }),
+      });
 
-      const res = await fetch('/api/hd-materials/upload', { method: 'POST', body: fd });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? 'Upload failed');
+      const signData = await signRes.json();
+      if (!signRes.ok) throw new Error(signData.error ?? 'Failed to prepare upload');
+
+      // Step 2: Upload directly to Supabase storage
+      let uploadSuccess = false;
+      try {
+        const { error: uploadError } = await supabase.storage
+          .from('hd-materials')
+          .uploadToSignedUrl(signData.path, signData.token, file, {
+            contentType: file.type || 'application/octet-stream',
+            upsert: false,
+          });
+        if (!uploadError) uploadSuccess = true;
+      } catch (err) {
+        console.warn('[tutor-hd-materials] uploadToSignedUrl fallback to PUT:', err);
+      }
+
+      if (!uploadSuccess && signData.signedUrl) {
+        const putRes = await fetch(signData.signedUrl, {
+          method: 'PUT',
+          body: file,
+          headers: { 'Content-Type': file.type || 'application/octet-stream' },
+        });
+        if (!putRes.ok) throw new Error('Failed to upload file to storage.');
+        uploadSuccess = true;
+      }
+
+      if (!uploadSuccess) {
+        throw new Error('Upload to storage failed.');
+      }
+
+      // Step 3: Save metadata record
+      const saveRes = await fetch('/api/hd-materials/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'save-record',
+          filePath: signData.filePath,
+          fileName: file.name,
+          fileSize: file.size,
+          fileType: file.type || 'application/octet-stream',
+          title: form.title.trim(),
+          description: form.description.trim(),
+          specialty: form.specialty,
+        }),
+      });
+
+      const saveData = await saveRes.json();
+      if (!saveRes.ok) throw new Error(saveData.error ?? 'Failed to save material record');
 
       toast.success('Material uploaded! It will be visible to students once the admin approves it.');
       setForm({ title: '', description: '', specialty: SPECIALTIES[0] });

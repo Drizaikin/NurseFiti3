@@ -17,9 +17,8 @@ export function sanitizeTitle(fileName: string, provided?: string | null): strin
   return fileName.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').trim() || 'Untitled textbook';
 }
 
-export async function extractTextFromFile(file: File): Promise<string> {
-  const buffer = Buffer.from(await file.arrayBuffer());
-  const name = file.name.toLowerCase();
+export async function extractTextFromBuffer(buffer: Buffer, fileName: string): Promise<string> {
+  const name = fileName.toLowerCase();
 
   if (name.endsWith('.pdf')) {
     const imported: any = await import('pdf-parse');
@@ -36,7 +35,13 @@ export async function extractTextFromFile(file: File): Promise<string> {
   }
 
   // Plain text / markdown / csv
-  return buffer.toString('utf-8');
+  return buffer.toString('utf-8').replace(/^\uFEFF/, '');
+}
+
+export async function extractTextFromFile(file: File | (Blob & { name?: string })): Promise<string> {
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const name = (file as any).name || 'document.txt';
+  return extractTextFromBuffer(buffer, name);
 }
 
 export function chunkText(text: string, maxChars = 1500, overlap = 250): string[] {
@@ -68,7 +73,8 @@ export function chunkText(text: string, maxChars = 1500, overlap = 250): string[
     }
 
     if (end >= cleaned.length) break;
-    start = Math.max(0, end - overlap);
+    const nextStart = Math.max(start + 1, end - overlap);
+    start = nextStart;
     if (start >= cleaned.length) break;
   }
 

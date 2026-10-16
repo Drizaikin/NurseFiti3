@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Spinner } from '@/components/ui/Spinner';
+import { createClient } from '@/lib/supabase/client';
 import toast from 'react-hot-toast';
 
 interface Material {
@@ -53,6 +54,7 @@ export default function AdminAiTutorPage() {
   const [description, setDescription] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState<string>('');
   const [deleting, setDeleting] = useState<string | null>(null);
   const [ratingFilter, setRatingFilter] = useState<number | 'all'>('all');
 
@@ -95,18 +97,83 @@ export default function AdminAiTutorPage() {
       toast.error('Please select a file.');
       return;
     }
+    if (file.size > 50 * 1024 * 1024) {
+      toast.error('File too large. Maximum size is 50 MB.');
+      return;
+    }
+
     setIsUploading(true);
+    setUploadStatus('Requesting secure upload authorization…');
+
     try {
-      const fd = new FormData();
-      fd.append('file', file);
-      if (title.trim()) fd.append('title', title.trim());
-      if (description.trim()) fd.append('description', description.trim());
+      // Step 1: Request signed upload URL from backend
+      const signRes = await fetch('/api/admin/ai-tutor/materials', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'get-upload-url',
+          fileName: file.name,
+          fileType: file.type || 'application/octet-stream',
+          fileSize: file.size,
+          title: title.trim() || undefined,
+          description: description.trim() || undefined,
+        }),
+      });
 
-      const res = await fetch('/api/admin/ai-tutor/materials', { method: 'POST', body: fd });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? 'Upload failed');
+      const signData = await signRes.json();
+      if (!signRes.ok) throw new Error(signData.error ?? 'Failed to prepare upload');
 
-      toast.success(`Ingested ${data.chunk_count} chunks from "${data.title}"`);
+      // Step 2: Upload file directly to Supabase Storage (bypasses Vercel 4.5MB 413 limit)
+      setUploadStatus(`Uploading ${file.name} directly to storage…`);
+      const supabase = createClient();
+      let uploadSuccess = false;
+
+      try {
+        const { error: uploadError } = await supabase.storage
+          .from('ai-tutor-materials')
+          .uploadToSignedUrl(signData.path, signData.token, file, {
+            contentType: file.type || 'application/octet-stream',
+            upsert: false,
+          });
+        if (!uploadError) uploadSuccess = true;
+      } catch (err) {
+        console.warn('[AdminAiTutor] uploadToSignedUrl fallback to PUT:', err);
+      }
+
+      if (!uploadSuccess && signData.signedUrl) {
+        const putRes = await fetch(signData.signedUrl, {
+          method: 'PUT',
+          body: file,
+          headers: { 'Content-Type': file.type || 'application/octet-stream' },
+        });
+        if (!putRes.ok) throw new Error('Failed to upload file to storage.');
+        uploadSuccess = true;
+      }
+
+      if (!uploadSuccess) {
+        throw new Error('Upload to storage failed.');
+      }
+
+      // Step 3: Trigger backend text extraction & chunk ingestion
+      setUploadStatus('Extracting text and indexing chunks…');
+      const ingestRes = await fetch('/api/admin/ai-tutor/materials', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'ingest',
+          filePath: signData.filePath,
+          fileName: file.name,
+          fileSize: file.size,
+          fileType: file.type || 'application/octet-stream',
+          title: title.trim() || undefined,
+          description: description.trim() || undefined,
+        }),
+      });
+
+      const ingestData = await ingestRes.json();
+      if (!ingestRes.ok) throw new Error(ingestData.error ?? 'Ingestion failed');
+
+      toast.success(`Ingested ${ingestData.chunk_count} chunks from "${ingestData.title}"`);
       setTitle('');
       setDescription('');
       setFile(null);
@@ -115,9 +182,11 @@ export default function AdminAiTutorPage() {
       if (input) input.value = '';
       await loadMaterials();
     } catch (err: any) {
+      console.error('[AdminAiTutor] Upload error:', err);
       toast.error(err.message ?? 'Upload failed');
     } finally {
       setIsUploading(false);
+      setUploadStatus('');
     }
   };
 
@@ -232,7 +301,7 @@ export default function AdminAiTutorPage() {
                 />
               </div>
               <Button type="submit" variant="primary" disabled={isUploading || !file}>
-                {isUploading ? <><Spinner size="sm" color="primary" /> Ingesting…</> : 'Upload & ingest'}
+                {isUploading ? <><Spinner size="sm" color="primary" /> {uploadStatus || 'Ingesting…'}</> : 'Upload & ingest'}
               </Button>
             </form>
           </Card>
